@@ -14,8 +14,7 @@ CoreOS is an open source project. All of the source for CoreOS is
 available on [github][github-coreos]. If you find issues with these docs
 or the code please send a pull request.
 
-You can direct directions and questions to the [IRC channel][irc] or
-[mailing list][coreos-dev].
+You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
 [github-coreos]: https://github.com/coreos/
 [irc]: irc://irc.freenode.org:6667/#coreos
