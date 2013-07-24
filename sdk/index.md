@@ -1,10 +1,12 @@
 ---
 layout: docs
+slug: sdk
 title: Documentation
-slug: docs
 ---
 
-# CoreOS Developer Guide
+# CoreOS Developer SDK Guide
+
+These are the instructions for building CoreOS itself. 
 
 ## Getting Started
 
