@@ -6,18 +6,26 @@ title: Documentation
 
 # CoreOS Developer SDK Guide
 
-These are the instructions for building CoreOS itself. 
+These are the instructions for building CoreOS itself. By the end of
+the guide you will build a developer image that you can run under
+KVM and have tools for making changes to the code.
+
+CoreOS is an open source project. All of the source for CoreOS is
+available on [github][github-coreos]. If you find issues with these docs
+or the code please send a pull request.
+
+You can direct directions and questions to the [IRC channel][irc] or
+[mailing list][coreos-dev].
+
+[github-coreos]: https://github.com/coreos/
+[irc]: irc://irc.freenode.org:6667/#coreos
+[coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
 
 ## Getting Started
 
-Let's get set up with an SDK chroot and build a bootable image of
-[CoreOS][coreos]. The SDK chroot has a full toolchain and isolates the build
-process from quirks and differences between host OSes.
-
-If you find bugs or need help send an email to our [mailing list][list].
-
-[coreos]: http://www.coreos.com
-[list]: https://groups.google.com/forum/#!forum/coreos-dev
+Let's get set up with an SDK chroot and build a bootable image of CoreOS. The
+SDK chroot has a full toolchain and isolates the build process from quirks and
+differences between host OSes.
 
 ### Install depot_tools
 
