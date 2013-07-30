@@ -116,7 +116,7 @@ print out after `image_to_vm.sh` runs).
 
 To demo the general direction we are starting in now the OS starts two
 small daemons that you can access over an HTTP interface. The first,
-systemd-rest, allows you to stop and stop units via HTTP. The other is a
+systemd-rest, allows you to stop and start units via HTTP. The other is a
 small server that you can play with shutting off and on called
 motd-http. You can try these daemons with:
 
