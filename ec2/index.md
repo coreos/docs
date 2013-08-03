@@ -9,18 +9,13 @@ systemd-version: 204
 
 # Running CoreOS on EC2
 
-CoreOS is currently in heavy development and actively being tested. The following instructions will bring up multiple CoreOS instances all sharing configuration data using [etcd][etcd]. All of these instructions assume `us-east-1` EC2 region.
-
+CoreOS is currently in heavy development and actively being tested. The following instructions will bring up multiple CoreOS instances all sharing configuration data using [etcd][etcd-docs]. All of these instructions assume `us-east-1` EC2 region.
 
 This will launch three t1.micro instances with `etcd` clustered sharing data between the hosts. To add more instances to the cluster, just launch more with the same `user-data`.
 
 **TL;DR:** launch three instances of [{{ page.us-east-1-ami }}][ec2-us-east-1] in a security group that has open port 22, 4001, and 7001 and the same random token in the "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [docker][docker-docs] to play with.
 
 You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
-
-[etcd]: https://github.com/coreos/etcd
-[irc]: irc://irc.freenode.org:6667/#coreos
-[coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
 
 ## Creating the security group
 
@@ -79,20 +74,7 @@ We will be launching three instances, with a shared token (via a gist url) in th
 9. Launch!
 
 ## Using CoreOS
-Now that a few machines have booked it is time to play around. 
 
-**ssh uses the `core` user** 
+Now that you have a few machines booted it is time to play around. Check out the [Using CoreOS][using-coreos] guide.
 
-The tools are your disposal are:
-
-* etcd ([docs][etcd-docs]) for service discovery between nodes. This will make it extremely easy to do things like have your proxy automatically discover which app servers to balance to. etcd's goal is to make it easy to build services where you add more machines and services automatically scale. 
-* docker {{ page.docker-version }} ([docs][docker-docs]) for package management. Put all your apps into containers, and wire them together with etcd across hosts. 
-* systemd {{ page.systemd-version }} ([docs][systemd-docs]). We particularly think socket activation is useful for widely deployed services.
-* Built in Chaos Monkey (i.e. random reboots). During the alpha period, CoreOS will automatically reboot after an update is applied. 
-
-
-[systemd-docs]: http://www.freedesktop.org/wiki/Software/systemd/
-[docker-docs]: http://docs.docker.io/
-[etcd-docs]: https://github.com/coreos/etcd
 [ec2-us-east-1]: https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi={{ page.us-east-1-ami }}
-
