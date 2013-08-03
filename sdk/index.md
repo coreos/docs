@@ -28,17 +28,19 @@ differences between host OSes.
 
 ### Prerequisites
 
-You need to have pre-installed:
-* curl
-* git
+System requirements to get started:
 
-* You need to have a proper GIT Setup:
+- curl
+- git
+
+You also need a proper git setup:
+
 ```
 git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
 ```
 
-__Do all of the following steps as a normal user and also not with sudo!__
+**NOTE**: Do the git configuration as a normal user and not with sudo.
 
 ### Install depot_tools
 
