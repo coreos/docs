@@ -26,6 +26,20 @@ Let's get set up with an SDK chroot and build a bootable image of CoreOS. The
 SDK chroot has a full toolchain and isolates the build process from quirks and
 differences between host OSes.
 
+### Prerequisites
+
+You need to have pre-installed:
+* curl
+* git
+
+* You need to have a proper GIT Setup:
+```
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+```
+
+__Do all of the following steps as a normal user and also not with sudo!__
+
 ### Install depot_tools
 
 `repo`, one of the `depot_tools`, helps to manage the collection of git
