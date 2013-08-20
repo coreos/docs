@@ -26,7 +26,7 @@ list][coreos-dev].
 In addition to Linux it can be run on Windows and OSX but works best on
 Linux. It should be available on just about any distro.
 
-### Debian/Ubuntu
+### Debian or Ubuntu
 
 Documentation for [Debian][qemudeb] has more details but to get started
 all you need is:
@@ -35,7 +35,7 @@ all you need is:
 
 [qemudeb]: https://wiki.debian.org/QEMU
 
-### Fedora/RedHat
+### Fedora or Red Hat
 
 The Fedora wiki has a [quick howto][qemufed] but the basic install is easy:
 
