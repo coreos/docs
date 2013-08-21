@@ -80,7 +80,12 @@ look for public keys in ssh-agent if available and at the default
 locations `~/.ssh/id_dsa.pub` and `~/.ssh/id_rsa.pub`. If you need to
 provide an alternate location use the -a option:
 
-    ./coreos_production_qemu.sh -a ~/.ssh/authoized_keys -nographic
+    ./coreos_production_qemu.sh -a ~/.ssh/authoized_keys -- -nographic
+
+Note: Options such as -a for the wrapper script must be specified before
+any options for QEMU. To make the separation between the two explicit
+you can use -- but that isn't required. See
+`./coreos_production_qemu.sh -h` for details.
 
 Once the virtual machine has started you can log in via SSH:
 
