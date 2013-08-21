@@ -2,7 +2,7 @@
 layout: docs
 slug: ec2
 title: Documentation
-us-east-1-ami: ami-2fe9a946
+us-east-1-ami: ami-bf5b18d6
 docker-version: 0.5
 systemd-version: 204
 ---
