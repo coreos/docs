@@ -55,7 +55,7 @@ The configuration file format for systemd is straight forward. Lets create a sim
 First, you will need to run all of this as `root` since you are modifying system state:
 
 ```
-sudo su
+sudo -i
 ```
 
 Create a file called `/media/state/units/hello.service`
