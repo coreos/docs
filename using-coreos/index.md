@@ -40,8 +40,8 @@ docker {{ page.docker-version }} ([docs][docker-docs]) for package management. P
 You can quickly try out a Ubuntu container with these commands:
 
 ```
-docker run ubuntu /bin/echo hello world
-docker run -i -t ubuntu /bin/bash
+sudo docker run ubuntu /bin/echo hello world
+sudo docker run -i -t ubuntu /bin/bash
 ```
 
 docker opens up a lot of possibilities for consistent application deploys. Read more about it at [docker.io][docker-docs].
