@@ -43,6 +43,14 @@ The Fedora wiki has a [quick howto][qemufed] but the basic install is easy:
 
 [qemufed]: https://fedoraproject.org/wiki/How_to_use_qemu
 
+### Arch
+
+This is all you need to get started:
+
+    sudo pacman -S qemu
+    
+More details can be found on [Arch's QEMU wiki page](https://wiki.archlinux.org/index.php/Qemu).
+
 ### Gentoo
 
 As to be expected Gentoo can be a little more complicated but all the
