@@ -2,7 +2,6 @@
 layout: docs
 slug: ec2
 title: Documentation
-us-east-1-ami: ami-993e7cf0
 docker-version: 0.5
 systemd-version: 204
 ---
@@ -13,7 +12,7 @@ CoreOS is currently in heavy development and actively being tested. The followin
 
 This will launch three t1.micro instances with `etcd` clustered sharing data between the hosts. To add more instances to the cluster, just launch more with the same `user-data`.
 
-**TL;DR:** launch three instances of [{{ page.us-east-1-ami }}][ec2-us-east-1] in a security group that has open port 22, 4001, and 7001 and the same random token in the "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [docker][docker-docs] to play with.
+**TL;DR:** launch three instances of [{{ site.ami-us-east-1 }}][ec2-us-east-1] in a security group that has open port 22, 4001, and 7001 and the same random token in the "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [docker][docker-docs] to play with.
 
 You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
@@ -50,7 +49,7 @@ First we need to create a security group to allow CoreOS instances to communicat
 We will be launching three instances, with a shared token (via a gist url) in the User Data, and selecting our security group.
 
 1. Open the quick launch by clicking [here][ec2-us-east-1] (shift+click for new tab)
-    * For reference, the current us-east-1 is: [{{ page.us-east-1-ami }}][ec2-us-east-1]
+    * For reference, the current us-east-1 is: [{{ site.ami-us-east-1 }}][ec2-us-east-1]
 2. On the second page of the wizard, launch 3 servers to test our clustering
     * Number of instances: 3 
     * Click "Continue"
@@ -77,4 +76,4 @@ We will be launching three instances, with a shared token (via a gist url) in th
 
 Now that you have a few machines booted it is time to play around. Check out the [Using CoreOS][using-coreos] guide.
 
-[ec2-us-east-1]: https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi={{ page.us-east-1-ami }}
+[ec2-us-east-1]: https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi={{ site.ami-us-east-1 }}

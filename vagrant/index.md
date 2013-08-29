@@ -27,10 +27,27 @@ The following commands will first grab a Vagrantfile which file tells
 Vagrant where it can find the latest disk image of CoreOS. Then Vagrant
 will download the image and start it for you.
 
+If you want to use the VMware provider see the next [section][vmware].
+
+[vmware]: #using-vmware
+
 ```
 git clone https://github.com/coreos/coreos-vagrant/
 cd coreos-vagrant
 vagrant up
+vagrant ssh
+```
+
+## Using VMware
+
+The following commands will setup CoreOS under the VMware Vagrant provider. After
+you run `vagrant up` you will see a scary message but you can safely ignore it.
+It will be fixed in version 1.2.8 of Vagrant.
+
+```
+git clone https://github.com/coreos/coreos-vagrant/
+cd coreos-vagrant/vmware
+vagrant up --provider vmware_fusion
 vagrant ssh
 ```
 
