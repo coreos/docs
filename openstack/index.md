@@ -10,7 +10,7 @@ CoreOS is currently in heavy development and actively being tested.  These
 instructions will walk you through downloading CoreOS for OpenStack, importing
 it with the `glance` tool and running it with the `nova` tool.
 
-## Import the Image into OpenStack
+## Import the Image
 
 These steps will download the CoreOS image, uncompress it and then import it
 into the glance image store.
