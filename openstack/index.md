@@ -41,6 +41,8 @@ $ glance image-create --name CoreOS --container-format ovf --disk-format qcow2 -
 +------------------+--------------------------------------+
 ```
 
+## Boot it up
+
 Now generate the ssh key that will be injected into the image for the `core`
 user and boot it up!
 
