@@ -6,38 +6,18 @@ title: Documentation
 
 # Running CoreOS on OpenStack
 
-CoreOS is currently in heavy development and actively being tested.
-These instructions will walk you through downloading CoreOS for OpenStack.
-
-## Download the Image
-
-The latest production CoreOS OpenStack image can be [found here](http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_openstack_image.img.bz2).
-
-OpenStack is a flexible platform and accurately documenting image installation for
-all OpenStack installs is really difficult. If you want to try your hand at it
-please [fork this doc][fork-me] and send a pull request.
+CoreOS is currently in heavy development and actively being tested.  These
+instructions will walk you through downloading CoreOS for OpenStack, importing
+it with the `glance` tool and running it with the `nova` tool.
 
 ## Import the Image into OpenStack
+
+These steps will download the CoreOS image, uncompress it and then import it
+into the glance image store.
 
 ```
 $ wget http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_openstack_image.img.bz2
 $ bunzip2 coreos_production_openstack_image.img.bz2
-```
-
-Quick inspection of the image before importing it:
-
-```
-$ qemu-img info coreos_production_openstack_image.img
-image: coreos_production_openstack_image.img
-file format: qcow2
-virtual size: 5.3G (5721032192 bytes)
-disk size: 347M
-cluster_size: 65536
-```
-
-Import it into Glance:
-
-```
 $ glance image-create --name CoreOS --container-format ovf --disk-format qcow2 --file coreos_production_openstack_image.img --is-public True
 +------------------+--------------------------------------+
 | Property         | Value                                |
@@ -61,23 +41,19 @@ $ glance image-create --name CoreOS --container-format ovf --disk-format qcow2 -
 +------------------+--------------------------------------+
 ```
 
-Create a key:
+Now generate the ssh key that will be injected into the image for the `core`
+user and boot it up!
 
 ```
 $ nova keypair-add coreos > core.pem
-```
-
-Boot the image:
-
-```bash
 $ nova boot --image cdf3874c-c27f-4816-bc8c-046b240e0edd --key-name coreos --flavor m1.medium --security-groups default coreos
 ...
-...
 ```
 
-Get the IP:
+Your first CoreOS instance should now be running. The only thing left to do is
+find the IP and SSH in.
 
-```bash
+```
 $ nova list
 +--------------------------------------+--------+--------+------------+-------------+------------------+
 | ID                                   | Name   | Status | Task State | Power State | Networks         |
@@ -88,7 +64,7 @@ $ nova list
 
 Finally SSH into it, note that the user is `core`:
 
-```bash
+```
 $ ssh -i core.pem core@10.0.0.3
    ______                ____  _____
   / ____/___  ________  / __ \/ ___/
@@ -98,8 +74,6 @@ $ ssh -i core.pem core@10.0.0.3
 
 core@10-0-0-3 ~ $
 ```
-
-[fork-me]: https://github.com/coreos/docs/blob/master/openstack/index.md
 
 ## Using CoreOS
 
