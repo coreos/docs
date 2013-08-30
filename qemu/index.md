@@ -85,7 +85,7 @@ In order to log in to the virtual machine you will need to use ssh keys.
 If you don't already have a ssh key pair you can generate one simply by
 running the command `ssh-keygen`. The wrapper script will automatically
 look for public keys in ssh-agent if available and at the default
-locations `~/.ssh/id_dsa.pub` and `~/.ssh/id_rsa.pub`. If you need to
+locations `~/.ssh/id_dsa.pub` or `~/.ssh/id_rsa.pub`. If you need to
 provide an alternate location use the -a option:
 
     ./coreos_production_qemu.sh -a ~/.ssh/authoized_keys -- -nographic
