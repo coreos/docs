@@ -16,26 +16,29 @@ CoreOS gives you three essential tools: service discovery, container management 
 
 ## Service Discovery with etcd
 
-etcd ([docs][etcd-docs]) can be used for service discovery between nodes. This will make it extremely easy to do things like have your proxy automatically discover which app servers to balance to. etcd's goal is to make it easy to build services where you add more machines and services automatically scale.
+The first building block of CoreOS is service discovery with **etcd** ([docs][etcd-docs]). Data stored in etcd is distributed across all of your machines running CoreOS. For example, each of your app servers can announce itself to your proxy, which would automatically know which machines should receive traffic. Building service discovery into your application allows you to add more machines and scale your services seamlessly.
 
 The API is easy to use. You can simply use curl to set and retrieve a key from etcd:
 
+Set a key `message` with value `Hello world`:
+
 ```
 curl -L http://127.0.0.1:4001/v1/keys/message -d value="Hello world"
+```
+
+Read the value of `message` back:
+
+```
 curl -L http://127.0.0.1:4001/v1/keys/message
 ```
 
-If you followed the [EC2 guide][ec2-guide] you can SSH into another machine in your cluster and can retrieve this same key:
-
-```
-curl -L http://127.0.0.1:4001/v1/keys/message
-```
+If you followed a guide to set up more than one CoreOS machine, you can SSH into another machine and can retrieve this same value.
 
 etcd is persistent and replicated accross members in the cluster. It can also be used standalone as a way to share configuration between containers on a single host. Read more about the full API on [Github][etcd-docs].
 
 ## Container Management with docker
 
-The second building block, **docker**, is where your applications and code run. [Version {{ page.docker-version }}][docker-docs] is installed on each CoreOS machine. You should make each of your services (web server, caching, database) into a container and connect them together by reading and writing to etcd. You can quickly try out a Ubuntu container in two different ways:
+The second building block, **docker** ([docs][docker-docs]), is where your applications and code run. Version {{ page.docker-version }} is installed on each CoreOS machine. You should make each of your services (web server, caching, database) into a container and connect them together by reading and writing to etcd. You can quickly try out a Ubuntu container in two different ways:
 
 Run a command in the container and then stop it: 
 
@@ -53,7 +56,7 @@ docker opens up a lot of possibilities for consistent application deploys. Read 
 
 ## Process Management with systemd
 
-The third buiding block of CoreOS is **systemd**. [Version {{ page.systemd-version }}][systemd-docs] is installed on each CoreOS machine. You should use systemd to manage the life cycle of your docker containers. The configuration format for systemd is straight forward. In the example below, the Ubuntu container is set up to print text after each reboot:
+The third buiding block of CoreOS is **systemd** ([docs][systemd-docs]). Version {{ page.systemd-version }} is installed on each CoreOS machine. You should use systemd to manage the life cycle of your docker containers. The configuration format for systemd is straight forward. In the example below, the Ubuntu container is set up to print text after each reboot:
 
 First, you will need to run all of this as `root` since you are modifying system state:
 
