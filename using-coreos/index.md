@@ -35,12 +35,17 @@ etcd is persistent and replicated accross members in the cluster. It can also be
 
 ## Container Management with docker
 
-docker {{ page.docker-version }} ([docs][docker-docs]) for package management. Put all your apps into containers, and wire them together with etcd across hosts.
+The second building block, **docker**, is where your applications and code run. [Version {{ page.docker-version }}][docker-docs] is installed on each CoreOS machine. You should make each of your services (web server, caching, database) into a container and connect them together by reading and writing to etcd. You can quickly try out a Ubuntu container in two different ways:
 
-You can quickly try out a Ubuntu container with these commands:
+Run a command in the container and then stop it: 
 
 ```
 docker run ubuntu /bin/echo hello world
+```
+
+Open a bash prompt inside of the container:
+
+```
 docker run -i -t ubuntu /bin/bash
 ```
 
