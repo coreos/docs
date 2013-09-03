@@ -48,9 +48,7 @@ docker opens up a lot of possibilities for consistent application deploys. Read 
 
 ## Process Management with systemd
 
-systemd {{ page.systemd-version }} ([docs][systemd-docs]). We particularly think socket activation is useful for widely deployed services.
-
-The configuration file format for systemd is straight forward. Lets create a simple service to run out of our ubuntu container that will start on reboots.:
+The third buiding block of CoreOS is **systemd**. [Version {{ page.systemd-version }}][systemd-docs] is installed on each CoreOS machine. You should use systemd to manage the life cycle of your docker containers. The configuration format for systemd is straight forward. In the example below, the Ubuntu container is set up to print text after each reboot:
 
 First, you will need to run all of this as `root` since you are modifying system state:
 
@@ -73,10 +71,7 @@ ExecStart=/usr/bin/docker run ubuntu /bin/sh -c "while true; do echo Hello World
 WantedBy=local.target
 ```
 
-Then run `systemctl restart local-enable.service`
-
-This will start your daemon and log to the systemd journal. You can
-watch all of the useful work it is doing by running:
+Then run `systemctl restart local-enable.service` to restart all services wanted by local.target. This will start your container and log to the systemd journal. You can read the log by running:
 
 ```
 journalctl -u hello.service -f
