@@ -43,7 +43,7 @@ If you followed a guide to set up more than one CoreOS machine, you can SSH into
 
 ## Container Management with docker
 
-The second building block, **docker** ([docs][docker-docs]), is where your applications and code run. Version {{ page.docker-version }} is installed on each CoreOS machine. You should make each of your services (web server, caching, database) into a container and connect them together by reading and writing to etcd. You can quickly try out a Ubuntu container in two different ways:
+The second building block, **docker** ([docs][docker-docs]), is where your applications and code run. It is installed on each CoreOS machine. You should make each of your services (web server, caching, database) into a container and connect them together by reading and writing to etcd. You can quickly try out a Ubuntu container in two different ways:
 
 Run a command in the container and then stop it: 
 
@@ -62,7 +62,7 @@ docker run -i -t ubuntu /bin/bash
 
 ## Process Management with systemd
 
-The third buiding block of CoreOS is **systemd** ([docs][systemd-docs]). Version {{ page.systemd-version }} is installed on each CoreOS machine. You should use systemd to manage the life cycle of your docker containers. The configuration format for systemd is straight forward. In the example below, the Ubuntu container is set up to print text after each reboot:
+The third buiding block of CoreOS is **systemd** ([docs][systemd-docs]) and it is installed on each CoreOS machine. You should use systemd to manage the life cycle of your docker containers. The configuration format for systemd is straight forward. In the example below, the Ubuntu container is set up to print text after each reboot:
 
 First, you will need to run all of this as `root` since you are modifying system state:
 
@@ -91,8 +91,8 @@ Then run `systemctl restart local-enable.service` to restart all services wanted
 journalctl -u hello.service -f
 ```
 
-#### Chaos Monkey
-During our alpha period, Chaos Monkey (i.e. random reboots) is built in and will give you plenty of opportunities to test out systemd. CoreOS machines will automatically reboot after an update is applied.
-
 #### More Detailed Information
 <a class="btn btn-default" href="http://www.freedesktop.org/wiki/Software/systemd/">Read systemd Website</a>
+
+#### Chaos Monkey
+During our alpha period, Chaos Monkey (i.e. random reboots) is built in and will give you plenty of opportunities to test out systemd. CoreOS machines will automatically reboot after an update is applied.
