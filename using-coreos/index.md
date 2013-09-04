@@ -8,17 +8,21 @@ systemd-version: 204
 
 # Using CoreOS
 
-If you haven't already got an instance of CoreOS up and running checkout the guides on running CoreOS on [Vagrant][vagrant-guide] or [Amazon EC2][ec2-guide]. With either of these guides you will have a machine up and running in a few minutes.
+If you don't have a CoreOS machine running, check out the guides on running CoreOS on [Vagrant][vagrant-guide], [Amazon EC2][ec2-guide], [QEMU/KVM][qemu-guide], [VMware][vmware-guide] and [OpenStack][openstack-guide]. With either of these guides you will have a machine up and running in a few minutes. 
 
-**NOTE**: the user for ssh is `core`. For example use `ssh core@an.ip.compute-1.amazonaws.com`
+CoreOS gives you three essential tools: service discovery, container management and process management. Let's try each of them out. 
 
-CoreOS gives you three essential tools: service discovery, container management and process management. Lets try each of them out.
+First, connect to a CoreOS machine via SSH as the user `core`. For example, on Amazon, use:
+
+```
+ssh core@an.ip.compute-1.amazonaws.com
+```
 
 ## Service Discovery with etcd
 
-The first building block of CoreOS is service discovery with **etcd** ([docs][etcd-docs]). Data stored in etcd is distributed across all of your machines running CoreOS. For example, each of your app servers can announce itself to your proxy, which would automatically know which machines should receive traffic. Building service discovery into your application allows you to add more machines and scale your services seamlessly.
+The first building block of CoreOS is service discovery with **etcd** ([docs][etcd-docs]). Data stored in etcd is distributed across all of your machines running CoreOS. For example, each of your app containers can announce itself to a proxy container, which would automatically know which machines should receive traffic. Building service discovery into your application allows you to add more machines and scale your services seamlessly.
 
-The API is easy to use. You can simply use curl to set and retrieve a key from etcd:
+The API is easy to use. From a CoreOS machine, you can simply use curl to set and retrieve a key from etcd:
 
 Set a key `message` with value `Hello world`:
 
@@ -34,7 +38,8 @@ curl -L http://127.0.0.1:4001/v1/keys/message
 
 If you followed a guide to set up more than one CoreOS machine, you can SSH into another machine and can retrieve this same value.
 
-etcd is persistent and replicated accross members in the cluster. It can also be used standalone as a way to share configuration between containers on a single host. Read more about the full API on [Github][etcd-docs].
+#### More Detailed Information
+<a class="btn btn-default" href="https://github.com/coreos/etcd">Read etcd API Docs</a>
 
 ## Container Management with docker
 
@@ -52,7 +57,8 @@ Open a bash prompt inside of the container:
 docker run -i -t ubuntu /bin/bash
 ```
 
-docker opens up a lot of possibilities for consistent application deploys. Read more about it at [docker.io][docker-docs].
+#### More Detailed Information
+<a class="btn btn-default" href="http://docs.docker.io/">Read docker Docs</a>
 
 ## Process Management with systemd
 
@@ -85,8 +91,8 @@ Then run `systemctl restart local-enable.service` to restart all services wanted
 journalctl -u hello.service -f
 ```
 
-systemd provides a solid init system and service manager. Read more about it at the [systemd homepage][systemd-docs].
-
 #### Chaos Monkey
+During our alpha period, Chaos Monkey (i.e. random reboots) is built in and will give you plenty of opportunities to test out systemd. CoreOS machines will automatically reboot after an update is applied.
 
-Built in Chaos Monkey (i.e. random reboots). During the alpha period, CoreOS will automatically reboot after an update is applied.
+#### More Detailed Information
+<a class="btn btn-default" href="http://www.freedesktop.org/wiki/Software/systemd/">Read systemd Website</a>
