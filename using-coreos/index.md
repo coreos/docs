@@ -8,49 +8,61 @@ systemd-version: 204
 
 # Using CoreOS
 
-If you haven't already got an instance of CoreOS up and running checkout the guides on running CoreOS on [Vagrant][vagrant-guide] or [Amazon EC2][ec2-guide]. With either of these guides you will have a machine up and running in a few minutes.
+If you don't have a CoreOS machine running, check out the guides on running CoreOS on [Vagrant][vagrant-guide], [Amazon EC2][ec2-guide], [QEMU/KVM][qemu-guide], [VMware][vmware-guide] and [OpenStack][openstack-guide]. With either of these guides you will have a machine up and running in a few minutes. 
 
-**NOTE**: the user for ssh is `core`. For example use `ssh core@an.ip.compute-1.amazonaws.com`
+CoreOS gives you three essential tools: service discovery, container management and process management. Let's try each of them out. 
 
-CoreOS gives you three essential tools: service discovery, container management and process management. Lets try each of them out.
+First, connect to a CoreOS machine via SSH as the user `core`. For example, on Amazon, use:
+
+```
+ssh core@an.ip.compute-1.amazonaws.com
+```
 
 ## Service Discovery with etcd
 
-etcd ([docs][etcd-docs]) can be used for service discovery between nodes. This will make it extremely easy to do things like have your proxy automatically discover which app servers to balance to. etcd's goal is to make it easy to build services where you add more machines and services automatically scale.
+The first building block of CoreOS is service discovery with **etcd** ([docs][etcd-docs]). Data stored in etcd is distributed across all of your machines running CoreOS. For example, each of your app containers can announce itself to a proxy container, which would automatically know which machines should receive traffic. Building service discovery into your application allows you to add more machines and scale your services seamlessly.
 
-The API is easy to use. You can simply use curl to set and retrieve a key from etcd:
+The API is easy to use. From a CoreOS machine, you can simply use curl to set and retrieve a key from etcd:
+
+Set a key `message` with value `Hello world`:
 
 ```
 curl -L http://127.0.0.1:4001/v1/keys/message -d value="Hello world"
+```
+
+Read the value of `message` back:
+
+```
 curl -L http://127.0.0.1:4001/v1/keys/message
 ```
 
-If you followed the [EC2 guide][ec2-guide] you can SSH into another machine in your cluster and can retrieve this same key:
+If you followed a guide to set up more than one CoreOS machine, you can SSH into another machine and can retrieve this same value.
 
-```
-curl -L http://127.0.0.1:4001/v1/keys/message
-```
-
-etcd is persistent and replicated accross members in the cluster. It can also be used standalone as a way to share configuration between containers on a single host. Read more about the full API on [Github][etcd-docs].
+#### More Detailed Information
+<a class="btn btn-default" href="https://github.com/coreos/etcd">Read etcd API Docs</a>
 
 ## Container Management with docker
 
-docker {{ page.docker-version }} ([docs][docker-docs]) for package management. Put all your apps into containers, and wire them together with etcd across hosts.
+The second building block, **docker** ([docs][docker-docs]), is where your applications and code run. It is installed on each CoreOS machine. You should make each of your services (web server, caching, database) into a container and connect them together by reading and writing to etcd. You can quickly try out a Ubuntu container in two different ways:
 
-You can quickly try out a Ubuntu container with these commands:
+Run a command in the container and then stop it: 
 
 ```
 docker run ubuntu /bin/echo hello world
+```
+
+Open a bash prompt inside of the container:
+
+```
 docker run -i -t ubuntu /bin/bash
 ```
 
-docker opens up a lot of possibilities for consistent application deploys. Read more about it at [docker.io][docker-docs].
+#### More Detailed Information
+<a class="btn btn-default" href="http://docs.docker.io/">Read docker Docs</a>
 
 ## Process Management with systemd
 
-systemd {{ page.systemd-version }} ([docs][systemd-docs]). We particularly think socket activation is useful for widely deployed services.
-
-The configuration file format for systemd is straight forward. Lets create a simple service to run out of our ubuntu container that will start on reboots.:
+The third buiding block of CoreOS is **systemd** ([docs][systemd-docs]) and it is installed on each CoreOS machine. You should use systemd to manage the life cycle of your docker containers. The configuration format for systemd is straight forward. In the example below, the Ubuntu container is set up to print text after each reboot:
 
 First, you will need to run all of this as `root` since you are modifying system state:
 
@@ -73,17 +85,14 @@ ExecStart=/usr/bin/docker run ubuntu /bin/sh -c "while true; do echo Hello World
 WantedBy=local.target
 ```
 
-Then run `systemctl restart local-enable.service`
-
-This will start your daemon and log to the systemd journal. You can
-watch all of the useful work it is doing by running:
+Then run `systemctl restart local-enable.service` to restart all services wanted by local.target. This will start your container and log to the systemd journal. You can read the log by running:
 
 ```
 journalctl -u hello.service -f
 ```
 
-systemd provides a solid init system and service manager. Read more about it at the [systemd homepage][systemd-docs].
+#### More Detailed Information
+<a class="btn btn-default" href="http://www.freedesktop.org/wiki/Software/systemd/">Read systemd Website</a>
 
 #### Chaos Monkey
-
-Built in Chaos Monkey (i.e. random reboots). During the alpha period, CoreOS will automatically reboot after an update is applied.
+During our alpha period, Chaos Monkey (i.e. random reboots) is built in and will give you plenty of opportunities to test out systemd. CoreOS machines will automatically reboot after an update is applied.
