@@ -1,9 +1,7 @@
 ---
 layout: docs
 slug: using-coreos
-title: Documentation
-docker-version: 0.5
-systemd-version: 204
+title: Documentation - Using CoreOS
 ---
 
 # Using CoreOS

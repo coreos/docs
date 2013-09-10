@@ -1,7 +1,7 @@
 ---
 layout: docs
 slug: vmware
-title: Documentation
+title: Documentation - VMware
 ---
 
 # Running CoreOS on VMware

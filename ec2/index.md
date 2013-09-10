@@ -1,9 +1,7 @@
 ---
 layout: docs
 slug: ec2
-title: Documentation
-docker-version: 0.5
-systemd-version: 204
+title: Documentation - Amazon EC2
 ---
 
 # Running CoreOS on EC2

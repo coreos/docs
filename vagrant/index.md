@@ -1,7 +1,7 @@
 ---
 layout: docs
 slug: vagrant
-title: Documentation
+title: Documentation - Vagrant
 ---
 
 # Running CoreOS on Vagrant

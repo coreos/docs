@@ -1,7 +1,7 @@
 ---
 layout: docs
 slug: sdk
-title: Documentation
+title: Documentation - SDK
 ---
 
 # CoreOS Developer SDK Guide

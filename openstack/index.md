@@ -1,7 +1,7 @@
 ---
 layout: docs
 slug: openstack
-title: Documentation
+title: Documentation - OpenStack
 ---
 
 # Running CoreOS on OpenStack

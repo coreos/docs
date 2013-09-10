@@ -1,7 +1,7 @@
 ---
 layout: docs
 slug: etcdctl
-title: Documentation
+title: Documentation - etcdctl
 forkurl: https://github.com/coreos/etcdctl/blob/master/README.md
 ---
 

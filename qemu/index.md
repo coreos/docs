@@ -1,7 +1,7 @@
 ---
 layout: docs
 slug: qemu
-title: Documentation
+title: Documentation - QEMU
 ---
 
 # Running CoreOS on QEMU
