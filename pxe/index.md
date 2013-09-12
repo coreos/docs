@@ -44,6 +44,10 @@ label coreos
   append initrd=coreos_production_pxe_image.cpio.gz root=squashfs: state=tmpfs: sshkey="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQC2PxAKTLdczK9+RNsGGPsz0eC2pBlydBEcrbI7LSfiN7Bo5hQQVjki+Xpnp8EEYKpzu6eakL8MJj3E28wT/vNklT1KyMZrXnVhtsmOtBKKG/++odpaavdW2/AU0l7RZiE= coreos pxe demo"
 ```
 
+**Other Arguments**
+
+- **console**: If you need a login prompt to show up on another tty besides the default append a list of console arguments e.g. `console=tty0 console=ttyS0`
+
 ### Download the files
 
 In the config above you can see that a Kernel image and a initramfs file is needed.
