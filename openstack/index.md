@@ -67,6 +67,7 @@ $ nova list
 Finally SSH into it, note that the user is `core`:
 
 ```
+$ chmod 400 core.pem
 $ ssh -i core.pem core@10.0.0.3
    ______                ____  _____
   / ____/___  ________  / __ \/ ___/
