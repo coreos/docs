@@ -2,19 +2,39 @@
 layout: docs
 slug: ec2
 title: Documentation - Amazon EC2
+cloud-formation-us-east-1: https://s3.amazonaws.com/coreos.com/dist/aws/coreos-alpha.template
+
 ---
 
 # Running CoreOS on EC2
 
 CoreOS is currently in heavy development and actively being tested. The following instructions will bring up multiple CoreOS instances all sharing configuration data using [etcd][etcd-docs]. All of these instructions assume `us-east-1` EC2 region.
 
-This will launch three t1.micro instances with `etcd` clustered sharing data between the hosts. To add more instances to the cluster, just launch more with the same `user-data`.
-
-**TL;DR:** launch three instances of [{{ site.ami-us-east-1 }}][ec2-us-east-1] in a security group that has open port 22, 4001, and 7001 and the same random token in the "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [docker][docker-docs] to play with.
+This will launch three t1.micro instances with `etcd` clustered sharing data between the hosts. To add more instances to the cluster, just launch more with the same `user-data`. This can either be done with a cloud formation template, or completely manually. Both sets of instructions are included below.
 
 You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
-## Creating the security group
+## Using Cloud Formation (easy way)
+
+Using Amazon Cloud Formation, you can automatically bring up the required security groups and instances in a cluster. All you need to do is click this button.
+
+[![yay][cloud-formation-launch-logo]][cloud-formation-us-east]
+
+A few notes
+
+  * If you run the template more than once, you will need to change the "Stack Name"
+  * You can find the direct [template file on s3]({{ page.cloud-formation-us-east-1 }})
+
+
+[cloud-formation-us-east]: https://console.aws.amazon.com/cloudformation/home?region=us-east-1#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ page.cloud-formation-us-east-1 }}
+[cloud-formation-launch-logo]: https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png "Launch now!"
+
+
+## Manual setup
+
+**TL;DR:** launch three instances of [{{ site.ami-us-east-1 }}][ec2-us-east-1] in a security group that has open port 22, 4001, and 7001 and the same random token in the "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [docker][docker-docs] to play with.
+
+### Creating the security group
 
 You need open port 7001 and 4001 between servers in the `etcd` cluster. Step by step instructions below.
 
@@ -42,7 +62,7 @@ First we need to create a security group to allow CoreOS instances to communicat
 
 [sg]: https://console.aws.amazon.com/ec2/home?region=us-east-1#s=SecurityGroups
 
-## Launching a test cluster
+### Launching a test cluster
 
 We will be launching three instances, with a shared token (via a gist url) in the User Data, and selecting our security group.
 
