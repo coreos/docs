@@ -46,13 +46,13 @@ The second building block, **docker** ([docs][docker-docs]), is where your appli
 Run a command in the container and then stop it: 
 
 ```
-docker run ubuntu /bin/echo hello world
+docker run busybox /bin/echo hello world
 ```
 
-Open a bash prompt inside of the container:
+Open a shell prompt inside of the container:
 
 ```
-docker run -i -t ubuntu /bin/bash
+docker run -i -t busybox /bin/sh
 ```
 
 #### More Detailed Information
@@ -77,7 +77,7 @@ After=docker.service
 
 [Service]
 Restart=always
-ExecStart=/usr/bin/docker run ubuntu /bin/sh -c "while true; do echo Hello World; sleep 1; done"
+ExecStart=/usr/bin/docker run busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"
 
 [Install]
 WantedBy=local.target
