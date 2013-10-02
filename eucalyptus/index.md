@@ -6,13 +6,13 @@ title: Documentation - Eucalyptus
 
 # Running CoreOS on Eucalyptus 3.4
 
-CoreOS is currently in heavy development and actively being tested.  These
-instructions will walk you through downloading CoreOS, bundling the image, and running an instance from it.
+CoreOS is currently in heavy development and actively being tested.
+These instructions will walk you through downloading CoreOS, bundling the image, and running an instance from it.
 
 ## Import the Image
 
-These steps will download the CoreOS image, uncompress it, convert it from qcow->raw, and then import it
-into Eucalyptus. In order to convert the image you will need to install ```qemu-img``` with your favorite package manager.
+These steps will download the CoreOS image, uncompress it, convert it from qcow->raw, and then import it into Eucalyptus.
+In order to convert the image you will need to install ```qemu-img``` with your favorite package manager.
 
 ```
 $ wget -q http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_openstack_image.img.bz2
@@ -22,24 +22,6 @@ $ euca-bundle-image -i coreos_production_openstack_image.raw -r x86_64 -d /var/t
 00% |====================================================================================================|   5.33 GB  59.60 MB/s Time: 0:01:35
 Wrote manifest bundle/coreos_production_openstack_image.raw.manifest.xml
 $ euca-upload-bundle -m /var/tmp/coreos_production_openstack_image.raw.manifest.xml -b coreos-production
-coreos_production_openstack_image.raw.part.0  ( 1/18) 100% |==============================================|  10.00 MB   5.81 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.part.1  ( 2/18) 100% |==============================================|  10.00 MB   7.53 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.part.2  ( 3/18) 100% |==============================================|  10.00 MB   7.15 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.part.3  ( 4/18) 100% |==============================================|  10.00 MB   4.72 MB/s Time: 0:00:02
-coreos_production_openstack_image.raw.part.4  ( 5/18) 100% |==============================================|  10.00 MB   6.75 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.part.5  ( 6/18) 100% |==============================================|  10.00 MB   7.61 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.part.6  ( 7/18) 100% |==============================================|  10.00 MB   7.74 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.part.7  ( 8/18) 100% |==============================================|  10.00 MB   7.08 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.part.8  ( 9/18) 100% |==============================================|  10.00 MB   6.92 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.part.9  (10/18) 100% |==============================================|  10.00 MB   7.12 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.part.10 (11/18) 100% |==============================================|  10.00 MB   7.22 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.part.11 (12/18) 100% |==============================================|  10.00 MB   6.61 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.part.12 (13/18) 100% |==============================================|  10.00 MB   6.37 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.part.13 (14/18) 100% |==============================================|  10.00 MB   6.62 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.part.14 (15/18) 100% |==============================================|  10.00 MB   6.38 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.part.15 (16/18) 100% |==============================================|  10.00 MB   6.25 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.part.16 (17/18) 100% |==============================================|  10.00 MB   7.17 MB/s Time: 0:00:01
-coreos_production_openstack_image.raw.manifest.xml 100% |=================================================|   6.06 kB   4.86 kB/s Time: 0:00:01
 Uploaded coreos-production/coreos_production_openstack_image.raw.manifest.xml
 $ euca-register coreos-production/coreos_production_openstack_image.raw.manifest.xml --virtualization-type hvm --name "CoreOS-Production"
 emi-E4A33D45
