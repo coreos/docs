@@ -2,13 +2,9 @@
 layout: docs
 slug: guides/docker
 title: Documentation - docker
-forkurl: 
 ---
 
-# docker
-
-
-## Overview
+# Getting Started with docker
 
 docker is an open-source project that makes creating and managing Linux containers (LXC) really easy. Containers are like extremely lightweight VMs – they allow code to run in isolation from other containers but safely share the machine’s resources, all without the overhead of a hypervisor.
 
@@ -118,6 +114,6 @@ docker run -d -p 08:80 registry.domain.com:5000/apache /usr/sbin/apache2 -D
 ```
 
 #### More Information
-<a class="btn btn-default" href="http://coreos.com/using-coreos/etcd">etcd Overview</a>
-<a class="btn btn-default" href="https://github.com/coreos/etcd">Full etcd API Docs</a>
-<a class="btn btn-default" href="https://github.com/coreos/etcd#libraries-and-tools">Projects using etcd</a>
+<a class="btn btn-default" href="using-coreos/docker">docker Overview</a>
+<a class="btn btn-default" href="http://www.docker.io/">Docker Website</a>
+<a class="btn btn-default" href="http://www.docker.io/gettingstarted/">docker's Getting Started Guide</a>

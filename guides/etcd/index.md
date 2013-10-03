@@ -2,19 +2,15 @@
 layout: docs
 slug: guides/etcd
 title: Documentation - etcd
-forkurl: https://github.com/coreos/etcd/blob/master/README.md
 ---
 
-# etcd
-
-
-## Overview
+# Getting Started with etcd
 
 etcd is an open-source distributed key value store that provides shared configuration and service discovery for CoreOS clusters. etcd runs on each machine in a cluster and gracefully handles master election during network partitions and the loss of the current master.
 
 Application containers running on your cluster can read and write data into etcd. Common examples are storing database connection details, cache settings, feature flags, and more. This guide will walk you through a basic example of reading and writing to etcd then proceed to other features like TTLs, directories and watching a prefix. This guide is way more fun when you've got at least one CoreOS machine up and running &mdash; try it on [Amazon EC2](docs/ec2/) or locally with [Vagrant](docs/vagrant).
 
-See the [README](https://github.com/coreos/etcd#etcd) on Github for a complete guide to etcd.
+<a class="btn btn-default" href="https://github.com/coreos/etcd#etcd">Complete etcd API Docs</a>
 
 ## Reading and Writing to etcd
 
@@ -105,6 +101,6 @@ If you request a key that has already expired, you will be returned a 100:
 ```
 
 #### More Information
-<a class="btn btn-default" href="http://coreos.com/using-coreos/etcd">etcd Overview</a>
+<a class="btn btn-default" href="/using-coreos/etcd">etcd Overview</a>
 <a class="btn btn-default" href="https://github.com/coreos/etcd">Full etcd API Docs</a>
 <a class="btn btn-default" href="https://github.com/coreos/etcd#libraries-and-tools">Projects using etcd</a>

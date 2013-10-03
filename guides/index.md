@@ -2,7 +2,7 @@
 layout: docs
 slug: guides
 title: Documentation - Using CoreOS
-alias: [/using-coreos/index.html]
+#redirect handled in alias_generator.rb
 ---
 
 # Using CoreOS
