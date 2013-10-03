@@ -1,7 +1,8 @@
 ---
 layout: docs
-slug: using-coreos
+slug: guides
 title: Documentation - Using CoreOS
+alias: [/using-coreos/index.html]
 ---
 
 # Using CoreOS

@@ -1,6 +1,6 @@
 ---
 layout: docs
-slug: etcd
+slug: guides/etcd
 title: Documentation - etcd
 forkurl: https://github.com/coreos/etcd/blob/master/README.md
 ---
@@ -40,7 +40,7 @@ curl -L http://127.0.0.1:4001/v1/keys/message -x DELETE
 
 ## Reading and Writing from Inside a Container
 
-To read and write to etcd from *within a container* you must use the docker0 interface which you can find in `ifconfig`. It's normally `172.17.42.1` and using it is as easy as replacing `127.0.0.1`.
+To read and write to etcd from *within a container* you must use the `docker0` interface which you can find in `ifconfig`. It's normally `172.17.42.1` and using it is as easy as replacing `127.0.0.1`.
 
 ## Proxy Example
 
