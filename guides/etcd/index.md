@@ -19,7 +19,7 @@ The API is easy to use. From a CoreOS machine, you can simply use curl to set an
 Set a key `message` with value `Hello world`:
 
 ```
-curl -L http://127.0.0.1:4001/v1/keys/message -d value="Hello world"
+curl -L http://127.0.0.1:4001/v1/keys/message -d value="Hello"
 ```
 
 Read the value of `message` back:
@@ -31,7 +31,7 @@ curl -L http://127.0.0.1:4001/v1/keys/message
 If you followed a guide to set up more than one CoreOS machine, you can SSH into another machine and can retrieve this same value. To delete the key run:
 
 ```
-curl -L http://127.0.0.1:4001/v1/keys/message -x DELETE
+curl -L http://127.0.0.1:4001/v1/keys/message -X DELETE
 ```
 
 ## Reading and Writing from Inside a Container
@@ -74,10 +74,17 @@ In the first window, you should get the notification that the key has changed. I
 
 ## Test and Set
 
-etcd can be used as centralized coordination service and provides `TestAndSet` funcationality as the building block of such a service. You must provide the `prevValue` along with your new value. If the previous value matches the current value the operation will succeed.
+etcd can be used as centralized coordination service and provides `TestAndSet` funcationality as the building block of such a service. Let's recreate our `message` key and then try to modify it:
 
 ```
-curl -L http://127.0.0.1:4001/v1/keys/message -d prevValue=Hello world -d value=Hello space
+curl -L http://127.0.0.1:4001/v1/keys/message -d value="Hello world"
+```
+
+You must provide the `prevValue` along with your new value. If the previous value matches the current value the operation will succeed.
+
+
+```
+curl -L http://127.0.0.1:4001/v1/keys/message -d prevValue=Hello -d value=Hi
 ```
 
 ## TTL
