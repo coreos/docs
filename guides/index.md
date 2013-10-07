@@ -1,7 +1,8 @@
 ---
 layout: docs
-slug: using-coreos
+slug: guides
 title: Documentation - Using CoreOS
+#redirect handled in alias_generator.rb
 ---
 
 # Using CoreOS
