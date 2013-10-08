@@ -31,7 +31,7 @@ curl -L http://127.0.0.1:4001/v1/keys/message
 If you followed a guide to set up more than one CoreOS machine, you can SSH into another machine and can retrieve this same value. To delete the key run:
 
 ```
-curl -L http://127.0.0.1:4001/v1/keys/message -x DELETE
+curl -L http://127.0.0.1:4001/v1/keys/message -X DELETE
 ```
 
 ## Reading and Writing from Inside a Container
