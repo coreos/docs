@@ -68,13 +68,13 @@ docker run -d coreos/apache [process]
 We need to run the apache process in the foreground, since our container will stop when the process specified in the `docker run` command stops. We can do this with a flag `-D` when starting the apache2 process:
 
 ```
-/usr/sbin/apache2 -D
+/usr/sbin/apache2ctl -D FOREGROUND
 ```
 
 Let's add that to our command:
 
 ```
-docker run -d coreos/apache /usr/sbin/apache2 -D
+docker run -d coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
 ```
 
 ### Network Access to 80
@@ -82,7 +82,7 @@ docker run -d coreos/apache /usr/sbin/apache2 -D
 The default apache install will be running on port 80. To give our container access to traffic over port 80, we use the `-p` flag and specify the port on the host that maps to the port inside the container. In our case we want 80 for each, so we include `-p 80:80` in our command:
 
 ```
-docker run -d -p 80:80 coreos/apache /usr/sbin/apache2 -D 
+docker run -d -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
 ```
 
 You can now run this command on your CoreOS host to create the container. You should see the default apache webpage when you load either `localhost:80` or the IP of your remote server. Be sure that any firewall or EC2 Security Group allows traffic to port 80.
@@ -110,7 +110,7 @@ docker push registry.domain.com:5000/apache
 Once the image is done uploading, you should be able to start the exact same container on a different CoreOS host by running:
 
 ```
-docker run -d -p 08:80 registry.domain.com:5000/apache /usr/sbin/apache2 -D
+docker run -d -p 80:80 registry.domain.com:5000/apache /usr/sbin/apache2ctl -D FOREGROUND
 ```
 
 #### More Information
