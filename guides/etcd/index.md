@@ -16,10 +16,10 @@ Application containers running on your cluster can read and write data into etcd
 
 The API is easy to use. From a CoreOS machine, you can simply use curl to set and retrieve a key from etcd. It's important to note the `-L` flag is required. etcd transparently redirects writes to the master and this flag allows curl to follow the location headers from etcd.
 
-Set a key `message` with value `Hello world`:
+Set a key `message` with value `Hello`:
 
 ```
-curl -L http://127.0.0.1:4001/v1/keys/message -d value="Hello world"
+curl -L http://127.0.0.1:4001/v1/keys/message -d value="Hello"
 ```
 
 Read the value of `message` back:
@@ -77,7 +77,7 @@ In the first window, you should get the notification that the key has changed. I
 etcd can be used as centralized coordination service and provides `TestAndSet` funcationality as the building block of such a service. You must provide the `prevValue` along with your new value. If the previous value matches the current value the operation will succeed.
 
 ```
-curl -L http://127.0.0.1:4001/v1/keys/message -d prevValue=Hello world -d value=Hello space
+curl -L http://127.0.0.1:4001/v1/keys/message -d prevValue=Hello -d value=Hi
 ```
 
 ## TTL
