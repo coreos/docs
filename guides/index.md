@@ -63,7 +63,7 @@ docker run -i -t busybox /bin/sh
 
 ## Process Management with systemd
 
-The third buiding block of CoreOS is **systemd** ([docs][systemd-docs]) and it is installed on each CoreOS machine. You should use systemd to manage the life cycle of your docker containers. The configuration format for systemd is straight forward. In the example below, the Ubuntu container is set up to print text after each reboot:
+The third buiding block of CoreOS is **systemd** ([docs][systemd-docs]) and it is installed on each CoreOS machine. You should use systemd to manage the life cycle of your docker containers. The configuration format for systemd is straightforward. In the example below, the Ubuntu container is set up to print text after each reboot:
 
 First, you will need to run all of this as `root` since you are modifying system state:
 
