@@ -1,11 +1,11 @@
 ---
 layout: docs
 slug: guides
-title: Documentation - Using CoreOS
+title: Documentation - Quick Start
 #redirect handled in alias_generator.rb
 ---
 
-# Using CoreOS
+# Quick Start
 
 If you don't have a CoreOS machine running, check out the guides on running CoreOS on [Vagrant][vagrant-guide], [Amazon EC2][ec2-guide], [QEMU/KVM][qemu-guide], [VMware][vmware-guide] and [OpenStack][openstack-guide]. With either of these guides you will have a machine up and running in a few minutes. 
 
@@ -38,6 +38,7 @@ curl -L http://127.0.0.1:4001/v1/keys/message
 If you followed a guide to set up more than one CoreOS machine, you can SSH into another machine and can retrieve this same value.
 
 #### More Detailed Information
+<a class="btn btn-primary" href="{{ site.url }}/docs/guides/etcd/" data-category="More Information" data-event="Docs: Getting Started etcd">View Complete Guide</a>
 <a class="btn btn-default" href="https://github.com/coreos/etcd">Read etcd API Docs</a>
 
 ## Container Management with docker
@@ -57,6 +58,7 @@ docker run -i -t busybox /bin/sh
 ```
 
 #### More Detailed Information
+<a class="btn btn-primary" href="{{ site.url }}/docs/guides/docker/" data-category="More Information" data-event="Docs: Getting Started docker">View Complete Guide</a>
 <a class="btn btn-default" href="http://docs.docker.io/">Read docker Docs</a>
 
 ## Process Management with systemd
