@@ -81,7 +81,7 @@ localhost login:
 ## Logging in
 
 The IP address for the machine should be printed out to the terminal for convienence.
-If it doesn't show up immediatly press enter a few times and it should show up.
+If it doesn't show up immediately press enter a few times and it should show up.
 Now you can simply ssh in using public key authentication
 
 ```
