@@ -55,8 +55,8 @@ Download these two files into your tftp root:
 
 ```
 cd /var/lib/tftpboot
-wget http://storage.core-os.net/coreos/amd64-generic/72.0.0/coreos_production_pxe.vmlinuz
-wget http://storage.core-os.net/coreos/amd64-generic/72.0.0/coreos_production_pxe_image.cpio.gz
+wget http://storage.core-os.net/coreos/amd64-generic/94.0.0/coreos_production_pxe.vmlinuz
+wget http://storage.core-os.net/coreos/amd64-generic/94.0.0/coreos_production_pxe_image.cpio.gz
 ```
 
 PXE booted machines cannot currently update themselves.
