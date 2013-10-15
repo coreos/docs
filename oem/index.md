@@ -8,8 +8,8 @@ title: Documentation - OEM
 
 This page outlines details required for implementing a CoreOS "OEM". OEMs are runtime specific changes that are required to do things like bring up networking, set nameservers, and set credentials. For example, the [vagrant oem][oem-vagrant] sets up authorized_keys file for the vagrant user, and copies it into place. An Amazon [EC2 AMI oem][oem-ami] pings the instance-data on the host to find the key and place it accordingly (network is configured by DHCP). 
 
-[oem-vagrant]: https://github.com/coreos/coreos-overlay/blob/master/coreos-base/oem-vagrant/files/run.sh
-[oem-ami]: https://github.com/coreos/coreos-overlay/tree/master/coreos-base/oem-ami/files/run.sh
+[oem-vagrant]: https://github.com/coreos/coreos-overlay/blob/master/coreos-base/oem-vagrant/files/
+[oem-ami]: https://github.com/coreos/coreos-overlay/tree/master/coreos-base/oem-ami/files/run
 
 ## Basics 
 
