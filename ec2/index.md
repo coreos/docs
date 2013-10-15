@@ -2,37 +2,60 @@
 layout: docs
 slug: ec2
 title: Documentation - Amazon EC2
-cloud-formation-us-east-1: https://s3.amazonaws.com/coreos.com/dist/aws/coreos-alpha.template
-
+cloud-formation-launch-logo: https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png
 ---
+{% capture cf_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha.template{% endcapture %}
 
-# Running CoreOS on EC2
+# Running CoreOS {{ site.ami-version }} on EC2
 
-CoreOS is currently in heavy development and actively being tested. The following instructions will bring up multiple CoreOS instances all sharing configuration data using [etcd][etcd-docs]. All of these instructions assume `us-east-1` EC2 region.
+CoreOS is currently in heavy development and actively being tested. The current AMIs for all EC2 regions are listed below and updated frequently. Each time a new update is released, your machines will [automatically upgrade themselves]({{ site.url }}/using-coreos/updates). Using CloudFormation is the easiest way to launch a cluster, but you can also follow the manual steps at the end of the article.
 
-This will launch three t1.micro instances with `etcd` clustered sharing data between the hosts. To add more instances to the cluster, just launch more with the same `user-data`. This can either be done with a cloud formation template, or completely manually. Both sets of instructions are included below.
+<table>
+  <thead>
+    <tr>
+      <th>EC2 Region</th>
+      <th>AMI ID</th>
+      <th>CloudFormation</th>
+    </tr>
+  </thead>
+  <tbody>
+{% assign pairs = site.amis-all | split: "|" %}
+{% for item in pairs %} 
 
-You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
+  {% assign amis = item | split: "=" %}
+  {% for item in amis limit:1 offset:0 %}
+     {% assign region = item %}
+  {% endfor %}
+  {% for item in amis limit:1 offset:1 %}
+     {% assign ami-id = item %}
+  {% endfor %}
+  {% if region == "us-east-1" %}
+    {% assign ami-us-east-1 = ami-id %}
+  {% endif %}
 
-## Using Cloud Formation (easy way)
+  <tr>
+    <td>{{ region }}</td>
+    <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region }}#launchAmi={{ ami-id }}">{{ ami-id }}</a></td>
+    <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+  </tr>
 
-Using Amazon Cloud Formation, you can automatically bring up the required security groups and instances in a cluster. All you need to do is click this button.
+{% endfor %}
+  </tbody>
+</table><br/>
 
-[![yay][cloud-formation-launch-logo]][cloud-formation-us-east]
+CloudFormation will launch at least three instances with the appropriate security group to enable [etcd]({{ site.url }}/using-coreos/etcd) clustered sharing data between the hosts. You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
-A few notes
+### Adding More Machines
+To add more instances to the cluster, just launch more with the same user-data, the appropriate security group and the AMI for that region. New instances will join the cluster regardless of region if the security groups are configured correctly.
 
-  * If you run the template more than once, you will need to change the "Stack Name"
-  * You can find the direct [template file on s3]({{ page.cloud-formation-us-east-1 }})
-
-
-[cloud-formation-us-east]: https://console.aws.amazon.com/cloudformation/home?region=us-east-1#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ page.cloud-formation-us-east-1 }}
-[cloud-formation-launch-logo]: https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png "Launch now!"
-
+### Multiple Clusters
+If you would like to create multiple clusters you will need to change the "Stack Name". You can find the direct [template file on S3]({{ cf_template }}).
 
 ## Manual setup
 
-**TL;DR:** launch three instances of [{{ site.ami-us-east-1 }}][ec2-us-east-1] in a security group that has open port 22, 4001, and 7001 and the same random token in the "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [docker][docker-docs] to play with.
+[us-east-latest-quicklaunch]: https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi={{ami-us-east-1}} "{{ami-us-east-1}}"
+
+**TL;DR:** launch three instances of [{{ami-us-east-1}}][us-east-latest-quicklaunch] in **us-east-1** with a security group that has open port 22, 4001, and 7001 and the same random token in the "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [docker][docker-docs] to play with.
 
 ### Creating the security group
 
@@ -66,7 +89,7 @@ First we need to create a security group to allow CoreOS instances to communicat
 
 We will be launching three instances, with a shared token (via a gist url) in the User Data, and selecting our security group.
 
-1. Open the quick launch by clicking [here][ec2-us-east-1] (shift+click for new tab)
+1. Open the quick launch by clicking [here][us-east-latest-quicklaunch] (shift+click for new tab)
     * For reference, the current us-east-1 is: [{{ site.ami-us-east-1 }}][ec2-us-east-1]
 2. On the second page of the wizard, launch 3 servers to test our clustering
     * Number of instances: 3 
@@ -93,5 +116,3 @@ We will be launching three instances, with a shared token (via a gist url) in th
 ## Using CoreOS
 
 Now that you have a few machines booted it is time to play around. Check out the [Using CoreOS][using-coreos] guide.
-
-[ec2-us-east-1]: https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi={{ site.ami-us-east-1 }}
