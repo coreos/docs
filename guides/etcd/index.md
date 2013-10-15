@@ -74,7 +74,7 @@ In the first window, you should get the notification that the key has changed. I
 
 ## Test and Set
 
-etcd can be used as centralized coordination service and provides `TestAndSet` funcationality as the building block of such a service. You must provide the `prevValue` along with your new value. If the previous value matches the current value the operation will succeed.
+etcd can be used as centralized coordination service and provides `TestAndSet` functionality as the building block of such a service. You must provide the `prevValue` along with your new value. If the previous value matches the current value the operation will succeed.
 
 ```
 curl -L http://127.0.0.1:4001/v1/keys/message -d prevValue=Hello -d value=Hi
