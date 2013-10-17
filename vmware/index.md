@@ -13,7 +13,7 @@ If you are familiar with another VMware product you can use these instructions a
 ## Running the VM
 
 These steps will download the VMware image and extract the zip file. After that
-you will need to launch the `coreos_developer_vmware_insecure.vmx` file.
+you will need to launch the `coreos_developer_vmware_insecure.vmx` file to create a VM.
 
 This is a rough sketch that should work on OSX and Linux:
 
@@ -23,6 +23,8 @@ unzip coreos_developer_vmware_insecure.zip
 cd coreos_developer_vmware_insecure
 open coreos_developer_vmware_insecure.vmx
 ```
+
+Note: If you want to deploy CoreOS on an ESXi host you will need to use vCenter Converter on the .vmx file to make an ESXi-compatible VM. 
 
 ## Logging in
 
