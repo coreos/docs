@@ -19,9 +19,9 @@ This is a rough sketch that should work on OSX and Linux:
 
 ```
 wget http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_vmware_insecure.zip
-unzip coreos_developer_vmware_insecure.zip
-cd coreos_developer_vmware_insecure
-open coreos_developer_vmware_insecure.vmx
+unzip coreos_production_vmware_insecure.zip
+cd coreos_production_vmware_insecure
+open coreos_production_vmware_insecure.vmx
 ```
 
 Note: If you want to deploy CoreOS on an ESXi host you will need to use vCenter Converter on the .vmx file to make an ESXi-compatible VM. 
