@@ -18,7 +18,7 @@ The OEM is only responsible for:
 * Set up networking, if dhcp is not available
 * Place initial credentials (via SSH keys)
 
-Upon every boot, CoreOS will look for `/usr/share/oem/run.sh`, and if it exists, execute it. The directory `/usr/share/oem/` should be where all files related to the particular implementation. This includes scripts, agents, or anything else required to bring the host up.  
+Upon every boot, CoreOS will look for `/usr/share/oem/run.sh`, and if it exists, execute it. The directory `/usr/share/oem/` should be where all files related to the particular implementation reside. This includes scripts, agents, or anything else required to bring the host up.  
 
 If dhcp is in place, networking and nameservers will be automatically configured. However, no credentials will be on the host, so that will still need to be configured via an OEM. 
 
@@ -87,7 +87,7 @@ systemctl enable --runtime /usr/share/oem/system/*
 systemctl start oem.target
 ```
 
-In this case, systemd [service][service-docs] files are placed in `/usr/share/oem/system/`. Using full services files allows you to run your own agents that are fully intregrated with CoreOS. 
+In this case, systemd [service][service-docs] files are placed in `/usr/share/oem/system/`. Using full services files allows you to run your own agents that are fully integrated with CoreOS. 
 
 All units will have to have the following section in their `.service` file, for the oem.target to work:
 
