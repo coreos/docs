@@ -12,7 +12,7 @@ docker containers can boot extremely fast (in milliseconds!) which gives you unp
 
 ## Docker CLI Basics
 
-docker has a [straightforward CLI](http://docs.docker.io/en/latest/commandline/cli/) that allows you to do almost everything you could want to a container. All of these commands use the image id (ex. be29975e0098), the image name (ex. myusername/webapp) and the container id (ex. 72d468f455ea) interchangable depending on the operation you are trying to do. This is confusing at first, so pay special attention to what you're using.
+docker has a [straightforward CLI](http://docs.docker.io/en/latest/commandline/cli/) that allows you to do almost everything you could want to a container. All of these commands use the image id (ex. be29975e0098), the image name (ex. myusername/webapp) and the container id (ex. 72d468f455ea) interchangably depending on the operation you are trying to do. This is confusing at first, so pay special attention to what you're using.
 
 ## Launching a Container
 
@@ -97,19 +97,19 @@ docker push coreos/apache
 To push to a private repository the syntax is very similar. First, we must prefix our image with the host running our private registry instead of our username. List images by running `docker images` and insert the correct ID into the `tag` command:
 
 ```
-docker tag f455ea72d468 registry.domain.com:5000/apache
+docker tag f455ea72d468 registry.example.com:5000/apache
 ```
 
 After tagging, the image needs to be pushed to the registry:
 
 ```
-docker push registry.domain.com:5000/apache
+docker push registry.example.com:5000/apache
 ```
 
 Once the image is done uploading, you should be able to start the exact same container on a different CoreOS host by running:
 
 ```
-docker run -d -p 80:80 registry.domain.com:5000/apache /usr/sbin/apache2ctl -D FOREGROUND
+docker run -d -p 80:80 registry.example.com:5000/apache /usr/sbin/apache2ctl -D FOREGROUND
 ```
 
 #### More Information

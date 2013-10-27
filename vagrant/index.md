@@ -12,7 +12,7 @@ You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev]
 
 ## Download and Install Vagrant
 
-Vagrant is simple to use command line virtual machine manager. There are
+Vagrant is a simple to use command line virtual machine manager. There are
 install packages available for Windows, Linux and OSX. Find the latest
 installer on the [Vagrant downloads page][vagrant]. Be sure to get
 version 1.2.3 or greater.

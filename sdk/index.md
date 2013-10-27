@@ -179,7 +179,7 @@ mind when making changes, the origin git repository should not have a
 
 ### Updating Packages on an Image
 
-Building a new VM image is time consuming process. On development images you
+Building a new VM image is a time consuming process. On development images you
 can use `gmerge` to build packages on your workstation and ship them to your
 target VM.
 

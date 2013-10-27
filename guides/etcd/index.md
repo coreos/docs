@@ -40,7 +40,7 @@ To read and write to etcd from *within a container* you must use the `docker0` i
 
 ## Proxy Example
 
-Let's pretend we're setting up a service that consists a few containers that are behind a proxy container. We can use etcd to announce these containers when they start by creating a directory, having each container write a key with in that directory and have the proxy watch the entire directory. We're going to skip creating the containers here but the [docker guide](docs/docker) is a good place to start for that.
+Let's pretend we're setting up a service that consists of a few containers that are behind a proxy container. We can use etcd to announce these containers when they start by creating a directory, having each container write a key within that directory and have the proxy watch the entire directory. We're going to skip creating the containers here but the [docker guide](docs/docker) is a good place to start for that.
 
 ### Create the directory
 
@@ -74,7 +74,7 @@ In the first window, you should get the notification that the key has changed. I
 
 ## Test and Set
 
-etcd can be used as centralized coordination service and provides `TestAndSet` functionality as the building block of such a service. You must provide the `prevValue` along with your new value. If the previous value matches the current value the operation will succeed.
+etcd can be used as a centralized coordination service and provides `TestAndSet` functionality as the building block of such a service. You must provide the `prevValue` along with your new value. If the previous value matches the current value the operation will succeed.
 
 ```
 curl -L http://127.0.0.1:4001/v1/keys/message -d prevValue=Hello -d value=Hi

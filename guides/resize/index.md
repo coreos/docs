@@ -8,7 +8,7 @@ title: Adding Disk Space
 
 Most writable paths such as `/home`, `/var`, and `/usr/local` are stored
 in a special STATE partition mounted at `/media/state`. The default size
-of this partition depends on the platform a new CoreOS but it is usually
+of this partition depends on the platform but it is usually
 between 3GB and 16GB. If more space is required simply extend the
 virtual machine's disk image and CoreOS will fix the partition table and
 resize the STATE partition to fill the disk on the next boot.
