@@ -40,7 +40,7 @@ We're ready to create a keypair then boot a server with it.
 
 ## Create Keypair
 
-For this guide, I'm assuming you already have a public key you use for your CoreOS servers. Load the public key to Rackspace:
+For this guide, I'm assuming you already have a public key you use for your CoreOS servers. Note that only RSA keypairs are supported. Load the public key to Rackspace:
 
 ```
 nova keypair-add --pub-key ~/.ssh/coreos.pub coreos-key
