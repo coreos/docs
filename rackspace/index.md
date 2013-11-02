@@ -1,6 +1,6 @@
 ---
 layout: docs
-slug: openstack
+slug: rackspace
 title: Documentation - Rackspace
 ---
 
