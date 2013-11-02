@@ -7,7 +7,7 @@ title: Documentation - Rackspace
 # Running CoreOS on Rackspace
 
 CoreOS is currently in heavy development and actively being tested.  These
-instructions will walk you through downloading CoreOS for Rackspace, which differs slightly from the generic Openstack instructions. We're going to install `rackspace-novaclient`, upload a keypair and boot the image id `430d35e0-1468-4007-b063-52ee1921b356`.
+instructions will walk you through running CoreOS on the Rackspace Openstack cloud, which differs slightly from the generic Openstack instructions. We're going to install `rackspace-novaclient`, upload a keypair and boot the image id `430d35e0-1468-4007-b063-52ee1921b356`.
 
 ## Install Rackspace CLI
 
