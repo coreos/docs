@@ -9,31 +9,32 @@ title: Documentation - Rackspace
 CoreOS is currently in heavy development and actively being tested.  These
 instructions will walk you through running CoreOS on the Rackspace Openstack cloud, which differs slightly from the generic Openstack instructions. We're going to install `rackspace-novaclient`, upload a keypair and boot the image id `430d35e0-1468-4007-b063-52ee1921b356`.
 
-## Install Rackspace CLI
+## Install Supernova Tool
 
-If you don't have `pip` installed, install it by running `sudo easy_install pip`. Now let's use `pip` to install the Rackspace fork of the Nova CLI. This fork supports Rackspace's custom authentication method.
-
-`pip install rackspace-novaclient`
-
-## Edit Bash Profile
-
-Edit your bash profile (`~/.bash_profile`) to store your username, API key and some other settings:
+If you don't have `pip` installed, install it by running `sudo easy_install pip`. Now let's use `pip` to install Supernova, a tool that lets you easily switch Rackspace regions. Be sure to install these in the order listed:
 
 ```
-OS_USERNAME=username
-OS_TENANT_NAME=username
-OS_AUTH_SYSTEM=rackspace
-OS_PASSWORD=api_token
-OS_AUTH_URL=https://identity.api.rackspacecloud.com/v2.0/
-OS_REGION_NAME=IAD
-OS_NO_CACHE=1
-export OS_USERNAME OS_TENANT_NAME OS_AUTH_SYSTEM OS_PASSWORD OS_AUTH_URL OS_REGION_NAME OS_NO_CACHE
+sudo pip install keyring
+sudo pip install rackspace-novaclient
+sudo pip install supernova
 ```
 
-After saving your profile, load the settings so `rackspace-novaclient` can read them:
+## Store Account Information 
+
+Edit your config file (`~/.supernova`) to store your username, API key and some other settings:
 
 ```
-source .bash_profile
+[production]
+OS_AUTH_URL = https://identity.api.rackspacecloud.com/v2.0/
+OS_USERNAME = username
+OS_PASSWORD = fd62afe2-4686-469f-9849-ceaa792c55a6
+OS_TENANT_NAME = nova-production
+
+[development]
+OS_AUTH_URL = http://dev.nova.example.com:8774/v1.1/
+OS_USERNAME = jsmith
+OS_PASSWORD = 40318069-6069-4d9f-836d-a46df17fc8d1
+OS_TENANT_NAME = nova-development
 ```
 
 We're ready to create a keypair then boot a server with it.
@@ -43,10 +44,10 @@ We're ready to create a keypair then boot a server with it.
 For this guide, I'm assuming you already have a public key you use for your CoreOS servers. Note that only RSA keypairs are supported. Load the public key to Rackspace:
 
 ```
-nova keypair-add --pub-key ~/.ssh/coreos.pub coreos-key
+supernova production keypair-add --pub-key ~/.ssh/coreos.pub coreos-key
 ```
 
-Check you make sure the key is in your list by running `nova keypair-list`
+Check you make sure the key is in your list by running `supernova production keypair-list`
 
 ```
 +------------+-------------------------------------------------+
@@ -61,7 +62,7 @@ Check you make sure the key is in your list by running `nova keypair-list`
 Boot a new server with our new keypair:
 
 ```
-nova boot --image 430d35e0-1468-4007-b063-52ee1921b356 --flavor 2 My_CoreOS_Server --key-name coreos-key
+supernova production boot --image 430d35e0-1468-4007-b063-52ee1921b356 --flavor 2 My_CoreOS_Server --key-name coreos-key
 ```
 
 You should now see the details of your new server in your terminal and it should also show up in the control panel:
