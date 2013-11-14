@@ -44,7 +44,8 @@ $ glance image-create --name CoreOS --container-format ovf --disk-format qcow2 -
 ## Boot it up
 
 Now generate the ssh key that will be injected into the image for the `core`
-user and boot it up!
+user and boot it up! In order for SSH key injection to work, your OpenStack
+cloud provider must be running the OpenStack metadata service.
 
 ```
 $ nova keypair-add coreos > core.pem
