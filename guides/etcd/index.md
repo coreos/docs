@@ -40,7 +40,7 @@ To read and write to etcd from *within a container* you must use the `docker0` i
 
 ## Proxy Example
 
-Let's pretend we're setting up a service that consists of a few containers that are behind a proxy container. We can use etcd to announce these containers when they start by creating a directory, having each container write a key within that directory and have the proxy watch the entire directory. We're going to skip creating the containers here but the [docker guide]({{site.url}}/docs/docker) is a good place to start for that.
+Let's pretend we're setting up a service that consists of a few containers that are behind a proxy container. We can use etcd to announce these containers when they start by creating a directory, having each container write a key within that directory and have the proxy watch the entire directory. We're going to skip creating the containers here but the [docker guide]({{site.url}}/docs/guides/docker) is a good place to start for that.
 
 ### Create the directory
 
