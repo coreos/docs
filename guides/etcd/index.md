@@ -8,7 +8,7 @@ title: Documentation - etcd
 
 etcd is an open-source distributed key value store that provides shared configuration and service discovery for CoreOS clusters. etcd runs on each machine in a cluster and gracefully handles master election during network partitions and the loss of the current master.
 
-Application containers running on your cluster can read and write data into etcd. Common examples are storing database connection details, cache settings, feature flags, and more. This guide will walk you through a basic example of reading and writing to etcd then proceed to other features like TTLs, directories and watching a prefix. This guide is way more fun when you've got at least one CoreOS machine up and running &mdash; try it on [Amazon EC2](docs/ec2/) or locally with [Vagrant](docs/vagrant).
+Application containers running on your cluster can read and write data into etcd. Common examples are storing database connection details, cache settings, feature flags, and more. This guide will walk you through a basic example of reading and writing to etcd then proceed to other features like TTLs, directories and watching a prefix. This guide is way more fun when you've got at least one CoreOS machine up and running &mdash; try it on [Amazon EC2]({{site.url}}/docs/ec2/) or locally with [Vagrant]({{site.url}}/docs/vagrant).
 
 <a class="btn btn-default" href="https://github.com/coreos/etcd#etcd">Complete etcd API Docs</a>
 
@@ -40,7 +40,7 @@ To read and write to etcd from *within a container* you must use the `docker0` i
 
 ## Proxy Example
 
-Let's pretend we're setting up a service that consists of a few containers that are behind a proxy container. We can use etcd to announce these containers when they start by creating a directory, having each container write a key within that directory and have the proxy watch the entire directory. We're going to skip creating the containers here but the [docker guide](docs/docker) is a good place to start for that.
+Let's pretend we're setting up a service that consists of a few containers that are behind a proxy container. We can use etcd to announce these containers when they start by creating a directory, having each container write a key within that directory and have the proxy watch the entire directory. We're going to skip creating the containers here but the [docker guide]({{site.url}}/docs/docker) is a good place to start for that.
 
 ### Create the directory
 
