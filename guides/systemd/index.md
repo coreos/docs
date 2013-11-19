@@ -10,12 +10,7 @@ systemd is an init system that provides many powerful features for starting, sto
 
 ## Terminology
 
-systemd consists of three main concepts. Their CoreOS-specific uses are:
-
-| Name    | Description |
-|---------|-------------|
-| unit    | A configuration file describes the properties of the process that you'd like to run. This is normally a `docker run` command or somethng similar.
-| target  | A grouping mechanism that allows systemd to start up groups of processes at the same time. This happens at every boot as processes are started at different run levels. |
+systemd consists of two main concepts: a unit and a target. A unit is a configuration file that describes the properties of the process that you'd like to run. This is normally a `docker run` command or somethng similar. A target is a grouping mechanism that allows systemd to start up groups of processes at the same time. This happens at every boot as processes are started at different run levels.
 
 systemd is the first process started on CoreOS and it reads different targets and starts the processes specified which allows the operating system to start. The target that you'll interact with is the `local.target` which holds all of the unit files for our containers.
 
@@ -64,7 +59,11 @@ systemd provides a high degree of functionality in your unit files. Here's a cur
 
 The full list is located on the [systemd man page](http://www.freedesktop.org/software/systemd/man/systemd.service.html).
 
-Let's put a few of these concepts togther to register new units within etcd. Imagine we had another container running that would read these values from etcd and act upon them. Since our `docker run` command will be `ExecStart`, it makes sense for our etcd command to run as `ExecStartPost` to ensure that our container is started and functioning. We also need to clean up our etcd key when the container exits or the unit is failed by using `ExecStopPost`.
+Let's put a few of these concepts togther to register new units within etcd. Imagine we had another container running that would read these values from etcd and act upon them.
+
+Since our `docker run` command will be `ExecStart`, it makes sense for our etcd command to run as `ExecStartPost` to ensure that our container is started and functioning.
+
+We also need to clean up our etcd key when the container exits or the unit is failed by using `ExecStopPost`.
 
 ```
 [Unit]
@@ -89,10 +88,10 @@ If our last example we had to hardcode our IP address when we announced our cont
 
 | Variable | Meaning | Description |
 |----------|---------|-------------|
-| %n | Full unit name | Useful if the name of your unit is unique enough to be used as an argument on a command. |
-| %m | Machine ID | Useful for namespacing etcd keys by machine. Example: `/machines/%m/units` |
-| %b | BootID | Same as Machine ID. This value is random and changes on each boot |
-| %H | Hostname | Allows you to run the same unit file across many machines. Useful for service discovery. Example: `/domains/example.com/%H:8081` |
+| `%n` | Full unit name | Useful if the name of your unit is unique enough to be used as an argument on a command. |
+| `%m` | Machine ID | Useful for namespacing etcd keys by machine. Example: `/machines/%m/units` |
+| `%b` | BootID | Same as Machine ID. This value is random and changes on each boot |
+| `%H` | Hostname | Allows you to run the same unit file across many machines. Useful for service discovery. Example: `/domains/example.com/%H:8081` |
 
 A full list is on the [systemd man page](http://www.freedesktop.org/software/systemd/man/systemd.unit.html).
 
@@ -102,8 +101,8 @@ Since systemd is based on symlinks, there are a few interesting tricks you can l
 
 | Variable | Meaning | Description |
 |----------|---------|-------------|
-| %p | Prefix name | Refers to any string before `@` in your unit name. |
-| %i | Instance name | Refers to the string between the `@` and the suffix. |
+| `%p` | Prefix name | Refers to any string before `@` in your unit name. |
+| `%i` | Instance name | Refers to the string between the `@` and the suffix. |
 
 In our earlier example we had to hardcode our IP address when registering within etcd:
 
@@ -111,10 +110,15 @@ In our earlier example we had to hardcode our IP address when registering within
 ExecStartPost=/usr/bin/etcdctl set /domains/example.com/10.10.10.123:8081 running
 ```
 
-We can enhance this by using `%H` and `%i` to dynamically announce the hostname and port. w e can specify the port after the `@` by using two unit files named `foo@123.service` and `foo@456.service`:
+We can enhance this by using `%H` and `%i` to dynamically announce the hostname and port. Specify the port after the `@` by using two unit files named `foo@123.service` and `foo@456.service`:
 
 ```
 ExecStartPost=/usr/bin/etcdctl set /domains/example.com/%H:%i running
 ```
 
-This gives us the flexiblity to use a single unit file to run multiple copies of the same container on a both a single machine (no port overlap) and on multiple machines (no hostname overlap).
+This gives us the flexiblity to use a single unit file to announce multiple copies of the same container on a both a single machine (no port overlap) and on multiple machines (no hostname overlap).
+
+#### More Information
+<a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">systemd.service Docs</a>
+<a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html">systemd.unit Docs</a>
+<a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.target.html">systemd.target Docs</a>
