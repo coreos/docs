@@ -86,7 +86,7 @@ ExecStart=/usr/bin/docker run busybox /bin/sh -c "while true; do echo Hello Worl
 WantedBy=local.target
 ```
 
-Then run `systemctl restart local-enable.service` to restart all services wanted by local.target. This will start your container and log to the systemd journal. You can read the log by running:
+Then run `systemctl restart local-enable.service` to start all services wanted by local.target. This will start your container and log to the systemd journal. You can read the log by running:
 
 ```
 journalctl -u hello.service -f
