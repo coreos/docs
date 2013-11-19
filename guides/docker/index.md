@@ -76,6 +76,12 @@ Let's add that to our command:
 docker run -d coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
 ```
 
+### Permanently Running a Container
+
+While the sections above explained how to run a container when configuring it, for a production setup, you should not manually start and babysit containers.
+
+Instead, create a systemd unit file to make systemd keep that container running. See <a href="../">the Quick Start guide</a> for details.
+
 ### Network Access to 80
 
 The default apache install will be running on port 80. To give our container access to traffic over port 80, we use the `-p` flag and specify the port on the host that maps to the port inside the container. In our case we want 80 for each, so we include `-p 80:80` in our command:
