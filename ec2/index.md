@@ -41,7 +41,7 @@ CoreOS is currently in heavy development and actively being tested. The current 
 
 {% endfor %}
   </tbody>
-</table><br/>
+</table>
 
 CloudFormation will launch at least three instances with the appropriate security group to enable [etcd]({{ site.url }}/using-coreos/etcd) clustered sharing data between the hosts. You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
