@@ -1,7 +1,7 @@
 ---
 layout: docs
 slug: guides
-title: Documentation - Quick Start
+title: Documentation - systemd
 ---
 
 # Getting Started wtih systemd
