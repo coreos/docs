@@ -106,7 +106,7 @@ We will be launching three instances, with a shared token (via a gist url) in th
    * "Continue"
 6. Tags
    * "Continue"
-7 Create Key Pair
+7. Create Key Pair
    * Choose a key of your choice, it will be added in addition to the one in the gist.
    * "Continue"
 8. Choose one or more of your existing Security Groups
