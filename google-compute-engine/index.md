@@ -6,7 +6,7 @@ title: Documentation - Google Compute Engine
 {% capture cf_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha.template{% endcapture %}_
 # Running CoreOS {{ site.ami-version }} on GCE
 
-CoreOS is currently in heavy development and actively being tested. The current disk image is listed below and relies on GCE's recently announced [Advanced OS Support][gce-advanced-os]. Each time a new update is released, your machines will [automatically upgrade themselves]({{ site.url }}/using-coreos/updates).
+CoreOS on Google Compute Engine (GCE) is currently in heavy development and actively being tested. The current disk image is listed below and relies on GCE's recently announced [Advanced OS Support][gce-advanced-os]. Each time a new update is released, your machines will [automatically upgrade themselves]({{ site.url }}/using-coreos/updates).
 
 You will need to [install gcutil][gcutil-documentation] before proceeding.
 
@@ -38,7 +38,7 @@ For now CoreOS only supports logging in as the `core` user which breaks the `gcu
 
 ## Etcd
 
-Automatic cluster setup isn't supported yet, but SOON...
+Automatic cluster setup is not supported yet, but is under active development.
 
 ## Using CoreOS
 
