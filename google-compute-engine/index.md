@@ -11,7 +11,7 @@ CoreOS on Google Compute Engine (GCE) is currently in heavy development and acti
 You will need to [install gcutil][gcutil-documentation] before proceeding.
 
 <!-- TODO: Update URL to public non-eap version -->
-[gce-advanced-os]: https://developers.google.com/cloud/eap/compute/advanced-operating-systems-support/
+[gce-advanced-os]: http://developers.google.com/compute/docs/transition-v1#customkernelbinaries
 [gcutil-documentation]: https://developers.google.com/compute/docs/gcutil/
 
 ## Image creation
