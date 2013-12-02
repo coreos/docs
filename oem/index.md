@@ -21,7 +21,7 @@ The OEM is only responsible for:
 * Set up networking, if dhcp is not available
 * Place initial credentials (via SSH keys)
 
-Upon every boot, CoreOS will look for `/usr/share/oem/run.sh`, and if it exists, execute it. The directory `/usr/share/oem/` should be where all files related to the particular implementation reside.
+Upon every boot, CoreOS will look for `/usr/share/oem/run`, and if it exists, execute it. The directory `/usr/share/oem/` should be where all files related to the particular implementation reside.
 This includes scripts, agents, or anything else required to bring the host up.
 
 If dhcp is in place, networking and nameservers will be automatically configured.
@@ -53,21 +53,21 @@ losetup --show --find -P coreos_production_image.bin
 mount /dev/loop0p6 /mnt/
 ```
 
-This partition will be mounted at /usr/share/oem, so your `run.sh` would need to be placed at `/mnt/oem.sh` in this example.
+This partition will be mounted at /usr/share/oem, so your `run` would need to be placed at `/mnt/oem.sh` in this example.
 
-From there, you will need to implement a run.sh
+From there, you will need to implement a run
 
 [coreos-dev-channel-raw]: http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_image.bin.bz2
 
 
 
-## run.sh in detail
+## run in detail
 
 `/usr/share/oem/` is /dev/disk6 (partition 6) mounted at `/usr/share/oem/`
 
 ### Simple example
 
-The simplest way to handle setup is to create a `run.sh` that does everything you need. For instance:
+The simplest way to handle setup is to create a `run` that does everything you need. For instance:
 
 ```
 #!/bin/bash
@@ -90,7 +90,7 @@ chown -R 1000:1000 /home/core/.ssh/
 ### Integrating with systemd
 
 If your provider requires an agent, you'll need to have the agent managed by systemd.
-To do this, your `run.sh` will add the required systemd service files at boot, then start them.
+To do this, your `run` will add the required systemd service files at boot, then start them.
 
 ```
 #!/bin/bash
