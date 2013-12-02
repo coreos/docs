@@ -4,7 +4,7 @@ slug: gce
 title: Documentation - Google Compute Engine
 ---
 {% capture cf_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha.template{% endcapture %}_
-# Running CoreOS {{ site.ami-version }} on GCE
+# Running CoreOS {{ site.ami-version }} on Google Compute Engine
 
 CoreOS on Google Compute Engine (GCE) is currently in heavy development and actively being tested. The current disk image is listed below and relies on GCE's recently announced [Advanced OS Support][gce-advanced-os]. Each time a new update is released, your machines will [automatically upgrade themselves]({{ site.url }}/using-coreos/updates).
 
@@ -21,13 +21,13 @@ At the moment CoreOS images are not publicly listed in GCE and must be added to 
 <!-- TODO: Update URL to public gs://storage.core-os.net location, make version automatic -->
 <!-- FIXME: After launch does the empty preferred_kernel option still need to be set? -->
 
-    gcutil --project=<project-id> addimage --description="CoreOS 153.0.0" --preferred_kernel="" coreos-production-v153 gs://coreos-gce-images/coreos/amd64-generic/153.0.0/coreos_production_gce.tar.gz
+    gcutil --project=<project-id> addimage --description="CoreOS 153.0.0" coreos-production-v153 gs://coreos-gce-images/coreos/amd64-generic/153.0.0/coreos_production_gce.tar.gz
 
 ## Instance creation
 
 New instances can now be created using the image created above:
 
-    gcutil --project=<project-id> addinstance <instance-name> --kernel="" --image=coreos-production-v153 --persistent_boot_disk
+    gcutil --project=<project-id> addinstance <instance-name> --image=coreos-production-v153 --persistent_boot_disk
 
 ## SSH
 
