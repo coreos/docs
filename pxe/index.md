@@ -142,6 +142,32 @@ If you run into issues ping on us #coreos or email [Carly][carly-email].
 
 [carly-email]: mailto:carly.stoughton+pxehardware@coreos.com
 
+## Adding a Custom OEM
+
+CoreOS has an [OEM partition][oem] that is used to setup networking, SSH keys, etc on boot.
+If you have site specific customizations you need to make the PXE image this is the perfect place to make it.
+Simply create a `./usr/share/oem/` directory as described on the [OEM page][oem] and append it to the CPIO:
+
+```
+gzip -d coreos_production_pxe_image.cpio.gz
+find usr | cpio -o -A -H newc -O coreos_production_pxe_image.cpio
+gzip coreos_production_pxe_image.cpio
+```
+
+Confirm the archive looks correct and has your `run.sh` file inside of it:
+
+```
+gzip -dc coreos_production_pxe_image.cpio.gz | cpio -it
+./
+newroot.squashfs
+usr
+usr/share
+usr/share/oem
+usr/share/oem/run.sh
+```
+
+[oem]: {{site.url}}/docs/oem/
+
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
