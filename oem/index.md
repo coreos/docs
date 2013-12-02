@@ -77,14 +77,7 @@ route add default gw Y.Y.Y.Y
 echo nameserver 8.8.8.8 > /etc/resolv.conf
 
 # This only adds a key if it is not all ready added
-mkdir -pm 0700 /home/core/.ssh
-cat hard_coded_id_dsa.pub | \
-    while read -r ktype key comment; do
-        if ! (grep -Fw "$ktype $key" ~/.ssh/authorized_keys | grep -qsvF "^#"); then
-            echo "$ktype $key $comment" >> /home/core/.ssh/authorized_keys
-        fi
-    done
-chown -R 1000:1000 /home/core/.ssh/
+cat hard_coded_id_dsa.pub | update-ssh-keys -a oem
 ```
 
 ### Integrating with systemd
