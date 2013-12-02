@@ -154,7 +154,7 @@ find usr | cpio -o -A -H newc -O coreos_production_pxe_image.cpio
 gzip coreos_production_pxe_image.cpio
 ```
 
-Confirm the archive looks correct and has your `run.sh` file inside of it:
+Confirm the archive looks correct and has your `run` file inside of it:
 
 ```
 gzip -dc coreos_production_pxe_image.cpio.gz | cpio -it
@@ -163,7 +163,7 @@ newroot.squashfs
 usr
 usr/share
 usr/share/oem
-usr/share/oem/run.sh
+usr/share/oem/run
 ```
 
 [oem]: {{site.url}}/docs/oem/
