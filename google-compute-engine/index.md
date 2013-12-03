@@ -17,7 +17,6 @@ You will need to [install gcutil][gcutil-documentation] before proceeding.
 
 At the moment CoreOS images are not publicly listed in GCE and must be added to your own account from a raw disk image published in Google Cloud Storage:
 
-<!-- TODO: Update URL to public gs://storage.core-os.net location, make version automatic -->
 <!-- FIXME: After launch does the empty preferred_kernel option still need to be set? -->
 
     gcutil --project=<project-id> addimage --description="CoreOS 153.0.0" coreos-production-v153 gs://storage.core-os.net/coreos/amd64-generic/153.0.0/coreos_production_gce.tar.gz
@@ -30,10 +29,9 @@ New instances can now be created using the image created above:
 
 ## SSH
 
-For now CoreOS only supports logging in as the `core` user which breaks the `gcutil ssh` command. Instead you must log in directly via ssh:
+You can log in your CoreOS instance using:
 
-    gcutil getinstance <instance-name>
-    ssh -i ~/.ssh/google_compute_engine -l core <external-ip>
+    gcutil --project=<project-id> ssh --ssh_user=core <instance-name>
 
 ## Etcd
 
