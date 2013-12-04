@@ -76,7 +76,8 @@ ifconfig eth0 X.X.X.X
 route add default gw Y.Y.Y.Y
 echo nameserver 8.8.8.8 > /etc/resolv.conf
 
-# This only adds a key if it is not all ready added
+# This will add a new key labeled oem or replace the old
+# key labeled oem
 cat hard_coded_id_dsa.pub | update-ssh-keys -a oem
 ```
 
