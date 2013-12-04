@@ -21,20 +21,14 @@ sudo pip install supernova
 
 ## Store Account Information 
 
-Edit your config file (`~/.supernova`) to store your username, API key and some other settings:
+Edit your config file (`~/.supernova`) to store your username, API key and some other settings. The `OS_TENANT_NAME` should also be set to your username.
 
 ```
 [production]
 OS_AUTH_URL = https://identity.api.rackspacecloud.com/v2.0/
 OS_USERNAME = username
 OS_PASSWORD = fd62afe2-4686-469f-9849-ceaa792c55a6
-OS_TENANT_NAME = nova-production
-
-[development]
-OS_AUTH_URL = http://dev.nova.example.com:8774/v1.1/
-OS_USERNAME = jsmith
-OS_PASSWORD = 40318069-6069-4d9f-836d-a46df17fc8d1
-OS_TENANT_NAME = nova-development
+OS_TENANT_NAME = username
 ```
 
 We're ready to create a keypair then boot a server with it.
