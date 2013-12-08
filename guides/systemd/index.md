@@ -73,7 +73,7 @@ After=docker.service
 
 [Service]
 Restart=always
-ExecStart=/usr/bin/docker run -d -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
+ExecStart=/usr/bin/docker run -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
 ExecStartPost=/usr/bin/etcdctl set /domains/example.com/10.10.10.123:8081 running
 ExecStopPost=/usr/bin/etcdctl delete /domains/example.com/10.10.10.123:8081
 RestartSec=10s
