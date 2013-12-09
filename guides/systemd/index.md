@@ -4,7 +4,7 @@ slug: guides
 title: Documentation - systemd
 ---
 
-# Getting Started wtih systemd
+# Getting Started with systemd
 
 systemd is an init system that provides many powerful features for starting, stopping and managing processes. Within the CoreOS world, you will almost exclusively use systemd to manage the lifecycle of your Docker containers.
 
