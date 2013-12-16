@@ -4,7 +4,7 @@ slug: guides/resize
 title: Adding Disk Space
 ---
 
-## Adding Disk Space to Your CoreOS Machine
+# Adding Disk Space to Your CoreOS Machine
 
 Most writable paths such as `/home`, `/var`, and `/usr/local` are stored
 in a special STATE partition mounted at `/media/state`. The default size
