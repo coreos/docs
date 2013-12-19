@@ -113,6 +113,13 @@ We will be launching three instances, with a shared token (via a gist url) in th
    * "coreos-testing" as above.
 9. Launch!
 
+### Automatic Rollback Limitations on EC2
+
+Amazon EC2 uses Xen paravirtualization which is incompatible with kexec which CoreOS uses to make it possible to rollback a bad update by simply rebooting the virtual machine.
+If EC2 moves to HVM or KVM virtualization then rollback will work as normal.
+
 ## Using CoreOS
 
 Now that you have a few machines booted it is time to play around. Check out the [Using CoreOS][using-coreos] guide.
+
+
