@@ -30,6 +30,7 @@ OS_AUTH_URL = https://identity.api.rackspacecloud.com/v2.0/
 OS_USERNAME = username
 OS_PASSWORD = fd62afe2-4686-469f-9849-ceaa792c55a6
 OS_TENANT_NAME = username
+OS_REGION_NAME = DFW
 ```
 
 We're ready to create a keypair then boot a server with it.
