@@ -25,7 +25,7 @@ You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev]
 
 Let's get set up with an SDK chroot and build a bootable image of CoreOS. The
 SDK chroot has a full toolchain and isolates the build process from quirks and
-differences between host OSes. The SDK must be ran on an x86-64 Linux machine,
+differences between host OSes. The SDK must be run on an x86-64 Linux machine,
 the distro should not matter (Ubuntu, Fedora, etc).
 
 ### Prerequisites
