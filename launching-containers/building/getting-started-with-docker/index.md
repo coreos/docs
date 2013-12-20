@@ -4,6 +4,7 @@ slug: guides/docker
 title: Getting Started with docker
 category: launching_containers
 sub_category: building
+weight: 5
 ---
 
 # Getting Started with docker

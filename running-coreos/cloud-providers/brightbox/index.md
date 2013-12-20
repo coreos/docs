@@ -3,6 +3,7 @@ layout: docs
 title: Brightbox Cloud
 category: running_coreos
 sub_category: cloud_provider
+weight: 7
 ---
 
 # Running CoreOS on Brightbox Cloud

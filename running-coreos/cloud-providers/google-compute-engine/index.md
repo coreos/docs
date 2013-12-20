@@ -2,6 +2,7 @@
 layout: docs
 category: running_coreos
 sub_category: cloud_provider
+weight: 3
 title: Google Compute Engine
 ---
 

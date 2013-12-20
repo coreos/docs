@@ -4,6 +4,7 @@ slug: guides/etcd
 title: Getting Started with etcd
 category: cluster_management
 sub_category: setting_up
+weight: 5
 ---
 
 # Getting Started with etcd

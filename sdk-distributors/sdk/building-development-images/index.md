@@ -3,6 +3,7 @@ layout: docs
 title: Building Development Images
 category: sdk_distributors
 sub_category: sdk
+weight: 5
 ---
 
 # Building Development Images

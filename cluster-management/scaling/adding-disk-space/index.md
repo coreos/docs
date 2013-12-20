@@ -4,6 +4,7 @@ slug: guides/resize
 title: Adding Disk Space
 category: cluster_management
 sub_category: scaling
+weight: 5
 ---
 
 # Adding Disk Space to Your CoreOS Machine

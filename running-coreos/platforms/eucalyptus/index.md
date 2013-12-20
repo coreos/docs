@@ -3,6 +3,7 @@ layout: docs
 title: Eucalyptus
 category: running_coreos
 sub_category: platforms
+weight: 5
 ---
 
 # Running CoreOS on Eucalyptus 3.4

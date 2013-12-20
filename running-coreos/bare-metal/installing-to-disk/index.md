@@ -4,6 +4,7 @@ slug: pxe
 title: Installing to Disk
 category: running_coreos
 sub_category: bare_metal
+weight: 7
 ---
 
 # Installing CoreOS to Disk
