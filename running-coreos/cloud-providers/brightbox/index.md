@@ -3,10 +3,10 @@ layout: docs
 title: Brightbox Cloud
 category: running_coreos
 sub_category: cloud_provider
-weight: 7
+weight: 10
 ---
 
-# Running CoreOS on Brightbox Cloud
+# Running CoreOS {{site.brightbox-version}} on Brightbox Cloud
 
 CoreOS is currently in heavy development and actively being tested.  These
 instructions will walk you through running a CoreOS cluster on Brightbox. This guide uses the [Brightbox CLI](http://brightbox.com/docs/guides/cli/getting-started/) but you can also use the [Brightbox Manager](http://brightbox.com/docs/guides/manager/).
@@ -82,7 +82,7 @@ $ brightbox images list | grep CoreOS
 
  id         owner      type      created_on  status   size   name
  ---------------------------------------------------------------------------------------------------------
- img-9ogji  brightbox  official  2013-12-15  public   5442   CoreOS 147.0.1 (x86_64)
+ {{site.brightbox-id}}  brightbox  official  2013-12-15  public   5442   CoreOS {{site.brightbox-version}} (x86_64)
  ```
 
 ## Building Servers
@@ -101,15 +101,15 @@ $ echo $TOKEN
 Then build three servers using the image, in the server group we created and specifying the token as the user data:
 
 ```
-$ brightbox servers create -i 3 --type small --name "coreos" --user-data $TOKEN --server-groups grp-cdl6h img-9ogji
+$ brightbox servers create -i 3 --type small --name "coreos" --user-data $TOKEN --server-groups grp-cdl6h {{site.brightbox-id}}
 
-Creating 3 small (typ-8fych) servers with image CoreOS 94.0.0 (img-9ogji) in groups grp-cdl6h with 0.05k of user data
+Creating 3 small (typ-8fych) servers with image CoreOS {{site.brightbox-version}} ({{ site.brightbox-id }}) in groups grp-cdl6h with 0.05k of user data
 
  id         status    type   zone   created_on  image_id   cloud_ip_ids  name  
 --------------------------------------------------------------------------------
- srv-ko2sk  creating  small  gb1-a  2013-10-18  img-9ogji                coreos
- srv-vynng  creating  small  gb1-a  2013-10-18  img-9ogji                coreos
- srv-7tf5d  creating  small  gb1-a  2013-10-18  img-9ogji                coreos
+ srv-ko2sk  creating  small  gb1-a  2013-10-18  {{ site.brightbox-id }}                coreos
+ srv-vynng  creating  small  gb1-a  2013-10-18  {{ site.brightbox-id }}                coreos
+ srv-7tf5d  creating  small  gb1-a  2013-10-18  {{ site.brightbox-id }}                coreos
 --------------------------------------------------------------------------------
 ```
 
