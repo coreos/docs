@@ -4,6 +4,7 @@ slug: qemu
 title: QEMU
 category: running_coreos
 sub_category: platforms
+weight: 5
 ---
 
 # Running CoreOS on QEMU

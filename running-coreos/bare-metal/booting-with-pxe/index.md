@@ -4,6 +4,7 @@ slug: pxe
 title: Booting with PXE
 category: running_coreos
 sub_category: bare_metal
+weight: 5
 ---
 
 # Booting CoreOS via PXE

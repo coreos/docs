@@ -3,6 +3,7 @@ layout: docs
 title: Modifying CoreOS
 category: sdk_distributors
 sub_category: sdk
+weight: 3
 ---
 
 # CoreOS Developer SDK Guide

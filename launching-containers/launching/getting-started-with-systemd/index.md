@@ -4,6 +4,7 @@ slug: guides
 title: Getting Started with systemd
 category: launching_containers
 sub_category: launching
+weight: 5
 ---
 
 # Getting Started with systemd

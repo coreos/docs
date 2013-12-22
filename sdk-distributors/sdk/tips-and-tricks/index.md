@@ -3,6 +3,7 @@ layout: docs
 title: SDK Tips and Tricks
 category: sdk_distributors
 sub_category: sdk
+weight: 7
 ---
 
 # Tips and Tricks

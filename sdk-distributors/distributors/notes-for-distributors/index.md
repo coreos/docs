@@ -3,6 +3,7 @@ layout: docs
 title: Notes for Distributors
 category: sdk_distributors
 sub_category: distributors
+weight: 5
 ---
 
 # Notes for Distributors
