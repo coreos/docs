@@ -30,7 +30,7 @@ We start by downloading the most recent disk image:
 
 ## Virtual machine configuration
 
-Now create /etc/libvirt/qemu/dock0.xml with the following contents:
+Now create /tmp/dock0.xml with the following contents:
 
     <domain type='kvm'>
       <name>dock0</name>
@@ -89,6 +89,10 @@ Now create /etc/libvirt/qemu/dock0.xml with the following contents:
     </domain>
 
 You can change any of these parameters later.
+
+Now import the XML as new VM into your libvirt instance:
+
+    virsh create /tmp/dock0.xml
 
 ### Network configuration
 
