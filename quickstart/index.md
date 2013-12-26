@@ -76,9 +76,11 @@ Create a file called `/media/state/units/hello.service`
 [Unit]
 Description=My Service
 After=docker.service
+Requires=docker.service
 
 [Service]
 Restart=always
+RestartSec=10s
 ExecStart=/usr/bin/docker run busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"
 
 [Install]
