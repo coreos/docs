@@ -74,6 +74,7 @@ The simplest way to handle setup is to create a `run` that does everything you n
 ```
 #!/bin/bash
 
+ip -4 address flush dev eth0
 ip -4 address add xxx.xxx.xxx.xxx/xx dev eth0
 ip -4 link set dev eth0 up
 ip -4 route add default via xxx.xxx.xxx.xxx
