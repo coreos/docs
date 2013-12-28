@@ -74,8 +74,10 @@ The simplest way to handle setup is to create a `run` that does everything you n
 ```
 #!/bin/bash
 
-ifconfig eth0 X.X.X.X
-route add default gw Y.Y.Y.Y
+ip -4 address flush dev eth0
+ip -4 address add xxx.xxx.xxx.xxx/xx dev eth0
+ip -4 link set dev eth0 up
+ip -4 route add default via xxx.xxx.xxx.xxx
 echo nameserver 8.8.8.8 > /etc/resolv.conf
 
 # This will add a new key labeled oem or replace the old
