@@ -109,6 +109,8 @@ partition and add a run.sh shell script:
     mount /dev/nbd0p6 /mnt/oem
     cat > /mnt/oem/run.sh <<'EOT'
     #!/bin/bash
+    systemctl disable dhcpcd.service
+    systemctl stop dhcpcd.service
     ip -4 address flush dev eth0
     ip -4 address add 203.0.113.2/24 dev eth0
     ip -4 link set dev eth0 up

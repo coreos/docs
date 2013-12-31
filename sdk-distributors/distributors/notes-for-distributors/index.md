@@ -74,6 +74,8 @@ The simplest way to handle setup is to create a `run` that does everything you n
 ```
 #!/bin/bash
 
+systemctl disable dhcpcd.service
+systemctl stop dhcpcd.service
 ip -4 address flush dev eth0
 ip -4 address add xxx.xxx.xxx.xxx/xx dev eth0
 ip -4 link set dev eth0 up
