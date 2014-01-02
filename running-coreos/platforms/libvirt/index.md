@@ -133,7 +133,7 @@ inside will be picked up by CoreOS.
 
 Once the virtual machine has started you can log in via SSH:
 
-    ssh -l core -p 2222 localhost
+    ssh core@203.0.113.2
 
 ### SSH Config
 
