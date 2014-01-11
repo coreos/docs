@@ -1,15 +1,15 @@
 ---
 layout: docs
 slug: guides
-title: Overview of journalctl
-category: launching_containers
-sub_category: launching
+title: Reading the System Log
+category: cluster_management
+sub_category: debugging
 weight: 5
 ---
 
-# Overview of journalctl
+# Reading the System Log
 
-`journalctl` is your interface into systemd's journal/logging. All service files and docker containers insert data into the systemd journal. There are a few helpful commands to read the journal:
+`journalctl` is your interface into CoreOS's journal/logging. All service files and docker containers insert data into the systemd journal. There are a few helpful commands to read the journal:
 
 ## Read the Entire Journal
 
