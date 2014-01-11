@@ -1,9 +1,9 @@
 ---
 layout: docs
 slug: guides
-title: Overview of journalctl
-category: launching_containers
-sub_category: launching
+title: Reading the System Log
+category: cluster_management
+sub_category: debugging
 weight: 5
 ---
 
