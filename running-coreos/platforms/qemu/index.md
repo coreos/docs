@@ -74,9 +74,8 @@ format) and the wrapper shell script to start QEMU.
 
     mkdir coreos; cd coreos
     wget http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_qemu.sh
-    wget http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_qemu_image.img.bz2
+    wget http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img
     chmod +x coreos_production_qemu.sh
-    bunzip2 coreos_production_qemu_image.img.bz2
 
 Starting is as simple as:
 
