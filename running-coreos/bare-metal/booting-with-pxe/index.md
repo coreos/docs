@@ -19,7 +19,7 @@ This guide assumes you already have a working PXE server using [pxelinux][pxelin
 If you need suggestions on how to set a server up checkout guides for [Debian][debian-pxe], [Fedora][fedora-pxe] or [Ubuntu][ubuntu-pxe].
 
 [debian-pxe]: http://www.debian-administration.org/articles/478
-[ubuntu-pxe]: https://help.ubuntu.com/community/PXEInstallServer
+[ubuntu-pxe]: https://help.ubuntu.com/community/DisklessUbuntuHowto
 [fedora-pxe]: http://docs.fedoraproject.org/en-US/Fedora/7/html/Installation_Guide/ap-pxe-server.html
 [pxelinux]: http://www.syslinux.org/wiki/index.php/PXELINUX
 
