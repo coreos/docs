@@ -56,7 +56,7 @@ Check you make sure the key is in your list by running `supernova production key
 
 ## Boot a Server
 
-Boot a new server with our new keypair:
+Boot a new server with our new keypair. **This image is not currently supported on Performance flavors.**
 
 ```
 supernova production boot --image 430d35e0-1468-4007-b063-52ee1921b356 --flavor 2 My_CoreOS_Server --key-name coreos-key
