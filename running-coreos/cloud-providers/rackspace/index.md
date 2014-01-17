@@ -9,7 +9,7 @@ weight: 5
 # Running CoreOS on Rackspace
 
 CoreOS is currently in heavy development and actively being tested.  These
-instructions will walk you through running CoreOS on the Rackspace Openstack cloud, which differs slightly from the generic Openstack instructions. We're going to install `rackspace-novaclient`, upload a keypair and boot the image id `430d35e0-1468-4007-b063-52ee1921b356`.
+instructions will walk you through running CoreOS on the Rackspace Openstack cloud, which differs slightly from the generic Openstack instructions. We're going to install `rackspace-novaclient`, upload a keypair and boot the image id `430d35e0-1468-4007-b063-52ee1921b356`. This image is supported on all flavors in the Standard family. Only the Performance 1-1 flavor is supported in the Performance families.
 
 ## Install Supernova Tool
 
@@ -56,7 +56,7 @@ Check you make sure the key is in your list by running `supernova production key
 
 ## Boot a Server
 
-Boot a new server with our new keypair. **This image is not currently supported on Performance flavors.**
+Boot a new server with our new keypair.
 
 ```
 supernova production boot --image 430d35e0-1468-4007-b063-52ee1921b356 --flavor 2 My_CoreOS_Server --key-name coreos-key
