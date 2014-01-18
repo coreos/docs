@@ -13,7 +13,7 @@ etcd is an open-source distributed key value store that provides shared configur
 
 Application containers running on your cluster can read and write data into etcd. Common examples are storing database connection details, cache settings, feature flags, and more. This guide will walk you through a basic example of reading and writing to etcd then proceed to other features like TTLs, directories and watching a prefix. This guide is way more fun when you've got at least one CoreOS machine up and running &mdash; try it on [Amazon EC2]({{site.url}}/docs/running-coreos/cloud-providers/ec2) or locally with [Vagrant]({{site.url}}/docs/running-coreos/platforms/vagrant).
 
-<a class="btn btn-default" href="https://github.com/coreos/etcd#etcd">Complete etcd API Docs</a>
+<a class="btn btn-default" href="{{site.url}}/docs/distributed-configuration/etcd-api/">Complete etcd API Docs</a>
 
 ## Reading and Writing to etcd
 
