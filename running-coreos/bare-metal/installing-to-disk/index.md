@@ -19,6 +19,9 @@ There are two options for installation on bare metal:
 There is a simple installer that will destroy everything on the given target disk.
 Essentially it downloads an image, verifies it with gpg and then copies it bit for bit to disk.
 
+The script is self-contained and located [on Github here](https://raw.github.com/coreos/init/master/bin/coreos-install "coreos-install").
+It is already installed if you are booting CoreOS via PXE but you can also use it from other Linux distributions.
+
 ```
 coreos-install -d /dev/sda
 ```
