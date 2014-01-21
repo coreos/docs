@@ -30,8 +30,6 @@ After=docker.service
 Requires=docker.service
 
 [Service]
-Restart=always
-RestartSec=5
 ExecStart=/usr/bin/docker run busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"
 
 [Install]
@@ -41,10 +39,6 @@ WantedBy=local.target
 The description shows up in the systemd log and a few other places. Write something that will help you understand exactly what this does later on.
 
 `After=docker.service` and `Requires=docker.service` means this unit will only start after `docker.service` is active. You can define as many of these as you want.
-
-`Restart=always` is pretty obvious. This is helpful if your container is designed to exit for some reason but you'd like to start up an identical container when that happens.
-
-`RestartSec=5` will only restart the service every 5 seconds. This prevents it from failing if docker takes a long time to start.
 
 `ExecStart=` allows you to specify any command that you'd like to run when this unit is started.
 
@@ -70,7 +64,7 @@ Let's put a few of these concepts togther to register new units within etcd. Ima
 
 Since our `docker run` command will be `ExecStart`, it makes sense for our etcd command to run as `ExecStartPost` to ensure that our container is started and functioning.
 
-We also need to clean up our etcd key when the container exits or the unit is failed by using `ExecStopPost`.
+When the service is told to stop, we need to stop the docker container using its `-name` from the run command. We also need to clean up our etcd key when the container exits or the unit is failed by using `ExecStopPost`.
 
 ```
 [Unit]
@@ -79,10 +73,9 @@ After=etcd.service
 After=docker.service
 
 [Service]
-Restart=always
-RestartSec=5s
-ExecStart=/usr/bin/docker run -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
+ExecStart=/usr/bin/docker run -name apache -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
 ExecStartPost=/usr/bin/etcdctl set /domains/example.com/10.10.10.123:8081 running
+ExecStop=/usr/bin/docker stop apache
 ExecStopPost=/usr/bin/etcdctl delete /domains/example.com/10.10.10.123:8081
 
 [Install]
