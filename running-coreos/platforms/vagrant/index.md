@@ -20,7 +20,7 @@ install packages available for Windows, Linux and OSX. Find the latest
 installer on the [Vagrant downloads page][vagrant]. Be sure to get
 version 1.2.3 or greater.
 
-[vagrant]: http://downloads.vagrantup.com/
+[vagrant]: http://www.vagrantup.com/downloads.html
 
 ## Startup CoreOS
 
