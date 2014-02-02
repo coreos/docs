@@ -72,7 +72,7 @@ Initialize the .repo directory with the manifest that describes all of the git
 repos required to get started.
 
 ```
-repo init -u https://github.com/coreos/manifest.git -g minilayout --repo-url https://android.googlesource.com/tools/repo
+repo init -u https://github.com/coreos/manifest.git -g minilayout --repo-url https://chromium.googlesource.com/external/repo.git
 ```
 
 Synchronize all of the required git repos from the manifest.
