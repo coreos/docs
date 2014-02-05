@@ -35,7 +35,9 @@ The `-t` and `-i` flags allocate a pseudo-tty and keep stdin open even if not at
 
 ## Commiting a Container
 
-After that completes, we need to `commit` these changes to our container with the container ID and the image name. Fetch the container id using `docker ps` in another shell. Remember, the image name is in the format of `username/name`...we're going to use `coreos` in this example. Insert the id with the image name you'd like to use:
+After that completes, we need to `commit` these changes to our container with the container ID and the image name.
+
+**Open another shell** (so the container is still running) and fetch the container ID using `docker ps`. Remember, the image name is in the format of `username/name`...we're going to use `coreos` in this example. Insert the ID with the image name you'd like to use:
 
 ```
 docker commit 72d468f455ea coreos/apache
