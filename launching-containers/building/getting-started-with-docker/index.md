@@ -25,27 +25,31 @@ Launching a container is simple as `docker run` + the image name you would like 
 docker run ubuntu /bin/echo hello world
 ```
 
-Let's launch an ubuntu container and install apache inside of it using the bash prompt:
+Let's launch an Ubuntu container and install Apache inside of it using the bash prompt:
 
 ```
 docker run -t -i ubuntu /bin/bash
 ```
 
-The `-t` and `-i` flags allocate a pseudo-tty and keep stdin open even if not attached. This will allow you to use the container like a traditional VM as long as the bash prompt is running. Install apache with `apt-get install apache2`. You're probably wondering what address you can connect to in order to test that apache was correctly installed...we'll get to that after we commit the container.
+The `-t` and `-i` flags allocate a pseudo-tty and keep stdin open even if not attached. This will allow you to use the container like a traditional VM as long as the bash prompt is running. Install Apache with `apt-get install apache2`. You're probably wondering what address you can connect to in order to test that Apache was correctly installed...we'll get to that after we commit the container.
 
 ## Commiting a Container
 
-After that completes, we need to `commit` these changes to our container with the container ID and the image name. Fetch the container id using `docker ps` in another shell. Remember, the image name is in the format of `username/name`...we're going to use `coreos` in this example. Insert the id with the image name you'd like to use:
+After that completes, we need to `commit` these changes to our container with the container ID and the image name. Fetch the container id using `docker ps` in another shell.
+
+The image name is in the format of `username/name`. You can commit using any username and image name locally, but to push an image to the public registry, the username must be a valid [Docker.IO user account](https://www.docker.io/account/signup/). 
+
+We're going to use `coreos` in this example but you should [sign up for a Docker.IO user account](https://www.docker.io/account/signup/) and use that instead. 
 
 ```
 docker commit 72d468f455ea coreos/apache
 ```
 
-The overlay filesystem works similar to git: our image now builds off of the `ubuntu` base and adds another layer with apache on top. These layers get cached separately so that you won't have to pull down the ubuntu base more than once.
+The overlay filesystem works similar to git: our image now builds off of the `ubuntu` base and adds another layer with Apache on top. These layers get cached separately so that you won't have to pull down the ubuntu base more than once.
 
 ## Keeping the Apache Container Running
 
-Now we have our ubuntu container with apache running in one shell and an image of that container sitting on disk. Let's launch a new container based on that image but set it up to keep running indefinitely. The basic syntax looks like this, but we need to configure a few additional options that we'll fill in as we go:
+Now we have our Ubuntu container with Apache running in one shell and an image of that container sitting on disk. Let's launch a new container based on that image but set it up to keep running indefinitely. The basic syntax looks like this, but we need to configure a few additional options that we'll fill in as we go:
 
 ```
 docker run [options] [image] [process]
