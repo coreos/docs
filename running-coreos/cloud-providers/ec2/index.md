@@ -92,7 +92,7 @@ First we need to create a security group to allow CoreOS instances to communicat
 We will be launching three instances, with a shared token (via a gist url) in the User Data, and selecting our security group.
 
 1. Open the quick launch by clicking [here][us-east-latest-quicklaunch] (shift+click for new tab)
-    * For reference, the current us-east-1 is: [{{ site.ami-us-east-1 }}](ec2-us-east-1)
+    * For reference, the current us-east-1 is: [{{ami-us-east-1}}][us-east-latest-quicklaunch]
 2. On the second page of the wizard, launch 3 servers to test our clustering
     * Number of instances: 3 
     * Click "Continue"
