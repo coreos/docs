@@ -10,7 +10,7 @@ title: Google Compute Engine
 
 CoreOS on Google Compute Engine (GCE) is currently in heavy development and actively being tested. The current disk image is listed below and relies on GCE's recently announced [Advanced OS Support][gce-advanced-os]. Each time a new update is released, your machines will [automatically upgrade themselves]({{ site.url }}/using-coreos/updates).
 
-You will need to [install gcutil][gcutil-documentation] before proceeding.
+Before proceeding, you will need to [install gcutil][gcutil-documentation] and check that your GCE account/project has billing enabled (Settings &rarr; Billing).
 
 [gce-advanced-os]: http://developers.google.com/compute/docs/transition-v1#customkernelbinaries
 [gcutil-documentation]: https://developers.google.com/compute/docs/gcutil/
