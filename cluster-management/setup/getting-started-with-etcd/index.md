@@ -17,24 +17,44 @@ Application containers running on your cluster can read and write data into etcd
 
 ## Reading and Writing to etcd
 
-The API is easy to use. From a CoreOS machine, you can simply use curl to set and retrieve a key from etcd. It's important to note the `-L` flag is required. etcd transparently redirects writes to the master and this flag allows curl to follow the location headers from etcd.
+The HTTP-based API is easy to use. This guide will show both `etcdctl` and `curl` examples. It's important to note the `-L` flag is required for `curl`. etcd transparently redirects writes to the master and this flag allows `curl` to follow the location headers from etcd.
 
-Set a key `message` with value `Hello`:
+From a CoreOS machine, set a key `message` with value `Hello`:
 
 ```
-curl -L http://127.0.0.1:4001/v1/keys/message -d value="Hello"
+$ etcdctl set /message Hello
+Hello
+```
+
+```
+$ curl -L -X PUT http://127.0.0.1:4001/v2/keys/message -d value="Hello"
+{"action":"set","node":{"key":"/message","value":"Hello","modifiedIndex":4,"createdIndex":4}}
 ```
 
 Read the value of `message` back:
 
 ```
-curl -L http://127.0.0.1:4001/v1/keys/message
+$ etcdctl get /message
+Hello
 ```
 
-If you followed a guide to set up more than one CoreOS machine, you can SSH into another machine and can retrieve this same value. To delete the key run:
+```
+$ curl -L http://127.0.0.1:4001/v2/keys/message
+{"action":"get","node":{"key":"/message","value":"Hello","modifiedIndex":4,"createdIndex":4}}
+```
+
+If you followed a guide to set up more than one CoreOS machine, you can SSH into another machine and can retrieve this same value.
+
+To delete the key run:
 
 ```
-curl -L http://127.0.0.1:4001/v1/keys/message -X DELETE
+$ etcdctl rm /message
+
+```
+
+```
+$ curl -L -X DELETE http://127.0.0.1:4001/v2/keys/message
+{"action":"delete","node":{"key":"/message","modifiedIndex":19,"createdIndex":4}}
 ```
 
 ## Reading and Writing from Inside a Container
@@ -50,57 +70,107 @@ Let's pretend we're setting up a service that consists of a few containers that 
 Directories are automatically created when a key is placed inside. Let's call our directory `foo-service` and create a key with information about a container:
 
 ```
-curl -L http://127.0.0.1:4001/v1/keys/foo-service/container1 -d value="localhost:1111"
+$ etcdctl mkdir /foo-service
+Cannot print key [/foo-service: Is a directory]
+$ etcdctl set /foo-service/container1 localhost:1111
+localhost:1111
+```
+
+```
+$ curl -L -X PUT http://127.0.0.1:4001/v2/keys/foo-service/container1 -d value="localhost:1111"
+{"action":"set","node":{"key":"/foo-service/container1","value":"localhost:1111","modifiedIndex":17,"createdIndex":17}}
 ```
 
 Read the `foo-service` directory to see the entry:
 
 ```
-curl -L http://127.0.0.1:4001/v1/keys/foo-service
+$ etcdctl ls /foo-service
+/foo-service/container1
+```
+
+```
+$ curl -L http://127.0.0.1:4001/v2/keys/foo-service
+{"action":"get","node":{"key":"/foo-service","dir":true,"nodes":[{"key":"/foo-service/container1","value":"localhost:1111","modifiedIndex":17,"createdIndex":17}],"modifiedIndex":17,"createdIndex":17}}
 ```
 
 ### Watching the Directory
 
-Now let's try watching the `foo-service` directory for changes, just like our proxy would have to. First, open up another shell on a CoreOS host in the cluster. In one window, start watching the directory by changing `keys` to `watch`. This command shouldn't output anything until the key has changed. Many events can trigger a change, including a new, updated, deleted or expired key.
+Now let's try watching the `foo-service` directory for changes, just like our proxy would have to. First, open up another shell on a CoreOS host in the cluster. In one window, start watching the directory and in the other window, add another key `container2` with the value `localhost:2222` into the directory. This command shouldn't output anything until the key has changed. Many events can trigger a change, including a new, updated, deleted or expired key.
 
 ```
-curl -L http://127.0.0.1:4001/v1/watch/foo-service
+$ etcdctl watch /foo-service
+
+```
+
+```
+$ curl -L http://127.0.0.1:4001/v2/keys/foo-service?wait=true\&recursive=true
+
 ```
 
 In the other window, let's pretend a new container has started and announced itself to the proxy by running:
 
 ```
-curl -L http://127.0.0.1:4001/v1/keys/foo-service/container2 -d value="localhost:2222"
+$ etcdctl set /foo-service/container2 localhost:2222
+localhost:2222
+```
+
+```
+$ curl -L -X PUT http://127.0.0.1:4001/v2/keys/foo-service/container2 -d value="localhost:2222"
+{"action":"set","node":{"key":"/foo-service/container2","value":"localhost:2222","modifiedIndex":23,"createdIndex":23}}
 ```
 
 In the first window, you should get the notification that the key has changed. In a real application, this would trigger reconfiguration.
 
-## Test and Set
-
-etcd can be used as a centralized coordination service and provides `TestAndSet` functionality as the building block of such a service. You must provide the `prevValue` along with your new value. If the previous value matches the current value the operation will succeed.
+```
+$ etcdctl watch /foo-service
+localhost:2222
+```
 
 ```
-curl -L http://127.0.0.1:4001/v1/keys/message -d prevValue=Hello -d value=Hi
+$ curl -L http://127.0.0.1:4001/v2/keys/foo-service?wait=true\&recursive=true
+{"action":"set","node":{"key":"/foo-service/container2","value":"localhost:2222","modifiedIndex":23,"createdIndex":23}}
+```
+
+## Test and Set
+
+etcd can be used as a centralized coordination service and provides `TestAndSet` functionality as the building block of such a service. You must provide the the previous value along with your new value. If the previous value matches the current value the operation will succeed.
+
+```
+$ etcdctl set /message "Hi" --swap-with-value "Hello"
+Hi
+```
+
+```
+$ curl -L -X PUT http://127.0.0.1:4001/v2/keys/message?prevValue=Hello -d value=Hi
+{"action":"compareAndSwap","node":{"key":"/message","value":"Hi","modifiedIndex":28,"createdIndex":27}}
 ```
 
 ## TTL
 
-You can optionally set a TTL for a key to expire in a certain number of seconds. Setting a TTL of 5 seconds:
+You can optionally set a TTL for a key to expire in a certain number of seconds. Setting a TTL of 20 seconds:
 
 ```
-curl -L http://127.0.0.1:4001/v1/keys/foo -d value=bar -d ttl=5
+$ etcdctl set /foo "Expiring Soon" --ttl 20
+Expiring Soon
 ```
 
-The response will contain an absolute timestamp of when the key will expire and a relative number of seconds until that timestamp:
+The `curl` response will contain an absolute timestamp of when the key will expire and a relative number of seconds until that timestamp:
 
 ```
-{"action":"SET","key":"/foo","value":"bar","newKey":true,"expiration":"2013-07-11T20:31:12.156146039-07:00","ttl":4,"index":6}
+$ curl -L -X PUT http://127.0.0.1:4001/v2/keys/foo?ttl=20 -d value=bar
+{"action":"set","node":{"key":"/foo","value":"bar","expiration":"2014-02-10T19:54:49.357382223Z","ttl":20,"modifiedIndex":31,"createdIndex":31}}
 ```
 
 If you request a key that has already expired, you will be returned a 100:
 
 ```
-{"errorCode":100,"message":"Key Not Found","cause":"/foo"}
+$ etcdctl get /foo
+Error: 100: Key not found (/foo) [32]
+```
+
+```
+$ curl -L http://127.0.0.1:4001/v2/keys/foo
+{"errorCode":100,"message":"Key not found","cause":"/foo","index":32}
 ```
 
 #### More Information
