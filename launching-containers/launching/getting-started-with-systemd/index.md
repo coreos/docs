@@ -21,7 +21,7 @@ Each target is actually a collection of symlinks to our unit files. Running `sys
 
 ## Unit File
 
-On CoreOS, unit files are located within the R/W filesystem at `/media/state/units`. Let's take a look at a simple unit file:
+On CoreOS, unit files are located within the R/W filesystem at `/media/state/units`. Let's create a simple unit named `hello.service`:
 
 ```
 [Unit]
@@ -43,6 +43,28 @@ The description shows up in the systemd log and a few other places. Write someth
 `ExecStart=` allows you to specify any command that you'd like to run when this unit is started.
 
 `WantedBy=` is the target that this unit is a part of.
+
+To start a new unit, we need to tell systemd to create the symlink and then start the file:
+
+```
+$ sudo systemctl link --runtime /media/state/units/hello.service
+ln -s '/media/state/units/hello.service' '/run/systemd/system/hello.service'
+$ sudo systemctl start hello.service
+```
+
+To verify the unit started, you can see the list of containers running with `docker ps` and read the unit's output with `journalctl`:
+
+```
+$ journalctl -f -u hello.service
+-- Logs begin at Fri 2014-02-07 00:05:55 UTC. --
+Feb 11 17:46:26 localhost docker[23470]: Hello World
+Feb 11 17:46:27 localhost docker[23470]: Hello World
+Feb 11 17:46:28 localhost docker[23470]: Hello World
+...
+```
+
+<a class="btn btn-default" href="{{site.url}}/docs/launching-containers/launching/overview-of-systemctl">Overview of systemctl</a>
+<a class="btn btn-default" href="{{site.url}}/docs/cluster-management/debugging/reading-the-system-log">Reading the System Log</a>
 
 ## Advanced Unit Files
 
