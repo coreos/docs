@@ -20,17 +20,17 @@ An Amazon [EC2 AMI oem][oem-ami] pings the instance-data on the host to find the
 
 The OEM is only responsible for:
 
-* Set up networking, if dhcp is not available
+* Set up networking, if DHCP is not available
 * Place initial credentials (via SSH keys)
 
 Upon every boot, CoreOS will look for `/usr/share/oem/run`, and if it exists, execute it. The directory `/usr/share/oem/` should be where all files related to the particular implementation reside.
 This includes scripts, agents, or anything else required to bring the host up.
 
-If dhcp is in place, networking and nameservers will be automatically configured.
+If DHCP is in place, networking and nameservers will be automatically configured.
 However, no credentials will be on the host, so that will still need to be configured via an OEM.
 
 
-## oem in detail
+## OEM in detail
 
 CoreOS's partition table has many different partitions.
 This is because of the active/passive nature of the update system.
@@ -106,6 +106,16 @@ All units will have to have the following section in their `.service` file, for 
 ```
 [Install]
 WantedBy = oem.target
+```
+
+Create /usr/share/oem/system/oem.target. This target will allow you to start and stop all your OEM related services at once:
+
+```
+[Unit]
+Description=CoreOS YourCompany OEM Target
+
+[Install]
+WantedBy=multi-user.target
 ```
 
 ### Example service file for an agent
