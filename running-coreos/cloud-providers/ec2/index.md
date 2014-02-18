@@ -45,10 +45,10 @@ CoreOS is currently in heavy development and actively being tested. The current 
   </tbody>
 </table>
 
-CloudFormation will launch at least three instances with the appropriate security group to enable [etcd]({{ site.url }}/using-coreos/etcd) clustered sharing data between the hosts. You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
+CloudFormation will launch a cluster of CoreOS machines with a configured security and autoscaling group. You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
 ### Adding More Machines
-To add more instances to the cluster, just launch more with the same user-data, the appropriate security group and the AMI for that region. New instances will join the cluster regardless of region if the security groups are configured correctly.
+To add more instances to the cluster, just launch more with the same discovery URL, the appropriate security group and the AMI for that region. New instances will join the cluster regardless of region if the security groups are configured correctly.
 
 ### Multiple Clusters
 If you would like to create multiple clusters you will need to change the "Stack Name". You can find the direct [template file on S3]({{ cf_template }}).
@@ -57,7 +57,7 @@ If you would like to create multiple clusters you will need to change the "Stack
 
 [us-east-latest-quicklaunch]: https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi={{ami-us-east-1}} "{{ami-us-east-1}}"
 
-**TL;DR:** launch three instances of [{{ami-us-east-1}}][us-east-latest-quicklaunch] in **us-east-1** with a security group that has open port 22, 4001, and 7001 and the same random token in the "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [docker][docker-docs] to play with.
+**TL;DR:** launch three instances of [{{ami-us-east-1}}][us-east-latest-quicklaunch] in **us-east-1** with a security group that has open port 22, 4001, and 7001 and the same "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [docker][docker-docs] to play with.
 
 ### Creating the security group
 
@@ -89,20 +89,22 @@ First we need to create a security group to allow CoreOS instances to communicat
 
 ### Launching a test cluster
 
-We will be launching three instances, with a shared token (via a gist url) in the User Data, and selecting our security group.
+We will be launching three instances, with a few parameters in the User Data, and selecting our security group.
 
 1. Open the quick launch by clicking [here][us-east-latest-quicklaunch] (shift+click for new tab)
     * For reference, the current us-east-1 is: [{{ami-us-east-1}}][us-east-latest-quicklaunch]
 2. On the second page of the wizard, launch 3 servers to test our clustering
     * Number of instances: 3 
     * Click "Continue"
-3. Next, we need a secret shared token for user-data. This will be used to bootstrap the cluster. This needs to be a reasonably long secret key. We like using gist for this, since each gist url is public but unique. 
-   * Open [gist.github.com](https://gist.github.com)
-   * Optional: If you paste in your public ssh key to the gist, it will automatically be added to your `core` users ssh client list. 
-   * Click "Create secret gist"
-   * Copy the gist url to your clipboard. 
-4. Back in the EC2 dashboard, paste this URL verbatim into the "User Data" field. 
-   * Paste "https://gist..." link into "User Data"
+3. Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at [https://discovery.etcd.io/new](https://discovery.etcd.io/new) and add it to the metadata. You should re-use this key for each machine in the cluster.
+
+```
+#!/bin/sh
+ETCD_DISCOVERY_URL=https://discovery.etcd.io/<token>
+START_FLEET=1
+```
+4. Back in the EC2 dashboard, paste this information verbatim into the "User Data" field. 
+   * Paste link into "User Data"
    * "Continue"
 5. Storage Configuration
    * "Continue"
