@@ -21,7 +21,7 @@ you will need to launch the `coreos_developer_vmware_insecure.vmx` file to creat
 This is a rough sketch that should work on OSX and Linux:
 
 ```
-wget http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_vmware_insecure.zip
+curl -O http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_vmware_insecure.zip
 unzip coreos_production_vmware_insecure.zip
 cd coreos_production_vmware_insecure
 open coreos_production_vmware_insecure.vmx
