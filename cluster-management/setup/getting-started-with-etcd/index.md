@@ -98,7 +98,7 @@ $ curl -L http://127.0.0.1:4001/v2/keys/foo-service
 Now let's try watching the `foo-service` directory for changes, just like our proxy would have to. First, open up another shell on a CoreOS host in the cluster. In one window, start watching the directory and in the other window, add another key `container2` with the value `localhost:2222` into the directory. This command shouldn't output anything until the key has changed. Many events can trigger a change, including a new, updated, deleted or expired key.
 
 ```
-$ etcdctl watch /foo-service
+$ etcdctl watch /foo-service --recursive
 
 ```
 
@@ -122,7 +122,7 @@ $ curl -L -X PUT http://127.0.0.1:4001/v2/keys/foo-service/container2 -d value="
 In the first window, you should get the notification that the key has changed. In a real application, this would trigger reconfiguration.
 
 ```
-$ etcdctl watch /foo-service
+$ etcdctl watch /foo-service --recursive
 localhost:2222
 ```
 
