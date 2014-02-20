@@ -32,7 +32,7 @@ will download the image and start it for you.
 
 
 ```
-git clone https://github.com/coreos/coreos-vagrant/
+git clone https://github.com/coreos/coreos-vagrant.git
 cd coreos-vagrant
 ```
 
