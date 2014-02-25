@@ -35,11 +35,15 @@ The `-t` and `-i` flags allocate a pseudo-tty and keep stdin open even if not at
 
 ## Commiting a Container
 
-After that completes, we need to `commit` these changes to our container with the container ID and the image name. Fetch the container id using `docker ps` in another shell.
+After that completes, we need to `commit` these changes to our container with the container ID and the image name.
 
-The image name is in the format of `username/name`. You can commit using any username and image name locally, but to push an image to the public registry, the username must be a valid [Docker.IO user account](https://www.docker.io/account/signup/). 
+To find the container ID, open another shell (so the container is still running) and read the ID using `docker ps`. 
 
-We're going to use `coreos` in this example but you should [sign up for a Docker.IO user account](https://www.docker.io/account/signup/) and use that instead. 
+The image name is in the format of `username/name`. We're going to use `coreos` as our username in this example but you should [sign up for a Docker.IO user account](https://www.docker.io/account/signup/) and use that instead. 
+
+It's important to note that you can commit using any username and image name locally, but to push an image to the public registry, the username must be a valid [Docker.IO user account](https://www.docker.io/account/signup/).
+
+Commit the container with the container ID, your username, and the name `apache`:
 
 ```
 docker commit 72d468f455ea coreos/apache
