@@ -133,7 +133,7 @@ $ curl -L http://127.0.0.1:4001/v2/keys/foo-service?wait=true\&recursive=true
 
 ## Test and Set
 
-etcd can be used as a centralized coordination service and provides `TestAndSet` functionality as the building block of such a service. You must provide the the previous value along with your new value. If the previous value matches the current value the operation will succeed.
+etcd can be used as a centralized coordination service and provides `TestAndSet` functionality as the building block of such a service. You must provide the previous value along with your new value. If the previous value matches the current value the operation will succeed.
 
 ```
 $ etcdctl set /message "Hi" --swap-with-value "Hello"
