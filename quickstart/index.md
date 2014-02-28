@@ -97,4 +97,4 @@ journalctl -u hello.service -f
 <a class="btn btn-default" href="http://www.freedesktop.org/wiki/Software/systemd/">Read systemd Website</a>
 
 #### Chaos Monkey
-During our alpha period, Chaos Monkey (i.e. random reboots) is built in and will give you plenty of opportunities to test out systemd. CoreOS machines will automatically reboot after an update is applied.
+During our alpha period, Chaos Monkey (i.e. random reboots) is built in and will give you plenty of opportunities to test out systemd. CoreOS machines will automatically reboot after an update is applied unless you [configure them not to]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update).
