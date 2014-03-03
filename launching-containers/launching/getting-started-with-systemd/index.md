@@ -100,7 +100,7 @@ After=docker.service
 ExecStart=/bin/bash -c '/usr/bin/docker start -a apache || /usr/bin/docker run -name apache -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND'
 ExecStartPost=/usr/bin/etcdctl set /domains/example.com/10.10.10.123:8081 running
 ExecStop=/usr/bin/docker stop apache
-ExecStopPost=/usr/bin/etcdctl delete /domains/example.com/10.10.10.123:8081
+ExecStopPost=/usr/bin/etcdctl rm /domains/example.com/10.10.10.123:8081
 
 [Install]
 WantedBy=local.target
