@@ -91,8 +91,9 @@ Now create /tmp/dock0.xml with the following contents:
 
 You can change any of these parameters later.
 
-Now import the XML as new VM into your libvirt instance:
+Now create the metadata directory and import the XML as new VM into your libvirt instance:
 
+    mkdir /usr/src/dock0/metadata
     virsh create /tmp/dock0.xml
 
 ### Network configuration
@@ -125,7 +126,6 @@ partition and add a run.sh shell script:
 
 Copy your SSH public key to /usr/src/dock0/metadata/authorized_keys:
 
-    mkdir /usr/src/dock0/metadata
     cp ~/.ssh/id_rsa.pub /usr/src/dock0/metadata/authorized_keys
 
 The metadata directory is configured to be mounted and the authorized_keys file
