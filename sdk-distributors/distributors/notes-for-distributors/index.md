@@ -76,9 +76,9 @@ The simplest way to handle setup is to create a `run` that does everything you n
 
 systemctl disable dhcpcd.service
 systemctl stop dhcpcd.service
-ip -4 address flush dev eth0
-ip -4 address add xxx.xxx.xxx.xxx/xx dev eth0
-ip -4 link set dev eth0 up
+ip -4 address flush dev ens3
+ip -4 address add xxx.xxx.xxx.xxx/xx dev ens3
+ip -4 link set dev ens3 up
 ip -4 route add default via xxx.xxx.xxx.xxx
 echo nameserver 8.8.8.8 > /etc/resolv.conf
 
