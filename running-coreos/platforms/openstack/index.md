@@ -6,6 +6,10 @@ sub_category: platforms
 weight: 5
 ---
 
+<div class="coreos-docs-banner">
+<span class="glyphicon glyphicon-info-sign"></span>This image is now way easier to use! Read about our <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">new file system layout and cloud-config support</a>.
+</div>
+
 # Running CoreOS on OpenStack
 
 CoreOS is currently in heavy development and actively being tested.  These
@@ -18,10 +22,10 @@ These steps will download the CoreOS image, uncompress it and then import it
 into the glance image store.
 
 ```
-$ wget http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_openstack_image.img.bz2
+$ wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_openstack_image.img.bz2
 $ bunzip2 coreos_production_openstack_image.img.bz2
 $ glance image-create --name CoreOS \
-  --container-format ovf \
+  --container-format bare \
   --disk-format qcow2 \
   --file coreos_production_openstack_image.img \
   --is-public True
@@ -47,42 +51,45 @@ $ glance image-create --name CoreOS \
 +------------------+--------------------------------------+
 ```
 
-## Cluster Setup
+## Cloud-Config
 
-We'll walk you through launching and configuring three instances of CoreOS and
-using User Data injection to configure etcd cluster discovery. In order for this
-to work your OpenStack cloud provider must be running the OpenStack metadata
-service.
+CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). We're going to provide our cloud-config to Openstack via the user-data flag. Our cloud-config will also contain SSH keys that will be used to connect to the instance. In order for this to work your OpenStack cloud provider must be running the OpenStack metadata service.
 
-1. You need to specify a discovery URL, which contains a unique token that allows
-   instances to find other hosts in the cluster. If you're launching your first
-   instance, generate one at [https://discovery.etcd.io/new](https://discovery.etcd.io/new)
-   and add it to the metadata. You should use this key for each machine in the
-   cluster. You'll use this token in a file to configure the User Data of new
-   instances. An example file is here (referenced as userdata.txt later):
+The most common cloud-config for Openstack looks like:
 
-        #!/bin/sh
-        ETCD_DISCOVERY_URL=https://discovery.etcd.io/<token>
-        START_FLEET=1
+```
+#cloud-config
 
-2. Now generate the ssh key that will be injected into the image for the `core`
-   user
+coreos:
+  etcd:
+    # generate a new token for each unique cluster from https://discovery.etcd.io/new
+    discovery: https://discovery.etcd.io/<token>
+    # multi-region and multi-cloud deployments need to use $public_ipv4
+    addr: $private_ipv4:4001
+    peer-addr: $private_ipv4:7001
+  units:
+    - name: etcd.service
+      command: start
+    - name: fleet.service
+      command: start
+ssh_authorized_keys:
+  # include one or more SSH public keys
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0g+ZTxC7weoIJLUafOgrm+h...
+```
 
-        $ nova keypair-add coreos > core.pem
+## Launch Cluster
 
-3. Boot up the cluster.
-   Note: Specify the id of the image we imported. The name of the key we just
-   created and the user-data file.
+Boot the machines with the `nova` CLI, referencing the image ID from the import step above and your `cloud-config.yaml`:
 
-        $ nova boot \
-          --user-data ./userdata.txt \
-          --image cdf3874c-c27f-4816-bc8c-046b240e0edd \
-          --key-name coreos \
-          --flavor m1.medium \
-          --num-instances 3
-          --security-groups default coreos
-
-    > If you want to run a single instance just omit the `--num-instances` flag.
+```
+nova boot \
+--user-data ./cloud-config.yaml \
+--image cdf3874c-c27f-4816-bc8c-046b240e0edd \
+--key-name coreos \
+--flavor m1.medium \
+--num-instances 3 \
+--security-groups default coreos
+```
 
 Your first CoreOS cluster should now be running. The only thing left to do is
 find an IP and SSH in.
@@ -115,23 +122,24 @@ core@10-0-0-3 ~ $
 ## Adding More Machines
 
 Adding new instances to the cluster is as easy as launching more with the same 
-discovery URL. New instances will join the cluster assuming they can communicate 
+cloud-config. New instances will join the cluster assuming they can communicate 
 with the others.
 
 Example:
 
-        $ nova boot \
-          --user-data ./userdata.txt \
-          --image cdf3874c-c27f-4816-bc8c-046b240e0edd \
-          --key-name coreos \
-          --flavor m1.medium \
-          --security-groups default coreos
+```
+nova boot \
+--user-data ./cloud-config.yaml \
+--image cdf3874c-c27f-4816-bc8c-046b240e0edd \
+--key-name coreos \
+--flavor m1.medium \
+--security-groups default coreos
+```
 
 ## Multiple Clusters
 
 If you would like to create multiple clusters you'll need to generate and use a
-new token. Change the token value on the `ETCD_DISCOVERY_URL` line in the user
-data script, and boot new instances.
+new discovery token. Change the token value on the etcd discovery parameter in the cloud-config, and boot new instances.
 
 ## Using CoreOS
 

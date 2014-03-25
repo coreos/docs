@@ -45,7 +45,7 @@ Get a view into what the base system will contain and why it will contain those
 things with the emerge tree view:
 
 ```
-emerge-amd64-generic  --emptytree  -p -v --tree  coreos-base/coreos-dev
+emerge-amd64-usr  --emptytree  -p -v --tree  coreos-base/coreos-dev
 ```
 
 ## SSH Config
