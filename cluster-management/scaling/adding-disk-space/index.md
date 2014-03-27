@@ -7,14 +7,13 @@ sub_category: scaling
 weight: 5
 ---
 
+<div class="coreos-docs-banner">
+<span class="glyphicon glyphicon-info-sign"></span>These instructions have been updated for our <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">our new images</a>.
+</div>
+
 # Adding Disk Space to Your CoreOS Machine
 
-Most writable paths such as `/home`, `/var`, and `/usr/local` are stored
-in a special STATE partition mounted at `/media/state`. The default size
-of this partition depends on the platform but it is usually
-between 3GB and 16GB. If more space is required simply extend the
-virtual machine's disk image and CoreOS will fix the partition table and
-resize the STATE partition to fill the disk on the next boot.
+On a CoreOS machine, the operating system itself is mounted as a read-only partition at `/usr`. The root partition provides read-write storage by default and on a fresh install is mostly blank. The default size of this partition depends on the platform but it is usually between 3GB and 16GB. If more space is required simply extend the virtual machine's disk image and CoreOS will fix the partition table and resize the root partition to fill the disk on the next boot.
 
 ## Amazon EC2
 
