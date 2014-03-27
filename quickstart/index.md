@@ -4,6 +4,10 @@ title: CoreOS Quick Start
 #redirect handled in alias_generator.rb
 ---
 
+<div class="coreos-docs-banner">
+<span class="glyphicon glyphicon-info-sign"></span>These instructions have been updated for our <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">our new images</a>.
+</div>
+
 # Quick Start
 
 If you don't have a CoreOS machine running, check out the guides on running CoreOS on [Vagrant][vagrant-guide], [Amazon EC2][ec2-guide], [QEMU/KVM][qemu-guide], [VMware][vmware-guide] and [OpenStack][openstack-guide]. With either of these guides you will have a machine up and running in a few minutes. 
@@ -70,7 +74,7 @@ First, you will need to run all of this as `root` since you are modifying system
 sudo -i
 ```
 
-Create a file called `/media/state/units/hello.service`
+Create a file called `/etc/systemd/system/hello.service`
 
 ```
 [Unit]
@@ -84,13 +88,26 @@ RestartSec=10s
 ExecStart=/usr/bin/docker run busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"
 
 [Install]
-WantedBy=local.target
+WantedBy=multi-user.target
 ```
 
-Then run `systemctl restart local-enable.service` to start all services wanted by local.target. This will start your container and log to the systemd journal. You can read the log by running:
+Then run enable and start the unit:
+
+```
+sudo systemctl enable /etc/systemd/system/hello.service
+sudo systemctl start hello.service
+```
+
+Your container is now started and is logging to the systemd journal. You can read the log by running:
 
 ```
 journalctl -u hello.service -f
+```
+
+To stop the container, run:
+
+```
+sudo systemctl stop hello.service
 ```
 
 #### More Detailed Information
