@@ -100,10 +100,10 @@ Set up the "core" user's password.
 ./set_shared_user_password.sh
 ```
 
-Target amd64-generic for this image:
+Target amd64-usr for this image:
 
 ```
-echo amd64-generic > .default_board
+echo amd64-usr > .default_board
 ```
 
 Setup a board root filesystem in /build/${BOARD}:

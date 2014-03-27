@@ -35,7 +35,7 @@ If you want to test that an image you built can successfully upgrade a running
 VM you can use the `--image` argument to the devserver. Here is an example:
 
 ```
-start_devserver --image ../build/images/amd64-generic/latest/chromiumos_image.bin
+start_devserver --image ../build/images/amd64-usr/latest/chromiumos_image.bin
 ```
 
 From the target virtual machine you run:

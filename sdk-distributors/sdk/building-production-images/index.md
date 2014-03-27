@@ -127,7 +127,7 @@ To push an update to the dev channel track on api.core-os.net build a
 production images as described above and then use the following tool:
 
 ```
-COREOS_OFFICIAL=1 ./core_upload_update <required flags> --track dev-channel --image ../build/images/amd64-generic/latest/coreos_production_image.bin
+COREOS_OFFICIAL=1 ./core_upload_update <required flags> --track dev-channel --image ../build/images/amd64-usr/latest/coreos_production_image.bin
 ```
 
 ### Automated builds
@@ -139,7 +139,7 @@ a full SDK setup is not required. This does require gsutil to be
 installed and configured.
 
 ```
-URL=gs://storage.core-os.net/coreos/amd64-generic/0000.0.0
+URL=gs://storage.core-os.net/coreos/amd64-usr/0000.0.0
 cd $(mktemp -d)
 gsutil cp $URL/au-generator.zip $URL/coreos_production_image.bin.bz2 ./
 unzip au-generator.zip

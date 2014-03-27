@@ -8,49 +8,107 @@ cloud-formation-launch-logo: https://s3.amazonaws.com/cloudformation-examples/cl
 ---
 {% capture cf_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha.template{% endcapture %}
 
+<div class="coreos-docs-banner">
+<span class="glyphicon glyphicon-info-sign"></span>This image is now way easier to use! Read about our <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">new file system layout and cloud-config support</a>.
+</div>
+
 # Running CoreOS {{ site.ami-version }} on EC2
 
-CoreOS is currently in heavy development and actively being tested. The current AMIs for all EC2 regions are listed below and updated frequently. Each time a new update is released, your machines will [automatically upgrade themselves]({{ site.url }}/using-coreos/updates). Using CloudFormation is the easiest way to launch a cluster, but you can also follow the manual steps at the end of the article.
+The current AMIs for all CoreOS channels and EC2 regions are listed below and updated frequently. Using CloudFormation is the easiest way to launch a cluster, but you can also follow the manual steps at the end of the article. You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
-<table>
-  <thead>
-    <tr>
-      <th>EC2 Region</th>
-      <th>AMI ID</th>
-      <th>CloudFormation</th>
-    </tr>
-  </thead>
-  <tbody>
-{% assign pairs = site.amis-all | split: "|" %}
-{% for item in pairs %} 
+## Choosing a Channel
 
-  {% assign amis = item | split: "=" %}
-  {% for item in amis limit:1 offset:0 %}
-     {% assign region = item %}
-  {% endfor %}
-  {% for item in amis limit:1 offset:1 %}
-     {% assign ami-id = item %}
-  {% endfor %}
-  {% if region == "us-east-1" %}
-    {% assign ami-us-east-1 = ami-id %}
-  {% endif %}
+CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Release notes can currently be found on [Github](https://github.com/coreos/manifest/releases) but we're researching better options.
 
-  <tr>
-    <td>{{ region }}</td>
-    <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region }}#launchAmi={{ ami-id }}">{{ ami-id }}</a></td>
-    <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
-  </tr>
+<div id="ec2-images">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
+  </ul>
+  <div class="tab-content coreos-docs-image-table">
+    <div class="tab-pane active" id="alpha">
+      <div class="channel-info">
+        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.ami-version}}.</p>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>EC2 Region</th>
+            <th>AMI ID</th>
+            <th>CloudFormation</th>
+          </tr>
+        </thead>
+        <tbody>
+      {% assign pairs = site.amis-all | split: "|" %}
+      {% for item in pairs %} 
 
-{% endfor %}
-  </tbody>
-</table>
+        {% assign amis = item | split: "=" %}
+        {% for item in amis limit:1 offset:0 %}
+           {% assign region = item %}
+        {% endfor %}
+        {% for item in amis limit:1 offset:1 %}
+           {% assign ami-id = item %}
+        {% endfor %}
+        {% if region == "us-east-1" %}
+          {% assign ami-us-east-1 = ami-id %}
+        {% endif %}
 
-CloudFormation will launch a cluster of CoreOS machines with a configured security and autoscaling group. You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
+        <tr>
+          <td>{{ region }}</td>
+          <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region }}#launchAmi={{ ami-id }}">{{ ami-id }}</a></td>
+          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+        </tr>
+
+      {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+CloudFormation will launch a cluster of CoreOS machines with a security and autoscaling group.
+
+## Cloud-Config
+
+CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. You can provide raw cloud-config data to CoreOS via the Amazon web console or [via the EC2 API][ec2-cloud-config]. Our CloudFormation template supports the most common cloud-config options as well.
+
+The most common cloud-config for EC2 looks like:
+
+```
+#cloud-config
+
+coreos:
+  etcd:
+    # generate a new token for each unique cluster from https://discovery.etcd.io/new
+    discovery: https://discovery.etcd.io/<token>
+    # multi-region and multi-cloud deployments need to use $public_ipv4
+    addr: $private_ipv4:4001
+    peer-addr: $private_ipv4:7001
+  units:
+    - name: etcd.service
+      command: start
+    - name: fleet.service
+      command: start
+```
+
+</br>
+<div class="row">
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <img src="{{site.url}}/assets/images/media/ec2-cloudformation-cloud-config.png" class="screenshot" />
+    <div class="caption">Providing options during CloudFormation.</div>
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <img src="{{site.url}}/assets/images/media/ec2-instance-cloud-config.png" class="screenshot" />
+    <div class="caption">Providing cloud-config during EC2 boot wizard.</div>
+  </div>
+</div>
+
+[ec2-cloud-config]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
+[cloud-config-docs]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 ### Adding More Machines
-To add more instances to the cluster, just launch more with the same discovery URL, the appropriate security group and the AMI for that region. New instances will join the cluster regardless of region if the security groups are configured correctly.
+To add more instances to the cluster, just launch more with the same cloud-config, the appropriate security group and the AMI for that region. New instances will join the cluster regardless of region if the security groups are configured correctly.
 
-### Multiple Clusters
+## Multiple Clusters
 If you would like to create multiple clusters you will need to change the "Stack Name". You can find the direct [template file on S3]({{ cf_template }}).
 
 ## Manual setup
@@ -99,9 +157,13 @@ We will be launching three instances, with a few parameters in the User Data, an
 3. Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at [https://discovery.etcd.io/new](https://discovery.etcd.io/new) and add it to the metadata. You should re-use this key for each machine in the cluster.
 
 ```
-#!/bin/sh
-ETCD_DISCOVERY_URL=https://discovery.etcd.io/<token>
-START_FLEET=1
+#cloud-config
+
+coreos:
+  etcd:
+    discovery_url: https://discovery.etcd.io/<token>
+    fleet:
+        autostart: yes
 ```
 4. Back in the EC2 dashboard, paste this information verbatim into the "User Data" field. 
    * Paste link into "User Data"
