@@ -7,6 +7,10 @@ sub_category: launching
 weight: 5
 ---
 
+<div class="coreos-docs-banner">
+<span class="glyphicon glyphicon-info-sign"></span>These instructions have been updated for our <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">our new images</a>.
+</div>
+
 # Getting Started with systemd
 
 systemd is an init system that provides many powerful features for starting, stopping and managing processes. Within the CoreOS world, you will almost exclusively use systemd to manage the lifecycle of your Docker containers.
@@ -15,13 +19,13 @@ systemd is an init system that provides many powerful features for starting, sto
 
 systemd consists of two main concepts: a unit and a target. A unit is a configuration file that describes the properties of the process that you'd like to run. This is normally a `docker run` command or something similar. A target is a grouping mechanism that allows systemd to start up groups of processes at the same time. This happens at every boot as processes are started at different run levels.
 
-systemd is the first process started on CoreOS and it reads different targets and starts the processes specified which allows the operating system to start. The target that you'll interact with is the `local.target` which holds all of the unit files for our containers.
+systemd is the first process started on CoreOS and it reads different targets and starts the processes specified which allows the operating system to start. The target that you'll interact with is the `multi-user.target` which holds all of the general use unit files for our containers.
 
-Each target is actually a collection of symlinks to our unit files. Running `systemctl restart local-enable.service` creates symlinks to any unit file that should reside in `local.target`. This is specified in the unit file by `WantedBy=local.target`.
+Each target is actually a collection of symlinks to our unit files. This is specified in the unit file by `WantedBy=multi-user.target`. Running `systemctl enable foo.service` creates symlinks to the unit inside `multi-user.target`.
 
 ## Unit File
 
-On CoreOS, unit files are located within the R/W filesystem at `/media/state/units`. Let's create a simple unit named `hello.service`:
+On CoreOS, unit files are located within the R/W filesystem at `/etc/systemd/system`. Let's create a simple unit named `hello.service`:
 
 ```
 [Unit]
@@ -33,7 +37,7 @@ Requires=docker.service
 ExecStart=/usr/bin/docker run busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"
 
 [Install]
-WantedBy=local.target
+WantedBy=multi-user.target
 ```
 
 The description shows up in the systemd log and a few other places. Write something that will help you understand exactly what this does later on.
@@ -47,8 +51,7 @@ The description shows up in the systemd log and a few other places. Write someth
 To start a new unit, we need to tell systemd to create the symlink and then start the file:
 
 ```
-$ sudo systemctl link --runtime /media/state/units/hello.service
-ln -s '/media/state/units/hello.service' '/run/systemd/system/hello.service'
+$ sudo systemctl enable /etc/systemd/system/hello.service
 $ sudo systemctl start hello.service
 ```
 
@@ -103,7 +106,7 @@ ExecStop=/usr/bin/docker stop apache
 ExecStopPost=/usr/bin/etcdctl rm /domains/example.com/10.10.10.123:8081
 
 [Install]
-WantedBy=local.target
+WantedBy=multi-user.target
 ```
 
 ## Unit Variables
