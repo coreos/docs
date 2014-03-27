@@ -7,7 +7,7 @@ weight: 7
 ---
 
 <div class="coreos-docs-banner">
-<span class="glyphicon glyphicon-info-sign"></span>These features are only available on <a href="{{site.url}}/blog/new-images-with-cloud-config/">our new images</a>. Currently EC2, Rackspace, GCE, Vagrant and Openstack have networkd support.
+<span class="glyphicon glyphicon-info-sign"></span>These features are only available on <a href="{{site.url}}/blog/new-images-with-cloud-config/">our new images</a>. Currently EC2, GCE, Vagrant and Openstack have networkd support.
 </div>
 
 # Network Configuration with networkd
