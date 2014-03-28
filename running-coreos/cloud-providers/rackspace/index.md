@@ -12,7 +12,7 @@ weight: 5
 
 # Running CoreOS {{site.rackspace-version}} on Rackspace
 
-CoreOS is currently in heavy development and actively being tested.  These instructions will walk you through running CoreOS on the Rackspace Openstack cloud, which differs slightly from the generic Openstack instructions.
+CoreOS is currently in heavy development and actively being tested.  These instructions will walk you through running CoreOS on the Rackspace Openstack cloud, which differs slightly from the generic Openstack instructions. There are two ways to launch a CoreOS cluster: launch an entire cluster with Heat or launch machines with Nova.
 
 
 ## Choosing a Channel
@@ -33,12 +33,14 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
           <tr>
             <th>Region</th>
             <th>Image ID</th>
+            <th>Heat Template</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>All Regions</td>
             <td>{{site.rackspace-image-id}}</td>
+            <td><a href="{{site.url}}/dist/rackspace/heat-alpha.yaml">heat-alpha.yaml</td>
           </tr>
         </tbody>
       </table>
@@ -158,6 +160,41 @@ You should now see the details of your new server in your terminal and it should
 ### Launching More Servers
 
 To launch more servers and have them join your cluster, simply provide the same cloud-config.
+
+## Launch with Heat
+
+We're going to install the `heat` tool, then use it to create a new stack with the specified number of machines, server flavor, SSH key and user-data.
+
+### Install Heat CLI
+
+First, install the [Heat CLI](https://github.com/openstack/python-heatclient) with `sudo pip install python-heatclient`. You can view the [full instructions](http://docs.rackspace.com/orchestration/api/v1/orchestration-getting-started/content/Install_Heat_Client.html) if needed.
+
+Second, verify that you're exporting your credentials for the CLI to use in your `~/bash_profile`:
+
+```
+export OS_AUTH_URL=https://identity.api.rackspacecloud.com/v2.0/
+export OS_USERNAME=<username>
+export OS_TENANT_ID=<tenant_id>
+export HEAT_URL=https://ord.orchestration.api.rackspacecloud.com/v1/${OS_TENANT_ID}  
+export OS_PASSWORD=<password>
+export OS_AUTH_SYSTEM=rackspace
+```
+
+If you have credentials already set up for use with the Nova CLI, they may conflict due to oddities in these tools. Re-source your credientials:
+
+```
+source ~/.bash_profile
+```
+
+### Launch the Stack
+
+Launch the stack by providing the specified parameters. This command will reference the local file `data.yml` in the current working directory that contains the cloud-config parameters. `$(< data.yaml)` prints the contents of this file into our heat command:
+
+```
+heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-alpha.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=5 -P user-data="$(< data.yaml)" -P name="CoreOS-alpha"
+```
+
+You can view the [template here]({{site.url}}/dist/rackspace/heat-alpha.yaml).
 
 ## Using CoreOS
 
