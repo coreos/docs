@@ -33,14 +33,12 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
           <tr>
             <th>Region</th>
             <th>Image ID</th>
-            <th>Heat Template</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>All Regions</td>
             <td>{{site.rackspace-image-id}}</td>
-            <td><a href="{{site.url}}/dist/rackspace/heat-alpha.yaml">heat-alpha.yaml</td>
           </tr>
         </tbody>
       </table>
