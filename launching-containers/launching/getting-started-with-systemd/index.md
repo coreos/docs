@@ -111,7 +111,7 @@ WantedBy=multi-user.target
 
 ## Unit Variables
 
-If our last example we had to hardcode our IP address when we announced our container in etcd. That's not scalable and systemd has a few variables built in to help us out. Here's a few of the most useful:
+In our last example we had to hardcode our IP address when we announced our container in etcd. That's not scalable and systemd has a few variables built in to help us out. Here's a few of the most useful:
 
 | Variable | Meaning | Description |
 |----------|---------|-------------|
