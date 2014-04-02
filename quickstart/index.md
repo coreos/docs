@@ -85,14 +85,15 @@ Requires=docker.service
 [Service]
 Restart=always
 RestartSec=10s
-ExecStart=/usr/bin/docker run --cidfile /var/run/%n.cid busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"
-ExecStop=/bin/bash -c "/usr/bin/docker stop -t 2 $(cat /var/run/%n.cid)"
-ExecStop=/bin/rm /var/run/%n.cid
-KillMode=none
+ExecStart=/bin/bash -c '/usr/bin/docker start -a hello || /usr/bin/docker run -name hello busybox /bin/sh -c \
+"while true; do echo Hello World; sleep 1; done"'
+ExecStop=/bin/bash -c "/usr/bin/docker stop hello"
 
 [Install]
 WantedBy=multi-user.target
 ```
+
+See the [getting started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd) page for more information on the format of this file.
 
 Then run enable and start the unit:
 
