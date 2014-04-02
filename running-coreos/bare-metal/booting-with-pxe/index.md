@@ -29,7 +29,7 @@ When configuring the CoreOS pxelinux.cfg entry there are are three important ker
 
 - **root=squashfs:**: tells CoreOS to run out of the squashfs root provided in the PXE initrd
 - **state=tmpfs:**: tells CoreOS to put all state into a tmpfs filesystem instead of searching for a disk labeled "STATE"
-- **sshkey**: the given SSH public key will be added to the `core` user'ss authorized_keys file. Replace the example key below with your own (it is usually in `~/.ssh/id_rsa.pub`)
+- **sshkey**: the given SSH public key will be added to the `core` user's authorized_keys file. Replace the example key below with your own (it is usually in `~/.ssh/id_rsa.pub`)
 
 This is an example pxelinux.cfg file that assumes CoreOS is the only option.
 You should be able to copy this verbatim into `/var/lib/tftpboot/pxelinux.cfg/default` after putting in your own SSH key.
@@ -83,9 +83,9 @@ localhost login:
 
 ## Logging in
 
-The IP address for the machine should be printed out to the terminal for convienence.
-If it doesn't show up immediately press enter a few times and it should show up.
-Now you can simply ssh in using public key authentication
+The IP address for the machine should be printed out to the terminal for convenience.
+If it doesn't show up immediately, press enter a few times and it should show up.
+Now you can simply SSH in using public key authentication:
 
 ```
 ssh core@10.0.2.15

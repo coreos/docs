@@ -8,7 +8,7 @@ weight: 5
 ---
 
 <div class="coreos-docs-banner">
-<span class="glyphicon glyphicon-info-sign"></span>These instructions have been updated for our <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">our new images</a>.
+<span class="glyphicon glyphicon-info-sign"></span>These instructions have been updated for <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">our new images</a>.
 </div>
 
 # Getting Started with systemd

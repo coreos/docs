@@ -73,7 +73,7 @@ Restarting a service is as easy as:
 sudo systemctl restart apache.service
 ```
 
-If you're restarting a service after you changed it's service file, you will need to reload all of the service files before your changes take affect:
+If you're restarting a service after you changed its service file, you will need to reload all of the service files before your changes take effect:
 
 ```
 sudo systemctl daemon-reload

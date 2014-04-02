@@ -23,7 +23,7 @@ To illustrate iPXE in action we will qemu-kvm in this guide.
 ### Setting up the Boot Script
 
 iPXE downloads a boot script from a publicly available URL.
-You will need to host this URL somewhere public and replace the example ssh key with your own.
+You will need to host this URL somewhere public and replace the example SSH key with your own.
 
 ```
 #!ipxe

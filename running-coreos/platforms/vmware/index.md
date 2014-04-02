@@ -28,7 +28,7 @@ open coreos_production_vmware_insecure.vmx
 ```
 
 ### To deploy on an ESXi/vSphere host, convert the VM to OVF
-* follow steps above to download and extract the coreos_production_vmware_insecure.zip
+* follow the steps above to download and extract the coreos_production_vmware_insecure.zip
 * download and run the [OVF Tool 3.5.0 installer](https://developercenter.vmware.com/tool/ovf) Requires VMware account login but the download is free. Available for Linux, OSX & Windows for both 32 & 64 bit architectures.
 * convert VM to OVF from the extract dir
 ```
@@ -36,9 +36,9 @@ cd coreos_developer_vmware_insecure
 mkdir coreos
 ovftool coreos_production_vmware_insecure.vmx coreos/coreos.insecure.ovf
 ```
-NOTE: This uses defaults and creates a single core, 1024mb type 4 VM when deployed. To change before deployment, see ovftool --help or manually edit the coreos.insecure.ovf If you do manually edit the OVF file, you will also need to recalculate the SHA1 and update the coreos.insecure.mf accordingly
+NOTE: This uses defaults and creates a single core, 1024MB type 4 VM when deployed. To change before deployment, see ovftool --help or manually edit the coreos.insecure.ovf If you do manually edit the OVF file, you will also need to recalculate the SHA1 and update the coreos.insecure.mf accordingly
 
-Above step creates the following files in ../coreos/
+The above step creates the following files in ../coreos/:
 ```
   coreos.insecure-disk1.vmdk
   coreos.insecure.ovf
@@ -55,19 +55,19 @@ Above step creates the following files in ../coreos/
     
     NOTE: unselect "Power on after deployment" so you have a chance to edit VM settings before powering it up for the first time.
 
-Last step uploads the files to your ESXi datastore and registers your VM. You can now tweak the VM settings like memory and virtual cores then power it on. These instructions were tested to deploy to an ESXi 5.5 host.
+The last step uploads the files to your ESXi datastore and registers your VM. You can now tweak the VM settings, like memory and virtual cores, then power it on. These instructions were tested to deploy to an ESXi 5.5 host.
 
 ## Logging in
 
 Networking can take a bit of time to come up under VMware and you will need to
-know the IP in order to ssh in. Press enter a few times at the login prompt and
+know the IP in order to SSH in. Press enter a few times at the login prompt and
 you should see an IP address pop up:
 
 ![VMware IP Address](vmware-ip.png)
 
 In this case the IP is `10.0.1.81`.
 
-Now you can login using the shared and insecure private ssh key.
+Now you can login using the shared and insecure private SSH key.
 
 ```
 cd coreos_developer_vmware_insecure
@@ -76,9 +76,9 @@ ssh -i insecure_ssh_key core@10.0.1.81
 
 ## Replacing the key
 
-We highly recommend that you disable the original insecure OEM ssh key and
-replace it with your own. This is a simple two step process, first add your
-public key and then remove the original OEM one.
+We highly recommend that you disable the original insecure OEM SSH key and
+replace it with your own. This is a simple two step process: first, add your
+public key, and then remove the original OEM one.
 
 ```
 cat ~/.ssh/id_rsa.pub | ssh core@10.0.1.81 -i insecure_ssh_key update-ssh-keys -a user
