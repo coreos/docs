@@ -38,6 +38,34 @@ docker ps
 journalctl -u docker
 ```
 
+### Cloud-Config
+
+If you need to modify a flag across many machines, you can provide the new unit with cloud-config:
+
+```
+#cloud-config
+
+coreos:
+  units:
+    - name: docker.service
+      command: restart
+      content: |
+        [Unit]
+        Description=Docker Application Container Engine 
+        Documentation=http://docs.docker.io
+        After=network.target
+        Requires=docker-tcp.socket
+
+        [Service]
+        ExecStartPre=/bin/mount --make-rprivate /
+        # Run docker but don't have docker automatically restart
+        # containers. This is a job for systemd and unit files.
+        ExecStart=/usr/bin/docker -d -s=btrfs -r=false -H fd:// -D
+
+        [Install]
+        WantedBy=multi-user.target
+```
+
 ## Enable the Remote API on a New Socket
 
 Create a file called `/etc/systemd/system/docker-tcp.socket` to make docker available on a tcp socket on port 4243.
@@ -63,4 +91,37 @@ systemctl stop docker
 systemctl start docker-tcp.socket
 systemctl start docker
 docker -H tcp://127.0.0.1:4243 ps
+```
+
+### Cloud-Config
+
+To enable the remote API on every CoreOS machine in a cluster, use [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). We need to provide the new socket file and docker's socket activation support will automatically start using the socket:
+
+```
+#cloud-config
+
+coreos:
+  units:
+    - name: docker-tcp.socket
+      command: start
+      content: |
+        [Unit]
+        Description=Docker Socket for the API
+
+        [Socket]
+        ListenStream=4243
+        Service=docker.service
+        BindIPv6Only=both
+
+        [Install]
+        WantedBy=sockets.target
+    - name: enable-docker-tcp.service
+      command: start
+      content: |
+        [Unit]
+        Description=Enable the Docker Socket for the API
+
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/bin/systemctl enable docker-tcp.socket
 ```
