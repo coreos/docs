@@ -117,7 +117,7 @@ In our last example we had to hardcode our IP address when we announced our cont
 |----------|---------|-------------|
 | `%n` | Full unit name | Useful if the name of your unit is unique enough to be used as an argument on a command. |
 | `%m` | Machine ID | Useful for namespacing etcd keys by machine. Example: `/machines/%m/units` |
-| `%b` | BootID | Same as Machine ID. This value is random and changes on each boot |
+| `%b` | BootID | Similar to the machine ID, but this value is random and changes on each boot |
 | `%H` | Hostname | Allows you to run the same unit file across many machines. Useful for service discovery. Example: `/domains/example.com/%H:8081` |
 
 A full list is on the [systemd man page](http://www.freedesktop.org/software/systemd/man/systemd.unit.html).
