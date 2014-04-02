@@ -85,9 +85,9 @@ Requires=docker.service
 [Service]
 Restart=always
 RestartSec=10s
-ExecStart=/bin/bash -c '/usr/bin/docker start -a hello || /usr/bin/docker run -name hello busybox /bin/sh -c \
+ExecStart=/bin/bash -c '/usr/bin/docker start -a hello || /usr/bin/docker run --name hello busybox /bin/sh -c \
 "while true; do echo Hello World; sleep 1; done"'
-ExecStop=/bin/bash -c "/usr/bin/docker stop hello"
+ExecStop=/bin/bash -c "/usr/bin/docker stop -t 2 hello"
 
 [Install]
 WantedBy=multi-user.target
