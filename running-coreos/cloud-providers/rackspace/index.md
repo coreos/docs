@@ -90,7 +90,7 @@ coreos:
         Type=ext3
 ```
 
-For more information about mounting storage, Google's [own documentation](https://developers.google.com/compute/docs/disks#attach_disk) is the best source. You can also read about [mounting storage on CoreOS]({{site.url}}/docs/cluster-management/setup/mounting-storage).
+For more general information, check out [mounting storage on CoreOS]({{site.url}}/docs/cluster-management/setup/mounting-storage).
 
 ## Launch with Nova
 

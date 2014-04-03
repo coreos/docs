@@ -12,7 +12,7 @@ weight: 7
 
 # Mounting Storage
 
-Many platforms provide attached storage, but it must be mounted for you to take advantage of it. You can easily do this via [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config) with a `.mount` unit. Here's an example that mounts an EC2 ephemeral disk:
+Many platforms provide attached storage, but it must be mounted for you to take advantage of it. You can easily do this via [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config) with a `.mount` unit. Here's an example that mounts an [EC2 ephemeral disk]({{site.url}}/docs/running-coreos/cloud-providers/ec2/#instance-storage):
 
 ```
 #cloud-config
@@ -34,4 +34,4 @@ It's important to note that [systemd requires](http://www.freedesktop.org/softwa
 
 ## Further Reading
 
-Read the [full docs](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) to learn about the available options.
+Read the [full docs](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) to learn about the available options. Examples specific to [EC2](http://localhost:9001/docs/running-coreos/cloud-providers/ec2/#instance-storage), [Google Compute Engine](http://localhost:9001/docs/running-coreos/cloud-providers/google-compute-engine/#additional-storage) and [Rackspace Cloud](http://localhost:9001/docs/running-coreos/cloud-providers/rackspace/#mount-data-disk) can be used as a starting point.
