@@ -75,7 +75,22 @@ coreos:
 
 ### Mount Data Disk
 
-Certain server flavors have separate system and data disks. To utilize the data disks or a Cloud Block Storage volume, they must be mounted with a `.mount` unit. [Read more about mounting storage]({{site.url}}/docs/cluster-management/setup/mounting-storage).
+Certain server flavors have separate system and data disks. To utilize the data disks or a Cloud Block Storage volume, they must be mounted with a `.mount` unit.
+
+```
+#cloud-config
+coreos:
+  units:
+    - name media-data.mount
+      command: start
+      content: |
+        [Mount]
+        What=/dev/xvde
+        Where=/media/data
+        Type=ext3
+```
+
+For more information about mounting storage, Google's [own documentation](https://developers.google.com/compute/docs/disks#attach_disk) is the best source. You can also read about [mounting storage on CoreOS]({{site.url}}/docs/cluster-management/setup/mounting-storage).
 
 ## Launch with Nova
 
