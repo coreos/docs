@@ -64,6 +64,10 @@ Create 3 instances from the image above using our cloud-config from `cloud-confi
 gcutil --project=<project-id> addinstance --image=coreos-v{{ site.gce-version-id }} --persistent_boot_disk --zone=us-central1-a --machine_type=n1-standard-1 --metadata_from_file=user-data:cloud-config.yaml core1 core2 core3
 ```
 
+### Additional Storage
+
+Additional disks attached to instances can be mounted with a `.mount` unit. [Read more about mounting storage]({{site.url}}/docs/cluster-management/setup/mounting-storage).
+
 ### Adding More Machines
 To add more instances to the cluster, just launch more with the same cloud-config inside of the project.
 

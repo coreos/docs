@@ -1,0 +1,37 @@
+---
+layout: docs
+title: Mounting Storage
+category: cluster_management
+sub_category: setting_up
+weight: 7
+---
+
+<div class="coreos-docs-banner">
+<span class="glyphicon glyphicon-info-sign"></span>These features are only available on <a href="{{site.url}}/blog/new-images-with-cloud-config/">our new images</a>. Currently EC2, GCE, Vagrant and Openstack have networkd support.
+</div>
+
+# Mounting Storage
+
+Many platforms provide attached storage, but it must be mounted for you to take advantage of it. You can easily do this via [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config) with a `.mount` unit. Here's an example that mounts an EC2 ephemeral disk:
+
+```
+#cloud-config
+
+coreos:
+  units:
+    - name: media-ephemeral.mount
+      command: start
+      content: |
+        [Mount]
+        What=/dev/xvdb
+        Where=/media/ephemeral
+        Type=ext3
+```
+
+As you can see, it's pretty simple. You specify the attached device and where you want it mounted. Optionally, you can provide a file system type.
+
+It's important to note that [systemd requires](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) mount units to be named after the "mount point directories they control". In our example above, we want our device mounted at `/media/ephemeral` so it must be named `media-ephemeral.mount`.
+
+## Further Reading
+
+Read the [full docs](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) to learn about the available options.
