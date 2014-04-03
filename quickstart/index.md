@@ -5,7 +5,7 @@ title: CoreOS Quick Start
 ---
 
 <div class="coreos-docs-banner">
-<span class="glyphicon glyphicon-info-sign"></span>These instructions have been updated for our <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">our new images</a>.
+<span class="glyphicon glyphicon-info-sign"></span>These instructions have been updated for <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">our new images</a>.
 </div>
 
 # Quick Start
@@ -54,7 +54,7 @@ Run a command in the container and then stop it:
 docker run busybox /bin/echo hello world
 ```
 
-Open a shell prompt inside of the container:
+Open a shell prompt inside the container:
 
 ```
 docker run -i -t busybox /bin/sh
@@ -66,7 +66,7 @@ docker run -i -t busybox /bin/sh
 
 ## Process Management with systemd
 
-The third buiding block of CoreOS is **systemd** ([docs][systemd-docs]) and it is installed on each CoreOS machine. You should use systemd to manage the life cycle of your docker containers. The configuration format for systemd is straightforward. In the example below, the Ubuntu container is set up to print text after each reboot:
+The third building block of CoreOS is **systemd** ([docs][systemd-docs]) and it is installed on each CoreOS machine. You should use systemd to manage the life cycle of your docker containers. The configuration format for systemd is straightforward. In the example below, the Ubuntu container is set up to print text after each reboot:
 
 First, you will need to run all of this as `root` since you are modifying system state:
 
@@ -74,7 +74,7 @@ First, you will need to run all of this as `root` since you are modifying system
 sudo -i
 ```
 
-Create a file called `/etc/systemd/system/hello.service`
+Create a file called `/etc/systemd/system/hello.service`:
 
 ```
 [Unit]
@@ -85,11 +85,14 @@ Requires=docker.service
 [Service]
 Restart=always
 RestartSec=10s
-ExecStart=/usr/bin/docker run busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"
+ExecStart=/bin/bash -c '/usr/bin/docker start -a hello || /usr/bin/docker run --name hello busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"'
+ExecStop=/usr/bin/docker stop -t 1 hello
 
 [Install]
 WantedBy=multi-user.target
 ```
+
+See the [getting started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd) page for more information on the format of this file.
 
 Then run enable and start the unit:
 

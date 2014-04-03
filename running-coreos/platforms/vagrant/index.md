@@ -19,7 +19,7 @@ You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev]
 
 ## Download and Install Vagrant
 
-Vagrant is a simple to use command line virtual machine manager. There are
+Vagrant is a simple-to-use command line virtual machine manager. There are
 install packages available for Windows, Linux and OSX. Find the latest
 installer on the [Vagrant downloads page][vagrant]. Be sure to get
 version 1.3.1 or greater.
@@ -28,9 +28,9 @@ version 1.3.1 or greater.
 
 ## Clone Vagrant Repo
 
-Now that you have vagrant installed you can bring up a CoreOS instance.
+Now that you have Vagrant installed you can bring up a CoreOS instance.
 
-The following commands will clone a respository that contains the CoreOS Vagrantfile. This file tells
+The following commands will clone a repository that contains the CoreOS Vagrantfile. This file tells
 Vagrant where it can find the latest disk image of CoreOS. Vagrant will download the image the first time you attempt to start the VM.
 
 ```
@@ -105,7 +105,7 @@ vagrant ssh core-01
 
 ### Using Vagrant's VMware Provider
 
-If you have purchased the [VMware Vagrant provider](http://www.vagrantup.com/vmware), run the following commands: 
+If you have purchased the [VMware Vagrant provider](http://www.vagrantup.com/vmware), run the following commands:
 
 ```
 vagrant up --provider vmware_fusion
@@ -127,7 +127,7 @@ After a 'vagrant reload' you will be prompted for your local machine password.
 
 CoreOS is a rolling release distribution and versions that are out of date will automatically update.
 If you want to start from the most up to date version you will need to make sure that you have the latest box file of CoreOS.
-Simply remove the old box file and vagrant will download the latest one the next time you `vagrant up`.
+Simply remove the old box file and Vagrant will download the latest one the next time you `vagrant up`.
 
 ```
 vagrant box remove coreos-alpha vmware_fusion
