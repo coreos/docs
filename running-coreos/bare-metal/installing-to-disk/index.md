@@ -29,8 +29,8 @@ coreos-install -d /dev/sda
 You most likely will want to take your ssh authorized key files over to this new install too.
 
 ```
-mount /dev/sda9 /mnt/
-cp -Ra ~core/.ssh /mnt/root/home/core/
+mount -o subvol=root /dev/sda9 /mnt/
+cp -Ra ~core/.ssh /mnt/home/core/
 ```
 
 ### STATE Only Installation
