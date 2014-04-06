@@ -17,7 +17,7 @@ CoreOS is currently in heavy development and actively being tested. These instru
 
 You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
-## Download and Install Vagrant
+## Install Vagrant and Virtualbox
 
 Vagrant is a simple-to-use command line virtual machine manager. There are
 install packages available for Windows, Linux and OSX. Find the latest
@@ -25,6 +25,8 @@ installer on the [Vagrant downloads page][vagrant]. Be sure to get
 version 1.3.1 or greater.
 
 [vagrant]: http://www.vagrantup.com/downloads.html
+
+Vagrant can use either the free Virtualbox provider or the commerical VMware provider. Instructions for both are below. For the Virtualbox provider, version 4.0 or greater is required.
 
 ## Clone Vagrant Repo
 
@@ -49,7 +51,8 @@ The most common cloud-config for Vagrant looks like:
 
 coreos:
   etcd:
-      #discovery: <DISCOVERY>
+      #generate a new token for each unique cluster from https://discovery.etcd.io/new
+      #discovery: https://discovery.etcd.io/<token>
       addr: $public_ipv4:4001
       peer-addr: $public_ipv4:7001
   units:
