@@ -73,6 +73,25 @@ coreos:
 
 [cloud-config-docs]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
 
+### Mount Data Disk
+
+Certain server flavors have separate system and data disks. To utilize the data disks or a Cloud Block Storage volume, they must be mounted with a `.mount` unit.
+
+```
+#cloud-config
+coreos:
+  units:
+    - name media-data.mount
+      command: start
+      content: |
+        [Mount]
+        What=/dev/xvde
+        Where=/media/data
+        Type=ext3
+```
+
+For more general information, check out [mounting storage on CoreOS]({{site.url}}/docs/cluster-management/setup/mounting-storage).
+
 ## Launch with Nova
 
 We're going to install `rackspace-novaclient`, upload a keypair and boot the image id `{{site.rackspace-image-id}}`.

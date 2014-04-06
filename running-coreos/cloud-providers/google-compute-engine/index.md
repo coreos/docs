@@ -64,6 +64,25 @@ Create 3 instances from the image above using our cloud-config from `cloud-confi
 gcutil --project=<project-id> addinstance --image=coreos-v{{ site.gce-version-id }} --persistent_boot_disk --zone=us-central1-a --machine_type=n1-standard-1 --metadata_from_file=user-data:cloud-config.yaml core1 core2 core3
 ```
 
+### Additional Storage
+
+Additional disks attached to instances can be mounted with a `.mount` unit. Each disk can be accessed via `/dev/disk/by-id/google-<disk-name>`. Here's the cloud-config to mount a disk called `database-backup`:
+
+```
+#cloud-config
+coreos:
+  units:
+    - name media-backup.mount
+      command: start
+      content: |
+        [Mount]
+        What=/dev/disk/by-id/google-database-backup
+        Where=/media/backup
+        Type=ext3
+```
+
+For more information about mounting storage, Google's [own documentation](https://developers.google.com/compute/docs/disks#attach_disk) is the best source. You can also read about [mounting storage on CoreOS]({{site.url}}/docs/cluster-management/setup/mounting-storage).
+
 ### Adding More Machines
 To add more instances to the cluster, just launch more with the same cloud-config inside of the project.
 
