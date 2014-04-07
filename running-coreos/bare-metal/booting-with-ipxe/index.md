@@ -9,9 +9,7 @@ weight: 5
 
 # Booting CoreOS via iPXE
 
-CoreOS is currently in heavy development and actively being tested.
-These instructions will walk you through booting CoreOS via PXE on real or virtual hardware.
-This will run CoreOS completely out of RAM by default.
+CoreOS is currently in heavy development and actively being tested. These instructions will walk you through booting CoreOS via PXE on real or virtual hardware. By default, this will run CoreOS completely out of RAM. CoreOS can also be [installed to disk]({{site.url}}/docs/running-coreos/bare-metal/installing-to-disk).
 
 ## Configuring pxelinux
 
@@ -63,6 +61,10 @@ http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_px
 ```
 
 After a few moments of downloading CoreOS should boot normally.
+
+## Update Process
+
+Since our upgrade process requires a disk, this image does not have the option to update itself. Instead, the box simply needs to be rebooted and will be running the latest verison, assuming that the image served by the PXE server is regularly updated.
 
 ## Installation
 
