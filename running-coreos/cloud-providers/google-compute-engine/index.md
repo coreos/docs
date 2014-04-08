@@ -99,7 +99,7 @@ To modify an existing instance's cloud-config, read the `metadata-fingerprint` a
 ```
 $ gcutil --project=coreos-gce-testing getinstance core2
 
-INFO: Zone for philips-prod2 detected as us-central1-a.
+INFO: Zone for core2 detected as us-central1-a.
 +------------------------+-----------------------------------------------------+
 | name                   | core2                                               |
 | description            |                                                     |
@@ -148,6 +148,8 @@ INFO: Zone for philips-prod2 detected as us-central1-a.
 ```
 gcutil --project=<project-id> setinstancemetadata core2 --metadata_from_file=cloud-config:foo.yaml --fingerprint="tgFMD53d3kI="
 ```
+
+The new metadata will be applied to the machine after a reboot.
 
 ## Using CoreOS
 
