@@ -6,10 +6,6 @@ sub_category: platforms
 weight: 5
 ---
 
-<div class="coreos-docs-banner">
-<span class="glyphicon glyphicon-info-sign"></span>This image is now way easier to use! Read about our <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">new file system layout and cloud-config support</a>.
-</div>
-
 # Running CoreOS on OpenStack
 
 CoreOS is currently in heavy development and actively being tested.  These

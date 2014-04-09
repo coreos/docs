@@ -6,10 +6,6 @@ weight: 3
 title: Google Compute Engine
 ---
 
-<div class="coreos-docs-banner">
-<span class="glyphicon glyphicon-info-sign"></span>This image is now way easier to use! Read about our <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">new file system layout and cloud-config support</a>.
-</div>
-
 # Running CoreOS {{ site.version-string }} on Google Compute Engine
 
 CoreOS on Google Compute Engine (GCE) is currently in heavy development and actively being tested. The current disk image is listed below and relies on GCE's recently announced [Advanced OS Support][gce-advanced-os]. Each time a new update is released, your machines will [automatically upgrade themselves]({{ site.url }}/using-coreos/updates).
