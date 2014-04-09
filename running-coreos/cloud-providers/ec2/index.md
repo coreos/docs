@@ -8,10 +8,6 @@ cloud-formation-launch-logo: https://s3.amazonaws.com/cloudformation-examples/cl
 ---
 {% capture cf_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha.template{% endcapture %}
 
-<div class="coreos-docs-banner">
-<span class="glyphicon glyphicon-info-sign"></span>This image is now way easier to use! Read about our <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">new file system layout and cloud-config support</a>.
-</div>
-
 # Running CoreOS {{ site.ami-version }} on EC2
 
 The current AMIs for all CoreOS channels and EC2 regions are listed below and updated frequently. Using CloudFormation is the easiest way to launch a cluster, but you can also follow the manual steps at the end of the article. You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].

@@ -6,10 +6,6 @@ sub_category: setting_up
 weight: 7
 ---
 
-<div class="coreos-docs-banner">
-<span class="glyphicon glyphicon-info-sign"></span>These features are only available on <a href="{{site.url}}/blog/new-images-with-cloud-config/">our new images</a>. Currently EC2, GCE, Vagrant and Openstack have networkd support.
-</div>
-
 # Network Configuration with networkd
 
 CoreOS machines are preconfigured with [networking customized]({{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors) for each platform. You can write your own networkd units to replace or override the units created for each platform. This article covers a subset of networkd functionality. You can view the [full docs here](http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html).
