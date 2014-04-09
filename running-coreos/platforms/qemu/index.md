@@ -73,8 +73,8 @@ image. There are two files you need: the disk image (provided in qcow2
 format) and the wrapper shell script to start QEMU.
 
     mkdir coreos; cd coreos
-    wget http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_qemu.sh
-    wget http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img
+    wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_qemu.sh
+    wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img
     chmod +x coreos_production_qemu.sh
 
 Starting is as simple as:

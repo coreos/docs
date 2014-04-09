@@ -26,7 +26,7 @@ We start by downloading the most recent disk image:
 
     mkdir -p /usr/src/dock0
     cd /usr/src/dock0
-    wget http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_qemu_image.img.bz2
+    wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_qemu_image.img.bz2
     bunzip2 coreos_production_qemu_image.img.bz2
 
 ## Virtual machine configuration

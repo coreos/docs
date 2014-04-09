@@ -17,7 +17,7 @@ These steps will download the CoreOS image, uncompress it, convert it from qcow-
 In order to convert the image you will need to install ```qemu-img``` with your favorite package manager.
 
 ```
-$ wget -q http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_openstack_image.img.bz2
+$ wget -q http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_openstack_image.img.bz2
 $ bunzip2 coreos_production_openstack_image.img.bz2
 $ qemu-img convert -O raw coreos_production_openstack_image.img coreos_production_openstack_image.raw
 $ euca-bundle-image -i coreos_production_openstack_image.raw -r x86_64 -d /var/tmp
