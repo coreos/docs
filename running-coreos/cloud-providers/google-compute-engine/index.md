@@ -25,7 +25,7 @@ gcutil --project=<project-id> addimage --description="CoreOS {{ site.version-str
 
 ## Cloud-Config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). You can provide cloud-config to CoreOS via the Google Cloud console's metadata field `cloud-config` or via a flag using `gcutil`.
+CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). You can provide cloud-config to CoreOS via the Google Cloud console's metadata field `user-data` or via a flag using `gcutil`.
 
 The most common cloud-config for GCE looks like:
 
@@ -127,7 +127,7 @@ INFO: Zone for core2 detected as us-central1-a.
 |   type                 | ONE_TO_ONE_NAT                                      |
 |   external-ip          | 23.251.151.111                                      |
 | metadata               |                                                     |
-|   cloud-config         | #cloud-config\n\ncoreos:\n  etcd:\n      discovery: |
+|   user-data            | #cloud-config\n\ncoreos:\n  etcd:\n      discovery: |
 |                        | https://discovery.etcd.io/722abac4b8f737b6e45295894 |
 |                        | 8e212af\n      addr: $public_ipv4:4001\n      peer- |
 |                        | addr: $private_ipv4:7001\n  units:\n    - name:     |
@@ -142,7 +142,7 @@ INFO: Zone for core2 detected as us-central1-a.
 ```
 
 ```
-gcutil --project=<project-id> setinstancemetadata core2 --metadata_from_file=cloud-config:foo.yaml --fingerprint="tgFMD53d3kI="
+gcutil --project=<project-id> setinstancemetadata core2 --metadata_from_file=user-data:cloud-config.yaml --fingerprint="tgFMD53d3kI="
 ```
 
 The new metadata will be applied to the machine after a reboot.
