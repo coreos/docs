@@ -12,9 +12,19 @@ weight: 5
 
 # Notes for Distributors
 
-Customizing a CoreOS image for a specific operating environment is easily done through [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/), a YAML-based configuration standard that is widely supported. As a provider, you must ensure that your platform makes this data available to CoreOS, where it will be parsed during the boot process.
+## Importing Images
+
+Images of CoreOS are hosted at `http://storage.core-os.net/coreos/amd64-usr/`. At this URL there are directories for each individual version of CoreOS but also images that have promoted to a channel like master, alpha, beta, etc.
+
+If you are importing images for use inside of your environment it is recommended that you import from a URL in the following format `http://storage.core-os.net/coreos/amd64-usr/${CHANNEL}/`. For example to grab the alpha OpenStack version of CoreOS you can import `http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_openstack_image.img.bz2`. There is a `version.txt` file in this directory which you can use to label the image with a version number as well.
+
+It is recommended that you also verify files using the [CoreOS Image Signing Key][signing-key]. The digests are simply the image URL with `.DIGESTS.asc` appended to it. You can verify the digest with `gpg --verify` after importing the signing key.
+
+[signing-key]: {{site.url}}/security/image-signing-key
 
 ## Image Customization
+
+Customizing a CoreOS image for a specific operating environment is easily done through [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/), a YAML-based configuration standard that is widely supported. As a provider, you must ensure that your platform makes this data available to CoreOS, where it will be parsed during the boot process.
 
 Use cloud-config to handle platform specific configuration such as custom networking, running an agent on the machine or injecting files onto disk. CoreOS will automatically parse and execute `/usr/share/oem/cloud-config.yml` if it exists. Your cloud-config should create additional units that process user-provided metadata, as described below.
 
