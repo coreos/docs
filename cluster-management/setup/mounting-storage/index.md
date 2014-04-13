@@ -30,4 +30,4 @@ It's important to note that [systemd requires](http://www.freedesktop.org/softwa
 
 ## Further Reading
 
-Read the [full docs](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) to learn about the available options. Examples specific to [EC2](http://{{site.url}}/docs/running-coreos/cloud-providers/ec2/#instance-storage), [Google Compute Engine](http://{{site.url}}/docs/running-coreos/cloud-providers/google-compute-engine/#additional-storage) and [Rackspace Cloud](http://{{site.url}}/docs/running-coreos/cloud-providers/rackspace/#mount-data-disk) can be used as a starting point.
+Read the [full docs](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) to learn about the available options. Examples specific to [EC2]({{site.url}}/docs/running-coreos/cloud-providers/ec2/#instance-storage), [Google Compute Engine]({{site.url}}/docs/running-coreos/cloud-providers/google-compute-engine/#additional-storage) and [Rackspace Cloud]({{site.url}}/docs/running-coreos/cloud-providers/rackspace/#mount-data-disk) can be used as a starting point.
