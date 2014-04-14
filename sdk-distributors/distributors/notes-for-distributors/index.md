@@ -6,10 +6,6 @@ sub_category: distributors
 weight: 5
 ---
 
-<div class="coreos-docs-banner">
-<span class="glyphicon glyphicon-info-sign"></span>The OEM process is now much easier! Read about our <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">new file system layout and cloud-config support</a>.
-</div>
-
 # Notes for Distributors
 
 ## Importing Images
