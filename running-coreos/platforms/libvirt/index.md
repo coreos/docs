@@ -101,26 +101,24 @@ Now create the metadata directory and import the XML as new VM into your libvirt
 By default, CoreOS uses DHCP to get its network configuration, but in my
 libvirt setup, I connect the VMs with a bridge to the host's eth0.
 
-To make CoreOS use custom networking settings, you can mount the image’s OEM
-partition and add a run.sh shell script:
+Copy the following script to /usr/src/dock0/metadata/run:
 
-    modprobe nbd max_part=63
-    qemu-nbd -c /dev/nbd0 /usr/src/dock0/coreos_production_qemu_image.img
-    mkdir /mnt/oem
-    mount /dev/nbd0p6 /mnt/oem
-    cat > /mnt/oem/run.sh <<'EOT'
     #!/bin/bash
-    systemctl disable dhcpcd.service
-    systemctl stop dhcpcd.service
-    ip -4 address flush dev ens3
-    ip -4 address add 203.0.113.2/24 dev ens3
-    ip -4 link set dev ens3 up
-    ip -4 route add default via 203.0.113.1
-    echo nameserver 8.8.8.8 > /etc/resolv.conf
-    EOT
-    chmod +x /mnt/oem/run.sh
-    umount /mnt/oem
-    qemu-nbd -d /dev/nbd0
+    cat > /run/systemd/network/10-ens3.network <<EOF
+    [Match]
+    MACAddress=52:54:00:fe:b3:c0
+
+    [Network]
+    Address=203.0.113.2/24
+    Gateway=203.0.113.1
+    DNS=8.8.8.8
+    EOF
+
+    systemctl --no-block restart systemd-networkd.service
+
+Be sure to make the script executable:
+
+    chmod +x /usr/src/dock0/metadata/run
 
 ### SSH Keys
 
