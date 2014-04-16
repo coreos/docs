@@ -61,7 +61,7 @@ Now create /tmp/coreos0.xml with the following contents:
         <controller type='usb' index='0'>
         </controller>
         <filesystem type='mount' accessmode='squash'>
-          <source dir='/var/lib/libvirt/images/coreos0/metadata/'/>
+          <source dir='/var/lib/libvirt/images/coreos0/configdrive/'/>
           <target dir='metadata'/>
           <readonly/>
         </filesystem>
@@ -91,43 +91,53 @@ Now create /tmp/coreos0.xml with the following contents:
 
 You can change any of these parameters later.
 
-Now create the metadata directory and import the XML as new VM into your libvirt instance:
+### Config drive
 
-    mkdir /var/lib/libvirt/images/coreos0/metadata
-    virsh create /tmp/coreos0.xml
+Now create a config drive file system to configure CoreOS itself:
+
+    mkdir -p /var/lib/libvirt/images/coreos0/configdrive/openstack/latest
+    touch /var/lib/libvirt/images/coreos0/configdrive/openstack/latest/user_data
+
+The `user_data` file may contain a script for a [cloud config][cloud-config]
+file. We recommend using ssh keys to log into the VM so at a minimum the
+contents of `user_data` should look something like this:
+
+    #config-drive
+
+    ssh_authorized_keys:
+     - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
 
 ### Network configuration
 
-By default, CoreOS uses DHCP to get its network configuration, but in my
-libvirt setup, I connect the VMs with a bridge to the host's eth0.
+By default, CoreOS uses DHCP to get its network configuration. In this
+example the VM will be attached directly to the local network via a bridge
+on the host's eth0 and the local network. To configure a static address
+add a [networkd unit][systemd-network] to `user_data`:
 
-Copy the following script to /var/lib/libvirt/images/coreos0/metadata/run:
 
-    #!/bin/bash
-    cat > /run/systemd/network/10-ens3.network <<EOF
-    [Match]
-    MACAddress=52:54:00:fe:b3:c0
+    #config-drive
 
-    [Network]
-    Address=203.0.113.2/24
-    Gateway=203.0.113.1
-    DNS=8.8.8.8
-    EOF
+    ssh_authorized_keys:
+     - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
 
-    systemctl --no-block restart systemd-networkd.service
+    coreos:
+        units:
+          - name: 10-ens3.network
+            content: |
+              [Match]
+              MACAddress=52:54:00:fe:b3:c0
 
-Be sure to make the script executable:
+              [Network]
+              Address=203.0.113.2/24
+              Gateway=203.0.113.1
+              DNS=8.8.8.8
 
-    chmod +x /var/lib/libvirt/images/coreos0/metadata/run
 
-### SSH Keys
+## Virtual machine startup
 
-Copy your SSH public key to /var/lib/libvirt/images/coreos0/metadata/authorized_keys:
+Now import the XML as new VM into your libvirt instance and start it:
 
-    cp ~/.ssh/id_rsa.pub /var/lib/libvirt/images/coreos0/metadata/authorized_keys
-
-The metadata directory is configured to be mounted and the authorized_keys file
-inside will be picked up by CoreOS.
+    virsh create /tmp/coreos0.xml
 
 Once the virtual machine has started you can log in via SSH:
 
@@ -139,8 +149,7 @@ To simplify this and avoid potential host key errors in the future add
 the following to `~/.ssh/config`:
 
     Host coreos0
-    HostName localhost
-    Port 2222
+    HostName 203.0.113.2
     User core
     StrictHostKeyChecking no
     UserKnownHostsFile /dev/null
