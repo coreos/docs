@@ -39,18 +39,6 @@ $ echo $TOKEN
 
 Then build three servers using the image, in the server group we created and specifying the token as the user data:
 
-```
-$ brightbox servers create -i 3 --type small --name "coreos" --user-data $TOKEN --server-groups grp-cdl6h {{site.brightbox-id}}
-
-Creating 3 small (typ-8fych) servers with image CoreOS {{site.brightbox-version}} ({{ site.brightbox-id }}) in groups grp-cdl6h with 0.05k of user data
-
- id         status    type   zone   created_on  image_id   cloud_ip_ids  name  
---------------------------------------------------------------------------------
- srv-ko2sk  creating  small  gb1-a  2013-10-18  {{ site.brightbox-id }}                coreos
- srv-vynng  creating  small  gb1-a  2013-10-18  {{ site.brightbox-id }}                coreos
- srv-7tf5d  creating  small  gb1-a  2013-10-18  {{ site.brightbox-id }}                coreos
---------------------------------------------------------------------------------
-```
 
 ## Accessing the Cluster
 
