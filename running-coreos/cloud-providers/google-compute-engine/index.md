@@ -48,12 +48,6 @@ coreos:
 
 ## Instance creation
 
-First, set up a firewall rule to allow etcd to connect and cluster with other machines in this project:
-
-```
-gcutil --project=<project-id> addfirewall etcd --allowed="tcp:4001,tcp:7001"
-```
-
 Create 3 instances from the image above using our cloud-config from `cloud-config.yaml`:
 
 ```
