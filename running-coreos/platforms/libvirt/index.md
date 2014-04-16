@@ -107,6 +107,8 @@ contents of `user_data` should look something like this:
     ssh_authorized_keys:
      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
 
+[cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
+
 ### Network configuration
 
 By default, CoreOS uses DHCP to get its network configuration. In this
@@ -131,6 +133,8 @@ add a [networkd unit][systemd-network] to `user_data`:
               Address=203.0.113.2/24
               Gateway=203.0.113.1
               DNS=8.8.8.8
+
+[systemd-network]: http://www.freedesktop.org/software/systemd/man/systemd.network.html
 
 
 ## Virtual machine startup
