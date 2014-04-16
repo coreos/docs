@@ -39,7 +39,7 @@ Now create /tmp/coreos0.xml with the following contents:
       <currentMemory unit='KiB'>1048576</currentMemory>
       <vcpu placement='static'>1</vcpu>
       <os>
-        <type arch='x86_64' machine='pc-0.15'>hvm</type>
+        <type arch='x86_64' machine='pc'>hvm</type>
         <boot dev='hd'/>
       </os>
       <features>
@@ -52,7 +52,7 @@ Now create /tmp/coreos0.xml with the following contents:
       <on_reboot>restart</on_reboot>
       <on_crash>restart</on_crash>
       <devices>
-        <emulator>/usr/bin/kvm</emulator>
+        <emulator>/usr/bin/qemu-kvm</emulator>
         <disk type='file' device='disk'>
           <driver name='qemu' type='qcow2'/>
           <source file='/var/lib/libvirt/images/coreos0/coreos_production_qemu_image.img'/>
