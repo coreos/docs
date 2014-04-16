@@ -8,43 +8,54 @@ weight: 10
 
 # Running CoreOS  on a Vultr VPS
 
-CoreOS is currently in heavy development and actively being tested.  These instructions will walk you through running a single CoreOS node. This guide assumes you have an account at [Vultr.com](http://vultr.com).
+CoreOS is currently in heavy development and actively being tested.  These instructions will walk you through running a single CoreOS node. This guide assumes you have an account at [Vultr.com](http://vultr.com). This also assumes you have a public + private key combination generated. Here's a helpful guide if you need to generate these keys: [How to set up SSH keys](https://www.digitalocean.com/community/articles/how-to-set-up-ssh-keys--2).
 
 
-## List Images
+## Create the VPS
 
-You can find it by listing all images and grepping for CoreOS:
+Create a new VPS (any location, any size of your choice), and then for the "Operating System" selection make sure to select "Custom". Click "Place Order". Once you receive the welcome email the VPS will be ready to use (typically 2-3 minutes at most).
 
-```
-$ brightbox images list | grep CoreOS
+## Create the script
 
- id         owner      type      created_on  status   size   name
- ---------------------------------------------------------------------------------------------------------
- {{site.brightbox-id}}  brightbox  official  2013-12-15  public   5442   CoreOS {{site.brightbox-version}} (x86_64)
- ```
+The simplest option to boot up CoreOS as quickly as possible is to load script that contains the series of commands you'd otherwise need to manually type at the command line. This script needs to be publicly accessible (host is on your server for example).
 
-## Building Servers
-
-Before building the cluster, we need to generate a unique identifier for it, which is used by CoreOS to discover and identify nodes.
-
-You can use any random string so we’ll use the `uuid` tool here to generate one:
+A sample script will look like this :
 
 ```
-$ TOKEN=`uuid`
-
-$ echo $TOKEN
-53cf11d4-3726-11e3-958f-939d4f7f9688
+#!ipxe
+set coreos-version dev-channel
+set base-url http://storage.core-os.net/coreos/amd64-generic/${coreos-version}
+kernel ${base-url}/coreos_production_pxe.vmlinuz root=squashfs: state=tmpfs: sshkey="YOUR_PUBLIC_KEY_HERE"
+initrd ${base-url}/coreos_production_pxe_image.cpio.gz
+boot
 ```
+Make sure to replace `YOUR_PUBLIC_KEY_HERE` with your actual public key.
 
-Then build three servers using the image, in the server group we created and specifying the token as the user data:
+Additional reading can be found at [Booting CoreOS with iPXE](http://coreos.com/docs/running-coreos/bare-metal/booting-with-ipxe/) and [Embedded scripts for iPXE](http://ipxe.org/embed).
 
-[Booting CoreOS with iPXE](http://coreos.com/docs/running-coreos/bare-metal/booting-with-ipxe/)
-[iPXE using scripts](http://ipxe.org/embed)
+## Getting CoreOS running
 
+Once you received the email indicating the VPS was ready, click "Manage" for that VPS. Under "Server Actions" Click on "View Console" which will open a new window, and show the iPXE command line prompt.
+
+Type the following commands:
+
+```
+iPXE> dhcp
+```
+The output should end with "OK".
+
+then type:
+
+```
+iPXE> chain http://PATH_TO_YOUR_SCRIPT/script.txt
+```
+Make sure to update ```PATH_TO_YOUR_SCRIPT``` with your correct path to script you created earlier.
+
+You'll see several lines fly past on the consoles the kernel is loaded, and then the initrd is loaded. CoreOS will automatically then boot up, and you'll end up at a login prompt. 
 
 ## Accessing the VPS
 
-Those servers should take just a minute to build and boot. They automatically install your Brightbox Cloud ssh key on bootup, so you can ssh in straight away as the `core` user.
+You can now login to CoreOS, assuming the associated private key is in place on your local computer you'll immediately be logged in. You may need to specify the specific location using ```-i LOCATION```. If you need additional details on how to specify the location of your private key file see [here](http://www.cyberciti.biz/faq/force-ssh-client-to-use-given-private-key-identity-file/).
 
 
 ```
