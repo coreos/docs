@@ -6,10 +6,9 @@ sub_category: cloud_provider
 weight: 10
 ---
 
-# Running CoreOS {{site.brightbox-version}} on a Vultr VPS
+# Running CoreOS  on a Vultr VPS
 
-CoreOS is currently in heavy development and actively being tested.  These
-instructions will walk you through running a single CoreOS node. This guide assumes you have an account at [Vultr.com](http://vultr.com).
+CoreOS is currently in heavy development and actively being tested.  These instructions will walk you through running a single CoreOS node. This guide assumes you have an account at [Vultr.com](http://vultr.com).
 
 
 ## List Images
@@ -39,20 +38,22 @@ $ echo $TOKEN
 
 Then build three servers using the image, in the server group we created and specifying the token as the user data:
 
+[Booting CoreOS with iPXE](http://coreos.com/docs/running-coreos/bare-metal/booting-with-ipxe/)
+[iPXE using scripts](http://ipxe.org/embed)
 
-## Accessing the Cluster
+
+## Accessing the VPS
 
 Those servers should take just a minute to build and boot. They automatically install your Brightbox Cloud ssh key on bootup, so you can ssh in straight away as the `core` user.
 
-If you’ve got ipv6 locally, you can ssh in directly:
 
 ```
-$ ssh core@ipv6.srv-n8uak.gb1.brightbox.com
-The authenticity of host 'ipv6.srv-n8uak.gb1.brightbox.com (2a02:1348:17c:423d:24:19ff:fef1:8f6)' can't be established.
+$ ssh core@IP_HERE
+The authenticity of host 'IP_HERE (2a02:1348:17c:423d:24:19ff:fef1:8f6)' can't be established.
 RSA key fingerprint is 99:a5:13:60:07:5d:ac:eb:4b:f2:cb:c9:b2:ab:d7:21.
 Are you sure you want to continue connecting (yes/no)? yes
 
-Last login: Thu Oct 17 11:42:04 UTC 2013 from srv-4mhaz.gb1.brightbox.com on pts/0
+Last login: Thu Oct 17 11:42:04 UTC 2013 from YOUR_IP on pts/0
    ______                ____  _____
   / ____/___  ________  / __ \/ ___/
  / /   / __ \/ ___/ _ \/ / / /\__ \
@@ -61,7 +62,6 @@ Last login: Thu Oct 17 11:42:04 UTC 2013 from srv-4mhaz.gb1.brightbox.com on pts
 core@srv-n8uak ~ $
 ```
 
-If you don’t have ipv6, you’ll need to [create and map a Cloud IP](http://brightbox.com/docs/guides/cli/cloud-ips/) first.
 
 ## Using CoreOS
 
