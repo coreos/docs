@@ -13,11 +13,11 @@ CoreOS is currently in heavy development and actively being tested.  These instr
 
 ## Create the VPS
 
-Create a new VPS (any location, any size of your choice), and then for the "Operating System" selection make sure to select "Custom". Click "Place Order". Once you receive the welcome email the VPS will be ready to use (typically 2-3 minutes at most).
+Create a new VPS (any location and any size of your choice), and then for the "Operating System" value select  "Custom". Click "Place Order". Once you receive the welcome email the VPS will be ready to use (typically less than 2-3 minutes).
 
 ## Create the script
 
-The simplest option to boot up CoreOS as quickly as possible is to load script that contains the series of commands you'd otherwise need to manually type at the command line. This script needs to be publicly accessible (host is on your server for example).
+The simplest option to boot up CoreOS is to load a script that contains the series of commands you'd otherwise need to manually type at the command line. This script needs to be publicly accessible (host it on your own server -- http://example.com/script.txt for example). Save this script as a text file (.txt extension).
 
 A sample script will look like this :
 
@@ -29,13 +29,13 @@ kernel ${base-url}/coreos_production_pxe.vmlinuz root=squashfs: state=tmpfs: ssh
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot
 ```
-Make sure to replace `YOUR_PUBLIC_KEY_HERE` with your actual public key.
+Make sure to replace `YOUR_PUBLIC_KEY_HERE` with your actual public key, it will begin with "ssh-rsa...".
 
 Additional reading can be found at [Booting CoreOS with iPXE](http://coreos.com/docs/running-coreos/bare-metal/booting-with-ipxe/) and [Embedded scripts for iPXE](http://ipxe.org/embed).
 
 ## Getting CoreOS running
 
-Once you received the email indicating the VPS was ready, click "Manage" for that VPS. Under "Server Actions" Click on "View Console" which will open a new window, and show the iPXE command line prompt.
+Once you have received the email indicating the VPS is ready, click "Manage" for that VPS in your Vultr account area. Under "Server Actions" Click on "View Console" which will open a new window, and show the iPXE command prompt.
 
 Type the following commands:
 
@@ -47,15 +47,17 @@ The output should end with "OK".
 then type:
 
 ```
-iPXE> chain http://PATH_TO_YOUR_SCRIPT/script.txt
+iPXE> chain http://PATH_TO_YOUR_SCRIPT
 ```
-Make sure to update ```PATH_TO_YOUR_SCRIPT``` with your correct path to script you created earlier.
+Make sure to update ```PATH_TO_YOUR_SCRIPT``` with your correct path to script you created earlier. For example, ```http://example.com/script.txt```
 
-You'll see several lines fly past on the consoles the kernel is loaded, and then the initrd is loaded. CoreOS will automatically then boot up, and you'll end up at a login prompt. 
+You'll see several lines scroll past on the console as the kernel is loaded, and then the initrd is loaded. CoreOS will automatically then boot up, and you'll end up at a login prompt. 
 
 ## Accessing the VPS
 
 You can now login to CoreOS, assuming the associated private key is in place on your local computer you'll immediately be logged in. You may need to specify the specific location using ```-i LOCATION```. If you need additional details on how to specify the location of your private key file see [here](http://www.cyberciti.biz/faq/force-ssh-client-to-use-given-private-key-identity-file/).
+
+SSH to the IP of your VPS, and specify the "core" user specifically: ```ssh core@IP_HERE```
 
 
 ```
