@@ -18,23 +18,23 @@ list][coreos-dev].
 
 ## Download the CoreOS image
 
-In this guide, the example virtual machine we are creating is called dock0 and
-all files are stored in /usr/src/dock0. This is not a requirement — feel free
+In this guide, the example virtual machine we are creating is called coreos0 and
+all files are stored in /usr/src/coreos0. This is not a requirement — feel free
 to substitute that path if you use another one.
 
 We start by downloading the most recent disk image:
 
-    mkdir -p /usr/src/dock0
-    cd /usr/src/dock0
+    mkdir -p /usr/src/coreos0
+    cd /usr/src/coreos0
     wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_qemu_image.img.bz2
     bunzip2 coreos_production_qemu_image.img.bz2
 
 ## Virtual machine configuration
 
-Now create /tmp/dock0.xml with the following contents:
+Now create /tmp/coreos0.xml with the following contents:
 
     <domain type='kvm'>
-      <name>dock0</name>
+      <name>coreos0</name>
       <memory unit='KiB'>1048576</memory>
       <currentMemory unit='KiB'>1048576</currentMemory>
       <vcpu placement='static'>1</vcpu>
@@ -55,13 +55,13 @@ Now create /tmp/dock0.xml with the following contents:
         <emulator>/usr/bin/kvm</emulator>
         <disk type='file' device='disk'>
           <driver name='qemu' type='qcow2'/>
-          <source file='/usr/src/dock0/coreos_production_qemu_image.img'/>
+          <source file='/usr/src/coreos0/coreos_production_qemu_image.img'/>
           <target dev='vda' bus='virtio'/>
         </disk>
         <controller type='usb' index='0'>
         </controller>
         <filesystem type='mount' accessmode='squash'>
-          <source dir='/usr/src/dock0/metadata/'/>
+          <source dir='/usr/src/coreos0/metadata/'/>
           <target dir='metadata'/>
           <readonly/>
         </filesystem>
@@ -93,15 +93,15 @@ You can change any of these parameters later.
 
 Now create the metadata directory and import the XML as new VM into your libvirt instance:
 
-    mkdir /usr/src/dock0/metadata
-    virsh create /tmp/dock0.xml
+    mkdir /usr/src/coreos0/metadata
+    virsh create /tmp/coreos0.xml
 
 ### Network configuration
 
 By default, CoreOS uses DHCP to get its network configuration, but in my
 libvirt setup, I connect the VMs with a bridge to the host's eth0.
 
-Copy the following script to /usr/src/dock0/metadata/run:
+Copy the following script to /usr/src/coreos0/metadata/run:
 
     #!/bin/bash
     cat > /run/systemd/network/10-ens3.network <<EOF
@@ -118,13 +118,13 @@ Copy the following script to /usr/src/dock0/metadata/run:
 
 Be sure to make the script executable:
 
-    chmod +x /usr/src/dock0/metadata/run
+    chmod +x /usr/src/coreos0/metadata/run
 
 ### SSH Keys
 
-Copy your SSH public key to /usr/src/dock0/metadata/authorized_keys:
+Copy your SSH public key to /usr/src/coreos0/metadata/authorized_keys:
 
-    cp ~/.ssh/id_rsa.pub /usr/src/dock0/metadata/authorized_keys
+    cp ~/.ssh/id_rsa.pub /usr/src/coreos0/metadata/authorized_keys
 
 The metadata directory is configured to be mounted and the authorized_keys file
 inside will be picked up by CoreOS.
@@ -138,7 +138,7 @@ Once the virtual machine has started you can log in via SSH:
 To simplify this and avoid potential host key errors in the future add
 the following to `~/.ssh/config`:
 
-    Host coreos
+    Host coreos0
     HostName localhost
     Port 2222
     User core
@@ -147,7 +147,7 @@ the following to `~/.ssh/config`:
 
 Now you can log in to the virtual machine with:
 
-    ssh coreos
+    ssh coreos0
 
 
 ## Using CoreOS
