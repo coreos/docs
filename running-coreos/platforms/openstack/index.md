@@ -49,7 +49,12 @@ $ glance image-create --name CoreOS \
 
 ## Cloud-Config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). We're going to provide our cloud-config to Openstack via the user-data flag. Our cloud-config will also contain SSH keys that will be used to connect to the instance. In order for this to work your OpenStack cloud provider must be running the OpenStack metadata service.
+CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config].
+We're going to provide our cloud-config to Openstack via the user-data flag. Our cloud-config will also contain SSH keys that will be used to connect to the instance.
+In order for this to work your OpenStack cloud provider must support [config drive][config-drive] or the OpenStack metadata service.
+
+[cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
+[config-drive]: http://docs.openstack.org/user-guide/content/config-drive.html
 
 The most common cloud-config for Openstack looks like:
 
@@ -86,6 +91,8 @@ nova boot \
 --num-instances 3 \
 --security-groups default coreos
 ```
+
+To use config drive you may need to add `--config-drive=true` to command above.
 
 Your first CoreOS cluster should now be running. The only thing left to do is
 find an IP and SSH in.

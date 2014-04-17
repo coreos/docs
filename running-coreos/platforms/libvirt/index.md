@@ -18,28 +18,28 @@ list][coreos-dev].
 
 ## Download the CoreOS image
 
-In this guide, the example virtual machine we are creating is called dock0 and
-all files are stored in /usr/src/dock0. This is not a requirement — feel free
+In this guide, the example virtual machine we are creating is called coreos0 and
+all files are stored in /var/lib/libvirt/images/coreos0. This is not a requirement — feel free
 to substitute that path if you use another one.
 
 We start by downloading the most recent disk image:
 
-    mkdir -p /usr/src/dock0
-    cd /usr/src/dock0
+    mkdir -p /var/lib/libvirt/images/coreos0
+    cd /var/lib/libvirt/images/coreos0
     wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_qemu_image.img.bz2
     bunzip2 coreos_production_qemu_image.img.bz2
 
 ## Virtual machine configuration
 
-Now create /tmp/dock0.xml with the following contents:
+Now create /tmp/coreos0.xml with the following contents:
 
     <domain type='kvm'>
-      <name>dock0</name>
+      <name>coreos0</name>
       <memory unit='KiB'>1048576</memory>
       <currentMemory unit='KiB'>1048576</currentMemory>
       <vcpu placement='static'>1</vcpu>
       <os>
-        <type arch='x86_64' machine='pc-0.15'>hvm</type>
+        <type arch='x86_64' machine='pc'>hvm</type>
         <boot dev='hd'/>
       </os>
       <features>
@@ -52,16 +52,16 @@ Now create /tmp/dock0.xml with the following contents:
       <on_reboot>restart</on_reboot>
       <on_crash>restart</on_crash>
       <devices>
-        <emulator>/usr/bin/kvm</emulator>
+        <emulator>/usr/bin/qemu-kvm</emulator>
         <disk type='file' device='disk'>
           <driver name='qemu' type='qcow2'/>
-          <source file='/usr/src/dock0/coreos_production_qemu_image.img'/>
+          <source file='/var/lib/libvirt/images/coreos0/coreos_production_qemu_image.img'/>
           <target dev='vda' bus='virtio'/>
         </disk>
         <controller type='usb' index='0'>
         </controller>
         <filesystem type='mount' accessmode='squash'>
-          <source dir='/usr/src/dock0/metadata/'/>
+          <source dir='/var/lib/libvirt/images/coreos0/configdrive/'/>
           <target dir='metadata'/>
           <readonly/>
         </filesystem>
@@ -91,43 +91,57 @@ Now create /tmp/dock0.xml with the following contents:
 
 You can change any of these parameters later.
 
-Now create the metadata directory and import the XML as new VM into your libvirt instance:
+### Config drive
 
-    mkdir /usr/src/dock0/metadata
-    virsh create /tmp/dock0.xml
+Now create a config drive file system to configure CoreOS itself:
+
+    mkdir -p /var/lib/libvirt/images/coreos0/configdrive/openstack/latest
+    touch /var/lib/libvirt/images/coreos0/configdrive/openstack/latest/user_data
+
+The `user_data` file may contain a script for a [cloud config][cloud-config]
+file. We recommend using ssh keys to log into the VM so at a minimum the
+contents of `user_data` should look something like this:
+
+    #config-drive
+
+    ssh_authorized_keys:
+     - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
+
+[cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 ### Network configuration
 
-By default, CoreOS uses DHCP to get its network configuration, but in my
-libvirt setup, I connect the VMs with a bridge to the host's eth0.
+By default, CoreOS uses DHCP to get its network configuration. In this
+example the VM will be attached directly to the local network via a bridge
+on the host's eth0 and the local network. To configure a static address
+add a [networkd unit][systemd-network] to `user_data`:
 
-Copy the following script to /usr/src/dock0/metadata/run:
 
-    #!/bin/bash
-    cat > /run/systemd/network/10-ens3.network <<EOF
-    [Match]
-    MACAddress=52:54:00:fe:b3:c0
+    #config-drive
 
-    [Network]
-    Address=203.0.113.2/24
-    Gateway=203.0.113.1
-    DNS=8.8.8.8
-    EOF
+    ssh_authorized_keys:
+     - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
 
-    systemctl --no-block restart systemd-networkd.service
+    coreos:
+        units:
+          - name: 10-ens3.network
+            content: |
+              [Match]
+              MACAddress=52:54:00:fe:b3:c0
 
-Be sure to make the script executable:
+              [Network]
+              Address=203.0.113.2/24
+              Gateway=203.0.113.1
+              DNS=8.8.8.8
 
-    chmod +x /usr/src/dock0/metadata/run
+[systemd-network]: http://www.freedesktop.org/software/systemd/man/systemd.network.html
 
-### SSH Keys
 
-Copy your SSH public key to /usr/src/dock0/metadata/authorized_keys:
+## Virtual machine startup
 
-    cp ~/.ssh/id_rsa.pub /usr/src/dock0/metadata/authorized_keys
+Now import the XML as new VM into your libvirt instance and start it:
 
-The metadata directory is configured to be mounted and the authorized_keys file
-inside will be picked up by CoreOS.
+    virsh create /tmp/coreos0.xml
 
 Once the virtual machine has started you can log in via SSH:
 
@@ -138,16 +152,15 @@ Once the virtual machine has started you can log in via SSH:
 To simplify this and avoid potential host key errors in the future add
 the following to `~/.ssh/config`:
 
-    Host coreos
-    HostName localhost
-    Port 2222
+    Host coreos0
+    HostName 203.0.113.2
     User core
     StrictHostKeyChecking no
     UserKnownHostsFile /dev/null
 
 Now you can log in to the virtual machine with:
 
-    ssh coreos
+    ssh coreos0
 
 
 ## Using CoreOS
