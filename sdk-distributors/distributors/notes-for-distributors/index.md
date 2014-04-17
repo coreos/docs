@@ -14,7 +14,12 @@ Images of CoreOS are hosted at `http://storage.core-os.net/coreos/amd64-usr/`. A
 
 If you are importing images for use inside of your environment it is recommended that you import from a URL in the following format `http://storage.core-os.net/coreos/amd64-usr/${CHANNEL}/`. For example to grab the alpha OpenStack version of CoreOS you can import `http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_openstack_image.img.bz2`. There is a `version.txt` file in this directory which you can use to label the image with a version number as well.
 
-It is recommended that you also verify files using the [CoreOS Image Signing Key][signing-key]. The digests are simply the image URL with `.DIGESTS.asc` appended to it. You can verify the digest with `gpg --verify` after importing the signing key.
+It is recommended that you also verify files using the [CoreOS Image Signing Key][signing-key]. The digests are simply the image URL, replacing `_image.img.bz2` with `.DIGESTS.asc`. You can verify the digest with `gpg --verify` after importing the signing key. Then the image itself can be verified based on one of the hashes in `.DIGESTS.asc`. For example:
+
+    wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_openstack_image.img.bz2
+    wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_openstack.DIGESTS.asc
+    gpg --verify coreos_production_openstack.DIGESTS.asc
+    sha512sum -c coreos_production_openstack.DIGESTS.asc
 
 [signing-key]: {{site.url}}/security/image-signing-key
 
