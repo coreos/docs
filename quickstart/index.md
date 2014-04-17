@@ -4,10 +4,6 @@ title: CoreOS Quick Start
 #redirect handled in alias_generator.rb
 ---
 
-<div class="coreos-docs-banner">
-<span class="glyphicon glyphicon-info-sign"></span>These instructions have been updated for <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">our new images</a>.
-</div>
-
 # Quick Start
 
 If you don't have a CoreOS machine running, check out the guides on running CoreOS on [Vagrant][vagrant-guide], [Amazon EC2][ec2-guide], [QEMU/KVM][qemu-guide], [VMware][vmware-guide] and [OpenStack][openstack-guide]. With either of these guides you will have a machine up and running in a few minutes. 

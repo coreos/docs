@@ -7,10 +7,6 @@ sub_category: launching
 weight: 5
 ---
 
-<div class="coreos-docs-banner">
-<span class="glyphicon glyphicon-info-sign"></span>These instructions have been updated for <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">our new images</a>.
-</div>
-
 # Getting Started with systemd
 
 systemd is an init system that provides many powerful features for starting, stopping and managing processes. Within the CoreOS world, you will almost exclusively use systemd to manage the lifecycle of your Docker containers.
