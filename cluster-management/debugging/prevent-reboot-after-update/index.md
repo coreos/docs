@@ -7,10 +7,6 @@ sub_category: debugging
 weight: 8
 ---
 
-<div class="coreos-docs-banner">
-<span class="glyphicon glyphicon-info-sign"></span>These instructions have been updated for <a href="{{site.url}}/blog/new-filesystem-btrfs-cloud-config/">our new images</a>.
-</div>
-
 # Prevent Reboot After Update
 
 This is a temporary workaround to disable auto updates. As we move out of the alpha there will be a nicer method.
