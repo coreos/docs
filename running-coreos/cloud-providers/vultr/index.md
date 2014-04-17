@@ -8,16 +8,23 @@ weight: 10
 
 # Running CoreOS  on a Vultr VPS
 
-CoreOS is currently in heavy development and actively being tested.  These instructions will walk you through running a single CoreOS node. This guide assumes you have an account at [Vultr.com](http://vultr.com). This also assumes you have a public + private key combination generated. Here's a helpful guide if you need to generate these keys: [How to set up SSH keys](https://www.digitalocean.com/community/articles/how-to-set-up-ssh-keys--2).
+CoreOS is currently in heavy development and actively being tested.  These instructions will walk you through running a single CoreOS node. This guide assumes:
 
+* You have an account at [Vultr.com](http://vultr.com). 
+* The location of your iPXE script (referenced later in the guide) is located at ```http://example.com/script.txt```
+* You have a public + private key combination generated. Here's a helpful guide if you need to generate these keys: [How to set up SSH keys](https://www.digitalocean.com/community/articles/how-to-set-up-ssh-keys--2). 
 
 ## Create the VPS
 
-Create a new VPS (any location and any size of your choice), and then for the "Operating System" value select  "Custom". Click "Place Order". Once you receive the welcome email the VPS will be ready to use (typically less than 2-3 minutes).
+Create a new VPS (any server type and location of your choice), and then for the "Operating System" select  "Custom". Click "Place Order". 
+
+![Any location, any size, custom OS, place order](https://s3.amazonaws.com/f.cl.ly/items/0H0l1w3u0f1F2n203d0I/Screen%20Shot%202014-04-17%20at%202.52.27%20PM.png)
+
+Once you receive the welcome email the VPS will be ready to use (typically less than 2-3 minutes).
 
 ## Create the script
 
-The simplest option to boot up CoreOS is to load a script that contains the series of commands you'd otherwise need to manually type at the command line. This script needs to be publicly accessible (host it on your own server -- http://example.com/script.txt for example). Save this script as a text file (.txt extension).
+The simplest option to boot up CoreOS is to load a script that contains the series of commands you'd otherwise need to manually type at the command line. This script needs to be publicly accessible (host this file on your own server). Save this script as a text file (.txt extension).
 
 A sample script will look like this :
 
@@ -47,9 +54,8 @@ The output should end with "OK".
 then type:
 
 ```
-iPXE> chain http://PATH_TO_YOUR_SCRIPT
+iPXE> chain http://example.com/script.txt
 ```
-Make sure to update ```PATH_TO_YOUR_SCRIPT``` with your correct path to script you created earlier. For example, ```http://example.com/script.txt```
 
 You'll see several lines scroll past on the console as the kernel is loaded, and then the initrd is loaded. CoreOS will automatically then boot up, and you'll end up at a login prompt. 
 
