@@ -27,6 +27,14 @@ When running on CoreOS the install script will attempt to install the same versi
 coreos-install -d /dev/sda -V alpha
 ```
 
+For reference here are the rest of the `coreos-install` options:
+
+    -d DEVICE   Install CoreOS to the given device.
+    -V VERSION  Version to install (e.g. alpha)
+    -o OEM      OEM type to install (e.g. openstack)
+    -c CLOUD    Insert a cloud-init config to be executed on boot.
+    -t TMPDIR   Temporary location with enough space to download images.
+
 ## Cloud Config
 
 By default there isn't a password or any other way to log into a fresh CoreOS system.
