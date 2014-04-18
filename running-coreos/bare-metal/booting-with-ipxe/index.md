@@ -74,6 +74,9 @@ CoreOS can be completely installed on disk or run from RAM but store user data o
 
 Similar to the [OEM partition][oem] in CoreOS disk images, iPXE images can be customized with a [cloud config][cloud-config] bundled in the initramfs. You can view the [instructions on the PXE docs]({{site.url/docs/bare-metal/booting-with-pxe/#adding-a-custom-oem}}).
 
+[oem]: {{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors/#image-customization
+[cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/
+
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
