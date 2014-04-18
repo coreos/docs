@@ -21,14 +21,14 @@ To illustrate iPXE in action we will qemu-kvm in this guide.
 ### Setting up the Boot Script
 
 iPXE downloads a boot script from a publicly available URL.
-You will need to host this URL somewhere public and replace the example SSH key with your own.
+You will need to host this URL somewhere public and replace the example SSH key with your own. You can also run a [custom iPXE server](https://github.com/kelseyhightower/coreos-ipxe-server).
 
 ```
 #!ipxe
 
-set coreos-version dev-channel
-set base-url http://storage.core-os.net/coreos/amd64-generic/${coreos-version}
-kernel ${base-url}/coreos_production_pxe.vmlinuz root=squashfs: state=tmpfs: sshkey="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQC2PxAKTLdczK9+RNsGGPsz0eC2pBlydBEcrbI7LSfiN7Bo5hQQVjki+Xpnp8EEYKpzu6eakL8MJj3E28wT/vNklT1KyMZrXnVhtsmOtBKKG/++odpaavdW2/AU0l7RZiE= coreos pxe demo"
+set coreos-version alpha
+set base-url http://storage.core-os.net/coreos/amd64-usr/${coreos-version}
+kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQC2PxAKTLdczK9+RNsGGPsz0eC2pBlydBEcrbI7LSfiN7Bo5hQQVjki+Xpnp8EEYKpzu6eakL8MJj3E28wT/vNklT1KyMZrXnVhtsmOtBKKG/++odpaavdW2/AU0l7RZiE= coreos pxe demo"
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot
 ```
@@ -57,7 +57,7 @@ Immediatly iPXE should download your boot script URL and start grabbing the imag
 
 ```
 ${YOUR_BOOT_URL}... ok
-http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_pxe.vmlinuz... 98%
+http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_pxe.vmlinuz... 98%
 ```
 
 After a few moments of downloading CoreOS should boot normally.
@@ -68,7 +68,11 @@ Since our upgrade process requires a disk, this image does not have the option t
 
 ## Installation
 
-CoreOS can be completely installed on disk or run from RAM but store user data on disk. Read more in our [Installing CoreOS guide](/docs/running-coreos/bare-metal/installing-to-disk).
+CoreOS can be completely installed on disk or run from RAM but store user data on disk. Read more in our [Installing CoreOS guide]({{site.url}}/docs/running-coreos/bare-metal/booting-with-pxe/#installation).
+
+## Adding a Custom OEM
+
+Similar to the [OEM partition][oem] in CoreOS disk images, iPXE images can be customized with a [cloud config][cloud-config] bundled in the initramfs. You can view the [instructions on the PXE docs]({{site.url/docs/bare-metal/booting-with-pxe/#adding-a-custom-oem}}).
 
 ## Using CoreOS
 
