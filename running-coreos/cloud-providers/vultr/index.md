@@ -63,16 +63,16 @@ You'll see several lines scroll past on the console as the kernel is loaded, and
 
 You can now login to CoreOS, assuming the associated private key is in place on your local computer you'll immediately be logged in. You may need to specify the specific location using ```-i LOCATION```. If you need additional details on how to specify the location of your private key file see [here](http://www.cyberciti.biz/faq/force-ssh-client-to-use-given-private-key-identity-file/).
 
-SSH to the IP of your VPS, and specify the "core" user specifically: ```ssh core@IP_HERE```
+SSH to the IP of your VPS, and specify the "core" user specifically: ```ssh core@IP```
 
 
 ```
-$ ssh core@IP_HERE
-The authenticity of host 'IP_HERE (2a02:1348:17c:423d:24:19ff:fef1:8f6)' can't be established.
+$ ssh core@IP
+The authenticity of host 'IP (2a02:1348:17c:423d:24:19ff:fef1:8f6)' can't be established.
 RSA key fingerprint is 99:a5:13:60:07:5d:ac:eb:4b:f2:cb:c9:b2:ab:d7:21.
 Are you sure you want to continue connecting (yes/no)? yes
 
-Last login: Thu Oct 17 11:42:04 UTC 2013 from YOUR_IP on pts/0
+Last login: Thu Oct 17 11:42:04 UTC 2013 from 127.0.0.1 on pts/0
    ______                ____  _____
   / ____/___  ________  / __ \/ ___/
  / /   / __ \/ ___/ _ \/ / / /\__ \
