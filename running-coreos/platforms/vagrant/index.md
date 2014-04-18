@@ -18,7 +18,7 @@ You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev]
 Vagrant is a simple-to-use command line virtual machine manager. There are
 install packages available for Windows, Linux and OSX. Find the latest
 installer on the [Vagrant downloads page][vagrant]. Be sure to get
-version 1.3.1 or greater.
+version 1.5 or greater.
 
 [vagrant]: http://www.vagrantup.com/downloads.html
 
@@ -71,7 +71,8 @@ coreos:
 
 ## Startup CoreOS
 
-With Vagrant, you can start a single machine or an entire cluster. To start a cluster, edit `NUM_INSTANCES` in the Vagrantfile to three or more. The cluster will be automatically configured if you provided a discovery URL in the cloud-config.
+With Vagrant, you can start a single machine or an entire cluster. Launching a CoreOS cluster on Vagrant is as simple as configuring `$num_instances` in a `config.rb` file to 3 (or more!) and running `vagrant up`.
+Make sure you provide a fresh discovery URL in your `user-data` if you wish to bootstrap etcd in your cluster.
 
 ### Using Vagrant's default VirtualBox Provider
 
