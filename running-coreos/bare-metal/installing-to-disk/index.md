@@ -9,14 +9,9 @@ weight: 7
 
 # Installing CoreOS to Disk
 
-There are two options for installation on bare metal:
+## Install Script
 
-- Use the installer and put a full CoreOS installation on disk
-- Set up a STATE partition and only store user data on disk and run CoreOS from RAM
-
-### Full Installation
-
-There is a simple installer that will destroy everything on the given target disk.
+There is a simple installer that will destroy everything on the given target disk and install CoreOS.
 Essentially it downloads an image, verifies it with gpg and then copies it bit for bit to disk.
 
 The script is self-contained and located [on Github here](https://raw.github.com/coreos/init/master/bin/coreos-install "coreos-install").
@@ -26,68 +21,50 @@ It is already installed if you are booting CoreOS via PXE but you can also use i
 coreos-install -d /dev/sda
 ```
 
-You most likely will want to take your ssh authorized key files over to this new install too.
+When running on CoreOS the install script will attempt to install the same version. If you want to ensure you are installing the latest available version use the `-V` option:
+
+```
+coreos-install -d /dev/sda -V alpha
+```
+
+For reference here are the rest of the `coreos-install` options:
+
+    -d DEVICE   Install CoreOS to the given device.
+    -V VERSION  Version to install (e.g. alpha)
+    -o OEM      OEM type to install (e.g. openstack)
+    -c CLOUD    Insert a cloud-init config to be executed on boot.
+    -t TMPDIR   Temporary location with enough space to download images.
+
+## Cloud Config
+
+By default there isn't a password or any other way to log into a fresh CoreOS system.
+The easiest way to configure accounts, add systemd units, and more is via cloud config.
+Jump over to the [docs to learn about the supported features][cloud-config].
+As an example this will install a ssh key for the default `core` user:
+
+```
+#cloud-config
+
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0g+ZTxC7weoIJLUafOgrm+h...
+```
+
+Pass this file to `coreos-install` via the `-c` option.
+It will be installed to `/var/lib/coreos-install/user_data` and evaluated on every boot.
+
+```
+coreos-install -d /dev/sda -c ~/config
+```
+
+[cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
+
+## Manual Tweaks
+
+If cloud config doesn't handle something you need to do or you just want to take a look at the root btrfs filesystem before booting your new install just mount the ninth partition:
 
 ```
 mount -o subvol=root /dev/sda9 /mnt/
-cp -Ra ~core/.ssh /mnt/home/core/
 ```
-
-### STATE Only Installation
-
-If you want to run CoreOS out of RAM but keep your containers and state on disk you will need to setup a STATE partition.
-For now this is a manual process.
-
-First, add a single partition to your disk:
-
-```
-parted -a optimal /dev/sda
-mklabel gpt
-mkpart primary 1 100%
-```
-
-Next, format the disk and set the label:
-
-```
-mkfs.ext4 /dev/sda1
-e2label /dev/sda1 STATE
-```
-
-Now you can remove the `state=tmpfs:` line from the PXE parameters and the next time you start the machine it will search for the disk and use it.
-
-## Hardware Support
-
-We are still working on the full set of hardware that we will be supporting.
-We have most of the common hardware working.
-If you run into issues ping on us #coreos or email [Carly][carly-email].
-
-[carly-email]: mailto:carly.stoughton+pxehardware@coreos.com
-
-## Adding a Custom OEM
-
-CoreOS has an [OEM partition][oem] that is used to setup networking, SSH keys, etc on boot.
-If you have site specific customizations you need to make the PXE image this is the perfect place to make it.
-Simply create a `./usr/share/oem/` directory as described on the [OEM page][oem] and append it to the CPIO:
-
-```
-gzip -d coreos_production_pxe_image.cpio.gz
-find usr | cpio -o -A -H newc -O coreos_production_pxe_image.cpio
-gzip coreos_production_pxe_image.cpio
-```
-
-Confirm the archive looks correct and has your `run` file inside of it:
-
-```
-gzip -dc coreos_production_pxe_image.cpio.gz | cpio -it
-./
-newroot.squashfs
-usr
-usr/share
-usr/share/oem
-usr/share/oem/run
-```
-
-[oem]: {{site.url}}/docs/oem/
 
 ## Using CoreOS
 
