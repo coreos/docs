@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Vultr VPS Provider
+title: Vultr VPS
 category: running_coreos
 sub_category: cloud_provider
 weight: 10
