@@ -33,7 +33,7 @@ initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot
 ```
 
-An easy place to host this boot script is on https://gist.github.com and then shorten the raw URL with http://git.io.
+An easy place to host this boot script is on https://gist.github.com. Use the "raw" gist URL, which can be found by clicking the "&lang; &rang;" icon near the top right of the text area. 
 
 
 ### Booting iPXE
