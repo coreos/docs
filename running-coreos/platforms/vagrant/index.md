@@ -134,6 +134,12 @@ vagrant box remove coreos-alpha vmware_fusion
 vagrant box remove coreos-alpha virtualbox
 ```
 
+If you'd like to download the box separately, you can download the URL contained in the Vagrantfile and add it manually:
+
+```
+vagrant box add coreos-alpha <path-to-box-file>
+```
+
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
