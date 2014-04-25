@@ -57,6 +57,14 @@ The above step creates the following files in ../coreos/:
 
 The last step uploads the files to your ESXi datastore and registers your VM. You can now tweak the VM settings, like memory and virtual cores, then power it on. These instructions were tested to deploy to an ESXi 5.5 host.
 
+## Cloud-Config
+
+Cloud-config can be specified by attaching a [config-drive]({{site.url}}/docs/cluster-management/setup/cloudinit-config-drive/) with the label `config-2`. This is commonly done through whatever interface allows for attaching cd-roms or new drives.
+
+Note that the config-drive standard was originally an Openstack feature, which is why you'll see strings containing `openstack`. This filepath needs to be retained, although CoreOS supports config-drive on all platforms.
+
+For more information on customization that can be done with cloud-config, head on over to the [cloud-config guide]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/).
+
 ## Logging in
 
 Networking can take a bit of time to come up under VMware and you will need to
