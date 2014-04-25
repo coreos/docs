@@ -2,8 +2,8 @@
 layout: docs
 slug: guides/etcd
 title: Getting Started with etcd
-category: cluster_management
-sub_category: setting_up
+category: distributed_configuration
+sub_category: reading_writing
 weight: 5
 ---
 

@@ -37,8 +37,8 @@ curl -L http://127.0.0.1:4001/v1/keys/message
 If you followed a guide to set up more than one CoreOS machine, you can SSH into another machine and can retrieve this same value.
 
 #### More Detailed Information
-<a class="btn btn-primary" href="{{ site.url }}/docs/guides/etcd/" data-category="More Information" data-event="Docs: Getting Started etcd">View Complete Guide</a>
-<a class="btn btn-default" href="https://github.com/coreos/etcd">Read etcd API Docs</a>
+<a class="btn btn-primary" href="{{ site.url }}/docs/distributed-configuration/getting-started-with-etcd/" data-category="More Information" data-event="Docs: Getting Started etcd">View Complete Guide</a>
+<a class="btn btn-default" href="{{site.url}}/docs/distributed-configuration/etcd-api/">Read etcd API Docs</a>
 
 ## Container Management with docker
 
