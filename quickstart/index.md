@@ -57,7 +57,7 @@ docker run -i -t busybox /bin/sh
 ```
 
 #### More Detailed Information
-<a class="btn btn-primary" href="{{ site.url }}/docs/guides/docker/" data-category="More Information" data-event="Docs: Getting Started docker">View Complete Guide</a>
+<a class="btn btn-primary" href="{{ site.url }}/docs/launching-containers/building/getting-started-with-docker" data-category="More Information" data-event="Docs: Getting Started docker">View Complete Guide</a>
 <a class="btn btn-default" href="http://docs.docker.io/">Read docker Docs</a>
 
 ## Process Management with systemd
@@ -110,6 +110,7 @@ sudo systemctl stop hello.service
 ```
 
 #### More Detailed Information
+<a class="btn btn-primary" href="{{ site.url }}/docs/launching-containers/launching/getting-started-with-systemd" data-category="More Information" data-event="Docs: Getting Started systemd">View Complete Guide</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/wiki/Software/systemd/">Read systemd Website</a>
 
 #### Chaos Monkey
