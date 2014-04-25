@@ -31,6 +31,9 @@ When configuring the CoreOS pxelinux.cfg there are a few kernel options that may
 - **sshkey**: Add the given SSH public key to the `core` user's authorized_keys file. Replace the example key below with your own (it is usually in `~/.ssh/id_rsa.pub`)
 - **console**: Enable kernel output and a login prompt on a given tty. The default, `tty0`, generally maps to VGA. Can be used multiple times, e.g. `console=tty0 console=ttyS0`
 - **coreos.autologin**: Drop directly to a shell on a given console without prompting for a password. Useful for troubleshooting but use with caution. For any console that doesn't normally get a login prompt by default be sure to combine with the `console` option, e.g. `console=ttyS0 coreos.autologin=ttyS0`. Without any argument it enables access on all consoles. *Experimental*
+- **cloud-config-url**: CoreOS will attempt to download a cloud-config document and use it to provision your booted system. See the [coreos-cloudinit-project][cloudinit] for more information.
+
+[cloudinit]: https://github.com/coreos/coreos-cloudinit
 
 This is an example pxelinux.cfg file that assumes CoreOS is the only option.
 You should be able to copy this verbatim into `/var/lib/tftpboot/pxelinux.cfg/default` after putting in your own SSH key.
