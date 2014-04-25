@@ -36,7 +36,7 @@ When configuring the CoreOS pxelinux.cfg there are a few kernel options that may
 [cloudinit]: https://github.com/coreos/coreos-cloudinit
 
 This is an example pxelinux.cfg file that assumes CoreOS is the only option.
-You should be able to copy this verbatim into `/var/lib/tftpboot/pxelinux.cfg/default` after putting in your own SSH key.
+You should be able to copy this verbatim into `/var/lib/tftpboot/pxelinux.cfg/default` after providing a cloud-config URL:
 
 ```
 default coreos
@@ -48,8 +48,24 @@ display boot.msg
 label coreos
   menu default
   kernel coreos_production_pxe.vmlinuz
-  append initrd=coreos_production_pxe_image.cpio.gz sshkey="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQC2PxAKTLdczK9+RNsGGPsz0eC2pBlydBEcrbI7LSfiN7Bo5hQQVjki+Xpnp8EEYKpzu6eakL8MJj3E28wT/vNklT1KyMZrXnVhtsmOtBKKG/++odpaavdW2/AU0l7RZiE= coreos pxe demo"
+  append initrd=coreos_production_pxe_image.cpio.gz cloud-config-url=http://example.com/pxe-cloud-config.yml
 ```
+
+Here's a common cloud-config example which should be located at the URL from above:
+
+```
+#cloud-config
+coreos:
+  units:
+    - name: etcd.service
+      command: start
+    - name: fleet.service
+      command: start
+  ssh_authorized_keys:
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQC2PxAKTLdczK9+RNsGGPsz0eC2pBlydBEcrbI7LSfiN7Bo5hQQVjki+Xpnp8EEYKpzu6eakL8MJj3E28wT/vNklT1KyMZrXnVhtsmOtBKKG/++odpaavdW2/AU0l7RZiE=
+```
+
+You can view all of the [cloud-config options here]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/).
 
 ### Download the files
 
