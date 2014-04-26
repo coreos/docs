@@ -62,7 +62,7 @@ Now create /tmp/coreos0.xml with the following contents:
         </controller>
         <filesystem type='mount' accessmode='squash'>
           <source dir='/var/lib/libvirt/images/coreos0/configdrive/'/>
-          <target dir='metadata'/>
+          <target dir='config-2'/>
           <readonly/>
         </filesystem>
         <interface type='direct'>
@@ -102,7 +102,7 @@ The `user_data` file may contain a script for a [cloud config][cloud-config]
 file. We recommend using ssh keys to log into the VM so at a minimum the
 contents of `user_data` should look something like this:
 
-    #config-drive
+    #cloud-config
 
     ssh_authorized_keys:
      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
@@ -117,7 +117,7 @@ on the host's eth0 and the local network. To configure a static address
 add a [networkd unit][systemd-network] to `user_data`:
 
 
-    #config-drive
+    #cloud-config
 
     ssh_authorized_keys:
      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
