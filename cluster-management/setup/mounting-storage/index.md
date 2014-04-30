@@ -38,13 +38,6 @@ We're going to bind mount a btrfs device to `/var/lib/docker`, where docker stor
 #cloud-config
 coreos:
   units
-    - name: media-ephemeral.mount
-      command: start
-      content: |
-        [Mount]
-        What=/dev/xvdb
-        Where=/media/ephemeral
-        Type=btrfs
     - name: format-ephemeral.service
       command: start
       content: |
@@ -52,23 +45,21 @@ coreos:
         Description=Formats the ephemeral drive
         [Service]
         Type=oneshot
+        RemainAfterExit=yes
         ExecStart=/usr/sbin/wipefs -f /dev/xvdb
-        ExecStartPost=/usr/sbin/mkfs.btrfs -f /dev/xvdb
-        ExecStartPost=/usr/bin/mount -t btrfs /dev/xvdb /media/ephemeral
-    - name: docker-storage.service
+        ExecStart=/usr/sbin/mkfs.btrfs -f /dev/xvdb
+    - name: media-ephemeral.mount
       command: start
       content: |
         [Unit]
+        Description=Mount ephemeral to /var/lib/docker
         Requires=format-ephemeral.service
-        Description=Mount ephemeral as /var/lib/docker
-        [Service]
-        Type=oneshot
-        ExecStartPre=/usr/bin/systemctl stop docker
-        ExecStartPre=/usr/bin/rm -rf /var/lib/docker/*
-        ExecStart=/usr/bin/mkdir -p /media/ephemeral/docker
-        ExecStart=/usr/bin/mkdir -p /var/lib/docker
-        ExecStartPost=/usr/bin/mount -o bind /media/ephemeral/docker /var/lib/docker
-        ExecStartPost=/usr/bin/systemctl start --no-block docker
+        Requires=docker.service
+        Before=docker.service
+        [Mount]
+        What=/dev/xvdb
+        Where=/var/lib/docker
+        Type=btrfs
 ```
 
 Notice that we're starting all three of these units at the same time and using the power of systemd to work out the dependencies for us. In this case, `docker-storage.service` requires `format-ephemeral.service`, ensuring that our storage will always be formatted before it is bind mounted. Docker will refuse to start otherwise.
