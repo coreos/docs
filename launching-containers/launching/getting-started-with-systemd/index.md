@@ -83,11 +83,11 @@ The full list is located on the [systemd man page](http://www.freedesktop.org/so
 
 Let's put a few of these concepts togther to register new units within etcd. Imagine we had another container running that would read these values from etcd and act upon them.
 
-We can use `ExecStart` to either create a container with the `docker run` command or start a pre-existing container with the `docker start -a` command. We need to account for both because you can't issue multiple docker run commands when specifying a `-name`. In either case we must leave the container in the foreground (i.e. don't run with `-d`) so systemd knows the service is running.
+We can use `ExecStart` to either create a container with the `docker run` command or start a pre-existing container with the `docker start -a` command. We need to account for both because you can't issue multiple docker run commands when specifying a `--name`. In either case we must leave the container in the foreground (i.e. don't run with `-d`) so systemd knows the service is running.
 
 Since our container will be started in `ExecStart`, it makes sense for our etcd command to run as `ExecStartPost` to ensure that our container is started and functioning.
 
-When the service is told to stop, we need to stop the docker container using its `-name` from the run command. We also need to clean up our etcd key when the container exits or the unit is failed by using `ExecStopPost`.
+When the service is told to stop, we need to stop the docker container using its `--name` from the run command. We also need to clean up our etcd key when the container exits or the unit is failed by using `ExecStopPost`.
 
 ```
 [Unit]
@@ -96,7 +96,7 @@ After=etcd.service
 After=docker.service
 
 [Service]
-ExecStart=/bin/bash -c '/usr/bin/docker start -a apache || /usr/bin/docker run -name apache -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND'
+ExecStart=/bin/bash -c '/usr/bin/docker start -a apache || /usr/bin/docker run --name apache -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND'
 ExecStartPost=/usr/bin/etcdctl set /domains/example.com/10.10.10.123:8081 running
 ExecStop=/usr/bin/docker stop apache
 ExecStopPost=/usr/bin/etcdctl rm /domains/example.com/10.10.10.123:8081
