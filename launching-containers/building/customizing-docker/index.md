@@ -118,8 +118,6 @@ coreos:
         Description=Docker Application Container Engine 
         Documentation=http://docs.docker.io
         After=network.target
-        Requires=docker-tcp.socket
-
         [Service]
         ExecStartPre=/bin/mount --make-rprivate /
         # Run docker but don't have docker automatically restart
