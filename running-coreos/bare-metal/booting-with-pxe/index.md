@@ -71,13 +71,16 @@ You can view all of the [cloud-config options here]({{site.url}}/docs/cluster-ma
 
 In the config above you can see that a Kernel image and a initramfs file is needed.
 Download these two files into your tftp root.
-The extra `coreos_production_pxe.DIGESTS.asc` file can be used to [verify the others][verify-notes].
+The extra `coreos_production_pxe.vmlinuz.sig` and `coreos_production_pxe_image.cpio.gz.sig` files can be used to [verify the downloaded files][verify-notes].
 
 ```
 cd /var/lib/tftpboot
 wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_pxe.vmlinuz
+wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_pxe.vmlinuz.sig
 wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_pxe_image.cpio.gz
-wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_pxe.DIGESTS.asc
+wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_pxe_image.cpio.gz.sig
+gpg --verify coreos_production_pxe.vmlinuz.sig
+gpg --verify coreos_production_pxe_image.cpio.gz.sig
 ```
 
 PXE booted machines cannot currently update themselves.
