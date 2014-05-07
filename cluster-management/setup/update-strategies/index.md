@@ -23,6 +23,15 @@ It's important to note that updates are always downloaded to the passive partiti
 
 ## Strategy Options
 
+The update strategy is defined in [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/#coreos):
+
+```
+#cloud-config
+coreos:
+  update:
+    reboot-strategy: best-effort
+```
+
 ### Best Effort
 
 The default setting is for CoreOS to make a `best-effort` to determine if the machine is part of a cluster. Currently this logic is very simple: if etcd has started, assume that the machine is part of a cluster.
