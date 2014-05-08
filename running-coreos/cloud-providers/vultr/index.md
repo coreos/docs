@@ -36,10 +36,10 @@ Additional reading can be found at [Booting CoreOS with iPXE](http://coreos.com/
 
 Create a new VPS (any server type and location of your choice), and then:
 
-1. For the "Operating System" select "Custom",
-1. Select iPXE boot,
-1. Set the chain URL to the URL of your script (http://example.com/script.txt),
-1. Click "Place Order". 
+1. For the "Operating System" select "Custom"
+2. Select iPXE boot
+3. Set the chain URL to the URL of your script (http://example.com/script.txt)
+4. Click "Place Order"
 
 ![Any location, any size, custom OS, iPXE boot, set chain URL, place order](http://s18.postimg.org/5ra9lioeh/vultr.png)
 
@@ -47,9 +47,9 @@ Once you receive the welcome email the VPS will be ready to use (typically less 
 
 ## Accessing the VPS
 
-You can now login to CoreOS, assuming the associated private key is in place on your local computer you'll immediately be logged in. You may need to specify the specific location using ```-i LOCATION```. If you need additional details on how to specify the location of your private key file see [here](http://www.cyberciti.biz/faq/force-ssh-client-to-use-given-private-key-identity-file/).
+You can now log in to CoreOS using the associated private key on your local computer. You may need to specify its location using ```-i LOCATION```. If you need additional details on how to specify the location of your private key file see [here](http://www.cyberciti.biz/faq/force-ssh-client-to-use-given-private-key-identity-file/).
 
-SSH to the IP of your VPS, and specify the "core" user specifically: ```ssh core@IP```
+SSH to the IP of your VPS, and specify the "core" user: ```ssh core@IP```
 
 
 ```
@@ -71,6 +71,6 @@ core@srv-n8uak ~ $
 
 Now that you have a cluster bootstrapped it is time to play around.
 
-It's currently running from RAM, based on the loaded image. You may want to [install it on the disk]({{site.url}}/docs/running-coreos/bare-metal/installing-to-disk). It's device name is /dev/vda, not sda.
+CoreOS is currently running from RAM, based on the loaded image. You may want to [install it on the disk]({{site.url}}/docs/running-coreos/bare-metal/installing-to-disk). Note that when following these instructions on Vultr, the device name should be `/dev/vda` rather than `/dev/sda`.
 
 Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
