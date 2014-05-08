@@ -14,14 +14,6 @@ CoreOS is currently in heavy development and actively being tested.  These instr
 * The location of your iPXE script (referenced later in the guide) is located at ```http://example.com/script.txt```
 * You have a public + private key combination generated. Here's a helpful guide if you need to generate these keys: [How to set up SSH keys](https://www.digitalocean.com/community/articles/how-to-set-up-ssh-keys--2). 
 
-## Create the VPS
-
-Create a new VPS (any server type and location of your choice), and then for the "Operating System" select  "Custom". Click "Place Order". 
-
-![Any location, any size, custom OS, place order](https://s3.amazonaws.com/f.cl.ly/items/0H0l1w3u0f1F2n203d0I/Screen%20Shot%202014-04-17%20at%202.52.27%20PM.png)
-
-Once you receive the welcome email the VPS will be ready to use (typically less than 2-3 minutes).
-
 ## Create the script
 
 The simplest option to boot up CoreOS is to load a script that contains the series of commands you'd otherwise need to manually type at the command line. This script needs to be publicly accessible (host this file on your own server). Save this script as a text file (.txt extension).
@@ -40,24 +32,18 @@ Make sure to replace `YOUR_PUBLIC_KEY_HERE` with your actual public key, it will
 
 Additional reading can be found at [Booting CoreOS with iPXE](http://coreos.com/docs/running-coreos/bare-metal/booting-with-ipxe/) and [Embedded scripts for iPXE](http://ipxe.org/embed).
 
-## Getting CoreOS running
+## Create the VPS
 
-Once you have received the email indicating the VPS is ready, click "Manage" for that VPS in your Vultr account area. Under "Server Actions" Click on "View Console" which will open a new window, and show the iPXE command prompt.
+Create a new VPS (any server type and location of your choice), and then:
 
-Type the following commands:
+1. For the "Operating System" select "Custom",
+1. Select iPXE boot,
+1. Set the chain URL to the URL of your script (http://example.com/script.txt),
+1. Click "Place Order". 
 
-```
-iPXE> dhcp
-```
-The output should end with "OK".
+![Any location, any size, custom OS, iPXE boot, set chain URL, place order](http://s18.postimg.org/5ra9lioeh/vultr.png)
 
-then type:
-
-```
-iPXE> chain http://example.com/script.txt
-```
-
-You'll see several lines scroll past on the console as the kernel is loaded, and then the initrd is loaded. CoreOS will automatically then boot up, and you'll end up at a login prompt. 
+Once you receive the welcome email the VPS will be ready to use (typically less than 2-3 minutes).
 
 ## Accessing the VPS
 
@@ -81,8 +67,10 @@ Last login: Thu Oct 17 11:42:04 UTC 2013 from 127.0.0.1 on pts/0
 core@srv-n8uak ~ $
 ```
 
-
 ## Using CoreOS
 
 Now that you have a cluster bootstrapped it is time to play around.
+
+It's currently running from RAM, based on the loaded image. You may want to [install it on the disk]({{site.url}}/docs/running-coreos/bare-metal/installing-to-disk). It's device name is /dev/vda, not sda.
+
 Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
