@@ -69,7 +69,7 @@ You can view all of the [cloud-config options here]({{site.url}}/docs/cluster-ma
 
 ### Choose a Channel
 
-CoreOS is released into master, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+CoreOS is released into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 PXE booted machines cannot currently update themselves when new versions are released to a channel. To update to the latest version of CoreOS download/verify these files again and reboot.
 

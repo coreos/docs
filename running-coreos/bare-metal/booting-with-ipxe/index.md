@@ -20,7 +20,7 @@ To illustrate iPXE in action we will qemu-kvm in this guide.
 
 ### Choose a Channel
 
-CoreOS is released into master, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+CoreOS is released into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 ### Setting up the Boot Script
 

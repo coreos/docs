@@ -20,7 +20,7 @@ you will need to launch the `coreos_developer_vmware_insecure.vmx` file to creat
 
 ### Choosing a Channel
 
-CoreOS is released into master, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+CoreOS is released into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 The channel is selected through the `storage.core-os.net` below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
 
