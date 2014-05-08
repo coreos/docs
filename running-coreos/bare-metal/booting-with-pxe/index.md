@@ -67,7 +67,13 @@ ssh_authorized_keys:
 
 You can view all of the [cloud-config options here]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/).
 
-### Download the files
+### Choose a Channel
+
+CoreOS is released into master, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+
+The channel is selected through the `storage.core-os.net` URLs below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
+
+PXE booted machines cannot currently update themselves. To update to the latest version of CoreOS download/verify these files again and reboot.
 
 In the config above you can see that a Kernel image and a initramfs file is needed.
 Download these two files into your tftp root.
@@ -82,9 +88,6 @@ wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_pxe_ima
 gpg --verify coreos_production_pxe.vmlinuz.sig
 gpg --verify coreos_production_pxe_image.cpio.gz.sig
 ```
-
-PXE booted machines cannot currently update themselves.
-To update to the latest version of CoreOS download/verify these files again and reboot.
 
 [verify-notes]: {{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images
 

@@ -8,22 +8,23 @@ cloud-formation-launch-logo: https://s3.amazonaws.com/cloudformation-examples/cl
 ---
 {% capture cf_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha.template{% endcapture %}
 
-# Running CoreOS {{ site.ami-version }} on EC2
+# Running CoreOS {{site.data.alpha-channel.ami-version}} on EC2
 
 The current AMIs for all CoreOS channels and EC2 regions are listed below and updated frequently. Using CloudFormation is the easiest way to launch a cluster, but you can also follow the manual steps at the end of the article. You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
 ## Choosing a Channel
 
-CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Release notes can currently be found on [Github](https://github.com/coreos/manifest/releases) but we're researching better options.
+CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.
 
 <div id="ec2-images">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
+    <li class="active"><a href="#beta" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
-    <div class="tab-pane active" id="alpha">
+    <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.ami-version}}.</p>
+        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
       </div>
       <table>
         <thead>
@@ -34,27 +35,36 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
           </tr>
         </thead>
         <tbody>
-      {% assign pairs = site.amis-all | split: "|" %}
-      {% for item in pairs %} 
-
-        {% assign amis = item | split: "=" %}
-        {% for item in amis limit:1 offset:0 %}
-           {% assign region = item %}
-        {% endfor %}
-        {% for item in amis limit:1 offset:1 %}
-           {% assign ami-id = item %}
-        {% endfor %}
-        {% if region == "us-east-1" %}
-          {% assign ami-us-east-1 = ami-id %}
-        {% endif %}
-
+        {% for region in site.data.alpha-channel.amis %}
         <tr>
-          <td>{{ region }}</td>
-          <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region }}#launchAmi={{ ami-id }}">{{ ami-id }}</a></td>
-          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+          <td>{{ region.name }}</td>
+          <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.ami-id }}">{{ region.ami-id }}</a></td>
+          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
         </tr>
-
-      {% endfor %}
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-pane active" id="beta">
+      <div class="channel-info">
+        <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>EC2 Region</th>
+            <th>AMI ID</th>
+            <th>CloudFormation</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for region in site.data.beta-channel.amis %}
+        <tr>
+          <td>{{ region.name }}</td>
+          <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.ami-id }}">{{ region.ami-id }}</a></td>
+          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+        </tr>
+        {% endfor %}
         </tbody>
       </table>
     </div>

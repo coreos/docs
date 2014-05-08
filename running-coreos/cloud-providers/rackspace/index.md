@@ -6,23 +6,24 @@ sub_category: cloud_provider
 weight: 5
 ---
 
-# Running CoreOS {{site.rackspace-version}} on Rackspace
+# Running CoreOS {{site.data.beta-channel.rackspace-version}} on Rackspace
 
 CoreOS is currently in heavy development and actively being tested.  These instructions will walk you through running CoreOS on the Rackspace Openstack cloud, which differs slightly from the generic Openstack instructions. There are two ways to launch a CoreOS cluster: launch an entire cluster with Heat or launch machines with Nova.
 
 
 ## Choosing a Channel
 
-CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Release notes can currently be found on [Github](https://github.com/coreos/manifest/releases) but we're researching better options.
+CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.
 
 <div id="ec2-images">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
+    <li class="active"><a href="#beta" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
-    <div class="tab-pane active" id="alpha">
+    <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.rackspace-version}}.</p>
+        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.data.alpha-channel.rackspace-version}}.</p>
       </div>
       <table>
         <thead>
@@ -35,7 +36,28 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
         <tbody>
           <tr>
             <td>All Regions</td>
-            <td>{{site.rackspace-image-id}}</td>
+            <td>{{site.data.alpha-channel.rackspace-image-id}}</td>
+            <td><a href="{{site.url}}/dist/rackspace/heat-alpha.yaml">heat-alpha.yaml</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-pane active" id="beta">
+      <div class="channel-info">
+        <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{{site.data.beta-channel.rackspace-version}}.</p>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Region</th>
+            <th>Image ID</th>
+            <th>Heat Template</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>All Regions</td>
+            <td>{{site.data.beta-channel.rackspace-image-id}}</td>
             <td><a href="{{site.url}}/dist/rackspace/heat-alpha.yaml">heat-alpha.yaml</td>
           </tr>
         </tbody>
@@ -90,7 +112,7 @@ For more general information, check out [mounting storage on CoreOS]({{site.url}
 
 ## Launch with Nova
 
-We're going to install `rackspace-novaclient`, upload a keypair and boot the image id `{{site.rackspace-image-id}}`.
+We're going to install `rackspace-novaclient`, upload a keypair and boot the image id from above.
 
 ### Install Supernova Tool
 
@@ -141,7 +163,7 @@ Check you make sure the key is in your list by running `supernova production key
 Boot a new server with our new keypair and specify optional cloud-config data.
 
 ```
-supernova production boot --image {{site.rackspace-image-id}} --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server
+supernova production boot --image {{site.data.beta-channel.rackspace-image-id}} --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server
 ```
 
 You should now see the details of your new server in your terminal and it should also show up in the control panel:

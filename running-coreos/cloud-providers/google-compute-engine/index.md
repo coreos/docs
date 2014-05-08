@@ -6,7 +6,7 @@ weight: 3
 title: Google Compute Engine
 ---
 
-# Running CoreOS {{ site.version-string }} on Google Compute Engine
+# Running CoreOS {{ site.alpha-channel }} on Google Compute Engine
 
 CoreOS on Google Compute Engine (GCE) is currently in heavy development and actively being tested. The current disk image is listed below and relies on GCE's recently announced [Advanced OS Support][gce-advanced-os]. Each time a new update is released, your machines will [automatically upgrade themselves]({{ site.url }}/using-coreos/updates).
 
@@ -15,13 +15,34 @@ Before proceeding, you will need to [install gcutil][gcutil-documentation] and c
 [gce-advanced-os]: http://developers.google.com/compute/docs/transition-v1#customkernelbinaries
 [gcutil-documentation]: https://developers.google.com/compute/docs/gcutil/
 
-## Image creation
+## Choosing a Channel
 
-At the moment CoreOS images are not publicly listed in GCE and must be added to your own account from a raw disk image published in Google Cloud Storage:
+CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.
 
-```
-gcutil --project=<project-id> addimage --description="CoreOS {{ site.version-string }}" coreos-v{{ site.gce-version-id }} gs://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_gce.tar.gz
-```
+<div id="gce-images">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#beta" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
+  </ul>
+  <div class="tab-content coreos-docs-image-table">
+    <div class="tab-pane" id="alpha">
+      <div class="channel-info">
+        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+      </div>
+      <p>At the moment CoreOS images are not publicly listed in GCE and must be added to your own account from a raw disk image published in Google Cloud Storage:</p>
+      <pre>
+gcutil --project=<project-id> addimage --description="CoreOS {{site.alpha-channel}}" coreos-v{{site.alpha-channel | replace:'.','-'}} gs://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_gce.tar.gz</pre>
+    </div>
+    <div class="tab-pane active" id="beta">
+      <div class="channel-info">
+        <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
+      </div>
+      <p>At the moment CoreOS images are not publicly listed in GCE and must be added to your own account from a raw disk image published in Google Cloud Storage:</p>
+      <pre>
+gcutil --project=<project-id> addimage --description="CoreOS {{site.beta-channel}}" coreos-v{{site.beta-channel | replace:'.','-'}} gs://storage.core-os.net/coreos/amd64-usr/beta/coreos_production_gce.tar.gz</pre>
+    </div>
+  </div>
+</div>
 
 ## Cloud-Config
 
@@ -51,7 +72,7 @@ coreos:
 Create 3 instances from the image above using our cloud-config from `cloud-config.yaml`:
 
 ```
-gcutil --project=<project-id> addinstance --image=coreos-v{{ site.gce-version-id }} --persistent_boot_disk --zone=us-central1-a --machine_type=n1-standard-1 --metadata_from_file=user-data:cloud-config.yaml core1 core2 core3
+gcutil --project=<project-id> addinstance --image=coreos-v{{ site.beta-channel | replace:'.','-' }} --persistent_boot_disk --zone=us-central1-a --machine_type=n1-standard-1 --metadata_from_file=user-data:cloud-config.yaml core1 core2 core3
 ```
 
 ### Additional Storage

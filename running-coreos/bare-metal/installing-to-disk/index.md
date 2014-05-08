@@ -17,11 +17,17 @@ Essentially it downloads an image, verifies it with gpg and then copies it bit f
 The script is self-contained and located [on Github here](https://raw.github.com/coreos/init/master/bin/coreos-install "coreos-install").
 It is already installed if you are booting CoreOS via PXE but you can also use it from other Linux distributions.
 
+## Choose a Channel
+
+CoreOS is released into master, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+
+When running on CoreOS the install script will attempt to install the same version (and channel) by default.
+
 ```
 coreos-install -d /dev/sda
 ```
 
-When running on CoreOS the install script will attempt to install the same version. If you want to ensure you are installing the latest available version use the `-V` option:
+If you want to ensure you are installing the latest available version on a channel, use the `-V` option:
 
 ```
 coreos-install -d /dev/sda -V alpha

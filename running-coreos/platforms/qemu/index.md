@@ -69,7 +69,15 @@ Wiki][qemugen]. Usually this should be sufficient:
 ## Startup CoreOS
 
 Once QEMU is installed you can download and start the latest CoreOS
-image. There are two files you need: the disk image (provided in qcow2
+image.
+
+### Choosing a Channel
+
+CoreOS is released into master, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+
+The channel is selected through the `storage.core-os.net` below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
+
+There are two files you need: the disk image (provided in qcow2
 format) and the wrapper shell script to start QEMU.
 
     mkdir coreos; cd coreos
