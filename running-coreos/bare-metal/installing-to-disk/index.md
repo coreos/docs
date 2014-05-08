@@ -14,24 +14,36 @@ weight: 7
 There is a simple installer that will destroy everything on the given target disk and install CoreOS.
 Essentially it downloads an image, verifies it with gpg and then copies it bit for bit to disk.
 
-The script is self-contained and located [on Github here](https://raw.github.com/coreos/init/master/bin/coreos-install "coreos-install").
-It is already installed if you are booting CoreOS via PXE but you can also use it from other Linux distributions.
+The script is self-contained and located [on Github here](https://raw.github.com/coreos/init/master/bin/coreos-install "coreos-install") and can be run from any Linux distribution.
 
-## Choose a Channel
-
-CoreOS is released into master, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
-
-When running on CoreOS the install script will attempt to install the same version (and channel) by default.
+If you have already booting CoreOS via PXE, the install script is already installed. By default the install script will attempt to install the same version and channel that was PXE-booted:
 
 ```
 coreos-install -d /dev/sda
 ```
 
-If you want to ensure you are installing the latest available version on a channel, use the `-V` option:
+## Choose a Channel
 
-```
-coreos-install -d /dev/sda -V alpha
-```
+CoreOS is released into master, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+
+<div id="install">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#beta-create" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha-create" data-toggle="tab">Alpha Channel</a></li>
+  </ul>
+  <div class="tab-content coreos-docs-image-table">
+    <div class="tab-pane" id="alpha-create">
+      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+      <p>If you want to ensure you are installing the latest alpha version, use the <code>-V</code> option:</p>
+      <pre>coreos-install -d /dev/sda -V alpha</pre>
+    </div>
+    <div class="tab-pane active" id="beta-create">
+      <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
+      <p>If you want to ensure you are installing the latest beta version, use the <code>-V</code> option:</p>
+      <pre>coreos-install -d /dev/sda -V beta</pre>
+    </div>
+  </div>
+</div>
 
 For reference here are the rest of the `coreos-install` options:
 

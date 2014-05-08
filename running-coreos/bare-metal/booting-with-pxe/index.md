@@ -71,15 +71,18 @@ You can view all of the [cloud-config options here]({{site.url}}/docs/cluster-ma
 
 CoreOS is released into master, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
-The channel is selected through the `storage.core-os.net` URLs below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
+PXE booted machines cannot currently update themselves when new versions are released to a channel. To update to the latest version of CoreOS download/verify these files again and reboot.
 
-PXE booted machines cannot currently update themselves. To update to the latest version of CoreOS download/verify these files again and reboot.
-
-In the config above you can see that a Kernel image and a initramfs file is needed.
-Download these two files into your tftp root.
-The extra `coreos_production_pxe.vmlinuz.sig` and `coreos_production_pxe_image.cpio.gz.sig` files can be used to [verify the downloaded files][verify-notes].
-
-```
+<div id="pxe-create">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#beta-create" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha-create" data-toggle="tab">Alpha Channel</a></li>
+  </ul>
+  <div class="tab-content coreos-docs-image-table">
+    <div class="tab-pane" id="alpha-create">
+      <p>In the config above you can see that a Kernel image and a initramfs file is needed. Download these two files into your tftp root.</p>
+      <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="{{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images">verify the downloaded files</a>.</p>
+      <pre>
 cd /var/lib/tftpboot
 wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_pxe.vmlinuz
 wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_pxe.vmlinuz.sig
@@ -87,9 +90,23 @@ wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_pxe_ima
 wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_pxe_image.cpio.gz.sig
 gpg --verify coreos_production_pxe.vmlinuz.sig
 gpg --verify coreos_production_pxe_image.cpio.gz.sig
-```
-
-[verify-notes]: {{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images
+      </pre>
+    </div>
+    <div class="tab-pane active" id="beta-create">
+      <p>In the config above you can see that a Kernel image and a initramfs file is needed. Download these two files into your tftp root.</p>
+      <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="{{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images">verify the downloaded files</a>.</p>
+      <pre>
+cd /var/lib/tftpboot
+wget http://storage.core-os.net/coreos/amd64-usr/beta/coreos_production_pxe.vmlinuz
+wget http://storage.core-os.net/coreos/amd64-usr/beta/coreos_production_pxe.vmlinuz.sig
+wget http://storage.core-os.net/coreos/amd64-usr/beta/coreos_production_pxe_image.cpio.gz
+wget http://storage.core-os.net/coreos/amd64-usr/beta/coreos_production_pxe_image.cpio.gz.sig
+gpg --verify coreos_production_pxe.vmlinuz.sig
+gpg --verify coreos_production_pxe_image.cpio.gz.sig
+      </pre>
+    </div>
+  </div>
+</div>
 
 ## Booting the Box
 

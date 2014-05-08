@@ -22,22 +22,38 @@ To illustrate iPXE in action we will qemu-kvm in this guide.
 
 CoreOS is released into master, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
-The channel is selected through the `set coreos-version` below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
-
 ### Setting up the Boot Script
 
-iPXE downloads a boot script from a publicly available URL.
-You will need to host this URL somewhere public and replace the example SSH key with your own. You can also run a [custom iPXE server](https://github.com/kelseyhightower/coreos-ipxe-server).
-
-```
+<div id="ipxe-create">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#beta-create" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha-create" data-toggle="tab">Alpha Channel</a></li>
+  </ul>
+  <div class="tab-content coreos-docs-image-table">
+    <div class="tab-pane" id="alpha-create">
+      <p>iPXE downloads a boot script from a publicly available URL. You will need to host this URL somewhere public and replace the example SSH key with your own. You can also run a <a href="https://github.com/kelseyhightower/coreos-ipxe-server">custom iPXE server</a>.</p>
+      <pre>
 #!ipxe
 
 set coreos-version alpha
 set base-url http://storage.core-os.net/coreos/amd64-usr/${coreos-version}
 kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQC2PxAKTLdczK9+RNsGGPsz0eC2pBlydBEcrbI7LSfiN7Bo5hQQVjki+Xpnp8EEYKpzu6eakL8MJj3E28wT/vNklT1KyMZrXnVhtsmOtBKKG/++odpaavdW2/AU0l7RZiE= coreos pxe demo"
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
-boot
-```
+boot</pre>
+    </div>
+    <div class="tab-pane active" id="beta-create">
+      <p>iPXE downloads a boot script from a publicly available URL. You will need to host this URL somewhere public and replace the example SSH key with your own. You can also run a <a href="https://github.com/kelseyhightower/coreos-ipxe-server">custom iPXE server</a>.</p>
+      <pre>
+#!ipxe
+
+set coreos-version beta
+set base-url http://storage.core-os.net/coreos/amd64-usr/${coreos-version}
+kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQC2PxAKTLdczK9+RNsGGPsz0eC2pBlydBEcrbI7LSfiN7Bo5hQQVjki+Xpnp8EEYKpzu6eakL8MJj3E28wT/vNklT1KyMZrXnVhtsmOtBKKG/++odpaavdW2/AU0l7RZiE= coreos pxe demo"
+initrd ${base-url}/coreos_production_pxe_image.cpio.gz
+boot</pre>
+    </div>
+  </div>
+</div>
 
 An easy place to host this boot script is on [http://pastie.org](http://pastie.org). Be sure to reference the "raw" version of script, which is accessed by clicking on the clipboard in the top right.
 
