@@ -6,7 +6,7 @@ sub_category: cloud_provider
 weight: 5
 ---
 
-# Running CoreOS {{site.data.beta-channel.rackspace-version}} on Rackspace
+# Running CoreOS on Rackspace
 
 CoreOS is currently in heavy development and actively being tested.  These instructions will walk you through running CoreOS on the Rackspace Openstack cloud, which differs slightly from the generic Openstack instructions. There are two ways to launch a CoreOS cluster: launch an entire cluster with Heat or launch machines with Nova.
 
@@ -15,7 +15,7 @@ CoreOS is currently in heavy development and actively being tested.  These instr
 
 CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.
 
-<div id="ec2-images">
+<div id="rax-images">
   <ul class="nav nav-tabs">
     <li class="active"><a href="#beta" data-toggle="tab">Beta Channel</a></li>
     <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
@@ -160,11 +160,22 @@ Check you make sure the key is in your list by running `supernova production key
 
 ### Boot a Server
 
-Boot a new server with our new keypair and specify optional cloud-config data.
-
-```
-supernova production boot --image {{site.data.beta-channel.rackspace-image-id}} --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server
-```
+<div id="rax-create">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#beta-create" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha-create" data-toggle="tab">Alpha Channel</a></li>
+  </ul>
+  <div class="tab-content coreos-docs-image-table">
+    <div class="tab-pane" id="alpha-create">
+      <p>Boot a new server with our new keypair and specify optional cloud-config data:</p>
+      <pre>supernova production boot --image {{site.data.alpha-channel.rackspace-image-id}} --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
+    </div>
+    <div class="tab-pane active" id="beta-create">
+      <p>Boot a new server with our new keypair and specify optional cloud-config data:</p>
+      <pre>supernova production boot --image {{site.data.beta-channel.rackspace-image-id}} --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
+    </div>
+  </div>
+</div>
 
 You should now see the details of your new server in your terminal and it should also show up in the control panel:
 
@@ -226,13 +237,24 @@ source ~/.bash_profile
 
 ### Launch the Stack
 
-Launch the stack by providing the specified parameters. This command will reference the local file `data.yml` in the current working directory that contains the cloud-config parameters. `$(< data.yaml)` prints the contents of this file into our heat command:
-
-```
-heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-alpha.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=5 -P user-data="$(< data.yaml)" -P name="CoreOS-alpha"
-```
-
-You can view the [template here]({{site.url}}/dist/rackspace/heat-alpha.yaml).
+<div id="rax-heat">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#beta-heat" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha-heat" data-toggle="tab">Alpha Channel</a></li>
+  </ul>
+  <div class="tab-content coreos-docs-image-table">
+    <div class="tab-pane" id="alpha-heat">
+      <p>Launch the stack by providing the specified parameters. This command will reference the local file `data.yml` in the current working directory that contains the cloud-config parameters. `$(< data.yaml)` prints the contents of this file into our heat command:</p>
+      <pre>heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-alpha.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=5 -P user-data="$(< data.yaml)" -P name="CoreOS-alpha"</pre>
+      <p>You can view the <a href="{{site.url}}/dist/rackspace/heat-alpha.yaml">template here</a>.</p>
+    </div>
+    <div class="tab-pane active" id="beta-heat">
+      <p>Launch the stack by providing the specified parameters. This command will reference the local file `data.yml` in the current working directory that contains the cloud-config parameters. `$(< data.yaml)` prints the contents of this file into our heat command:</p>
+      <pre>heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-beta.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=5 -P user-data="$(< data.yaml)" -P name="CoreOS-beta"</pre>
+      <p>You can view the <a href="{{site.url}}/dist/rackspace/heat-beta.yaml">template here</a>.</p>
+    </div>
+  </div>
+</div>
 
 ## Using CoreOS
 
