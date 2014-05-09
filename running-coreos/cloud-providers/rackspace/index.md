@@ -17,10 +17,10 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
 
 <div id="rax-images">
   <ul class="nav nav-tabs">
-    <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
+    <li class="active"><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
-    <div class="tab-pane" id="alpha">
+    <div class="tab-pane active" id="alpha">
       <div class="channel-info">
         <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.data.alpha-channel.rackspace-version}}.</p>
       </div>
