@@ -62,7 +62,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
         <tr>
           <td>{{ region.name }}</td>
           <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.ami-id }}">{{ region.ami-id }}</a></td>
-          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-beta%7Cturl%7E{{ cf_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
         </tr>
         {% endfor %}
         </tbody>
