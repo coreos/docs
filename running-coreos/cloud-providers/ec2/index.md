@@ -8,22 +8,23 @@ cloud-formation-launch-logo: https://s3.amazonaws.com/cloudformation-examples/cl
 ---
 {% capture cf_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha.template{% endcapture %}
 
-# Running CoreOS {{ site.ami-version }} on EC2
+# Running CoreOS on EC2
 
 The current AMIs for all CoreOS channels and EC2 regions are listed below and updated frequently. Using CloudFormation is the easiest way to launch a cluster, but you can also follow the manual steps at the end of the article. You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
 ## Choosing a Channel
 
-CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Release notes can currently be found on [Github](https://github.com/coreos/manifest/releases) but we're researching better options.
+CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.
 
 <div id="ec2-images">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
+    <li class="active"><a href="#beta" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
-    <div class="tab-pane active" id="alpha">
+    <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.ami-version}}.</p>
+        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
       </div>
       <table>
         <thead>
@@ -34,27 +35,36 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
           </tr>
         </thead>
         <tbody>
-      {% assign pairs = site.amis-all | split: "|" %}
-      {% for item in pairs %} 
-
-        {% assign amis = item | split: "=" %}
-        {% for item in amis limit:1 offset:0 %}
-           {% assign region = item %}
-        {% endfor %}
-        {% for item in amis limit:1 offset:1 %}
-           {% assign ami-id = item %}
-        {% endfor %}
-        {% if region == "us-east-1" %}
-          {% assign ami-us-east-1 = ami-id %}
-        {% endif %}
-
+        {% for region in site.data.alpha-channel.amis %}
         <tr>
-          <td>{{ region }}</td>
-          <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region }}#launchAmi={{ ami-id }}">{{ ami-id }}</a></td>
-          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+          <td>{{ region.name }}</td>
+          <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.ami-id }}">{{ region.ami-id }}</a></td>
+          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
         </tr>
-
-      {% endfor %}
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-pane active" id="beta">
+      <div class="channel-info">
+        <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>EC2 Region</th>
+            <th>AMI ID</th>
+            <th>CloudFormation</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for region in site.data.beta-channel.amis %}
+        <tr>
+          <td>{{ region.name }}</td>
+          <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.ami-id }}">{{ region.ami-id }}</a></td>
+          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-beta%7Cturl%7E{{ cf_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+        </tr>
+        {% endfor %}
         </tbody>
       </table>
     </div>
@@ -130,7 +140,11 @@ If you would like to create multiple clusters you will need to change the "Stack
 
 [us-east-latest-quicklaunch]: https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi={{ami-us-east-1}} "{{ami-us-east-1}}"
 
-**TL;DR:** launch three instances of [{{ami-us-east-1}}][us-east-latest-quicklaunch] in **us-east-1** with a security group that has open port 22, 4001, and 7001 and the same "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [docker][docker-docs] to play with.
+{% for region in site.data.alpha-channel.amis %}
+  {% if region.name == 'us-east-1' %}
+**TL;DR:** launch three instances of [{{region.ami-id}}](https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.ami-id}}) in **{{region.name}}** with a security group that has open port 22, 4001, and 7001 and the same "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [docker][docker-docs] to play with.
+  {% endif %}
+{% endfor %}
 
 ### Creating the security group
 
@@ -162,37 +176,162 @@ First we need to create a security group to allow CoreOS instances to communicat
 
 ### Launching a test cluster
 
-We will be launching three instances, with a few parameters in the User Data, and selecting our security group.
-
-1. Open the quick launch by clicking [here][us-east-latest-quicklaunch] (shift+click for new tab)
-    * For reference, the current us-east-1 is: [{{ami-us-east-1}}][us-east-latest-quicklaunch]
-2. On the second page of the wizard, launch 3 servers to test our clustering
-    * Number of instances: 3 
-    * Click "Continue"
-3. Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at [https://discovery.etcd.io/new](https://discovery.etcd.io/new) and add it to the metadata. You should re-use this key for each machine in the cluster.
-
-```
+<div id="ec2-manual">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#beta-manual" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha-manual" data-toggle="tab">Alpha Channel</a></li>
+  </ul>
+  <div class="tab-content coreos-docs-image-table">
+    <div class="tab-pane" id="alpha-manual">
+      <p>We will be launching three instances, with a few parameters in the User Data, and selecting our security group.</p>
+      <ol>
+        <li>
+        {% for region in site.data.alpha-channel.amis %}
+          {% if region.name == 'us-east-1' %}
+            Open the <a href="https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.ami-id}}" target="_blank">quick launch wizard</a> to boot {{region.ami-id}}.
+          {% endif %}
+        {% endfor %}
+        </li>
+        <li>
+          On the second page of the wizard, launch 3 servers to test our clustering
+          <ul>
+            <li>Number of instances: 3</li>
+            <li>Click "Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new">https://discovery.etcd.io/new</a> and add it to the metadata. You should re-use this key for each machine in the cluster.
+        </li>
+        <pre>
 #cloud-config
 
 coreos:
   etcd:
-    discovery_url: https://discovery.etcd.io/<token>
-    fleet:
-        autostart: yes
-```
-4. Back in the EC2 dashboard, paste this information verbatim into the "User Data" field. 
-   * Paste link into "User Data"
-   * "Continue"
-5. Storage Configuration
-   * "Continue"
-6. Tags
-   * "Continue"
-7. Create Key Pair
-   * Choose a key of your choice, it will be added in addition to the one in the gist.
-   * "Continue"
-8. Choose one or more of your existing Security Groups
-   * "coreos-testing" as above.
-9. Launch!
+    # generate a new token from https://discovery.etcd.io/new
+    discovery: https://discovery.etcd.io/&lt;token>
+    # multi-region and multi-cloud deployments need to use $public_ipv4
+    addr: $private_ipv4:4001
+    peer-addr: $private_ipv4:7001
+  units:
+    - name: etcd.service
+      command: start
+    - name: fleet.service
+      command: start
+</pre>
+        <li>
+          Back in the EC2 dashboard, paste this information verbatim into the "User Data" field. 
+          <ul>
+            <li>Paste link into "User Data"</li>
+            <li>"Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Storage Configuration
+          <ul>
+            <li>"Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Tags
+          <ul>
+            <li>"Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Create Key Pair
+          <ul>
+            <li>Choose a key of your choice, it will be added in addition to the one in the gist.</li>
+            <li>"Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Choose one or more of your existing Security Groups
+          <ul>
+            <li>"coreos-testing" as above.</li>
+            <li>"Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Launch!
+        </li>
+      </ol>
+    </div>
+    <div class="tab-pane active" id="beta-manual">
+      <p>We will be launching three instances, with a few parameters in the User Data, and selecting our security group.</p>
+      <ol>
+        <li>
+        {% for region in site.data.beta-channel.amis %}
+          {% if region.name == 'us-east-1' %}
+            Open the <a href="https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.ami-id}}" target="_blank">quick launch wizard</a> to boot {{region.ami-id}}.
+          {% endif %}
+        {% endfor %}
+        </li>
+        <li>
+          On the second page of the wizard, launch 3 servers to test our clustering
+          <ul>
+            <li>Number of instances: 3</li>
+            <li>Click "Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new">https://discovery.etcd.io/new</a> and add it to the metadata. You should re-use this key for each machine in the cluster.
+        </li>
+        <pre>
+#cloud-config
+
+coreos:
+  etcd:
+    # generate a new token from https://discovery.etcd.io/new
+    discovery: https://discovery.etcd.io/&lt;token>
+    # multi-region and multi-cloud deployments need to use $public_ipv4
+    addr: $private_ipv4:4001
+    peer-addr: $private_ipv4:7001
+  units:
+    - name: etcd.service
+      command: start
+    - name: fleet.service
+      command: start
+</pre>
+        <li>
+          Back in the EC2 dashboard, paste this information verbatim into the "User Data" field. 
+          <ul>
+            <li>Paste link into "User Data"</li>
+            <li>"Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Storage Configuration
+          <ul>
+            <li>"Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Tags
+          <ul>
+            <li>"Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Create Key Pair
+          <ul>
+            <li>Choose a key of your choice, it will be added in addition to the one in the gist.</li>
+            <li>"Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Choose one or more of your existing Security Groups
+          <ul>
+            <li>"coreos-testing" as above.</li>
+            <li>"Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Launch!
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
 
 ### Automatic Rollback Limitations on EC2
 
