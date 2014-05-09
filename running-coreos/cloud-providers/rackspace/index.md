@@ -17,7 +17,6 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
 
 <div id="rax-images">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#beta" data-toggle="tab">Beta Channel</a></li>
     <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
@@ -38,27 +37,6 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
             <td>All Regions</td>
             <td>{{site.data.alpha-channel.rackspace-image-id}}</td>
             <td><a href="{{site.url}}/dist/rackspace/heat-alpha.yaml">heat-alpha.yaml</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="tab-pane active" id="beta">
-      <div class="channel-info">
-        <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{{site.data.beta-channel.rackspace-version}}.</p>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Region</th>
-            <th>Image ID</th>
-            <th>Heat Template</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>All Regions</td>
-            <td>{{site.data.beta-channel.rackspace-image-id}}</td>
-            <td><a href="{{site.url}}/dist/rackspace/heat-beta.yaml">heat-beta.yaml</td>
           </tr>
         </tbody>
       </table>
