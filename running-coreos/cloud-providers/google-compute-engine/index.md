@@ -50,12 +50,12 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
       <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
-      <p>Create 3 instances from the image above using our cloud-config from `cloud-config.yaml`:</p>
+      <p>Create 3 instances from the image above using our cloud-config from <code>cloud-config.yaml</code>:</p>
       <pre>gcutil --project=<project-id> addinstance --image={{site.data.alpha-channel.gce-image-path}} --persistent_boot_disk --zone=us-central1-a --machine_type=n1-standard-1 --metadata_from_file=user-data:cloud-config.yaml core1 core2 core3</pre>
     </div>
     <div class="tab-pane active" id="beta-create">
       <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
-      <p>Create 3 instances from the image above using our cloud-config from `cloud-config.yaml`:</p>
+      <p>Create 3 instances from the image above using our cloud-config from <code>cloud-config.yaml</code>:</p>
       <pre>gcutil --project=<project-id> addinstance --image={{site.data.beta-channel.gce-image-path}} --persistent_boot_disk --zone=us-central1-a --machine_type=n1-standard-1 --metadata_from_file=user-data:cloud-config.yaml core1 core2 core3</pre>
     </div>
   </div>
