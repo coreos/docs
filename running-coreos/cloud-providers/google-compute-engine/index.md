@@ -30,7 +30,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
         <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
       </div>
       <p>At the moment CoreOS images are not publicly listed in GCE and must be added to your own account from a raw disk image published in Google Cloud Storage:</p>
-      <pre>gcutil --project=<project-id> addimage --description="CoreOS {{site.alpha-channel}}" coreos-v{{site.alpha-channel | replace:'.','-'}} gs://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_gce.tar.gz</pre>
+      <pre>gcutil --project=&lt;project-id> addimage --description="CoreOS {{site.alpha-channel}}" coreos-v{{site.alpha-channel | replace:'.','-'}} gs://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_gce.tar.gz</pre>
     </div>
     <div class="tab-pane active" id="beta">
       <div class="channel-info">
