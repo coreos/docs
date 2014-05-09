@@ -22,9 +22,10 @@ A sample script will look like this :
 
 ```
 #!ipxe
-set coreos-version dev-channel
-set base-url http://storage.core-os.net/coreos/amd64-generic/${coreos-version}
-kernel ${base-url}/coreos_production_pxe.vmlinuz root=squashfs: state=tmpfs: sshkey="YOUR_PUBLIC_KEY_HERE"
+
+set coreos-version alpha
+set base-url http://storage.core-os.net/coreos/amd64-usr/${coreos-version}
+kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="YOUR_PUBLIC_KEY_HERE"
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot
 ```
