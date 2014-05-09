@@ -58,7 +58,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
           <tr>
             <td>All Regions</td>
             <td>{{site.data.beta-channel.rackspace-image-id}}</td>
-            <td><a href="{{site.url}}/dist/rackspace/heat-alpha.yaml">heat-alpha.yaml</td>
+            <td><a href="{{site.url}}/dist/rackspace/heat-beta.yaml">heat-beta.yaml</td>
           </tr>
         </tbody>
       </table>
