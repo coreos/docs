@@ -119,7 +119,7 @@ Ephemeral disks and additional EBS volumes attached to instances can be mounted 
 #cloud-config
 coreos:
   units:
-    - name media-ephemeral.mount
+    - name: media-ephemeral.mount
       command: start
       content: |
         [Mount]
