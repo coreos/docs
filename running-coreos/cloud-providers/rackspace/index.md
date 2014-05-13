@@ -77,7 +77,7 @@ Certain server flavors have separate system and data disks. To utilize the data 
 #cloud-config
 coreos:
   units:
-    - name media-data.mount
+    - name: media-data.mount
       command: start
       content: |
         [Mount]

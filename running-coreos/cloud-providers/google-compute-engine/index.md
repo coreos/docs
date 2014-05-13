@@ -92,7 +92,7 @@ Additional disks attached to instances can be mounted with a `.mount` unit. Each
 #cloud-config
 coreos:
   units:
-    - name media-backup.mount
+    - name: media-backup.mount
       command: start
       content: |
         [Mount]
