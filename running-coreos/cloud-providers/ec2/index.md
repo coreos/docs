@@ -6,7 +6,8 @@ sub_category: cloud_provider
 weight: 1
 cloud-formation-launch-logo: https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png
 ---
-{% capture cf_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha.template{% endcapture %}
+{% capture cf_alpha_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha.template{% endcapture %}
+{% capture cf_beta_template %}{{ site.https-s3 }}/dist/aws/coreos-beta.template{% endcapture %}
 
 # Running CoreOS on EC2
 
@@ -39,7 +40,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
         <tr>
           <td>{{ region.name }}</td>
           <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.ami-id }}">{{ region.ami-id }}</a></td>
-          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_alpha_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
         </tr>
         {% endfor %}
         </tbody>
@@ -62,7 +63,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
         <tr>
           <td>{{ region.name }}</td>
           <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.ami-id }}">{{ region.ami-id }}</a></td>
-          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-beta%7Cturl%7E{{ cf_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-beta%7Cturl%7E{{ cf_beta_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
         </tr>
         {% endfor %}
         </tbody>
@@ -134,7 +135,7 @@ For more information about mounting storage, Amazon's [own documentation](http:/
 To add more instances to the cluster, just launch more with the same cloud-config, the appropriate security group and the AMI for that region. New instances will join the cluster regardless of region if the security groups are configured correctly.
 
 ## Multiple Clusters
-If you would like to create multiple clusters you will need to change the "Stack Name". You can find the direct [template file on S3]({{ cf_template }}).
+If you would like to create multiple clusters you will need to change the "Stack Name". You can find the direct [template file on S3]({{ cf_beta_template }}).
 
 ## Manual setup
 
