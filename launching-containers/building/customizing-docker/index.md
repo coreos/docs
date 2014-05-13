@@ -127,3 +127,51 @@ coreos:
         [Install]
         WantedBy=multi-user.target
 ```
+
+## Use an HTTP Proxy
+
+If you're operating in a locked down networking environment, you can specify an HTTP proxy for docker to use via an environment variable. First, copy the existing unit from the read-only file system into the read/write file system, so we can edit it:
+
+```
+cp /usr/lib/systemd/system/docker.service /etc/systemd/system/
+```
+
+Add a line that sets the environment variable in the unit above the `ExecStart` command:
+
+```
+Environment="HTTP_PROXY=http://proxy.example.com:8080"
+```
+
+To apply the change, reload the unit and restart docker:
+
+```
+systemctl daemon-reload
+systemctl restart docker
+```
+
+### Cloud-Config
+
+The easiest way to use this proxy on all of your machines is via cloud-config:
+
+```
+#cloud-config
+
+coreos:
+  units:
+    - name: docker.service
+      command: restart
+      content: |
+        [Unit]
+        Description=Docker Application Container Engine 
+        Documentation=http://docs.docker.io
+        After=network.target
+        [Service]
+        Environment="HTTP_PROXY=http://proxy.example.com:8080"
+        ExecStartPre=/bin/mount --make-rprivate /
+        # Run docker but don't have docker automatically restart
+        # containers. This is a job for systemd and unit files.
+        ExecStart=/usr/bin/docker -d -s=btrfs -r=false -H fd://
+
+        [Install]
+        WantedBy=multi-user.target
+```
