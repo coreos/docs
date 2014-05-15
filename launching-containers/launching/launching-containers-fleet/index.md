@@ -107,7 +107,7 @@ X-ConditionMachineOf=apache.1.service
 
 This unit has a few interesting properties. First, it uses `BindsTo` to link the unit to our `apache.1.service` unit. When the Apache unit is stopped, this unit will stop as well, causing it to be removed from our `/services/website` directory in `etcd`. A TTL of 60 seconds is also being used here to remove the unit from the directory if our machine suddenly died for some reason.
 
-Second is `%H`, a variable built into systemd, that represents the hostname of the machine running this unit. Variable usage is coverd in our [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd/#unit-variables) guide as well as in [systemd documentation](http://www.freedesktop.org/software/systemd/man/systemd.unit.html#Specifiers).
+Second is `%H`, a variable built into systemd, that represents the hostname of the machine running this unit. Variable usage is covered in our [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd/#unit-variables) guide as well as in [systemd documentation](http://www.freedesktop.org/software/systemd/man/systemd.unit.html#Specifiers).
 
 The third is a fleet-specific property called `X-ConditionMachineOf`. This property causes the unit to be placed onto the same machine that `apache.1.service` is running on.
 
