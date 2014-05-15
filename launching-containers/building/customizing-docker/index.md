@@ -73,6 +73,7 @@ coreos:
 To keep access to the port local, replace the `ListenStream` configuration above with:
 
 ```
+        [Socket]
         ListenStream=127.0.0.1:4243
 ```
 
