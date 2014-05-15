@@ -70,6 +70,12 @@ coreos:
         ExecStart=/usr/bin/systemctl enable docker-tcp.socket
 ```
 
+To keep access to the port local, replace the `ListenStream` configuration above with:
+
+```
+        ListenStream=127.0.0.1:4243
+```
+
 ## Use Attached Storage for Docker Images
 
 Docker containers can be very large and debugging a build process makes it easy to accumulate hundreds of containers. It's advantagous to use attached storage to expand your capacity for container images. Check out the guide to [mounting storage to your CoreOS machine]({{site.url}}/docs/cluster-management/setup/mounting-storage/#use-attached-storage-for-docker) for an example of how to bind mount storage into `/var/lib/docker`.
