@@ -18,11 +18,11 @@ You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev]
 Vagrant is a simple-to-use command line virtual machine manager. There are
 install packages available for Windows, Linux and OSX. Find the latest
 installer on the [Vagrant downloads page][vagrant]. Be sure to get
-version 1.5 or greater.
+version 1.6.3 or greater.
 
 [vagrant]: http://www.vagrantup.com/downloads.html
 
-Vagrant can use either the free Virtualbox provider or the commerical VMware provider. Instructions for both are below. For the Virtualbox provider, version 4.0 or greater is required.
+Vagrant can use either the free Virtualbox provider or the commerical VMware provider. Instructions for both are below. For the Virtualbox provider, version 4.3.10 or greater is required.
 
 ## Clone Vagrant Repo
 
