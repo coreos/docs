@@ -175,3 +175,58 @@ coreos:
         [Install]
         WantedBy=multi-user.target
 ```
+
+## Using a dockercfg File for Authentication
+
+A json file `.dockercfg` can be created in your home directory that holds authentication information for a public or private docker registry. The auth token is a base64 encoded string: `base64(<username>:<password>)`. Here's what an example looks like with credentials for docker's public index and a private index:
+
+```
+{
+  "https://index.docker.io/v1/": {
+    "auth": "xXxXxXxXxXx=",
+    "email": "username@example.com"
+  },
+  "https://index.example.com": {
+    "auth": "XxXxXxXxXxX=",
+    "email": "username@example.com"
+  }
+}
+```
+
+The last step is to tell your systemd units to run as the core user in order for docker to use the credentials we just set up. This is done in the service section of the unit:
+
+```
+[Unit]
+Description=My Container
+After=docker.service
+
+[Service]
+User=core
+ExecStart=/usr/bin/docker run busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### Cloud-Config
+
+Since each machine in your cluster is going to have to pull images, cloud-config is the easiest way to write the config file to disk.
+
+```
+#cloud-config
+write_files:
+    - path: /home/core/.dockercfg
+      owner: core:core
+      permissions: 0644
+      content: |
+        {
+          "https://index.docker.io/v1/": {
+            "auth": "xXxXxXxXxXx=",
+            "email": "username@example.com"
+         },
+         "https://index.example.com": {
+           "auth": "XxXxXxXxXxX=",
+           "email": "username@example.com"
+         }
+       }
+```
