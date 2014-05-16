@@ -223,10 +223,10 @@ write_files:
           "https://index.docker.io/v1/": {
             "auth": "xXxXxXxXxXx=",
             "email": "username@example.com"
-         },
-         "https://index.example.com": {
-           "auth": "XxXxXxXxXxX=",
-           "email": "username@example.com"
-         }
-       }
+          },
+          "https://index.example.com": {
+            "auth": "XxXxXxXxXxX=",
+            "email": "username@example.com"
+          }
+        }
 ```
