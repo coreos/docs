@@ -48,7 +48,7 @@ coreos:
         RemainAfterExit=yes
         ExecStart=/usr/sbin/wipefs -f /dev/xvdb
         ExecStart=/usr/sbin/mkfs.btrfs -f /dev/xvdb
-    - name: media-ephemeral.mount
+    - name: var-lib-docker.mount
       command: start
       content: |
         [Unit]
