@@ -27,7 +27,7 @@ The channel is selected through the `storage.core-os.net` below. Simply replace 
 This is a rough sketch that should work on OSX and Linux:
 
 ```
-curl -O http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_vmware_insecure.zip
+wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_vmware_insecure.zip
 unzip coreos_production_vmware_insecure.zip -d coreos_production_vmware_insecure
 cd coreos_production_vmware_insecure
 open coreos_production_vmware_insecure.vmx
