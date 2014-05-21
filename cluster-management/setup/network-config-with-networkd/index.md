@@ -33,7 +33,7 @@ sudo systemctl restart systemd-networkd
 
 ## Turn Off DHCP
 
-If you'd like to use DHCP on all interfaces except `enp2s0`, create two files. They'll be checked in their ASCII sort order. Any interfaces matching during earlier files will be ignored during later files.
+If you'd like to use DHCP on all interfaces except `enp2s0`, create two files. They'll be checked in lexical order, as described in the [full network docs](http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html). Any interfaces matching during earlier files will be ignored during later files.
 
 #### 10-static.network
 
