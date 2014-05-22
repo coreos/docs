@@ -8,8 +8,6 @@ title: Google Compute Engine
 
 # Running CoreOS on Google Compute Engine
 
-CoreOS on Google Compute Engine (GCE) is currently in heavy development and actively being tested. The current disk image is listed below and relies on GCE's recently announced [Advanced OS Support][gce-advanced-os]. Each time a new update is released, your machines will [automatically upgrade themselves]({{ site.url }}/using-coreos/updates).
-
 Before proceeding, you will need to [install gcutil][gcutil-documentation] and check that your GCE account/project has billing enabled (Settings &rarr; Billing). In each command below, be sure to insert your project name in place of `<project-id>`.
 
 [gce-advanced-os]: http://developers.google.com/compute/docs/transition-v1#customkernelbinaries
@@ -52,11 +50,11 @@ Create 3 instances from the image above using our cloud-config from `cloud-confi
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
       <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
-      <pre>gcutil --project=<project-id> addinstance --image={{site.data.alpha-channel.gce-image-path}} --persistent_boot_disk --zone=us-central1-a --machine_type=n1-standard-1 --metadata_from_file=user-data:cloud-config.yaml core1 core2 core3</pre>
+      <pre>gcutil --project=&lt;project-id&gt; addinstance --image={{site.data.alpha-channel.gce-image-path}} --persistent_boot_disk --zone=us-central1-a --machine_type=n1-standard-1 --metadata_from_file=user-data:cloud-config.yaml core1 core2 core3</pre>
     </div>
     <div class="tab-pane active" id="beta-create">
       <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
-      <pre>gcutil --project=<project-id> addinstance --image={{site.data.beta-channel.gce-image-path}} --persistent_boot_disk --zone=us-central1-a --machine_type=n1-standard-1 --metadata_from_file=user-data:cloud-config.yaml core1 core2 core3</pre>
+      <pre>gcutil --project=&lt;project-id&gt; addinstance --image={{site.data.beta-channel.gce-image-path}} --persistent_boot_disk --zone=us-central1-a --machine_type=n1-standard-1 --metadata_from_file=user-data:cloud-config.yaml core1 core2 core3</pre>
     </div>
   </div>
 </div>
