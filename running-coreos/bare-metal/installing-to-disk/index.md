@@ -34,13 +34,13 @@ CoreOS is released into alpha and beta channels. Releases to each channel serve 
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
       <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
-      <p>If you want to ensure you are installing the latest alpha version, use the <code>-V</code> option:</p>
-      <pre>coreos-install -d /dev/sda -V alpha</pre>
+      <p>If you want to ensure you are installing the latest alpha version, use the <code>-C</code> option:</p>
+      <pre>coreos-install -d /dev/sda -C alpha</pre>
     </div>
     <div class="tab-pane active" id="beta-create">
       <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
-      <p>If you want to ensure you are installing the latest beta version, use the <code>-V</code> option:</p>
-      <pre>coreos-install -d /dev/sda -V beta</pre>
+      <p>If you want to ensure you are installing the latest beta version, use the <code>-C</code> option:</p>
+      <pre>coreos-install -d /dev/sda -C beta</pre>
     </div>
   </div>
 </div>
@@ -48,7 +48,8 @@ CoreOS is released into alpha and beta channels. Releases to each channel serve 
 For reference here are the rest of the `coreos-install` options:
 
     -d DEVICE   Install CoreOS to the given device.
-    -V VERSION  Version to install (e.g. alpha)
+    -V VERSION  Version to install (e.g. current)
+    -C CHANNEL  Release channel to use (e.g. beta)
     -o OEM      OEM type to install (e.g. openstack)
     -c CLOUD    Insert a cloud-init config to be executed on boot.
     -t TMPDIR   Temporary location with enough space to download images.
