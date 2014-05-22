@@ -71,7 +71,7 @@ coreos:
       command: start
       content: |
         [Mount]
-        What=/dev/disk/by-id/google-database-backup
+        What=/dev/disk/by-id/scsi-0Google_PersistentDisk_database-backup
         Where=/media/backup
         Type=ext3
 ```
