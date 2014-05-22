@@ -33,17 +33,9 @@ sudo systemctl restart systemd-networkd
 
 ## Turn Off DHCP
 
-If you'd like to use DHCP on all interfaces except `enp2s0`, create two files that run in order of least specificity. Configure general settings in `10-dhcp.network`:
+If you'd like to use DHCP on all interfaces except `enp2s0`, create two files. They'll be checked in lexical order, as described in the [full network docs](http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html). Any interfaces matching during earlier files will be ignored during later files.
 
-```
-[Match]
-Name=en*
-
-[Network]
-DHCP=yes
-```
-
-Write your static configuration in `20-static.network`:
+#### 10-static.network
 
 ```
 [Match]
@@ -54,7 +46,19 @@ Address=192.168.0.15/24
 Gateway=192.168.0.1
 ```
 
-To apply the configuration, run `sudo systemctl restart systemd-networkd`.
+Put your settings-of-last-resort in `20-dhcp.network`. For example, any interfaces matching `en*` that weren't matched in `10-static.network` will be configured with DHCP:
+
+#### 20-dhcp.network
+
+```
+[Match]
+Name=en*
+
+[Network]
+DHCP=yes
+```
+
+To apply the configuration, run `sudo systemctl restart systemd-networkd`. Check the status with `systemctl status systemd-networkd` and read the full log with `journalctl -u systemd-networkd`.
 
 ## Further Reading
 
