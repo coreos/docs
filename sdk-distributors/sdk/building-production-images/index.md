@@ -22,11 +22,17 @@ repository which is usually organized like so:
 
 [coreos-manifest]: https://github.com/coreos/manifest
 
-## Manual Builds
+## Tagging Releases
 
 The first step of building a release is updating and tagging the release
 in the manifest git repository. A typical release off of master involves
 the following steps:
+
+ 1. Make sure you are on the master branch: `repo init -b master`
+ 2. Sync/checkout source, excluding local changes: `repo sync --detach`
+ 3. In the scripts directory: `./tag_release --push`
+
+That was far to easy, if you need to do it the hard way try this:
 
  1. Make sure you are on the master branch: `repo init -b master`
  2. Sync/checkout source, excluding local changes: `repo sync --detach`
@@ -54,7 +60,10 @@ the following steps:
     HEAD:build-$BUILD v$BUILD.$BRANCH.$PATCH`
 
 If a release branch needs to be updated after master has moved on the
-procedure is similar but has a few key differences:
+procedure is similar.
+Unfortunately since tagging branched releases (not on master) is a bit
+tricker to get right the `tag_release` script cannot be used.
+The automated build will kick off after updating the `dev-channel` branch.
 
  1. Check out the release instead of master: `repo init -b build-$BUILD
     -m release.xml`
@@ -88,64 +97,51 @@ This will build an image that can be ran under KVM and uses near production
 values.
 
 Note: Add `COREOS_OFFICIAL=1` here if you are making a real release. That will
-change the version and enable uploads by default.
+change the version to leave off the build id suffix.
 
 ```
-./build_image prod
+./build_image prod --group alpha
 ```
 
 The generated production image is bootable as-is by qemu but for a
-larger STATE partition or VMware images use `image_to_vm.sh` as
-described in the final output of `build_image1`.
+larger ROOT partition or VMware images use `image_to_vm.sh` as
+described in the final output of `build_image`.
 
 ## Automated Builds
 
 Automated release builds are triggered by pushes to the `dev-channel`
-branch in the manifest repository. When cutting releases off of master
-you can skip the long process described above by using the `tag_release`
-script:
-
- 1. Make sure you are on the master branch: `repo init -b master`
- 2. Sync/checkout source, excluding local changes: `repo sync --detach`
- 3. In the scripts directory: `./tag_release --push`
-
-That's it! Automated builds will now kick off to generate a new SDK
-tarball and disk images for most of our supported platform types.
-Unfortunately since tagging branched releases (not on master) requires a
-bit more thought use the manual process described above. The automated
-build will still kick off after updating the `dev-channel` branch.
+branch in the manifest repository.
 
 Note: In the future builds will be triggered by pushing new tags instead
-of using the `dev-channel` branch. Only using tags will mesh better with
-our current plans for adding more release channels.
+of using the `dev-channel` branch; the branch only exists do to a limitation
+of the current buildbot deployment.
 
-## Pushing updates to the dev-channel
-
-### Manual Builds
-
-To push an update to the dev channel track on api.core-os.net build a
-production images as described above and then use the following tool:
-
-```
-COREOS_OFFICIAL=1 ./core_upload_update <required flags> --track dev-channel --image ../build/images/amd64-usr/latest/coreos_production_image.bin
-```
-
-### Automated builds
+## Pushing updates into roller
 
 The automated build host does not have access to production signing keys
-so the final signing and push to api.core-os.net must be done elsewhere.
-The `au-generator.zip` archive provides the tools required to do this so
-a full SDK setup is not required. This does require gsutil to be
+so the final signing and push to roller must be done elsewhere.
+The `coreos_production_update.zip` archive provides the tools required to
+do this so a full SDK setup is not required. This does require gsutil to be
 installed and configured.
+An update payload signed by the insecure development keys is generated
+automatically as `coreos_production_update.gz` and
+`coreos_production_update.meta`. If needed the raw filesystem image used
+to generate the payload is `coreos_production_update.bin.bz2`.
+As an example, to publish the insecurely signed payload:
 
 ```
-URL=gs://storage.core-os.net/coreos/amd64-usr/0000.0.0
+URL=gs://builds.release.core-os.net/alpha/amd64-usr/321.0.0
 cd $(mktemp -d)
-gsutil cp $URL/au-generator.zip $URL/coreos_production_image.bin.bz2 ./
-unzip au-generator.zip
-bunzip2 coreos_production_image.bin.bz2
-COREOS_OFFICIAL=1 ./core_upload_update <required flags> --track dev-channel --image coreos_production_image.bin
+gsutil -m cp $URL/coreos_production_update* ./
+gpg --verify coreos_production_update.zip.sig
+gpg --verify coreos_production_update.gz.sig
+gpg --verify coreos_production_update.meta.sig
+unzip coreos_production_update.zip
+ ./core_roller_upload --user <you>@coreos.com --api_key <yourkey>
 ```
+
+Note: prefixing the command with a space will avoid recording your API key
+into your bash history if `$HISTCONTROL` is `ignorespace` or `ignoreboth`.
 
 ## Tips and Tricks
 
