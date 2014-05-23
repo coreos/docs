@@ -22,11 +22,12 @@ start_devserver --port 8080
 
 NOTE: This port will need to be internet accessible.
 
-2. Run /usr/local/bin/gmerge from your VM and ensure that the settings in
-   `/etc/lsb-release` point to your workstation IP/hostname and port
+2. Run `/usr/bin/gmerge` from your VM and ensure that the settings in
+   `/etc/coreos/update.conf` point to your workstation IP/hostname and port.
+  You'll need to set `DEVSERVER` and `COREOS_RELEASE_BOARD` (likely `amd64-usr`).
 
 ```
-/usr/local/bin/gmerge coreos-base/update_engine
+/usr/bin/gmerge coreos-base/update_engine
 ```
 
 ### Updating an Image with Update Engine
