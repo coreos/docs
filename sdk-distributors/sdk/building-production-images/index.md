@@ -32,7 +32,7 @@ the following steps:
  2. Sync/checkout source, excluding local changes: `repo sync --detach`
  3. In the scripts directory: `./tag_release --push`
 
-That was far to easy, if you need to do it the hard way try this:
+That was far too easy, if you need to do it the hard way try this:
 
  1. Make sure you are on the master branch: `repo init -b master`
  2. Sync/checkout source, excluding local changes: `repo sync --detach`
@@ -113,7 +113,7 @@ Automated release builds are triggered by pushes to the `dev-channel`
 branch in the manifest repository.
 
 Note: In the future builds will be triggered by pushing new tags instead
-of using the `dev-channel` branch; the branch only exists do to a limitation
+of using the `dev-channel` branch; the branch only exists due to a limitation
 of the current buildbot deployment.
 
 ## Pushing updates into roller
@@ -141,7 +141,7 @@ unzip coreos_production_update.zip
 ```
 
 Note: prefixing the command with a space will avoid recording your API key
-into your bash history if `$HISTCONTROL` is `ignorespace` or `ignoreboth`.
+in your bash history if `$HISTCONTROL` is `ignorespace` or `ignoreboth`.
 
 ## Tips and Tricks
 
