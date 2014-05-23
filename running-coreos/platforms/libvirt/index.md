@@ -26,13 +26,13 @@ to substitute that path if you use another one.
 
 CoreOS is released into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
-The channel is selected through the `storage.core-os.net` below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
+The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
 
 We start by downloading the most recent disk image:
 
     mkdir -p /var/lib/libvirt/images/coreos0
     cd /var/lib/libvirt/images/coreos0
-    wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_qemu_image.img.bz2
+    wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2
     bunzip2 coreos_production_qemu_image.img.bz2
 
 ## Virtual machine configuration

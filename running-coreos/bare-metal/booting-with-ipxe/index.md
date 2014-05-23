@@ -35,8 +35,7 @@ CoreOS is released into alpha and beta channels. Releases to each channel serve 
       <pre>
 #!ipxe
 
-set coreos-version alpha
-set base-url http://storage.core-os.net/coreos/amd64-usr/${coreos-version}
+set base-url http://alpha.release.core-os.net/amd64-usr/current
 kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQC2PxAKTLdczK9+RNsGGPsz0eC2pBlydBEcrbI7LSfiN7Bo5hQQVjki+Xpnp8EEYKpzu6eakL8MJj3E28wT/vNklT1KyMZrXnVhtsmOtBKKG/++odpaavdW2/AU0l7RZiE= coreos pxe demo"
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
@@ -46,8 +45,7 @@ boot</pre>
       <pre>
 #!ipxe
 
-set coreos-version beta
-set base-url http://storage.core-os.net/coreos/amd64-usr/${coreos-version}
+set base-url http://beta.release.core-os.net/amd64-usr/current
 kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQC2PxAKTLdczK9+RNsGGPsz0eC2pBlydBEcrbI7LSfiN7Bo5hQQVjki+Xpnp8EEYKpzu6eakL8MJj3E28wT/vNklT1KyMZrXnVhtsmOtBKKG/++odpaavdW2/AU0l7RZiE= coreos pxe demo"
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
@@ -81,7 +79,7 @@ Immediatly iPXE should download your boot script URL and start grabbing the imag
 
 ```
 ${YOUR_BOOT_URL}... ok
-http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_pxe.vmlinuz... 98%
+http://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz... 98%
 ```
 
 After a few moments of downloading CoreOS should boot normally.

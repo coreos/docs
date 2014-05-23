@@ -10,14 +10,14 @@ weight: 5
 
 ## Importing Images
 
-Images of CoreOS are hosted at `http://storage.core-os.net/coreos/amd64-usr/`. At this URL there are directories for each individual version of CoreOS but also images that have promoted to a channel like master, alpha, beta, etc.
+Images of CoreOS alpha releases are hosted at `http://alpha.release.core-os.net/amd64-usr/`. There are directories for releases by version as well as `current` with a copy of the latest version. Similarly, beta releases can be found at `http://beta.release.core-os.net/amd64-usr/`.
 
-If you are importing images for use inside of your environment it is recommended that you import from a URL in the following format `http://storage.core-os.net/coreos/amd64-usr/${CHANNEL}/`. For example to grab the alpha OpenStack version of CoreOS you can import `http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_openstack_image.img.bz2`. There is a `version.txt` file in this directory which you can use to label the image with a version number as well.
+If you are importing images for use inside of your environment it is recommended that you import from the `current` directory. For example to grab the alpha OpenStack version of CoreOS you can import `gs://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2`. There is a `version.txt` file in this directory which you can use to label the image with a version number.
 
 It is recommended that you also verify files using the [CoreOS Image Signing Key][signing-key]. The GPG signature for each image is a detached `.sig` file that must be passed to `gpg --verify`. For example:
 
-    wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_openstack_image.img.bz2
-    wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_openstack_image.img.bz2.sig
+    wget gs://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
+    wget gs://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2.sig
     gpg --verify coreos_production_openstack_image.img.bz2.sig
 
 [signing-key]: {{site.url}}/security/image-signing-key

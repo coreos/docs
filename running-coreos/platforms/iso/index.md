@@ -20,8 +20,8 @@ The latest CoreOS ISOs can be downloaded from the image storage site:
       <div class="channel-info">
         <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
       </div>
-      <a href="http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_iso_image.iso" class="btn btn-primary">Download Alpha ISO</a>
-      <a href="http://storage.core-os.net/coreos/amd64-usr/alpha/" class="btn btn-default">Browse Storage Site</a>
+      <a href="http://alpha.release.core-os.net/amd64-usr/current/coreos_production_iso_image.iso" class="btn btn-primary">Download Alpha ISO</a>
+      <a href="http://alpha.release.core-os.net/amd64-usr/current/" class="btn btn-default">Browse Storage Site</a>
       <br/><br/>
       <p>All of the files necessary to verify the image can be found on the storage site.</p>
     </div>
@@ -29,8 +29,8 @@ The latest CoreOS ISOs can be downloaded from the image storage site:
       <div class="channel-info">
         <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
       </div>
-      <a href="http://storage.core-os.net/coreos/amd64-usr/beta/coreos_production_iso_image.iso" class="btn btn-primary">Download Beta ISO</a>
-      <a href="http://storage.core-os.net/coreos/amd64-usr/beta/" class="btn btn-default">Browse Storage Site</a>
+      <a href="http://beta.release.core-os.net/amd64-usr/current/coreos_production_iso_image.iso" class="btn btn-primary">Download Beta ISO</a>
+      <a href="http://beta.release.core-os.net/amd64-usr/current/" class="btn btn-default">Browse Storage Site</a>
       <br/><br/>
       <p>All of the files necessary to verify the image can be found on the storage site.</p>
     </div>

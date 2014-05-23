@@ -20,10 +20,10 @@ In order to convert the image you will need to install ```qemu-img``` with your 
 
 CoreOS is released into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
-The channel is selected through the `storage.core-os.net` below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
+The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
 
 ```
-$ wget -q http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_openstack_image.img.bz2
+$ wget -q http://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
 $ bunzip2 coreos_production_openstack_image.img.bz2
 $ qemu-img convert -O raw coreos_production_openstack_image.img coreos_production_openstack_image.raw
 $ euca-bundle-image -i coreos_production_openstack_image.raw -r x86_64 -d /var/tmp
