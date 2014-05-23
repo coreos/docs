@@ -23,8 +23,7 @@ A sample script will look like this :
 ```
 #!ipxe
 
-set coreos-version alpha
-set base-url http://storage.core-os.net/coreos/amd64-usr/${coreos-version}
+set base-url http://alpha.release.core-os.net/amd64-usr/current
 kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="YOUR_PUBLIC_KEY_HERE"
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot

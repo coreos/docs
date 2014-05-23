@@ -75,14 +75,14 @@ image.
 
 CoreOS is released into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
-The channel is selected through the `storage.core-os.net` below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
+The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
 
 There are two files you need: the disk image (provided in qcow2
 format) and the wrapper shell script to start QEMU.
 
     mkdir coreos; cd coreos
-    wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_qemu.sh
-    wget http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img
+    wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh
+    wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img
     chmod +x coreos_production_qemu.sh
 
 Starting is as simple as:
