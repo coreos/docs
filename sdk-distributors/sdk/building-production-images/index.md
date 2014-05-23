@@ -130,7 +130,7 @@ to generate the payload is `coreos_production_update.bin.bz2`.
 As an example, to publish the insecurely signed payload:
 
 ```
-URL=gs://builds.release.core-os.net/alpha/amd64-usr/321.0.0
+URL=http://builds.release.core-os.net/alpha/amd64-usr/321.0.0
 cd $(mktemp -d)
 gsutil -m cp $URL/coreos_production_update* ./
 gpg --verify coreos_production_update.zip.sig
