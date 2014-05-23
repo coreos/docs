@@ -6,9 +6,11 @@ title: CoreOS Quick Start
 
 # Quick Start
 
-If you don't have a CoreOS machine running, check out the guides on running CoreOS on [Vagrant][vagrant-guide], [Amazon EC2][ec2-guide], [QEMU/KVM][qemu-guide], [VMware][vmware-guide] and [OpenStack][openstack-guide]. With either of these guides you will have a machine up and running in a few minutes. 
+If you don't have a CoreOS machine running, check out the guides on running CoreOS on [Vagrant][vagrant-guide], [Amazon EC2][ec2-guide], [QEMU/KVM][qemu-guide], [VMware][vmware-guide] and [OpenStack][openstack-guide]. With either of these guides you will have a machine up and running in a few minutes.
 
-CoreOS gives you three essential tools: service discovery, container management and process management. Let's try each of them out. 
+It's highly recommended that you set up a cluster of at least 3 machines &mdash; it's not as much fun on a single machine. If you don't want to break the bank, [Vagrant][vagrant-guide] allows you to run an entire cluster on your laptop. For a cluster to be properly bootstrapped, you have to provide cloud-config via user-data, which is covered in each platform's guide.
+
+CoreOS gives you three essential tools: service discovery, container management and process management. Let's try each of them out.
 
 First, connect to a CoreOS machine via SSH as the user `core`. For example, on Amazon, use:
 
