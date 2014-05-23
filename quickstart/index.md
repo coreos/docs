@@ -20,7 +20,7 @@ ssh core@an.ip.compute-1.amazonaws.com
 
 The first building block of CoreOS is service discovery with **etcd** ([docs][etcd-docs]). Data stored in etcd is distributed across all of your machines running CoreOS. For example, each of your app containers can announce itself to a proxy container, which would automatically know which machines should receive traffic. Building service discovery into your application allows you to add more machines and scale your services seamlessly.
 
-If you used an example [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config) from a guide above, etcd is automatically started on boot. The API is easy to use. From a CoreOS machine, you can simply use curl to set and retrieve a key from etcd:
+If you used an example [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config) from a guide linked in the first paragraph, etcd is automatically started on boot. The API is easy to use. From a CoreOS machine, you can simply use curl to set and retrieve a key from etcd:
 
 Set a key `message` with value `Hello world`:
 
