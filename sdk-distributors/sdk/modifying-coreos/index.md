@@ -133,19 +133,6 @@ a bootable vm will be printed. Run the `image_to_vm.sh` command.
 Once you build an image you can launch it with KVM (instructions will
 print out after `image_to_vm.sh` runs).
 
-To demo the general direction we are starting in now the OS starts two
-small daemons that you can access over an HTTP interface. The first,
-systemd-rest, allows you to stop and start units via HTTP. The other is a
-small server that you can play with shutting off and on called
-motd-http. You can try these daemons with:
-
-```sh
-curl http://127.0.0.1:8000
-curl http://127.0.0.1:8080/units/motd-http.service/stop/replace
-curl http://127.0.0.1:8000
-curl http://127.0.0.1:8080/units/motd-http.service/start/replace
-```
-
 ## Making Changes
 
 ### git and repo
