@@ -25,7 +25,7 @@ It's important to note that updates are always downloaded to the passive partiti
 
 The update strategy is defined in [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/#coreos):
 
-```
+```yaml
 #cloud-config
 coreos:
   update:
@@ -46,7 +46,7 @@ The `etcd-lock` strategy mandates that each machine acquire and hold a reboot lo
 
 The number of machines allowed to reboot simultaneously is configurable via a command line utility:
 
-```
+```sh
 $ locksmithctl set-max 4
 Old: 1
 New: 4
@@ -56,7 +56,7 @@ This setting is stored in etcd so it won't have to be configured for subsequent 
 
 To view the number of available slots and find out which machines in the cluster are holding locks, run:
 
-```
+```sh
 $ locksmithctl status
 Available: 0
 Max: 1
@@ -67,7 +67,7 @@ MACHINE ID
 
 If needed, you can manually clear a lock by providing the machine ID:
 
-```
+```sh
 locksmithctl unlock 69d27b356a94476da859461d3a3bc6fd
 ```
 

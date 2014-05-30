@@ -16,7 +16,7 @@ Drop a file in `/etc/systemd/network/` or inject a file on boot via [cloud-confi
 
 To configure a static IP on `enp2s0`, create `static.network`:
 
-```
+```ini
 [Match]
 Name=enp2s0
 
@@ -27,7 +27,7 @@ Gateway=192.168.0.1
 
 Place the file in `/etc/systemd/network/`. To apply the configuration, run:
 
-```
+```sh
 sudo systemctl restart systemd-networkd
 ```
 
@@ -37,7 +37,7 @@ If you'd like to use DHCP on all interfaces except `enp2s0`, create two files. T
 
 #### 10-static.network
 
-```
+```ini
 [Match]
 Name=enp2s0
 
@@ -50,7 +50,7 @@ Put your settings-of-last-resort in `20-dhcp.network`. For example, any interfac
 
 #### 20-dhcp.network
 
-```
+```ini
 [Match]
 Name=en*
 

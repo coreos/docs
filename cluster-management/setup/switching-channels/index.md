@@ -14,7 +14,7 @@ CoreOS is released into beta and stable channels. New features and bug fixes are
 
 You can switch machines between channels by creating `/etc/coreos/update.conf`:
 
-```
+```ini
 GROUP=beta
 ```
 
@@ -22,7 +22,7 @@ GROUP=beta
 
 The last step is to restart the update engine in order for it to pick up the changed channel:
 
-```
+```sh
 sudo systemctl restart update-engine
 ```
 
@@ -30,13 +30,13 @@ sudo systemctl restart update-engine
 
 After the update engine is restarted, the machine should check for an update within an hour. You can view the update engine log if you'd like to see the requests that are being made to the update service:
 
-```
+```sh
 journalctl -f -u update-engine
 ```
 
 For reference, you can find the current version:
 
-```
+```sh
 cat /etc/os-release
 ```
 

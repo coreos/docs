@@ -10,7 +10,7 @@ weight: 7
 
 Many platforms provide attached storage, but it must be mounted for you to take advantage of it. You can easily do this via [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config) with a `.mount` unit. Here's an example that mounts an [EC2 ephemeral disk]({{site.url}}/docs/running-coreos/cloud-providers/ec2/#instance-storage):
 
-```
+```yaml
 #cloud-config
 
 coreos:
@@ -34,7 +34,7 @@ Docker containers can be very large and debugging a build process makes it easy 
 
 We're going to bind mount a btrfs device to `/var/lib/docker`, where docker stores images. We can do this on the fly when the machines starts up with a oneshot unit that formats the drive and another one that runs afterwards to mount it. Be sure to hardcode the correct device or look for a device by label:
 
-```
+```yaml
 #cloud-config
 coreos:
   units
