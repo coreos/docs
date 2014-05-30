@@ -82,28 +82,28 @@ PXE booted machines cannot currently update themselves when new versions are rel
     <div class="tab-pane" id="alpha-create">
       <p>In the config above you can see that a Kernel image and a initramfs file is needed. Download these two files into your tftp root.</p>
       <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="{{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images">verify the downloaded files</a>.</p>
-        <div class="highlight">
-          <pre><code class="ini">cd /var/lib/tftpboot
+      <pre>
+cd /var/lib/tftpboot
 wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz
 wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz.sig
 wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz
 wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz.sig
 gpg --verify coreos_production_pxe.vmlinuz.sig
-gpg --verify coreos_production_pxe_image.cpio.gz.sig</pre></code>
-        </div>
+gpg --verify coreos_production_pxe_image.cpio.gz.sig
+      </pre>
     </div>
     <div class="tab-pane active" id="beta-create">
       <p>In the config above you can see that a Kernel image and a initramfs file is needed. Download these two files into your tftp root.</p>
       <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="{{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images">verify the downloaded files</a>.</p>
-        <div class="highlight">
-          <pre><code class="ini">cd /var/lib/tftpboot
+      <pre>
+cd /var/lib/tftpboot
 wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz
 wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz.sig
 wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz
 wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz.sig
 gpg --verify coreos_production_pxe.vmlinuz.sig
-gpg --verify coreos_production_pxe_image.cpio.gz.sig</pre></code>
-      </div>
+gpg --verify coreos_production_pxe_image.cpio.gz.sig
+      </pre>
     </div>
   </div>
 </div>

@@ -35,16 +35,12 @@ CoreOS is released into alpha and beta channels. Releases to each channel serve 
     <div class="tab-pane" id="alpha-create">
       <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
       <p>If you want to ensure you are installing the latest alpha version, use the <code>-C</code> option:</p>
-      <div class="highlight">
-        <pre><code class="sh">coreos-install -d /dev/sda -C alpha</code></pre>
-      </div>
+      <pre>coreos-install -d /dev/sda -C alpha</pre>
     </div>
     <div class="tab-pane active" id="beta-create">
       <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
       <p>If you want to ensure you are installing the latest beta version, use the <code>-C</code> option:</p>
-      <div class="highlight">
-        <pre><code class="sh">coreos-install -d /dev/sda -C beta</code></pre>
-      </div>
+      <pre>coreos-install -d /dev/sda -C beta</pre>
     </div>
   </div>
 </div>
