@@ -23,7 +23,7 @@ Each target is actually a collection of symlinks to our unit files. This is spec
 
 On CoreOS, unit files are located within the R/W filesystem at `/etc/systemd/system`. Let's create a simple unit named `hello.service`:
 
-```
+```ini
 [Unit]
 Description=My Service
 After=docker.service
@@ -46,14 +46,14 @@ The description shows up in the systemd log and a few other places. Write someth
 
 To start a new unit, we need to tell systemd to create the symlink and then start the file:
 
-```
+```sh
 $ sudo systemctl enable /etc/systemd/system/hello.service
 $ sudo systemctl start hello.service
 ```
 
 To verify the unit started, you can see the list of containers running with `docker ps` and read the unit's output with `journalctl`:
 
-```
+```sh
 $ journalctl -f -u hello.service
 -- Logs begin at Fri 2014-02-07 00:05:55 UTC. --
 Feb 11 17:46:26 localhost docker[23470]: Hello World
@@ -89,7 +89,7 @@ Since our container will be started in `ExecStart`, it makes sense for our etcd 
 
 When the service is told to stop, we need to stop the docker container using its `--name` from the run command. We also need to clean up our etcd key when the container exits or the unit is failed by using `ExecStopPost`.
 
-```
+```ini
 [Unit]
 Description=My Advanced Service
 After=etcd.service
@@ -129,13 +129,13 @@ Since systemd is based on symlinks, there are a few interesting tricks you can l
 
 In our earlier example we had to hardcode our IP address when registering within etcd:
 
-```
+```ini
 ExecStartPost=/usr/bin/etcdctl set /domains/example.com/10.10.10.123:8081 running
 ```
 
 We can enhance this by using `%H` and `%i` to dynamically announce the hostname and port. Specify the port after the `@` by using two unit files named `foo@123.service` and `foo@456.service`:
 
-```
+```ini
 ExecStartPost=/usr/bin/etcdctl set /domains/example.com/%H:%i running
 ```
 

@@ -26,7 +26,7 @@ The channel is selected based on the URL below. Simply replace `alpha` with `bet
 
 This is a rough sketch that should work on OSX and Linux:
 
-```
+```sh
 curl -LO http://alpha.release.core-os.net/amd64-usr/current/coreos_production_vmware_insecure.zip
 unzip coreos_production_vmware_insecure.zip -d coreos_production_vmware_insecure
 cd coreos_production_vmware_insecure
@@ -37,15 +37,18 @@ open coreos_production_vmware_insecure.vmx
 * follow the steps above to download and extract the coreos_production_vmware_insecure.zip
 * download and run the [OVF Tool 3.5.0 installer](https://developercenter.vmware.com/tool/ovf) Requires VMware account login but the download is free. Available for Linux, OSX & Windows for both 32 & 64 bit architectures.
 * convert VM to OVF from the extract dir
-```
+
+```sh
 cd coreos_developer_vmware_insecure
 mkdir coreos
 ovftool coreos_production_vmware_insecure.vmx coreos/coreos.insecure.ovf
 ```
+
 NOTE: This uses defaults and creates a single core, 1024MB type 4 VM when deployed. To change before deployment, see ovftool --help or manually edit the coreos.insecure.ovf If you do manually edit the OVF file, you will also need to recalculate the SHA1 and update the coreos.insecure.mf accordingly
 
 The above step creates the following files in ../coreos/:
-```
+
+```sh
   coreos.insecure-disk1.vmdk
   coreos.insecure.ovf
   coreos.insecure.mf
@@ -83,7 +86,7 @@ In this case the IP is `10.0.1.81`.
 
 Now you can login using the shared and insecure private SSH key.
 
-```
+```sh
 cd coreos_developer_vmware_insecure
 ssh -i insecure_ssh_key core@10.0.1.81
 ```
@@ -94,7 +97,7 @@ We highly recommend that you disable the original insecure OEM SSH key and
 replace it with your own. This is a simple two step process: first, add your
 public key, and then remove the original OEM one.
 
-```
+```sh
 cat ~/.ssh/id_rsa.pub | ssh core@10.0.1.81 -i insecure_ssh_key update-ssh-keys -a user
 ssh core@10.0.1.81 update-ssh-keys -D oem
 ```

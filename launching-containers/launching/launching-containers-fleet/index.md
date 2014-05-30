@@ -19,7 +19,7 @@ This guide assumes you're running `fleetctl` locally from a CoreOS machine that'
 
 Running a single container is very easy. All you need to do is provide a regular unit file without an `[Install]` section. Let's run the same unit from the [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd) guide. First save these contents as `myapp.service` on the CoreOS machine:
 
-```
+```ini
 [Unit]
 Description=MyApp
 After=docker.service
@@ -31,13 +31,13 @@ ExecStart=/usr/bin/docker run busybox /bin/sh -c "while true; do echo Hello Worl
 
 Run the start command to start up the container on the cluster:
 
-```
+```sh
 $ fleetctl start myapp.service
 ```
 
 Now list all of the units in the cluster to see the current status. The unit should have been scheduled to a machine in your cluster:
 
-```
+```sh
 $ fleetctl list-units
 UNIT             LOAD    ACTIVE  SUB      DESC    MACHINE
 myapp.service  	 loaded  active  running  MyApp   c9de9451.../10.10.1.3
@@ -45,7 +45,7 @@ myapp.service  	 loaded  active  running  MyApp   c9de9451.../10.10.1.3
 
 You can view all of the machines in the cluster by running `list-machines`:
 
-```
+```sh
 $ fleetctl list-machines
 MACHINE                                 IP          METADATA
 148a18ff-6e95-4cd8-92da-c9de9bb90d5a    10.10.1.1   -
@@ -59,7 +59,7 @@ The main benefit of using CoreOS is to have your services run in a highly availa
 
 First, let's write a unit file that we'll run two copies of, named `apache.1.service` and `apache.2.service`:
 
-```
+```ini
 [Unit]
 Description=My Apache Frontend
 After=docker.service
@@ -75,7 +75,7 @@ X-Conflicts=apache.*.service
 
 The `X-Conflicts` attribute tells `fleet` that these two services can't be run on the same machine, giving us high availability. Let's start both units and verify that they're on two different machines:
 
-```
+```sh
 $ fleetctl start apache.*
 $ fleetctl list-units
 UNIT               LOAD    ACTIVE  SUB      DESC    			MACHINE
@@ -92,7 +92,7 @@ How do we route requests to these containers? The best strategy is to run a "sid
 
 The simplest sidekick example is for [service discovery](https://github.com/coreos/fleet/blob/master/Documentation/service-discovery.md). This unit blindly announces that our container has been started. We'll run one of these for each Apache unit that's already running. Make two copies of the unit called `apache-discovery.1.service` and `apache-discovery.2.service`. Be sure to change all instances of `apache.1.service` to `apache.2.service` when you create the second unit.
 
-```
+```ini
 [Unit]
 Description=Announce Apache1
 BindsTo=apache.1.service
@@ -113,7 +113,7 @@ The third is a fleet-specific property called `X-ConditionMachineOf`. This prope
 
 Let's verify that each unit was placed on to the same machine as the Apache service is is bound to:
 
-```
+```sh
 $ fleetctl start apache-discovery.1.service
 $ fleetctl list-units
 UNIT              			LOAD    ACTIVE  SUB      DESC    			 MACHINE
@@ -126,7 +126,7 @@ apache-discovery.2.service  loaded  active  running  Announce Apache2    148a18f
 
 Now let's verify that the service discovery is working correctly:
 
-```
+```sh
 $ etcdctl ls /services/ --recursive
 /services/website
 /services/website/apache1

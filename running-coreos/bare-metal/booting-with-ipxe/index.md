@@ -63,21 +63,21 @@ Note: the iPXE environment won't open https links, which means you can't use [ht
 First, download and boot the iPXE image.
 We will use `qemu-kvm` in this guide but use whatever process you normally use for booting an ISO on your platform.
 
-```
+```sh
 wget http://boot.ipxe.org/ipxe.iso
 qemu-kvm -m 1024 ipxe.iso --curses
 ```
 
 Next press Ctrl+B to get to the iPXE prompt and type in the following commands:
 
-```
+```sh
 iPXE> dhcp
 iPXE> chain http://${YOUR_BOOT_URL}
 ```
 
 Immediatly iPXE should download your boot script URL and start grabbing the images from the CoreOS storage site:
 
-```
+```sh
 ${YOUR_BOOT_URL}... ok
 http://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz... 98%
 ```

@@ -72,7 +72,7 @@ CoreOS allows you to configure machine parameters, launch systemd units on start
 
 The most common Rackspace cloud-config looks like:
 
-```
+```yaml
 #cloud-config
 
 coreos:
@@ -95,7 +95,7 @@ coreos:
 
 Certain server flavors have separate system and data disks. To utilize the data disks or a Cloud Block Storage volume, they must be mounted with a `.mount` unit.
 
-```
+```yaml
 #cloud-config
 coreos:
   units:
@@ -118,7 +118,7 @@ We're going to install `rackspace-novaclient`, upload a keypair and boot the ima
 
 If you don't have `pip` installed, install it by running `sudo easy_install pip`. Now let's use `pip` to install Supernova, a tool that lets you easily switch Rackspace regions. Be sure to install these in the order listed:
 
-```
+```sh
 sudo pip install keyring
 sudo pip install rackspace-novaclient
 sudo pip install supernova
@@ -128,7 +128,7 @@ sudo pip install supernova
 
 Edit your config file (`~/.supernova`) to store your Rackspace username, API key (referenced as `OS_PASSWORD`) and some other settings. The `OS_TENANT_NAME` should be set to your Rackspace account ID, which is displayed in the upper right-hand corner of the cloud control panel UI. 
 
-```
+```ini
 [production]
 OS_AUTH_URL = https://identity.api.rackspacecloud.com/v2.0/
 OS_USERNAME = username
@@ -144,7 +144,7 @@ We're ready to create a keypair then boot a server with it.
 
 For this guide, I'm assuming you already have a public key you use for your CoreOS servers. Note that only RSA keypairs are supported. Load the public key to Rackspace:
 
-```
+```sh
 supernova production keypair-add --pub-key ~/.ssh/coreos.pub coreos-key
 ```
 
@@ -220,7 +220,7 @@ First, install the [Heat CLI](https://github.com/openstack/python-heatclient) wi
 
 Second, verify that you're exporting your credentials for the CLI to use in your `~/bash_profile`:
 
-```
+```sh
 export OS_AUTH_URL=https://identity.api.rackspacecloud.com/v2.0/
 export OS_USERNAME=<username>
 export OS_TENANT_ID=<tenant_id>
@@ -231,7 +231,7 @@ export OS_AUTH_SYSTEM=rackspace
 
 If you have credentials already set up for use with the Nova CLI, they may conflict due to oddities in these tools. Re-source your credientials:
 
-```
+```sh
 source ~/.bash_profile
 ```
 

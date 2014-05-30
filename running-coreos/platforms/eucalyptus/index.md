@@ -22,7 +22,7 @@ CoreOS is released into alpha and beta channels. Releases to each channel serve 
 
 The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
 
-```
+```sh
 $ wget -q http://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
 $ bunzip2 coreos_production_openstack_image.img.bz2
 $ qemu-img convert -O raw coreos_production_openstack_image.img coreos_production_openstack_image.raw
@@ -40,7 +40,7 @@ emi-E4A33D45
 Now generate the ssh key that will be injected into the image for the `core`
 user and boot it up!
 
-```
+```sh
 $ euca-create-keypair coreos > core.pem
 $ euca-run-instances emi-E4A33D45 -k coreos -t m1.medium -g default
 ...
@@ -49,7 +49,7 @@ $ euca-run-instances emi-E4A33D45 -k coreos -t m1.medium -g default
 Your first CoreOS instance should now be running. The only thing left to do is
 find the IP and SSH in.
 
-```
+```sh
 $ euca-describe-instances | grep coreos
 RESERVATION     r-BCF44206      498025213678    group-1380012085
 INSTANCE        i-22444094      emi-E4A33D45    euca-10-0-1-61.cloud.home       euca-172-16-0-56.cloud.internal running coreos  0
@@ -59,7 +59,7 @@ INSTANCE        i-22444094      emi-E4A33D45    euca-10-0-1-61.cloud.home       
 
 Finally SSH into it, note that the user is `core`:
 
-```
+```sh
 $ chmod 400 core.pem
 $ ssh -i core.pem core@10.0.1.61
    ______                ____  _____

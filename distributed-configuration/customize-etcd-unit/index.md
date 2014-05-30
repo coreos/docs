@@ -21,7 +21,7 @@ We need to create our drop-in unit in `/run/systemd/system/etcd.service.d/`. If 
 
 #### 30-certificates.conf
 
-```
+```ini
 [Service]
 # Client Env Vars
 Environment=ETCD_CA_FILE=/path/to/CA.pem
@@ -39,7 +39,7 @@ You'll have to put these files on disk somewhere. To do this on each of your mac
 
 Cloud-config has a parameter that will place the contents of a file on disk. We're going to use this to add our drop-in unit as well as the certificate files.
 
-```
+```yaml
 #cloud-config
 
 write_files:

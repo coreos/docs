@@ -18,7 +18,7 @@ The script is self-contained and located [on Github here](https://raw.github.com
 
 If you have already booting CoreOS via PXE, the install script is already installed. By default the install script will attempt to install the same version and channel that was PXE-booted:
 
-```
+```sh
 coreos-install -d /dev/sda
 ```
 
@@ -47,12 +47,14 @@ CoreOS is released into alpha and beta channels. Releases to each channel serve 
 
 For reference here are the rest of the `coreos-install` options:
 
-    -d DEVICE   Install CoreOS to the given device.
-    -V VERSION  Version to install (e.g. current)
-    -C CHANNEL  Release channel to use (e.g. beta)
-    -o OEM      OEM type to install (e.g. openstack)
-    -c CLOUD    Insert a cloud-init config to be executed on boot.
-    -t TMPDIR   Temporary location with enough space to download images.
+```
+-d DEVICE   Install CoreOS to the given device.
+-V VERSION  Version to install (e.g. current)
+-C CHANNEL  Release channel to use (e.g. beta)
+-o OEM      OEM type to install (e.g. openstack)
+-c CLOUD    Insert a cloud-init config to be executed on boot.
+-t TMPDIR   Temporary location with enough space to download images.
+```
 
 ## Cloud Config
 
@@ -61,7 +63,7 @@ The easiest way to configure accounts, add systemd units, and more is via cloud 
 Jump over to the [docs to learn about the supported features][cloud-config].
 As an example this will install a ssh key for the default `core` user:
 
-```
+```yaml
 #cloud-config
 
 ssh_authorized_keys:
@@ -71,7 +73,7 @@ ssh_authorized_keys:
 Pass this file to `coreos-install` via the `-c` option.
 It will be installed to `/var/lib/coreos-install/user_data` and evaluated on every boot.
 
-```
+```sh
 coreos-install -d /dev/sda -c ~/config
 ```
 
@@ -81,7 +83,7 @@ coreos-install -d /dev/sda -c ~/config
 
 If cloud config doesn't handle something you need to do or you just want to take a look at the root btrfs filesystem before booting your new install just mount the ninth partition:
 
-```
+```sh
 mount -o subvol=root /dev/sda9 /mnt/
 ```
 

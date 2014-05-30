@@ -14,7 +14,7 @@ The docker systemd unit can be customized by overriding the unit that ships with
 
 Create a file called `/etc/systemd/system/docker-tcp.socket` to make docker available on a tcp socket on port 4243.
 
-```
+```ini
 [Unit]
 Description=Docker Socket for the API
 
@@ -29,7 +29,7 @@ WantedBy=sockets.target
 
 Then enable this new socket:
 
-```
+```sh
 systemctl enable docker-tcp.socket
 systemctl stop docker
 systemctl start docker-tcp.socket
@@ -41,7 +41,7 @@ docker -H tcp://127.0.0.1:4243 ps
 
 To enable the remote API on every CoreOS machine in a cluster, use [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). We need to provide the new socket file and docker's socket activation support will automatically start using the socket:
 
-```
+```yaml
 #cloud-config
 
 coreos:
@@ -72,7 +72,7 @@ coreos:
 
 To keep access to the port local, replace the `ListenStream` configuration above with:
 
-```
+```yaml
         [Socket]
         ListenStream=127.0.0.1:4243
 ```
@@ -85,26 +85,26 @@ Docker containers can be very large and debugging a build process makes it easy 
 
 First, copy the existing unit from the read-only file system into the read/write file system, so we can edit it:
 
-```
+```sh
 cp /usr/lib/systemd/system/docker.service /etc/systemd/system/
 ```
 
 Edit the `ExecStart` line to add the -D flag:
 
-```
+```ini
 ExecStart=/usr/bin/docker -d -s=btrfs -r=false -H fd:// -D
 ```
 
 Now lets tell systemd about the new unit and restart docker:
 
-```
+```sh
 systemctl daemon-reload
 systemctl restart docker
 ```
 
 To test our debugging stream, run a docker command and then read the systemd journal, which should contain the output:
 
-```
+```sh
 docker ps
 journalctl -u docker
 ```
@@ -113,7 +113,7 @@ journalctl -u docker
 
 If you need to modify a flag across many machines, you can provide the new unit with cloud-config:
 
-```
+```yaml
 #cloud-config
 
 coreos:
@@ -139,19 +139,19 @@ coreos:
 
 If you're operating in a locked down networking environment, you can specify an HTTP proxy for docker to use via an environment variable. First, copy the existing unit from the read-only file system into the read/write file system, so we can edit it:
 
-```
+```sh
 cp /usr/lib/systemd/system/docker.service /etc/systemd/system/
 ```
 
 Add a line that sets the environment variable in the unit above the `ExecStart` command:
 
-```
+```ini
 Environment="HTTP_PROXY=http://proxy.example.com:8080"
 ```
 
 To apply the change, reload the unit and restart docker:
 
-```
+```sh
 systemctl daemon-reload
 systemctl restart docker
 ```
@@ -160,7 +160,7 @@ systemctl restart docker
 
 The easiest way to use this proxy on all of your machines is via cloud-config:
 
-```
+```yaml
 #cloud-config
 
 coreos:
@@ -187,7 +187,7 @@ coreos:
 
 A json file `.dockercfg` can be created in your home directory that holds authentication information for a public or private docker registry. The auth token is a base64 encoded string: `base64(<username>:<password>)`. Here's what an example looks like with credentials for docker's public index and a private index:
 
-```
+```json
 {
   "https://index.docker.io/v1/": {
     "auth": "xXxXxXxXxXx=",
@@ -202,7 +202,7 @@ A json file `.dockercfg` can be created in your home directory that holds authen
 
 The last step is to tell your systemd units to run as the core user in order for docker to use the credentials we just set up. This is done in the service section of the unit:
 
-```
+```ini
 [Unit]
 Description=My Container
 After=docker.service
@@ -219,7 +219,7 @@ WantedBy=multi-user.target
 
 Since each machine in your cluster is going to have to pull images, cloud-config is the easiest way to write the config file to disk.
 
-```
+```yaml
 #cloud-config
 write_files:
     - path: /home/core/.dockercfg

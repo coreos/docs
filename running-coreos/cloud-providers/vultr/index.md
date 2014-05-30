@@ -20,7 +20,7 @@ The simplest option to boot up CoreOS is to load a script that contains the seri
 
 A sample script will look like this :
 
-```
+```ini
 #!ipxe
 
 set base-url http://alpha.release.core-os.net/amd64-usr/current
@@ -52,7 +52,7 @@ You can now log in to CoreOS using the associated private key on your local comp
 SSH to the IP of your VPS, and specify the "core" user: ```ssh core@IP```
 
 
-```
+```sh
 $ ssh core@IP
 The authenticity of host 'IP (2a02:1348:17c:423d:24:19ff:fef1:8f6)' can't be established.
 RSA key fingerprint is 99:a5:13:60:07:5d:ac:eb:4b:f2:cb:c9:b2:ab:d7:21.

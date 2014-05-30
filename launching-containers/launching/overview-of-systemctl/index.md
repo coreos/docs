@@ -15,7 +15,7 @@ weight: 5
 
 The first step to troubleshooting with `systemctl` is to find the status of the item in question. If you have multiple `Exec` commands in your service file, you can see which one of them is failing and view the exit code. Here's a failing service that starts a private docker registry in a container:
 
-```
+```sh
 $ sudo systemctl status custom-registry.service
 
 custom-registry.service - Custom Registry Service
@@ -43,17 +43,17 @@ You can see that `Process: 10171 ExecStart=/usr/bin/docker` exited with `status=
 
 Listing all of the processes running on the box is too much information, but you can pipe the output into grep to find the services you're looking for. Here's all service files and their status:
 
-```
+```sh
 sudo systemctl list-units | grep .service
 ```
 
 ## Start or Stop a Service
 
-```
+```sh
 sudo systemctl start apache.service
 ```
 
-```
+```sh
 sudo systemctl stop apache.service
 ```
 
@@ -61,7 +61,7 @@ sudo systemctl stop apache.service
 
 This will stop the process immediately:
 
-```
+```sh
 sudo systemctl kill apache.service
 ```
 
@@ -69,13 +69,13 @@ sudo systemctl kill apache.service
 
 Restarting a service is as easy as:
 
-```
+```sh
 sudo systemctl restart apache.service
 ```
 
 If you're restarting a service after you changed its service file, you will need to reload all of the service files before your changes take effect:
 
-```
+```sh
 sudo systemctl daemon-reload
 ```
 

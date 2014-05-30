@@ -14,7 +14,7 @@ CoreOS gives you three essential tools: service discovery, container management 
 
 First, connect to a CoreOS machine via SSH as the user `core`. For example, on Amazon, use:
 
-```
+```sh
 ssh core@an.ip.compute-1.amazonaws.com
 ```
 
@@ -26,13 +26,13 @@ If you used an example [cloud-config]({{site.url}}/docs/cluster-management/setup
 
 Set a key `message` with value `Hello world`:
 
-```
+```sh
 curl -L http://127.0.0.1:4001/v1/keys/message -d value="Hello world"
 ```
 
 Read the value of `message` back:
 
-```
+```sh
 curl -L http://127.0.0.1:4001/v1/keys/message
 ```
 
@@ -48,13 +48,13 @@ The second building block, **docker** ([docs][docker-docs]), is where your appli
 
 Run a command in the container and then stop it: 
 
-```
+```sh
 docker run busybox /bin/echo hello world
 ```
 
 Open a shell prompt inside the container:
 
-```
+```sh
 docker run -i -t busybox /bin/sh
 ```
 
@@ -68,13 +68,13 @@ The third building block of CoreOS is **systemd** ([docs][systemd-docs]) and it 
 
 First, you will need to run all of this as `root` since you are modifying system state:
 
-```
+```sh
 sudo -i
 ```
 
 Create a file called `/etc/systemd/system/hello.service`:
 
-```
+```ini
 [Unit]
 Description=My Service
 After=docker.service
@@ -94,20 +94,20 @@ See the [getting started with systemd]({{site.url}}/docs/launching-containers/la
 
 Then run enable and start the unit:
 
-```
+```sh
 sudo systemctl enable /etc/systemd/system/hello.service
 sudo systemctl start hello.service
 ```
 
 Your container is now started and is logging to the systemd journal. You can read the log by running:
 
-```
+```sh
 journalctl -u hello.service -f
 ```
 
 To stop the container, run:
 
-```
+```sh
 sudo systemctl stop hello.service
 ```
 

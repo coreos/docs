@@ -27,7 +27,7 @@ to use. It will work on raw, qcow2, vmdk, and most other formats. The
 command accepts either an absolute size or a relative size by
 by adding `+` prefix. Unit suffixes such as `G` or `M` are also supported.
 
-```
+```sh
 # Increase the disk size by 5GB
 qemu-img resize coreos_production_qemu_image.img +5G
 ```
@@ -41,7 +41,7 @@ be the absolute disk size, relative sizes are not supported so be
 careful to only increase the size, not shrink it. The unit
 suffixes `Gb` and `Mb` are supported.
 
-```
+```sh
 # Set the disk size to 20GB
 vmware-vdiskmanager -x 20Gb coreos_developer_vmware_insecure.vmx
 ```
@@ -58,7 +58,7 @@ format used for importing/exporting virtual machines.
 If you have have no other options you can try converting the VMDK disk
 image to a VDI image and configuring a new virtual machine with it:
 
-```
+```sh
 VBoxManage clonehd old.vmdk new.vdi --format VDI
 VBoxManage modifyhd new.vdi --resize 20480
 ```
