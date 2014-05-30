@@ -15,7 +15,7 @@ instructions will walk you through running a CoreOS cluster on Brightbox. This g
 
 First of all, let’s create a server group to put the new servers into:
 
-```
+```sh
 $ brightbox groups create -n "coreos"
 
 Creating a new server group
@@ -28,7 +28,7 @@ Creating a new server group
 
 And then create a [firewall policy](http://brightbox.com/docs/guides/cli/firewall/) for the group using its identifier:
 
-```
+```sh
 $ brightbox firewall-policies create -n "coreos" grp-cdl6h
 
  id         server_group  name  
@@ -41,7 +41,7 @@ $ brightbox firewall-policies create -n "coreos" grp-cdl6h
 
 Now let’s define the firewall rules for this new policy. First we’ll allow ssh access in from anywhere:
 
-```
+```sh
 $ brightbox firewall-rules create --source any --protocol tcp --dport 22 fwp-dw0n6
 
  id         protocol  source  sport  destination  dport  icmp_type  description
@@ -52,7 +52,7 @@ $ brightbox firewall-rules create --source any --protocol tcp --dport 22 fwp-dw0
 
 And then we’ll allow the CoreOS etcd ports `7001` and `4001`, allowing access from only the other nodes in the group.
 
-```
+```sh
 $ brightbox firewall-rules create --source grp-cdl6h --protocol tcp --dport 7001,4001 fwp-dw0n6
 
  id         protocol  source     sport  destination  dport      icmp_type  description
@@ -64,7 +64,7 @@ $ brightbox firewall-rules create --source grp-cdl6h --protocol tcp --dport 7001
 And then allow all outgoing access from the servers in the group:
 
 
-```
+```sh
 $ brightbox firewall-rules create --destination any fwp-dw0n6
 
  id         protocol  source  sport  destination  dport  icmp_type  description
@@ -77,7 +77,7 @@ $ brightbox firewall-rules create --destination any fwp-dw0n6
 
 You can find it by listing all images and grepping for CoreOS:
 
-```
+```sh
 $ brightbox images list | grep CoreOS
 
  id         owner      type      created_on  status   size   name
@@ -91,7 +91,7 @@ Before building the cluster, we need to generate a unique identifier for it, whi
 
 You can use any random string so we’ll use the `uuid` tool here to generate one:
 
-```
+```sh
 $ TOKEN=`uuid`
 
 $ echo $TOKEN
@@ -100,7 +100,7 @@ $ echo $TOKEN
 
 Then build three servers using the image, in the server group we created and specifying the token as the user data:
 
-```
+```sh
 $ brightbox servers create -i 3 --type small --name "coreos" --user-data $TOKEN --server-groups grp-cdl6h {{site.brightbox-id}}
 
 Creating 3 small (typ-8fych) servers with image CoreOS {{site.brightbox-version}} ({{ site.brightbox-id }}) in groups grp-cdl6h with 0.05k of user data
@@ -119,7 +119,7 @@ Those servers should take just a minute to build and boot. They automatically in
 
 If you’ve got ipv6 locally, you can ssh in directly:
 
-```
+```sh
 $ ssh core@ipv6.srv-n8uak.gb1.brightbox.com
 The authenticity of host 'ipv6.srv-n8uak.gb1.brightbox.com (2a02:1348:17c:423d:24:19ff:fef1:8f6)' can't be established.
 RSA key fingerprint is 99:a5:13:60:07:5d:ac:eb:4b:f2:cb:c9:b2:ab:d7:21.

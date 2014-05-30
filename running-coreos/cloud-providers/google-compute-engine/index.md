@@ -19,7 +19,7 @@ CoreOS allows you to configure machine parameters, launch systemd units on start
 
 The most common cloud-config for GCE looks like:
 
-```
+```yaml
 #cloud-config
 
 coreos:
@@ -63,7 +63,7 @@ Create 3 instances from the image above using our cloud-config from `cloud-confi
 
 Additional disks attached to instances can be mounted with a `.mount` unit. Each disk can be accessed via `/dev/disk/by-id/google-<disk-name>`. Here's the cloud-config to mount a disk called `database-backup`:
 
-```
+```yaml
 #cloud-config
 coreos:
   units:
@@ -85,13 +85,15 @@ To add more instances to the cluster, just launch more with the same cloud-confi
 
 You can log in your CoreOS instances using:
 
-    gcutil --project=<project-id> ssh --ssh_user=core <instance-name>
+```sh
+gcutil --project=<project-id> ssh --ssh_user=core <instance-name>
+```
 
 ## Modify Existing Cloud-Config
 
 To modify an existing instance's cloud-config, read the `metadata-fingerprint` and provide it to the `setinstancemetadata` command along with your new `cloud-config.yaml`:
 
-```
+```sh
 $ gcutil --project=coreos-gce-testing getinstance core2
 
 INFO: Zone for core2 detected as us-central1-a.
@@ -140,7 +142,7 @@ INFO: Zone for core2 detected as us-central1-a.
 +------------------------+-----------------------------------------------------+
 ```
 
-```
+```sh
 gcutil --project=<project-id> setinstancemetadata core2 --metadata_from_file=user-data:cloud-config.yaml --fingerprint="tgFMD53d3kI="
 ```
 

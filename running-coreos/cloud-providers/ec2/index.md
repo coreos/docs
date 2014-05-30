@@ -80,7 +80,7 @@ CoreOS allows you to configure machine parameters, launch systemd units on start
 
 The most common cloud-config for EC2 looks like:
 
-```
+```yaml
 #cloud-config
 
 coreos:
@@ -116,7 +116,7 @@ coreos:
 
 Ephemeral disks and additional EBS volumes attached to instances can be mounted with a `.mount` unit. Amazon's block storage devices are attached differently [depending on the instance type](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#InstanceStoreDeviceNames). Here's the cloud-config to mount the first ephemeral disk, `xvdb` on most instance types:
 
-```
+```yaml
 #cloud-config
 coreos:
   units:

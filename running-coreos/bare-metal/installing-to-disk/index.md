@@ -18,7 +18,7 @@ The script is self-contained and located [on Github here](https://raw.github.com
 
 If you have already booting CoreOS via PXE, the install script is already installed. By default the install script will attempt to install the same version and channel that was PXE-booted:
 
-```
+```sh
 coreos-install -d /dev/sda
 ```
 
@@ -35,24 +35,30 @@ CoreOS is released into alpha and beta channels. Releases to each channel serve 
     <div class="tab-pane" id="alpha-create">
       <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
       <p>If you want to ensure you are installing the latest alpha version, use the <code>-C</code> option:</p>
-      <pre>coreos-install -d /dev/sda -C alpha</pre>
+      <div class="highlight">
+        <pre><code class="sh">coreos-install -d /dev/sda -C alpha</code></pre>
+      </div>
     </div>
     <div class="tab-pane active" id="beta-create">
       <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
       <p>If you want to ensure you are installing the latest beta version, use the <code>-C</code> option:</p>
-      <pre>coreos-install -d /dev/sda -C beta</pre>
+      <div class="highlight">
+        <pre><code class="sh">coreos-install -d /dev/sda -C beta</code></pre>
+      </div>
     </div>
   </div>
 </div>
 
 For reference here are the rest of the `coreos-install` options:
 
-    -d DEVICE   Install CoreOS to the given device.
-    -V VERSION  Version to install (e.g. current)
-    -C CHANNEL  Release channel to use (e.g. beta)
-    -o OEM      OEM type to install (e.g. openstack)
-    -c CLOUD    Insert a cloud-init config to be executed on boot.
-    -t TMPDIR   Temporary location with enough space to download images.
+```
+-d DEVICE   Install CoreOS to the given device.
+-V VERSION  Version to install (e.g. current)
+-C CHANNEL  Release channel to use (e.g. beta)
+-o OEM      OEM type to install (e.g. openstack)
+-c CLOUD    Insert a cloud-init config to be executed on boot.
+-t TMPDIR   Temporary location with enough space to download images.
+```
 
 ## Cloud Config
 
@@ -61,7 +67,7 @@ The easiest way to configure accounts, add systemd units, and more is via cloud 
 Jump over to the [docs to learn about the supported features][cloud-config].
 As an example this will install a ssh key for the default `core` user:
 
-```
+```yaml
 #cloud-config
 
 ssh_authorized_keys:
@@ -71,7 +77,7 @@ ssh_authorized_keys:
 Pass this file to `coreos-install` via the `-c` option.
 It will be installed to `/var/lib/coreos-install/user_data` and evaluated on every boot.
 
-```
+```sh
 coreos-install -d /dev/sda -c ~/config
 ```
 
@@ -81,7 +87,7 @@ coreos-install -d /dev/sda -c ~/config
 
 If cloud config doesn't handle something you need to do or you just want to take a look at the root btrfs filesystem before booting your new install just mount the ninth partition:
 
-```
+```sh
 mount -o subvol=root /dev/sda9 /mnt/
 ```
 

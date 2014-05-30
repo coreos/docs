@@ -38,7 +38,7 @@ When configuring the CoreOS pxelinux.cfg there are a few kernel options that may
 This is an example pxelinux.cfg file that assumes CoreOS is the only option.
 You should be able to copy this verbatim into `/var/lib/tftpboot/pxelinux.cfg/default` after providing a cloud-config URL:
 
-```
+```ini
 default coreos
 prompt 1
 timeout 15
@@ -53,7 +53,7 @@ label coreos
 
 Here's a common cloud-config example which should be located at the URL from above:
 
-```
+```yaml
 #cloud-config
 coreos:
   units:
@@ -82,28 +82,28 @@ PXE booted machines cannot currently update themselves when new versions are rel
     <div class="tab-pane" id="alpha-create">
       <p>In the config above you can see that a Kernel image and a initramfs file is needed. Download these two files into your tftp root.</p>
       <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="{{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images">verify the downloaded files</a>.</p>
-      <pre>
-cd /var/lib/tftpboot
+        <div class="highlight">
+          <pre><code class="ini">cd /var/lib/tftpboot
 wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz
 wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz.sig
 wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz
 wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz.sig
 gpg --verify coreos_production_pxe.vmlinuz.sig
-gpg --verify coreos_production_pxe_image.cpio.gz.sig
-      </pre>
+gpg --verify coreos_production_pxe_image.cpio.gz.sig</pre></code>
+        </div>
     </div>
     <div class="tab-pane active" id="beta-create">
       <p>In the config above you can see that a Kernel image and a initramfs file is needed. Download these two files into your tftp root.</p>
       <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="{{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images">verify the downloaded files</a>.</p>
-      <pre>
-cd /var/lib/tftpboot
+        <div class="highlight">
+          <pre><code class="ini">cd /var/lib/tftpboot
 wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz
 wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz.sig
 wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz
 wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz.sig
 gpg --verify coreos_production_pxe.vmlinuz.sig
-gpg --verify coreos_production_pxe_image.cpio.gz.sig
-      </pre>
+gpg --verify coreos_production_pxe_image.cpio.gz.sig</pre></code>
+      </div>
     </div>
   </div>
 </div>
@@ -114,7 +114,7 @@ After setting up the PXE server as outlined above you can start the target machi
 The machine should grab the image from the server and boot into CoreOS.
 If something goes wrong you can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
-```
+```sh
 This is localhost.unknown_domain (Linux x86_64 3.10.10+) 19:53:36
 SSH host key: 24:2e:f1:3f:5f:9c:63:e5:8c:17:47:32:f4:09:5d:78 (RSA)
 SSH host key: ed:84:4d:05:e3:7d:e3:d0:b9:58:90:58:3b:99:3a:4c (DSA)
@@ -128,7 +128,7 @@ The IP address for the machine should be printed out to the terminal for conveni
 If it doesn't show up immediately, press enter a few times and it should show up.
 Now you can simply SSH in using public key authentication:
 
-```
+```sh
 ssh core@10.0.2.15
 ```
 
@@ -142,7 +142,7 @@ Once booted it is possible to [install CoreOS on a local disk][install-to-disk] 
 If you plan on using Docker we recommend using a local btrfs filesystem but ext4 is also available if supporting Docker is not required.
 For example, to setup a btrfs root filesystem on `/dev/sda`:
 
-```
+```sh
 cfdisk -z /dev/sda
 touch "/usr.squashfs (deleted)"     # work around a bug in mkfs.btrfs 3.12
 mkfs.btrfs -L ROOT /dev/sda1
@@ -156,7 +156,7 @@ And add `root=/dev/sda1` or `root=LABEL=ROOT` to the kernel options as documente
 
 Similar to the [OEM partition][oem] in CoreOS disk images, PXE images can be customized with a [cloud config][cloud-config] bundled in the initramfs. Simply create a `./usr/share/oem/` directory containing `cloud-config.yml` and append it to the cpio:
 
-```
+```sh
 mkdir -p usr/share/oem
 cp cloud-config.yml ./usr/share/oem
 gzip -d coreos_production_pxe_image.cpio.gz
@@ -166,7 +166,7 @@ gzip coreos_production_pxe_image.cpio
 
 Confirm the archive looks correct and has your `run` file inside of it:
 
-```
+```sh
 gzip -dc coreos_production_pxe_image.cpio.gz | cpio -it
 ./
 usr.squashfs

@@ -31,7 +31,7 @@ Now that you have Vagrant installed you can bring up a CoreOS instance.
 The following commands will clone a repository that contains the CoreOS Vagrantfile. This file tells
 Vagrant where it can find the latest disk image of CoreOS. Vagrant will download the image the first time you attempt to start the VM.
 
-```
+```sh
 git clone https://github.com/coreos/coreos-vagrant.git
 cd coreos-vagrant
 ```
@@ -42,7 +42,7 @@ CoreOS allows you to configure machine parameters, launch systemd units on start
 
 The most common cloud-config for Vagrant looks like:
 
-```
+```yaml
 #cloud-config
 
 coreos:
@@ -78,13 +78,13 @@ Make sure you provide a fresh discovery URL in your `user-data` if you wish to b
 
 Start the machine(s):
 
-```
+```sh
 vagrant up
 ```
 
 List the status of the running machines:
 
-```
+```sh
 $ vagrant status
 Current machine states:
 
@@ -99,7 +99,7 @@ VM, run `vagrant status NAME`.
 
 Connect to one of the machines:
 
-```
+```sh
 vagrant ssh core-01
 ```
 
@@ -107,7 +107,7 @@ vagrant ssh core-01
 
 If you have purchased the [VMware Vagrant provider](http://www.vagrantup.com/vmware), run the following commands:
 
-```
+```sh
 vagrant up --provider vmware_fusion
 vagrant ssh core-01
 ```
@@ -116,7 +116,7 @@ vagrant ssh core-01
 
 Optionally, you can share a folder from your laptop into the virtual machine. This is useful for easily getting code and Dockerfiles into CoreOS.
 
-```
+```ini
 config.vm.network "private_network", ip: "172.12.8.150"
 config.vm.synced_folder ".", "/home/core/share", id: "core", :nfs => true,  :mount_options   => ['nolock,vers=3,udp']
 ```
@@ -129,14 +129,14 @@ CoreOS is a rolling release distribution and versions that are out of date will 
 If you want to start from the most up to date version you will need to make sure that you have the latest box file of CoreOS.
 Simply remove the old box file and Vagrant will download the latest one the next time you `vagrant up`.
 
-```
+```sh
 vagrant box remove coreos-alpha vmware_fusion
 vagrant box remove coreos-alpha virtualbox
 ```
 
 If you'd like to download the box separately, you can download the URL contained in the Vagrantfile and add it manually:
 
-```
+```sh
 vagrant box add coreos-alpha <path-to-box-file>
 ```
 

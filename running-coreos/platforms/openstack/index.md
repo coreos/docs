@@ -23,7 +23,7 @@ CoreOS is released into alpha and beta channels. Releases to each channel serve 
 
 The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
 
-```
+```sh
 $ wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
 $ bunzip2 coreos_production_openstack_image.img.bz2
 $ glance image-create --name CoreOS \
@@ -64,7 +64,7 @@ In order for this to work your OpenStack cloud provider must support [config dri
 
 The most common cloud-config for Openstack looks like:
 
-```
+```yaml
 #cloud-config
 
 coreos:
@@ -88,7 +88,7 @@ ssh_authorized_keys:
 
 Boot the machines with the `nova` CLI, referencing the image ID from the import step above and your `cloud-config.yaml`:
 
-```
+```sh
 nova boot \
 --user-data ./cloud-config.yaml \
 --image cdf3874c-c27f-4816-bc8c-046b240e0edd \
@@ -103,7 +103,7 @@ To use config drive you may need to add `--config-drive=true` to command above.
 Your first CoreOS cluster should now be running. The only thing left to do is
 find an IP and SSH in.
 
-```
+```sh
 $ nova list
 +--------------------------------------+-----------------+--------+------------+-------------+-------------------+
 | ID                                   | Name            | Status | Task State | Power State | Networks          |
@@ -116,7 +116,7 @@ $ nova list
 
 Finally SSH into an instance, note that the user is `core`:
 
-```
+```sh
 $ chmod 400 core.pem
 $ ssh -i core.pem core@10.0.0.3
    ______                ____  _____
@@ -136,7 +136,7 @@ with the others.
 
 Example:
 
-```
+```sh
 nova boot \
 --user-data ./cloud-config.yaml \
 --image cdf3874c-c27f-4816-bc8c-046b240e0edd \

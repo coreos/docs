@@ -32,23 +32,25 @@ CoreOS is released into alpha and beta channels. Releases to each channel serve 
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
       <p>iPXE downloads a boot script from a publicly available URL. You will need to host this URL somewhere public and replace the example SSH key with your own. You can also run a <a href="https://github.com/kelseyhightower/coreos-ipxe-server">custom iPXE server</a>.</p>
-      <pre>
-#!ipxe
+      <div class="highlight">
+        <pre><code class="ini">#!ipxe
 
 set base-url http://alpha.release.core-os.net/amd64-usr/current
 kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQC2PxAKTLdczK9+RNsGGPsz0eC2pBlydBEcrbI7LSfiN7Bo5hQQVjki+Xpnp8EEYKpzu6eakL8MJj3E28wT/vNklT1KyMZrXnVhtsmOtBKKG/++odpaavdW2/AU0l7RZiE= coreos pxe demo"
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
-boot</pre>
+boot</code></pre>
+      </div>
     </div>
     <div class="tab-pane active" id="beta-create">
       <p>iPXE downloads a boot script from a publicly available URL. You will need to host this URL somewhere public and replace the example SSH key with your own. You can also run a <a href="https://github.com/kelseyhightower/coreos-ipxe-server">custom iPXE server</a>.</p>
-      <pre>
-#!ipxe
+      <div class="highlight">
+        <pre><code class="ini">#!ipxe
 
 set base-url http://beta.release.core-os.net/amd64-usr/current
 kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQC2PxAKTLdczK9+RNsGGPsz0eC2pBlydBEcrbI7LSfiN7Bo5hQQVjki+Xpnp8EEYKpzu6eakL8MJj3E28wT/vNklT1KyMZrXnVhtsmOtBKKG/++odpaavdW2/AU0l7RZiE= coreos pxe demo"
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
-boot</pre>
+boot</code></pre>
+      </div>
     </div>
   </div>
 </div>
@@ -63,21 +65,21 @@ Note: the iPXE environment won't open https links, which means you can't use [ht
 First, download and boot the iPXE image.
 We will use `qemu-kvm` in this guide but use whatever process you normally use for booting an ISO on your platform.
 
-```
+```sh
 wget http://boot.ipxe.org/ipxe.iso
 qemu-kvm -m 1024 ipxe.iso --curses
 ```
 
 Next press Ctrl+B to get to the iPXE prompt and type in the following commands:
 
-```
+```sh
 iPXE> dhcp
 iPXE> chain http://${YOUR_BOOT_URL}
 ```
 
 Immediatly iPXE should download your boot script URL and start grabbing the images from the CoreOS storage site:
 
-```
+```sh
 ${YOUR_BOOT_URL}... ok
 http://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz... 98%
 ```
