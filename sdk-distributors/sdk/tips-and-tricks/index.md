@@ -20,7 +20,7 @@ weight: 7
 
 Using `repo forall` you can search across all of the git repos at once:
 
-```
+```sh
 repo forall -c  git grep 'CONFIG_EXTRA_FIRMWARE_DIR'
 ```
 
@@ -31,7 +31,7 @@ Note: You need git 1.7.10 or newer to use the credential helper
 Turn on the credential helper and git will save your password in memory
 for some time:
 
-```
+```sh
 git config --global credential.helper cache
 ```
 
@@ -44,7 +44,7 @@ this.
 Get a view into what the base system will contain and why it will contain those
 things with the emerge tree view:
 
-```
+```sh
 emerge-amd64-usr  --emptytree  -p -v --tree  coreos-base/coreos-dev
 ```
 
@@ -53,7 +53,7 @@ emerge-amd64-usr  --emptytree  -p -v --tree  coreos-base/coreos-dev
 You will be booting lots of VMs with on the fly ssh key generation. Add
 this in your `$HOME/.ssh/config` to stop the annoying fingerprint warnings.
 
-```
+```ini
 Host 127.0.0.1
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
@@ -68,7 +68,7 @@ including loop devices used to contruct CoreOS disk images. If the daemon
 responsible for this happens to be ``udisks`` then you can disable this
 behavior with the following udev rule:
 
-```
+```sh
 echo 'SUBSYSTEM=="block", KERNEL=="ram*|loop*", ENV{UDISKS_PRESENTATION_HIDE}="1", ENV{UDISKS_PRESENTATION_NOPOLICY}="1"' > /etc/udev/rules.d/85-hide-loop.rules
 udevadm control --reload
 ```

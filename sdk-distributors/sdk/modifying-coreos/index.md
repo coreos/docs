@@ -38,7 +38,7 @@ System requirements to get started:
 
 You also need a proper git setup:
 
-```
+```sh
 git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
 ```
@@ -51,7 +51,7 @@ git config --global user.name "Your Name"
 repositories that makes up CoreOS. Pull down the code and add it to your
 path:
 
-```
+```sh
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
 export PATH="$PATH":`pwd`/depot_tools
 ```
@@ -64,20 +64,20 @@ need to reset your $PATH manually each time you open a new shell.
 Create a project directory. This will hold all of your git repos and the SDK
 chroot. A few gigs of space will be necessary.
 
-```
+```sh
 mkdir coreos; cd coreos
 ```
 
 Initialize the .repo directory with the manifest that describes all of the git
 repos required to get started.
 
-```
+```sh
 repo init -u https://github.com/coreos/manifest.git -g minilayout --repo-url https://chromium.googlesource.com/external/repo.git
 ```
 
 Synchronize all of the required git repos from the manifest.
 
-```
+```sh
 repo sync
 ```
 
@@ -86,7 +86,7 @@ repo sync
 Download and enter the SDK chroot which contains all of the compilers and
 tooling.
 
-```
+```sh
 ./chromite/bin/cros_sdk
 ```
 
@@ -96,32 +96,32 @@ entries that are bind mounted into the chroot.
 
 Set up the "core" user's password.
 
-```
+```sh
 ./set_shared_user_password.sh
 ```
 
 Target amd64-usr for this image:
 
-```
+```sh
 echo amd64-usr > .default_board
 ```
 
 Setup a board root filesystem in /build/${BOARD}:
 
-```
+```sh
 ./setup_board
 ```
 
 Build all of the target binary packages:
 
-```
+```sh
 ./build_packages
 ```
 
 Build an image based on the built binary packages along with the developer
 overlay:
 
-```
+```sh
 ./build_image --noenable_rootfs_verification dev
 ```
 
@@ -139,7 +139,7 @@ systemd-rest, allows you to stop and start units via HTTP. The other is a
 small server that you can play with shutting off and on called
 motd-http. You can try these daemons with:
 
-```
+```sh
 curl http://127.0.0.1:8000
 curl http://127.0.0.1:8080/units/motd-http.service/stop/replace
 curl http://127.0.0.1:8000

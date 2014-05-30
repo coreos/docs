@@ -99,7 +99,7 @@ values.
 Note: Add `COREOS_OFFICIAL=1` here if you are making a real release. That will
 change the version to leave off the build id suffix.
 
-```
+```sh
 ./build_image prod --group alpha
 ```
 
@@ -129,7 +129,7 @@ automatically as `coreos_production_update.gz` and
 to generate the payload is `coreos_production_update.bin.bz2`.
 As an example, to publish the insecurely signed payload:
 
-```
+```sh
 URL=http://builds.release.core-os.net/alpha/amd64-usr/321.0.0
 cd $(mktemp -d)
 gsutil -m cp $URL/coreos_production_update* ./

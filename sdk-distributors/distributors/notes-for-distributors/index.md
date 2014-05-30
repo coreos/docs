@@ -16,9 +16,11 @@ If you are importing images for use inside of your environment it is recommended
 
 It is recommended that you also verify files using the [CoreOS Image Signing Key][signing-key]. The GPG signature for each image is a detached `.sig` file that must be passed to `gpg --verify`. For example:
 
-    wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
-    wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2.sig
-    gpg --verify coreos_production_openstack_image.img.bz2.sig
+```sh
+wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
+wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2.sig
+gpg --verify coreos_production_openstack_image.img.bz2.sig
+```
 
 [signing-key]: {{site.url}}/security/image-signing-key
 
