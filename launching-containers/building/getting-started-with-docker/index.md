@@ -21,13 +21,13 @@ docker has a [straightforward CLI](http://docs.docker.io/en/latest/reference/com
 
 Launching a container is simple as `docker run` + the image name you would like to run + the command to run within the container. If the image doesn't exist on your local machine, docker will attempt to fetch it from the public image registry. Later we'll explore how to use docker with a private registry. It's important to note that containers are designed to stop once the command executed within them has exited. For example, if you ran `/bin/echo hello world` as your command, the container will start, print hello world and then stop:
 
-```
+```sh
 docker run ubuntu /bin/echo hello world
 ```
 
 Let's launch an Ubuntu container and install Apache inside of it using the bash prompt:
 
-```
+```sh
 docker run -t -i ubuntu /bin/bash
 ```
 
@@ -45,7 +45,7 @@ It's important to note that you can commit using any username and image name loc
 
 Commit the container with the container ID, your username, and the name `apache`:
 
-```
+```sh
 docker commit 72d468f455ea coreos/apache
 ```
 
@@ -55,13 +55,13 @@ The overlay filesystem works similar to git: our image now builds off of the `ub
 
 Now we have our Ubuntu container with Apache running in one shell and an image of that container sitting on disk. Let's launch a new container based on that image but set it up to keep running indefinitely. The basic syntax looks like this, but we need to configure a few additional options that we'll fill in as we go:
 
-```
+```sh
 docker run [options] [image] [process]
 ```
 
 The first step is to tell docker that we want to run our `coreos/apache` image:
 
-```
+```sh
 docker run [options] coreos/apache [process]
 ```
 
@@ -69,7 +69,7 @@ docker run [options] coreos/apache [process]
 
 The most important option is to run the container in detached mode with the `-d` flag. This will output the container ID to show that the command was successful, but nothing else. At any time you can run `docker ps` in the other shell to view a list of the running containers. Our command now looks like:
 
-```
+```sh
 docker run -d coreos/apache [process]
 ```
 
@@ -77,13 +77,13 @@ docker run -d coreos/apache [process]
 
 We need to run the apache process in the foreground, since our container will stop when the process specified in the `docker run` command stops. We can do this with a flag `-D` when starting the apache2 process:
 
-```
+```sh
 /usr/sbin/apache2ctl -D FOREGROUND
 ```
 
 Let's add that to our command:
 
-```
+```sh
 docker run -d coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
 ```
 
@@ -97,7 +97,7 @@ Instead, create a systemd unit file to make systemd keep that container running.
 
 The default apache install will be running on port 80. To give our container access to traffic over port 80, we use the `-p` flag and specify the port on the host that maps to the port inside the container. In our case we want 80 for each, so we include `-p 80:80` in our command:
 
-```
+```sh
 docker run -d -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
 ```
 
@@ -107,25 +107,25 @@ You can now run this command on your CoreOS host to create the container. You sh
 
 Earlier we downloaded the ubuntu image remotely from the docker public registry because it didn't exist on our local machine. We can also push local images to the public registry (or a private registry) very easily with the `push` command:
 
-```
+```sh
 docker push coreos/apache
 ```
 
 To push to a private repository the syntax is very similar. First, we must prefix our image with the host running our private registry instead of our username. List images by running `docker images` and insert the correct ID into the `tag` command:
 
-```
+```sh
 docker tag f455ea72d468 registry.example.com:5000/apache
 ```
 
 After tagging, the image needs to be pushed to the registry:
 
-```
+```sh
 docker push registry.example.com:5000/apache
 ```
 
 Once the image is done uploading, you should be able to start the exact same container on a different CoreOS host by running:
 
-```
+```sh
 docker run -d -p 80:80 registry.example.com:5000/apache /usr/sbin/apache2ctl -D FOREGROUND
 ```
 
