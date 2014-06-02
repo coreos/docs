@@ -143,4 +143,4 @@ vagrant box add coreos-alpha <path-to-box-file>
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide, learn about [CoreOS clustering with Vagrant]({{site.url}}/blog/coreos-clustering-with-vagrant/), or dig into [more specific topics]({{site.url}}/docs).
