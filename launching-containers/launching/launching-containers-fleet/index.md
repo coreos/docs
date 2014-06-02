@@ -9,9 +9,9 @@ weight: 2
 
 # Launching Containers with fleet
 
-`fleet` is a cluster manager that controls `systemd` at the cluster level. To run your services in the cluster, you must submit regular systemd units combined with a few fleet-specific properties.
+`fleet` is a cluster manager that controls `systemd` at the cluster level. To run your services in the cluster, you must submit regular systemd units combined with a few [fleet-specific properties]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/).
 
-If you're not familiar with systemd units, check out our [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd) guide.
+If you're not familiar with systemd units, check out our [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd) guide. 
 
 This guide assumes you're running `fleetctl` locally from a CoreOS machine that's part of a CoreOS cluster. You can also [control your cluster remotely]({{site.url}}/docs/launching-containers/launching/fleet-using-the-client/#get-up-and-running). All of the units referenced in this blog post are contained in the [unit-examples](https://github.com/coreos/unit-examples/tree/master/simple-fleet) repository. You can clone this onto your CoreOS box to make unit submission easier.
 
@@ -73,7 +73,9 @@ ExecStop=/usr/bin/docker stop apache
 X-Conflicts=apache.*.service
 ```
 
-The `X-Conflicts` attribute tells `fleet` that these two services can't be run on the same machine, giving us high availability. Let's start both units and verify that they're on two different machines:
+The `X-Conflicts` attribute tells `fleet` that these two services can't be run on the same machine, giving us high availability. A full list of options for this section can be found in the [fleet units guide]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/).
+
+Let's start both units and verify that they're on two different machines:
 
 ```sh
 $ fleetctl start apache.*
@@ -109,7 +111,7 @@ This unit has a few interesting properties. First, it uses `BindsTo` to link the
 
 Second is `%H`, a variable built into systemd, that represents the hostname of the machine running this unit. Variable usage is covered in our [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd/#unit-variables) guide as well as in [systemd documentation](http://www.freedesktop.org/software/systemd/man/systemd.unit.html#Specifiers).
 
-The third is a fleet-specific property called `X-ConditionMachineOf`. This property causes the unit to be placed onto the same machine that `apache.1.service` is running on.
+The third is a [fleet-specific property]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/) called `X-ConditionMachineOf`. This property causes the unit to be placed onto the same machine that `apache.1.service` is running on.
 
 Let's verify that each unit was placed on to the same machine as the Apache service is is bound to:
 
@@ -143,5 +145,5 @@ If you're running in the cloud, many services have APIs that can be automated ba
 
 #### More Information
 <a class="btn btn-default" href="{{site.url}}/docs/launching-containers/launching/fleet-example-deployment">Example Deployment with fleet</a>
-<a class="btn btn-default" href="https://github.com/coreos/fleet/blob/master/Documentation/unit-files.md">fleet Unit Specifications</a>
+<a class="btn btn-default" href="{{site.url}}/docs/launching-containers/launching/fleet-unit-files/">fleet Unit Specifications</a>
 <a class="btn btn-default" href="https://github.com/coreos/fleet/blob/master/Documentation/configuration.md">fleet Configuration</a>
