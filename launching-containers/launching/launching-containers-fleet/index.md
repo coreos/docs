@@ -143,6 +143,62 @@ If you're running in the cloud, many services have APIs that can be automated ba
 
 <iframe width="636" height="375" src="//www.youtube.com/embed/u91DnN-yaJ8?rel=0" frameborder="0" allowfullscreen></iframe>
 
+## Schedule Based on Machine Metadata
+
+Applications with complex and specific requirements can target a subset of the cluster for scheduling via machine metadata. Powerful deployment topologies can be achieved &mdash; schedule units based on the machine's region, rack location, disk speed or anything else you can think of.
+
+Metadata can be provided via [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/#coreos) or a [config file](https://github.com/coreos/fleet/blob/master/Documentation/configuration.md). Here's an example config file:
+
+```ini
+# Comma-delimited key/value pairs that are published to the fleet registry.
+# This data can be referenced in unit files to affect scheduling decisions.
+# An example could look like: metadata="region=us-west,az=us-west-1"
+metadata="platform=metal,provider=rackspace,region=east,disk=ssd"
+```
+
+Metadata can be viewed in the machine list when configured:
+
+```sh
+$ fleetctl list-machines
+MACHINE     IP            METADATA
+29db5063... 172.17.8.101  disk=ssd,platform=metal,provider=rackspace,region=east
+ebb97ff7... 172.17.8.102  disk=ssd,platform=cloud,provider=rackspace,region=east
+f823e019... 172.17.8.103  disk=ssd,platform=cloud,provider=amazon,region=east
+```
+
+The unit file for a service that does a lot of disk I/O but doesn't care where it runs could look like:
+
+```ini
+[X-Fleet]
+X-ConditionMachineMetadata=disk=ssd
+```
+
+If you wanted to ensure very high availability you could have 3 unit files that must be scheduled across providers but in the same region:
+
+```ini
+[X-Fleet]
+X-Conflicts=webapp*
+X-ConditionMachineMetadata=provider=rackspace
+X-ConditionMachineMetadata=platform=metal
+X-ConditionMachineMetadata=region=east
+```
+
+```ini
+[X-Fleet]
+X-Conflicts=webapp*
+X-ConditionMachineMetadata=provider=rackspace
+X-ConditionMachineMetadata=platform=cloud
+X-ConditionMachineMetadata=region=east
+```
+
+```ini
+[X-Fleet]
+X-Conflicts=webapp*
+X-ConditionMachineMetadata=provider=amazon
+X-ConditionMachineMetadata=platform=cloud
+X-ConditionMachineMetadata=region=east
+```
+
 #### More Information
 <a class="btn btn-default" href="{{site.url}}/docs/launching-containers/launching/fleet-example-deployment">Example Deployment with fleet</a>
 <a class="btn btn-default" href="{{site.url}}/docs/launching-containers/launching/fleet-unit-files/">fleet Unit Specifications</a>
