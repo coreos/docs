@@ -6,7 +6,7 @@ title: CoreOS Quick Start
 
 # Quick Start
 
-If you don't have a CoreOS machine running, check out the guides on running CoreOS on [Vagrant][vagrant-guide], [Amazon EC2][ec2-guide], [QEMU/KVM][qemu-guide], [VMware][vmware-guide] and [OpenStack][openstack-guide]. With either of these guides you will have a machine up and running in a few minutes.
+If you don't have a CoreOS machine running, check out the guides on [running CoreOS]({{site.url}}/docs/#running-coreos) on most cloud providers ([EC2]({{site.url}}/docs/running-coreos/cloud-providers/ec2), [Rackspace]({{site.url}}/docs/running-coreos/cloud-providers/rackspace), [GCE]({{site.url}}/docs/running-coreos/cloud-providers/google-compute-engine)), virtualization platforms ([Vagrant]({{site.url}}/docs/running-coreos/platforms/vagrant), [VMware]({{site.url}}/docs/running-coreos/platforms/vmware), [OpenStack]({{site.url}}/docs/running-coreos/platforms/openstack), [QEMU/KVM]({{site.url}}/docs/running-coreos/platforms/qemu)) and bare metal servers ([PXE]({{site.url}}/docs/running-coreos/bare-metal/booting-with-pxe), [iPXE]({{site.url}}/docs/running-coreos/bare-metal/booting-with-ipxe), [ISO]({{site.url}}/docs/running-coreos/platforms/iso), [Installer]({{site.url}}/docs/running-coreos/bare-metal/installing-to-disk)). With any of these guides you will have machines up and running in a few minutes.
 
 It's highly recommended that you set up a cluster of at least 3 machines &mdash; it's not as much fun on a single machine. If you don't want to break the bank, [Vagrant][vagrant-guide] allows you to run an entire cluster on your laptop. For a cluster to be properly bootstrapped, you have to provide cloud-config via user-data, which is covered in each platform's guide.
 
