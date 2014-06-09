@@ -8,18 +8,17 @@ weight: 5
 
 # Running CoreOS on VEXXHOST
 
-CoreOS is currently in heavy development and actively being tested.  The
-following instructions will walk you through setting up the `nova` tool with
-your appropriate credentials and launching your first cluster using the
-CLI tools.
-
 VEXXHOST is a Canadian OpenStack cloud computing provider based in Canada. In
 order to get started, you must have an active account on the VEXXHOST
 [public cloud computing][cloud-compute] service.
 
+The following instructions will walk you through setting up the `nova` tool with
+your appropriate credentials and launching your first cluster using the
+CLI tools.
+
 [cloud-compute]: http://vexxhost.com/cloud-computing
 
-### Choosing a Channel
+## Choosing a Channel
 
 CoreOS is released into alpha and beta channels. Releases to each channel serve
 as a release-candidate for the next channel. For example, a bug-free alpha
@@ -31,7 +30,7 @@ CoreOS _Channel_ _Version_.  For example, the image name of the latest alpha
 release will be "CoreOS Alpha {{site.alpha-channel}}".
 
 
-## Cloud-Config
+### Cloud-Config
 
 CoreOS allows you to configure machine parameters, launch systemd units on
 startup and more via [cloud-config][cloud-config].  We're going to provide the
