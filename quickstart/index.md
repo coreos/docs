@@ -82,7 +82,7 @@ Fleet works by receiving [systemd unit files]({{site.url}}/docs/launching-contai
 
 First, let's construct a simple systemd unit that runs a docker container. Save this as `hello.service` in the home directory:
 
-#### home.service
+#### hello.service
 
 ```ini
 [Unit]
