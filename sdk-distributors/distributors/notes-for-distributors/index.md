@@ -42,7 +42,7 @@ CoreOS machines running on Amazon EC2 utilize a two-step cloud-config process. F
 
 You can find the [code for this process on Github][amazon-github]. End-user instructions for this process can be found on our [Amazon EC2 docs][amazon-cloud-config].
 
-[amazon-github]: https://github.com/coreos/coreos-overlay/tree/master/coreos-base/oem-ami
+[amazon-github]: https://github.com/coreos/coreos-overlay/tree/master/coreos-base/oem-ec2-compat
 [amazon-user-data-doc]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html#instancedata-user-data-retrieval
 [amazon-cloud-config]: {{site.url}}/docs/running-coreos/cloud-providers/ec2#cloud-config
 
