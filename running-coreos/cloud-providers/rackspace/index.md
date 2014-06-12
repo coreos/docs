@@ -68,7 +68,9 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
 
 ## Cloud-Config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. You can provide cloud-config data via both Heat and Nova APIs. You **can not** provide cloud-config via the Control Panel. If you launch machines via the UI, you will have to do all configuration manually.
+CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a machine is created on Rackspace, the cloud-config can't be modified.
+
+You can provide cloud-config data via both Heat and Nova APIs. You **cannot** provide cloud-config via the Control Panel. If you launch machines via the UI, you will have to do all configuration manually.
 
 The most common Rackspace cloud-config looks like:
 
@@ -93,7 +95,7 @@ coreos:
 
 ### Mount Data Disk
 
-Certain server flavors have separate system and data disks. To utilize the data disks or a Cloud Block Storage volume, they must be mounted with a `.mount` unit.
+Certain server flavors have separate system and data disks. To utilize the data disks, they must be mounted with a `.mount` unit. Check to make sure the `Where=` parameter accurately reflects the location of the block device:
 
 ```yaml
 #cloud-config
@@ -107,6 +109,8 @@ coreos:
         Where=/media/data
         Type=ext3
 ```
+
+Mounting Cloud Block Storage can be done with a mount unit, but should not be included in cloud-config unless the disk is present on the first boot.
 
 For more general information, check out [mounting storage on CoreOS]({{site.url}}/docs/cluster-management/setup/mounting-storage).
 
