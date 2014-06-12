@@ -24,6 +24,51 @@ Using `repo forall` you can search across all of the git repos at once:
 repo forall -c  git grep 'CONFIG_EXTRA_FIRMWARE_DIR'
 ```
 
+## Add new upstream package
+
+Before making modificaions use `repo start` to create a new branch for the changes.
+
+To add a new package fetch the Gentoo package from upstream and add the package as a dependency of coreos-base/coreos
+
+If any files in the upstream package will be changed the package can be fetched from upstream Gentoo directly into `src/third_party/coreos-overlay` it may be necessary to create any missing directrories in the path too.
+
+e.g.
+`~/trunk/src/third_party/coreos-overlay $ mkdir -p sys-block/open-iscsi && rsync -av rsync://rsync.gentoo.org/gentoo-portage/sys-block/open-iscsi/ sys-block/open-iscsi/`
+The tailing / prevents rsync from creating the directory for the package so you dont end up with `sys-block/open-iscsi/open-iscsi`
+Remember to add the new files to git.
+
+If the new package does not need to be modified the package should be placed in `src/third_party/portage-stable` 
+
+You can use `scripts/update_ebuilds` to fetch packages into `src/third_party/portage-stable` and add the files to git.
+You should specify the category and the packagename.
+e.g.
+`./update_ebuilds sys-block/open-iscsi`
+
+If the package needs to be modified it must be moved out of `src/third_party/portage-stable` to `src/third_party/coreos-overlay`
+
+To include the new packaage as a dependency of coreos add the package to the end of the RDEPEND environment variable in `coreos-base/coreos/coreos-0.0.1.ebuild` then increment the revision of coreos by renaming the softlink `git mv coreos-base/coreos/coreos-0.0.1-r237.ebuild coreos-base/coreos/coreos-0.0.1-r238.ebuild`
+
+The new package will now be built and installed as part of the normal build flow.
+
+Add and commit the changes to git using Angularjs format see [CONTRIBUTING.md]
+[CONTRIBUTING.md]: https://github.com/coreos/etcd/blob/master/CONTRIBUTING.md
+
+Push the changes to your github fork and create a pull request.
+
+### Ebuild Tips
+
+- Manualy merge a package to the chroot to test build `emerge-amd64-usr packagename`
+- Manualy unmerge a package `emerge-amd64-usr --unmerge packagename`
+- Remove a binary package from the cache `sudo rm /build/amd64-usr/packages/catagory/packagename-version.tbz2`
+- recreate the chroot prior to a clean rebuild `./chromite/bin/cros_sdk -r`
+- it may be necessary to comment out kernel source checks from the ebuild if the build fails -- as coreos does not  yet provide visibility of the configured kernel source at biuld time -- usualy this is not a problem but may lead to warning messages
+- Chromeium OS [Portage Build FAQ]
+- [Gentoo Development Guide]
+ 
+
+[Portage Build FAQ]: http://www.chromium.org/chromium-os/how-tos-and-troubleshooting/portage-build-faq
+[Gentoo Development Guide]: http://devmanual.gentoo.org/
+
 ## Caching git https passwords
 
 Note: You need git 1.7.10 or newer to use the credential helper
