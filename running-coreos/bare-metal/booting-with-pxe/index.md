@@ -9,7 +9,7 @@ weight: 5
 
 # Booting CoreOS via PXE
 
-CoreOS is currently in heavy development and actively being tested. These instructions will walk you through booting CoreOS via PXE on real or virtual hardware. By default, this will run CoreOS completely out of RAM. CoreOS can also be [installed to disk]({{site.url}}/docs/running-coreos/bare-metal/installing-to-disk).
+These instructions will walk you through booting CoreOS via PXE on real or virtual hardware. By default, this will run CoreOS completely out of RAM. CoreOS can also be [installed to disk]({{site.url}}/docs/running-coreos/bare-metal/installing-to-disk).
 
 ## Configuring pxelinux
 
@@ -23,10 +23,12 @@ If you need suggestions on how to set a server up, check out guides for [Debian]
 
 ### Setting up pxelinux.cfg
 
-When configuring the CoreOS pxelinux.cfg there are a few kernel options that may be useful but all are optional:
+When configuring the CoreOS pxelinux.cfg there are a few kernel options that may be useful but all are optional.
+
+If you plan to use docker, `/var/lib/docker` must have a btrfs filesystem. This is most easily accomplished by using btrfs for the entire root filesystem via `rootfstype=btrfs`, although this option is still experimental.
 
 - **rootfstype=tmpfs**: Use tmpfs for the writable root filesystem. This is the default behavior.
-- **rootfstype=btrfs**: Use btrfs in ram for the writable root filesystem. Use this option if you want to use docker without any further configuration. *Experimental*
+- **rootfstype=btrfs**: Use btrfs in ram for the writable root filesystem. *Experimental*
 - **root**: Use a local filesystem for root instead of one of two in-ram options above. The filesystem must be formatted in advance but may be completely blank, it will be initialized on boot. The filesystem may be specified by any of the usual ways including device, label, or UUID; e.g: `root=/dev/sda1`, `root=LABEL=ROOT` or `root=UUID=2c618316-d17a-4688-b43b-aa19d97ea821`.
 - **sshkey**: Add the given SSH public key to the `core` user's authorized_keys file. Replace the example key below with your own (it is usually in `~/.ssh/id_rsa.pub`)
 - **console**: Enable kernel output and a login prompt on a given tty. The default, `tty0`, generally maps to VGA. Can be used multiple times, e.g. `console=tty0 console=ttyS0`
@@ -38,7 +40,7 @@ When configuring the CoreOS pxelinux.cfg there are a few kernel options that may
 This is an example pxelinux.cfg file that assumes CoreOS is the only option.
 You should be able to copy this verbatim into `/var/lib/tftpboot/pxelinux.cfg/default` after providing a cloud-config URL:
 
-```ini
+```sh
 default coreos
 prompt 1
 timeout 15
