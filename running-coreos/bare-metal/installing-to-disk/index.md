@@ -61,7 +61,10 @@ For reference here are the rest of the `coreos-install` options:
 By default there isn't a password or any other way to log into a fresh CoreOS system.
 The easiest way to configure accounts, add systemd units, and more is via cloud config.
 Jump over to the [docs to learn about the supported features][cloud-config].
-As an example this will install a ssh key for the default `core` user:
+
+The installation script will process your `cloud-config.yaml` file specified with the `-c` flag and place it onto disk. It will be installed to `/var/lib/coreos-install/user_data` and evaluated on every boot. Cloud-config is not the only supported format for this file &mdash; running a script is also available.
+
+A cloud-config that specifies an SSH key for the `core` but doesn't use any other parameters looks like:
 
 ```yaml
 #cloud-config
@@ -70,11 +73,9 @@ ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0g+ZTxC7weoIJLUafOgrm+h...
 ```
 
-Pass this file to `coreos-install` via the `-c` option.
-It will be installed to `/var/lib/coreos-install/user_data` and evaluated on every boot.
-
-```sh
-coreos-install -d /dev/sda -c ~/config
+To start the installation script with a reference to our cloud-config file, run:
+```
+coreos-install -d /dev/sda -C beta -c ~/cloud-config.yaml
 ```
 
 [cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
