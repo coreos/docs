@@ -63,6 +63,8 @@ The easiest way to configure accounts, add systemd units, and more is via cloud 
 Jump over to the [docs to learn about the supported features][cloud-config].
 As an example this will install a ssh key for the default `core` user:
 
+Note: cloud config files are in the YAML format but can be named accordingly, with or without an extension. 
+
 ```yaml
 #cloud-config
 
@@ -76,6 +78,8 @@ It will be installed to `/var/lib/coreos-install/user_data` and evaluated on eve
 ```sh
 coreos-install -d /dev/sda -c ~/config
 ```
+
+Note: in this example `~/config` is the actual cloud config file. If you named your config `myConfig.yml`, you would pass `-c ~/myConfig.yml` during the installation.
 
 [cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
 
