@@ -64,7 +64,7 @@ Jump over to the [docs to learn about the supported features][cloud-config].
 
 The installation script will process your `cloud-config.yaml` file specified with the `-c` flag and place it onto disk. It will be installed to `/var/lib/coreos-install/user_data` and evaluated on every boot. Cloud-config is not the only supported format for this file &mdash; running a script is also available.
 
-A cloud-config that specifies an SSH key for the `core` but doesn't use any other parameters looks like:
+A cloud-config that specifies an SSH key for the `core` user but doesn't use any other parameters looks like:
 
 ```yaml
 #cloud-config
