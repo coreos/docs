@@ -1,12 +1,12 @@
 ---
 layout: docs
-title: Adding Users
+title: Customizing the SSH Daemon
 category: cluster_management
 sub_category: setting_up
 weight: 7
 ---
 
-# Customizing the ssh daemon
+# Customizing the SSH Daemon
 
 CoreOS defaults to running an OpenSSH daemon. In some cases you may want to customize this daemon's authentication methods or other configuration. This guide will show you how to customize using `cloud-config`.
 
