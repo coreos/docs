@@ -66,8 +66,8 @@ After=docker.service
 Requires=docker.service
 
 [Service]
-ExecStart=/usr/bin/docker run --name apache -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
-ExecStop=/usr/bin/docker stop apache
+ExecStart=/usr/bin/docker run -rm -name apache -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
+ExecStop=/usr/bin/docker rm -f apache
 
 [X-Fleet]
 X-Conflicts=apache.*.service
