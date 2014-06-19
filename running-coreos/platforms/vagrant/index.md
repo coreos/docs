@@ -127,7 +127,7 @@ VM, run `vagrant status NAME`.
 Connect to one of the machines:
 
 ```sh
-vagrant ssh core-01
+vagrant ssh core-01 -- -A
 ```
 
 #### Start Machines Using Vagrant's VMware Provider
@@ -136,7 +136,7 @@ If you have purchased the [VMware Vagrant provider](http://www.vagrantup.com/vmw
 
 ```sh
 vagrant up --provider vmware_fusion
-vagrant ssh core-01
+vagrant ssh core-01 -- -A
 ```
 
 ## Single Machine
@@ -207,7 +207,7 @@ vagrant up
 Connect to the machine:
 
 ```sh
-vagrant ssh core-01
+vagrant ssh core-01 -- -A
 ```
 
 #### Start Machines Using Vagrant's VMware Provider
@@ -216,7 +216,7 @@ If you have purchased the [VMware Vagrant provider](http://www.vagrantup.com/vmw
 
 ```sh
 vagrant up --provider vmware_fusion
-vagrant ssh core-01
+vagrant ssh core-01 -- -A
 ```
 
 ## Shared Folder Setup
