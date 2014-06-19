@@ -54,6 +54,7 @@ coreos:
         [Unit]
         Description=Mount ephemeral to /var/lib/docker
         Requires=format-ephemeral.service
+        After=format-ephemeral.service
         Before=docker.service
         [Mount]
         What=/dev/xvdb
