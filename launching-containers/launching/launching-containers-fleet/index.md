@@ -92,7 +92,7 @@ How do we route requests to these containers? The best strategy is to run a "sid
 
 ## Run a Simple Sidekick
 
-The simplest sidekick example is for [service discovery](https://github.com/coreos/fleet/blob/master/Documentation/service-discovery.md). This unit blindly announces that our container has been started. We'll run one of these for each Apache unit that's already running. Make two copies of the unit called `apache-discovery.1.service` and `apache-discovery.2.service`. Be sure to change all instances of `apache.1.service` to `apache.2.service` when you create the second unit.
+The simplest sidekick example is for [service discovery](https://github.com/coreos/fleet/blob/master/Documentation/service-discovery.md). This unit blindly announces that our container has been started. We'll run one of these for each Apache unit that's already running. Make two copies of the unit called `apache-discovery.1.service` and `apache-discovery.2.service`. Be sure to change all instances of `apache.1.service` to `apache.2.service` and `apache1` to `apache2` when you create the second unit.
 
 ```ini
 [Unit]
