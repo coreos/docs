@@ -13,13 +13,13 @@ Running CoreOS with Vagrant is the easiest way to bring up a single machine or v
 
 You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
-## Install Vagrant and Virtualbox
+## Install Vagrant and VirtualBox
 
 Vagrant is a simple-to-use command line virtual machine manager. There are install packages available for Windows, Linux and OSX. Find the latest installer on the [Vagrant downloads page][vagrant]. Be sure to get version 1.6.3 or greater.
 
 [vagrant]: http://www.vagrantup.com/downloads.html
 
-Vagrant can use either the free Virtualbox provider or the commerical VMware provider. Instructions for both are below. For the Virtualbox provider, version 4.3.10 or greater is required.
+Vagrant can use either the free VirtualBox provider or the commercial VMware provider. Instructions for both are below. For the VirtualBox provider, version 4.3.10 or greater is required.
 
 ## Clone Vagrant Repo
 
@@ -38,7 +38,7 @@ To start our cluster, we need to provide some config parameters in cloud-config 
 
 ### Cloud-Config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. You can provide cloud-config data to your CoreOS Vagrant VM by editing the `user-data` file inside of the cloned directory. A sample file `user-data.sample` exists as a base and must be renamed to `user-data` for it to be processed.
+CoreOS allows you to configure machine parameters, launch systemd units on start-up and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. You can provide cloud-config data to your CoreOS Vagrant VM by editing the `user-data` file inside of the cloned directory. A sample file `user-data.sample` exists as a base and must be renamed to `user-data` for it to be processed.
 
 Our cluster will use an etcd [discovery URL]({{site.url}}/docs/cluster-management/setup/etcd-cluster-discovery/) to bootstrap the cluster of machines and elect an initial etcd leader. Be sure to replace `<token>` with your own URL from [https://discovery.etcd.io/new](https://discovery.etcd.io/new):
 
@@ -68,9 +68,9 @@ coreos:
 
 [cloud-config-docs]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
 
-### Startup CoreOS
+### Start up CoreOS
 
-The `config.rb.sample` file contains a few useful settings about your Vagrant envrionment and most importantly, how many machines you'd like in your cluster.
+The `config.rb.sample` file contains a few useful settings about your Vagrant environment and most importantly, how many machines you'd like in your cluster.
 
 CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. Select the channel you'd like to use for this cluster below. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.
 
@@ -169,9 +169,9 @@ coreos:
         ExecStart=/usr/bin/fleet
 ```
 
-### Startup CoreOS
+### Start up CoreOS
 
-The `config.rb.sample` file contains a few useful settings about your Vagrant envrionment. We're going to set the CoreOS channel that we'd like the machine to track.</p>
+The `config.rb.sample` file contains a few useful settings about your Vagrant environment. We're going to set the CoreOS channel that we'd like the machine to track.</p>
 
 <div id="vagrant-single">
   <ul class="nav nav-tabs">
@@ -196,9 +196,9 @@ $update_channel='beta'</pre>
   </div>
 </div>
 
-#### Start Machines Using Vagrant's default VirtualBox Provider
+#### Start Machine Using Vagrant's default VirtualBox Provider
 
-Start the machine(s):
+Start the machine:
 
 ```sh
 vagrant up
@@ -210,7 +210,7 @@ Connect to the machine:
 vagrant ssh core-01
 ```
 
-#### Start Machines Using Vagrant's VMware Provider
+#### Start Machine Using Vagrant's VMware Provider
 
 If you have purchased the [VMware Vagrant provider](http://www.vagrantup.com/vmware), run the following commands:
 
@@ -224,7 +224,6 @@ vagrant ssh core-01
 Optionally, you can share a folder from your laptop into the virtual machine. This is useful for easily getting code and Dockerfiles into CoreOS.
 
 ```ini
-config.vm.network "private_network", ip: "172.12.8.150"
 config.vm.synced_folder ".", "/home/core/share", id: "core", :nfs => true,  :mount_options   => ['nolock,vers=3,udp']
 ```
 
@@ -234,7 +233,7 @@ After a 'vagrant reload' you will be prompted for your local machine password.
 
 CoreOS is a rolling release distribution and versions that are out of date will automatically update.
 If you want to start from the most up to date version you will need to make sure that you have the latest box file of CoreOS.
-Simply remove the old box file and Vagrant will download the latest one the next time you `vagrant up`.
+You can do this using `vagrant box update` - or, simply remove the old box file and Vagrant will download the latest one the next time you `vagrant up`.
 
 ```sh
 vagrant box remove coreos-alpha vmware_fusion
