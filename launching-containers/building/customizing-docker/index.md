@@ -12,14 +12,14 @@ The docker systemd unit can be customized by overriding the unit that ships with
 
 ## Enable the Remote API on a New Socket
 
-Create a file called `/etc/systemd/system/docker-tcp.socket` to make docker available on a tcp socket on port 4243.
+Create a file called `/etc/systemd/system/docker-tcp.socket` to make docker available on a tcp socket on port 2375.
 
 ```ini
 [Unit]
 Description=Docker Socket for the API
 
 [Socket]
-ListenStream=4243
+ListenStream=2375
 Service=docker.service
 BindIPv6Only=both
 
@@ -34,7 +34,7 @@ systemctl enable docker-tcp.socket
 systemctl stop docker
 systemctl start docker-tcp.socket
 systemctl start docker
-docker -H tcp://127.0.0.1:4243 ps
+docker -H tcp://127.0.0.1:2375 ps
 ```
 
 ### Cloud-Config
@@ -53,7 +53,7 @@ coreos:
         Description=Docker Socket for the API
 
         [Socket]
-        ListenStream=4243
+        ListenStream=2375
         Service=docker.service
         BindIPv6Only=both
 
@@ -74,7 +74,7 @@ To keep access to the port local, replace the `ListenStream` configuration above
 
 ```yaml
         [Socket]
-        ListenStream=127.0.0.1:4243
+        ListenStream=127.0.0.1:2375
 ```
 
 ## Use Attached Storage for Docker Images
