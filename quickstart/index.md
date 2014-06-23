@@ -19,7 +19,12 @@ $ ssh -A core@an.ip.compute-1.amazonaws.com
 CoreOS (beta)
 ```
 
-The `-A` forwards your ssh-agent to the machine, which is needed for the fleet section of this guide.
+The `-A` forwards your ssh-agent to the machine, which is needed for the fleet section of this guide. You might have to add your private key on ssh agent running on client machine:
+
+```sh
+$ ssh-add
+Identity added: .../.ssh/id_rsa (.../.ssh/id_rsa)
+```
 
 If you're using Vagrant, you'll need to connect a bit differently:
 
