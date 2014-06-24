@@ -15,7 +15,9 @@ Before proceeding, you will need to [install gcutil][gcutil-documentation] and c
 
 ## Cloud-Config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). You can provide cloud-config to CoreOS via the Google Cloud console's metadata field `user-data` or via a flag using `gcutil`.
+CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. On GCE, the cloud-config can be modified while the instance is running and will be processed next time the machine boots.
+
+You can provide cloud-config to CoreOS via the Google Cloud console's metadata field `user-data` or via a flag using `gcutil`.
 
 The most common cloud-config for GCE looks like:
 

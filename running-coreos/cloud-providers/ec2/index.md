@@ -76,7 +76,9 @@ CloudFormation will launch a cluster of CoreOS machines with a security and auto
 
 ## Cloud-Config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. You can provide raw cloud-config data to CoreOS via the Amazon web console or [via the EC2 API][ec2-cloud-config]. Our CloudFormation template supports the most common cloud-config options as well.
+CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a machine is created on EC2, the cloud-config can only be modified after it is stopped or recreated.
+
+You can provide raw cloud-config data to CoreOS via the Amazon web console or [via the EC2 API][ec2-cloud-config]. Our CloudFormation template supports the most common cloud-config options as well.
 
 The most common cloud-config for EC2 looks like:
 
