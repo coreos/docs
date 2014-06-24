@@ -336,7 +336,7 @@ coreos:
 
 ### Automatic Rollback Limitations on EC2
 
-Amazon EC2 uses Xen paravirtualization which is incompatible with kexec which CoreOS uses to make it possible to rollback a bad update by simply rebooting the virtual machine.
+Amazon EC2 uses Xen paravirtualization which is incompatible with kexec.  CoreOS uses this to rollback a bad update by simply rebooting the virtual machine.
 
 ## Using CoreOS
 
