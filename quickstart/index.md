@@ -19,7 +19,7 @@ $ ssh -A core@an.ip.compute-1.amazonaws.com
 CoreOS (beta)
 ```
 
-The `-A` forwards your ssh-agent to the machine, which is needed for the fleet section of this guide. You might have to add your private key on ssh agent running on client machine:
+The `-A` forwards your ssh-agent to the machine, which is needed for the fleet section of this guide. If you haven't already done so, you will need to add your private key to the SSH agent running on your client machine - for example:
 
 ```sh
 $ ssh-add
