@@ -47,7 +47,8 @@ Our cluster will use an etcd [discovery URL]({{site.url}}/docs/cluster-managemen
 
 coreos:
   etcd:
-      #generate a new token for each unique cluster from https://discovery.etcd.io/new
+      # generate a new token for each unique cluster from https://discovery.etcd.io/new
+      # WARNING: replace each time you 'vagrant destroy'
       discovery: https://discovery.etcd.io/<token>
       addr: $public_ipv4:4001
       peer-addr: $public_ipv4:7001
