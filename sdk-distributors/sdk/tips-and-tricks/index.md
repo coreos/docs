@@ -62,7 +62,7 @@ Push the changes to your github fork and create a pull request.
 - Remove a binary package from the cache `sudo rm /build/amd64-usr/packages/catagory/packagename-version.tbz2`
 - recreate the chroot prior to a clean rebuild `./chromite/bin/cros_sdk -r`
 - it may be necessary to comment out kernel source checks from the ebuild if the build fails -- as coreos does not  yet provide visibility of the configured kernel source at biuld time -- usualy this is not a problem but may lead to warning messages
-- Chromeium OS [Portage Build FAQ]
+- Chromium OS [Portage Build FAQ]
 - [Gentoo Development Guide]
  
 
