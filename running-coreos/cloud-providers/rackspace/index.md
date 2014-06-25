@@ -248,12 +248,12 @@ source ~/.bash_profile
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-heat">
-      <p>Launch the stack by providing the specified parameters. This command will reference the local file `data.yml` in the current working directory that contains the cloud-config parameters. `$(< data.yaml)` prints the contents of this file into our heat command:</p>
+      <p>Launch the stack by providing the specified parameters. This command will reference the local file <code>data.yml</code> in the current working directory that contains the cloud-config parameters. <code>$(< data.yaml)</code> prints the contents of this file into our heat command:</p>
       <pre>heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-alpha.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=5 -P user-data="$(< data.yaml)" -P name="CoreOS-alpha"</pre>
       <p>You can view the <a href="{{site.url}}/dist/rackspace/heat-alpha.yaml">template here</a>.</p>
     </div>
     <div class="tab-pane active" id="beta-heat">
-      <p>Launch the stack by providing the specified parameters. This command will reference the local file `data.yml` in the current working directory that contains the cloud-config parameters. `$(< data.yaml)` prints the contents of this file into our heat command:</p>
+      <p>Launch the stack by providing the specified parameters. This command will reference the local file <code>data.yml</code> in the current working directory that contains the cloud-config parameters. <code>$(< data.yaml)</code> prints the contents of this file into our heat command:</p>
       <pre>heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-beta.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=5 -P user-data="$(< data.yaml)" -P name="CoreOS-beta"</pre>
       <p>You can view the <a href="{{site.url}}/dist/rackspace/heat-beta.yaml">template here</a>.</p>
     </div>
