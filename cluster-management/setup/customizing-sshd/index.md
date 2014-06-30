@@ -24,14 +24,31 @@ write_files:
     permissions: 0600
     owner: root:root
     content: |
-        # Use most defaults for sshd configuration.
-        UsePrivilegeSeparation sandbox
-        Subsystem sftp internal-sftp
+      # Use most defaults for sshd configuration.
+      UsePrivilegeSeparation sandbox
+      Subsystem sftp internal-sftp
 
-        PermitRootLogin no
-        AllowUsers core
-        PasswordAuthentication no
-        ChallengeResponseAuthentication no
+      PermitRootLogin no
+      AllowUsers core
+      PasswordAuthentication no
+      ChallengeResponseAuthentication no
+```
+
+## Changing the sshd Port
+
+CoreOS ships with socket-activated SSH by default. The configuration for this can be found at `/usr/lib/systemd/system/sshd.socket`. We're going to override this in the cloud-config provided at boot:
+
+```yaml
+#cloud-config
+
+coreos:
+  units:
+  - name: sshd.socket
+    command: restart
+    content: |
+      [Socket]
+      ListenStream=2222
+      Accept=yes
 ```
 
 ## Further Reading
