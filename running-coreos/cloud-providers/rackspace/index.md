@@ -131,7 +131,7 @@ sudo pip install supernova
 
 ### Store Account Information 
 
-Edit your config file (`~/.supernova`) to store your Rackspace username, API key (referenced as `OS_PASSWORD`) and some other settings. The `OS_TENANT_NAME` should be set to your Rackspace account ID, which is displayed in the upper right-hand corner of the cloud control panel UI. 
+Edit your config file (`~/.supernova`) to store your Rackspace username, API key (referenced as `OS_PASSWORD`) and some other settings. The `OS_TENANT_NAME` should be set to your Rackspace account ID, which can be found by clicking on your rackspace username in the upper right-hand corner of the cloud control panel UI.
 
 ```ini
 [production]
