@@ -269,7 +269,8 @@ You can also launch servers with either the `alpha` and `beta` channel versions 
  1. click on 'Severs'
  1. click on 'Create Server'
  1. choose server name and region
- 1. click on 'Linux', then on 'CoreOS' and finally choose '(alpha)' or '(beta)' version  
+ 1. click on 'Linux', then on 'CoreOS' and finally choose '(alpha)' or '(beta)' version
+ ![Control Panel Selection](http://57711b76b91f5d65a382-e5576ae0d6cf44f41aa69b4e6e0902ca.r62.cf1.rackcdn.com/Screen%20Shot%202014-06-30%20at%209.54.43%20AM.png)  
  1. choose flavor and use 'Advanced Options' to select SSH Key -- if available
  1. click on 'Create Server'
 
