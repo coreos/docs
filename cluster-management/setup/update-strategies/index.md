@@ -34,9 +34,7 @@ coreos:
 
 ### Best Effort
 
-The default setting is for CoreOS to make a `best-effort` to determine if the machine is part of a cluster. Currently this logic is very simple: if etcd has started, assume that the machine is part of a cluster.
-
-If so, use the `etcd-lock` strategy.
+The default setting is for CoreOS to make a `best-effort` to determine if the machine is part of a cluster. Currently this logic is very simple: if etcd has started, assume that the machine is part of a cluster and use the `etcd-lock` strategy.
 
 Otherwise, use the `reboot` strategy.
 
@@ -73,11 +71,11 @@ locksmithctl unlock 69d27b356a94476da859461d3a3bc6fd
 
 ### Reboot Immediately
 
-The `reboot` strategy works exactly how it sounds: the machine is rebooted as soon as the update has been installed to the passive partition. If the applications running on your cluster are highly resilient, this strategy was made for you.
+The `reboot` strategy works exactly like it sounds: the machine is rebooted as soon as the update has been installed to the passive partition. If the applications running on your cluster are highly resilient, this strategy was made for you.
 
 ### Off
 
-The `off` strategy is also very straightforward. The update will be installed onto the passive partion and await a reboot command to complete the update. We don't recommend this strategy unless you reboot frequently as part of your normal operations workflow
+The `off` strategy is also straightforward. The update will be installed onto the passive partion and await a reboot command to complete the update. We don't recommend this strategy unless you reboot frequently as part of your normal operations workflow.
 
 ## Updating PXE/iPXE Machines
 
