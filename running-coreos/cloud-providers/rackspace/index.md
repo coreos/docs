@@ -261,6 +261,19 @@ source ~/.bash_profile
   </div>
 </div>
 
+## Launch via Control Panel
+
+You can also launch servers with either the `alpha` and `beta` channel versions via the web-based Control Panel. To do so: 
+ 
+ 1. log into your Rackspace Control Panel
+ 1. click on 'Severs'
+ 1. click on 'Create Server'
+ 1. choose server name and region
+ 1. click on 'Linux', then on 'CoreOS' and finally choose '(alpha)' or '(beta)' version  
+ 1. choose flavor and use 'Advanced Options' to select SSH Key -- if available
+ 1. click on 'Create Server'
+
+
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
