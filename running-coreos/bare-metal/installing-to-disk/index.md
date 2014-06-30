@@ -4,6 +4,7 @@ slug: pxe
 title: Installing to Disk
 category: running_coreos
 sub_category: bare_metal
+supported: true
 weight: 7
 ---
 

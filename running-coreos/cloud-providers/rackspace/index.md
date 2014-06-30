@@ -3,6 +3,7 @@ layout: docs
 title: Rackspace Cloud
 category: running_coreos
 sub_category: cloud_provider
+supported: true
 weight: 5
 ---
 

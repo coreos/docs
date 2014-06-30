@@ -3,6 +3,7 @@ layout: docs
 title: Amazon EC2
 category: running_coreos
 sub_category: cloud_provider
+supported: true
 weight: 1
 cloud-formation-launch-logo: https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png
 ---
