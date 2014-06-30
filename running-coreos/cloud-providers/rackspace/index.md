@@ -131,7 +131,7 @@ sudo pip install supernova
 
 ### Store Account Information 
 
-Edit your config file (`~/.supernova`) to store your Rackspace username, API key (referenced as `OS_PASSWORD`) and some other settings. The `OS_TENANT_NAME` should be set to your Rackspace account ID, which is displayed in the upper right-hand corner of the cloud control panel UI. 
+Edit your config file (`~/.supernova`) to store your Rackspace username, API key (referenced as `OS_PASSWORD`) and some other settings. The `OS_TENANT_NAME` should be set to your Rackspace account ID, which can be found by clicking on your Rackspace username in the upper right-hand corner of the cloud control panel UI.
 
 ```ini
 [production]
@@ -260,6 +260,20 @@ source ~/.bash_profile
     </div>
   </div>
 </div>
+
+## Launch via Control Panel
+
+You can also launch servers with either the `alpha` and `beta` channel versions via the web-based Control Panel. To do so: 
+ 
+ 1. log into your Rackspace Control Panel
+ 2. click on 'Servers'
+ 3. click on 'Create Server'
+ 4. choose server name and region
+ 5. click on 'Linux', then on 'CoreOS' and finally choose '(alpha)' or '(beta)' version
+ ![Control Panel Selection](http://57711b76b91f5d65a382-e5576ae0d6cf44f41aa69b4e6e0902ca.r62.cf1.rackcdn.com/Screen%20Shot%202014-06-30%20at%209.54.43%20AM.png)  
+ 6. choose flavor and use 'Advanced Options' to select SSH Key -- if available
+ 7. click on 'Create Server'
+
 
 ## Using CoreOS
 
