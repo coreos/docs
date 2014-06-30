@@ -3,6 +3,7 @@ layout: docs
 title: ISO
 category: running_coreos
 sub_category: platforms
+supported: true
 weight: 10
 ---
 

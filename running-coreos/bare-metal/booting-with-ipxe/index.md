@@ -4,6 +4,7 @@ slug: ipxe
 title: Booting with iPXE
 category: running_coreos
 sub_category: bare_metal
+supported: true
 weight: 5
 ---
 

@@ -4,6 +4,7 @@ slug: vagrant
 title: Vagrant
 category: running_coreos
 sub_category: platforms
+supported: true
 weight: 5
 ---
 
