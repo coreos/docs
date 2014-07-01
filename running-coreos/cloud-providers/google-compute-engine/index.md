@@ -9,16 +9,18 @@ title: Google Compute Engine
 
 # Running CoreOS on Google Compute Engine
 
-Before proceeding, you will need to [install gcutil][gcutil-documentation] and check that your GCE account/project has billing enabled (Settings &rarr; Billing). In each command below, be sure to insert your project name in place of `<project-id>`.
+Before proceeding, you will need to [install gcloud][gcloud-documentation] and check that your GCE account/project has billing enabled (Settings &rarr; Billing). In each command below, be sure to insert your project name in place of `<project-id>`.
 
 [gce-advanced-os]: http://developers.google.com/compute/docs/transition-v1#customkernelbinaries
-[gcutil-documentation]: https://developers.google.com/compute/docs/gcutil/
+[gcloud-documentation]: https://developers.google.com/cloud/sdk/
+
+After installation, log into your account with `gcloud auth login` and enter your project ID when prompted.
 
 ## Cloud-Config
 
 CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. On GCE, the cloud-config can be modified while the instance is running and will be processed next time the machine boots.
 
-You can provide cloud-config to CoreOS via the Google Cloud console's metadata field `user-data` or via a flag using `gcutil`.
+You can provide cloud-config to CoreOS via the Google Cloud console's metadata field `user-data` or via a flag using `gcloud`.
 
 The most common cloud-config for GCE looks like:
 
@@ -53,11 +55,11 @@ Create 3 instances from the image above using our cloud-config from `cloud-confi
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
       <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
-      <pre>gcutil --project=&lt;project-id&gt; addinstance --image={{site.data.alpha-channel.gce-image-path}} --persistent_boot_disk --zone=us-central1-a --machine_type=n1-standard-1 --metadata_from_file=user-data:cloud-config.yaml core1 core2 core3</pre>
+      <pre>gcloud compute instances create core1 core2 core3 --image https://www.googleapis.com/compute/v1/{{site.data.alpha-channel.gce-image-path}} --zone us-central1-a --machine-type n1-standard-1 --metadata-from-file user-data=cloud-config.yaml</pre>
     </div>
     <div class="tab-pane active" id="beta-create">
       <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
-      <pre>gcutil --project=&lt;project-id&gt; addinstance --image={{site.data.beta-channel.gce-image-path}} --persistent_boot_disk --zone=us-central1-a --machine_type=n1-standard-1 --metadata_from_file=user-data:cloud-config.yaml core1 core2 core3</pre>
+      <pre>gcloud compute instances create core1 core2 core3 --image https://www.googleapis.com/compute/v1/{{site.data.beta-channel.gce-image-path}} --zone us-central1-a --machine-type n1-standard-1 --metadata-from-file user-data=cloud-config.yaml</pre>
     </div>
   </div>
 </div>
@@ -89,67 +91,70 @@ To add more instances to the cluster, just launch more with the same cloud-confi
 You can log in your CoreOS instances using:
 
 ```sh
-gcutil --project=<project-id> ssh --ssh_user=core <instance-name>
+gcloud compute ssh --zone us-central1-a <instance-name>
 ```
 
 ## Modify Existing Cloud-Config
 
-To modify an existing instance's cloud-config, read the `metadata-fingerprint` and provide it to the `setinstancemetadata` command along with your new `cloud-config.yaml`:
+To modify an existing instance's cloud-config, use the `add-metadata` command to overwrite the existing data with the new `cloud-config.yaml`:
 
 ```sh
-$ gcutil --project=coreos-gce-testing getinstance core2
-
-INFO: Zone for core2 detected as us-central1-a.
-+------------------------+-----------------------------------------------------+
-| name                   | core2                                               |
-| description            |                                                     |
-| creation-time          | 2014-03-21T14:08:41.516-07:00                       |
-| machine                | us-central1-a/machineTypes/n1-standard-1            |
-| image                  |                                                     |
-| kernel                 |                                                     |
-| zone                   | us-central1-a                                       |
-| tags-fingerprint       | 42WmSpB8rSM=                                        |
-| metadata-fingerprint   | tgFMD53d3kI=                                        |
-| status                 | RUNNING                                             |
-| status-message         |                                                     |
-| on-host-maintenance    | MIGRATE                                             |
-| automatic-restart      | True                                                |
-| disk                   |                                                     |
-|   type                 | PERSISTENT                                          |
-|   mode                 | READ_WRITE                                          |
-|   device-name          | philips-prod2                                       |
-|   source               | https://www.googleapis.com/compute/v1/projects      |
-|                        | /coreos-gce-testing/zones/us-central1-a/disks       |
-|                        | /core2                                              |
-|   boot                 | True                                                |
-|   autoDelete           | False                                               |
-| network-interface      |                                                     |
-|   network              | https://www.googleapis.com/compute/v1/projects      |
-|                        | /coreos-gce-testing/global/networks/default         |
-|   ip                   | 10.240.191.156                                      |
-|   access-configuration | External NAT                                        |
-|   type                 | ONE_TO_ONE_NAT                                      |
-|   external-ip          | 23.251.151.111                                      |
-| metadata               |                                                     |
-|   user-data            | #cloud-config\n\ncoreos:\n  etcd:\n      discovery: |
-|                        | https://discovery.etcd.io/722abac4b8f737b6e45295894 |
-|                        | 8e212af\n      addr: $public_ipv4:4001\n      peer- |
-|                        | addr: $private_ipv4:7001\n  units:\n    - name:     |
-|                        | etcd.service\n      command: start\n    - name:     |
-|                        | fleet.service\n      runtime: yes\n      content:   |
-|                        | |\n        [Unit]\n        Description=fleet\n\n    |
-|                        | [Service]\n                                         |
-|                        | Environment=FLEET_PUBLIC_IP=$public_ipv4\n          |
-|                        | ExecStart=/usr/bin/fleet\n                          |
-| metadata-fingerprint   | tgFMD53d3kI=                                        |
-+------------------------+-----------------------------------------------------+
+gcloud compute instances add-metadata core1 --zone us-central1-a --metadata-from-file=user-data=cloud-config.yaml
 ```
+
+The new metadata will be applied to the machine after a reboot. To verify that the metadata was set correctly, you can run:
 
 ```sh
-gcutil --project=<project-id> setinstancemetadata core2 --metadata_from_file=user-data:cloud-config.yaml --fingerprint="tgFMD53d3kI="
+$ gcloud compute instances get core1
+---
+canIpForward: false
+creationTimestamp: '2014-07-01T16:04:06.469-07:00'
+disks:
+- autoDelete: true
+  boot: true
+  deviceName: persistent-disk-0
+  index: 0
+  kind: compute#attachedDisk
+  mode: READ_WRITE
+  source: core1
+  type: PERSISTENT
+id: '4569192679304736137'
+kind: compute#instance
+machineType: n1-standard-1
+metadata:
+  fingerprint: Gi4UKHu-LKk=
+  items:
+  - key: user-data
+    value: "#cloud-config\n\ncoreos:\n  etcd:\n    # generate a new token for each\
+      \ unique cluster from https://discovery.etcd.io/new\n    discovery: https://discovery.etcd.io/8905e11767c1c7f4ee2b8b30c4b471b2\n\
+      \    # multi-region and multi-cloud deployments need to use $public_ipv4\n \
+      \   addr: $private_ipv4:4001\n    peer-addr: $private_ipv4:7001\n  units:\n\
+      \    - name: etcd.service\n      command: start\n    - name: fleet.service\n\
+      \      command: start\n"
+  kind: compute#metadata
+name: rob1
+networkInterfaces:
+- accessConfigs:
+  - kind: compute#accessConfig
+    name: external-nat
+    natIP: 173.255.112.17
+    type: ONE_TO_ONE_NAT
+  name: nic0
+  network: default
+  networkIP: 10.240.95.60
+scheduling:
+  automaticRestart: true
+  onHostMaintenance: MIGRATE
+selfLink: https://www.googleapis.com/compute/v1/projects/<project-id>/zones/us-central1-a/instances/core1
+serviceAccounts:
+- email: 1053319219775@project.gserviceaccount.com
+  scopes:
+  - https://www.googleapis.com/auth/devstorage.read_only
+status: RUNNING
+tags:
+  fingerprint: 42B8rWmSpSM=
+zone: us-central1-a
 ```
-
-The new metadata will be applied to the machine after a reboot.
 
 ## Using CoreOS
 
