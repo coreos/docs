@@ -9,7 +9,7 @@ weight: 5
 
 # Running CoreOS on Rackspace
 
-CoreOS is currently in heavy development and actively being tested.  These instructions will walk you through running CoreOS on the Rackspace Openstack cloud, which differs slightly from the generic Openstack instructions. There are two ways to launch a CoreOS cluster: launch an entire cluster with Heat or launch machines with Nova.
+CoreOS is currently in heavy development and actively being tested.  These instructions will walk you through running CoreOS on the Rackspace OpenStack cloud, which differs slightly from the generic OpenStack instructions. There are two ways to launch a CoreOS cluster: launch an entire cluster with Heat or launch machines with Nova.
 
 
 ## Choosing a Channel
