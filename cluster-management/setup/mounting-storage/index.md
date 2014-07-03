@@ -37,7 +37,7 @@ We're going to bind mount a btrfs device to `/var/lib/docker`, where docker stor
 ```yaml
 #cloud-config
 coreos:
-  units
+  units:
     - name: format-ephemeral.service
       command: start
       content: |
