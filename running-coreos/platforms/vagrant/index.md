@@ -68,6 +68,8 @@ coreos:
         ExecStart=/usr/bin/fleet
 ```
 
+The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on Vagrant. They will map to the first statically defined private and public networks defined in the Vagrantfile.
+
 [cloud-config-docs]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 ### Start up CoreOS

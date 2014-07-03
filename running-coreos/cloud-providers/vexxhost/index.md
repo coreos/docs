@@ -61,6 +61,8 @@ coreos:
       command: start
 ```
 
+The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on VEXXHOST.
+
 ## Launch Cluster
 
 You will need to install `python-novaclient` which supplies the OpenStack CLI

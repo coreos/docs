@@ -85,6 +85,8 @@ ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0g+ZTxC7weoIJLUafOgrm+h...
 ```
 
+The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on most OpenStack deployments. Unfortunately some systems relying on config drive may leave these values undefined.
+
 ## Launch Cluster
 
 Boot the machines with the `nova` CLI, referencing the image ID from the import step above and your `cloud-config.yaml`:

@@ -74,6 +74,8 @@ ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0g+ZTxC7weoIJLUafOgrm+h...
 ```
 
+Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are *not* supported when installing via the `coreos-install` script.
+
 To start the installation script with a reference to our cloud-config file, run:
 
 ```

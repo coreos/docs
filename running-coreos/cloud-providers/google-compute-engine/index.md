@@ -39,6 +39,8 @@ coreos:
       command: start
 ```
 
+The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on GCE.
+
 ## Choosing a Channel
 
 CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.

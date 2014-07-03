@@ -85,23 +85,40 @@ $ brightbox images list | grep CoreOS
  {{site.brightbox-id}}  brightbox  official  2013-12-15  public   5442   CoreOS {{site.brightbox-version}} (x86_64)
  ```
 
-## Building Servers
+## Cloud-Config
 
-Before building the cluster, we need to generate a unique identifier for it, which is used by CoreOS to discover and identify nodes.
+CoreOS allows you to configure machine parameters, launch systemd units on
+startup and more via [cloud-config][cloud-config].  We're going to provide the
+`cloud-config` data via the `user-data-file` flag.
 
-You can use any random string so we’ll use the `uuid` tool here to generate one:
+[cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
 
-```sh
-$ TOKEN=`uuid`
+A sample common `cloud-config` file will look something like the following:
 
-$ echo $TOKEN
-53cf11d4-3726-11e3-958f-939d4f7f9688
+```yaml
+#cloud-config
+
+coreos:
+  etcd:
+    # generate a new token for each unique cluster from https://discovery.etcd.io/new
+    discovery: https://discovery.etcd.io/<token>
+    addr: $private_ipv4:4001
+    peer-addr: $private_ipv4:7001
+  units:
+    - name: etcd.service
+      command: start
+    - name: fleet.service
+      command: start
 ```
 
-Then build three servers using the image, in the server group we created and specifying the token as the user data:
+The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on Brightbox.
+
+## Building Servers
+
+Now build three servers using the image, in the server group we created and specifying the cloud-config as the user data:
 
 ```sh
-$ brightbox servers create -i 3 --type small --name "coreos" --user-data $TOKEN --server-groups grp-cdl6h {{site.brightbox-id}}
+$ brightbox servers create -i 3 --type small --name "coreos" --user-data-file ./user-data --server-groups grp-cdl6h {{site.brightbox-id}}
 
 Creating 3 small (typ-8fych) servers with image CoreOS {{site.brightbox-version}} ({{ site.brightbox-id }}) in groups grp-cdl6h with 0.05k of user data
 
