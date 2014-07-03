@@ -113,7 +113,7 @@ Second is `%H`, a variable built into systemd, that represents the hostname of t
 
 The third is a [fleet-specific property]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/) called `X-ConditionMachineOf`. This property causes the unit to be placed onto the same machine that `apache.1.service` is running on.
 
-Let's verify that each unit was placed on to the same machine as the Apache service is is bound to:
+Let's verify that each unit was placed on to the same machine as the Apache service is bound to:
 
 ```sh
 $ fleetctl start apache-discovery.1.service
