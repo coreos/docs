@@ -74,6 +74,8 @@ Note that the config-drive standard was originally an OpenStack feature, which i
 
 For more information on customization that can be done with cloud-config, head on over to the [cloud-config guide]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/).
 
+Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are *not* supported on VMware.
+
 ## Logging in
 
 Networking can take a bit of time to come up under VMware and you will need to

@@ -92,6 +92,8 @@ coreos:
       command: start
 ```
 
+The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on Rackspace.
+
 [cloud-config-docs]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 ### Mount Data Disk
