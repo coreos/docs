@@ -38,7 +38,7 @@ Create a new VPS (any server type and location of your choice), and then:
 
 1. For the "Operating System" select "Custom"
 2. Select iPXE boot
-3. Set the chain URL to the URL of your script (http://example.com/script.txt)
+3. Set the chain URL to the URL of your script (http://example.com/script.txt) *Note*: URL must be plain old HTTP, not HTTPS
 4. Click "Place Order"
 
 ![Any location, any size, custom OS, iPXE boot, set chain URL, place order](http://s18.postimg.org/5ra9lioeh/vultr.png)
