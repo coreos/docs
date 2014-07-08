@@ -53,19 +53,13 @@ coreos:
       discovery: https://discovery.etcd.io/<token>
       addr: $public_ipv4:4001
       peer-addr: $public_ipv4:7001
+  fleet:
+      public-ip: $public_ipv4
   units:
     - name: etcd.service
       command: start
     - name: fleet.service
       command: start
-      runtime: no
-      content: |
-        [Unit]
-        Description=fleet
-
-        [Service]
-        Environment=FLEET_PUBLIC_IP=$public_ipv4
-        ExecStart=/usr/bin/fleet
 ```
 
 The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on Vagrant. They will map to the first statically defined private and public networks defined in the Vagrantfile.
