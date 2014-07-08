@@ -62,7 +62,7 @@ coreos:
         Type=btrfs
 ```
 
-Notice that we're starting all three of these units at the same time and using the power of systemd to work out the dependencies for us. In this case, `docker-storage.service` requires `format-ephemeral.service`, ensuring that our storage will always be formatted before it is bind mounted. Docker will refuse to start otherwise.
+Notice that we're starting both units at the same time and using the power of systemd to work out the dependencies for us. In this case, `var-lib-docker.mount` requires `format-ephemeral.service`, ensuring that our storage will always be formatted before it is mounted. Docker will refuse to start otherwise.
 
 ## Further Reading
 
