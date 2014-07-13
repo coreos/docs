@@ -64,6 +64,8 @@ coreos:
 
 The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on Vagrant. They will map to the first statically defined private and public networks defined in the Vagrantfile.
 
+If you wish to update your cloud-config later on, `vagrant up --provision` must be run to apply the new file.
+
 [cloud-config-docs]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 ### Start up CoreOS
@@ -152,19 +154,13 @@ coreos:
   etcd:
       addr: $public_ipv4:4001
       peer-addr: $public_ipv4:7001
+  fleet:
+      public-ip: $public_ipv4
   units:
     - name: etcd.service
       command: start
     - name: fleet.service
       command: start
-      runtime: no
-      content: |
-        [Unit]
-        Description=fleet
-
-        [Service]
-        Environment=FLEET_PUBLIC_IP=$public_ipv4
-        ExecStart=/usr/bin/fleet
 ```
 
 ### Start up CoreOS
