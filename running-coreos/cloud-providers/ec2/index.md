@@ -7,8 +7,9 @@ supported: true
 weight: 1
 cloud-formation-launch-logo: https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png
 ---
-{% capture cf_alpha_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha.template{% endcapture %}
-{% capture cf_beta_template %}{{ site.https-s3 }}/dist/aws/coreos-beta.template{% endcapture %}
+{% capture cf_alpha_pv_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha-pv.template{% endcapture %}
+{% capture cf_alpha_hvm_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha-hvm.template{% endcapture %}
+{% capture cf_beta_pv_template %}{{ site.https-s3 }}/dist/aws/coreos-beta-pv.template{% endcapture %}
 
 # Running CoreOS on EC2
 
@@ -32,6 +33,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
         <thead>
           <tr>
             <th>EC2 Region</th>
+            <th>AMI Type</th>
             <th>AMI ID</th>
             <th>CloudFormation</th>
           </tr>
@@ -39,9 +41,15 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
         <tbody>
         {% for region in site.data.alpha-channel.amis %}
         <tr>
-          <td>{{ region.name }}</td>
-          <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.ami-id }}">{{ region.ami-id }}</a></td>
-          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_alpha_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+          <td rowspan="2">{{ region.name }}</td>
+          <td class="dashed"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
+          <td class="dashed"><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.pv }}">{{ region.pv }}</a></td>
+          <td class="dashed"><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_alpha_pv_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+        </tr>
+        <tr>
+          <td class="rowspan-padding"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">HVM</a></td>
+          <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.hvm }}">{{ region.hvm }}</a></td>
+          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_alpha_hvm_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
         </tr>
         {% endfor %}
         </tbody>
@@ -55,6 +63,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
         <thead>
           <tr>
             <th>EC2 Region</th>
+            <th>AMI Type</th>
             <th>AMI ID</th>
             <th>CloudFormation</th>
           </tr>
@@ -63,9 +72,16 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
         {% for region in site.data.beta-channel.amis %}
         <tr>
           <td>{{ region.name }}</td>
-          <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.ami-id }}">{{ region.ami-id }}</a></td>
-          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-beta%7Cturl%7E{{ cf_beta_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+          <td><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
+          <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.pv }}">{{ region.pv }}</a></td>
+          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_beta_pv_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
         </tr>
+        <!--<tr class="dashed">
+          <td></td>
+          <td>HVM</td>
+          <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.hvm }}">{{ region.hvm }}</a></td>
+          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_beta_hvm_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+        </tr>-->
         {% endfor %}
         </tbody>
       </table>
@@ -140,7 +156,7 @@ For more information about mounting storage, Amazon's [own documentation](http:/
 To add more instances to the cluster, just launch more with the same cloud-config, the appropriate security group and the AMI for that region. New instances will join the cluster regardless of region if the security groups are configured correctly.
 
 ## Multiple Clusters
-If you would like to create multiple clusters you will need to change the "Stack Name". You can find the direct [template file on S3]({{ cf_beta_template }}).
+If you would like to create multiple clusters you will need to change the "Stack Name". You can find the direct [template file on S3]({{ cf_beta_pv_template }}).
 
 ## Manual setup
 
