@@ -82,3 +82,22 @@ The `off` strategy is also straightforward. The update will be installed onto th
 PXE/iPXE machines download a new copy of CoreOS every time they are started thus are dependent on the version of CoreOS they are served. If you don't automatically load new CoreOS images into your PXE/iPXE server, your machines will never have new features or security updates.
 
 An easy solution to this problem is to use iPXE and reference images [directly from the CoreOS storage site]({{site.url}}/docs/running-coreos/bare-metal/booting-with-ipxe/#setting-up-the-boot-script). The `alpha` URL is automatically pointed to the new version of CoreOS as it is released.
+
+## Updating Behind a Proxy
+
+Public Internet access is required to contact CoreUpdate and download new versions of CoreOS.
+If direct access is not available the `update-engine` service may be configured to use a HTTP or SOCKS proxy using curl-compatible environment variables, such as `HTTPS_PROXY` or `ALL_PROXY`.
+See [curl's documentation](http://curl.haxx.se/docs/manpage.html#ALLPROXY) for details.
+
+```yaml
+#cloud-config
+write_files:
+  - path: /etc/systemd/system/update-engine.service.d/proxy.conf
+    content: |
+        [Service]
+        Environment=ALL_PROXY=http://proxy.example.com:3128
+coreos:
+    units:
+      - name: update-engine.service
+        command: restart
+```
