@@ -71,17 +71,16 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
         <tbody>
         {% for region in site.data.beta-channel.amis %}
         <tr>
-          <td>{{ region.name }}</td>
-          <td><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
-          <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.pv }}">{{ region.pv }}</a></td>
-          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_beta_pv_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+          <td rowspan="2">{{ region.name }}</td>
+          <td class="dashed"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
+          <td class="dashed"><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.pv }}">{{ region.pv }}</a></td>
+          <td class="dashed"><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_beta_pv_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
         </tr>
-        <!--<tr class="dashed">
-          <td></td>
-          <td>HVM</td>
+        <tr>
+          <td class="rowspan-padding"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">HVM</a></td>
           <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.hvm }}">{{ region.hvm }}</a></td>
           <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7E{{ cf_beta_hvm_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
-        </tr>-->
+        </tr>
         {% endfor %}
         </tbody>
       </table>
