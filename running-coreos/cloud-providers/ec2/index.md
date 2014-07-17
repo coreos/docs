@@ -10,6 +10,7 @@ cloud-formation-launch-logo: https://s3.amazonaws.com/cloudformation-examples/cl
 {% capture cf_alpha_pv_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha-pv.template{% endcapture %}
 {% capture cf_alpha_hvm_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha-hvm.template{% endcapture %}
 {% capture cf_beta_pv_template %}{{ site.https-s3 }}/dist/aws/coreos-beta-pv.template{% endcapture %}
+{% capture cf_beta_hvm_template %}{{ site.https-s3 }}/dist/aws/coreos-beta-hvm.template{% endcapture %}
 
 # Running CoreOS on EC2
 
@@ -158,8 +159,6 @@ To add more instances to the cluster, just launch more with the same cloud-confi
 If you would like to create multiple clusters you will need to change the "Stack Name". You can find the direct [template file on S3]({{ cf_beta_pv_template }}).
 
 ## Manual setup
-
-[us-east-latest-quicklaunch]: https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi={{ami-us-east-1}} "{{ami-us-east-1}}"
 
 {% for region in site.data.alpha-channel.amis %}
   {% if region.name == 'us-east-1' %}
