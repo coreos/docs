@@ -236,7 +236,7 @@ export OS_PASSWORD=<password>
 export OS_AUTH_SYSTEM=rackspace
 ```
 
-If you have credentials already set up for use with the Nova CLI, they may conflict due to oddities in these tools. Re-source your credientials:
+If you have credentials already set up for use with the Nova CLI, they may conflict due to oddities in these tools. Re-source your credentials:
 
 ```sh
 source ~/.bash_profile
