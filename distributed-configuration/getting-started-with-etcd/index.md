@@ -59,7 +59,12 @@ $ curl -L -X DELETE http://127.0.0.1:4001/v2/keys/message
 
 ## Reading and Writing from Inside a Container
 
-To read and write to etcd from *within a container* you must use the `docker0` interface which you can find in `ip address show`. It's normally `172.17.42.1` and using it is as easy as replacing `127.0.0.1`.
+To read and write to etcd from *within a container* you must use the IP address assigned to the `docker0` interface on the CoreOS host. From the host, run `ip address show` to find this address. It's normally `172.17.42.1` and using it is as easy as replacing `127.0.0.1` while running `curl` in the container:
+
+```
+$ curl -L http://172.17.42.1:4001/v2/keys/
+{"action":"get","node":{"key":"/","dir":true,"nodes":[{"key":"/coreos.com","dir":true,"modifiedIndex":4,"createdIndex":4}]}}
+```
 
 ## Proxy Example
 
