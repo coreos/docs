@@ -8,8 +8,6 @@ weight: 7
 
 # Custom Certificate Authorities
 
-What if we restructured this paragraph to list the reasons first, then have it lead into the steps:
-
 CoreOS supports custom Certificate Authorities (CAs) in addition to the default list of trusted CAs. Adding your own CA allows you to:
 
 - Use a corporate wildcard certificate
