@@ -64,7 +64,8 @@ coreos:
 
 The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on Vagrant. They will map to the first statically defined private and public networks defined in the Vagrantfile.
 
-If you wish to update your cloud-config later on, `vagrant up --provision` must be run to apply the new file.
+Your Vagrantfile should copy your cloud-config file to `/var/lib/coreos-vagrant/vagrantfile-user-data`. The provided Vagrantfile is already configured to do this. `cloudinit` reads `vagrantfile-user-data` on every boot and uses it to create the machine's user-data file. If you wish to update your cloud-config later on, `vagrant up --provision` must be run to apply the new file.
+
 
 [cloud-config-docs]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
 
