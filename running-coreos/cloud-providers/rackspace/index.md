@@ -29,16 +29,21 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
       <table>
         <thead>
           <tr>
-            <th>Region</th>
+            <th>Server Type</th>
             <th>Image ID</th>
             <th>Heat Template</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>All Regions</td>
+            <td>Cloud Servers</td>
             <td>{{site.data.alpha-channel.rackspace-image-id}}</td>
             <td><a href="{{site.url}}/dist/rackspace/heat-alpha.yaml">heat-alpha.yaml</td>
+          </tr>
+          <tr>
+            <td>OnMetal</td>
+            <td>{{site.data.alpha-channel.rackspace-onmetal-id}}</td>
+            <td><a href="{{site.url}}/dist/rackspace/heat-onmetal-alpha.yaml">heat-onmetal-alpha.yaml</td>
           </tr>
         </tbody>
       </table>
@@ -50,14 +55,14 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
       <table>
         <thead>
           <tr>
-            <th>Region</th>
+            <th>Server Type</th>
             <th>Image ID</th>
             <th>Heat Template</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>All Regions</td>
+            <td>Cloud Server</td>
             <td>{{site.data.beta-channel.rackspace-image-id}}</td>
             <td><a href="{{site.url}}/dist/rackspace/heat-beta.yaml">heat-beta.yaml</td>
           </tr>
@@ -174,11 +179,13 @@ Check you make sure the key is in your list by running `supernova production key
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
-      <p>Boot a new server with our new keypair and specify optional cloud-config data:</p>
+      <p>Boot a new Cloud Server with our new keypair and specify optional cloud-config data:</p>
       <pre>supernova production boot --image {{site.data.alpha-channel.rackspace-image-id}} --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
+      <p>Boot a new OnMetal Server with our new keypair and specify optional cloud-config data:</p>
+      <pre>supernova production boot --image {{site.data.alpha-channel.rackspace-onmetal-id}} --flavor onmetal-compute1 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
     </div>
     <div class="tab-pane active" id="beta-create">
-      <p>Boot a new server with our new keypair and specify optional cloud-config data:</p>
+      <p>Boot a new Cloud Server with our new keypair and specify optional cloud-config data:</p>
       <pre>supernova production boot --image {{site.data.beta-channel.rackspace-image-id}} --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
     </div>
   </div>
@@ -254,6 +261,9 @@ source ~/.bash_profile
       <p>Launch the stack by providing the specified parameters. This command will reference the local file <code>data.yml</code> in the current working directory that contains the cloud-config parameters. <code>$(< data.yaml)</code> prints the contents of this file into our heat command:</p>
       <pre>heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-alpha.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=5 -P user-data="$(< data.yaml)" -P name="CoreOS-alpha"</pre>
       <p>You can view the <a href="{{site.url}}/dist/rackspace/heat-alpha.yaml">template here</a>.</p>
+      <p>To boot an OnMetal cluster, use a slightly modified template:</p>
+      <pre>heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-onmetal-alpha.yaml -P key-name=coreos-key -P flavor='OnMetal Compute v1' -P count=3 -P user-data="$(< data.yaml)" -P name="CoreOS-alpha"</pre>
+      <p>You can view the <a href="{{site.url}}/dist/rackspace/heat-onmetal-alpha.yaml">template here</a>.</p>
     </div>
     <div class="tab-pane active" id="beta-heat">
       <p>Launch the stack by providing the specified parameters. This command will reference the local file <code>data.yml</code> in the current working directory that contains the cloud-config parameters. <code>$(< data.yaml)</code> prints the contents of this file into our heat command:</p>
