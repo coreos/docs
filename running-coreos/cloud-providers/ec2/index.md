@@ -11,6 +11,8 @@ cloud-formation-launch-logo: https://s3.amazonaws.com/cloudformation-examples/cl
 {% capture cf_alpha_hvm_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha-hvm.template{% endcapture %}
 {% capture cf_beta_pv_template %}{{ site.https-s3 }}/dist/aws/coreos-beta-pv.template{% endcapture %}
 {% capture cf_beta_hvm_template %}{{ site.https-s3 }}/dist/aws/coreos-beta-hvm.template{% endcapture %}
+{% capture cf_stable_pv_template %}{{ site.https-s3 }}/dist/aws/coreos-stable-pv.template{% endcapture %}
+{% capture cf_stable_hvm_template %}{{ site.https-s3 }}/dist/aws/coreos-stable-hvm.template{% endcapture %}
 
 # Running CoreOS on EC2
 
@@ -22,7 +24,8 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
 
 <div id="ec2-images">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#beta" data-toggle="tab">Beta Channel</a></li>
+    <li class="active"><a href="#stable" data-toggle="tab">Stable Channel</a></li>
+    <li><a href="#beta" data-toggle="tab">Beta Channel</a></li>
     <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
@@ -56,7 +59,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
         </tbody>
       </table>
     </div>
-    <div class="tab-pane active" id="beta">
+    <div class="tab-pane" id="beta">
       <div class="channel-info">
         <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
       </div>
@@ -81,6 +84,36 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
           <td class="rowspan-padding"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">HVM</a></td>
           <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.hvm }}">{{ region.hvm }}</a></td>
           <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-beta%7Cturl%7E{{ cf_beta_hvm_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-pane active" id="stable">
+      <div class="channel-info">
+        <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.stable-channel}}.</p>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>EC2 Region</th>
+            <th>AMI Type</th>
+            <th>AMI ID</th>
+            <th>CloudFormation</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for region in site.data.stable-channel.amis %}
+        <tr>
+          <td rowspan="2">{{ region.name }}</td>
+          <td class="dashed"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
+          <td class="dashed"><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.pv }}">{{ region.pv }}</a></td>
+          <td class="dashed"><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-stable%7Cturl%7E{{ cf_stable_pv_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
+        </tr>
+        <tr>
+          <td class="rowspan-padding"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">HVM</a></td>
+          <td><a href="https://console.aws.amazon.com/ec2/home?region={{ region.name }}#launchAmi={{ region.hvm }}">{{ region.hvm }}</a></td>
+          <td><a href="https://console.aws.amazon.com/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-stable%7Cturl%7E{{ cf_stable_hvm_template  }}" target="_blank"><img src="{{page.cloud-formation-launch-logo}}" alt="Launch Stack"/></a></td>
         </tr>
         {% endfor %}
         </tbody>
@@ -162,7 +195,7 @@ If you would like to create multiple clusters you will need to change the "Stack
 
 {% for region in site.data.alpha-channel.amis %}
   {% if region.name == 'us-east-1' %}
-**TL;DR:** launch three instances of [{{region.ami-id}}](https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.ami-id}}) in **{{region.name}}** with a security group that has open port 22, 4001, and 7001 and the same "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [docker][docker-docs] to play with.
+**TL;DR:** launch three instances of [{{region.pv}}](https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.pv}}) in **{{region.name}}** with a security group that has open port 22, 4001, and 7001 and the same "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [docker][docker-docs] to play with.
   {% endif %}
 {% endfor %}
 
@@ -198,7 +231,8 @@ First we need to create a security group to allow CoreOS instances to communicat
 
 <div id="ec2-manual">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#beta-manual" data-toggle="tab">Beta Channel</a></li>
+    <li class="active"><a href="#stable-manual" data-toggle="tab">Stable Channel</a></li>
+    <li><a href="#beta-manual" data-toggle="tab">Beta Channel</a></li>
     <li><a href="#alpha-manual" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
@@ -208,7 +242,7 @@ First we need to create a security group to allow CoreOS instances to communicat
         <li>
         {% for region in site.data.alpha-channel.amis %}
           {% if region.name == 'us-east-1' %}
-            Open the <a href="https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.ami-id}}" target="_blank">quick launch wizard</a> to boot {{region.ami-id}}.
+            Open the <a href="https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.pv}}" target="_blank">quick launch wizard</a> to boot {{region.pv}}.
           {% endif %}
         {% endfor %}
         </li>
@@ -276,13 +310,87 @@ coreos:
         </li>
       </ol>
     </div>
-    <div class="tab-pane active" id="beta-manual">
+    <div class="tab-pane" id="beta-manual">
       <p>We will be launching three instances, with a few parameters in the User Data, and selecting our security group.</p>
       <ol>
         <li>
         {% for region in site.data.beta-channel.amis %}
           {% if region.name == 'us-east-1' %}
-            Open the <a href="https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.ami-id}}" target="_blank">quick launch wizard</a> to boot {{region.ami-id}}.
+            Open the <a href="https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.pv}}" target="_blank">quick launch wizard</a> to boot {{region.pv}}.
+          {% endif %}
+        {% endfor %}
+        </li>
+        <li>
+          On the second page of the wizard, launch 3 servers to test our clustering
+          <ul>
+            <li>Number of instances: 3</li>
+            <li>Click "Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new">https://discovery.etcd.io/new</a> and add it to the metadata. You should re-use this key for each machine in the cluster.
+        </li>
+        <pre>
+#cloud-config
+
+coreos:
+  etcd:
+    # generate a new token from https://discovery.etcd.io/new
+    discovery: https://discovery.etcd.io/&lt;token>
+    # multi-region and multi-cloud deployments need to use $public_ipv4
+    addr: $private_ipv4:4001
+    peer-addr: $private_ipv4:7001
+  units:
+    - name: etcd.service
+      command: start
+    - name: fleet.service
+      command: start
+</pre>
+        <li>
+          Back in the EC2 dashboard, paste this information verbatim into the "User Data" field. 
+          <ul>
+            <li>Paste link into "User Data"</li>
+            <li>"Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Storage Configuration
+          <ul>
+            <li>"Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Tags
+          <ul>
+            <li>"Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Create Key Pair
+          <ul>
+            <li>Choose a key of your choice, it will be added in addition to the one in the gist.</li>
+            <li>"Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Choose one or more of your existing Security Groups
+          <ul>
+            <li>"coreos-testing" as above.</li>
+            <li>"Continue"</li>
+          </ul>
+        </li>
+        <li>
+          Launch!
+        </li>
+      </ol>
+    </div>
+    <div class="tab-pane active" id="stable-manual">
+      <p>We will be launching three instances, with a few parameters in the User Data, and selecting our security group.</p>
+      <ol>
+        <li>
+        {% for region in site.data.stable-channel.amis %}
+          {% if region.name == 'us-east-1' %}
+            Open the <a href="https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.pv}}" target="_blank">quick launch wizard</a> to boot {{region.pv}}.
           {% endif %}
         {% endfor %}
         </li>

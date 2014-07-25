@@ -27,7 +27,8 @@ CoreOS is released into alpha and beta channels. Releases to each channel serve 
 
 <div id="ipxe-create">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#beta-create" data-toggle="tab">Beta Channel</a></li>
+    <li class="active"><a href="#stable-create" data-toggle="tab">Stable Channel</a></li>
+    <li><a href="#beta-create" data-toggle="tab">Beta Channel</a></li>
     <li><a href="#alpha-create" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
@@ -41,12 +42,22 @@ kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="ssh-rsa AAAAB3NzaC1yc2E
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
-    <div class="tab-pane active" id="beta-create">
+    <div class="tab-pane" id="beta-create">
       <p>iPXE downloads a boot script from a publicly available URL. You will need to host this URL somewhere public and replace the example SSH key with your own. You can also run a <a href="https://github.com/kelseyhightower/coreos-ipxe-server">custom iPXE server</a>.</p>
       <pre>
 #!ipxe
 
 set base-url http://beta.release.core-os.net/amd64-usr/current
+kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQC2PxAKTLdczK9+RNsGGPsz0eC2pBlydBEcrbI7LSfiN7Bo5hQQVjki+Xpnp8EEYKpzu6eakL8MJj3E28wT/vNklT1KyMZrXnVhtsmOtBKKG/++odpaavdW2/AU0l7RZiE= coreos pxe demo"
+initrd ${base-url}/coreos_production_pxe_image.cpio.gz
+boot</pre>
+    </div>
+    <div class="tab-pane active" id="stable-create">
+      <p>iPXE downloads a boot script from a publicly available URL. You will need to host this URL somewhere public and replace the example SSH key with your own. You can also run a <a href="https://github.com/kelseyhightower/coreos-ipxe-server">custom iPXE server</a>.</p>
+      <pre>
+#!ipxe
+
+set base-url http://stable.release.core-os.net/amd64-usr/current
 kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQC2PxAKTLdczK9+RNsGGPsz0eC2pBlydBEcrbI7LSfiN7Bo5hQQVjki+Xpnp8EEYKpzu6eakL8MJj3E28wT/vNklT1KyMZrXnVhtsmOtBKKG/++odpaavdW2/AU0l7RZiE= coreos pxe demo"
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
