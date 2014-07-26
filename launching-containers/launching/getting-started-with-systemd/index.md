@@ -77,7 +77,7 @@ systemd provides a high degree of functionality in your unit files. Here's a cur
 | ExecReload | Commands that will run when this unit is reloaded via `systemctl reload foo.service` |
 | ExecStop | Commands that will run when this unit is considered failed or if it is stopped via `systemctl stop foo.service` |
 | ExecStopPost | Commands that will run after `ExecStop` has completed. |
-| RestartSec | The amount of time to sleep before restarting a serivce. Useful to prevent your failed service from attempting to restart itself every 100ms. |
+| RestartSec | The amount of time to sleep before restarting a service. Useful to prevent your failed service from attempting to restart itself every 100ms. |
 
 The full list is located on the [systemd man page](http://www.freedesktop.org/software/systemd/man/systemd.service.html).
 
