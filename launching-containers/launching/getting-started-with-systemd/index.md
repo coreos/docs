@@ -105,7 +105,7 @@ ExecStopPost=/usr/bin/etcdctl rm /domains/example.com/10.10.10.123:8081
 WantedBy=multi-user.target
 ```
 
-## Unit Variables
+## Unit Specifiers
 
 In our last example we had to hardcode our IP address when we announced our container in etcd. That's not scalable and systemd has a few variables built in to help us out. Here's a few of the most useful:
 
@@ -116,7 +116,7 @@ In our last example we had to hardcode our IP address when we announced our cont
 | `%b` | BootID | Similar to the machine ID, but this value is random and changes on each boot |
 | `%H` | Hostname | Allows you to run the same unit file across many machines. Useful for service discovery. Example: `/domains/example.com/%H:8081` |
 
-A full list is on the [systemd man page](http://www.freedesktop.org/software/systemd/man/systemd.unit.html).
+A full list of specifiers can be found on the [systemd man page](http://www.freedesktop.org/software/systemd/man/systemd.unit.html#Specifiers).
 
 ## Instantiated Units
 
