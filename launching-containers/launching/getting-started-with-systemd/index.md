@@ -77,7 +77,7 @@ systemd provides a high degree of functionality in your unit files. Here's a cur
 | ExecReload | Commands that will run when this unit is reloaded via `systemctl reload foo.service` |
 | ExecStop | Commands that will run when this unit is considered failed or if it is stopped via `systemctl stop foo.service` |
 | ExecStopPost | Commands that will run after `ExecStop` has completed. |
-| RestartSec | The amount of time to sleep before restarting a serivce. Useful to prevent your failed service from attempting to restart itself every 100ms. |
+| RestartSec | The amount of time to sleep before restarting a service. Useful to prevent your failed service from attempting to restart itself every 100ms. |
 
 The full list is located on the [systemd man page](http://www.freedesktop.org/software/systemd/man/systemd.service.html).
 
@@ -105,7 +105,7 @@ ExecStopPost=/usr/bin/etcdctl rm /domains/example.com/10.10.10.123:8081
 WantedBy=multi-user.target
 ```
 
-## Unit Variables
+## Unit Specifiers
 
 In our last example we had to hardcode our IP address when we announced our container in etcd. That's not scalable and systemd has a few variables built in to help us out. Here's a few of the most useful:
 
@@ -116,7 +116,7 @@ In our last example we had to hardcode our IP address when we announced our cont
 | `%b` | BootID | Similar to the machine ID, but this value is random and changes on each boot |
 | `%H` | Hostname | Allows you to run the same unit file across many machines. Useful for service discovery. Example: `/domains/example.com/%H:8081` |
 
-A full list is on the [systemd man page](http://www.freedesktop.org/software/systemd/man/systemd.unit.html).
+A full list of specifiers can be found on the [systemd man page](http://www.freedesktop.org/software/systemd/man/systemd.unit.html#Specifiers).
 
 ## Instantiated Units
 
