@@ -90,7 +90,7 @@ $num_instances=3</pre>
       <pre># Official CoreOS channel from which updates should be downloaded
 $update_channel='alpha'</pre>
     </div>
-    <div class="tab-pane active" id="beta-create">
+    <div class="tab-pane" id="beta-create">
       <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
       <p>Rename the file to <code>config.rb</code> then uncomment and modify:</p>
       <h4>config.rb</h4>
@@ -100,7 +100,7 @@ $num_instances=3</pre>
 $update_channel='beta'</pre>
     </div>
 	<div class="tab-pane active" id="stable-create">
-      <p>The stable channel consists of promoted beta releases. Current version is CoreOS {{site.stable-channel}}.</p>
+      <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.stable-channel}}.</p>
       <p>Rename the file to <code>config.rb</code> then uncomment and modify:</p>
       <h4>config.rb</h4>
       <pre># Size of the CoreOS cluster created by Vagrant
