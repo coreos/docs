@@ -76,7 +76,8 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
 
 <div id="vagrant-create">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#beta-create" data-toggle="tab">Beta Channel</a></li>
+    <li class="active"><a href="#stable-create" data-toggle="tab">Stable Channel</a></li>
+    <li><a href="#beta-create" data-toggle="tab">Beta Channel</a></li>
     <li><a href="#alpha-create" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
@@ -97,6 +98,15 @@ $update_channel='alpha'</pre>
 $num_instances=3</pre>
       <pre># Official CoreOS channel from which updates should be downloaded
 $update_channel='beta'</pre>
+    </div>
+	<div class="tab-pane active" id="stable-create">
+      <p>The stable channel consists of promoted beta releases. Current version is CoreOS {{site.stable-channel}}.</p>
+      <p>Rename the file to <code>config.rb</code> then uncomment and modify:</p>
+      <h4>config.rb</h4>
+      <pre># Size of the CoreOS cluster created by Vagrant
+$num_instances=3</pre>
+      <pre># Official CoreOS channel from which updates should be downloaded
+$update_channel='stable'</pre>
     </div>
   </div>
 </div>
