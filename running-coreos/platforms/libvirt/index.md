@@ -26,16 +26,41 @@ to substitute that path if you use another one.
 
 CoreOS is released into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
-The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
+Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
 
-We start by downloading the most recent disk image:
-
-```sh
+<div id="libvirt-create">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#stable-create" data-toggle="tab">Stable Channel</a></li>
+    <li><a href="#beta-create" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha-create" data-toggle="tab">Alpha Channel</a></li>
+  </ul>
+  <div class="tab-content coreos-docs-image-table">
+    <div class="tab-pane" id="alpha-create">
+      <p>We start by downloading the most recent disk image:</p>
+      <pre>
 mkdir -p /var/lib/libvirt/images/coreos0
-cd /var/lib/libvirt/images/coreos0
-wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2
-bunzip2 coreos_production_qemu_image.img.bz2
-```
+cd /var/lib/libvirt/coreos0
+wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img
+      </pre>
+    </div>
+    <div class="tab-pane" id="beta-create">
+      <p>We start by downloading the most recent disk image:</p>
+      <pre>
+mkdir -p /var/lib/libvirt/images/coreos0
+cd /var/lib/libvirt/coreos0
+wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img
+      </pre>
+    </div>
+    <div class="tab-pane active" id="stable-create">
+      <p>We start by downloading the most recent disk image:</p>
+      <pre>
+mkdir -p /var/lib/libvirt/images/coreos0
+cd /var/lib/libvirt/coreos0
+wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img
+      </pre>
+    </div>
+  </div>
+</div>
 
 ## Virtual machine configuration
 
