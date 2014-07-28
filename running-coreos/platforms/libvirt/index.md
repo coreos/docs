@@ -110,6 +110,13 @@ mkdir -p /var/lib/libvirt/images/coreos0/configdrive/openstack/latest
 touch /var/lib/libvirt/images/coreos0/configdrive/openstack/latest/user_data
 ```
 
+Note:  Depending on your kernel version, you may need to ensure that the 9pnet and 9pnet_virtio modules are loaded.
+
+```sh
+modprobe 9pnet_virtio
+```
+
+
 The `user_data` file may contain a script for a [cloud config][cloud-config]
 file. We recommend using ssh keys to log into the VM so at a minimum the
 contents of `user_data` should look something like this:
