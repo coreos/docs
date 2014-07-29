@@ -90,9 +90,9 @@ CoreOS is released into stable, alpha and beta channels. Releases to each channe
     <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
-    <div class="tab-pane" id="stable">
+    <div class="tab-pane active" id="stable">
       <div class="channel-info">
-        <p>The stable channel consists of promoted beta releases.  Current version is CoreOS {{site.stable-channel}}.</p>
+        <p>Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.stable-channel}}.</p>
        </div>
       <p>There are two files you need: the disk image (provided in qcow2
       format) and the wrapper shell script to start QEMU.</p>
@@ -112,7 +112,7 @@ wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu.s
 wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img
 chmod +x coreos_production_qemu.sh</pre>
     </div>
-    <div class="tab-pane active" id="beta">
+    <div class="tab-pane" id="beta">
       <div class="channel-info">
         <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
       </div>
