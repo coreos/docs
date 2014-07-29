@@ -81,17 +81,29 @@ image.
 
 ### Choosing a Channel
 
-CoreOS is released into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
+CoreOS is released into stable, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
 
 <div id="qemu-images">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#beta" data-toggle="tab">Beta Channel</a></li>
+    <li class="active"><a href="#stable" data-toggle="tab">Stable Channel</a></li>
+    <li><a href="#beta" data-toggle="tab">Beta Channel</a></li>
     <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
+    <div class="tab-pane" id="stable">
+      <div class="channel-info">
+        <p>The stable channel consists of promoted beta releases.  Current version is CoreOS {{site.stable-channel}}.</p>
+       </div>
+      <p>There are two files you need: the disk image (provided in qcow2
+      format) and the wrapper shell script to start QEMU.</p>
+      <pre>mkdir coreos; cd coreos
+wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh
+wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img
+chmod +x coreos_production_qemu.sh</pre>
+    </div>
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+        <p>The alpha channel closely tracks master and is released to frequently.  Current version is CoreOS {{site.alpha-channel}}.</p>
       </div>
       <p>There are two files you need: the disk image (provided in qcow2
       format) and the wrapper shell script to start QEMU.</p>
