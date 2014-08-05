@@ -25,12 +25,16 @@ On CoreOS, unit files are located within the R/W filesystem at `/etc/systemd/sys
 
 ```ini
 [Unit]
-Description=My Service
+Description=MyApp
 After=docker.service
 Requires=docker.service
 
 [Service]
-ExecStart=/usr/bin/docker run busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill busybox1
+ExecStartPre=-/usr/bin/docker rm busybox1
+ExecStartPre=/usr/bin/docker pull busybox
+ExecStart=/usr/bin/docker run busybox --name busybox1 /bin/sh -c "while true; do echo Hello World; sleep 1; done"
 
 [Install]
 WantedBy=multi-user.target
@@ -96,9 +100,13 @@ After=etcd.service
 After=docker.service
 
 [Service]
-ExecStart=/bin/bash -c '/usr/bin/docker start -a apache || /usr/bin/docker run --name apache -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND'
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill apache1
+ExecStartPre=-/usr/bin/docker rm apache1
+ExecStartPre=/usr/bin/docker pull coreos/apache
+ExecStart=/usr/bin/docker run --name apache1 -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
 ExecStartPost=/usr/bin/etcdctl set /domains/example.com/10.10.10.123:8081 running
-ExecStop=/usr/bin/docker stop apache
+ExecStop=/usr/bin/docker stop apache1
 ExecStopPost=/usr/bin/etcdctl rm /domains/example.com/10.10.10.123:8081
 
 [Install]

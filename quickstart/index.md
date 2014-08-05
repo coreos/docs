@@ -118,8 +118,12 @@ Description=My Service
 After=docker.service
 
 [Service]
-ExecStart=/bin/bash -c '/usr/bin/docker start -a hello || /usr/bin/docker run --name hello busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"'
-ExecStop=/usr/bin/docker stop -t 1 hello
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill hello
+ExecStartPre=-/usr/bin/docker rm hello
+ExecStartPre=/usr/bin/docker pull busybox
+ExecStart=/usr/bin/docker run --name hello busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"
+ExecStop=/usr/bin/docker stop hello
 ```
 
 The [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd) guide explains the format of this file in more detail.
