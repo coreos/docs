@@ -74,3 +74,11 @@ Now that you have a cluster bootstrapped it is time to play around.
 CoreOS is currently running from RAM, based on the loaded image. You may want to [install it on the disk]({{site.url}}/docs/running-coreos/bare-metal/installing-to-disk). Note that when following these instructions on Vultr, the device name should be `/dev/vda` rather than `/dev/sda`.
 
 Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+
+## Using Cloud-Config
+
+Please be sure to check out [Using Cloud-Config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). 
+
+In particular, please note that the `$private_ipv4` and `$public_ipv4` variables are NOT supported on `vultr`.
+
+In other words, you will need to hard code these values into your `cloud-config` file.
