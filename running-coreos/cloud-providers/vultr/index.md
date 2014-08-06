@@ -8,29 +8,78 @@ weight: 10
 
 # Running CoreOS  on a Vultr VPS
 
-CoreOS is currently in heavy development and actively being tested.  These instructions will walk you through running a single CoreOS node. This guide assumes:
+These instructions will walk you through running a single CoreOS node. This guide assumes:
 
 * You have an account at [Vultr.com](http://vultr.com). 
 * The location of your iPXE script (referenced later in the guide) is located at ```http://example.com/script.txt```
 * You have a public + private key combination generated. Here's a helpful guide if you need to generate these keys: [How to set up SSH keys](https://www.digitalocean.com/community/articles/how-to-set-up-ssh-keys--2). 
 
-## Create the script
-
 The simplest option to boot up CoreOS is to load a script that contains the series of commands you'd otherwise need to manually type at the command line. This script needs to be publicly accessible (host this file on your own server). Save this script as a text file (.txt extension).
 
-A sample script will look like this :
+## Choosing a Channel
 
-```ini
-#!ipxe
+CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.
+
+<div id="vultr-images">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#stable" data-toggle="tab">Stable Channel</a></li>
+    <li><a href="#beta" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
+  </ul>
+  <div class="tab-content coreos-docs-image-table">
+    <div class="tab-pane" id="alpha">
+      <div class="channel-info">
+        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.data.alpha-channel.rackspace-version}}.</p>
+      </div>
+      <p>A sample script will look like this:</p>
+
+<pre>#!ipxe
 
 set base-url http://alpha.release.core-os.net/amd64-usr/current
 kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="YOUR_PUBLIC_KEY_HERE"
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
-boot
-```
-Make sure to replace `YOUR_PUBLIC_KEY_HERE` with your actual public key, it will begin with "ssh-rsa...".
+boot</pre>
+    </div>
+    <div class="tab-pane" id="beta">
+      <div class="channel-info">
+        <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.data.beta-channel.rackspace-version}}.</p>
+      </div>
+      <p>A sample script will look like this:</p>
+
+<pre>#!ipxe
+
+set base-url http://beta.release.core-os.net/amd64-usr/current
+kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="YOUR_PUBLIC_KEY_HERE"
+initrd ${base-url}/coreos_production_pxe_image.cpio.gz
+boot</pre>
+    </div>
+    <div class="tab-pane active" id="stable">
+      <div class="channel-info">
+        <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.data.stable-channel.rackspace-version}}.</p>
+      </div>
+      <p>A sample script will look like this:</p>
+
+<pre>#!ipxe
+
+set base-url http://stable.release.core-os.net/amd64-usr/current
+kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="YOUR_PUBLIC_KEY_HERE"
+initrd ${base-url}/coreos_production_pxe_image.cpio.gz
+boot</pre>
+    </div>
+  </div>
+</div>
+
+Make sure to replace `YOUR_PUBLIC_KEY_HERE` with your actual public key, it will begin with `ssh-rsa...`.
 
 Additional reading can be found at [Booting CoreOS with iPXE](http://coreos.com/docs/running-coreos/bare-metal/booting-with-ipxe/) and [Embedded scripts for iPXE](http://ipxe.org/embed).
+
+## Using Cloud-Config
+
+Please be sure to check out [Using Cloud-Config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). 
+
+In particular, please note that the `$private_ipv4` and `$public_ipv4` variables are NOT supported on `vultr`.
+
+In other words, you will need to hard code these values into your `cloud-config` file.
 
 ## Create the VPS
 
@@ -74,11 +123,3 @@ Now that you have a cluster bootstrapped it is time to play around.
 CoreOS is currently running from RAM, based on the loaded image. You may want to [install it on the disk]({{site.url}}/docs/running-coreos/bare-metal/installing-to-disk). Note that when following these instructions on Vultr, the device name should be `/dev/vda` rather than `/dev/sda`.
 
 Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
-
-## Using Cloud-Config
-
-Please be sure to check out [Using Cloud-Config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). 
-
-In particular, please note that the `$private_ipv4` and `$public_ipv4` variables are NOT supported on `vultr`.
-
-In other words, you will need to hard code these values into your `cloud-config` file.
