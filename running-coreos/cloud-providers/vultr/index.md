@@ -77,7 +77,7 @@ Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig int
 
 ## Using Cloud-Config
 
-Please be sure to check out [Using Cloud-Config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/). 
+Please be sure to check out [Using Cloud-Config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). 
 
 In particular, please note that the `$private_ipv4` and `$public_ipv4` variables are NOT supported on `vultr`.
 
