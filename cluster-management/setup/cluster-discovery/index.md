@@ -40,25 +40,25 @@ coreos:
 
 ## New Clusters
 
-Starting a CoreOS cluster requires one of the new machines to become the first leader of the cluster. The initial leader is stored as metadata with the discovery URL in order to inform the other members of the new cluster. Let's walk through an example with a new 3 machine CoreOS cluster:
+Starting a CoreOS cluster requires one of the new machines to become the first leader of the cluster. The initial leader is stored as metadata with the discovery URL in order to inform the other members of the new cluster. Let's walk through a timeline a new 3 machine CoreOS cluster discovering each other:
 
-1. 3 machines are booted via a cloud-provider
-2. Machine 1 that boots connects to the discovery token and submits its `peer-addr` address `10.10.10.1`.
+1. All three machines are booted via a cloud-provider with the same cloud-config in the user-data.
+2. Machine 1 starts up first. It requests information about the cluster from the discovery token and submits its `peer-addr` address `10.10.10.1`.
 3. No leader is recorded into the discovery URL metadata, so machine 1 becomes the leader.
 4. Machine 2 boots and submits its `peer-addr` address `10.10.10.2`. It also reads back the list of existing peers (only `10.10.10.1`) and attempts to connect to the address listed.
-5. Machine 2 is now part of the cluster as a follower.
-6. Machine 3 boots and submits its `peer-addr` address `10.10.10.3`. It reads back the list of peers ( `10.10.10.1` and `10.10.10.2`) and selects one of the addresses to try first. If it can connect, the machine joins the cluster and is given a full list of the existing other members of the cluster.
+5. Machine 2 connects to Machine 1 and is now part of the cluster as a follower.
+6. Machine 3 boots and submits its `peer-addr` address `10.10.10.3`. It reads back the list of peers ( `10.10.10.1` and `10.10.10.2`) and selects one of the addresses to try first. When it connects to a machine in the cluster, the machine is given a full list of the existing other members of the cluster.
 7. The cluster is now bootstrapped with an intial leader and two followers.
 
 There are two interesting things happening during this process.
 
 First, each machine is configured with the same discovery URL and etcd figured out what to do. This allows you to load the same cloud-config into an auto-scaling group and it will work whether it is the first or 30th machine in the group.
 
-Second, machine 3 only needed to use one of the addresses stored in the discovery URL to connect to the cluster, because the rest of the active peers can be obtained after cluster membership through the Raft protocol.
+Second, machine 3 only needed to use one of the addresses stored in the discovery URL to connect to the cluster. Since etcd uses the Raft consensus algorithm, existing machines in the cluster already maintain a list of healty members in order for the algorithm to function properly. This list is given to the new machine and it starts normal operations with each of the other cluster members.
 
 ## Existing Clusters
 
-If you're already bootstrapped a cluster with a discovery URL, all you need to do is to boot new machines with a cloud-config containing the same URL. After boot, new machines will see that a cluster already exists and attempt to join through one of the addresses stored with the discovery URL.
+If you're already operating a bootstrapped a cluster with a discovery URL, adding new machines to the cluster is very easy. All you need to do is to boot the new machines with a cloud-config containing the same discovery URL. After boot, the new machines will see that a cluster already exists and attempt to join through one of the addresses stored with the discovery URL.
 
 Over time, as machines come and go, the discovery URL will eventually contain addresses of peers that are no longer alive. Each entry in the discovery URL has a TTL of 7 days, which should be long enough to make sure no extended outages cause an address to be removed erroneously. There is no harm in having stale peers in the list until they are cleaned up, since an etcd instance only needs to connect to one valid peer in the cluster to join.
 
@@ -66,7 +66,7 @@ Over time, as machines come and go, the discovery URL will eventually contain ad
 
 ### Invalid Cloud-Config
 
-The most common problem with cluster discovery is using invalid cloud-config, which will prevent the cloud-config from being applied to the machine. Formatting errors are easy to do with YAML. You should always run newly written cloud-config through a [YAML validator](yamllint.com).
+The most common problem with cluster discovery is using invalid cloud-config, which will prevent the cloud-config from being applied to the machine. The YAML format uses indention to represent data hierarchy, which makes it easy to create an invalid cloud-config. You should always run newly written cloud-config through a [YAML validator](yamllint.com).
 
 Unfortunately, if you are providing an SSH-key via cloud-config, it can be hard to read the `coreos-cloudinit` log to find out what's wrong. If you're using a cloud provider, you can normally provide an SSH-key via another method which will allow you to log in. If you're running on bare metal, the [coreos.autologin]({{site.url}}/docs/running-coreos/bare-metal/booting-with-pxe/#setting-up-pxelinux.cfg) kernel option will bypass authentication, letting you read the journal.
 
@@ -78,7 +78,11 @@ journalctl _EXE=/usr/bin/coreos-cloudinit
 
 ### Stale Tokens
 
-Another common problem with cluster discovery is attempting to boot a new cluster with a stale discovery URL. As explained above, the intial leader election is recorded into the URL, which inticates that the new etcd instance should be joining an existing cluster. On a stale token, each of the old peer addresses will be used to try to join a cluster but will fail. A new cluster can't be formed by discarding these old addresses, because if an etcd peer was in a network partition, it would look exactly like the described situation. Because etcd can't ever accurately determined whether a token has been reused or not, it must assume the worst and fail the cluster discovery.
+Another common problem with cluster discovery is attempting to boot a new cluster with a stale discovery URL. As explained above, the intial leader election is recorded into the URL, which inticates that the new etcd instance should be joining an existing cluster.
+
+If you provide a stale discovery URL, the new machines will attempt to connec to each of the old peer addresses, which will fail since they don't exist, and the bootstrapping process will fail.
+
+If you're thinking, why can't the new machines just form a new cluster if they're all down. There's a really great reason for this &mdash; if an etcd peer was in a network partition, it would look exactly like the "full-down" situation and starting a new cluster would form a split-brain. Since etcd will never be able to determine whether a token has been reused or not, it must assume the worst and abort the cluster discovery.
 
 If you're running into problems with your discovery URL, there are a few sources of information that can help you see what's going on. First, you can open the URL in a browser to see what information etcd is using to bootstrap itself:
 
@@ -122,9 +126,15 @@ If you're running into problems with your discovery URL, there are a few sources
 
 To rule out firewall settings as a source of your issue, ensure that you can curl each of the IPs from machines in your cluster.
 
+If all of the IPs can be reached, the etcd log can provide more clues:
+
+```
+journalctl -u etcd
+```
+
 ### Communicating with discovery.etcd.io
 
-If your CoreOS cluster can't communicate out to the public internet, [https://discovery.etcd.io](https://discovery.etcd.io) won't work and you'll have to run your own discovery endpoint, which is described later in this document.
+If your CoreOS cluster can't communicate out to the public internet, [https://discovery.etcd.io](https://discovery.etcd.io) won't work and you'll have to run your own discovery endpoint, which is described below.
 
 ### Setting Peer Addresses Correctly
 
