@@ -11,13 +11,13 @@ weight: 5
 
 ## Overview
 
-CoreOS uses etcd, a service running on each machine, to handle coordination between software running on the cluster. For a group of CoreOS machines to form a cluster, their etcd instances need be connected.
+CoreOS uses etcd, a service running on each machine, to handle coordination between software running on the cluster. For a group of CoreOS machines to form a cluster, their etcd instances need to be connected.
 
 A discovery service, [https://discovery.etcd.io](https://discovery.etcd.io), is provided as a free service to help connect etcd instances together by storing a list of peer addresses and metadata under a unique address, known as the discovery URL.
 
 The discovery URL can be provided to each CoreOS machine via [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config), a minimal config tool that's designed to get a machine connected to the network and join the cluster. The rest of this guide will explain what's happening behind the scenes, but if you're trying to get clustered as quickly as possible, all you need to do is provide a _fresh, unique_ discovery token in your cloud-config.
 
-Boot each one of the machines with identical cloud-config and they should be auotmatically clustered. You can grab a new token from [https://discovery.etcd.io/new](https://discovery.etcd.io/new) at any time.
+Boot each one of the machines with identical cloud-config and they should be automatically clustered. You can grab a new token from [https://discovery.etcd.io/new](https://discovery.etcd.io/new) at any time.
 
 A common cloud-config is provided below, but specific guides are provided for each platform's guide. Not all providers support the `$private_ipv4` variable substitution.
 
@@ -73,12 +73,12 @@ Unfortunately, if you are providing an SSH-key via cloud-config, it can be hard 
 Reading the `coreos-cloudinit` log will indicate which line is invalid:
 
 ```
-journalctl -u coreos-cloudinit
+journalctl _EXE=/usr/bin/coreos-cloudinit
 ```
 
 ### Stale Tokens
 
-Another common problem with cluster discovery is attempting to boot a new cluster with a stable discovery URL. As explained above, the intial leader election is recorded into the URL, which inticates that the new etcd instance should be joining an existing cluster. On a stale token, each of the old peer addresses will be used to try to join a cluster but will fail. A new cluster can't be formed by discarding these old addresses, because if an etcd peer was in a network partition, it would look exactly like the described situtation. Because etcd can't ever accurately determined whether a token has been reused or not, it must assume the worst and fail the cluster discovery.
+Another common problem with cluster discovery is attempting to boot a new cluster with a stale discovery URL. As explained above, the intial leader election is recorded into the URL, which inticates that the new etcd instance should be joining an existing cluster. On a stale token, each of the old peer addresses will be used to try to join a cluster but will fail. A new cluster can't be formed by discarding these old addresses, because if an etcd peer was in a network partition, it would look exactly like the described situation. Because etcd can't ever accurately determined whether a token has been reused or not, it must assume the worst and fail the cluster discovery.
 
 If you're running into problems with your discovery URL, there are a few sources of information that can help you see what's going on. First, you can open the URL in a browser to see what information etcd is using to bootstrap itself:
 
@@ -124,7 +124,7 @@ To rule out firewall settings as a source of your issue, ensure that you can cur
 
 ### Communicating with discovery.etcd.io
 
-If your CoreOS cluster can't communicate out the public internet, [https://discovery.etcd.io](https://discovery.etcd.io) won't work and you'll have to run your own discovery endpoint, which is described later in this document.
+If your CoreOS cluster can't communicate out to the public internet, [https://discovery.etcd.io](https://discovery.etcd.io) won't work and you'll have to run your own discovery endpoint, which is described later in this document.
 
 ### Setting Peer Addresses Correctly
 
@@ -132,14 +132,8 @@ Each etcd instance submits the `-peer-addr` of each etcd instance to the configu
 
 ## Running Your Own Discovery Service
 
-The public discovery service is just an etcd cluster made available to the public internet. Since the discovery service conducts and stores the result of the first leader election, it needs to be consistent. You wouldn't want 2 machines in the same cluster to think they were both the leader.
+The public discovery service is just an etcd cluster made available to the public internet. Since the discovery service conducts and stores the result of the first leader election, it needs to be consistent. You wouldn't want two machines in the same cluster to think they were both the leader.
 
 Since etcd is designed to this type of leader election, it was an obvious choice to use it for everyone's initial leader election. This means that it's easy to run your own etcd cluster for this purpose.
 
-If you're interested in how to discovery API works behind the scenes in etcd, read about the [Discovery Protocol](https://github.com/coreos/etcd/blob/master/Documentation/discovery-protocol.md). 
-
-## Lifetime of a Discovery URL
-
-A discovery URL identifies a single etcd cluster. Do not re-use discovery URLs for new clusters.
-
-When a machine starts with a new discovery URL the discovery URL will be activated and record the machine's metadata. If you destroy the whole cluster and attempt to bring the cluster back up with the same discovery URL it will fail. This is intentional because all of the registered machines are gone including their logs so there is nothing to recover the killed cluster.
+If you're interested in how to discovery API works behind the scenes in etcd, read about the [Discovery Protocol](https://github.com/coreos/etcd/blob/master/Documentation/discovery-protocol.md).
