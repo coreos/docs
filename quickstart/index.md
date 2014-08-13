@@ -128,9 +128,10 @@ ExecStop=/usr/bin/docker stop hello
 
 The [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd) guide explains the format of this file in more detail.
 
-Then start the unit:
+Then load and start the unit:
 
 ```sh
+$ fleetctl load hello.service
 $ fleetctl start hello.service
 Job hello.service launched on 8145ebb7.../172.17.8.105
 ```
