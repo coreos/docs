@@ -132,6 +132,7 @@ Then load and start the unit:
 
 ```sh
 $ fleetctl load hello.service
+Job hello.service loaded on c72c6ea2.../10.65.174.36
 $ fleetctl start hello.service
 Job hello.service launched on 8145ebb7.../172.17.8.105
 ```
