@@ -87,7 +87,7 @@ iPXE> dhcp
 iPXE> chain http://${YOUR_BOOT_URL}
 ```
 
-Immediatly iPXE should download your boot script URL and start grabbing the images from the CoreOS storage site:
+Immediately iPXE should download your boot script URL and start grabbing the images from the CoreOS storage site:
 
 ```sh
 ${YOUR_BOOT_URL}... ok
