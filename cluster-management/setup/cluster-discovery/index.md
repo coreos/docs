@@ -13,13 +13,16 @@ weight: 5
 
 CoreOS uses etcd, a service running on each machine, to handle coordination between software running on the cluster. For a group of CoreOS machines to form a cluster, their etcd instances need to be connected.
 
-A discovery service, [https://discovery.etcd.io](https://discovery.etcd.io), is provided as a free service to help connect etcd instances together by storing a list of peer addresses and metadata under a unique address, known as the discovery URL.
+A discovery service, [https://discovery.etcd.io](https://discovery.etcd.io), is provided as a free service to help connect etcd instances together by storing a list of peer addresses and metadata under a unique address, known as the discovery URL. You can generate them very easily:
+
+```
+$ curl -w "\n" https://discovery.etcd.io/new
+https://discovery.etcd.io/6a28e078895c5ec737174db2419bb2f3
+```
 
 The discovery URL can be provided to each CoreOS machine via [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config), a minimal config tool that's designed to get a machine connected to the network and join the cluster. The rest of this guide will explain what's happening behind the scenes, but if you're trying to get clustered as quickly as possible, all you need to do is provide a _fresh, unique_ discovery token in your cloud-config.
 
-Boot each one of the machines with identical cloud-config and they should be automatically clustered. You can grab a new token from [https://discovery.etcd.io/new](https://discovery.etcd.io/new) at any time.
-
-A common cloud-config is provided below, but specific guides are provided for each platform's guide. Not all providers support the `$private_ipv4` variable substitution.
+Boot each one of the machines with identical cloud-config and they should be automatically clustered:
 
 ```
 #cloud-config
@@ -38,13 +41,15 @@ coreos:
       command: start
 ```
 
+Specific documentation are provided for each platform's guide. Not all providers support the $private_ipv4 variable substitution.
+
 ## New Clusters
 
 Starting a CoreOS cluster requires one of the new machines to become the first leader of the cluster. The initial leader is stored as metadata with the discovery URL in order to inform the other members of the new cluster. Let's walk through a timeline a new 3 machine CoreOS cluster discovering each other:
 
 1. All three machines are booted via a cloud-provider with the same cloud-config in the user-data.
 2. Machine 1 starts up first. It requests information about the cluster from the discovery token and submits its `peer-addr` address `10.10.10.1`.
-3. No leader is recorded into the discovery URL metadata, so machine 1 becomes the leader.
+3. No state is recorded into the discovery URL metadata, so machine 1 becomes the leader and records the state as `started`.
 4. Machine 2 boots and submits its `peer-addr` address `10.10.10.2`. It also reads back the list of existing peers (only `10.10.10.1`) and attempts to connect to the address listed.
 5. Machine 2 connects to Machine 1 and is now part of the cluster as a follower.
 6. Machine 3 boots and submits its `peer-addr` address `10.10.10.3`. It reads back the list of peers ( `10.10.10.1` and `10.10.10.2`) and selects one of the addresses to try first. When it connects to a machine in the cluster, the machine is given a full list of the existing other members of the cluster.
@@ -61,6 +66,8 @@ Second, machine 3 only needed to use one of the addresses stored in the discover
 If you're already operating a bootstrapped a cluster with a discovery URL, adding new machines to the cluster is very easy. All you need to do is to boot the new machines with a cloud-config containing the same discovery URL. After boot, the new machines will see that a cluster already exists and attempt to join through one of the addresses stored with the discovery URL.
 
 Over time, as machines come and go, the discovery URL will eventually contain addresses of peers that are no longer alive. Each entry in the discovery URL has a TTL of 7 days, which should be long enough to make sure no extended outages cause an address to be removed erroneously. There is no harm in having stale peers in the list until they are cleaned up, since an etcd instance only needs to connect to one valid peer in the cluster to join.
+
+It's also possible that a discovery URL can contain no existing addresses, because they were all removed after 7 days. This represents a dead cluster and the discovery URL won't work any more and should be discarded.
 
 ## Common Problems with Cluster Discovery
 
@@ -138,7 +145,7 @@ If your CoreOS cluster can't communicate out to the public internet, [https://di
 
 ### Setting Peer Addresses Correctly
 
-Each etcd instance submits the `-peer-addr` of each etcd instance to the configured discovery service. It's important to select an address that *all* peers in the cluster can communicate with. For example, if you're located in two regions of a cloud provider, configuring a private `10.x` address will not work between the two regions, and communication will not be possible between all peers.
+Each etcd instance submits the `-peer-addr` of each etcd instance to the configured discovery service. It's important to select an address that *all* peers in the cluster can communicate with. For example, if you're located in two regions of a cloud provider, configuring a private `10.x` address will not work between the two regions, and communication will not be possible between all peers. The `--bindaddr` flag allows you to bind to a specific interface (or all interfaces) to ensure your etcd traffic is routed properly.
 
 ## Running Your Own Discovery Service
 
