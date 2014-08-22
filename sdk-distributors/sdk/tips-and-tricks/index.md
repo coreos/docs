@@ -26,7 +26,7 @@ repo forall -c  git grep 'CONFIG_EXTRA_FIRMWARE_DIR'
 
 ## Add new upstream package
 
-Before making modificaions use `repo start` to create a new branch for the changes.
+Before making modifications use `repo start` to create a new branch for the changes.
 
 To add a new package fetch the Gentoo package from upstream and add the package as a dependency of coreos-base/coreos
 
