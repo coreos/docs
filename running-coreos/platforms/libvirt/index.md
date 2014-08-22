@@ -128,8 +128,8 @@ You can change any of these parameters later.
 Now create a config drive file system to configure CoreOS itself:
 
 ```sh
-mkdir -p /var/lib/libvirt/images/coreos0/configdrive/openstack/latest
-touch /var/lib/libvirt/images/coreos0/configdrive/openstack/latest/user_data
+mkdir -p /var/lib/libvirt/images/coreos0/configdrive
+touch /var/lib/libvirt/images/coreos0/configdrive/user_data
 ```
 
 The `user_data` file may contain a script for a [cloud config][cloud-config]
