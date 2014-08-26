@@ -31,6 +31,7 @@ ExecStartPre=-/usr/bin/docker kill busybox1
 ExecStartPre=-/usr/bin/docker rm busybox1
 ExecStartPre=/usr/bin/docker pull busybox
 ExecStart=/usr/bin/docker run --name busybox1 busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"
+ExecStop=/usr/bin/docker stop busybox1
 ```
 
 Run the start command to start up the container on the cluster:
