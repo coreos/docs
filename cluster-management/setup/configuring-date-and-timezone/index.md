@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Configuring Date and Timezone
+title: Configuring Date & Timezone (NTP)
 category: cluster_management
 sub_category: setting_up
 weight: 7
