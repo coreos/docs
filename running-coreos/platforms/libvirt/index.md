@@ -39,22 +39,19 @@ Read the [release notes]({{site.url}}/releases) for specific features and bug fi
       <p>We start by downloading the most recent disk image:</p>
       <pre>
 mkdir -p /var/lib/libvirt/images/coreos0
-cd /var/lib/libvirt/images/coreos0
-wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img</pre>
+wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > /var/lib/libvirt/images/coreos0/coreos_production_qemu_image.img</pre>
     </div>
     <div class="tab-pane" id="beta-create">
       <p>We start by downloading the most recent disk image:</p>
       <pre>
 mkdir -p /var/lib/libvirt/images/coreos0
-cd /var/lib/libvirt/coreos0
-wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img</pre>
+wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > /var/lib/libvirt/images/coreos0/coreos_production_qemu_image.img</pre>
     </div>
     <div class="tab-pane active" id="stable-create">
       <p>We start by downloading the most recent disk image:</p>
       <pre>
 mkdir -p /var/lib/libvirt/images/coreos0
-cd /var/lib/libvirt/coreos0
-wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img</pre>
+wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > /var/lib/libvirt/images/coreos0/coreos_production_qemu_image.img</pre>
     </div>
   </div>
 </div>
@@ -130,6 +127,7 @@ Now create a config drive file system to configure CoreOS itself:
 ```sh
 mkdir -p /var/lib/libvirt/images/coreos0/configdrive/openstack/latest
 touch /var/lib/libvirt/images/coreos0/configdrive/openstack/latest/user_data
+chcon -R -t virt_content_t /var/lib/libvirt/images/coreos0/configdrive/openstack
 ```
 
 The `user_data` file may contain a script for a [cloud config][cloud-config]
