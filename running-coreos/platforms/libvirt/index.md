@@ -127,7 +127,7 @@ Now create a config drive file system to configure CoreOS itself:
 ```sh
 mkdir -p /var/lib/libvirt/images/coreos0/configdrive/openstack/latest
 touch /var/lib/libvirt/images/coreos0/configdrive/openstack/latest/user_data
-chcon -R -t virt_content_t /var/lib/libvirt/images/coreos0/configdrive/openstack
+chcon -R -t virt_content_t /var/lib/libvirt/images/coreos0/configdrive
 ```
 
 The `user_data` file may contain a script for a [cloud config][cloud-config]
