@@ -1,15 +1,13 @@
 ---
 layout: docs
-title: Initial Setup of CoreOS Enterprise Registry
+title: On-Premise Installation
 category: registry
 sub_category: setup
 forkurl: https://github.com/coreos/docs/blob/master/enterprise-registry/initial-setup/index.md
 weight: 5
 ---
 
-# Initial Setup of CoreOS Enterprise Registry
-
-## Introduction
+# On-Premise Installation
 
 CoreOS Enterprise Registry requires four components to operate successfully:
 
