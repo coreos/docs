@@ -37,8 +37,8 @@ Redis stores data which must be accessed quickly but doesn’t necessarily requi
 
 To run redis, simply pull and run the Quay.io Redis image:
 
-```sudo docker pull quay.io/quay/redis
-sudo docker run -d -p 6379:6379 quay.io/quay/redis```
+   sudo docker pull quay.io/quay/redis
+   sudo docker run -d -p 6379:6379 quay.io/quay/redis
 
 **NOTE**: This host will have to accept incoming connections on port 6379 from the hosts on which the registry will run.
 
