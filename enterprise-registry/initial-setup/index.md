@@ -1,0 +1,175 @@
+---
+layout: docs
+title: Initial Setup of CoreOS Enterprise Registry
+category: registry
+sub_category: setup
+forkurl: https://github.com/coreos/docs/blob/master/enterprise-registry/initial-setup/index.md
+weight: 5
+---
+
+# Initial Setup of CoreOS Enterprise Registry
+
+## Introduction
+
+CoreOS Enterprise Registry requires four components to operate successfully:
+- A supported database (MySQL, Postgres)
+- A Redis instance (for real-time events)
+- A config.yaml file
+- The Enterprise Registry image
+
+
+## Preparing the Database
+
+A MySQL RDBMS or Postgres installation with an empty database is required, and a login with full access to said database. The schema will be created the first time the registry image is run.
+
+Please have the url for the login and database available in the SQLAlchemy format:
+
+### For MySQL:
+```mysql+pymysql://<username>:<url escaped password>@<hostname>/<database_name>```
+
+### For Postgres:
+```postgresql://<username>:<url escaped password>@<hostname>/<database_name>```
+
+
+## Setting up Redis
+
+Redis stores data which must be accessed quickly but doesn’t necessarily require durability guarantees. If you have an existing Redis instance, make sure to accept incoming connections on port 6379 and then feel free to skip this step.
+
+To run redis, simply pull and run the Quay.io Redis image:
+
+```sudo docker pull quay.io/quay/redis
+sudo docker run -d -p 6379:6379 quay.io/quay/redis```
+
+**NOTE**: This host will have to accept incoming connections on port 6379 from the hosts on which the registry will run.
+
+
+## Writing a config.yaml
+
+CoreOS Enterprise Registry requires a `config.yaml` file.
+
+Sample configuration can be found below. Any fields marked as `(FILL IN HERE)` are required to be edited.
+
+	# A unique secret key. This should be a UUID or some other secret
+	# string.
+	SECRET_KEY: '(FILL IN HERE: secret key)'
+	
+	# Should be 'https' if SSL is used and 'http' otherwise.
+	PREFERRED_URL_SCHEME: '(FILL IN HERE: "https" or "http")'
+	
+	# The HTTP host (and optionally the port number) of the location
+	# where the registry will be accessible on the network.
+	SERVER_HOSTNAME: '(FILL IN HERE: registry.mycorp.com)'
+	
+	# A logo to use for your enterprise
+	ENTERPRISE_LOGO_URL: '(FILL IN HERE: http://someurl/...)'
+	
+	# Settings for SMTP and mailing. This is *required*.
+	MAIL_PORT: 587
+	MAIL_PASSWORD: '(FILL IN HERE: password)'
+	MAIL_SERVER: '(FILL IN HERE: hostname)'
+	MAIL_USERNAME: '(FILL IN HERE: username)'
+	MAIL_USE_TLS: true
+	
+	# The database URI for your MySQL or Postgres DB.
+	DB_URI: '(FILL IN HERE: database uri)'
+	
+	# References to the REDIS host setup above. Note that this does
+	# not include the port, but merely the hostname/ip.
+	BUILDLOGS_REDIS_HOSTNAME: '(FILL IN HERE: redis host)'
+	USER_EVENTS_REDIS_HOSTNAME: '(FILL IN HERE: redis host)'
+	
+	# The usernames of your super-users, if any. Super users will
+	# have the ability to view and delete other users.
+	SUPER_USERS: []
+	
+	# Either 'Database' or 'LDAP'.
+	# If LDAP, additional configuration is required below.
+	AUTHENTICATION_TYPE: 'Database'
+	
+	# Should always be 'local'.
+	DISTRIBUTED_STORAGE_PREFERENCE: ['local']
+	
+	# Defines the kind of storage used by the registry:
+	#  LocalStorage: Registry data is stored on a local mounted volume
+	#
+	#     Required fields:
+	#       storage_path: The path under the mounted volume
+	#
+	#  S3Storage: Registry data is stored in Amazon S3
+	#
+	#     Required fields:
+	#       storage_path: The path under the S3 bucket
+	#       s3_access_key: The S3 access key
+	#       s3_secret_key: The S3 secret key
+	#       s3_bucket: The S3 bucket
+	#
+	#  GoogleCloudStorage: Registry data is stored in GCS
+	#
+	#     Required fields:
+	#       storage_path: The path under the GCS bucket
+	#       access_key: The GCS access key
+	#       secret_key: The GCS secret key
+	#       bucket_name: The GCS bucket
+	#
+	DISTRIBUTED_STORAGE_CONFIG:
+	 local:
+	    # The name of the storage provider
+	    - LocalStorage
+	
+	    # Fields, in dictionary form
+	    - {'storage_path': '/datastorage/registry'}
+	
+	# LDAP information (only needed if `LDAP` is chosen above).
+	# LDAP_URI: 'ldap://localhost'
+	# LDAP_ADMIN_DN: 'cn=admin,dc=devtable,dc=com'
+	# LDAP_ADMIN_PASSWD: 'secret'
+	# LDAP_BASE_DN: ['dc=devtable', 'dc=com']
+	# LDAP_EMAIL_ATTR: 'mail'
+	# LDAP_UID_ATTR: 'uid'
+	# LDAP_USER_RDN: ['ou=People']
+	
+	# Where user files (uploaded build packs, other binary data)
+	# are stored. 
+	USERFILES_PATH: 'datastorage/userfiles'
+	USERFILES_TYPE: 'LocalUserfiles'
+	
+	# Required constants.
+	TESTING: false
+	USE_CDN: false
+	FEATURE_USER_LOG_ACCESS: true
+	FEATURE_BUILD_SUPPORT: false
+
+
+## Setting up the directories
+
+CoreOS Enterprise registry requires a storage directory and a configuration directory containing the `config.yaml`, and, if SSL is used, two files named `ssl.cert` and `ssl.key`:
+
+	mkdir storage
+	mkdir config
+	mv config.yaml config/config.yaml
+	cp my-ssl-cert config/ssl.cert
+	cp my-ssl-key config/ssl.key
+
+
+## Pulling the CoreOS Enterprise Registry image
+
+As part of the setup package, a set of pull credentials have been included. To pull the CoreOS Enterprise Registry image, run a `docker login` and then a `docker pull`:
+
+	docker login quay.io
+	Username: (the username given)
+	Password: (the password given)
+	E-mail: (put anything here)
+
+	docker pull quay.io/coreos/registry:latest
+
+
+## Running the CoreOS Enterprise Registry image
+
+The CoreOS Enterprise Registry is run via a `docker run` call, with the `<conf directory name here>` and `<storage directory name here>` being the directories created above.
+
+	docker run -p 443:443 -p 80:80 --privileged=true -v <conf directory name here>:/conf/stack -v <storage directory name here>:/datastorage -d quay.io/coreos/registry
+
+
+## Verifying that CoreOS Enterprise Registry is running
+
+Visit the `/status` endpoint on the registry hostname and verify it returns true for both variables.
