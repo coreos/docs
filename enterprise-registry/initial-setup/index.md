@@ -155,7 +155,7 @@ CoreOS Enterprise registry requires a storage directory and a configuration dire
 	cp my-ssl-key config/ssl.key
 
 
-## Pulling the CoreOS Enterprise Registry image
+## Pulling the Registry image
 
 As part of the setup package, a set of pull credentials have been included. To pull the CoreOS Enterprise Registry image, run a `docker login` and then a `docker pull`:
 
@@ -167,14 +167,14 @@ As part of the setup package, a set of pull credentials have been included. To p
 	docker pull quay.io/coreos/registry:latest
 
 
-## Running the CoreOS Enterprise Registry image
+## Running the Registry
 
 The CoreOS Enterprise Registry is run via a `docker run` call, with the `config` and `storage` being the directories created above.
 
 	docker run -p 443:443 -p 80:80 --privileged=true -v config:/conf/stack -v storage:/datastorage -d quay.io/coreos/registry
 
 
-## Verifying that CoreOS Enterprise Registry is running
+## Verifying the Registry status
 
 Visit the `/status` endpoint on the registry hostname and verify it returns true for both variables.
 
