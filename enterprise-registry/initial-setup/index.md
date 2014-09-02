@@ -20,7 +20,7 @@ CoreOS Enterprise Registry requires four components to operate successfully:
 
 ## Preparing the Database
 
-A MySQL RDBMS or Postgres installation with an empty database is required, and a login with full access to said database. The schema will be created the first time the registry image is run.
+A MySQL RDBMS or Postgres installation with an empty database is required, and a login with full access to said database. The schema will be created the first time the registry image is run. The database install can either be pre-existing or run on CoreOS via a Docker container.
 
 Please have the url for the login and database available in the SQLAlchemy format:
 
@@ -45,9 +45,9 @@ sudo docker run -d -p 6379:6379 quay.io/quay/redis
 **NOTE**: This host will have to accept incoming connections on port 6379 from the hosts on which the registry will run.
 
 
-## Writing a config.yaml
+## Enterprise Registry Config File
 
-CoreOS Enterprise Registry requires a `config.yaml` file.
+CoreOS Enterprise Registry requires a `config.yaml` file, that stores database connection information, the storage location of your containers and other important settings.
 
 Sample configuration can be found below. Any fields marked as `(FILL IN HERE)` are required to be edited.
 
@@ -143,7 +143,7 @@ FEATURE_USER_LOG_ACCESS: true
 FEATURE_BUILD_SUPPORT: false
 ```
 
-## Setting up the directories
+## Setting up the Directories
 
 CoreOS Enterprise registry requires a storage directory and a configuration directory containing the `config.yaml`, and, if SSL is used, two files named `ssl.cert` and `ssl.key`:
 
@@ -168,11 +168,23 @@ As part of the setup package, a set of pull credentials have been included. To p
 
 ## Running the CoreOS Enterprise Registry image
 
-The CoreOS Enterprise Registry is run via a `docker run` call, with the `<conf directory name here>` and `<storage directory name here>` being the directories created above.
+The CoreOS Enterprise Registry is run via a `docker run` call, with the `config` and `storage` being the directories created above.
 
-	docker run -p 443:443 -p 80:80 --privileged=true -v <conf directory name here>:/conf/stack -v <storage directory name here>:/datastorage -d quay.io/coreos/registry
+	docker run -p 443:443 -p 80:80 --privileged=true -v config:/conf/stack -v storage:/datastorage -d quay.io/coreos/registry
 
 
 ## Verifying that CoreOS Enterprise Registry is running
 
 Visit the `/status` endpoint on the registry hostname and verify it returns true for both variables.
+
+
+## Logging in
+
+### If using database authentication:
+
+Once the Enterprise Registry is running, new users can be created by clicking the `Sign Up` button. The sign up process will require an e-mail confirmation step, after which repositories, organizations and teams can be setup by the user.
+
+
+### If using LDAP authentication:
+
+Users should be able to login to the Enterprise Registry directly with their LDAP username and password.
