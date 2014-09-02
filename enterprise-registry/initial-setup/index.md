@@ -12,6 +12,7 @@ weight: 5
 ## Introduction
 
 CoreOS Enterprise Registry requires four components to operate successfully:
+
 - A supported database (MySQL, Postgres)
 - A Redis instance (for real-time events)
 - A config.yaml file
