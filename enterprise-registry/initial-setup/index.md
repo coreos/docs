@@ -49,96 +49,97 @@ CoreOS Enterprise Registry requires a `config.yaml` file.
 
 Sample configuration can be found below. Any fields marked as `(FILL IN HERE)` are required to be edited.
 
-	# A unique secret key. This should be a UUID or some other secret
-	# string.
-	SECRET_KEY: '(FILL IN HERE: secret key)'
-	
-	# Should be 'https' if SSL is used and 'http' otherwise.
-	PREFERRED_URL_SCHEME: '(FILL IN HERE: "https" or "http")'
-	
-	# The HTTP host (and optionally the port number) of the location
-	# where the registry will be accessible on the network.
-	SERVER_HOSTNAME: '(FILL IN HERE: registry.mycorp.com)'
-	
-	# A logo to use for your enterprise
-	ENTERPRISE_LOGO_URL: '(FILL IN HERE: http://someurl/...)'
-	
-	# Settings for SMTP and mailing. This is *required*.
-	MAIL_PORT: 587
-	MAIL_PASSWORD: '(FILL IN HERE: password)'
-	MAIL_SERVER: '(FILL IN HERE: hostname)'
-	MAIL_USERNAME: '(FILL IN HERE: username)'
-	MAIL_USE_TLS: true
-	
-	# The database URI for your MySQL or Postgres DB.
-	DB_URI: '(FILL IN HERE: database uri)'
-	
-	# References to the REDIS host setup above. Note that this does
-	# not include the port, but merely the hostname/ip.
-	BUILDLOGS_REDIS_HOSTNAME: '(FILL IN HERE: redis host)'
-	USER_EVENTS_REDIS_HOSTNAME: '(FILL IN HERE: redis host)'
-	
-	# The usernames of your super-users, if any. Super users will
-	# have the ability to view and delete other users.
-	SUPER_USERS: []
-	
-	# Either 'Database' or 'LDAP'.
-	# If LDAP, additional configuration is required below.
-	AUTHENTICATION_TYPE: 'Database'
-	
-	# Should always be 'local'.
-	DISTRIBUTED_STORAGE_PREFERENCE: ['local']
-	
-	# Defines the kind of storage used by the registry:
-	#  LocalStorage: Registry data is stored on a local mounted volume
-	#
-	#     Required fields:
-	#       storage_path: The path under the mounted volume
-	#
-	#  S3Storage: Registry data is stored in Amazon S3
-	#
-	#     Required fields:
-	#       storage_path: The path under the S3 bucket
-	#       s3_access_key: The S3 access key
-	#       s3_secret_key: The S3 secret key
-	#       s3_bucket: The S3 bucket
-	#
-	#  GoogleCloudStorage: Registry data is stored in GCS
-	#
-	#     Required fields:
-	#       storage_path: The path under the GCS bucket
-	#       access_key: The GCS access key
-	#       secret_key: The GCS secret key
-	#       bucket_name: The GCS bucket
-	#
-	DISTRIBUTED_STORAGE_CONFIG:
-	 local:
-	    # The name of the storage provider
-	    - LocalStorage
-	
-	    # Fields, in dictionary form
-	    - {'storage_path': '/datastorage/registry'}
-	
-	# LDAP information (only needed if `LDAP` is chosen above).
-	# LDAP_URI: 'ldap://localhost'
-	# LDAP_ADMIN_DN: 'cn=admin,dc=devtable,dc=com'
-	# LDAP_ADMIN_PASSWD: 'secret'
-	# LDAP_BASE_DN: ['dc=devtable', 'dc=com']
-	# LDAP_EMAIL_ATTR: 'mail'
-	# LDAP_UID_ATTR: 'uid'
-	# LDAP_USER_RDN: ['ou=People']
-	
-	# Where user files (uploaded build packs, other binary data)
-	# are stored. 
-	USERFILES_PATH: 'datastorage/userfiles'
-	USERFILES_TYPE: 'LocalUserfiles'
-	
-	# Required constants.
-	TESTING: false
-	USE_CDN: false
-	FEATURE_USER_LOG_ACCESS: true
-	FEATURE_BUILD_SUPPORT: false
+```yaml
+# A unique secret key. This should be a UUID or some other secret
+# string.
+SECRET_KEY: '(FILL IN HERE: secret key)'
 
+# Should be 'https' if SSL is used and 'http' otherwise.
+PREFERRED_URL_SCHEME: '(FILL IN HERE: "https" or "http")'
+
+# The HTTP host (and optionally the port number) of the location
+# where the registry will be accessible on the network.
+SERVER_HOSTNAME: '(FILL IN HERE: registry.mycorp.com)'
+
+# A logo to use for your enterprise
+ENTERPRISE_LOGO_URL: '(FILL IN HERE: http://someurl/...)'
+
+# Settings for SMTP and mailing. This is *required*.
+MAIL_PORT: 587
+MAIL_PASSWORD: '(FILL IN HERE: password)'
+MAIL_SERVER: '(FILL IN HERE: hostname)'
+MAIL_USERNAME: '(FILL IN HERE: username)'
+MAIL_USE_TLS: true
+
+# The database URI for your MySQL or Postgres DB.
+DB_URI: '(FILL IN HERE: database uri)'
+
+# References to the REDIS host setup above. Note that this does
+# not include the port, but merely the hostname/ip.
+BUILDLOGS_REDIS_HOSTNAME: '(FILL IN HERE: redis host)'
+USER_EVENTS_REDIS_HOSTNAME: '(FILL IN HERE: redis host)'
+
+# The usernames of your super-users, if any. Super users will
+# have the ability to view and delete other users.
+SUPER_USERS: []
+
+# Either 'Database' or 'LDAP'.
+# If LDAP, additional configuration is required below.
+AUTHENTICATION_TYPE: 'Database'
+
+# Should always be 'local'.
+DISTRIBUTED_STORAGE_PREFERENCE: ['local']
+
+# Defines the kind of storage used by the registry:
+#  LocalStorage: Registry data is stored on a local mounted volume
+#
+#     Required fields:
+#       storage_path: The path under the mounted volume
+#
+#  S3Storage: Registry data is stored in Amazon S3
+#
+#     Required fields:
+#       storage_path: The path under the S3 bucket
+#       s3_access_key: The S3 access key
+#       s3_secret_key: The S3 secret key
+#       s3_bucket: The S3 bucket
+#
+#  GoogleCloudStorage: Registry data is stored in GCS
+#
+#     Required fields:
+#       storage_path: The path under the GCS bucket
+#       access_key: The GCS access key
+#       secret_key: The GCS secret key
+#       bucket_name: The GCS bucket
+#
+DISTRIBUTED_STORAGE_CONFIG:
+ local:
+    # The name of the storage provider
+    - LocalStorage
+
+    # Fields, in dictionary form
+    - {'storage_path': '/datastorage/registry'}
+
+# LDAP information (only needed if `LDAP` is chosen above).
+# LDAP_URI: 'ldap://localhost'
+# LDAP_ADMIN_DN: 'cn=admin,dc=devtable,dc=com'
+# LDAP_ADMIN_PASSWD: 'secret'
+# LDAP_BASE_DN: ['dc=devtable', 'dc=com']
+# LDAP_EMAIL_ATTR: 'mail'
+# LDAP_UID_ATTR: 'uid'
+# LDAP_USER_RDN: ['ou=People']
+
+# Where user files (uploaded build packs, other binary data)
+# are stored. 
+USERFILES_PATH: 'datastorage/userfiles'
+USERFILES_TYPE: 'LocalUserfiles'
+
+# Required constants.
+TESTING: false
+USE_CDN: false
+FEATURE_USER_LOG_ACCESS: true
+FEATURE_BUILD_SUPPORT: false
+```
 
 ## Setting up the directories
 
