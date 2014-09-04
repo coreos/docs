@@ -39,13 +39,12 @@ Run the start command to start up the container on the cluster:
 ```sh
 $ fleetctl start myapp.service
 ```
-
-Now list all of the units in the cluster to see the current status. The unit should have been scheduled to a machine in your cluster:
+The unit should have been scheduled to a machine in your cluster:
 
 ```sh
 $ fleetctl list-units
-UNIT             LOAD    ACTIVE  SUB      DESC    MACHINE
-myapp.service  	 loaded  active  running  MyApp   c9de9451.../10.10.1.3
+UNIT              MACHINE                 ACTIVE    SUB
+myapp.service     c9de9451.../10.10.1.3   active    running
 ```
 
 You can view all of the machines in the cluster by running `list-machines`:
@@ -89,15 +88,15 @@ Let's start both units and verify that they're on two different machines:
 ```sh
 $ fleetctl start apache.*
 $ fleetctl list-units
-UNIT               LOAD    ACTIVE  SUB      DESC    			MACHINE
-myapp.service  	   loaded  active  running  MyApp               c9de9451.../10.10.1.3
-apache.1.service   loaded  active  running  My Apache Frontend  491586a6.../10.10.1.2
-apache.2.service   loaded  active  running  My Apache Frontend  148a18ff.../10.10.1.1
+UNIT              MACHINE                 ACTIVE    SUB
+myapp.service     c9de9451.../10.10.1.3   active    running
+apache.1.service  491586a6.../10.10.1.2   active    running
+apache.2.service  148a18ff.../10.10.1.1   active    running
 ```
 
 As you can see, the Apache units are now running on two different machines in our cluster.
 
-How do we route requests to these containers? The best strategy is to run a "sidekick" container that performs other duties that are related to our main container but shouldn't be directly built into that application. Examples of common sidekick containers are for service discovery and controlling external services such as cloud load balancers.
+How do we route requests to these containers? The best strategy is to run a "sidekick" container that performs other duties that are related to our main container but shouldn't be directly built into that application. Examples of common sidekick containers are for service discovery and controlling external services such as cloud load balancers or DNS.
 
 ## Run a Simple Sidekick
 
@@ -127,12 +126,12 @@ Let's verify that each unit was placed on to the same machine as the Apache serv
 ```sh
 $ fleetctl start apache-discovery.1.service
 $ fleetctl list-units
-UNIT              			LOAD    ACTIVE  SUB      DESC    			 MACHINE
-myapp.service  	  			loaded  active  running  MyApp               c9de9451.../10.10.1.3
-apache.1.service 			loaded  active  running  My Apache Frontend  491586a6.../10.10.1.2
-apache.2.service  			loaded  active  running  My Apache Frontend  148a18ff.../10.10.1.1
-apache-discovery.1.service  loaded  active  running  Announce Apache1    491586a6.../10.10.1.2
-apache-discovery.2.service  loaded  active  running  Announce Apache2    148a18ff.../10.10.1.1
+UNIT                        MACHINE                 ACTIVE    SUB
+myapp.service               c9de9451.../10.10.1.3   active    running
+apache.1.service            491586a6.../10.10.1.2   active    running
+apache.2.service            148a18ff.../10.10.1.1   active    running
+apache-discovery.1.service  491586a6.../10.10.1.2   active    running
+apache-discovery.2.service  148a18ff.../10.10.1.1   active    running
 ```
 
 Now let's verify that the service discovery is working correctly:
