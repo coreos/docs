@@ -20,6 +20,6 @@ documents as a pull request and follow two guidelines:
 2. Add an explanation about the translated document to the top of the
    file: "These documents were localized into Esperanto by Community
    Member <person@example.com> and last updated on 2014-04-04. If you
-   find inaccuracies or problems please file an issue on Github."
+   find inaccuracies or problems please file an issue on GitHub."
 
 Thank you for your contributions.
