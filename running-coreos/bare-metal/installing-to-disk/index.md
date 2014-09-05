@@ -45,7 +45,7 @@ CoreOS is released into alpha and beta channels. Releases to each channel serve 
       <pre>coreos-install -d /dev/sda -C beta</pre>
     </div>
     <div class="tab-pane active" id="stable-create">
-      <p>TThe Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.stable-channel}}.</p>
+      <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.stable-channel}}.</p>
       <p>If you want to ensure you are installing the latest stable version, use the <code>-C</code> option:</p>
       <pre>coreos-install -d /dev/sda -C stable</pre>
     </div>
