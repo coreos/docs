@@ -175,7 +175,7 @@ For more details, check out [DigitalOcean's API documentation][do-api-docs].
     <div class="caption">Droplet settings for networking and cloud-config</div>
   </div>
 </div>
-4. Choose your <a href="#choosing-a-channel">prefered channel</a> of CoreOS.<br/><br/>
+4. Choose your <a href="#choosing-a-channel">preferred channel</a> of CoreOS.<br/><br/>
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12">
     <img src="image.png" class="screenshot" />
