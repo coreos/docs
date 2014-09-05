@@ -40,7 +40,7 @@ End-users should be able to provide a cloud-config file to your platform while s
 
 CoreOS machines running on Amazon EC2 utilize a two-step cloud-config process. First, a cloud-config file baked into the image runs systemd units that execute scripts to fetch the user-provided SSH key and fetch the [user-provided cloud-config][amazon-cloud-config] from the instance [user-data service][amazon-user-data-doc] on Amazon's internal network. Afterwards, the user-provided cloud-config, specified from either the web console or API, is parsed.
 
-You can find the [code for this process on Github][amazon-github]. End-user instructions for this process can be found on our [Amazon EC2 docs][amazon-cloud-config].
+You can find the [code for this process on GitHub][amazon-github]. End-user instructions for this process can be found on our [Amazon EC2 docs][amazon-cloud-config].
 
 [amazon-github]: https://github.com/coreos/coreos-overlay/tree/master/coreos-base/oem-ec2-compat
 [amazon-user-data-doc]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html#instancedata-user-data-retrieval
@@ -50,7 +50,7 @@ You can find the [code for this process on Github][amazon-github]. End-user inst
 
 Rackspace passes configuration data to a VM by mounting [config-drive][config-drive-docs], a special configuration drive containing machine-specific data, to the machine. Like, Amazon EC2, CoreOS images for Rackspace contain a cloud-config file baked into the image that runs units to read from the config-drive. If a user-provided cloud-config file is found, it is parsed.
 
-You can find the [code for this process on Github][rackspace-github]. End-user instructions for this process can be found on our [Rackspace docs][rackspace-cloud-config].
+You can find the [code for this process on GitHub][rackspace-github]. End-user instructions for this process can be found on our [Rackspace docs][rackspace-cloud-config].
 
 [rackspace-github]: https://github.com/coreos/coreos-overlay/tree/master/coreos-base/oem-rackspace
 [rackspace-cloud-config]: {{site.url}}/docs/running-coreos/cloud-providers/rackspace#cloud-config
