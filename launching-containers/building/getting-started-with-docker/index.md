@@ -39,9 +39,9 @@ After that completes, we need to `commit` these changes to our container with th
 
 To find the container ID, open another shell (so the container is still running) and read the ID using `docker ps`. 
 
-The image name is in the format of `username/name`. We're going to use `coreos` as our username in this example but you should [sign up for a Docker.IO user account](https://www.docker.io/account/signup/) and use that instead. 
+The image name is in the format of `username/name`. We're going to use `coreos` as our username in this example but you should [sign up for a Docker.IO user account](https://hub.docker.com/account/signup/) and use that instead. 
 
-It's important to note that you can commit using any username and image name locally, but to push an image to the public registry, the username must be a valid [Docker.IO user account](https://www.docker.io/account/signup/).
+It's important to note that you can commit using any username and image name locally, but to push an image to the public registry, the username must be a valid [Docker.IO user account](https://hub.docker.com/account/signup/).
 
 Commit the container with the container ID, your username, and the name `apache`:
 
@@ -131,5 +131,5 @@ docker run -d -p 80:80 registry.example.com:5000/apache /usr/sbin/apache2ctl -D 
 
 #### More Information
 <a class="btn btn-default" href="{{site.url}}/using-coreos/docker">docker Overview</a>
-<a class="btn btn-default" href="http://www.docker.io/">Docker Website</a>
-<a class="btn btn-default" href="http://www.docker.io/gettingstarted/">docker's Getting Started Guide</a>
+<a class="btn btn-default" href="http://www.docker.com/">Docker Website</a>
+<a class="btn btn-default" href="http://www.docker.com/gettingstarted/">docker's Getting Started Guide</a>
