@@ -87,7 +87,7 @@ journalctl _EXE=/usr/bin/coreos-cloudinit
 
 Another common problem with cluster discovery is attempting to boot a new cluster with a stale discovery URL. As explained above, the intial leader election is recorded into the URL, which indicates that the new etcd instance should be joining an existing cluster.
 
-If you provide a stale discovery URL, the new machines will attempt to connec to each of the old peer addresses, which will fail since they don't exist, and the bootstrapping process will fail.
+If you provide a stale discovery URL, the new machines will attempt to connect to each of the old peer addresses, which will fail since they don't exist, and the bootstrapping process will fail.
 
 If you're thinking, why can't the new machines just form a new cluster if they're all down. There's a really great reason for this &mdash; if an etcd peer was in a network partition, it would look exactly like the "full-down" situation and starting a new cluster would form a split-brain. Since etcd will never be able to determine whether a token has been reused or not, it must assume the worst and abort the cluster discovery.
 
