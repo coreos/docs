@@ -85,7 +85,7 @@ journalctl _EXE=/usr/bin/coreos-cloudinit
 
 ### Stale Tokens
 
-Another common problem with cluster discovery is attempting to boot a new cluster with a stale discovery URL. As explained above, the intial leader election is recorded into the URL, which inticates that the new etcd instance should be joining an existing cluster.
+Another common problem with cluster discovery is attempting to boot a new cluster with a stale discovery URL. As explained above, the intial leader election is recorded into the URL, which indicates that the new etcd instance should be joining an existing cluster.
 
 If you provide a stale discovery URL, the new machines will attempt to connec to each of the old peer addresses, which will fail since they don't exist, and the bootstrapping process will fail.
 
