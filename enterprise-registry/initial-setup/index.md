@@ -171,7 +171,7 @@ As part of the setup package, a set of pull credentials have been included. To p
 
 The CoreOS Enterprise Registry is run via a `docker run` call, with the `config` and `storage` being the directories created above.
 
-	docker run -p 443:443 -p 80:80 --privileged=true -v config:/conf/stack -v storage:/datastorage -d quay.io/coreos/registry
+	docker run -p 443:443 -p 80:80 --privileged=true -v /local/path/to/config:/conf/stack -v /local/path/to/storage:/datastorage -d quay.io/coreos/registry
 
 
 ## Verifying the Registry status
