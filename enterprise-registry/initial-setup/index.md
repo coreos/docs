@@ -120,8 +120,8 @@ DISTRIBUTED_STORAGE_PREFERENCE: ['local']
 #       hostname: The hostname at which RADOS is running
 #       is_secure: Whether to use a secure connection
 #       storage_path: The path under RADOS
-#       access_key: The access key
-#       secret_key: The secret key
+#       access_key: An object gateway user access key
+#       secret_key: An object gateway user secret key
 #       bucket_name: The bucket under RADOS
 #
 DISTRIBUTED_STORAGE_CONFIG:
@@ -145,7 +145,8 @@ DISTRIBUTED_STORAGE_CONFIG:
 # are stored. Must match a key under DISTRIBUTED_STORAGE_CONFIG.
 USERFILES_LOCATION: 'local'
 
-# The path under the storage where userfiles are stored.
+# The path under the storage where user files are stored. If the storage has a storage_path,
+# this will be a sub-directory under that path.
 USERFILES_PATH: 'userfiles/'
 
 # Required constants.
