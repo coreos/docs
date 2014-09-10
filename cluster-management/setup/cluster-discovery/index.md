@@ -63,7 +63,7 @@ Second, machine 3 only needed to use one of the addresses stored in the discover
 
 ## Existing Clusters
 
-If you're already operating a bootstrapped a cluster with a discovery URL, adding new machines to the cluster is very easy. All you need to do is to boot the new machines with a cloud-config containing the same discovery URL. After boot, the new machines will see that a cluster already exists and attempt to join through one of the addresses stored with the discovery URL.
+If you're already operating a bootstrapped cluster with a discovery URL, adding new machines to the cluster is very easy. All you need to do is to boot the new machines with a cloud-config containing the same discovery URL. After boot, the new machines will see that a cluster already exists and attempt to join through one of the addresses stored with the discovery URL.
 
 Over time, as machines come and go, the discovery URL will eventually contain addresses of peers that are no longer alive. Each entry in the discovery URL has a TTL of 7 days, which should be long enough to make sure no extended outages cause an address to be removed erroneously. There is no harm in having stale peers in the list until they are cleaned up, since an etcd instance only needs to connect to one valid peer in the cluster to join.
 
@@ -153,4 +153,4 @@ The public discovery service is just an etcd cluster made available to the publi
 
 Since etcd is designed to this type of leader election, it was an obvious choice to use it for everyone's initial leader election. This means that it's easy to run your own etcd cluster for this purpose.
 
-If you're interested in how to discovery API works behind the scenes in etcd, read about the [Discovery Protocol](https://github.com/coreos/etcd/blob/master/Documentation/discovery-protocol.md).
+If you're interested in how discovery API works behind the scenes in etcd, read about the [Discovery Protocol](https://github.com/coreos/etcd/blob/master/Documentation/discovery-protocol.md).
