@@ -57,7 +57,13 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
     </div>
     <div class="tab-pane" id="beta">
       <div class="channel-info">
-        <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.data.beta-channel.rackspace-version}}.</p>
+        <p>The beta channel consists of promoted alpha releases.
+        {% if site.data.beta-channel.rackspace-version != site.data.beta-channel.rackspace-onmetal-version %}
+          Current version for Cloud Servers is CoreOS {{site.data.beta-channel.rackspace-version}} and the current version for On Metal servers is {{site.data.beta-channel.rackspace-onmetal-version}}.
+        {% elsif site.data.beta-channel.rackspace-version == site.data.beta-channel.rackspace-onmetal-version %}
+          Current version is CoreOS {{site.data.beta-channel.rackspace-version}}.
+        {% endif %}
+        </p>
       </div>
       <table>
         <thead>
@@ -83,7 +89,13 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
     </div>
     <div class="tab-pane active" id="stable">
       <div class="channel-info">
-        <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.data.stable-channel.rackspace-version}}.</p>
+        <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted.
+        {% if site.data.stable-channel.rackspace-version != site.data.stable-channel.rackspace-onmetal-version %}
+          Current version for Cloud Servers is CoreOS {{site.data.stable-channel.rackspace-version}} and the current version for On Metal servers is {{site.data.stable-channel.rackspace-onmetal-version}}.
+        {% elsif site.data.stable-channel.rackspace-version == site.data.stable-channel.rackspace-onmetal-version %}
+          Current version is CoreOS {{site.data.stable-channel.rackspace-version}}.
+        {% endif %}
+        </p>
       </div>
       <table>
         <thead>
