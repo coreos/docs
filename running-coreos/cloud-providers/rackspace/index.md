@@ -25,7 +25,13 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.data.alpha-channel.rackspace-version}}.</p>
+        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing.
+        {% if site.data.alpha-channel.rackspace-version != site.data.alpha-channel.rackspace-onmetal-version %}
+          Current version for Cloud Servers is CoreOS {{site.data.alpha-channel.rackspace-version}} and the current version for On Metal servers is {{site.data.alpha-channel.rackspace-onmetal-version}}.
+        {% elsif site.data.alpha-channel.rackspace-version == site.data.alpha-channel.rackspace-onmetal-version %}
+          Current version is CoreOS {{site.data.alpha-channel.rackspace-version}}.
+        {% endif %}
+        </p>
       </div>
       <table>
         <thead>
@@ -67,6 +73,11 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
             <td>{{site.data.beta-channel.rackspace-image-id}}</td>
             <td><a href="{{site.url}}/dist/rackspace/heat-beta.yaml">heat-beta.yaml</td>
           </tr>
+          <tr>
+            <td>OnMetal</td>
+            <td>{{site.data.beta-channel.rackspace-onmetal-id}}</td>
+            <td><a href="{{site.url}}/dist/rackspace/heat-onmetal-beta.yaml">heat-onmetal-beta.yaml</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -87,6 +98,11 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
             <td>Cloud Server</td>
             <td>{{site.data.stable-channel.rackspace-image-id}}</td>
             <td><a href="{{site.url}}/dist/rackspace/heat-stable.yaml">heat-stable.yaml</td>
+          </tr>
+          <tr>
+            <td>OnMetal</td>
+            <td>{{site.data.stable-channel.rackspace-onmetal-id}}</td>
+            <td><a href="{{site.url}}/dist/rackspace/heat-onmetal-stable.yaml">heat-onmetal-stable.yaml</td>
           </tr>
         </tbody>
       </table>
