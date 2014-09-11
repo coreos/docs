@@ -27,7 +27,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
       <div class="channel-info">
         <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing.
         {% if site.data.alpha-channel.rackspace-version != site.data.alpha-channel.rackspace-onmetal-version %}
-          Current version for Cloud Servers is CoreOS {{site.data.alpha-channel.rackspace-version}} and the current version for On Metal servers is {{site.data.alpha-channel.rackspace-onmetal-version}}.
+          Current version for Cloud Servers is CoreOS {{site.data.alpha-channel.rackspace-version}} and the current version for OnMetal servers is {{site.data.alpha-channel.rackspace-onmetal-version}}.
         {% elsif site.data.alpha-channel.rackspace-version == site.data.alpha-channel.rackspace-onmetal-version %}
           Current version is CoreOS {{site.data.alpha-channel.rackspace-version}}.
         {% endif %}
@@ -59,7 +59,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
       <div class="channel-info">
         <p>The beta channel consists of promoted alpha releases.
         {% if site.data.beta-channel.rackspace-version != site.data.beta-channel.rackspace-onmetal-version %}
-          Current version for Cloud Servers is CoreOS {{site.data.beta-channel.rackspace-version}} and the current version for On Metal servers is {{site.data.beta-channel.rackspace-onmetal-version}}.
+          Current version for Cloud Servers is CoreOS {{site.data.beta-channel.rackspace-version}} and the current version for OnMetal servers is {{site.data.beta-channel.rackspace-onmetal-version}}.
         {% elsif site.data.beta-channel.rackspace-version == site.data.beta-channel.rackspace-onmetal-version %}
           Current version is CoreOS {{site.data.beta-channel.rackspace-version}}.
         {% endif %}
@@ -91,7 +91,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
       <div class="channel-info">
         <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted.
         {% if site.data.stable-channel.rackspace-version != site.data.stable-channel.rackspace-onmetal-version %}
-          Current version for Cloud Servers is CoreOS {{site.data.stable-channel.rackspace-version}} and the current version for On Metal servers is {{site.data.stable-channel.rackspace-onmetal-version}}.
+          Current version for Cloud Servers is CoreOS {{site.data.stable-channel.rackspace-version}} and the current version for OnMetal servers is {{site.data.stable-channel.rackspace-onmetal-version}}.
         {% elsif site.data.stable-channel.rackspace-version == site.data.stable-channel.rackspace-onmetal-version %}
           Current version is CoreOS {{site.data.stable-channel.rackspace-version}}.
         {% endif %}
