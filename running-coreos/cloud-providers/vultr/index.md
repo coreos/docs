@@ -10,9 +10,9 @@ weight: 10
 
 These instructions will walk you through running a single CoreOS node. This guide assumes:
 
-* You have an account at [Vultr.com](http://vultr.com). 
+* You have an account at [Vultr.com](https://www.vultr.com).
 * The location of your iPXE script (referenced later in the guide) is located at ```http://example.com/script.txt```
-* You have a public + private key combination generated. Here's a helpful guide if you need to generate these keys: [How to set up SSH keys](https://www.digitalocean.com/community/articles/how-to-set-up-ssh-keys--2). 
+* You have a public + private key combination generated. Here's a helpful guide if you need to generate these keys: [How to set up SSH keys](https://help.github.com/articles/generating-ssh-keys).
 
 The simplest option to boot up CoreOS is to load a script that contains the series of commands you'd otherwise need to manually type at the command line. This script needs to be publicly accessible (host this file on your own server). Save this script as a text file (.txt extension).
 
@@ -36,7 +36,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
 <pre>#!ipxe
 
 set base-url http://alpha.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="YOUR_PUBLIC_KEY_HERE"
+kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=http://169.254.169.254/2014-09-12/coreos-init sshkey="YOUR_PUBLIC_KEY_HERE"
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
@@ -49,7 +49,7 @@ boot</pre>
 <pre>#!ipxe
 
 set base-url http://beta.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="YOUR_PUBLIC_KEY_HERE"
+kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=http://169.254.169.254/2014-09-12/coreos-init sshkey="YOUR_PUBLIC_KEY_HERE"
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
@@ -62,7 +62,7 @@ boot</pre>
 <pre>#!ipxe
 
 set base-url http://stable.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz sshkey="YOUR_PUBLIC_KEY_HERE"
+kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=http://169.254.169.254/2014-09-12/coreos-init sshkey="YOUR_PUBLIC_KEY_HERE"
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
@@ -75,11 +75,11 @@ Additional reading can be found at [Booting CoreOS with iPXE](http://coreos.com/
 
 ## Using Cloud-Config
 
-Please be sure to check out [Using Cloud-Config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). 
+Please be sure to check out [Using Cloud-Config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config).
 
-In particular, please note that the `$private_ipv4` and `$public_ipv4` variables are NOT supported on `vultr`.
+In particular, note that the `$private_ipv4` and `$public_ipv4` variables are only supported on Vultr if you have the 'cloud-config-url' option set on your kernel command line.
 
-In other words, you will need to hard code these values into your `cloud-config` file.
+Without this option, you will need to hard code these values into your `cloud-config` file.
 
 ## Create the VPS
 
