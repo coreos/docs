@@ -34,6 +34,8 @@ ExecStart=/usr/bin/docker run --name busybox1 busybox /bin/sh -c "while true; do
 ExecStop=/usr/bin/docker stop busybox1
 ```
 
+If you've been running docker commands manually, be sure you don't copy a `docker run` command that starts a container in detached mode (`-d`). Detached mode won't start the container as a child of the unit's pid. This will cause the unit to run for just a few seconds and then exit.
+
 Run the start command to start up the container on the cluster:
 
 ```sh
