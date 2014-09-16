@@ -147,7 +147,7 @@ ExecStart=/bin/sh -c "while true; do etcdctl set /services/website/apache1 '{ \"
 ExecStop=/usr/bin/etcdctl rm /services/website/apache1
 
 [X-Fleet]
-X-ConditionMachineOf=apache.1.service
+MachineOf=apache.1.service
 ```
 
 This unit has a few interesting properties. First, it uses `BindsTo` to link the unit to our `apache.1.service` unit. When the Apache unit is stopped, this unit will stop as well, causing it to be removed from our `/services/website` directory in `etcd`. A TTL of 60 seconds is also being used here to remove the unit from the directory if our machine suddenly died for some reason.
