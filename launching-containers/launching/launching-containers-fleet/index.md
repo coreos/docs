@@ -226,6 +226,8 @@ datadog.service             491586a6.../10.10.1.2   active    running
 datadog.service             c9de9451.../10.10.1.3   active    running
 ```
 
+Global units can deployed to a subset of matching machines with the `MachineMetadata` parameter, which is explained in the next section.
+
 ## Schedule Based on Machine Metadata
 
 Applications with complex and specific requirements can target a subset of the cluster for scheduling via machine metadata. Powerful deployment topologies can be achieved &mdash; schedule units based on the machine's region, rack location, disk speed or anything else you can think of.
