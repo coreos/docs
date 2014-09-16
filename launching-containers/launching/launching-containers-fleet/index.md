@@ -159,7 +159,7 @@ The third is a [fleet-specific property]({{site.url}}/docs/launching-containers/
 Let's verify that each unit was placed on to the same machine as the Apache service is bound to:
 
 ```sh
-$ fleetctl start apache-discovery.1.service
+$ fleetctl start apache-discovery.*.service
 $ fleetctl list-units
 UNIT                        MACHINE                 ACTIVE    SUB
 myapp.service               c9de9451.../10.10.1.3   active    running
