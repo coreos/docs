@@ -156,7 +156,7 @@ This unit has a few interesting properties. First, it uses `BindsTo` to link the
 
 Second is `%H`, a variable built into systemd, that represents the hostname of the machine running this unit. Variable usage is covered in our [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd/#unit-variables) guide as well as in [systemd documentation](http://www.freedesktop.org/software/systemd/man/systemd.unit.html#Specifiers).
 
-The third is a [fleet-specific property]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/) called `ConditionMachineOf`. This property causes the unit to be placed onto the same machine that `apache.1.service` is running on.
+The third is a [fleet-specific property]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/) called `MachineOf`. This property causes the unit to be placed onto the same machine that `apache.1.service` is running on.
 
 Let's verify that each unit was placed on to the same machine as the Apache service is bound to:
 
@@ -265,25 +265,25 @@ If you wanted to ensure very high availability you could have 3 unit files that 
 ```ini
 [X-Fleet]
 Conflicts=webapp*
-ConditionMachineMetadata=provider=rackspace
-ConditionMachineMetadata=platform=metal
-ConditionMachineMetadata=region=east
+MachineMetadata=provider=rackspace
+MachineMetadata=platform=metal
+MachineMetadata=region=east
 ```
 
 ```ini
 [X-Fleet]
 Conflicts=webapp*
-ConditionMachineMetadata=provider=rackspace
-ConditionMachineMetadata=platform=cloud
-ConditionMachineMetadata=region=east
+MachineMetadata=provider=rackspace
+MachineMetadata=platform=cloud
+MachineMetadata=region=east
 ```
 
 ```ini
 [X-Fleet]
 Conflicts=webapp*
-ConditionMachineMetadata=provider=amazon
-ConditionMachineMetadata=platform=cloud
-ConditionMachineMetadata=region=east
+MachineMetadata=provider=amazon
+MachineMetadata=platform=cloud
+MachineMetadata=region=east
 ```
 
 #### More Information
