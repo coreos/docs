@@ -59,11 +59,11 @@ There are two interesting things happening during this process.
 
 First, each machine is configured with the same discovery URL and etcd figured out what to do. This allows you to load the same cloud-config into an auto-scaling group and it will work whether it is the first or 30th machine in the group.
 
-Second, machine 3 only needed to use one of the addresses stored in the discovery URL to connect to the cluster. Since etcd uses the Raft consensus algorithm, existing machines in the cluster already maintain a list of healty members in order for the algorithm to function properly. This list is given to the new machine and it starts normal operations with each of the other cluster members.
+Second, machine 3 only needed to use one of the addresses stored in the discovery URL to connect to the cluster. Since etcd uses the Raft consensus algorithm, existing machines in the cluster already maintain a list of healthy members in order for the algorithm to function properly. This list is given to the new machine and it starts normal operations with each of the other cluster members.
 
 ## Existing Clusters
 
-If you're already operating a bootstrapped a cluster with a discovery URL, adding new machines to the cluster is very easy. All you need to do is to boot the new machines with a cloud-config containing the same discovery URL. After boot, the new machines will see that a cluster already exists and attempt to join through one of the addresses stored with the discovery URL.
+If you're already operating a bootstrapped cluster with a discovery URL, adding new machines to the cluster is very easy. All you need to do is to boot the new machines with a cloud-config containing the same discovery URL. After boot, the new machines will see that a cluster already exists and attempt to join through one of the addresses stored with the discovery URL.
 
 Over time, as machines come and go, the discovery URL will eventually contain addresses of peers that are no longer alive. Each entry in the discovery URL has a TTL of 7 days, which should be long enough to make sure no extended outages cause an address to be removed erroneously. There is no harm in having stale peers in the list until they are cleaned up, since an etcd instance only needs to connect to one valid peer in the cluster to join.
 
@@ -85,9 +85,9 @@ journalctl _EXE=/usr/bin/coreos-cloudinit
 
 ### Stale Tokens
 
-Another common problem with cluster discovery is attempting to boot a new cluster with a stale discovery URL. As explained above, the intial leader election is recorded into the URL, which inticates that the new etcd instance should be joining an existing cluster.
+Another common problem with cluster discovery is attempting to boot a new cluster with a stale discovery URL. As explained above, the intial leader election is recorded into the URL, which indicates that the new etcd instance should be joining an existing cluster.
 
-If you provide a stale discovery URL, the new machines will attempt to connec to each of the old peer addresses, which will fail since they don't exist, and the bootstrapping process will fail.
+If you provide a stale discovery URL, the new machines will attempt to connect to each of the old peer addresses, which will fail since they don't exist, and the bootstrapping process will fail.
 
 If you're thinking, why can't the new machines just form a new cluster if they're all down. There's a really great reason for this &mdash; if an etcd peer was in a network partition, it would look exactly like the "full-down" situation and starting a new cluster would form a split-brain. Since etcd will never be able to determine whether a token has been reused or not, it must assume the worst and abort the cluster discovery.
 
@@ -153,4 +153,4 @@ The public discovery service is just an etcd cluster made available to the publi
 
 Since etcd is designed to this type of leader election, it was an obvious choice to use it for everyone's initial leader election. This means that it's easy to run your own etcd cluster for this purpose.
 
-If you're interested in how to discovery API works behind the scenes in etcd, read about the [Discovery Protocol](https://github.com/coreos/etcd/blob/master/Documentation/discovery-protocol.md).
+If you're interested in how discovery API works behind the scenes in etcd, read about the [Discovery Protocol](https://github.com/coreos/etcd/blob/master/Documentation/discovery-protocol.md).

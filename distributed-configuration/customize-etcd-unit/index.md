@@ -13,7 +13,7 @@ The etcd systemd unit can be customized by overriding the unit that ships with t
 
 ## Use Client Certificates
 
-etcd supports client certificates as a way to provide secure communication between clients &#8596; leader and internal traffic between etcd peers in the cluster. Configuring certificates for both scenarios is done through environment varaibles. We can use a systemd drop-in unit to augment the unit that ships with CoreOS.
+etcd supports client certificates as a way to provide secure communication between clients &#8596; leader and internal traffic between etcd peers in the cluster. Configuring certificates for both scenarios is done through environment variables. We can use a systemd drop-in unit to augment the unit that ships with CoreOS.
 
 This site has a [good reference for how to generate self-signed key pairs](http://www.g-loaded.eu/2005/11/10/be-your-own-ca/) or you could use [etcd-ca](https://github.com/coreos/etcd-ca) to generate certs and keys. 
 

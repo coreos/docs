@@ -79,6 +79,17 @@ The unit should have been scheduled to a machine in your cluster:
 $ fleetctl list-units
 UNIT              MACHINE                 ACTIVE    SUB
 myapp.service     c9de9451.../10.10.1.3   active    running
+
+```
+
+You can view all of the machines in the cluster by running `list-machines`:
+
+```sh
+$ fleetctl list-machines
+MACHINE                                 IP          METADATA
+148a18ff-6e95-4cd8-92da-c9de9bb90d5a    10.10.1.1   -
+491586a6-508f-4583-a71d-bfc4d146e996    10.10.1.2   -
+c9de9451-6a6f-1d80-b7e6-46e996bfc4d1    10.10.1.3   -
 ```
 
 ## Run a High Availability Service

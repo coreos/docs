@@ -25,7 +25,13 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.data.alpha-channel.rackspace-version}}.</p>
+        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing.
+        {% if site.data.alpha-channel.rackspace-version != site.data.alpha-channel.rackspace-onmetal-version %}
+          Current version for Cloud Servers is CoreOS {{site.data.alpha-channel.rackspace-version}} and the current version for OnMetal servers is {{site.data.alpha-channel.rackspace-onmetal-version}}.
+        {% elsif site.data.alpha-channel.rackspace-version == site.data.alpha-channel.rackspace-onmetal-version %}
+          Current version is CoreOS {{site.data.alpha-channel.rackspace-version}}.
+        {% endif %}
+        </p>
       </div>
       <table>
         <thead>
@@ -51,7 +57,13 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
     </div>
     <div class="tab-pane" id="beta">
       <div class="channel-info">
-        <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.data.beta-channel.rackspace-version}}.</p>
+        <p>The beta channel consists of promoted alpha releases.
+        {% if site.data.beta-channel.rackspace-version != site.data.beta-channel.rackspace-onmetal-version %}
+          Current version for Cloud Servers is CoreOS {{site.data.beta-channel.rackspace-version}} and the current version for OnMetal servers is {{site.data.beta-channel.rackspace-onmetal-version}}.
+        {% elsif site.data.beta-channel.rackspace-version == site.data.beta-channel.rackspace-onmetal-version %}
+          Current version is CoreOS {{site.data.beta-channel.rackspace-version}}.
+        {% endif %}
+        </p>
       </div>
       <table>
         <thead>
@@ -67,12 +79,23 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
             <td>{{site.data.beta-channel.rackspace-image-id}}</td>
             <td><a href="{{site.url}}/dist/rackspace/heat-beta.yaml">heat-beta.yaml</td>
           </tr>
+          <tr>
+            <td>OnMetal</td>
+            <td>{{site.data.beta-channel.rackspace-onmetal-id}}</td>
+            <td><a href="{{site.url}}/dist/rackspace/heat-onmetal-beta.yaml">heat-onmetal-beta.yaml</td>
+          </tr>
         </tbody>
       </table>
     </div>
     <div class="tab-pane active" id="stable">
       <div class="channel-info">
-        <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.data.stable-channel.rackspace-version}}.</p>
+        <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted.
+        {% if site.data.stable-channel.rackspace-version != site.data.stable-channel.rackspace-onmetal-version %}
+          Current version for Cloud Servers is CoreOS {{site.data.stable-channel.rackspace-version}} and the current version for OnMetal servers is {{site.data.stable-channel.rackspace-onmetal-version}}.
+        {% elsif site.data.stable-channel.rackspace-version == site.data.stable-channel.rackspace-onmetal-version %}
+          Current version is CoreOS {{site.data.stable-channel.rackspace-version}}.
+        {% endif %}
+        </p>
       </div>
       <table>
         <thead>
@@ -87,6 +110,11 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
             <td>Cloud Server</td>
             <td>{{site.data.stable-channel.rackspace-image-id}}</td>
             <td><a href="{{site.url}}/dist/rackspace/heat-stable.yaml">heat-stable.yaml</td>
+          </tr>
+          <tr>
+            <td>OnMetal</td>
+            <td>{{site.data.stable-channel.rackspace-onmetal-id}}</td>
+            <td><a href="{{site.url}}/dist/rackspace/heat-onmetal-stable.yaml">heat-onmetal-stable.yaml</td>
           </tr>
         </tbody>
       </table>
@@ -301,7 +329,7 @@ source ~/.bash_profile
     <div class="tab-pane active" id="stable-heat">
       <p>Launch the stack by providing the specified parameters. This command will reference the local file <code>data.yml</code> in the current working directory that contains the cloud-config parameters. <code>$(< data.yaml)</code> prints the contents of this file into our heat command:</p>
       <pre>heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-stable.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=5 -P user-data="$(< data.yaml)" -P name="CoreOS-stable"</pre>
-      <p>You can view the <a href="{{site.url}}/dist/rackspace/heat-beta.yaml">template here</a>.</p>
+      <p>You can view the <a href="{{site.url}}/dist/rackspace/heat-stable.yaml">template here</a>.</p>
     </div>
   </div>
 </div>
