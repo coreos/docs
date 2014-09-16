@@ -67,11 +67,13 @@ docker run [options] coreos/apache [process]
 
 ### Run Container Detached
 
-The most important option is to run the container in detached mode with the `-d` flag. This will output the container ID to show that the command was successful, but nothing else. At any time you can run `docker ps` in the other shell to view a list of the running containers. Our command now looks like:
+When running docker containers manually, the most important option is to run the container in detached mode with the `-d` flag. This will output the container ID to show that the command was successful, but nothing else. At any time you can run `docker ps` in the other shell to view a list of the running containers. Our command now looks like:
 
 ```sh
 docker run -d coreos/apache [process]
 ```
+
+After you are comfortable with the mechanics of running containers by hand, it's recommeneded to use [systemd units]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd) and/or [fleet]({{site.url}}/docs/launching-containers/launching/launching-containers-fleet) to run your containers on a cluster of CoreOS machines.
 
 ### Run Apache in Foreground
 

@@ -44,7 +44,7 @@ The description shows up in the systemd log and a few other places. Write someth
 
 `After=docker.service` and `Requires=docker.service` means this unit will only start after `docker.service` is active. You can define as many of these as you want.
 
-`ExecStart=` allows you to specify any command that you'd like to run when this unit is started.
+`ExecStart=` allows you to specify any command that you'd like to run when this unit is started. The pid assigned to this process is what systemd will monitor to determine whether the process has crashed or not. Do not run docker containers with `-d` as this will prevent the container from starting as a child of this pid. systemd will think the process has exited and the unit will be stopped.
 
 `WantedBy=` is the target that this unit is a part of.
 
