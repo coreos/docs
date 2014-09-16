@@ -113,10 +113,10 @@ ExecStart=/usr/bin/docker run -rm --name apache1 -p 80:80 coreos/apache /usr/sbi
 ExecStop=/usr/bin/docker stop apache1
 
 [X-Fleet]
-X-Conflicts=apache.*.service
+Conflicts=apache.*.service
 ```
 
-The `X-Conflicts` attribute tells `fleet` that these two services can't be run on the same machine, giving us high availability. A full list of options for this section can be found in the [fleet units guide]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/).
+The `Conflicts` attribute tells `fleet` that these two services can't be run on the same machine, giving us high availability. A full list of options for this section can be found in the [fleet units guide]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/).
 
 Let's start both units and verify that they're on two different machines:
 
@@ -147,14 +147,14 @@ ExecStart=/bin/sh -c "while true; do etcdctl set /services/website/apache1 '{ \"
 ExecStop=/usr/bin/etcdctl rm /services/website/apache1
 
 [X-Fleet]
-X-ConditionMachineOf=apache.1.service
+ConditionMachineOf=apache.1.service
 ```
 
 This unit has a few interesting properties. First, it uses `BindsTo` to link the unit to our `apache.1.service` unit. When the Apache unit is stopped, this unit will stop as well, causing it to be removed from our `/services/website` directory in `etcd`. A TTL of 60 seconds is also being used here to remove the unit from the directory if our machine suddenly died for some reason.
 
 Second is `%H`, a variable built into systemd, that represents the hostname of the machine running this unit. Variable usage is covered in our [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd/#unit-variables) guide as well as in [systemd documentation](http://www.freedesktop.org/software/systemd/man/systemd.unit.html#Specifiers).
 
-The third is a [fleet-specific property]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/) called `X-ConditionMachineOf`. This property causes the unit to be placed onto the same machine that `apache.1.service` is running on.
+The third is a [fleet-specific property]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/) called `ConditionMachineOf`. This property causes the unit to be placed onto the same machine that `apache.1.service` is running on.
 
 Let's verify that each unit was placed on to the same machine as the Apache service is bound to:
 
@@ -253,33 +253,33 @@ The unit file for a service that does a lot of disk I/O but doesn't care where i
 
 ```ini
 [X-Fleet]
-X-ConditionMachineMetadata=disk=ssd
+ConditionMachineMetadata=disk=ssd
 ```
 
 If you wanted to ensure very high availability you could have 3 unit files that must be scheduled across providers but in the same region:
 
 ```ini
 [X-Fleet]
-X-Conflicts=webapp*
-X-ConditionMachineMetadata=provider=rackspace
-X-ConditionMachineMetadata=platform=metal
-X-ConditionMachineMetadata=region=east
+Conflicts=webapp*
+ConditionMachineMetadata=provider=rackspace
+ConditionMachineMetadata=platform=metal
+ConditionMachineMetadata=region=east
 ```
 
 ```ini
 [X-Fleet]
-X-Conflicts=webapp*
-X-ConditionMachineMetadata=provider=rackspace
-X-ConditionMachineMetadata=platform=cloud
-X-ConditionMachineMetadata=region=east
+Conflicts=webapp*
+ConditionMachineMetadata=provider=rackspace
+ConditionMachineMetadata=platform=cloud
+ConditionMachineMetadata=region=east
 ```
 
 ```ini
 [X-Fleet]
-X-Conflicts=webapp*
-X-ConditionMachineMetadata=provider=amazon
-X-ConditionMachineMetadata=platform=cloud
-X-ConditionMachineMetadata=region=east
+Conflicts=webapp*
+ConditionMachineMetadata=provider=amazon
+ConditionMachineMetadata=platform=cloud
+ConditionMachineMetadata=region=east
 ```
 
 #### More Information
