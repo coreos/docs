@@ -15,6 +15,40 @@ If you're not familiar with systemd units, check out our [Getting Started with s
 
 This guide assumes you're running `fleetctl` locally from a CoreOS machine that's part of a CoreOS cluster. You can also [control your cluster remotely]({{site.url}}/docs/launching-containers/launching/fleet-using-the-client/#get-up-and-running). All of the units referenced in this blog post are contained in the [unit-examples](https://github.com/coreos/unit-examples/tree/master/simple-fleet) repository. You can clone this onto your CoreOS box to make unit submission easier.
 
+## Types of Fleet Units
+
+Two types of units can be run in your cluster &mdash; standard and global units. Standard units are long-running processes that are scheduled onto a single machine. If that machine goes offline, the unit will be migrated onto a new machine and started.
+
+Global units will be run on all machines in the cluster. These are ideal for common services like monitoring agents or components of higher-level orchestration systems like Kubernetes, Mesos or OpenStack. There are two fleetctl commands to view units in the cluster: `list-unit-files`, which shows the units that fleet knows about and whether or not they are global, and `list-units`, which shows the current state of units actively loaded into machines in the cluster. Here's an example cluster with 3 machines, running both types of units:
+
+```sh
+$ fleetctl list-unit-files
+UNIT                   HASH     DSTATE    STATE     TMACHINE
+global-unit.service    8ff68b9  launched  launched  3 of 3
+standard-unit.service  7710e8a  launched  launched  148a18ff.../10.10.1.1
+```
+
+You can view all of the machines in the cluster by running `list-machines`:
+
+```sh
+$ fleetctl list-machines
+MACHINE                                 IP          METADATA
+148a18ff-6e95-4cd8-92da-c9de9bb90d5a    10.10.1.1   -
+491586a6-508f-4583-a71d-bfc4d146e996    10.10.1.2   -
+c9de9451-6a6f-1d80-b7e6-46e996bfc4d1    10.10.1.3   -
+```
+
+Now when looking at the status of units, we should expect to see 3 copies of global-unit.service - one running on each machine:
+
+```sh
+$ fleetctl list-units
+UNIT                    MACHINE                  ACTIVE    SUB
+global-unit.service     148a18ff.../10.10.1.1    active    running
+global-unit.service     491586a6.../10.10.1.2    active    running
+global-unit.service     c9de9451.../10.10.1.3    active    running
+standard-unit.service   148a18ff.../10.10.1.1    active    running
+```
+
 ## Run a Container in the Cluster
 
 Running a single container is very easy. All you need to do is provide a regular unit file without an `[Install]` section. Let's run the same unit from the [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd) guide. First save these contents as `myapp.service` on the CoreOS machine:
@@ -45,6 +79,7 @@ The unit should have been scheduled to a machine in your cluster:
 $ fleetctl list-units
 UNIT              MACHINE                 ACTIVE    SUB
 myapp.service     c9de9451.../10.10.1.3   active    running
+
 ```
 
 You can view all of the machines in the cluster by running `list-machines`:
@@ -150,6 +185,46 @@ $ etcdctl get /services/website/apache1
 If you're running in the cloud, many services have APIs that can be automated based on actions in the cluster. For example, you may update DNS records or add new containers to a cloud load balancer. Our [Example Deployment with fleet]({{site.url}}/docs/launching-containers/launching/fleet-example-deployment/#service-files) contains a pre-made presence container that updates an Amazon Elastic Load Balancer with new backends.
 
 <iframe width="636" height="375" src="//www.youtube.com/embed/u91DnN-yaJ8?rel=0" frameborder="0" allowfullscreen></iframe>
+
+## Run a Global Unit
+
+As mentioned earlier, global units are useful for running a unit across all of the machines in your cluster. It doesn't differ very much from a regular unit other than a new `X-Fleet` parameter called `Global=true`. Here's an example unit from a [blog post to use Data Dog with CoreOS](https://www.datadoghq.com/2014/08/monitor-coreos-scale-datadog/). You'll need to set an etcd key `ddapikey` before this example will work &mdash; more details are in the post.
+
+```ini
+[Unit]
+Description=Monitoring Service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill dd-agent
+ExecStartPre=-/usr/bin/docker rm dd-agent
+ExecStartPre=/usr/bin/docker pull dd-agent
+ExecStart=/usr/bin/docker run --privileged --name dd-agent -h `hostname` \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v /proc/mounts:/host/proc/mounts:ro \
+-v /sys/fs/cgroup/:/host/sys/fs/cgroup:ro \
+-e API_KEY=`etcdctl get /ddapikey` \
+datadog/docker-dd-agent
+
+[X-Fleet]
+Global=true
+```
+
+If we start this unit, it should be running on all 3 of our machines:
+
+```sh
+$ fleetctl start datadog.service
+$ fleetctl list-units
+UNIT                        MACHINE                 ACTIVE    SUB
+myapp.service               c9de9451.../10.10.1.3   active    running
+apache.1.service            491586a6.../10.10.1.2   active    running
+apache.2.service            148a18ff.../10.10.1.1   active    running
+apache-discovery.1.service  491586a6.../10.10.1.2   active    running
+apache-discovery.2.service  148a18ff.../10.10.1.1   active    running
+datadog.service             148a18ff.../10.10.1.1   active    running
+datadog.service             491586a6.../10.10.1.2   active    running
+datadog.service             c9de9451.../10.10.1.3   active    running
+```
 
 ## Schedule Based on Machine Metadata
 
