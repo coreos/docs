@@ -22,11 +22,11 @@ The following command will create a single droplet. For more details, check out
 <div id="do-images">
   <ul class="nav nav-tabs">
     <li><a href="#stable" data-toggle="tab">Stable Channel</a></li>
-    <li><a href="#beta" data-toggle="tab">Beta Channel</a></li>
-    <li class="active"><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
+    <li class="active"><a href="#beta" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
-    <div class="tab-pane active" id="alpha">
+    <div class="tab-pane" id="alpha">
       <div class="channel-info">
         <p>The alpha channel closely tracks master and frequently has new releases. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a>, and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.data.alpha-channel.do-version}}.</p>
         <a href="https://cloud.digitalocean.com/droplets/new?image=coreos-alpha" class="btn btn-default">Launch CoreOS Droplet</a><br/><br/>
@@ -42,10 +42,20 @@ The following command will create a single droplet. For more details, check out
         "name":"core-1"}'</pre>
       </div>
     </div>
-    <div class="tab-pane" id="beta">
+    <div class="tab-pane active" id="beta">
       <div class="channel-info">
-        <p>CoreOS on DigitalOcean is new! There haven't been any beta images yet.</p>
-        <p>Alpha images can be <a href="{{site.url}}/docs/cluster-management/setup/switching-channels">switched</a> to the beta channel.</p>
+        <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.data.beta-channel.do-version}}.</p>
+        <a href="https://cloud.digitalocean.com/droplets/new?image=coreos-beta" class="btn btn-default">Launch CoreOS Droplet</a><br/><br/>
+        <p>Launch via DigitalOcean API by specifying <code>$REGION</code>, <code>$SIZE</code> and <code>$SSH_KEY_ID</code>:</p>
+        <pre>curl --request POST "https://api.digitalocean.com/v2/droplets" \
+     --header "Content-Type: application/json" \
+     --header "Authorization: Bearer $TOKEN" \
+     --data '{"region":"'"${REGION}"'",
+        "image":"{{site.data.beta-channel.do-image-path}}",
+        "size":"'"$SIZE"'",
+        "user_data": "'"$(cat ~/cloud-config.yaml)"'",
+        "ssh_keys":["'"$SSH_KEY_ID"'"],
+        "name":"core-1"}'</pre>
       </div>
     </div>
     <div class="tab-pane" id="stable">
