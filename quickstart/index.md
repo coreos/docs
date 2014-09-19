@@ -60,7 +60,7 @@ coreos:
     discovery: https://discovery.etcd.io/<token>
 ```
 
-In order to get the discovery token, visit [https://discovery.etcd.io/new] and you will receive a URL including your token. Paste the whole thing into your cloud-config file.
+In order to get the discovery token, visit [https://discovery.etcd.io/new](https://discovery.etcd.io/new) and you will receive a URL including your token. Paste the whole thing into your cloud-config file.
 
 The API is easy to use. From a CoreOS machine, you can simply use curl to set and retrieve a key from etcd:
 
