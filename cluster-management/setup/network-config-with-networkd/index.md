@@ -33,6 +33,37 @@ Place the file in `/etc/systemd/network/`. To apply the configuration, run:
 sudo systemctl restart systemd-networkd
 ```
 
+### Cloud-Config
+
+Setting up static networking in your cloud-config can be done by writing out the network unit. Be sure to modify the `[Match]` section with the name of your desired interface, and replace the IPs:
+
+```yaml
+#cloud-config
+ 
+coreos:
+  etcd:
+    # generate a new token for each unique cluster from https://discovery.etcd.io/new
+    discovery: https://discovery.etcd.io/<token>
+    # multi-region and multi-cloud deployments need to use $public_ipv4
+    addr: 10.0.0.101:4001
+    peer-addr: 10.0.0.101:7001
+  units:
+    - name: etcd.service
+      command: start
+    - name: fleet.service
+      command: start
+    - name: 00-eth0.network
+      runtime: true
+      content: |
+        [Match]
+        Name=eth0
+ 
+        [Network]
+        DNS=1.2.3.4
+        Address=10.0.0.101/24
+        Gateway=10.0.0.1
+```
+
 ## Turn Off DHCP
 
 If you'd like to use DHCP on all interfaces except `enp2s0`, create two files. They'll be checked in lexical order, as described in the [full network docs](http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html). Any interfaces matching during earlier files will be ignored during later files.
