@@ -113,6 +113,17 @@ DISTRIBUTED_STORAGE_PREFERENCE: ['local']
 #       secret_key: The GCS secret key
 #       bucket_name: The GCS bucket
 #
+#  RadosGWStorage: Registry data is stored in Ceph Object Gateway (RADOS)
+#                  See: http://ceph.com/docs/master/radosgw/admin/
+#
+#     Required fields:
+#       hostname: The hostname at which RADOS is running
+#       is_secure: Whether to use a secure connection
+#       storage_path: The path under RADOS
+#       access_key: An object gateway user access key
+#       secret_key: An object gateway user secret key
+#       bucket_name: The bucket under RADOS
+#
 DISTRIBUTED_STORAGE_CONFIG:
  local:
     # The name of the storage provider
@@ -131,9 +142,12 @@ DISTRIBUTED_STORAGE_CONFIG:
 # LDAP_USER_RDN: ['ou=People']
 
 # Where user files (uploaded build packs, other binary data)
-# are stored. 
-USERFILES_PATH: 'datastorage/userfiles'
-USERFILES_TYPE: 'LocalUserfiles'
+# are stored. Must match a key under DISTRIBUTED_STORAGE_CONFIG.
+USERFILES_LOCATION: 'local'
+
+# The path under the storage where user files are stored. If the storage has a storage_path,
+# this will be a sub-directory under that path.
+USERFILES_PATH: 'userfiles/'
 
 # Required constants.
 TESTING: false
