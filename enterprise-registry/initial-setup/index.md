@@ -83,7 +83,7 @@ DB_URI: '(FILL IN HERE: database uri)'
 #   port: The port to use when connecting to REDIS.
 #   password: The password to use when connecting to REDIS.
 #
-BUILDLOGS_REDIS: {'host': (FILL IN HERE: redis host)'}
+BUILDLOGS_REDIS: {'host': '(FILL IN HERE: redis host)'}
 USER_EVENTS_REDIS: {'host': '(FILL IN HERE: redis host)'}
 
 # The usernames of your super-users, if any. Super users will
