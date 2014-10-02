@@ -2,7 +2,7 @@
 layout: docs
 title: Update Strategies
 category: cluster_management
-sub_category: setting_up
+sub_category: planning
 weight: 7
 ---
 
