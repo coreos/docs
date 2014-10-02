@@ -173,16 +173,11 @@ CoreOS Enterprise registry requires a storage directory and a configuration dire
 	cp my-ssl-key config/ssl.key
 
 
-## Pulling the Registry image
+## Accessing the Enterprise Registry Container
 
-As part of the setup package, a set of pull credentials have been included. To pull the CoreOS Enterprise Registry image, run a `docker login` and then a `docker pull`:
-
-	docker login quay.io
-	Username: (the username given)
-	Password: (the password given)
-	E-mail: (put anything here)
-
-	docker pull quay.io/coreos/registry:latest
+After signing up you will receive a `.dockercfg` file containing your credentials to the `quay.io/coreos/registry` repository.
+Save this file to your CoreOS machine in `/home/core/.dockercfg` and `/root/.dockercfg`.
+You should now be able to execute `docker pull quay.io/coreos/registry` to download the container.
 
 
 ## Running the Registry
