@@ -1,10 +1,10 @@
 ---
 layout: docs
-title: Cluster Discovery
+title: Clustering Machines
 category: cluster_management
 sub_category: setting_up
 forkurl: https://github.com/coreos/docs/blob/master/cluster-management/setup/cluster-discovery/index.md
-weight: 5
+weight: 4
 ---
 
 # CoreOS Cluster Discovery
