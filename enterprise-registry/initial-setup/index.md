@@ -32,7 +32,7 @@ Please have the url for the login and database available in the SQLAlchemy forma
 
 ## Setting up Redis
 
-Redis stores data which must be accessed quickly but doesn’t necessarily require durability guarantees. If you have an existing Redis instance, make sure to accept incoming connections on port 6379 and then feel free to skip this step.
+Redis stores data which must be accessed quickly but doesn’t necessarily require durability guarantees. If you have an existing Redis instance, make sure to accept incoming connections on port 6379 (or change the port in the config.yaml) and then feel free to skip this step.
 
 To run redis, simply pull and run the Quay.io Redis image:
 
@@ -75,10 +75,16 @@ MAIL_USE_TLS: true
 # The database URI for your MySQL or Postgres DB.
 DB_URI: '(FILL IN HERE: database uri)'
 
-# References to the REDIS host setup above. Note that this does
-# not include the port, but merely the hostname/ip.
-BUILDLOGS_REDIS_HOSTNAME: '(FILL IN HERE: redis host)'
-USER_EVENTS_REDIS_HOSTNAME: '(FILL IN HERE: redis host)'
+# REDIS connection information. The 'host' entry in the dictionary is
+# *required* and should refer to the REDIS host setup above. Note that the
+# host should *not* include the port.
+#
+# Additional options:
+#   port: The port to use when connecting to REDIS.
+#   password: The password to use when connecting to REDIS.
+#
+BUILDLOGS_REDIS: {'host': '(FILL IN HERE: redis host)'}
+USER_EVENTS_REDIS: {'host': '(FILL IN HERE: redis host)'}
 
 # The usernames of your super-users, if any. Super users will
 # have the ability to view and delete other users.
