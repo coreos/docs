@@ -31,7 +31,7 @@ Check out the entire [Customize with Cloud-Config]({{site.url}}/docs/cluster-man
 
 ## Add User Manually
 
-If you'd like to add a user manually, SSH to the machine and use the `useradd` toll. To create the user `user`, run:
+If you'd like to add a user manually, SSH to the machine and use the `useradd` tool. To create the user `user`, run:
 
 ```sh
 sudo useradd -p "*" -U -m user1 -G sudo
