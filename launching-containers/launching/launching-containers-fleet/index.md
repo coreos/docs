@@ -258,7 +258,7 @@ The unit file for a service that does a lot of disk I/O but doesn't care where i
 
 ```ini
 [X-Fleet]
-ConditionMachineMetadata=disk=ssd
+MachineMetadata=disk=ssd
 ```
 
 If you wanted to ensure very high availability you could have 3 unit files that must be scheduled across providers but in the same region:
