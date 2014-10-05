@@ -103,6 +103,23 @@ nova boot \
 
 To use config drive you may need to add `--config-drive=true` to command above.
 
+If you have more than one network, you may have to be explicit in the nova boot command.
+
+```
+--nic net-id=5b9c5ef6-28b9-4781-ac18-d7d86765fd38
+```
+
+You can see the IDs for your configured networks by running
+```
+nova network-list
++--------------------------------------+---------+------+
+| ID                                   | Label   | Cidr |
++--------------------------------------+---------+------+
+| f54b48c7-34fc-4828-8ee9-21b623c7b8f9 | public  | -    |
+| 5b9c5ef6-28b9-4781-ac18-d7d86765fd38 | private | -    |
++--------------------------------------+---------+------+
+```
+
 Your first CoreOS cluster should now be running. The only thing left to do is
 find an IP and SSH in.
 
