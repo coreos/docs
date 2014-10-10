@@ -1,13 +1,13 @@
 ---
 layout: docs
 slug: guides
-title: Working with BTRFS
+title: Working with btrfs
 category: cluster_management
 sub_category: debugging
 weight: 5
 ---
 
-# Working with BTRFS and Common Troubleshooting
+# Working with btrfs and Common Troubleshooting
 
 btrfs is a copy-on-write filesystem with full support in the upstream Linux kernel, which is important since CoreOS frequently ships [updated versions]({{site.url}}/releases) of the kernel. Docker has a storage driver for btrfs and it is set up on CoreOS out of the box.
 
