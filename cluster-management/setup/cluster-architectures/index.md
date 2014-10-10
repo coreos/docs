@@ -103,7 +103,7 @@ This environment is now set up to take a beating. Pull the plug on a machine and
 
 ### Configuration for etcd Role
 
-Since we're only using a single etcd node, there is no need to include a discovery token. There isn't any high availability for etcd in this configuration, but that's assumed to be OK for development and testing. Boot this machine first so you can configure the rest with it's IP address.
+Since we're only using a single etcd node, there is no need to include a discovery token. There isn't any high availability for etcd in this configuration, but that's assumed to be OK for development and testing. Boot this machine first so you can configure the rest with its IP address.
 
 Here's the cloud-config for the etcd machine:
 
