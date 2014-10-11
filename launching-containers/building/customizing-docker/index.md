@@ -85,7 +85,7 @@ To keep access to the port local, replace the `ListenStream` configuration above
 
 ## Use Attached Storage for Docker Images
 
-Docker containers can be very large and debugging a build process makes it easy to accumulate hundreds of containers. It's advantagous to use attached storage to expand your capacity for container images. Check out the guide to [mounting storage to your CoreOS machine]({{site.url}}/docs/cluster-management/setup/mounting-storage/#use-attached-storage-for-docker) for an example of how to bind mount storage into `/var/lib/docker`.
+Docker containers can be very large and debugging a build process makes it easy to accumulate hundreds of containers. It's advantageous to use attached storage to expand your capacity for container images. Check out the guide to [mounting storage to your CoreOS machine]({{site.url}}/docs/cluster-management/setup/mounting-storage/#use-attached-storage-for-docker) for an example of how to bind mount storage into `/var/lib/docker`.
 
 ## Enabling the docker Debug Flag
 
