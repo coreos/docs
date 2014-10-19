@@ -36,7 +36,7 @@ When the filesystem is out of chucks to write data into, `No space left on devic
 
 The common reaction to this error is to run `df -h` and you'll see that there is still some free space. That command isn't measuring the btrfs primitives (chucks, metadata, etc), which is what really matters.
 
-Running `sudo brtfs fi show` will give you the btrfs view of how much free space you have. When starting/stopping many docker containers or doing a large amount of random writes, chunks will become duplicated in an inefficient manner over time.
+Running `sudo btrfs fi show` will give you the btrfs view of how much free space you have. When starting/stopping many docker containers or doing a large amount of random writes, chunks will become duplicated in an inefficient manner over time.
 
 Re-balancing the filesystem ([official btrfs docs](https://btrfs.wiki.kernel.org/index.php/Balance_Filters)) will relocate data from empty or near-empty chucks to free up space. This operation can be done without downtime.
 
