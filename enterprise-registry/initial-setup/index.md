@@ -72,6 +72,9 @@ MAIL_SERVER: '(FILL IN HERE: hostname)'
 MAIL_USERNAME: '(FILL IN HERE: username)'
 MAIL_USE_TLS: true
 
+# To change the mail sender:
+# MAIL_DEFAULT_SENDER: '(EMAIL ADDRESS)'
+
 # The database URI for your MySQL or Postgres DB.
 DB_URI: '(FILL IN HERE: database uri)'
 
