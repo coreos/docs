@@ -71,7 +71,7 @@ $ curl -L http://172.17.42.1:4001/v2/keys/
 You can also fetch the `docker0` IP programmatically:
 
 ```
-ETCD_ENDPOINT="$(ifconfig docker0 | grep 'inet ' | awk '{ print $2}'):4001"
+ETCD_ENDPOINT="$(ifconfig docker0 | awk '/\<inet\>/ { print $2}'):4001"
 ```
 
 ## Proxy Example
