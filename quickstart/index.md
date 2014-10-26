@@ -12,19 +12,24 @@ It's highly recommended that you set up a cluster of at least 3 machines &mdash;
 
 CoreOS gives you three essential tools: service discovery, container management and process management. Let's try each of them out.
 
-First, connect to a CoreOS machine via SSH as the user `core`. For example, on Amazon, use:
+First, on the client start your user agent by typing:
+```
+eval &(ssh-agent)
+```
+
+Then, add your private key to the agent by typing:
+```
+ssh-add
+```
+
+Connect to a CoreOS machine via SSH as the user `core`. For example, on Amazon, use:
 
 ```sh
 $ ssh -A core@an.ip.compute-1.amazonaws.com
 CoreOS (beta)
 ```
 
-The `-A` forwards your ssh-agent to the machine, which is needed for the fleet section of this guide. If you haven't already done so, you will need to add your private key to the SSH agent running on your client machine - for example:
-
-```sh
-$ ssh-add
-Identity added: .../.ssh/id_rsa (.../.ssh/id_rsa)
-```
+The `-A` forwards your ssh-agent to the machine, which is needed for the fleet section of this guide.
 
 If you're using Vagrant, you'll need to connect a bit differently:
 
