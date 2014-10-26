@@ -13,11 +13,13 @@ It's highly recommended that you set up a cluster of at least 3 machines &mdash;
 CoreOS gives you three essential tools: service discovery, container management and process management. Let's try each of them out.
 
 First, on the client start your agent by typing:
-```eval &(ssh-agent)
+```
+eval &(ssh-agent)
 ```
 
 Then, add your private key to the agent by typing:
-```ssh-add
+```
+ssh-add
 ```
 
 Connect to a CoreOS machine via SSH as the user `core`. For example, on Amazon, use:
