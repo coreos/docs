@@ -126,6 +126,18 @@ populated, the droplet must have private networking enabled.
 To add more instances to the cluster, just launch more with the same
 cloud-config. New instances will join the cluster regardless of region.
 
+## SSH to your Droplets
+
+CoreOS is set up to be a little more secure than other DigitalOcean images. By default, it uses the core user instead of root and doesn't use a password for authentication. You'll need to add an SSH key(s) via the web console or add keys/passwords via your cloud-config in order to log in.
+
+To connect to a droplet after it's created, run:
+
+```sh
+ssh core@<ip address>
+```
+
+Optionally, you may want to [configure your ssh-agent]({{site.url}}/docs/launching-containers/launching/fleet-using-the-client/#remote-fleet-access) to more easily run [fleet commands]({{site.url}}/docs/launching-containers/launching/launching-containers-fleet/).
+
 ## Launching Droplets
 
 ### Via the API
