@@ -143,15 +143,16 @@ coreos:
 
 ## Use an HTTP Proxy
 
-If you're operating in a locked down networking environment, you can specify an HTTP proxy for docker to use via an environment variable. First, copy the existing unit from the read-only file system into the read/write file system, so we can edit it:
+If you're operating in a locked down networking environment, you can specify an HTTP proxy for docker to use via an environment variable. First, create a directory for drop-in configuration for docker:
 
 ```sh
-cp /usr/lib/systemd/system/docker.service /etc/systemd/system/
+mkdir /etc/systemd/system/docker.service.d
 ```
 
-Add a line that sets the environment variable in the unit above the `ExecStart` command:
+Now, create a file called `/etc/systemd/system/docker.service.d/http-proxy.conf` that adds the environment variable:
 
 ```ini
+[Service]
 Environment="HTTP_PROXY=http://proxy.example.com:8080"
 ```
 
@@ -169,25 +170,63 @@ The easiest way to use this proxy on all of your machines is via cloud-config:
 ```yaml
 #cloud-config
 
+write_files:
+    - path: /etc/systemd/system/docker.service.d/http-proxy.conf
+      owner: core:core
+      permissions: 0644
+      content: |
+        [Service]
+        Environment="HTTP_PROXY=http://proxy.example.com:8080"
+
 coreos:
   units:
     - name: docker.service
       command: restart
-      content: |
-        [Unit]
-        Description=Docker Application Container Engine 
-        Documentation=http://docs.docker.io
-        After=network.target
-        [Service]
-        Environment="HTTP_PROXY=http://proxy.example.com:8080"
-        ExecStartPre=/bin/mount --make-rprivate /
-        # Run docker but don't have docker automatically restart
-        # containers. This is a job for systemd and unit files.
-        ExecStart=/usr/bin/docker -d -s=btrfs -r=false -H fd://
-
-        [Install]
-        WantedBy=multi-user.target
 ```
+
+## Increase ulimits
+
+If you need to increase certain ulimits that are too low for your application by default, like memlock, you will need to modify the docker service to increase the limit. First, create a directory for drop-in configuration for docker:
+
+```sh
+mkdir /etc/systemd/system/docker.service.d
+```
+
+Now, create a file called `/etc/systemd/system/docker.service.d/increase-ulimit.conf` that adds increased limit:
+
+```ini
+[Service]
+LimitMEMLOCK=infinity
+```
+
+To apply the change, reload the unit and restart docker:
+
+```sh
+systemctl daemon-reload
+systemctl restart docker
+```
+
+### Cloud-Config
+
+The easiest way to use these new ulimits on all of your machines is via cloud-config:
+
+```yaml
+#cloud-config
+
+write_files:
+    - path: /etc/systemd/system/docker.service.d/increase-ulimit.conf
+      owner: core:core
+      permissions: 0644
+      content: |
+        [Service]
+        LimitMEMLOCK=infinity
+
+coreos:
+  units:
+    - name: docker.service
+      command: restart
+```
+
 
 ## Using a dockercfg File for Authentication
 
