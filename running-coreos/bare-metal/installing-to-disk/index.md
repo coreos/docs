@@ -17,7 +17,7 @@ Essentially it downloads an image, verifies it with gpg and then copies it bit f
 
 The script is self-contained and located [on GitHub here](https://raw.github.com/coreos/init/master/bin/coreos-install "coreos-install") and can be run from any Linux distribution.
 
-If you have already booting CoreOS via PXE, the install script is already installed. By default the install script will attempt to install the same version and channel that was PXE-booted:
+If you already boot CoreOS via PXE, the install script is already installed. By default the install script will attempt to install the same version and channel that was PXE-booted:
 
 ```sh
 coreos-install -d /dev/sda
