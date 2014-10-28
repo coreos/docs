@@ -14,7 +14,7 @@ CoreOS gives you three essential tools: service discovery, container management 
 
 First, on the client start your user agent by typing:
 ```
-eval &(ssh-agent)
+eval $(ssh-agent)
 ```
 
 Then, add your private key to the agent by typing:
