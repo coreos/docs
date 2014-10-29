@@ -70,6 +70,7 @@ MAIL_PORT: 587
 MAIL_PASSWORD: '(FILL IN HERE: password)'
 MAIL_SERVER: '(FILL IN HERE: hostname)'
 MAIL_USERNAME: '(FILL IN HERE: username)'
+MAIL_DEFAULT_SENDER: '(FILL IN HERE: validated email address)'
 MAIL_USE_TLS: true
 
 # To change the mail sender:
@@ -197,8 +198,15 @@ The CoreOS Enterprise Registry is run via a `docker run` call, with the `config`
 
 ## Verifying the Registry status
 
-Visit the `/status` endpoint on the registry hostname and verify it returns true for both variables.
+Visit the `/status` endpoint on the registry hostname and verify. The expected values are:
 
+Variable Name     | Expected Value | Error Description
+----------------- | -------------- | ------------------------------------------------------------------
+db_healthy        | true           | If `false`, then the SQL connection failed.
+buildlogs_healthy | true           | If `false`, then the Redis connection failed.
+is_testing        | false          | If `true`, then the configuration volume was not mounted properly.
+
+Note: `is_testing` may be missing from older installations.
 
 ## Logging in
 
