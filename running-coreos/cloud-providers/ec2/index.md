@@ -188,6 +188,18 @@ For more information about mounting storage, Amazon's [own documentation](http:/
 ### Adding More Machines
 To add more instances to the cluster, just launch more with the same cloud-config, the appropriate security group and the AMI for that region. New instances will join the cluster regardless of region if the security groups are configured correctly.
 
+## SSH to your Instances
+
+CoreOS is set up to be a little more secure than other cloud images. By default, it uses the `core` user instead of `root` and doesn't use a password for authentication. You'll need to add an SSH key(s) via the AWS console or add keys/passwords via your cloud-config in order to log in.
+
+To connect to an instance after it's created, run:
+
+```sh
+ssh core@<ip address>
+```
+
+Optionally, you may want to [configure your ssh-agent]({{site.url}}/docs/launching-containers/launching/fleet-using-the-client/#remote-fleet-access) to more easily run [fleet commands]({{site.url}}/docs/launching-containers/launching/launching-containers-fleet/).
+
 ## Multiple Clusters
 If you would like to create multiple clusters you will need to change the "Stack Name". You can find the direct [template file on S3]({{ cf_beta_pv_template }}).
 
