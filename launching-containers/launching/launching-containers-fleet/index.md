@@ -139,7 +139,7 @@ How do we route requests to these containers? The best strategy is to run a "sid
 
 ## Run a Simple Sidekick
 
-The simplest sidekick example is for [service discovery](https://github.com/coreos/fleet/blob/master/Documentation/examples/service-discovery.md). This unit blindly announces that our container has been started. We'll run one of these for each Apache unit that's already running. Again, we'll use a template unit with two instances. Make a template unit called `apache-discovery@.service`. Be sure to launch both instances of the template (`apache-discovery@.service`), by starting `apache-discovery@1` and `apache-discovery@2`.
+The simplest sidekick example is for [service discovery](https://github.com/coreos/fleet/blob/master/Documentation/examples/service-discovery.md). This unit blindly announces that our container has been started. We'll run one of these for each Apache unit that's already running. Again, we'll use a template unit with two instances. Make a template unit called `apache-discovery@.service`. 
 
 ```ini
 [Unit]
