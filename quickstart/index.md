@@ -63,6 +63,8 @@ coreos:
   etcd:
     name: coreos0
     discovery: https://discovery.etcd.io/<token>
+    addr: $public_ipv4:4001
+    peer-addr: $private_ipv4:7001
 ```
 
 In order to get the discovery token, visit [https://discovery.etcd.io/new](https://discovery.etcd.io/new) and you will receive a URL including your token. Paste the whole thing into your cloud-config file.
