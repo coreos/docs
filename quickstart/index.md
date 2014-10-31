@@ -137,9 +137,9 @@ Then load and start the unit:
 
 ```sh
 $ fleetctl load hello.service
-Job hello.service loaded on 8145ebb7.../172.17.8.105
+Unit hello.service loaded on 8145ebb7.../172.17.8.105
 $ fleetctl start hello.service
-Job hello.service launched on 8145ebb7.../172.17.8.105
+Unit hello.service launched on 8145ebb7.../172.17.8.105
 ```
 
 Your container has been started somewhere on the cluster. To verify the status, run:
