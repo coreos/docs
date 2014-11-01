@@ -24,15 +24,15 @@ This guide won't cover these topics &mdash; it's mostly focused on troubleshooti
 
 For a more complete troubleshooting experience, let's explore how btrfs works under the hood.
 
-btrfs stores data in chunks across all of the block devices on the system. The total storage across these devices is shown in the standard outout of `df -h`.
+btrfs stores data in chunks across all of the block devices on the system. The total storage across these devices is shown in the standard output of `df -h`.
 
-Raw data and filesystem metadata are stored in one or many chuncks, typically ~1GiB in size. When RAID is configured, these chunks are replicated instead of individual files.
+Raw data and filesystem metadata are stored in one or many chunks, typically ~1GiB in size. When RAID is configured, these chunks are replicated instead of individual files.
 
-A copy-on-write filesystem maintains many changes of a single file, which is helpful for snapshoting and other advanced features, but can lead to fragmentation with some workloads.
+A copy-on-write filesystem maintains many changes of a single file, which is helpful for snapshotting and other advanced features, but can lead to fragmentation with some workloads.
 
 ## No Space Left on Device
 
-When the filesystem is out of chuncks to write data into, `No space left on device` will be reported. This will prevent journal files from being recorded, containers from starting and so on.
+When the filesystem is out of chunks to write data into, `No space left on device` will be reported. This will prevent journal files from being recorded, containers from starting and so on.
 
 The common reaction to this error is to run `df -h` and you'll see that there is still some free space. That command isn't measuring the btrfs primitives (chunks, metadata, etc), which is what really matters.
 
@@ -100,7 +100,7 @@ $ sudo mkdir /var/lib/mysql
 $ sudo chattr -R +C /var/lib/mysql
 ```
 
-The directory `/var/lib/mysql` is now ready to be used by a docker conatiner without COW. Let's break down the command:
+The directory `/var/lib/mysql` is now ready to be used by a docker container without COW. Let's break down the command:
 
 `-R` indicates that want to recursively change the file attribute
 `+C` means we want to set the NOCOW attribute on the file/directory
