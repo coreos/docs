@@ -20,25 +20,25 @@ Notable Features of btrfs:
  - RAID 0, RAID 1, RAID 5, RAID 6 and RAID 10
  - Snapshots and file cloning
 
-This guide won't cover these topics &mdash; it's mostly focused on troublehsooting.
+This guide won't cover these topics &mdash; it's mostly focused on troubleshooting.
 
-For a more complete troublehsooting experience, let's explore how btrfs works under the hood.
+For a more complete troubleshooting experience, let's explore how btrfs works under the hood.
 
-btrfs stores data in chuncks across all of the block devices on the system. The total storage across these devices is shown in the standard outout of `df -h`.
+btrfs stores data in chunks across all of the block devices on the system. The total storage across these devices is shown in the standard output of `df -h`.
 
-Raw data and filesystem metadata are stored in one or many chucks, typically ~1GiB in size. When RAID is configured, these chunks are replicated instead of individual files.
+Raw data and filesystem metadata are stored in one or many chunks, typically ~1GiB in size. When RAID is configured, these chunks are replicated instead of individual files.
 
 A copy-on-write filesystem maintains many changes of a single file, which is helpful for snapshotting and other advanced features, but can lead to fragmentation with some workloads.
 
 ## No Space Left on Device
 
-When the filesystem is out of chucks to write data into, `No space left on device` will be reported. This will prevent journal files from being recorded, containers from starting and so on.
+When the filesystem is out of chunks to write data into, `No space left on device` will be reported. This will prevent journal files from being recorded, containers from starting and so on.
 
-The common reaction to this error is to run `df -h` and you'll see that there is still some free space. That command isn't measuring the btrfs primitives (chucks, metadata, etc), which is what really matters.
+The common reaction to this error is to run `df -h` and you'll see that there is still some free space. That command isn't measuring the btrfs primitives (chunks, metadata, etc), which is what really matters.
 
 Running `sudo btrfs fi show` will give you the btrfs view of how much free space you have. When starting/stopping many docker containers or doing a large amount of random writes, chunks will become duplicated in an inefficient manner over time.
 
-Re-balancing the filesystem ([official btrfs docs](https://btrfs.wiki.kernel.org/index.php/Balance_Filters)) will relocate data from empty or near-empty chucks to free up space. This operation can be done without downtime.
+Re-balancing the filesystem ([official btrfs docs](https://btrfs.wiki.kernel.org/index.php/Balance_Filters)) will relocate data from empty or near-empty chunks to free up space. This operation can be done without downtime.
 
 First, let's see how much free space we have:
 
@@ -53,9 +53,9 @@ Btrfs v3.14_pre20140414
 
 The answer: not a lot. We can re-balance to fix that.
 
-The re-balance command can be configured to only relocate data in chucks up to a certain percentage used. This will prevent you from moving around a lot of data without a lot of benefit. If your disk is completely full, you may need to delete a few containers to create space for the re-balance operation to work with.
+The re-balance command can be configured to only relocate data in chunks up to a certain percentage used. This will prevent you from moving around a lot of data without a lot of benefit. If your disk is completely full, you may need to delete a few containers to create space for the re-balance operation to work with.
 
-Let's try to relocate chucks with less than 5% of usage:
+Let's try to relocate chunks with less than 5% of usage:
 
 ```sh
 $ sudo btrfs fi balance start -dusage=5 /
@@ -100,7 +100,7 @@ $ sudo mkdir /var/lib/mysql
 $ sudo chattr -R +C /var/lib/mysql
 ```
 
-The directory `/var/lib/mysql` is now ready to be used by a docker conatiner without COW. Let's break down the command:
+The directory `/var/lib/mysql` is now ready to be used by a docker container without COW. Let's break down the command:
 
 `-R` indicates that want to recursively change the file attribute
 `+C` means we want to set the NOCOW attribute on the file/directory
