@@ -33,7 +33,7 @@ docker run -t -i ubuntu /bin/bash
 
 The `-t` and `-i` flags allocate a pseudo-tty and keep stdin open even if not attached. This will allow you to use the container like a traditional VM as long as the bash prompt is running. Install Apache with `apt-get update && apt-get install apache2`. You're probably wondering what address you can connect to in order to test that Apache was correctly installed...we'll get to that after we commit the container.
 
-## Commiting a Container
+## Committing a Container
 
 After that completes, we need to `commit` these changes to our container with the container ID and the image name.
 
