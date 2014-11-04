@@ -98,7 +98,7 @@ c9de9451-6a6f-1d80-b7e6-46e996bfc4d1    10.10.1.3   -
 
 The main benefit of using CoreOS is to have your services run in a highly available manner. Let's walk through deploying a service that consists of two identical containers running the Apache web server.
 
-First, let's write a unit file that we'll run two copies of, named `apache.1.service` and `apache.2.service`:
+First, let's write a unit file that we'll run two copies of. To do that, we'll use a template unit, named `apache@.service`. We'll use that template to launch two instances, name `apache@1.service` and `apache@2.service`:
 
 ```ini
 [Unit]
@@ -115,7 +115,7 @@ ExecStart=/usr/bin/docker run -rm --name apache1 -p 80:80 coreos/apache /usr/sbi
 ExecStop=/usr/bin/docker stop apache1
 
 [X-Fleet]
-Conflicts=apache.*.service
+Conflicts=apache@*.service
 ```
 
 The `Conflicts` attribute tells `fleet` that these two services can't be run on the same machine, giving us high availability. A full list of options for this section can be found in the [fleet units guide]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/).
@@ -123,12 +123,14 @@ The `Conflicts` attribute tells `fleet` that these two services can't be run on 
 Let's start both units and verify that they're on two different machines:
 
 ```sh
-$ fleetctl start apache.*
+$ fleetctl submit apache@.service
+$ fleetctl start apache@1
+$ fleetctl start apache@2
 $ fleetctl list-units
 UNIT              MACHINE                 ACTIVE    SUB
 myapp.service     c9de9451.../10.10.1.3   active    running
-apache.1.service  491586a6.../10.10.1.2   active    running
-apache.2.service  148a18ff.../10.10.1.1   active    running
+apache@1.service  491586a6.../10.10.1.2   active    running
+apache@2.service  148a18ff.../10.10.1.1   active    running
 ```
 
 As you can see, the Apache units are now running on two different machines in our cluster.
@@ -137,38 +139,43 @@ How do we route requests to these containers? The best strategy is to run a "sid
 
 ## Run a Simple Sidekick
 
-The simplest sidekick example is for [service discovery](https://github.com/coreos/fleet/blob/master/Documentation/examples/service-discovery.md). This unit blindly announces that our container has been started. We'll run one of these for each Apache unit that's already running. Make two copies of the unit called `apache-discovery.1.service` and `apache-discovery.2.service`. Be sure to change all instances of `apache.1.service` to `apache.2.service` and `apache1` to `apache2` when you create the second unit.
+The simplest sidekick example is for [service discovery](https://github.com/coreos/fleet/blob/master/Documentation/examples/service-discovery.md). This unit blindly announces that our container has been started. We'll run one of these for each Apache unit that's already running. Again, we'll use a template unit with two instances. Make a template unit called `apache-discovery@.service`. 
 
 ```ini
 [Unit]
 Description=Announce Apache1
-BindsTo=apache.1.service
+BindsTo=apache@%i.service
+After=apache@%i.service
 
 [Service]
 ExecStart=/bin/sh -c "while true; do etcdctl set /services/website/apache1 '{ \"host\": \"%H\", \"port\": 80, \"version\": \"52c7248a14\" }' --ttl 60;sleep 45;done"
 ExecStop=/usr/bin/etcdctl rm /services/website/apache1
 
 [X-Fleet]
-MachineOf=apache.1.service
+MachineOf=apache@%i.service
 ```
 
-This unit has a few interesting properties. First, it uses `BindsTo` to link the unit to our `apache.1.service` unit. When the Apache unit is stopped, this unit will stop as well, causing it to be removed from our `/services/website` directory in `etcd`. A TTL of 60 seconds is also being used here to remove the unit from the directory if our machine suddenly died for some reason.
+This unit has a few interesting properties. First, it uses `BindsTo` to link the unit to our `apache@%i.service` unit. When the Apache unit is stopped, this unit will stop as well, causing it to be removed from our `/services/website` directory in `etcd`. A TTL of 60 seconds is also being used here to remove the unit from the directory if our machine suddenly died for some reason.
 
-Second is `%H`, a variable built into systemd, that represents the hostname of the machine running this unit. Variable usage is covered in our [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd/#unit-variables) guide as well as in [systemd documentation](http://www.freedesktop.org/software/systemd/man/systemd.unit.html#Specifiers).
+Second is `%i`, a variable built into systemd that represents the instance name of an instantiated unit (a unit launched from a template). This variable expands to any value after the `@` in the unit's name. In our case, it will expand to `1` (for `apache-discovery@1`) and `2` (for `apache-discovery@2`). 
 
-The third is a [fleet-specific property]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/) called `MachineOf`. This property causes the unit to be placed onto the same machine that `apache.1.service` is running on.
+Third is `%H`, a variable built into systemd, that represents the hostname of the machine running this unit. Variable usage is covered in our [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd/#unit-variables) guide as well as in [systemd documentation](http://www.freedesktop.org/software/systemd/man/systemd.unit.html#Specifiers).
+
+The fourth is a [fleet-specific property]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/) called `MachineOf`. This property causes the unit to be placed onto the same machine that the corresponding apache service is running on (e.g., `apache-discovery@1.service` will be scheduled on the same machine as `apache@1.service`).
 
 Let's verify that each unit was placed on to the same machine as the Apache service is bound to:
 
 ```sh
-$ fleetctl start apache-discovery.*.service
+$ fleetctl submit apache-discovery@.service
+$ fleetctl start apache-discovery@1
+$ fleetctl start apache-discovery@2
 $ fleetctl list-units
 UNIT                        MACHINE                 ACTIVE    SUB
 myapp.service               c9de9451.../10.10.1.3   active    running
-apache.1.service            491586a6.../10.10.1.2   active    running
-apache.2.service            148a18ff.../10.10.1.1   active    running
-apache-discovery.1.service  491586a6.../10.10.1.2   active    running
-apache-discovery.2.service  148a18ff.../10.10.1.1   active    running
+apache@1.service            491586a6.../10.10.1.2   active    running
+apache@2.service            148a18ff.../10.10.1.1   active    running
+apache-discovery@1.service  491586a6.../10.10.1.2   active    running
+apache-discovery@2.service  148a18ff.../10.10.1.1   active    running
 ```
 
 Now let's verify that the service discovery is working correctly:
@@ -220,10 +227,10 @@ $ fleetctl start datadog.service
 $ fleetctl list-units
 UNIT                        MACHINE                 ACTIVE    SUB
 myapp.service               c9de9451.../10.10.1.3   active    running
-apache.1.service            491586a6.../10.10.1.2   active    running
-apache.2.service            148a18ff.../10.10.1.1   active    running
-apache-discovery.1.service  491586a6.../10.10.1.2   active    running
-apache-discovery.2.service  148a18ff.../10.10.1.1   active    running
+apache@1.service            491586a6.../10.10.1.2   active    running
+apache@2.service            148a18ff.../10.10.1.1   active    running
+apache-discovery@1.service  491586a6.../10.10.1.2   active    running
+apache-discovery@2.service  148a18ff.../10.10.1.1   active    running
 datadog.service             148a18ff.../10.10.1.1   active    running
 datadog.service             491586a6.../10.10.1.2   active    running
 datadog.service             c9de9451.../10.10.1.3   active    running
