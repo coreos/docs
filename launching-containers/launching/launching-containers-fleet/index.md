@@ -145,6 +145,7 @@ The simplest sidekick example is for [service discovery](https://github.com/core
 [Unit]
 Description=Announce Apache1
 BindsTo=apache@%i.service
+After=apache@%i.service
 
 [Service]
 ExecStart=/bin/sh -c "while true; do etcdctl set /services/website/apache1 '{ \"host\": \"%H\", \"port\": 80, \"version\": \"52c7248a14\" }' --ttl 60;sleep 45;done"
