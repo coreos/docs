@@ -17,8 +17,8 @@ CoreOS Enterprise Registry supports using GitHub or GitHub Enterprise as an auth
 The first step in supporting GitHub Authentication is to create an OAuth Application representing the
 Enterprise Registry in GitHub or GitHub Enterprise. 
 
-1) Log into GitHub (Enterprise)
-2) Visit the applications page under your settings and click "<a href="https://github.com/settings/applications/new">Register New Application</a>".
+- Log into GitHub (Enterprise)
+- Visit the applications page under your settings and click "<a href="https://github.com/settings/applications/new">Register New Application</a>".
 
 
 <div class="graphic">
@@ -27,9 +27,9 @@ Enterprise Registry in GitHub or GitHub Enterprise.
   </div>
 </div>
 
-3) Enter your registry's URL as the application URL
-4) Enter `https://{REGISTRY URL HERE}/oauth2/github/callback` as the Authorization callback URL.
-5) Create the application and note down the `Client ID` and `Client Secret`.
+- Enter your registry's URL as the application URL
+- Enter `https://{REGISTRY URL HERE}/oauth2/github/callback` as the Authorization callback URL.
+- Create the application and note down the `Client ID` and `Client Secret`.
 
 ## New configuration
 
