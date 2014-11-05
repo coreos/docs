@@ -9,7 +9,7 @@ weight: 5
 
 # On-Premise Installation
 
-CoreOS Enterprise Registry requires four components to operate successfully:
+CoreOS Enterprise Registry requires five components to operate successfully:
 
 - A supported database (MySQL, Postgres)
 - A Redis instance (for real-time events)
