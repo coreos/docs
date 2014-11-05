@@ -18,7 +18,7 @@ The first step in supporting GitHub Authentication is to create an OAuth Applica
 Enterprise Registry in GitHub or GitHub Enterprise. 
 
 - Log into GitHub (Enterprise)
-- Visit the applications page under your settings and click "<a href="https://github.com/settings/applications/new">Register New Application</a>".
+- Visit the applications page under your organization's settings and click "<a href="https://github.com/settings/applications/new">Register New Application</a>". 
 
 
 <div class="graphic">
