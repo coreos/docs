@@ -9,11 +9,12 @@ weight: 5
 
 # On-Premise Installation
 
-CoreOS Enterprise Registry requires four components to operate successfully:
+CoreOS Enterprise Registry requires five components to operate successfully:
 
 - A supported database (MySQL, Postgres)
 - A Redis instance (for real-time events)
 - A config.yaml file
+- An SMTP server
 - The Enterprise Registry image
 
 
@@ -65,7 +66,8 @@ SERVER_HOSTNAME: '(FILL IN HERE: registry.mycorp.com)'
 # A logo to use for your enterprise
 ENTERPRISE_LOGO_URL: '(FILL IN HERE: http://someurl/...)'
 
-# Settings for SMTP and mailing. This is *required*.
+# Settings for SMTP and mailing. This is *required*. Note: "localhost" will not work since the
+# registry is run inside a container.
 MAIL_PORT: 587
 MAIL_PASSWORD: '(FILL IN HERE: password)'
 MAIL_SERVER: '(FILL IN HERE: hostname)'
