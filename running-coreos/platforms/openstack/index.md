@@ -110,6 +110,7 @@ If you have more than one network, you may have to be explicit in the nova boot 
 ```
 
 You can see the IDs for your configured networks by running
+
 ```
 nova network-list
 +--------------------------------------+---------+------+
