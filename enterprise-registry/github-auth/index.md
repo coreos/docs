@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: GitHub Authentication in Enterprise Registry
+title: Configure GitHub Authentication
 category: registry
 sub_category: setup
 forkurl: https://github.com/coreos/docs/blob/master/enterprise-registry/github-auth/index.md

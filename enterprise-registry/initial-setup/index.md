@@ -2,7 +2,6 @@
 layout: docs
 title: On-Premise Installation
 category: registry
-sub_category: setup
 forkurl: https://github.com/coreos/docs/blob/master/enterprise-registry/initial-setup/index.md
 weight: 5
 ---
