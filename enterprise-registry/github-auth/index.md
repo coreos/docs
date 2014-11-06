@@ -11,7 +11,6 @@ weight: 5
 
 CoreOS Enterprise Registry supports using GitHub or GitHub Enterprise as an authentication system.
 
-
 ## Create an OAuth Application in GitHub
 
 The first step in supporting GitHub Authentication is to create an OAuth Application representing the
@@ -28,10 +27,19 @@ Enterprise Registry in GitHub or GitHub Enterprise.
 </div>
 
 - Enter your registry's URL as the application URL
+
+Note: If using public GitHub, the URL entered must be accessible by *your users*. It can still be an internal URL.
+
 - Enter `https://{REGISTRY URL HERE}/oauth2/github/callback` as the Authorization callback URL.
 - Create the application and note down the `Client ID` and `Client Secret`.
 
-## New configuration
+<div class="graphic">
+  <div class="screenshot">
+    <img src="{{site.url}}/docs/enterprise-registry/github-auth/view-app.png" style="margin: 0 auto; display: block; max-width: 700px;"></img>
+  </div>
+</div>
+
+## Add new configuration
 
 In the Enteprise Registry `config.yaml`, add the following section:
 
@@ -53,9 +61,9 @@ GITHUB_LOGIN_CONFIG: {
 }
 ```
 
-## Configuration Changes
+## Change the feature flag
 
-In the Enteprise Registry `config.yaml`, change:
+Next, in the Enteprise Registry `config.yaml`, change the following to enable GitHub Login:
 
 ```yaml
 FEATURE_GITHUB_LOGIN: false
@@ -67,6 +75,6 @@ to
 FEATURE_GITHUB_LOGIN: true
 ```
 
-## Restart
+## Restart Enterprise Registry
 
-Restart the CoreOS Enterprise Registry image and the `Login with GitHub` button should be present.
+Finally, restart the CoreOS Enterprise Registry image and the `Login with GitHub` button should be present.
