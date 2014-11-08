@@ -7,15 +7,15 @@ sub_category: building
 weight: 5
 ---
 
-# Getting Started with docker
+# Getting Started with Docker
 
-docker is an open-source project that makes creating and managing Linux containers really easy. Containers are like extremely lightweight VMs – they allow code to run in isolation from other containers but safely share the machine’s resources, all without the overhead of a hypervisor.
+Docker is an open-source project that makes creating and managing Linux containers really easy. Containers are like extremely lightweight VMs – they allow code to run in isolation from other containers but safely share the machine’s resources, all without the overhead of a hypervisor.
 
-docker containers can boot extremely fast (in milliseconds!) which gives you unprecedented flexibility in managing load across your cluster. For example, instead of running chef on each of your VMs, it’s faster and more reliable to have your build system create a container and launch it on the appropriate number of CoreOS hosts. This guide will show you how to launch a container, install some software on it, commit that container, and optionally launch it on another CoreOS machine. Before starting, make sure you've got at least one CoreOS machine up and running &mdash; try it on [Amazon EC2]({{site.url}}/docs/running-coreos/cloud-providers/ec2/) or locally with [Vagrant]({{site.url}}/docs/running-coreos/platforms/vagrant).
+Docker containers can boot extremely fast (in milliseconds!) which gives you unprecedented flexibility in managing load across your cluster. For example, instead of running chef on each of your VMs, it’s faster and more reliable to have your build system create a container and launch it on the appropriate number of CoreOS hosts. This guide will show you how to launch a container, install some software on it, commit that container, and optionally launch it on another CoreOS machine. Before starting, make sure you've got at least one CoreOS machine up and running &mdash; try it on [Amazon EC2]({{site.url}}/docs/running-coreos/cloud-providers/ec2/) or locally with [Vagrant]({{site.url}}/docs/running-coreos/platforms/vagrant).
 
 ## Docker CLI Basics
 
-docker has a [straightforward CLI](http://docs.docker.io/en/latest/reference/commandline/) that allows you to do almost everything you could want to a container. All of these commands use the image id (ex. be29975e0098), the image name (ex. myusername/webapp) and the container id (ex. 72d468f455ea) interchangably depending on the operation you are trying to do. This is confusing at first, so pay special attention to what you're using.
+Docker has a [straightforward CLI](http://docs.docker.io/en/latest/reference/commandline/) that allows you to do almost everything you could want to a container. All of these commands use the image id (ex. be29975e0098), the image name (ex. myusername/webapp) and the container id (ex. 72d468f455ea) interchangably depending on the operation you are trying to do. This is confusing at first, so pay special attention to what you're using.
 
 ## Launching a Container
 
@@ -132,6 +132,6 @@ docker run -d -p 80:80 registry.example.com:5000/apache /usr/sbin/apache2ctl -D 
 ```
 
 #### More Information
-<a class="btn btn-default" href="{{site.url}}/using-coreos/docker">docker Overview</a>
+<a class="btn btn-default" href="{{site.url}}/using-coreos/docker">Docker Overview</a>
 <a class="btn btn-default" href="http://www.docker.com/">Docker Website</a>
 <a class="btn btn-default" href="http://www.docker.com/gettingstarted/">docker's Getting Started Guide</a>
