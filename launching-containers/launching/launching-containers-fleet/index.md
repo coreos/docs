@@ -148,8 +148,8 @@ BindsTo=apache@%i.service
 After=apache@%i.service
 
 [Service]
-ExecStart=/bin/sh -c "while true; do etcdctl set /services/website/apache1 '{ \"host\": \"%H\", \"port\": 80, \"version\": \"52c7248a14\" }' --ttl 60;sleep 45;done"
-ExecStop=/usr/bin/etcdctl rm /services/website/apache1
+ExecStart=/bin/sh -c "while true; do etcdctl set /services/website/apache@%i '{ \"host\": \"%H\", \"port\": 80, \"version\": \"52c7248a14\" }' --ttl 60;sleep 45;done"
+ExecStop=/usr/bin/etcdctl rm /services/website/apache@%i
 
 [X-Fleet]
 MachineOf=apache@%i.service
@@ -183,9 +183,9 @@ Now let's verify that the service discovery is working correctly:
 ```sh
 $ etcdctl ls /services/ --recursive
 /services/website
-/services/website/apache1
-/services/website/apache2
-$ etcdctl get /services/website/apache1
+/services/website/apache@1
+/services/website/apache@2
+$ etcdctl get /services/website/apache@1
 { "host": "ip-10-182-139-116", "port": 80, "version": "52c7248a14" }
 ```
 
