@@ -20,7 +20,7 @@ CLI tools.
 
 ## Choosing a Channel
 
-CoreOS is released into alpha and beta channels. Releases to each channel serve
+CoreOS is released into stable, alpha, and beta channels. Releases to each channel serve
 as a release-candidate for the next channel. For example, a bug-free alpha
 release is promoted bit-for-bit to the beta channel.
 
@@ -38,9 +38,9 @@ startup and more via [cloud-config][cloud-config].  We're going to provide the
 
 [cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
 
-At the moment, you cannot supply the `user-data` using the AURO control
-panel therefore you must use the CLI to deploy your cluster on the AURO
-cloud.
+You are able to supply the `user-data` using the AURO control panel when launching
+an instance, in the "Post Creation" tab, as well as using the CLI to deploy your 
+cluster on the AURO cloud.
 
 A sample common `cloud-config` file will look something like the following:
 
