@@ -28,8 +28,8 @@ The following command will create a single instance. For more details, check out
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane active" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and frequently has new releases. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a>, and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS 475.1.0.</p>
-        <pre>azure vm create --custom-data=cloud-config.yaml --vm-size=Small --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --location="West US" my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Alpha-475.1.0 core</pre>
+        <p>The alpha channel closely tracks master and frequently has new releases. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a>, and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+        <pre>azure vm create --custom-data=cloud-config.yaml --vm-size=Small --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --location="West US" my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Alpha-{{site.alpha-channel}} core</pre>
       </div>
     </div>
     <div class="tab-pane" id="beta">
@@ -122,10 +122,10 @@ probably already have an SSH key, which you can use to generate an x509
 certificate. More detail can be found in [this guide][ssh].
 
 Now that you have a cloud service and your keys, create an instance of CoreOS
-Alpha 475.1.0, connected to your cloud service:
+Alpha {{site.alpha-channel}}, connected to your cloud service:
 
 ```sh
-azure vm create --custom-data=cloud-config.yaml --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --connect=my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Alpha-475.1.0 core
+azure vm create --custom-data=cloud-config.yaml --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --connect=my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Alpha-{{site.alpha-channel}} core
 ```
 
 This will additionally create an endpoint allowing SSH traffic to reach the
@@ -135,11 +135,11 @@ different port for each instance.
 Let's create two more instances:
 
 ```sh
-azure vm create --custom-data=cloud-config.yaml --ssh=2022 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-2 --connect=my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Alpha-475.1.0 core
+azure vm create --custom-data=cloud-config.yaml --ssh=2022 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-2 --connect=my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Alpha-{{site.alpha-channel}} core
 ```
 
 ```sh
-azure vm create --custom-data=cloud-config.yaml --ssh=3022 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-3 --connect=my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Alpha-475.1.0 core
+azure vm create --custom-data=cloud-config.yaml --ssh=3022 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-3 --connect=my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Alpha-{{site.alpha-channel}} core
 ```
 
 If you used the recommended <a href="#cloud-config">cloud-config</a>, you
