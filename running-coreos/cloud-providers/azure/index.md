@@ -26,16 +26,16 @@ The following command will create a single instance. For more details, check out
     <li class="active"><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
-    <div class="tab-pane active" id="alpha">
+    <div class="tab-pane" id="alpha">
       <div class="channel-info">
         <p>The alpha channel closely tracks master and frequently has new releases. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a>, and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
         <pre>azure vm create --custom-data=cloud-config.yaml --vm-size=Small --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --location="West US" my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Alpha-{{site.alpha-channel}} core</pre>
       </div>
     </div>
-    <div class="tab-pane" id="beta">
+    <div class="tab-pane active" id="beta">
       <div class="channel-info">
-        <p>CoreOS on Azure is new! There haven't been any beta images yet.</p>
-        <p>Alpha images can be <a href="{{site.url}}/docs/cluster-management/setup/switching-channels">switched</a> to the beta channel.</p>
+        <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
+        <pre>azure vm create --custom-data=cloud-config.yaml --vm-size=Small --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --location="West US" my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Beta-{{site.beta-channel}} core</pre>
       </div>
     </div>
     <div class="tab-pane" id="stable">
