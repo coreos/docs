@@ -22,8 +22,8 @@ The following command will create a single instance. For more details, check out
 <div id="azure-images">
   <ul class="nav nav-tabs">
     <li><a href="#stable" data-toggle="tab">Stable Channel</a></li>
-    <li><a href="#beta" data-toggle="tab">Beta Channel</a></li>
-    <li class="active"><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
+    <li class="active"><a href="#beta" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha">
