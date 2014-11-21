@@ -92,6 +92,7 @@ USER_EVENTS_REDIS: {'host': '(FILL IN HERE: redis host)'}
 
 # The usernames of your super-users, if any. Super users will
 # have the ability to view and delete other users.
+FEATURE_SUPER_USERS: false
 SUPER_USERS: []
 
 # Either 'Database' or 'LDAP'.
