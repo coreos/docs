@@ -66,7 +66,8 @@ SERVER_HOSTNAME: '(FILL IN HERE: registry.mycorp.com)'
 ENTERPRISE_LOGO_URL: '(FILL IN HERE: http://someurl/...)'
 
 # Settings for SMTP and mailing. This is *required*. Note: "localhost" will not work since the
-# registry is run inside a container.
+# registry is run inside a container. Delete or use null values for username and password if
+# you are running an auth-less mailserver.
 MAIL_PORT: 587
 MAIL_PASSWORD: '(FILL IN HERE: password)'
 MAIL_SERVER: '(FILL IN HERE: hostname)'
