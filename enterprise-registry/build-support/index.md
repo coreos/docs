@@ -46,8 +46,8 @@ docker pull quay.io/coreos/build-worker
 `docker run` the image, with `SERVER` being a *websocket URL* to your Enterprise Registry install. For example,
 if your Enterprise Registry is located at `somehost.com`, then the `SERVER` will be:
 
-If SSL is being used: ```wss://somehost.com```
-If SSL is *not* being used: ```ws://somehost.com```
+- If SSL is being used: ```wss://somehost.com```
+- If SSL is *not* being used: ```ws://somehost.com```
 
 ```sh
 docker run --restart on-failure -e SERVER=wss://myenterprise.host -v /var/run/docker.sock:/var/run/docker.sock quay.io/coreos/build-worker
