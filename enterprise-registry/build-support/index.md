@@ -9,14 +9,16 @@ weight: 5
 
 # Automatically build Dockerfiles with Build Workers
 
-CoreOS Enterprise Registry supports building Dockerfiles using a set of worker nodes. Build triggers, such as Github webhooks, can be configured to automatically build new versions of your repositories when new code is committed. This document will walk you through enabling the feature flag and setting up multiple build workers to enable this feature.
+CoreOS Enterprise Registry supports building Dockerfiles using a set of worker nodes. Build triggers, such as GitHub webhooks, can be configured to automatically build new versions of your repositories when new code is committed. This document will walk you through enabling the feature flag and setting up multiple build workers to enable this feature.
+
+<img src="workers.png" class="img-center" alt="Enterprise Registry Build Workers"/>
 
 *Note:* This feature is currently in *beta*, so it may encounter issues every so often. Please report
 any issues encountered to support so we can fix it ASAP.
 
 ## Enable the Feature Flag
 
-By default, the feature flag to enable build workers is off. In the Enteprise Registry `config.yaml`, change the following to enable build support:
+By default, the feature flag to enable build workers is off. In the Enterprise Registry `config.yaml`, change the following to enable build support:
 
 ```yaml
 FEATURE_BUILD_SUPPORT: false
@@ -42,7 +44,7 @@ To apply the new configuration, restart the container running the registry.
 
 ## Setup the Build Workers
 
-One or more build workers will communicate with the main registry container to build new containers when triggered. The machines must have Docker installed and must not be used for any other work. The following procedure needs to be done everytime a new worker needs to be
+One or more build workers will communicate with the main registry container to build new containers when triggered. The machines must have Docker installed and must not be used for any other work. The following procedure needs to be done every time a new worker needs to be
 added, but it can be automated fairly easily.
 
 ### Pull the Build Worker Image
@@ -57,7 +59,7 @@ docker pull quay.io/coreos/registry-build-worker:latest
 
 Run this container on each build worker. Since the worker will be orchestrating docker builds, we need to mount in the docker socket. This orchestration will use a large amount of CPU and need to manipulate the docker images on disk &mdash; we recommend that dedicated machines be used for this task.
 
-Use the environment variable `SERVER` to tell the worker how to communitate with the primary Enterprise Registry container. A websocket is used as a data channel, and it was configured when we changed the feature flag above.
+Use the environment variable `SERVER` to tell the worker how to communicate with the primary Enterprise Registry container. A websocket is used as a data channel, and it was configured when we changed the feature flag above.
 
 | Security | Websocket Address |
 |----------|-------------------|
