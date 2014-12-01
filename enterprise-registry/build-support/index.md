@@ -38,7 +38,7 @@ added, but it can be automated fairly easily.
 ### Download the Build Worker image
 
 ```sh
-docker pull quay.io/coreos/build-worker
+docker pull quay.io/coreos/registry-build-worker
 ```
 
 ### Run the Build Worker image
@@ -50,7 +50,7 @@ if your Enterprise Registry is located at `somehost.com`, then the `SERVER` will
 - If SSL is *not* being used: ```ws://somehost.com```
 
 ```sh
-docker run --restart on-failure -e SERVER=wss://myenterprise.host -v /var/run/docker.sock:/var/run/docker.sock quay.io/coreos/build-worker
+docker run --restart on-failure -e SERVER=wss://myenterprise.host -v /var/run/docker.sock:/var/run/docker.sock quay.io/coreos/registry-build-worker
 ```
 
 The build worker should auto-register with the Enterprise Registry and start building once a job has been queued.
