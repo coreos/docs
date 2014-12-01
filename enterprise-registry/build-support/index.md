@@ -11,6 +11,9 @@ weight: 5
 
 CoreOS Enterprise Registry supports building Dockerfiles using a set of worker nodes.
 
+*Note:* This feature is currently in *beta*, so it may encounter issues every so often. Please report
+any issues encountered to support so we can fix it ASAP.
+
 ## Change the feature flag
 
 In the Enteprise Registry `config.yaml`, change the following to enable build support:
@@ -25,9 +28,9 @@ to
 FEATURE_BUILD_SUPPORT: true
 ```
 
-## Restart Enterprise Registry
+## Update and Restart Enterprise Registry
 
-Restart the CoreOS Enterprise Registry to enable building.
+Pull the latest Enterprise Registry image and restart the CoreOS Enterprise Registry to enable building.
 
 ## Setup the build worker(s)
 
@@ -38,7 +41,7 @@ added, but it can be automated fairly easily.
 ### Download the Build Worker image
 
 ```sh
-docker pull quay.io/coreos/registry-build-worker
+docker pull quay.io/coreos/registry-build-worker:latest
 ```
 
 ### Run the Build Worker image
@@ -50,7 +53,7 @@ if your Enterprise Registry is located at `somehost.com`, then the `SERVER` will
 - If SSL is *not* being used: ```ws://somehost.com```
 
 ```sh
-docker run --restart on-failure -e SERVER=wss://myenterprise.host -v /var/run/docker.sock:/var/run/docker.sock quay.io/coreos/registry-build-worker
+docker run --restart on-failure -e SERVER=wss://myenterprise.host -v /var/run/docker.sock:/var/run/docker.sock quay.io/coreos/registry-build-worker:latest
 ```
 
 The build worker should auto-register with the Enterprise Registry and start building once a job has been queued.
