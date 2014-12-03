@@ -49,7 +49,8 @@ added, but it can be automated fairly easily.
 
 ### Pull the Build Worker Image
 
-Just like above, pull down the latest copy of the build worker container:
+The build worker is currently in beta. To gain access to its repository, please contact support.
+Once given access, pull down the latest copy of the image just like any other:
 
 ```sh
 docker pull quay.io/coreos/registry-build-worker:latest
