@@ -1,13 +1,13 @@
 ---
 layout: docs
-title: GitHub Build
+title: Setup GitHub Build Triggers
 category: registry
 sub_category: setup
 forkurl: https://github.com/coreos/docs/blob/master/enterprise-registry/github-build/index.md
 weight: 5
 ---
 
-# GitHub Build
+# Setup GitHub Build Triggers
 
 CoreOS Enterprise Registry supports using GitHub or GitHub Enterprise as a trigger to building
 images.
@@ -21,7 +21,7 @@ If you have not yet done so, please <a href="{{site.url}}/docs/enterprise-regist
 The first step in supporting GitHub Build is to create an OAuth Application representing the
 Enterprise Registry *for building* in GitHub or GitHub Enterprise.
 
-*Note:* A *separate* application must be setup for GitHub build, independent of the one used for GitHub Authentication.
+*Note:* A *separate* application must be setup for GitHub build, independent of the one used for [GitHub Authentication]({{site.url}}/docs/enterprise-registry/github-auth/).
 
 - Log into GitHub (Enterprise)
 - Visit the applications page under your organization's settings and click "<a href="https://github.com/settings/applications/new">Register New Application</a>".
