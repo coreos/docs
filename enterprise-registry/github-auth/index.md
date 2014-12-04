@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: GitHub Authentication in Enterprise Registry
+title: Configure GitHub Authentication
 category: registry
 sub_category: setup
 forkurl: https://github.com/coreos/docs/blob/master/enterprise-registry/github-auth/index.md
@@ -19,12 +19,7 @@ Enterprise Registry in GitHub or GitHub Enterprise.
 - Log into GitHub (Enterprise)
 - Visit the applications page under your organization's settings and click "<a href="https://github.com/settings/applications/new">Register New Application</a>". 
 
-
-<div class="graphic">
-  <div class="screenshot">
-    <img src="{{site.url}}/docs/enterprise-registry/github-auth/register-app.png" style="margin: 0 auto; display: block; max-width: 700px;"></img>
-  </div>
-</div>
+<img src="{{site.url}}/docs/enterprise-registry/github-auth/register-app.png" style="margin: 0 auto; display: block;"/>
 
 - Enter your registry's URL as the application URL
 
@@ -33,11 +28,7 @@ Note: If using public GitHub, the URL entered must be accessible by *your users*
 - Enter `https://{REGISTRY URL HERE}/oauth2/github/callback` as the Authorization callback URL.
 - Create the application and note down the `Client ID` and `Client Secret`.
 
-<div class="graphic">
-  <div class="screenshot">
-    <img src="{{site.url}}/docs/enterprise-registry/github-auth/view-app.png" style="margin: 0 auto; display: block; max-width: 700px;"></img>
-  </div>
-</div>
+<img src="{{site.url}}/docs/enterprise-registry/github-auth/view-app.png" style="margin: 0 auto; display: block;"/>
 
 ## Add new configuration
 

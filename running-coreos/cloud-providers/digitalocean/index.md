@@ -21,8 +21,8 @@ The following command will create a single droplet. For more details, check out
 
 <div id="do-images">
   <ul class="nav nav-tabs">
-    <li><a href="#stable" data-toggle="tab">Stable Channel</a></li>
-    <li class="active"><a href="#beta" data-toggle="tab">Beta Channel</a></li>
+    <li class="active"><a href="#stable" data-toggle="tab">Stable Channel</a></li>
+    <li><a href="#beta" data-toggle="tab">Beta Channel</a></li>
     <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
@@ -42,7 +42,7 @@ The following command will create a single droplet. For more details, check out
         "name":"core-1"}'</pre>
       </div>
     </div>
-    <div class="tab-pane active" id="beta">
+    <div class="tab-pane" id="beta">
       <div class="channel-info">
         <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.data.beta-channel.do-version}}.</p>
         <a href="https://cloud.digitalocean.com/droplets/new?image=coreos-beta" class="btn btn-default">Launch CoreOS Droplet</a><br/><br/>
@@ -58,10 +58,22 @@ The following command will create a single droplet. For more details, check out
         "name":"core-1"}'</pre>
       </div>
     </div>
-    <div class="tab-pane" id="stable">
+    <div class="tab-pane active" id="stable">
       <div class="channel-info">
-        <p>CoreOS on DigitalOcean is new! There haven't been any stable images yet.</p>
-        <p>Alpha images can be <a href="{{site.url}}/docs/cluster-management/setup/switching-channels">switched</a> to the stable channel.</p>
+        <div class="channel-info">
+        <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.data.beta-channel.do-version}}.</p>
+        <a href="https://cloud.digitalocean.com/droplets/new?image=coreos-stable" class="btn btn-default">Launch CoreOS Droplet</a><br/><br/>
+        <p>Launch via DigitalOcean API by specifying <code>$REGION</code>, <code>$SIZE</code> and <code>$SSH_KEY_ID</code>:</p>
+        <pre>curl --request POST "https://api.digitalocean.com/v2/droplets" \
+     --header "Content-Type: application/json" \
+     --header "Authorization: Bearer $TOKEN" \
+     --data '{"region":"'"${REGION}"'",
+        "image":"{{site.data.stable-channel.do-image-path}}",
+        "size":"'"$SIZE"'",
+        "user_data": "'"$(cat ~/cloud-config.yaml)"'",
+        "ssh_keys":["'"$SSH_KEY_ID"'"],
+        "name":"core-1"}'</pre>
+      </div>
       </div>
     </div>
   </div>
@@ -113,6 +125,18 @@ populated, the droplet must have private networking enabled.
 ### Adding More Machines
 To add more instances to the cluster, just launch more with the same
 cloud-config. New instances will join the cluster regardless of region.
+
+## SSH to your Droplets
+
+CoreOS is set up to be a little more secure than other DigitalOcean images. By default, it uses the core user instead of root and doesn't use a password for authentication. You'll need to add an SSH key(s) via the web console or add keys/passwords via your cloud-config in order to log in.
+
+To connect to a droplet after it's created, run:
+
+```sh
+ssh core@<ip address>
+```
+
+Optionally, you may want to [configure your ssh-agent]({{site.url}}/docs/launching-containers/launching/fleet-using-the-client/#remote-fleet-access) to more easily run [fleet commands]({{site.url}}/docs/launching-containers/launching/launching-containers-fleet/).
 
 ## Launching Droplets
 

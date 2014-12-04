@@ -2,7 +2,6 @@
 layout: docs
 title: On-Premise Installation
 category: registry
-sub_category: setup
 forkurl: https://github.com/coreos/docs/blob/master/enterprise-registry/initial-setup/index.md
 weight: 5
 ---
@@ -67,7 +66,8 @@ SERVER_HOSTNAME: '(FILL IN HERE: registry.mycorp.com)'
 ENTERPRISE_LOGO_URL: '(FILL IN HERE: http://someurl/...)'
 
 # Settings for SMTP and mailing. This is *required*. Note: "localhost" will not work since the
-# registry is run inside a container.
+# registry is run inside a container. Delete or use null values for username and password if
+# you are running an auth-less mailserver.
 MAIL_PORT: 587
 MAIL_PASSWORD: '(FILL IN HERE: password)'
 MAIL_SERVER: '(FILL IN HERE: hostname)'
@@ -93,6 +93,7 @@ USER_EVENTS_REDIS: {'host': '(FILL IN HERE: redis host)'}
 
 # The usernames of your super-users, if any. Super users will
 # have the ability to view and delete other users.
+FEATURE_SUPER_USERS: false
 SUPER_USERS: []
 
 # Either 'Database' or 'LDAP'.
@@ -178,16 +179,11 @@ CoreOS Enterprise registry requires a storage directory and a configuration dire
 	cp my-ssl-key config/ssl.key
 
 
-## Pulling the Registry image
+## Accessing the Enterprise Registry Container
 
-As part of the setup package, a set of pull credentials have been included. To pull the CoreOS Enterprise Registry image, run a `docker login` and then a `docker pull`:
-
-	docker login quay.io
-	Username: (the username given)
-	Password: (the password given)
-	E-mail: (put anything here)
-
-	docker pull quay.io/coreos/registry:latest
+After signing up you will receive a `.dockercfg` file containing your credentials to the `quay.io/coreos/registry` repository.
+Save this file to your CoreOS machine in `/home/core/.dockercfg` and `/root/.dockercfg`.
+You should now be able to execute `docker pull quay.io/coreos/registry` to download the container.
 
 
 ## Running the Registry
