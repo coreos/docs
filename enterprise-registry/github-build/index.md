@@ -14,7 +14,7 @@ images.
 
 ## Initial Setup
 
-If you have not yet done so, please <a href="../build-support/">enable build support</a> in the Enterprise Registry.
+If you have not yet done so, please <a href="{{site.url}}/docs/enterprise-registry/build-support/">enable build support</a> in the Enterprise Registry.
 
 ## Create an OAuth Application in GitHub
 
