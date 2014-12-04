@@ -27,11 +27,7 @@ Enterprise Registry *for building* in GitHub or GitHub Enterprise.
 - Visit the applications page under your organization's settings and click "<a href="https://github.com/settings/applications/new">Register New Application</a>".
 
 
-<div class="graphic">
-  <div class="screenshot">
-    <img src="{{site.url}}/docs/enterprise-registry/github-auth/register-app.png" style="margin: 0 auto; display: block; max-width: 700px;"></img>
-  </div>
-</div>
+<img src="{{site.url}}/docs/enterprise-registry/github-auth/register-app.png" class="img-center" alt="Register Application"/>
 
 - Enter your registry's URL as the application URL
 
@@ -40,11 +36,7 @@ Note: If using public GitHub, the URL entered must be accessible by *your users*
 - Enter `https://{REGISTRY URL HERE}/oauth2/github/callback` as the Authorization callback URL.
 - Create the application and note down the `Client ID` and `Client Secret`.
 
-<div class="graphic">
-  <div class="screenshot">
-    <img src="{{site.url}}/docs/enterprise-registry/github-auth/view-app.png" style="margin: 0 auto; display: block; max-width: 700px;"></img>
-  </div>
-</div>
+<img src="{{site.url}}/docs/enterprise-registry/github-auth/view-app.png" class="img-center" alt="View Application"/>
 
 
 ## Add new configuration
