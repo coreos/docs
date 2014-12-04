@@ -21,8 +21,8 @@ The following command will create a single instance. For more details, check out
 
 <div id="azure-images">
   <ul class="nav nav-tabs">
-    <li><a href="#stable" data-toggle="tab">Stable Channel</a></li>
-    <li class="active"><a href="#beta" data-toggle="tab">Beta Channel</a></li>
+    <li class="active"><a href="#stable" data-toggle="tab">Stable Channel</a></li>
+    <li><a href="#beta" data-toggle="tab">Beta Channel</a></li>
     <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
@@ -32,16 +32,17 @@ The following command will create a single instance. For more details, check out
         <pre>azure vm create --custom-data=cloud-config.yaml --vm-size=Small --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --location="West US" my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Alpha-{{site.alpha-channel}} core</pre>
       </div>
     </div>
-    <div class="tab-pane active" id="beta">
+    <div class="tab-pane" id="beta">
       <div class="channel-info">
         <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
         <pre>azure vm create --custom-data=cloud-config.yaml --vm-size=Small --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --location="West US" my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Beta-{{site.beta-channel}} core</pre>
       </div>
     </div>
-    <div class="tab-pane" id="stable">
+    <div class="tab-pane active" id="stable">
       <div class="channel-info">
-        <p>CoreOS on Azure is new! There haven't been any stable images yet.</p>
-        <p>Alpha images can be <a href="{{site.url}}/docs/cluster-management/setup/switching-channels">switched</a> to the stable channel.</p>
+        <div class="channel-info">
+        <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.data.beta-channel.do-version}}.</p>
+        <pre>azure vm create --custom-data=cloud-config.yaml --vm-size=Small --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --location="West US" my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Stable-{{site.beta-channel}} core</pre>
       </div>
     </div>
   </div>
