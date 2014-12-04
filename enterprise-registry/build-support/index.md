@@ -75,3 +75,8 @@ docker run --restart on-failure -e SERVER=wss://myenterprise.host -v /var/run/do
 
 When the container starts, each build worker will auto-register with the Enterprise Registry and start building containers once a job triggered and it is assigned to a worker.
 
+### Setup GitHub Build (optional)
+
+If your organization plans to have builds be conducted via pushes to GitHub (or GitHub Enterprise), please continue
+with the <a href="../github-build/">Setting up Github Build</a>.
+
