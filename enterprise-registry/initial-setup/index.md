@@ -153,6 +153,16 @@ DISTRIBUTED_STORAGE_CONFIG:
 # LDAP_UID_ATTR: 'uid'
 # LDAP_USER_RDN: ['ou=People']
 
+# If Active Directory is used for LDAP services.
+# AUTHENTICATION_TYPE: 'LDAP'
+# LDAP_URI: 'ldap://globalcatalog.dev.company.com:3268'
+# LDAP_ADMIN_DN: 'cn=service_user,ou=serviceaccounts,dc=dev,dc=company,dc=com'
+# LDAP_ADMIN_PASSWD: 'secret'
+# LDAP_BASE_DN: ['dc=dev','dc=company','dc=com']
+# LDAP_EMAIL_ATTR: 'mail'
+# LDAP_UID_ATTR: 'sAMAccountName'
+# LDAP_USER_RDN: ['cn=Users']
+
 # Where user files (uploaded build packs, other binary data)
 # are stored. Must match a key under DISTRIBUTED_STORAGE_CONFIG.
 USERFILES_LOCATION: 'local'
