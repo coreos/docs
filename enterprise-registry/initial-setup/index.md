@@ -39,7 +39,7 @@ docker \
 
 Edit these values to your liking:
 ```shell
-MYSQL_USER="ucoreos"
+MYSQL_USER="coreosuser"
 MYSQL_DATABASE="ent_reg_db"
 MYSQL_CONTAINER_NAME="mysql"
 ```
