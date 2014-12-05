@@ -30,10 +30,8 @@ docker \
   --publish 3306:3306 \
   mysql:5.6;
 
-# Sleep for 30 seconds to allow time for the DB to be provisioned:
+echo "Sleeping for 30 seconds to allow time for the DB to be provisioned:"
 sleep 30
 
 # Echo the DB_URL that needs to be entered into the config.yaml file
 echo "DB_URI: 'mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db/${MYSQL_DATABASE}'"
-
-
