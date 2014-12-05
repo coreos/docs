@@ -194,7 +194,7 @@ DISTRIBUTED_STORAGE_CONFIG:
 # LDAP_UID_ATTR: 'uid'
 # LDAP_USER_RDN: ['ou=People']
 
-# If Active Directory is used for LDAP services.
+# If Active Directory is used for LDAP services:
 # LDAP_URI: 'ldap://globalcatalog.dev.company.com:3268'
 # LDAP_ADMIN_DN: 'cn=service_user,ou=serviceaccounts,dc=dev,dc=company,dc=com'
 # LDAP_ADMIN_PASSWD: 'secret'
