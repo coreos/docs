@@ -227,16 +227,4 @@ Once the Enterprise Registry is running, new users can be created by clicking th
 
 Users should be able to login to the Enterprise Registry directly with their LDAP username and password.
 
-To aid in LDAP debugging you can tail the logs of the Enterprise Registry container from the Docker host as shown below:
-``` shell
-CONTAINER_ID=$(docker ps | grep "coreos/registry:latest" | awk '{print $1}')
-LOG_LOCATION=$(docker inspect -f '{{ index .Volumes "/var/log" }}' ${CONTAINER_ID})
-tail -f  ${LOG_LOCATION}/gunicorn_web/* ${LOG_LOCATION}/gunicorn_registry/* ${LOG_LOCATION}/gunicorn_verbs/*
-```
-<!---
-Tail all of the Enterprise Registry container logs:
-``` shell
-find ${LOG_LOCATION} -type f -exec tail -f {} +
-```
--->
-
+To aid in LDAP debugging you can [tail the logs of the Enterprise Registry container]({{site.url}}/docs/enterprise-registry/ldap-logging) from the Docker host.
