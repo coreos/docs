@@ -14,3 +14,13 @@ CONTAINER_ID=$(docker ps | grep "coreos/registry:latest" | awk '{print $1}')
 LOG_LOCATION=$(docker inspect -f '{{ index .Volumes "/var/log" }}' ${CONTAINER_ID})
 tail -f  ${LOG_LOCATION}/gunicorn_web/* ${LOG_LOCATION}/gunicorn_registry/* ${LOG_LOCATION}/gunicorn_verbs/*
 ```
+
+Alternatively you can download a simple shell script to perform the steps above:
+```shell
+curl --location {{site.url}}/docs/enterprise-registry/ldap-logging/tail_gunicorn_logs.sh -o /tmp/tail_gunicorn_logs.sh -#
+```
+Then run:
+```shell
+chmod -c +x /tmp/tail_gunicorn_logs.sh
+/tmp/tail_gunicorn_logs.sh
+```
