@@ -161,6 +161,7 @@ DISTRIBUTED_STORAGE_CONFIG:
 # LDAP_BASE_DN: ['dc=dev','dc=company','dc=com']
 # LDAP_EMAIL_ATTR: 'mail'
 # LDAP_UID_ATTR: 'sAMAccountName'
+# To search for users across all OUs and CNs in AD simply leave the following line commented out:
 # LDAP_USER_RDN: ['cn=Users']
 
 # Where user files (uploaded build packs, other binary data)
