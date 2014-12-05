@@ -38,4 +38,15 @@ Run the following command to output the DB URI for the MySQL database:
 ```shell
 echo "DB_URI: 'mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db/${MYSQL_DATABASE}'"
 ```
+
+Alternatively you can download a simple shell script to perform the steps above:
+```shell
+curl --location {{site.url}}/docs/enterprise-registry/mysql-container/provision_mysql.sh -o /tmp/provision_mysql.sh -#
+```
+Then run:
+```shell
+chmod -c +x /tmp/provision_mysql.sh
+/tmp/provision_mysql.sh
+```
+
 Note: Using Percona v5.6 for the MySQL container is known to not work at this point in time.
