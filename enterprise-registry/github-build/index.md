@@ -38,6 +38,19 @@ Note: If using public GitHub, the URL entered must be accessible by *your users*
 
 <img src="{{site.url}}/docs/enterprise-registry/github-auth/view-app.png" class="img-center" alt="View Application"/>
 
+## Change the feature flag
+
+Next, in the Enteprise Registry `config.yaml`, change the following to enable GitHub Build:
+
+```yaml
+FEATURE_GITHUB_BUILD: false
+```
+
+to
+
+```yaml
+FEATURE_GITHUB_BUILD: true
+```
 
 ## Add new configuration
 
