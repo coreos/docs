@@ -227,4 +227,4 @@ Once the Enterprise Registry is running, new users can be created by clicking th
 
 Users should be able to login to the Enterprise Registry directly with their LDAP username and password.
 
-To aid in LDAP debugging you can [tail the logs of the Enterprise Registry container]({{site.url}}/docs/enterprise-registry/ldap-logging) from the Docker host.
+To aid in LDAP debugging you can [tail the logs of the Enterprise Registry container]({{site.url}}/docs/enterprise-registry/log-debugging) from the Docker host.
