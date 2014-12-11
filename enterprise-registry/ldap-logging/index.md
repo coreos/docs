@@ -6,8 +6,8 @@ forkurl: https://github.com/coreos/docs/blob/master/enterprise-registry/ldap-log
 weight: 5
 ---
 
-# LDAP debugging
-To aid in LDAP debugging you can tail the logs of the Enterprise Registry container from the Docker host as shown below:
+# Enterprise Registry log debugging
+To aid in debugging issues such as LDAP configuration you can tail the logs of the Enterprise Registry container from the Docker host as shown below:
 
 ```shell
 CONTAINER_ID=$(docker ps | grep "coreos/registry:latest" | awk '{print $1}')
