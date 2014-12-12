@@ -7,23 +7,48 @@ weight: 5
 
 # Enterprise Registry Log Debugging
 
-To aid in debugging issues such as LDAP configuration you can tail the logs of the Enterprise Registry container from the Docker host as shown below:
+## Personal debugging
 
+When attempting to debug an issue, one should first consult the logs of the web workers running the Enterprise Registry.
+This can be obtained in two different ways: manually or via a script.
+
+Please note that both of these methods assume that they are being executed on the host machine.
+
+### Manual
+
+{% raw %}
 ```sh
-CONTAINER_ID=$(docker ps | grep "coreos/registry:latest" | awk '{print $1}')
+CONTAINER_ID=$(docker ps | grep "coreos/registry" | awk '{print $1}')
 LOG_LOCATION=$(docker inspect -f '{{ index .Volumes "/var/log" }}' ${CONTAINER_ID})
-tail -f  ${LOG_LOCATION}/gunicorn_web/* ${LOG_LOCATION}/gunicorn_registry/* ${LOG_LOCATION}/gunicorn_verbs/*
+tail -f ${LOG_LOCATION}/gunicorn_*/current
 ```
+{% endraw %}
 
-Alternatively you can download a simple shell script to perform the steps above:
+### Script
 
 ```sh
-curl --location https://github.com/coreos/docs/blob/master/enterprise-registry/log-debugging/tail_gunicorn_logs.sh -o /tmp/tail_gunicorn_logs.sh -#
+curl -L -f https://github.com/coreos/docs/blob/master/enterprise-registry/log-debugging/tail-gunicorn-logs.sh | sh
 ```
 
-Then run:
+## Contacting support
+
+When contacting support, one should always include a copy of the Enterprise Registry's log directory.
+This can be obtained in two different ways: manually or via a script.
+
+Please note that both of these methods assume that they are being executed on the host machine.
+
+### Manual
+
+{% raw %}
+```sh
+CONTAINER_ID=$(docker ps | grep "coreos/registry" | awk '{print $1}')
+LOG_LOCATION=$(docker inspect -f '{{ index .Volumes "/var/log" }}' ${CONTAINER_ID})
+tar -zcvf registry-logs-$(date +%s).tar.gz ${LOG_LOCATION}
+```
+{% endraw %}
+
+### Script
 
 ```sh
-chmod -c +x /tmp/tail_gunicorn_logs.sh
-/tmp/tail_gunicorn_logs.sh
+curl -L -f https://github.com/coreos/docs/blob/master/enterprise-registry/log-debugging/gzip-registry-logs.sh | sh
 ```
