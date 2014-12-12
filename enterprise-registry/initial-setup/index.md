@@ -140,9 +140,6 @@ DISTRIBUTED_STORAGE_PREFERENCE: ['local']
 #       access_key: An object gateway user access key
 #       secret_key: An object gateway user secret key
 #       bucket_name: The bucket under RADOS
-#
-# All non-local storages require CORS settings to allow GETs and PUTs from any origin.
-# Examples can be found at https://gist.github.com/jzelinskie/1ceb32a89f650c29eb8d
 DISTRIBUTED_STORAGE_CONFIG:
  local:
     # The name of the storage provider
@@ -234,3 +231,56 @@ Once the Enterprise Registry is running, new users can be created by clicking th
 Users should be able to login to the Enterprise Registry directly with their LDAP username and password.
 
 To aid in LDAP debugging you can [tail the logs of the Enterprise Registry container]({{site.url}}/docs/enterprise-registry/log-debugging) from the Docker host.
+
+## Ensuring storage is set up correctly
+
+### If using local storage
+
+There's nothing left to do! Enjoy a brand new Enterprise Registry!
+
+### If using a storage service
+
+When using a storage service, the service must have it's CORS (Cross-Origin Resource Sharing) configuration altered. This is usually done in the service's web console while configuring the settings for a given bucket. Enterprise Registry requires that both GET and PUT methods be accessible from any origin.
+
+An example Amazon S3 configuration looks like:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <CORSRule>
+        <AllowedOrigin>*</AllowedOrigin>
+        <AllowedMethod>GET</AllowedMethod>
+        <MaxAgeSeconds>3000</MaxAgeSeconds>
+        <AllowedHeader>Authorization</AllowedHeader>
+    </CORSRule>
+    <CORSRule>
+        <AllowedOrigin>*</AllowedOrigin>
+        <AllowedMethod>PUT</AllowedMethod>
+        <MaxAgeSeconds>3000</MaxAgeSeconds>
+        <AllowedHeader>Content-Type</AllowedHeader>
+        <AllowedHeader>x-amz-acl</AllowedHeader>
+        <AllowedHeader>origin</AllowedHeader>
+    </CORSRule>
+</CORSConfiguration>
+```
+For more information see [Amazon's CORS documentation](http://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html).
+
+An example Google Cloud Storage configuration looks like:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<CorsConfig>
+  <Cors>
+    <Origins>
+      <Origin>*</Origin>
+    </Origins>
+    <Methods>
+      <Method>GET</Method>
+      <Method>PUT</Method>
+    </Methods>
+    <ResponseHeaders>
+      <ResponseHeader>Content-Type</ResponseHeader>
+    </ResponseHeaders>
+    <MaxAgeSec>3000</MaxAgeSec>
+  </Cors>
+</CorsConfig>
+```
+For more information see [Google's CORS documentation](https://cloud.google.com/storage/docs/cross-origin).
