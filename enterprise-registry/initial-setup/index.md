@@ -115,6 +115,8 @@ DISTRIBUTED_STORAGE_PREFERENCE: ['local']
 #       storage_path: The path under the mounted volume
 #
 #  S3Storage: Registry data is stored in Amazon S3
+#             S3 Buckets require CORS with settings similar to:
+#             https://gist.github.com/jzelinskie/1ceb32a89f650c29eb8d
 #
 #     Required fields:
 #       storage_path: The path under the S3 bucket
