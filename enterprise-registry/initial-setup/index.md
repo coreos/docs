@@ -240,7 +240,7 @@ There's nothing left to do! Enjoy a brand new Enterprise Registry!
 
 ### If using a storage service
 
-When using a storage service, the service must have it's CORS (Cross-Origin Resource Sharing) configuration altered. This is usually done in the service's web console while configuring the settings for a given bucket. Enterprise Registry requires that both GET and PUT methods be accessible from any origin.
+When using a storage service, the service must have its CORS (Cross-Origin Resource Sharing) configuration altered. This is usually done in the service's web console while configuring the settings for a given bucket. Enterprise Registry requires that both GET and PUT methods be accessible from any origin because userfiles (Dockerfiles and archives with Dockerfiles in them) are uploaded directly from the browser to storage. If this is not properly set up, uploading a Dockerfile/archive will yield an Internal Server Error (500) page.
 
 An example Amazon S3 configuration looks like:
 ```
