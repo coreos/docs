@@ -29,6 +29,7 @@ Please have the url for the login and database available in the SQLAlchemy forma
 ### For Postgres:
 ```postgresql://<username>:<url escaped password>@<hostname>/<database_name>```
 
+If you don't have an existing MySQL system to host the Enterprise Registry database on then you can run the steps in the [Using a dedicated MySQL Docker container]({{site.url}}/docs/enterprise-registry/mysql-container) document.
 
 ## Setting up Redis
 
@@ -153,6 +154,16 @@ DISTRIBUTED_STORAGE_CONFIG:
 # LDAP_UID_ATTR: 'uid'
 # LDAP_USER_RDN: ['ou=People']
 
+# If Active Directory is used for LDAP services:
+# LDAP_URI: 'ldap://globalcatalog.dev.company.com:3268'
+# LDAP_ADMIN_DN: 'cn=service_user,ou=serviceaccounts,dc=dev,dc=company,dc=com'
+# LDAP_ADMIN_PASSWD: 'secret'
+# LDAP_BASE_DN: ['dc=dev','dc=company','dc=com']
+# LDAP_EMAIL_ATTR: 'mail'
+# LDAP_UID_ATTR: 'sAMAccountName'
+# To search for users across all OUs and CNs in AD simply leave the following line commented out:
+# LDAP_USER_RDN: ['cn=Users']
+
 # Where user files (uploaded build packs, other binary data)
 # are stored. Must match a key under DISTRIBUTED_STORAGE_CONFIG.
 USERFILES_LOCATION: 'local'
@@ -215,3 +226,5 @@ Once the Enterprise Registry is running, new users can be created by clicking th
 ### If using LDAP authentication:
 
 Users should be able to login to the Enterprise Registry directly with their LDAP username and password.
+
+To aid in LDAP debugging you can [tail the logs of the Enterprise Registry container]({{site.url}}/docs/enterprise-registry/log-debugging) from the Docker host.
