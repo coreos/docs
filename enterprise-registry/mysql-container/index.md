@@ -1,26 +1,36 @@
-### Using a dedicated MySQL Docker container
-If you don't have an existing MySQL system to host the Enterprise Registry database on then you can run the steps below to create a dedicated MySQL container using the Oracle MySQL verified Docker image from: https://registry.hub.docker.com/_/mysql/
-```shell
-docker \
-  pull \
-  mysql:5.6;
+---
+layout: docs
+title: Setting Up a MySQL Docker Container
+category: registry
+weight: 5
+---
+
+# Setting Up a MySQL Docker Container
+
+If you don't have an existing MySQL system to host the Enterprise Registry database on then you can run the steps below to create a dedicated MySQL container using the Oracle MySQL verified Docker image from https://registry.hub.docker.com/_/mysql/
+
+```sh
+docker pull mysql:5.6
 ```
 
 Edit these values to your liking:
-```shell
+
+```sh
 MYSQL_USER="coreosuser"
 MYSQL_DATABASE="enterpriseregistrydb"
 MYSQL_CONTAINER_NAME="mysql"
 ```
 Do not edit these values:
 (creates a 32 char password for the MySQL root user and the Enterprise Registery DB user)
-```shell
+
+```sh
 MYSQL_ROOT_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | sed 1q)
 MYSQL_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | sed 1q)
 ```
 
 Start the MySQL container and create a new DB for the Enterprise registry:
-```shell
+
+```sh
 docker \
   run \
   --detach \
@@ -32,19 +42,23 @@ docker \
   --publish 3306:3306 \
   mysql:5.6;
 ```
+
 Wait about 30 seconds for the new DB to be created before testing the connection to the DB, the MySQL container will not respond during the initial DB creation process.
 
 Run the following command to output the DB URI for the MySQL database:
-```shell
+
+```sh
 echo "DB_URI: 'mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db/${MYSQL_DATABASE}'"
 ```
 
 Alternatively you can download a simple shell script to perform the steps above:
-```shell
-curl --location {{site.url}}/docs/enterprise-registry/mysql-container/provision_mysql.sh -o /tmp/provision_mysql.sh -#
+
+```sh
+curl --location https://raw.githubusercontent.com/coreos/docs/master/enterprise-registry/mysql-container/provision_mysql.sh -o /tmp/provision_mysql.sh -#
 ```
 Then run:
-```shell
+
+```sh
 chmod -c +x /tmp/provision_mysql.sh
 /tmp/provision_mysql.sh
 ```
