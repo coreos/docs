@@ -101,3 +101,59 @@ coreos:
       - name: update-engine.service
         command: restart
 ```
+
+# Auto-Updates with a Maintainence Window
+
+A timeframe in which to update can be specified by using two systemd units, a very simple service and a timer to run it on your schedule:
+
+#### update-window.service
+
+```yaml
+[Unit]
+Description=Reboot if an update has been downloaded
+
+[Service]
+ExecStart=/usr/bin/bash -c 'if update_engine_client -status | grep NEED_REBOOT; then reboot; fi'
+```
+
+#### update-window.timer
+
+```yaml
+[Unit]
+Description=Reboot if needed at 05:00 daily
+
+[Timer]
+OnCalendar=*-*-* 05:00:00
+```
+
+More [information on systemd timers](http://www.freedesktop.org/software/systemd/man/systemd.timer.html) and the available ways you can configure your maintenance window.
+
+## Cloud-Config
+
+```yaml
+#cloud-config
+ 
+coreos:
+  update:
+    reboot-strategy: off
+  units:
+    -
+      name: update-window.service
+      runtime: true
+      content: |
+        [Unit]
+        Description=Reboot if an update has been downloaded
+
+        [Service]
+        ExecStart=/usr/bin/bash -c 'if update_engine_client -status | grep NEED_REBOOT; then locksmithctl reboot; fi' 
+    -
+      name: update-window.timer
+      runtime: true
+      command: start
+      content: |
+        [Unit]
+        Description=Reboot if needed at 05:00 daily
+
+        [Timer]
+        OnCalendar=*-*-* 05:00:00
+```
