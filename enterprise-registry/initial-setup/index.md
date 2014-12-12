@@ -115,7 +115,7 @@ DISTRIBUTED_STORAGE_PREFERENCE: ['local']
 #       storage_path: The path under the mounted volume
 #
 #  S3Storage: Registry data is stored in Amazon S3
-#             S3 Buckets require CORS with settings similar to:
+#             S3 buckets require CORS with settings similar to:
 #             https://gist.github.com/jzelinskie/1ceb32a89f650c29eb8d
 #
 #     Required fields:
@@ -143,6 +143,8 @@ DISTRIBUTED_STORAGE_PREFERENCE: ['local']
 #       secret_key: An object gateway user secret key
 #       bucket_name: The bucket under RADOS
 #
+# All non-local storages require CORS settings to allow GETs and PUTs from any origin.
+# Examples can be found at https://gist.github.com/jzelinskie/1ceb32a89f650c29eb8d
 DISTRIBUTED_STORAGE_CONFIG:
  local:
     # The name of the storage provider
