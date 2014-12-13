@@ -243,6 +243,7 @@ There's nothing left to do! Enjoy a brand new Enterprise Registry!
 When using a storage service, the service must have its CORS (Cross-Origin Resource Sharing) configuration altered. This is usually done in the service's web console while configuring the settings for a given bucket. Enterprise Registry requires that both GET and PUT methods be accessible from any origin because userfiles (Dockerfiles and archives with Dockerfiles in them) are uploaded directly from the browser to storage. If this is not properly set up, uploading a Dockerfile/archive will yield an Internal Server Error (500) page.
 
 An example Amazon S3 configuration looks like:
+
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
@@ -262,9 +263,11 @@ An example Amazon S3 configuration looks like:
     </CORSRule>
 </CORSConfiguration>
 ```
+
 For more information see [Amazon's CORS documentation](http://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html).
 
 An example Google Cloud Storage configuration looks like:
+
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <CorsConfig>
@@ -283,4 +286,5 @@ An example Google Cloud Storage configuration looks like:
   </Cors>
 </CorsConfig>
 ```
+
 For more information see [Google's CORS documentation](https://cloud.google.com/storage/docs/cross-origin).
