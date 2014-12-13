@@ -10,11 +10,7 @@ weight: 5
 ## Personal debugging
 
 When attempting to debug an issue, one should first consult the logs of the web workers running the Enterprise Registry.
-This can be obtained in two different ways: manually or via a script.
-
 Please note that both of these methods assume that they are being executed on the host machine.
-
-### Manual
 
 {% raw %}
 ```sh
@@ -24,20 +20,12 @@ tail -f ${LOG_LOCATION}/gunicorn_*/current
 ```
 {% endraw %}
 
-### Script
-
-```sh
-curl -L -f https://github.com/coreos/docs/blob/master/enterprise-registry/log-debugging/tail-gunicorn-logs.sh | sh
-```
+The aforementioned shell commands are also available in script form at https://github.com/coreos/docs/blob/master/enterprise-registry/log-debugging/tail-gunicorn-logs.sh
 
 ## Contacting support
 
 When contacting support, one should always include a copy of the Enterprise Registry's log directory.
-This can be obtained in two different ways: manually or via a script.
-
 Please note that both of these methods assume that they are being executed on the host machine.
-
-### Manual
 
 {% raw %}
 ```sh
@@ -47,8 +35,4 @@ tar -zcvf registry-logs-$(date +%s).tar.gz ${LOG_LOCATION}
 ```
 {% endraw %}
 
-### Script
-
-```sh
-curl -L -f https://github.com/coreos/docs/blob/master/enterprise-registry/log-debugging/gzip-registry-logs.sh | sh
-```
+The aforementioned shell commands are also available in script form at https://github.com/coreos/docs/blob/master/enterprise-registry/log-debugging/gzip-registry-logs.sh
