@@ -74,3 +74,11 @@ GITHUB_TRIGGER_CONFIG: {
 }
 ```
 
+## Tagging a build
+
+Tagging a build that has been automatically trigged by GitHub can be done on the repository page.
+After selecting a given build, the right side of the page displays tag information which when clicked provides a drop-down menu with the option of creating a new tag.
+
+<img src="{{site.url}}/docs/enterprise-registry/github-build/new-tag.png" class="img-center" alt="Create a new tag"/>
+
+There is currently no ability to automatically tag GitHub triggered builds.
