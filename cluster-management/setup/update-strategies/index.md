@@ -128,7 +128,7 @@ OnCalendar=*-*-* 05:00:00
 
 More [information on systemd timers](http://www.freedesktop.org/software/systemd/man/systemd.timer.html) and the available ways you can configure your maintenance window.
 
-## Cloud-Config
+### Cloud-Config
 
 ```yaml
 #cloud-config
