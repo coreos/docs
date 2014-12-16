@@ -1,7 +1,8 @@
 ---
 layout: docs
-title: Enterprise Registry Log debugging
+title: Enterprise Registry Log Debugging
 category: registry
+sub_category: setup
 weight: 5
 ---
 
