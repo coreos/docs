@@ -178,7 +178,7 @@ We're going to install `rackspace-novaclient`, upload a keypair and boot the ima
 
 ### Install Supernova Tool
 
-If you don't have `pip` installed, install it by running `sudo easy_install pip`. Now let's use `pip` to install Supernova, a tool that lets you easily switch Rackspace regions. Be sure to install these in the order listed:
+The Supernova tool requires Python and `pip`, a Python package manger. If you don't have `pip` installed, install it by running `sudo easy_install pip`. Now let's use `pip` to install Supernova, a tool that lets you easily switch Rackspace regions. Be sure to install these in the order listed:
 
 ```sh
 sudo pip install keyring
