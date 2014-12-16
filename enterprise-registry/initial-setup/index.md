@@ -70,6 +70,17 @@ SERVER_HOSTNAME: '(FILL IN HERE: registry.mycorp.com)'
 # A logo to use for your enterprise
 ENTERPRISE_LOGO_URL: '(FILL IN HERE: http://someurl/...)'
 
+# Contact information for the contact page.
+# Supported URL forms:
+#   email: mailto:some@email.com
+#   IRC: irc://server:port/channel
+#   telephone: tel:number
+#   twitter: https://twitter.com/twitterhandle
+#   generic URL: http(s)://*
+CONTACT_INFO:
+  - 'mailto:(FILL IN HERE: support@email.com)'
+  - 'tel:(FILL IN HERE: +1-555-555-5555)'
+
 # Settings for SMTP and mailing. This is *required*. Note: "localhost" will not work since the
 # registry is run inside a container. Delete or use null values for username and password if
 # you are running an auth-less mailserver.
