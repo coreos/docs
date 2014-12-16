@@ -103,7 +103,7 @@ This environment is now set up to take a beating. Pull the plug on a machine and
 
 ### Configuration for etcd Role
 
-Since we're only using a single etcd node, there is no need to include a discovery token. There isn't any high availability for etcd in this configuration, but that's assumed to be OK for development and testing. Boot this machine first so you can configure the rest with its IP address.
+Since we're only using a single etcd node, there is no need to include a discovery token. There isn't any high availability for etcd in this configuration, but that's assumed to be OK for development and testing. Boot this machine first so you can configure the rest with its IP address, which is specified with the network unit.
 
 Here's the cloud-config for the etcd machine:
 
@@ -111,9 +111,21 @@ Here's the cloud-config for the etcd machine:
 #cloud-config
 
 coreos:
+  etcd:
+    addr: 10.0.0.101:4001
   units:
     - name: etcd.service
       command: start
+    - name: 00-eth0.network
+      runtime: true
+      content: |
+        [Match]
+        Name=eth0
+
+        [Network]
+        DNS=1.2.3.4
+        Address=10.0.0.101/24
+        Gateway=10.0.0.1
 ```
 
 ### Configuration for Worker Role
@@ -128,11 +140,17 @@ Look how simple the cloud-config becomes:
 coreos:
   fleet:
     # replace this IP
-    etcd_servers: "http://10.0.0.1:4001"
+    etcd_servers: "http://10.0.0.101:4001"
   units:
     - name: fleet.service
       command: start
 write_files:
+  - path: /etc/profile.d/etcdctl.sh
+    permissions: 0644
+    owner: core
+    content: |
+      # configure etcdctl to work with our etcd servers set above
+      export ETCDCTL_PEERS="http://10.0.0.101:4001"
   - path: /etc/profile.d/fleetctl.sh
     permissions: 0644
     owner: core
@@ -214,7 +232,7 @@ Here's an example cloud-config for a worker:
 coreos:
   fleet:
     metadata: "role=worker,cabinet=two,disk=spinning"
-    etcd_servers: "http://10.0.0.1:4001,http://10.0.0.2:4001,http://10.0.0.3:4001,http://10.0.0.4:4001,http://10.0.0.5:4001"
+    etcd_servers: "http://10.0.0.101:4001,http://10.0.0.102:4001,http://10.0.0.103:4001,http://10.0.0.104:4001,http://10.0.0.105:4001"
   units:
     - name: fleet.service
       command: start
@@ -223,6 +241,12 @@ coreos:
     group: f118a298-2a8a-460b-9edd-3a9b49df504e
     server: https://customer.update.core-os.net/v1/update/
 write_files:
+  - path: /etc/profile.d/etcdctl.sh
+    permissions: 0644
+    owner: core
+    content: |
+      # configure etcdctl to work with our etcd servers set above
+      export ETCDCTL_PEERS="http://10.0.0.101:4001,http://10.0.0.102:4001,http://10.0.0.103:4001,http://10.0.0.104:4001,http://10.0.0.105:4001"
   - path: /etc/profile.d/fleetctl.sh
     permissions: 0644
     owner: core
