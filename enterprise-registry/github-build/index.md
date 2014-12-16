@@ -38,7 +38,7 @@ Note: If using public GitHub, the URL entered must be accessible by *your users*
 
 <img src="{{site.url}}/docs/enterprise-registry/github-auth/view-app.png" class="img-center" alt="View Application"/>
 
-## Change the feature flag
+## Change the Feature Flag
 
 Next, in the Enteprise Registry `config.yaml`, change the following to enable GitHub Build:
 
@@ -52,7 +52,7 @@ to
 FEATURE_GITHUB_BUILD: true
 ```
 
-## Add new configuration
+## Configure the Feature
 
 In the Enteprise Registry `config.yaml`, add the following section:
 
@@ -74,10 +74,10 @@ GITHUB_TRIGGER_CONFIG: {
 }
 ```
 
-## Tagging a build
+## Tag an Automated Build
 
-Tagging a build that has been automatically trigged by GitHub can be done on the repository page.
-After selecting a given build, the right side of the page displays tag information which when clicked provides a drop-down menu with the option of creating a new tag.
+After getting automated builds working, it may be desired to tag a specific build with a name. By default, the last image pushed to a repository will be tagged as `latest`.
+Because tagging is [usually done client side](https://docs.docker.com/userguide/dockerimages/#setting-tags-on-an-image) before an image is pushed, it may not be clear how to tag an image that was built and pushed by GitHub. Luckily, there is a interface for doing so on the repository page. After clicking to select a given build on the build graph, the right side of the page displays tag information which when clicked provides a drop-down menu with the option of creating a new tag.
 
 <img src="{{site.url}}/docs/enterprise-registry/github-build/new-tag.png" class="img-center" alt="Create a new tag"/>
 
