@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Amazon ECS
+title: Amazon EC2 Container Service
 category: running_coreos
 sub_category: cloud_provider
 supported: true
