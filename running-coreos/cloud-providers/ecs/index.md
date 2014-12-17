@@ -7,10 +7,9 @@ supported: true
 weight: 1
 ---
 
-#Amazon ECS on CoreOS
+# Amazon ECS on CoreOS
 
-Today, Amazon officially launched their [EC2 Container Service](http://aws.amazon.com/ecs/).
-ECS is a container management service which provides a set of APIs for scheduling container workloads across EC2 clusters. It supports Docker and it runs on CoreOS.
+At re:Invent 2014, AWS launched [Amazon EC2 Container Service (ECS)](http://aws.amazon.com/ecs/). ECS is a container management service which provides a set of APIs for scheduling container workloads across EC2 clusters. It supports Docker and it runs on CoreOS.
 
 In order to use ECS on CoreOS, you’ll need to add the “amazon-ecs-agent.service” unit to your existing cloud-config (or just use the cloud-config below in its entirety).
 Be sure to replace “your_cluster_name” with an appropriate value or leave it blank to use the default cluster.
