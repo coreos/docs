@@ -75,6 +75,8 @@ docker run -d coreos/apache [process]
 
 After you are comfortable with the mechanics of running containers by hand, it's recommended to use [systemd units]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd) and/or [fleet]({{site.url}}/docs/launching-containers/launching/launching-containers-fleet) to run your containers on a cluster of CoreOS machines.
 
+Do not run containers with detached mode inside of systemd unit files. Detached mode prevents your init system, in our case systemd, from monitoring the process that owns the container because detached mode forks it into the background. To prevent this issue, just omit the `-d` flag if you aren't running something manually.
+
 ### Run Apache in Foreground
 
 We need to run the apache process in the foreground, since our container will stop when the process specified in the `docker run` command stops. We can do this with a flag `-D` when starting the apache2 process:
