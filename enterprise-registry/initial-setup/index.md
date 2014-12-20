@@ -70,6 +70,12 @@ SERVER_HOSTNAME: '(FILL IN HERE: registry.mycorp.com)'
 # A logo to use for your enterprise
 ENTERPRISE_LOGO_URL: '(FILL IN HERE: http://someurl/...)'
 
+# Avatar generation
+# Possible values:
+#  local
+#  gravatar
+AVATAR_KIND: 'local'
+
 # Contact information for the contact page.
 # Supported URL forms:
 #   email: mailto:some@email.com
