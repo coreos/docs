@@ -102,7 +102,7 @@ coreos:
         command: restart
 ```
 
-## Auto-Updates with a Maintainence Window
+## Auto-Updates with a Maintainance Window
 
 A timeframe in which to update can be specified by using two systemd units, a very simple service and a timer to run it on your schedule:
 
