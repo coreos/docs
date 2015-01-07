@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Configuring flannel
+title: Configuring flannel Networking
 category: cluster_management
 sub_category: setting_up
 weight: 10
@@ -8,7 +8,7 @@ weight: 10
 
 # Configuring flannel for Container Networking
 
-*Note*: flannel is only available in CoreOS versions 554 and later.
+*Note*: flannel is only available in [CoreOS versions 554]({{site.url}}/releases/#554.0.0) and later.
 
 ## Overview
 
@@ -70,7 +70,8 @@ minimum and maximum subnet IP addresses is overridable in config:
 This config instructs flannel to allocate /28 subnets to individual hosts and make sure not to issue subnets outside of 10.1.10.0 - 10.1.50.0 range.
 
 ### Firewall
-flannel uses UDP port 8285 for sending encapsulated IP packets. Make sure to enable this traffic to pass between the hosts.
+
+flannel uses UDP port 8285 for sending encapsulated IP packets. Make sure to enable this traffic to pass between the hosts. If you find that you can't ping containers across hosts, this port is probably not open.
 
 ### Enabling flannel via Cloud-Config
 The last step is to enable `flanneld.service` in the cloud-config by adding `command: start` directive:
@@ -103,7 +104,7 @@ is started with `--iptables=false` and containers that it executes need to run w
 Here is the sequence of events that happens when `flanneld.service` is started followed by a service that runs a Docker container (e.g. redis server):
 
 1. `early-docker.service` gets started since it is a dependency of `flanneld.service`.
-2. `early-docker.service` launches a Docker on a separate Unix socket -- `/var/run/early-docker.sock`.
+2. `early-docker.service` launches a Docker on a separate Unix socket &mdash; `/var/run/early-docker.sock`.
 3. `flanneld.service` executes `DOCKER_HOST=unix:///var/run/early-docker.sock docker run --net=host quay.io/coreos/flannel:$FLANNEL_VER` (actual invokation is slightly more complex).
 4. flanneld starts and writes out `/run/flannel/subnet.env` with the acquired IP subnet information.
 5. `ExecStartPost` in `flanneld.service` converts information in `/run/flannel/subnet.env` into Docker daemon command line args (such as `--bip` and `--mtu`),
