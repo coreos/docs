@@ -102,6 +102,7 @@ echo "This machine is dedicated to computing Pi" > /etc/motd.d/pi.conf
 ```
 
 Or via cloud-config:
+
 ```yaml
 #cloud-config
 
