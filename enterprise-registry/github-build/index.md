@@ -81,4 +81,6 @@ Because tagging is [usually done client side](https://docs.docker.com/userguide/
 
 <img src="{{site.url}}/docs/enterprise-registry/github-build/new-tag.png" class="img-center" alt="Create a new tag"/>
 
+Trying to find a specific image for a commit after it is no longer tagged as latest? The build name (visible in the build history of a repository) will match the commit SHA value.
+
 There is currently no ability to automatically tag GitHub triggered builds.
