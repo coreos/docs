@@ -132,6 +132,13 @@ mkdir -p /var/lib/libvirt/images/coreos0/configdrive/openstack/latest
 touch /var/lib/libvirt/images/coreos0/configdrive/openstack/latest/user_data
 ```
 
+If the host uses SELinux, allow VM to access the config:
+
+```sh
+semanage fcontext -a -t virt_content_t "/var/lib/libvirt/images/coreos0/configdrive(/.*)?"
+restorecon -R "/var/lib/libvirt/images/coreos0/configdrive"
+```
+
 The `user_data` file may contain a script for a [cloud config][cloud-config]
 file. We recommend using ssh keys to log into the VM so at a minimum the
 contents of `user_data` should look something like this:
