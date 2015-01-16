@@ -153,4 +153,4 @@ The public discovery service is just an etcd cluster made available to the publi
 
 Since etcd is designed to this type of leader election, it was an obvious choice to use it for everyone's initial leader election. This means that it's easy to run your own etcd cluster for this purpose.
 
-If you're interested in how discovery API works behind the scenes in etcd, read about the [Discovery Protocol](https://github.com/coreos/etcd/blob/master/Documentation/discovery-protocol.md).
+If you're interested in how discovery API works behind the scenes in etcd, read about [etcd clustering](https://github.com/coreos/etcd/blob/master/Documentation/clustering.md).
