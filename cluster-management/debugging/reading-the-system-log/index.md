@@ -54,7 +54,7 @@ Dec 22 12:32:39 localhost docker[9772]: apache2: Could not reliably determine th
 
 ## Read Entries Since Boot
 
-Reading just the entires since the last boot is an easy way to troubleshoot services that are faiing to start properly:
+Reading just the entries since the last boot is an easy way to troubleshoot services that are failing to start properly:
 
 ```sh
 journalctl --boot

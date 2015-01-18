@@ -105,7 +105,7 @@ Here is the sequence of events that happens when `flanneld.service` is started f
 
 1. `early-docker.service` gets started since it is a dependency of `flanneld.service`.
 2. `early-docker.service` launches a Docker on a separate Unix socket &mdash; `/var/run/early-docker.sock`.
-3. `flanneld.service` executes `DOCKER_HOST=unix:///var/run/early-docker.sock docker run --net=host quay.io/coreos/flannel:$FLANNEL_VER` (actual invokation is slightly more complex).
+3. `flanneld.service` executes `DOCKER_HOST=unix:///var/run/early-docker.sock docker run --net=host quay.io/coreos/flannel:$FLANNEL_VER` (actual invocation is slightly more complex).
 4. flanneld starts and writes out `/run/flannel/subnet.env` with the acquired IP subnet information.
 5. `ExecStartPost` in `flanneld.service` converts information in `/run/flannel/subnet.env` into Docker daemon command line args (such as `--bip` and `--mtu`),
 storing them in `/run/docker_opts.env`

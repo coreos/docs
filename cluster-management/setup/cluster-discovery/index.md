@@ -53,7 +53,7 @@ Starting a CoreOS cluster requires one of the new machines to become the first l
 4. Machine 2 boots and submits its `peer-addr` address `10.10.10.2`. It also reads back the list of existing peers (only `10.10.10.1`) and attempts to connect to the address listed.
 5. Machine 2 connects to Machine 1 and is now part of the cluster as a follower.
 6. Machine 3 boots and submits its `peer-addr` address `10.10.10.3`. It reads back the list of peers ( `10.10.10.1` and `10.10.10.2`) and selects one of the addresses to try first. When it connects to a machine in the cluster, the machine is given a full list of the existing other members of the cluster.
-7. The cluster is now bootstrapped with an intial leader and two followers.
+7. The cluster is now bootstrapped with an initial leader and two followers.
 
 There are two interesting things happening during this process.
 
@@ -85,7 +85,7 @@ journalctl _EXE=/usr/bin/coreos-cloudinit
 
 ### Stale Tokens
 
-Another common problem with cluster discovery is attempting to boot a new cluster with a stale discovery URL. As explained above, the intial leader election is recorded into the URL, which indicates that the new etcd instance should be joining an existing cluster.
+Another common problem with cluster discovery is attempting to boot a new cluster with a stale discovery URL. As explained above, the initial leader election is recorded into the URL, which indicates that the new etcd instance should be joining an existing cluster.
 
 If you provide a stale discovery URL, the new machines will attempt to connect to each of the old peer addresses, which will fail since they don't exist, and the bootstrapping process will fail.
 
