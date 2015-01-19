@@ -75,7 +75,7 @@ The `reboot` strategy works exactly like it sounds: the machine is rebooted as s
 
 ### Off
 
-The `off` strategy is also straightforward. The update will be installed onto the passive partion and await a reboot command to complete the update. We don't recommend this strategy unless you reboot frequently as part of your normal operations workflow.
+The `off` strategy is also straightforward. The update will be installed onto the passive partition and await a reboot command to complete the update. We don't recommend this strategy unless you reboot frequently as part of your normal operations workflow.
 
 ## Updating PXE/iPXE Machines
 
@@ -102,7 +102,7 @@ coreos:
         command: restart
 ```
 
-## Auto-Updates with a Maintainance Window
+## Auto-Updates with a Maintenance Window
 
 A timeframe in which to update can be specified by using two systemd units, a very simple service and a timer to run it on your schedule:
 

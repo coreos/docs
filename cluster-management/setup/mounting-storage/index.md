@@ -30,7 +30,7 @@ It's important to note that [systemd requires](http://www.freedesktop.org/softwa
 
 ## Use Attached Storage for Docker
 
-Docker containers can be very large and debugging a build process makes it easy to accumulate hundreds of containers. It's advantagous to use attached storage to expand your capacity for container images. Be aware that some cloud providers treat certain disks as ephemeral and you will lose all docker images contained on that disk.
+Docker containers can be very large and debugging a build process makes it easy to accumulate hundreds of containers. It's advantageous to use attached storage to expand your capacity for container images. Be aware that some cloud providers treat certain disks as ephemeral and you will lose all docker images contained on that disk.
 
 We're going to bind mount a btrfs device to `/var/lib/docker`, where docker stores images. We can do this on the fly when the machines starts up with a oneshot unit that formats the drive and another one that runs afterwards to mount it. Be sure to hardcode the correct device or look for a device by label:
 
