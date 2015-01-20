@@ -53,7 +53,7 @@ coreos:
   units:
     - name: docker-tcp.socket
       command: start
-      enable: yes
+      enable: true
       content: |
         [Unit]
         Description=Docker Socket for the API
@@ -65,15 +65,6 @@ coreos:
 
         [Install]
         WantedBy=sockets.target
-    - name: enable-docker-tcp.service
-      command: start
-      content: |
-        [Unit]
-        Description=Enable the Docker Socket for the API
-
-        [Service]
-        Type=oneshot
-        ExecStart=/usr/bin/systemctl enable docker-tcp.socket
 ```
 
 To keep access to the port local, replace the `ListenStream` configuration above with:
