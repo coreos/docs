@@ -117,6 +117,8 @@ ExecStopPost=/usr/bin/etcdctl rm /domains/example.com/10.10.10.123:8081
 WantedBy=multi-user.target
 ```
 
+While it's possible to manage the starting, stopping, and removal of the container in a single `ExecStart` command by using `docker run --rm`, it's a good idea to separate the container's lifecycle into `ExecStartPre`, `ExecStart`, and `ExecStop` options as we've done above. This gives you a chance to inspect the container's state after it stops or fails.
+
 ## Unit Specifiers
 
 In our last example we had to hardcode our IP address when we announced our container in etcd. That's not scalable and systemd has a few variables built in to help us out. Here's a few of the most useful:
