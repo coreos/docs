@@ -61,6 +61,8 @@ For reference here are the rest of the `coreos-install` options:
 -o OEM      OEM type to install (e.g. openstack)
 -c CLOUD    Insert a cloud-init config to be executed on boot.
 -t TMPDIR   Temporary location with enough space to download images.
+-v          Super verbose, for debugging.
+-b BASEURL  URL to the image mirror
 ```
 
 ## Cloud Config
