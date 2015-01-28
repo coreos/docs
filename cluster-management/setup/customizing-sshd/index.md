@@ -49,6 +49,7 @@ coreos:
       [Socket]
       ListenStream=2222
       Accept=yes
+      FreeBind=true
 ```
 
 ## Further Reading
