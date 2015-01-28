@@ -78,5 +78,5 @@ When the container starts, each build worker will auto-register with the Enterpr
 ### Setup GitHub Build (optional)
 
 If your organization plans to have builds be conducted via pushes to GitHub (or GitHub Enterprise), please continue
-with the <a href="../github-build/">Setting up Github Build</a>.
+with the <a href="../github-build/">Setting up GitHub Build</a>.
 
