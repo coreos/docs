@@ -2,6 +2,8 @@
 
 These are publicly accessible versions of the documentation on [coreos.com](http://coreos.com/docs/).
 
+Check out the [help-wanted tag](https://github.com/coreos/docs/issues?q=is%3Aopen+label%3Ahelp-wanted) if you're not sure what to help out with.
+
 1. Fork this repo
 2. Send a Pull Request
 3. We will get your fix up on [coreos.com](http://coreos.com/docs/)
