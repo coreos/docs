@@ -104,6 +104,8 @@ coreos:
 
 ## Auto-Updates with a Maintenance Window
 
+In this example, auto-reboot strategy is turned off so we can schedule it in a maintencence window in which a script checks if an update has been downloaded. If a reboot is needed and etcd service is running on the system, then call locksmithctl reboot to get a lock and reboot; otherwise, run a simple reboot after a random delay to prevent workers from rebooting at the same time. 
+
 A timeframe in which to update can be specified by using two systemd units, a very simple service and a timer to run it on your schedule:
 
 #### update-window.service
@@ -113,20 +115,46 @@ A timeframe in which to update can be specified by using two systemd units, a ve
 Description=Reboot if an update has been downloaded
 
 [Service]
-ExecStart=/usr/bin/bash -c 'if update_engine_client -status | grep NEED_REBOOT; then reboot; fi'
+ExecStart=/opt/bin/update-window.sh
 ```
 
 #### update-window.timer
 
 ```yaml
 [Unit]
-Description=Reboot if needed at 05:00 daily
+Description=Reboot timer
 
 [Timer]
-OnCalendar=*-*-* 05:00:00
+OnCalendar=*-*-* 05,06:00/30:00
 ```
-
 More [information on systemd timers](http://www.freedesktop.org/software/systemd/man/systemd.timer.html) and the available ways you can configure your maintenance window.
+
+#### update-window.sh
+
+This script should be installed in a location to match the script path used in the update-window.service unit, e.g. /opt/bin/update-window.sh.
+
+```yaml
+#!/bin/bash
+
+# If etcd is active, this uses locksmith. Otherwise, it randomly delays. 
+delay=$(/usr/bin/expr $RANDOM % 3600 )
+rebootflag='NEED_REBOOT'
+
+if update_engine_client -status | grep $rebootflag;
+then
+    echo -n "etcd is "
+    if systemctl is-active etcd;
+    then
+        echo "Update reboot with locksmithctl."
+        locksmithctl reboot
+    else
+        echo "Update reboot in $delay seconds."
+        sleep $delay
+        reboot
+    fi
+fi
+exit 0
+```
 
 ### Cloud-Config
 
@@ -137,23 +165,46 @@ coreos:
   update:
     reboot-strategy: off
   units:
-    -
-      name: update-window.service
+    - name: update-window.service
       runtime: true
       content: |
         [Unit]
         Description=Reboot if an update has been downloaded
 
         [Service]
-        ExecStart=/usr/bin/bash -c 'if update_engine_client -status | grep NEED_REBOOT; then locksmithctl reboot; fi' 
-    -
-      name: update-window.timer
+        ExecStart=/opt/bin/update-window.sh 
+    - name: update-window.timer
       runtime: true
       command: start
       content: |
         [Unit]
-        Description=Reboot if needed at 05:00 daily
+        Description=Reboot timer
 
         [Timer]
-        OnCalendar=*-*-* 05:00:00
+        OnCalendar=*-*-* 05,06:00/30:00
+        
+write_files:
+  - path: /opt/bin/update-window.sh
+    permissions: 0755
+    owner: root
+    content: |
+        #!/bin/bash
+        # If etcd is active, this uses locksmith. Otherwise, it randomly delays. 
+        delay=$(/usr/bin/expr $RANDOM % 3600 )
+        rebootflag='NEED_REBOOT'
+
+        if update_engine_client -status | grep $rebootflag;
+        then
+            echo -n "etcd is "
+            if systemctl is-active etcd;
+            then
+                echo "Update reboot with locksmithctl."
+                locksmithctl reboot
+            else
+                echo "Update reboot in $delay seconds."
+                sleep $delay
+                reboot
+            fi
+        fi
+        exit 0
 ```
