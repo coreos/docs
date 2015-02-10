@@ -104,6 +104,8 @@ coreos:
 
 ## Auto-Updates with a Maintenance Window
 
+In this example, auto-reboot strategy is turned off so we can schedule it in a maintencence window. We create a script to run during the maintenace window. If an update has been downloaded and etcd service is running on the system, then locksmithctl reboot is used to request reboot lock, otherwise, run a simple reboot after a random delay between 0 and 3600 seconds to prevent workers from rebooting at the same time. 
+
 A timeframe in which to update can be specified by using two systemd units, a very simple service and a timer to run it on your schedule:
 
 #### update-window.service
@@ -113,22 +115,57 @@ A timeframe in which to update can be specified by using two systemd units, a ve
 Description=Reboot if an update has been downloaded
 
 [Service]
-ExecStart=/usr/bin/bash -c 'if update_engine_client -status | grep NEED_REBOOT; then reboot; fi'
+ExecStart=/usr/bin/bash /opt/bin/update-window.sh
 ```
 
 #### update-window.timer
 
 ```yaml
 [Unit]
-Description=Reboot if needed at 05:00 daily
+Description=Reboot timer
 
 [Timer]
-OnCalendar=*-*-* 05:00:00
-```
+OnCalendar=*-*-* 05,06:10/20:00
 
+[Install]
+WantedBy=timers.target
+```
 More [information on systemd timers](http://www.freedesktop.org/software/systemd/man/systemd.timer.html) and the available ways you can configure your maintenance window.
 
+#### update-window.sh
+
+This script should be installed in a localtion to match the script path used in update-window.service, e.g. /opt/bin/update-window.sh.
+
+
+```yaml
+#!/bin/bash
+
+# Randomly delay reboot between 0 and 3600 seconds.
+# If etcd is not running, simply reboot, otherwise use locksmithctl reboot to get reboot lock.
+delay=$(/usr/bin/expr $RANDOM % 3600 )
+rebootflag='NEED_REBOOT'
+# For testing force reboot, uncomment the following line
+#rebootflag='VERSION'
+
+if update_engine_client -status | grep $rebootflag;
+then
+    echo -n "etcd is "
+        if systemctl is-active etcd;
+        then
+            echo "Update reboot with locksmithctl."
+            locksmithctl reboot
+        else
+            echo "Update reboot in $delay seconds."
+            sleep $delay
+            reboot
+        fi
+fi
+fi
+exit 0
+```
+
 ### Cloud-Config
+
 
 ```yaml
 #cloud-config
@@ -145,15 +182,15 @@ coreos:
         Description=Reboot if an update has been downloaded
 
         [Service]
-        ExecStart=/usr/bin/bash -c 'if update_engine_client -status | grep NEED_REBOOT; then locksmithctl reboot; fi' 
+        ExecStart=/usr/bin/bash /opt/bin/update-window.sh 
     -
       name: update-window.timer
       runtime: true
       command: start
       content: |
         [Unit]
-        Description=Reboot if needed at 05:00 daily
+        Description=Reboot if needed at 05:10,05:30,05:50, and 06:10,06:30,05:50.
 
         [Timer]
-        OnCalendar=*-*-* 05:00:00
+        OnCalendar=*-*-* 05,06:10/20:00
 ```
