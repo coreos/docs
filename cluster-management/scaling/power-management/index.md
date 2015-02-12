@@ -28,12 +28,14 @@ Several governors are available:
 | `userspace`        | Controlled by a userspace application via the `scaling_setspeed` file |
 
 The "conservative" governor can be used instead using the following shell commands:
+
 ```sh
 modprobe cpufreq_conservative
 echo "conservative" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor > /dev/null
 ```
 
 This can be configured with [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/#coreos) as well:
+
 ```yaml
 coreos:
   units:
