@@ -156,7 +156,7 @@ write_files:
     owner: core
     content: |
       # configure fleetctl to work with our etcd servers set above
-      export FLEETCTL_ENDPOINT=/var/run/fleet.sock
+      export FLEETCTL_ENDPOINT=unix:///var/run/fleet.sock
       export FLEETCTL_EXPERIMENTAL_API=true
 ```
 
@@ -252,6 +252,6 @@ write_files:
     owner: core
     content: |
       # configure fleetctl to work with our etcd servers set above
-      export FLEETCTL_ENDPOINT=/var/run/fleet.sock
+      export FLEETCTL_ENDPOINT=unix:///var/run/fleet.sock
       export FLEETCTL_EXPERIMENTAL_API=true
 ```
