@@ -8,12 +8,13 @@ weight: 5
 
 # On-Premise Installation
 
-CoreOS Enterprise Registry requires three components to operate successfully:
+CoreOS Enterprise Registry requires three components to be running to begin the setup process:
 
 - A supported database (MySQL, Postgres)
 - A Redis instance (for real-time events)
 - The Enterprise Registry image
-- (optional) An SMTP server
+
+**NOTE**: Please have the host and port of the database and the Redis instance ready.
 
 
 ## Preparing the Database
@@ -57,10 +58,14 @@ paths to the directories created above:
 sudo docker run --restart=always -p 443:443 -p 80:80 --privileged=true -v /local/path/to/the/config/directory:/conf/stack -v /local/path/to/the/storage/directory:/datastorage -d quay.io/coreos/registry
 ```
 
+<img src="{{site.url}}/docs/enterprise-registry/initial-setup/db-setup-full.png" class="img-center" alt="Enterprise Registry Setup Screen"/>
+
 Once started, visit: http://yourhost/setup, wait for the page to load (it may take a minute or two) and follow instructions there to setup the enterprise registry.
 
 **NOTE**: The Enterprise Registry will restart itself a few times during this setup process. If the container does not automatically come
 back up, simply run the command above again.
+
+<img src="{{site.url}}/docs/enterprise-registry/initial-setup/container-restart.png" class="img-center" alt="Enterprise Registry Restart"/>
 
 
 ## Verifying the Registry status
