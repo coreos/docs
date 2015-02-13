@@ -2,14 +2,13 @@
 layout: docs
 category: running_coreos
 sub_category: cloud_provider
-supported: true
 weight: 6
 title: NIFTY Cloud
 ---
 
 # ニフティクラウド上でのCoreOSの起動
 
-事前に[ニフティクラウド CLI][cli-documentation]をインストールする必要があります。
+事前に[ニフティクラウド CLI][cli-documentation]をインストールする必要があります。These instructions are also [available in English](../).
 
 [cli-documentation]: http://cloud.nifty.com/api/cli/
 

@@ -1,15 +1,14 @@
 ---
 layout: docs
 category: running_coreos
-sub_category: cloud_provider
-supported: true
+sub_category: none
 weight: 6
 title: NIFTY Cloud
 ---
 
 # Running CoreOS on NIFTY Cloud
 
-Before proceeding, you will need to [install NIFTY Cloud CLI][cli-documentation].
+NIFTY Cloud is a Japanese cloud computing provider. These instructions are also [available in Japaense](JA_JP/). Before proceeding, you will need to [install NIFTY Cloud CLI][cli-documentation].
 
 [cli-documentation]: https://translate.google.com/translate?hl=en&sl=ja&tl=en&u=http%3A%2F%2Fcloud.nifty.com%2Fapi%2Fcli%2F
 
