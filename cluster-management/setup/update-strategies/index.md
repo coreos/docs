@@ -187,12 +187,9 @@ write_files:
   - path: /opt/bin/update-window.sh
     content: |
         #!/bin/bash
-        # Randomly delay reboot between 0 and 3600 seconds.
-        # If etcd is not running, simply reboot, otherwise use locksmithctl reboot to get reboot lock.
+        # If etcd is active, this uses locksmith. Otherwise, it randomly delays. 
         delay=$(/usr/bin/expr $RANDOM % 3600 )
         rebootflag='NEED_REBOOT'
-        # For testing force reboot, uncomment the following line
-        #rebootflag='VERSION'
 
         if update_engine_client -status | grep $rebootflag;
         then
