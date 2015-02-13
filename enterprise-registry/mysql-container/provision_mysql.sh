@@ -1,5 +1,6 @@
 #!/bin/bash
 # A simple shell script to provision a dedicated MySQL container for the CoreOS Enterprise Registery
+set -e
 
 # Edit the following three values to your liking:
 MYSQL_USER="coreosuser"
@@ -8,17 +9,13 @@ MYSQL_CONTAINER_NAME="mysql"
 
 # Do not edit these values:
 # (creates a 32 char password for the MySQL root user and the Enterprise Registery DB user)
-MYSQL_ROOT_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | sed 1q)
-MYSQL_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | sed 1q)
-
-echo "Pull the Oracle MySQL verified Docker image from the public Docker registry::
-docker \
-  pull \
-  mysql:5.6;
+MYSQL_ROOT_PASSWORD=$(cat /dev/urandom | LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 32 | sed 1q)
+MYSQL_PASSWORD=$(cat /dev/urandom | LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 32 | sed 1q)
 
 echo "Start the Oracle MySQL container:"
 # It will provision a blank database for the Enterprise Registery upon first start.
 # This initial provisioning can take up to 30 seconds.
+
 docker \
   run \
   --detach \
@@ -28,10 +25,15 @@ docker \
   --env MYSQL_DATABASE=${MYSQL_DATABASE} \
   --name ${MYSQL_CONTAINER_NAME} \
   --publish 3306:3306 \
-  mysql:5.6;
+  mysql:5.7;
 
-echo "Sleeping for 30 seconds to allow time for the DB to be provisioned:"
-sleep 30
+echo "Sleeping for 10 seconds to allow time for the DB to be provisioned:"
+for i in `seq 1 10`;
+do
+  echo "."
+  sleep 1
+done
 
-# Echo the DB_URL that needs to be entered into the config.yaml file
-echo "DB_URI: 'mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db/${MYSQL_DATABASE}'"
+echo "Database '${MYSQL_DATABASE}' running."
+echo "  Username: ${MYSQL_USER}"
+echo "  Password: ${MYSQL_PASSWORD}"
