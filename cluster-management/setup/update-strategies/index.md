@@ -178,10 +178,10 @@ coreos:
       command: start
       content: |
         [Unit]
-        Description=Reboot if needed at 05:10,05:30,05:50, and 06:10,06:30,06:50.
+        Description=Reboot timer
 
         [Timer]
-        OnCalendar=*-*-* 05,06:10/20:00
+        OnCalendar=*-*-* 05,06:00/30:00
         
 write_files:
   - path: /opt/bin/update-window.sh
