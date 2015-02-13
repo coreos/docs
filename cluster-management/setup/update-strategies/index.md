@@ -125,10 +125,7 @@ ExecStart=/usr/bin/bash /opt/bin/update-window.sh
 Description=Reboot timer
 
 [Timer]
-OnCalendar=*-*-* 05,06:10/20:00
-
-[Install]
-WantedBy=timers.target
+OnCalendar=*-*-* 05,06:00/30:00
 ```
 More [information on systemd timers](http://www.freedesktop.org/software/systemd/man/systemd.timer.html) and the available ways you can configure your maintenance window.
 
@@ -139,12 +136,9 @@ This script should be installed in a location to match the script path used in t
 ```yaml
 #!/bin/bash
 
-# Randomly delay reboot between 0 and 3600 seconds.
-# If etcd is not running, simply reboot, otherwise use locksmithctl reboot to get reboot lock.
+# If etcd is active, this uses locksmith. Otherwise, it randomly delays. 
 delay=$(/usr/bin/expr $RANDOM % 3600 )
 rebootflag='NEED_REBOOT'
-# For testing force reboot, uncomment the following line
-#rebootflag='VERSION'
 
 if update_engine_client -status | grep $rebootflag;
 then
