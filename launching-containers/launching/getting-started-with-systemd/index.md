@@ -44,7 +44,7 @@ The description shows up in the systemd log and a few other places. Write someth
 
 `After=docker.service` and `Requires=docker.service` means this unit will only start after `docker.service` is active. You can define as many of these as you want.
 
-`ExecStart=` allows you to specify any command that you'd like to run when this unit is started. The pid assigned to this process is what systemd will monitor to determine whether the process has crashed or not. Do not run docker containers with `-d` as this will prevent the container from starting as a child of this pid. systemd will think the process has exited and the unit will be stopped.
+`ExecStart=` allows you to specify any command that you'd like to run when this unit is started. The pid assigned to this process is what systemd will monitor to determine whether the process has crashed or not. Do not run docker containers with `-d` in `ExecStart` as then the docker client exits right after the container is initialized and systemd stops the unit while the container still runs. Without `-d` the docker client process stays attached to the container until the container stops.
 
 `WantedBy=` is the target that this unit is a part of.
 
@@ -91,11 +91,11 @@ We can use `ExecStartPre` to scrub existing container state. The `docker kill` w
 
 `docker rm` will remove the container and `docker pull` will pull down the latest version. You can optionally pull down a specific version as a docker tag: `coreos/apache:1.2.3`
 
-`ExecStart` is where the container is started from the container image that we pulled above.
+To ensure that our container is started and its network and volumes are initialized before systemd starts other containers that depends on them, we use `ExecStartPre` to start the container in the background from the image that we pulled above using `docker run -d`. When that command returns, we have a fully initialized container running. Then we use `docker logs -f` in `ExecStart` to receive logs from the container as long as the container runs and anounce about the container from `ExecStartPost` with the etcdctl command.
 
-Since our container will be started in `ExecStart`, it makes sense for our etcd command to run as `ExecStartPost` to ensure that our container is started and functioning.
+When the service is told to stop, we need to stop the docker container in `ExecStop` using its `--name` from the run command. In addition we use `ExecStopPost` to tell docker to stop the container if `docker logs` from above exits unexpectedly before the container is instructed to stop. 
 
-When the service is told to stop, we need to stop the docker container using its `--name` from the run command. We also need to clean up our etcd key when the container exits or the unit is failed by using `ExecStopPost`.
+We also need to clean up our etcd key when the container exits or the unit is failed by using another `ExecStopPost`.
 
 ```ini
 [Unit]
@@ -108,16 +108,18 @@ TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill apache1
 ExecStartPre=-/usr/bin/docker rm apache1
 ExecStartPre=/usr/bin/docker pull coreos/apache
-ExecStart=/usr/bin/docker run --name apache1 -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
+ExecStartPre=/usr/bin/docker run -d --name apache1 -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
+ExecStart=/usr/bin/docker logs -f 
 ExecStartPost=/usr/bin/etcdctl set /domains/example.com/10.10.10.123:8081 running
 ExecStop=/usr/bin/docker stop apache1
+ExecStopPost=/usr/bin/docker stop apache1
 ExecStopPost=/usr/bin/etcdctl rm /domains/example.com/10.10.10.123:8081
 
 [Install]
 WantedBy=multi-user.target
 ```
 
-While it's possible to manage the starting, stopping, and removal of the container in a single `ExecStart` command by using `docker run --rm`, it's a good idea to separate the container's lifecycle into `ExecStartPre`, `ExecStart`, and `ExecStop` options as we've done above. This gives you a chance to inspect the container's state after it stops or fails.
+While it's possible to manage the starting, stopping, and removal of the container in a single `ExecStart` command by using `docker run --rm`, it's a good idea to separate the container's lifecycle into `ExecStartPre`, `ExecStart`, and `ExecStop` options as we've done above. This gives you a chance to inspect the container's state after it stops or fails while reliably tracking container startup.
 
 ## Unit Specifiers
 
