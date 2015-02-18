@@ -18,61 +18,25 @@ If you have not yet done so, please <a href="{{site.url}}/docs/enterprise-regist
 
 ## Create an OAuth Application in GitHub
 
-The first step in supporting GitHub Build is to create an OAuth Application representing the
-Enterprise Registry *for building* in GitHub or GitHub Enterprise.
+Following the instructions at <a href="{{site.url}}/docs/enterprise-registry/github-app/">Create a GitHub Application</a>.
 
-*Note:* A *separate* application must be setup for GitHub build, independent of the one used for [GitHub Authentication]({{site.url}}/docs/enterprise-registry/github-auth/).
+**NOTE:** This application must be **different** from that used for GitHub Authentication.
 
-- Log into GitHub (Enterprise)
-- Visit the applications page under your organization's settings and click "<a href="https://github.com/settings/applications/new">Register New Application</a>".
+## Visit the Management Panel
 
+Sign in to a super user account and visit `http://yourregister/superuser` to view the management panel panel:
 
-<img src="{{site.url}}/docs/enterprise-registry/github-auth/register-app.png" class="img-center" alt="Register Application"/>
+<img src="../build-support/superuser.png" class="img-center" alt="Enterprise Registry Management Panel"/>
 
-- Enter your registry's URL as the application URL
+## Enable GitHub Triggers
 
-Note: If using public GitHub, the URL entered must be accessible by *your users*. It can still be an internal URL.
+<img src="enable-trigger.png" class="img-center" alt="Enable GitHub Trigger"/>
 
-- Enter `https://{REGISTRY URL HERE}/oauth2/github/callback` as the Authorization callback URL.
-- Create the application and note down the `Client ID` and `Client Secret`.
-
-<img src="{{site.url}}/docs/enterprise-registry/github-auth/view-app.png" class="img-center" alt="View Application"/>
-
-## Change the Feature Flag
-
-Next, in the Enteprise Registry `config.yaml`, change the following to enable GitHub Build:
-
-```yaml
-FEATURE_GITHUB_BUILD: false
-```
-
-to
-
-```yaml
-FEATURE_GITHUB_BUILD: true
-```
-
-## Configure the Feature
-
-In the Enteprise Registry `config.yaml`, add the following section:
-
-```yaml
-
-# For GitHub Enterprise building
-GITHUB_TRIGGER_CONFIG: {
-  'GITHUB_ENDPOINT': '(GITHUB ENTERPRISE ENDPOINT HERE)',
-  'CLIENT_ID': '(CLIENT ID)',
-  'CLIENT_SECRET': '(CLIENT SECRET)',
-}
-
-# For GitHub.com building
-GITHUB_TRIGGER_CONFIG: {
-  'GITHUB_ENDPOINT': 'https://github.com/',
-  'API_ENDPOINT': 'https://api.github.com/',
-  'CLIENT_ID': '(CLIENT ID)',
-  'CLIENT_SECRET': '(CLIENT SECRET)',
-}
-```
+- Click the gear icon (<img src="../build-support/gear.png">) and scroll down to the section entitled <strong> Github (Enterprise) Build Triggers</strong>.
+- Check the "Enable GitHub Triggers" box
+- Fill in the credentials from the application created above
+- Click "Save Configuration Changes"
+- Restart the container (you will be prompted)
 
 ## Tag an Automated Build
 

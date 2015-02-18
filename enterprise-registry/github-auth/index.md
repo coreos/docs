@@ -13,59 +13,22 @@ CoreOS Enterprise Registry supports using GitHub or GitHub Enterprise as an auth
 
 ## Create an OAuth Application in GitHub
 
-The first step in supporting GitHub Authentication is to create an OAuth Application representing the
-Enterprise Registry in GitHub or GitHub Enterprise. 
+Following the instructions at <a href="{{site.url}}/docs/enterprise-registry/github-app/">Create a GitHub Application</a>.
 
-- Log into GitHub (Enterprise)
-- Visit the applications page under your organization's settings and click "<a href="https://github.com/settings/applications/new">Register New Application</a>". 
+**NOTE:** This application must be **different** from that used for GitHub Build Triggers.
 
-<img src="{{site.url}}/docs/enterprise-registry/github-auth/register-app.png" style="margin: 0 auto; display: block;"/>
+## Visit the Management Panel
 
-- Enter your registry's URL as the application URL
+Sign in to a super user account and visit `http://yourregister/superuser` to view the management panel panel:
 
-Note: If using public GitHub, the URL entered must be accessible by *your users*. It can still be an internal URL.
+<img src="../build-support/superuser.png" class="img-center" alt="Enterprise Registry Management Panel"/>
 
-- Enter `https://{REGISTRY URL HERE}/oauth2/github/callback` as the Authorization callback URL.
-- Create the application and note down the `Client ID` and `Client Secret`.
+## Enable GitHub Authentication
 
-<img src="{{site.url}}/docs/enterprise-registry/github-auth/view-app.png" style="margin: 0 auto; display: block;"/>
+<img src="enable-auth.png" class="img-center" alt="Enable GitHub Authentication"/>
 
-## Add new configuration
-
-In the Enteprise Registry `config.yaml`, add the following section:
-
-```yaml
-
-# For GitHub Enterprise authentication
-GITHUB_LOGIN_CONFIG: {
-  'GITHUB_ENDPOINT': '(GITHUB ENTERPRISE ENDPOINT HERE)',
-  'CLIENT_ID': '(CLIENT ID)',
-  'CLIENT_SECRET': '(CLIENT SECRET)',
-}
-
-# For GitHub.com authentication
-GITHUB_LOGIN_CONFIG: {
-  'GITHUB_ENDPOINT': 'https://github.com/',
-  'API_ENDPOINT': 'https://api.github.com/',
-  'CLIENT_ID': '(CLIENT ID)',
-  'CLIENT_SECRET': '(CLIENT SECRET)',
-}
-```
-
-## Change the feature flag
-
-Next, in the Enteprise Registry `config.yaml`, change the following to enable GitHub Login:
-
-```yaml
-FEATURE_GITHUB_LOGIN: false
-```
-
-to 
-
-```yaml
-FEATURE_GITHUB_LOGIN: true
-```
-
-## Restart Enterprise Registry
-
-Finally, restart the CoreOS Enterprise Registry image and the `Login with GitHub` button should be present.
+- Click the gear icon (<img src="../build-support/gear.png">) and scroll down to the section entitled <strong> Github (Enterprise) Authentication</strong>.
+- Check the "Enable GitHub Authentication" box
+- Fill in the credentials from the application created above
+- Click "Save Configuration Changes"
+- Restart the container (you will be prompted)
