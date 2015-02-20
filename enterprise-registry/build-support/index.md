@@ -24,7 +24,7 @@ Sign in to a super user account and visit `http://yourregister/superuser` to vie
 
 <img src="enable-build.png" class="img-center" alt="Enable Dockerfile Build"/>
 
-- Click the gear icon (<img src="gear.png">) and scroll down to the section entitled <strong> Dockerfile Build Support</strong>.
+- Click the configuration tab (<span class="fa fa-gear"></span>) and scroll down to the section entitled <strong> Dockerfile Build Support</strong>.
 - Check the "Enable Dockerfile Build" box
 - Click "Save Configuration Changes"
 - Restart the container (you will be prompted)

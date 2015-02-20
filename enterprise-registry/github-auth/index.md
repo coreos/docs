@@ -27,7 +27,7 @@ Sign in to a super user account and visit `http://yourregister/superuser` to vie
 
 <img src="enable-auth.png" class="img-center" alt="Enable GitHub Authentication"/>
 
-- Click the gear icon (<img src="../build-support/gear.png">) and scroll down to the section entitled <strong> Github (Enterprise) Authentication</strong>.
+- Click the configuration tab (<span class="fa fa-gear"></span>) and scroll down to the section entitled <strong> Github (Enterprise) Authentication</strong>.
 - Check the "Enable GitHub Authentication" box
 - Fill in the credentials from the application created above
 - Click "Save Configuration Changes"
