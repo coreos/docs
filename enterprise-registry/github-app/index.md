@@ -2,7 +2,7 @@
 layout: docs
 title: Register GitHub Application
 category: registry
-sub_category: setup
+sub_category: none
 forkurl: https://github.com/coreos/docs/blob/master/enterprise-registry/github-app/index.md
 weight: 5
 ---
