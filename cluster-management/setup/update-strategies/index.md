@@ -104,7 +104,7 @@ coreos:
 
 ## Auto-Updates with a Maintenance Window
 
-In this example, auto-reboot strategy is turned off so we can schedule it in a maintencence window in which a script checks if an update has been downloaded. If a reboot is needed and etcd service is running on the system, then call locksmithctl reboot to get a lock and reboot; otherwise, run a simple reboot after a random delay between 0 and 3600 seconds to prevent workers from rebooting at the same time. 
+In this example, auto-reboot strategy is turned off so we can schedule it in a maintencence window in which a script checks if an update has been downloaded. If a reboot is needed and etcd service is running on the system, then call locksmithctl reboot to get a lock and reboot; otherwise, run a simple reboot after a random delay to prevent workers from rebooting at the same time. 
 
 A timeframe in which to update can be specified by using two systemd units, a very simple service and a timer to run it on your schedule:
 
@@ -115,7 +115,7 @@ A timeframe in which to update can be specified by using two systemd units, a ve
 Description=Reboot if an update has been downloaded
 
 [Service]
-ExecStart=/usr/bin/bash /opt/bin/update-window.sh
+ExecStart=/opt/bin/update-window.sh
 ```
 
 #### update-window.timer
@@ -172,7 +172,7 @@ coreos:
         Description=Reboot if an update has been downloaded
 
         [Service]
-        ExecStart=/usr/bin/bash /opt/bin/update-window.sh 
+        ExecStart=/opt/bin/update-window.sh 
     - name: update-window.timer
       runtime: true
       command: start
@@ -185,6 +185,8 @@ coreos:
         
 write_files:
   - path: /opt/bin/update-window.sh
+    permissions: 0755
+    owner: root
     content: |
         #!/bin/bash
         # If etcd is active, this uses locksmith. Otherwise, it randomly delays. 
