@@ -24,7 +24,7 @@ Following the instructions at <a href="{{site.url}}/docs/enterprise-registry/git
 
 ## Visit the Management Panel
 
-Sign in to a super user account and visit `http://yourregister/superuser` to view the management panel panel:
+Sign in to a super user account and visit `http://yourregister/superuser` to view the management panel:
 
 <img src="../build-support/superuser.png" class="img-center" alt="Enterprise Registry Management Panel"/>
 

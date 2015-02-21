@@ -16,7 +16,7 @@ any issues encountered to support so we can fix it ASAP.
 
 ## Visit the Management Panel
 
-Sign in to a super user account and visit `http://yourregister/superuser` to view the management panel panel:
+Sign in to a super user account and visit `http://yourregister/superuser` to view the management panel:
 
 <img src="superuser.png" class="img-center" alt="Enterprise Registry Management Panel"/>
 
