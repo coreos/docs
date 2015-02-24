@@ -17,17 +17,17 @@ The simplest option to boot up CoreOS is to select the "CoreOS Stable" operating
 
 ## Cloud-Config
 
-First, you'll need to make two files available at public URL's -- your `cloud-config` file and the following shell script:
+First, you'll need to make two files available at public URL's -- your `cloud-config` file and a shell script which you need to create:
 
 ```sh
+URL="http://example.com/cloud-config.yaml"
+
+cat << EOF > ./cloud-config-bootstrap.sh\n
 #!/bin/bash
-
-# Location of your valid cloud-config file.
-URL = "http://example.com/cloud-config.yaml"
-
 curl -o cloud-config.yaml $URL
 sudo coreos-install -d /dev/vda -c cloud-config.yaml
 sudo reboot
+EOF
 ```
 
 Please be sure to check out [Using Cloud-Config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config).
