@@ -34,8 +34,6 @@ Please be sure to check out [Using Cloud-Config]({{site.url}}/docs/cluster-manag
 
 You must add to your ssh public key to your `cloud-config`'s [ssh authorized keys]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/#ssh_authorized_keys) so you'll be able to log in.
 
-Note that the `$private_ipv4` and `$public_ipv4` variables are only supported on Vultr if you have the 'cloud-config-url' option set on your kernel command line. Without this option, you will need to hard code these values into your `cloud-config` file.
-
 ## Choosing a Channel
 
 CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.
