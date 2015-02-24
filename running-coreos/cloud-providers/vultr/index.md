@@ -11,10 +11,27 @@ weight: 10
 These instructions will walk you through running a single CoreOS node. This guide assumes:
 
 * You have an account at [Vultr.com](https://www.vultr.com).
-* The location of your iPXE script (referenced later in the guide) is located at ```http://example.com/script.txt```
 * You have a public + private key combination generated. Here's a helpful guide if you need to generate these keys: [How to set up SSH keys](https://help.github.com/articles/generating-ssh-keys).
 
-The simplest option to boot up CoreOS is to load a script that contains the series of commands you'd otherwise need to manually type at the command line. This script needs to be publicly accessible (host this file on your own server). Save this script as a text file (.txt extension).
+The simplest option to boot up CoreOS is to select the "CoreOS Stable" operating system from Vultr's default offerings. However, most deployments require a custom `cloud-config`, which can only be achieved in Vultr with an iPXE script. The remainder of this article describes this process.
+
+First, you'll need to make two files available at public URL's -- your `cloud-config` file and the following shell script *(be sure to replace the cloud-config URL)*:
+
+```sh
+#!/bin/bash
+
+curl -o cloud-config.yaml URL_TO_YOUR_CLOUD_CONFIG
+sudo coreos-install -d /dev/vda -c cloud-config.yaml
+sudo reboot
+```
+
+## Cloud-Config
+
+Please be sure to check out [Using Cloud-Config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config).
+
+You must add to your ssh public key to your `cloud-config`'s [ssh authorized keys]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/#ssh_authorized_keys) so you'll be able to log in.
+
+Note that the `$private_ipv4` and `$public_ipv4` variables are only supported on Vultr if you have the 'cloud-config-url' option set on your kernel command line. Without this option, you will need to hard code these values into your `cloud-config` file.
 
 ## Choosing a Channel
 
@@ -36,7 +53,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
 <pre>#!ipxe
 
 set base-url http://alpha.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=http://169.254.169.254/2014-09-12/coreos-init sshkey="YOUR_PUBLIC_KEY_HERE"
+kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=URL_TO_YOUR_SHELL_SCRIPT
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
@@ -49,7 +66,7 @@ boot</pre>
 <pre>#!ipxe
 
 set base-url http://beta.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=http://169.254.169.254/2014-09-12/coreos-init sshkey="YOUR_PUBLIC_KEY_HERE"
+kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=URL_TO_YOUR_SHELL_SCRIPT
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
@@ -62,37 +79,26 @@ boot</pre>
 <pre>#!ipxe
 
 set base-url http://stable.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=http://169.254.169.254/2014-09-12/coreos-init sshkey="YOUR_PUBLIC_KEY_HERE"
+kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=URL_TO_YOUR_SHELL_SCRIPT
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
   </div>
 </div>
 
-Make sure to replace `YOUR_PUBLIC_KEY_HERE` with your actual public key, it will begin with `ssh-rsa...`.
+Go to My Servers > Startup Scripts > Add Startup Script, select type "PXE", and input your script. Be sure to replace the cloud-config-url with that of the shell script you created above.
 
 Additional reading can be found at [Booting CoreOS with iPXE](http://coreos.com/docs/running-coreos/bare-metal/booting-with-ipxe/) and [Embedded scripts for iPXE](http://ipxe.org/embed).
-
-## Using Cloud-Config
-
-Please be sure to check out [Using Cloud-Config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config).
-
-In particular, note that the `$private_ipv4` and `$public_ipv4` variables are only supported on Vultr if you have the 'cloud-config-url' option set on your kernel command line.
-
-Without this option, you will need to hard code these values into your `cloud-config` file.
 
 ## Create the VPS
 
 Create a new VPS (any server type and location of your choice), and then:
 
 1. For the "Operating System" select "Custom"
-2. Select iPXE boot
-3. Set the chain URL to the URL of your script (http://example.com/script.txt) *Note*: URL must be plain old HTTP, not HTTPS
-4. Click "Place Order"
+2. Select "iPXE Custom Script" and the script you created above.
+3. Click "Place Order"
 
-![Any location, any size, custom OS, iPXE boot, set chain URL, place order](http://s18.postimg.org/5ra9lioeh/vultr.png)
-
-Once you receive the welcome email the VPS will be ready to use (typically less than 2-3 minutes).
+Once you receive the "Subscription Activated" email the VPS will be ready to use.
 
 ## Accessing the VPS
 
@@ -100,26 +106,17 @@ You can now log in to CoreOS using the associated private key on your local comp
 
 SSH to the IP of your VPS, and specify the "core" user: ```ssh core@IP```
 
-
 ```sh
 $ ssh core@IP
 The authenticity of host 'IP (2a02:1348:17c:423d:24:19ff:fef1:8f6)' can't be established.
 RSA key fingerprint is 99:a5:13:60:07:5d:ac:eb:4b:f2:cb:c9:b2:ab:d7:21.
 Are you sure you want to continue connecting (yes/no)? yes
-
-Last login: Thu Oct 17 11:42:04 UTC 2013 from 127.0.0.1 on pts/0
-   ______                ____  _____
-  / ____/___  ________  / __ \/ ___/
- / /   / __ \/ ___/ _ \/ / / /\__ \
-/ /___/ /_/ / /  /  __/ /_/ /___/ /
-\____/\____/_/   \___/\____//____/
-core@srv-n8uak ~ $
+Warning: Permanently added '[IP]' (ED25519) to the list of known hosts.
+Enter passphrase for key '/home/user/.ssh/id_rsa':
+CoreOS stable (557.2.0)
+core@localhost ~ $
 ```
 
 ## Using CoreOS
-
-Now that you have a cluster bootstrapped it is time to play around.
-
-CoreOS is currently running from RAM, based on the loaded image. You may want to [install it on the disk]({{site.url}}/docs/running-coreos/bare-metal/installing-to-disk). Note that when following these instructions on Vultr, the device name should be `/dev/vda` rather than `/dev/sda`.
 
 Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
