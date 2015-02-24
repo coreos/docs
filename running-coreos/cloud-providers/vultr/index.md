@@ -15,17 +15,20 @@ These instructions will walk you through running a single CoreOS node. This guid
 
 The simplest option to boot up CoreOS is to select the "CoreOS Stable" operating system from Vultr's default offerings. However, most deployments require a custom `cloud-config`, which can only be achieved in Vultr with an iPXE script. The remainder of this article describes this process.
 
-First, you'll need to make two files available at public URL's -- your `cloud-config` file and the following shell script *(be sure to replace the cloud-config URL)*:
+## Cloud-Config
+
+First, you'll need to make two files available at public URL's -- your `cloud-config` file and the following shell script:
 
 ```sh
 #!/bin/bash
 
-curl -o cloud-config.yaml URL_TO_YOUR_CLOUD_CONFIG
+# Location of your valid cloud-config file.
+URL = "http://example.com/cloud-config.yaml"
+
+curl -o cloud-config.yaml $URL
 sudo coreos-install -d /dev/vda -c cloud-config.yaml
 sudo reboot
 ```
-
-## Cloud-Config
 
 Please be sure to check out [Using Cloud-Config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config).
 
@@ -52,8 +55,11 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
 
 <pre>#!ipxe
 
+# Location of your shell script.
+set cloud-config-url http://example.com/cloud-config-bootstrap.sh
+
 set base-url http://alpha.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=URL_TO_YOUR_SHELL_SCRIPT
+kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=${cloud-config-url}
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
@@ -65,8 +71,11 @@ boot</pre>
 
 <pre>#!ipxe
 
+# Location of your shell script.
+set cloud-config-url http://example.com/cloud-config-bootstrap.sh
+
 set base-url http://beta.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=URL_TO_YOUR_SHELL_SCRIPT
+kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=${cloud-config-url}
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
@@ -78,8 +87,11 @@ boot</pre>
 
 <pre>#!ipxe
 
+# Location of your shell script.
+set cloud-config-url http://example.com/cloud-config-bootstrap.sh
+
 set base-url http://stable.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=URL_TO_YOUR_SHELL_SCRIPT
+kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=${cloud-config-url}
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
