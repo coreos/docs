@@ -102,6 +102,15 @@ coreos:
         command: restart
 ```
 
+## Manually Triggering an Update
+
+Each machine should check in about 10 minutes after boot and roughly every hour after that. If you'd like to see it sooner, you can force an update check, which will skip any rate-limiting settings that are configured in CoreUpdate.
+
+```
+$ update_engine_client -check_for_update
+[0123/220706:INFO:update_engine_client.cc(245)] Initiating update check and install.
+```
+
 ## Auto-Updates with a Maintenance Window
 
 A timeframe in which to update can be specified by using two systemd units, a very simple service and a timer to run it on your schedule:
