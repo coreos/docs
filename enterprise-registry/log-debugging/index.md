@@ -11,29 +11,24 @@ weight: 5
 ## Personal debugging
 
 When attempting to debug an issue, one should first consult the logs of the web workers running the Enterprise Registry.
-Please note that both of these methods assume that they are being executed on the host machine.
 
-{% raw %}
-```sh
-CONTAINER_ID=$(docker ps | grep "coreos/registry" | awk '{print $1}')
-LOG_LOCATION=$(docker inspect -f '{{ index .Volumes "/var/log" }}' ${CONTAINER_ID})
-tail -f ${LOG_LOCATION}/gunicorn_*/current
-```
-{% endraw %}
+## Visit the Management Panel
 
-The aforementioned shell commands are also available in script form at https://github.com/coreos/docs/blob/master/enterprise-registry/log-debugging/tail-gunicorn-logs.sh
+Sign in to a super user account and visit `http://yourregister/superuser` to view the management panel:
+
+<img src="../build-support/superuser.png" class="img-center" alt="Enterprise Registry Management Panel"/>
+
+## View the logs for each service
+
+- Click the logs tab (<span class="fa fa-bug"></span>)
+- To view logs for each service, click the service name at the top. The logs will update automatically.
 
 ## Contacting support
 
 When contacting support, one should always include a copy of the Enterprise Registry's log directory.
-Please note that both of these methods assume that they are being executed on the host machine.
 
-{% raw %}
-```sh
-CONTAINER_ID=$(docker ps | grep "coreos/registry" | awk '{print $1}')
-LOG_LOCATION=$(docker inspect -f '{{ index .Volumes "/var/log" }}' ${CONTAINER_ID})
-tar -zcvf registry-logs-$(date +%s).tar.gz ${LOG_LOCATION}
-```
-{% endraw %}
+To download logs, click the "<i class="fa fa-download"></i> Download All Local Logs (.tar.gz)" link
 
-The aforementioned shell commands are also available in script form at https://github.com/coreos/docs/blob/master/enterprise-registry/log-debugging/gzip-registry-logs.sh
+## Shell script to download logs
+
+The aforementioned operations are also available in script form at <a href="https://github.com/coreos/docs/blob/master/enterprise-registry/log-debugging/gzip-registry-logs.sh">https://github.com/coreos/docs/blob/master/enterprise-registry/log-debugging/gzip-registry-logs.sh</a>
