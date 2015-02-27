@@ -11,7 +11,7 @@ weight: 7
 
 These instructions will walk you through running CoreOS on Oracle VM VirtualBox.
 
-## Building the virtual disk
+## Building the Virtual Disk
 
 There is a script that simplify the VDI building. It downloads a bare-metal
 image, verifies it with GPG and convert the image to VirtualBox format.
@@ -34,20 +34,50 @@ To run the script you can specify a destination location and the CoreOS version.
 ./create-coreos-vdi -d /data/VirtualBox/Templates
 ```
 
-If you want a specific version of CoreOS, you can find which versions is
-available to download on
-[CoreOS storage](http://storage.core-os.net/coreos/amd64-usr/index.html). Then
-just specify the desired version to the script.
+## Choose a Channel
 
-```sh
-./create-coreos-vdi -V 298.0.0
-```
+Choose a channel to base your disk image on. Specific versions of CoreOS can also be referenced by version number.
+
+<div id="virtualbox-create">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#stable-create" data-toggle="tab">Stable Channel</a></li>
+    <li><a href="#beta-create" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha-create" data-toggle="tab">Alpha Channel</a></li>
+  </ul>
+  <div class="tab-content coreos-docs-image-table">
+    <div class="tab-pane" id="alpha-create">
+      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+      <p>Create a disk image from this channel by running:</p>
+<pre>
+./create-coreos-vdi -V alpha
+</pre>
+    </div>
+    <div class="tab-pane" id="beta-create">
+      <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
+      <p>Create a disk image from this channel by running:</p>
+<pre>
+./create-coreos-vdi -V beta
+</pre>
+    </div>
+  <div class="tab-pane active" id="stable-create">
+      <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.stable-channel}}.</p>
+      <p>Create a disk image from this channel by running:</p>
+<pre>
+./create-coreos-vdi -V stable
+</pre>
+    </div>
+  </div>
+</div>
 
 After the script is finished successfully, will be available at the specified
 destination location the CoreOS image or at current location. The file name will
-be something like "*coreos_production_298.0.0.vdi*".
+be something like:
 
-## Creating a config-drive
+```
+coreos_production_stable.vdi
+```
+
+## Creating a Config-Drive
 
 Cloud-config can be specified by attaching a
 [config-drive]({{site.url}}/docs/cluster-management/setup/cloudinit-config-drive/)
@@ -75,13 +105,13 @@ chmod +x create-basic-configdrive
 Will be created an ISO file named `my_vm01.iso` that will configure a virtual
 machine to accept your SSH key and set its name to my_vm01.
 
-## Deploying a new virtual machine on VirtualBox
+## Deploying a New Virtual Machine on VirtualBox
 
 I recommend to use the built image as base image. Therefore you should clone the
 image for each new virtual machine and set it to desired size.
 
 ```sh
-VBoxManage clonehd coreos_production_298.0.0.vdi my_vm01.vdi
+VBoxManage clonehd coreos_production_stable.vdi my_vm01.vdi
 # Resize virtual disk to 10 GB
 VBoxManage modifyhd my_vm01.vdi --resize 10240
 ```
@@ -104,7 +134,7 @@ and load the created config-drive into CD/DVD drive.
 
 Click on 'OK' button and the virtual machine will be ready to be started.
 
-## Logging in
+## Logging In
 
 Networking can take a bit of time to come up under VirtualBox and you will need
 to know the IP in order to connect to it. Press enter a few times at the login
