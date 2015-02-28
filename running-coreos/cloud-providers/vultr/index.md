@@ -19,6 +19,8 @@ The simplest option to boot up CoreOS is to select the "CoreOS Stable" operating
 
 First, you'll need to make a shell script containing your `cloud-config` available at a public URL:
 
+**cloud-config-bootstrap.sh**
+
 ```sh
 #!/bin/bash
 
