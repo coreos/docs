@@ -46,7 +46,7 @@ Pulling repository index.example.com/debug
 Advanced users can SSH directly into a toolbox by setting up an `/etc/passwd` entry:
 
 ```sh
-useradd bob -m -p '*' -s /usr/bin/toolbox -g sudo -G docker
+useradd bob -m -p '*' -s /usr/bin/toolbox -U -G sudo,docker
 ```
 
 To test, SSH as bob:
