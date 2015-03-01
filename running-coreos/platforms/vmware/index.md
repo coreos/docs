@@ -35,7 +35,7 @@ open coreos_production_vmware_insecure.vmx
 
 ### To deploy on an ESXi/vSphere host, convert the VM to OVF
 * follow the steps above to download and extract the coreos_production_vmware_insecure.zip
-* download and run the [OVF Tool 3.5.0 installer](https://developercenter.vmware.com/tool/ovf/3.5.0) Requires VMware account login but the download is free. Available for Linux, OSX & Windows for both 32 & 64 bit architectures.
+* download and run the [OVF Tool installer](https://developercenter.vmware.com/tool/ovf/) Requires VMware account login but the download is free. Available for Linux, OSX & Windows for both 32 & 64 bit architectures.
 * convert VM to OVF from the extract dir
 
 ```sh
