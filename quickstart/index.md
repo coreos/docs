@@ -62,6 +62,8 @@ coreos:
       command: start
   etcd:
     name: coreos0
+    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+    # specify the intial size of your cluster with ?size=X
     discovery: https://discovery.etcd.io/<token>
 ```
 

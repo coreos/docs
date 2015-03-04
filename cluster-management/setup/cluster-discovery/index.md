@@ -13,10 +13,10 @@ weight: 4
 
 CoreOS uses etcd, a service running on each machine, to handle coordination between software running on the cluster. For a group of CoreOS machines to form a cluster, their etcd instances need to be connected.
 
-A discovery service, [https://discovery.etcd.io](https://discovery.etcd.io), is provided as a free service to help connect etcd instances together by storing a list of peer addresses and metadata under a unique address, known as the discovery URL. You can generate them very easily:
+A discovery service, [https://discovery.etcd.io](https://discovery.etcd.io), is provided as a free service to help connect etcd instances together by storing a list of peer addresses, metadata and the initial size of the cluster under a unique address, known as the discovery URL. You can generate them very easily:
 
 ```
-$ curl -w "\n" https://discovery.etcd.io/new
+$ curl -w "\n" https://discovery.etcd.io/new?size=3
 https://discovery.etcd.io/6a28e078895c5ec737174db2419bb2f3
 ```
 
@@ -29,7 +29,8 @@ Boot each one of the machines with identical cloud-config and they should be aut
 
 coreos:
   etcd:
-    # generate a new token for each unique cluster from https://discovery.etcd.io/new
+    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+    # specify the intial size of your cluster with ?size=X
     discovery: https://discovery.etcd.io/<token>
     # multi-region and multi-cloud deployments need to use $public_ipv4
     addr: $private_ipv4:4001
