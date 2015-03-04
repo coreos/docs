@@ -181,14 +181,15 @@ fleet will be started with metadata indicating the role of these machines, which
 
 [Managed Linux]({{site.url}}/products/managed-linux) customers can also specify a [CoreUpdate]({{site.url}}/products/coreupdate) group ID which will allow you to attach these machines to a different channel and control updates separately from the worker machines.
 
-Here's an example cloud-config for one of the central service machines:
+Here's an example cloud-config for one of the central service machines. Be sure to generate a new discovery token with the initial size of your cluster:
 
 ```yaml
 #cloud-config
 
 coreos:
   etcd:
-    # generate a new token for each unique cluster from https://discovery.etcd.io/new
+    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+    # specify the intial size of your cluster with ?size=X
     discovery: https://discovery.etcd.io/<token>
     # multi-region and multi-cloud deployments need to use $public_ipv4
     addr: 10.0.0.101:4001
