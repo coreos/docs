@@ -81,5 +81,5 @@ write_files:
   - path: /etc/systemd/system/docker.service.d/50-insecure-registry.conf
     content: |
         [Service]
-        Environment=DOCKER_OPTS='--insecure-registry="10.0.1.0/24"'
+        Environment='DOCKER_OPTS=--insecure-registry="10.0.1.0/24"'
 ```
