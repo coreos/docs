@@ -129,7 +129,7 @@ $ sudo lsattr /var/lib/
 
 ### Disable in a Unit File
 
-Setting the file attributes can we done within a systemd unit using two `ExecStartPre` commands:
+Setting the file attributes can be done within a systemd unit using two `ExecStartPre` commands:
 
 ```ini
 ExecStartPre=/usr/bin/mkdir -p /var/lib/mysql
