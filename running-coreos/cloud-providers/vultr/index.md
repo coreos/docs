@@ -24,7 +24,7 @@ First, you'll need to make a shell script containing your `cloud-config` availab
 ```sh
 #!/bin/bash
 
-cat "cloud-config.yaml" <<EOF
+cat > "cloud-config.yaml" <<EOF
 #cloud-config
 
 ssh_authorized_keys:
