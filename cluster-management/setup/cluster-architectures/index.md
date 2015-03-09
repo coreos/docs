@@ -234,7 +234,11 @@ coreos:
   fleet:
     metadata: "role=worker,cabinet=two,disk=spinning"
     etcd_servers: "http://10.0.0.101:4001,http://10.0.0.102:4001,http://10.0.0.103:4001,http://10.0.0.104:4001,http://10.0.0.105:4001"
+  locksmith:
+    endpoint: "http://10.0.0.101:4001,http://10.0.0.102:4001,http://10.0.0.103:4001,http://10.0.0.104:4001,http://10.0.0.105:4001"
   units:
+    - name: etcd.service
+      mask: true
     - name: fleet.service
       command: start
   update:
