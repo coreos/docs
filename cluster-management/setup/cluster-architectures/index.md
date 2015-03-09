@@ -237,10 +237,10 @@ coreos:
   locksmith:
     endpoint: "http://10.0.0.101:4001,http://10.0.0.102:4001,http://10.0.0.103:4001,http://10.0.0.104:4001,http://10.0.0.105:4001"
   units:
+    - name: etcd.service
+      mask: true
     - name: fleet.service
       command: start
-    - name: etcd.service
-      command: stop
   update:
     # CoreUpdate group ID for "Production Workers"
     group: f118a298-2a8a-460b-9edd-3a9b49df504e
