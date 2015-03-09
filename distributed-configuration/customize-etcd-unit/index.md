@@ -3,7 +3,6 @@ layout: docs
 title: Customizing the etcd Unit
 category: distributed_configuration
 sub_category: configuration
-forkurl: https://github.com/coreos/etcd/blob/master/Documentation/configuration.md
 weight: 5
 ---
 
@@ -17,7 +16,7 @@ etcd supports client certificates as a way to provide secure communication betwe
 
 This site has a [good reference for how to generate self-signed key pairs](http://www.g-loaded.eu/2005/11/10/be-your-own-ca/) or you could use [etcd-ca](https://github.com/coreos/etcd-ca) to generate certs and keys. 
 
-We need to create our drop-in unit in `/etcd/systemd/system/etcd.service.d/`. If you run `systemctl status etcd` you can see that CoreOS is already generating a few drop-in units for etcd as part of the OEM and cloudinit processes. To ensure that our drop-in runs after these, we name it `30-certificates.conf` and place them in `/etc/`.
+We need to create our drop-in unit in `/etc/systemd/system/etcd.service.d/`. If you run `systemctl status etcd` you can see that CoreOS is already generating a few drop-in units for etcd as part of the OEM and cloudinit processes. To ensure that our drop-in runs after these, we name it `30-certificates.conf` and place them in `/etc/systemd/system/etcd.service.d/`.
 
 #### 30-certificates.conf
 
