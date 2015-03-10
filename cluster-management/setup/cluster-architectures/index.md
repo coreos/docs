@@ -142,6 +142,8 @@ coreos:
     # replace this IP
     etcd_servers: "http://10.0.0.101:4001"
   units:
+    - name: etcd.service
+      mask: true
     - name: fleet.service
       command: start
 write_files:
