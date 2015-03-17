@@ -93,6 +93,15 @@ coreos:
 *Important*: If you are starting other units via cloud-config, `flanneld.service` needs to be listed _before_ any services that run Docker containers.
 This includes fleet.service as fleet daemon will start units that may run Docker containers.
 
+*Important*: If you are starting flannel on Vagrant, it should be instructed to use the correct network interface:
+```yaml
+#cloud-config
+
+coreos:
+  flannel:
+    interface: $public_ipv4
+```
+
 ## Under the Hood
 To reduce the CoreOS image size, flannel daemon is stored in CoreOS Enterprise Registry as a Docker container and not shipped in the CoreOS image.
 For those users wishing not to use flannel, it helps to keep their installation minimal. When `flanneld.service` it started, it pulls the Docker image
