@@ -94,6 +94,7 @@ coreos:
 This includes fleet.service as fleet daemon will start units that may run Docker containers.
 
 *Important*: If you are starting flannel on Vagrant, it should be instructed to use the correct network interface:
+
 ```yaml
 #cloud-config
 
