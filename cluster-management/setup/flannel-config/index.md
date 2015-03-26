@@ -88,10 +88,23 @@ coreos:
             [Service]
             ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
       command: start
+
+    # Example service running in a Docker container
+    - name: redis.service
+      content: |
+        [Unit]
+        Requires=flanneld.service
+        After=flanneld.service
+
+        [Service]
+        ExecStart=/usr/bin/docker run redis
+        Restart=always
+      command: start
 ```
 
 *Important*: If you are starting other units via cloud-config, `flanneld.service` needs to be listed _before_ any services that run Docker containers.
-This includes fleet.service as fleet daemon will start units that may run Docker containers.
+In addition, other units that will run in containers, including those scheduled via fleet, should include `Requires=flanneld.service`, `After=flanneld.service`, and `Restart=always|on-failure` directives.
+These directive are necessary because flanneld.service may fail due to etcd not being available yet. It will keep restarting and it is important for Docker based services to also keep trying until flannel is up.
 
 *Important*: If you are starting flannel on Vagrant, it should be instructed to use the correct network interface:
 
@@ -120,7 +133,7 @@ Here is the sequence of events that happens when `flanneld.service` is started f
 5. `ExecStartPost` in `flanneld.service` converts information in `/run/flannel/subnet.env` into Docker daemon command line args (such as `--bip` and `--mtu`),
 storing them in `/run/docker_opts.env`
 6. `redis.service` gets started which invokes `docker run ...`, triggering socket activation of `docker.service`.
-7. `docker.service` sources in `/run/docker_opts.env` (which contains `DOCKER_OPTS`) and starts the Docker daemon with `$DOCKER_OPTS`
+7. `docker.service` sources in `/run/flannel_docker_opts.env` which contains env variables with command line options and starts the Docker with them.
 8. `redis.service` runs Docker redis container.
 
 If you would like to learn more about these service files, you can check them out like so: `systemctl cat early-docker.service`.
