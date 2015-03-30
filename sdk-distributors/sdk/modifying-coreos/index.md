@@ -35,6 +35,7 @@ System requirements to get started:
 
 - curl
 - git
+- python2
 
 You also need a proper git setup:
 
@@ -45,15 +46,16 @@ git config --global user.name "Your Name"
 
 **NOTE**: Do the git configuration as a normal user and not with sudo.
 
-### Install depot_tools
+### Install repo
 
-`repo`, one of the `depot_tools`, helps to manage the collection of git
-repositories that makes up CoreOS. Pull down the code and add it to your
-path:
+`repo` helps to manage the collection of git repositories that makes up CoreOS.
+Pull down the code and add it to your path:
 
 ```sh
-git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-export PATH="$PATH":`pwd`/depot_tools
+mkdir ~/bin
+export PATH="$PATH:$HOME/bin"
+curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+chmod a+x ~/bin/repo
 ```
 
 You may want to add this to your .bashrc or /etc/profile.d/ so that you don’t
@@ -72,7 +74,7 @@ Initialize the .repo directory with the manifest that describes all of the git
 repos required to get started.
 
 ```sh
-repo init -u https://github.com/coreos/manifest.git -g minilayout --repo-url https://chromium.googlesource.com/external/repo.git
+repo init -u https://github.com/coreos/manifest.git
 ```
 
 Synchronize all of the required git repos from the manifest.
@@ -100,16 +102,10 @@ Set up the "core" user's password.
 ./set_shared_user_password.sh
 ```
 
-Target amd64-usr for this image:
+Setup a board root filesystem for the amd64-usr target in /build/amd64-usr:
 
 ```sh
-echo amd64-usr > .default_board
-```
-
-Setup a board root filesystem in /build/${BOARD}:
-
-```sh
-./setup_board
+./setup_board --default --board=amd64-usr
 ```
 
 Build all of the target binary packages:
@@ -122,7 +118,7 @@ Build an image based on the built binary packages along with the developer
 overlay:
 
 ```sh
-./build_image --noenable_rootfs_verification dev
+./build_image dev
 ```
 
 After this finishes up commands for converting the raw bin into
