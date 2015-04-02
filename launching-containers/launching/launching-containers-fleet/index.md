@@ -294,6 +294,8 @@ MachineMetadata=platform=cloud
 MachineMetadata=region=east
 ```
 
+It's also possible to restrict a global unit by metadata, thus scheduling a unit on all machines matching some requirements.
+
 #### More Information
 <a class="btn btn-default" href="{{site.url}}/docs/launching-containers/launching/fleet-example-deployment">Example Deployment with fleet</a>
 <a class="btn btn-default" href="{{site.url}}/docs/launching-containers/launching/fleet-unit-files/">fleet Unit Specifications</a>
