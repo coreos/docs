@@ -54,7 +54,6 @@ coreos:
     - name: fleet.service
       command: start
     - name: 00-eth0.network
-      runtime: true
       content: |
         [Match]
         Name=eth0
