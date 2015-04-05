@@ -154,13 +154,17 @@ The `$private_ipv4` and `$public_ipv4` substitution variables are fully supporte
 
 </br>
 <div class="row">
-  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-    <img src="{{site.url}}/assets/images/media/ec2-cloudformation-cloud-config.png" class="screenshot" />
-    <div class="caption">Providing options during CloudFormation.</div>
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 co-m-screenshot">
+    <a href="{{site.url}}/assets/images/media/ec2-cloudformation-cloud-config.png">
+      <img src="{{site.url}}/assets/images/media/ec2-cloudformation-cloud-config.png" />
+    </a>
+    <div class="co-m-screenshot-caption">Providing options during CloudFormation.</div>
   </div>
-  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-    <img src="{{site.url}}/assets/images/media/ec2-instance-cloud-config.png" class="screenshot" />
-    <div class="caption">Providing cloud-config during EC2 boot wizard.</div>
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 co-m-screenshot">
+    <a href="{{site.url}}/assets/images/media/ec2-instance-cloud-config.png">
+      <img src="{{site.url}}/assets/images/media/ec2-instance-cloud-config.png" class="screenshot" />
+    </a>
+    <div class="co-m-screenshot-caption">Providing cloud-config during EC2 boot wizard.</div>
   </div>
 </div>
 

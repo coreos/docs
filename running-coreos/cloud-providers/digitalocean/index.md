@@ -198,23 +198,29 @@ For more details, check out [DigitalOcean's API documentation][do-api-docs].
    page in the web console.
 2. Give the machine a hostname, select the size, and choose a region.<br/><br/>
 <div class="row">
-  <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12">
-    <img src="size.png" class="screenshot" />
-    <div class="caption">Choosing a CoreOS channel</div>
+  <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12 co-m-screenshot">
+    <a href="size.png">
+      <img src="size.png" />
+    </div>
+    <div class="co-m-screenshot-caption">Choosing a CoreOS channel</div>
   </div>
 </div>
 3. Enable User Data and add your cloud-config in the text box.<br /><br />
 <div class="row">
-  <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12">
-    <img src="settings.png" class="screenshot" />
-    <div class="caption">Droplet settings for networking and cloud-config</div>
+  <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12 co-m-screenshot">
+    <a href="settings.png">
+      <img src="settings.png" />
+    </a>
+    <div class="co-m-screenshot-caption">Droplet settings for networking and cloud-config</div>
   </div>
 </div>
 4. Choose your <a href="#choosing-a-channel">preferred channel</a> of CoreOS.<br/><br/>
 <div class="row">
-  <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12">
-    <img src="image.png" class="screenshot" />
-    <div class="caption">Choosing a CoreOS channel</div>
+  <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12 co-m-screenshot">
+    <a href="image.png">
+      <img src="image.png" />
+    </a>
+    <div class="co-m-screenshot-caption">Choosing a CoreOS channel</div>
   </div>
 </div>
 5. Select your SSH keys.
