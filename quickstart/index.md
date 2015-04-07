@@ -74,7 +74,7 @@ The API is easy to use. From a CoreOS machine, you can simply use curl to set an
 Set a key `message` with value `Hello world`:
 
 ```sh
-curl -L http://127.0.0.1:4001/v2/keys/message -d value="Hello world"
+curl -L http://127.0.0.1:4001/v2/keys/message -XPUT -d value="Hello world"
 ```
 
 Read the value of `message` back:
