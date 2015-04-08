@@ -30,7 +30,6 @@ Apache CloudStack cloudmonkey 5.3.0. Type help or ? to list commands.
 Using management server profile: local 
 
 (local) >
-
 ```
 After running this, you should see that Cloudmonkey has started successfully and that it's ready to accept API calls.All of the VDC API commands that can be accepted by Cloudmonkey can be found in the [API Command Reference](http://cloudstore.interoute.com/main/knowledge-centre/library/api-command-reference).
 
@@ -39,105 +38,149 @@ After running this, you should see that Cloudmonkey has started successfully and
 The following API call from Cloudmonkey is used to deploy a new virtual machine in VDC running CoreOS:
 
 ```cloudmonkey
-> deployVirtualMachine serviceofferingid=value1 zoneid=value2 templateid=value3 networkids=value4 keypair=value5 name=value6
+deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 networkids=e9e1220b-76c8-47cd-a6c2-885ffee49972 keypair=CoreOS-Key01 name=DockerTutorialVM01
 ```
 As you can see above 6 parameter values were provided above. 
 
 ### Service Offering
 
+The first parameter is the 'service offering id' which represents the amount of memory and number of CPUs that you want to allocate to the VM.I have decided to use the service offering with 4 Gigabytes of RAM and 2 CPU cores.
 
+```cloudmonkey
+> listServiceOfferings name=4096-2 filter=id
+```
+The name parameter above denotes how much RAM (in Mbytes) and CPU cores you want to have. You should see an output like the following:
 
-CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.
-
-<div id="vultr-images">
-  <ul class="nav nav-tabs">
-    <li class="active"><a href="#stable" data-toggle="tab">Stable Channel</a></li>
-    <li><a href="#beta" data-toggle="tab">Beta Channel</a></li>
-    <li><a href="#alpha" data-toggle="tab">Alpha Channel</a></li>
-  </ul>
-  <div class="tab-content coreos-docs-image-table">
-    <div class="tab-pane" id="alpha">
-      <div class="channel-info">
-        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.data.alpha-channel.rackspace-version}}.</p>
-      </div>
-      <p>A sample script will look like this:</p>
-
-<pre>#!ipxe
-
-# Location of your shell script.
-set cloud-config-url http://example.com/cloud-config-bootstrap.sh
-
-set base-url http://alpha.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=${cloud-config-url}
-initrd ${base-url}/coreos_production_pxe_image.cpio.gz
-boot</pre>
-    </div>
-    <div class="tab-pane" id="beta">
-      <div class="channel-info">
-        <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.data.beta-channel.rackspace-version}}.</p>
-      </div>
-      <p>A sample script will look like this:</p>
-
-<pre>#!ipxe
-
-# Location of your shell script.
-set cloud-config-url http://example.com/cloud-config-bootstrap.sh
-
-set base-url http://beta.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=${cloud-config-url}
-initrd ${base-url}/coreos_production_pxe_image.cpio.gz
-boot</pre>
-    </div>
-    <div class="tab-pane active" id="stable">
-      <div class="channel-info">
-        <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.data.stable-channel.rackspace-version}}.</p>
-      </div>
-      <p>A sample script will look like this:</p>
-
-<pre>#!ipxe
-
-# Location of your shell script.
-set cloud-config-url http://example.com/cloud-config-bootstrap.sh
-
-set base-url http://stable.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=${cloud-config-url}
-initrd ${base-url}/coreos_production_pxe_image.cpio.gz
-boot</pre>
-    </div>
-  </div>
-</div>
-
-Go to My Servers > Startup Scripts > Add Startup Script, select type "PXE", and input your script. Be sure to replace the cloud-config-url with that of the shell script you created above.
-
-Additional reading can be found at [Booting CoreOS with iPXE](http://coreos.com/docs/running-coreos/bare-metal/booting-with-ipxe/) and [Embedded scripts for iPXE](http://ipxe.org/embed).
-
-## Create the VPS
-
-Create a new VPS (any server type and location of your choice), and then:
-
-1. For the "Operating System" select "Custom"
-2. Select "iPXE Custom Script" and the script you created above.
-3. Click "Place Order"
-
-Once you receive the "Subscription Activated" email the VPS will be ready to use.
-
-## Accessing the VPS
-
-You can now log in to CoreOS using the associated private key on your local computer. You may need to specify its location using ```-i LOCATION```. If you need additional details on how to specify the location of your private key file see [here](http://www.cyberciti.biz/faq/force-ssh-client-to-use-given-private-key-identity-file/).
-
-SSH to the IP of your VPS, and specify the "core" user: ```ssh core@IP```
-
-```sh
-$ ssh core@IP
-The authenticity of host 'IP (2a02:1348:17c:423d:24:19ff:fef1:8f6)' can't be established.
-RSA key fingerprint is 99:a5:13:60:07:5d:ac:eb:4b:f2:cb:c9:b2:ab:d7:21.
-Are you sure you want to continue connecting (yes/no)? yes
-Warning: Permanently added '[IP]' (ED25519) to the list of known hosts.
-Enter passphrase for key '/home/user/.ssh/id_rsa':
-CoreOS stable (557.2.0)
-core@localhost ~ $
+```cloudmonkey
++--------------------------------------+
+|                  id                  |
++--------------------------------------+
+| 85228261-fc66-4092-8e54-917d1702979d |
++--------------------------------------+
 ```
 
+### Zone
+
+The "zoneid" parameter specifies the zone (data centre of VDC) of the VM to be deployed. I can view the list of the available zones by typing:
+
+```cloudmonkey
+> listZones filter=id,name
+```
+You should get the following result, if you are working in the Europe region of VDC.Note that the UUID values required for most of the input parameters will be different from the ones shown here.): 
+
+```cloudmonkey
++--------------------------------------+-------------------+
+|                  id                  |        name       |
++--------------------------------------+-------------------+
+| 374b937d-2051-4440-b02c-a314dd9cb27e |    Paris (ESX)    |
+| 58848a37-db49-4518-946a-88911db0ee2b |    Milan (ESX)    |
+| fc129b38-d490-4cd9-acf8-838cf7eb168d |    Berlin (ESX)   |
+| 3c43b32b-fadf-4629-b8e9-61fb7a5b9bb8 | Amsterdam 2 (ESX) |
+| f6b0d029-8e53-413b-99f3-e0a2a543ee1d |   London 2 (ESX)  |
+| 5343ddc2-919f-4d1b-a8e6-59f91d901f8e |    Slough (ESX)   |
+| 1ef96ec0-9e51-4502-9a81-045bc37ecc0a |   Geneva 2 (ESX)  |
+| ddf450f2-51b2-433d-8dea-c871be6de38d |    Madrid (ESX)   |
+| 7144b207-e97e-4e4a-b15d-64a30711e0e7 |  Frankfurt (ESX)  |
++--------------------------------------+-------------------+
+```
+
+### Template
+
+The "templateid" parameter specifies the operating system that I want the VM to run. I am going to choose the templateid of CoreOS, which is named 'IRT-COREOS' in VDC. Here is how to find out the required UUID:
+
+```cloudmonkey
+> listTemplates templatefilter=featured zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d name=IRT-COREOS filter=id,name
+```  
+
+Note this is the 'CoreOS stable' version, there is another template for 'CoreOS alpha'.
+
+### Network
+
+The "networkids" parameter specifies the network or networks that the deployed VM will be using.As I chose the VM to be located in London then the chosen network(s) should also be located in London. Type the following to show your networks in the London zone:
+
+```cloudmonkey
+> listNetworks zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d filter=id,name
+``` 
+
+This is the output for my VDC account:
+
+```cloudmonkey
++--------------------------------------+--------------------+
+|                  id                  |        name        |
++--------------------------------------+--------------------+
+| e9e1220b-76c8-47cd-a6c2-885ffee49972 |   PrvWithGW Lon2   |
+| 182e8be5-6f73-4a31-a9f9-b6f445a46b53 |    IPVPN_LON02     |
++--------------------------------------+--------------------+
+```
+
+As you can see above, I have two networks in the London zone. I want my deployed VM to be connected to only one network, so I choose networkids to be 'e9e1220b-76c8-47cd-a6c2-885ffee49972'. (If I wanted two or more networks, I would make a list using commas to separate, such as: 'networkids=e9e1220b-76c8-47cd-a6c2-885ffee49972,182e8be5-6f73-4a31-a9f9-b6f445a46b53'.)
+
+### SSH Keys
+
+The "keypair" parameter specifies the SSH keypair used to login to the CoreOS as the CoreOS template does not allow for any logins (root user or otherwise) using passwords.
+
+First of all, I am going to create a new keypair on my own machine using the OpenSSH command line tool, ssh-keygen:
+
+```cmd
+$ cd ~/.ssh && ssh-keygen -t rsa -f id_rsa_coreos          #(for Linux)
+cd C:/ && ssh-keygen -t rsa -f id_rsa_coreos 		   #(for Windows)
+``` 
+The next step is to 'register' your keypair, which means storing your public key in VDC, so that VMs can boot with that information:
+
+
+```cloudmonkey
+> registerSSHKeyPair name=CoreOS-Key01 publickey="ssh-rsa AAAAB3NzaC1y...........fyskMb4oBw== PapanCostas@interoute.com"
+keypair:
+name = CoreOS-Key01
+fingerprint = 55:33:b4:d3:b6:52:fb:79:97:fc:e8:16:58:6e:42:ce
+```
+
+The "name" parameter is arbitrary and is used for your reference only.
+
+### Name
+
+The final "name" parameter is the name of the VM. You can choose any name that is unique and is not used by any existing VM on your VDC account. I will choose the name 'DockerTutorialVM01'.
+
+I am going to make sure that Cloudmonkey is set to the mode of waiting for deployment to complete (known as 'asynchronous blocking'), otherwise the VM information will not be output to the terminal:
+
+```cloudmonkey
+> set asyncblock true
+```
+
+## Connecting to CoreOS
+
+To be able to SSH to the VM a port forwarding rule is required to allow connection on port 22:
+
+```cloudmonkey
+> createPortForwardingRule protocol=TCP publicport=22 ipaddressid=value1 virtualmachineid=value2 privateport=22 openfirewall=true
+```
+The last configuration step is to set an egress firewall rule for the network so that the CoreOS VM will be able to get outward access to the internet. This is needed for Docker to access repositories for container images, and to allow CoreOS to access internet update servers to do automatic updating:
+
+
+```cloudmonkey
+> createEgressFirewallRule networkid=e9e1220b-76c8-47cd-a6c2-885ffee49972 protocol=all cidr=0.0.0.0/0
+```
+
+Note that allowing traffic from any iP is not a good practice.
+
+So finally my VM is set up for me to connect to it, using the 'ipaddress' found from the listPublicIpAddresses command and specifying the private SSH key file to match the public key which I registered in VDC. Type this ssh command into a terminal:
+
+
+```cmd
+$ ssh -i ~/.ssh/id_rsa_coreos core@IPADDRESS
+```
+
+Upon the first connection to the VM I am asked to check authenticity of the VM:
+
+```cmd  
+The authenticity of host '[IPADDRESS]:22 ([IPADDRESS]:22)' can't be established.
+ED25519 key fingerprint is 4a:f4:85:c0:1d:e0:fa:26:94:89:7c:39:1b:57:42:d2.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '[IPADDRESS]:22' (ED25519) to the list of known hosts.
+CoreOS (stable)
+core@DockerTutorialVM01 ~ $
+```
 ## Using CoreOS
 
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS and Docker in Interoute VDC](http://cloudstore.interoute.com/main/knowledge-centre/blog/coreos-docker-vdc-part2) turorial for using Docker.
+
