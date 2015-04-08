@@ -35,12 +35,12 @@ After running this, you should see that Cloudmonkey has started successfully and
 
 ## Deploy a CoreOS node
 
-The following API call from Cloudmonkey is used to deploy a new virtual machine in VDC running CoreOS:
+The following API call from Cloudmonkey is used to deploy a new virtual machine running CoreOS in VDC:
 
 ```cloudmonkey
-deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 networkids=e9e1220b-76c8-47cd-a6c2-885ffee49972 keypair=CoreOS-Key01 name=DockerTutorialVM01
+> deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 networkids=e9e1220b-76c8-47cd-a6c2-885ffee49972 keypair=CoreOS-Key01 name=DockerTutorialVM01
 ```
-As you can see above 6 parameter values were provided above. 
+As you can see that 6 parameter values were provided above. 
 
 ### Service Offering
 
@@ -61,12 +61,12 @@ The name parameter above denotes how much RAM (in Mbytes) and CPU cores you want
 
 ### Zone
 
-The "zoneid" parameter specifies the zone (data centre of VDC) of the VM to be deployed. I can view the list of the available zones by typing:
+The 'zoneid' parameter specifies the zone (data centre of VDC) of the VM to be deployed. You can view the list of the available zones by typing:
 
 ```cloudmonkey
 > listZones filter=id,name
 ```
-You should get the following result, if you are working in the Europe region of VDC.Note that the UUID values required for most of the input parameters will be different from the ones shown here.): 
+You should get the following result, if you are working in the Europe region of VDC.Note that the UUID values required for most of the input parameters will be different from the ones shown here: 
 
 ```cloudmonkey
 +--------------------------------------+-------------------+
@@ -86,7 +86,7 @@ You should get the following result, if you are working in the Europe region of 
 
 ### Template
 
-The "templateid" parameter specifies the operating system that I want the VM to run. I am going to choose the templateid of CoreOS, which is named 'IRT-COREOS' in VDC. Here is how to find out the required UUID:
+The 'templateid' parameter specifies the operating system of the VM. I am going to choose the templateid of CoreOS, which is named 'IRT-COREOS' in VDC. Here is how to find out the required UUID:
 
 ```cloudmonkey
 > listTemplates templatefilter=featured zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d name=IRT-COREOS filter=id,name
@@ -96,7 +96,7 @@ Note this is the 'CoreOS stable' version, there is another template for 'CoreOS 
 
 ### Network
 
-The "networkids" parameter specifies the network or networks that the deployed VM will be using.As I chose the VM to be located in London then the chosen network(s) should also be located in London. Type the following to show your networks in the London zone:
+The 'networkids' parameter specifies the network or networks that the deployed VM will be using.As I chose the VM to be located in London then the chosen network(s) should also be located in London. Type the following to show your networks in the London zone:
 
 ```cloudmonkey
 > listNetworks zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d filter=id,name
@@ -117,7 +117,7 @@ As you can see above, I have two networks in the London zone. I want my deployed
 
 ### SSH Keys
 
-The "keypair" parameter specifies the SSH keypair used to login to the CoreOS as the CoreOS template does not allow for any logins (root user or otherwise) using passwords.
+The 'keypair' parameter specifies the SSH keypair used to login to the CoreOS as the CoreOS template does not allow any logins (root user or otherwise) using passwords.
 
 First of all, I am going to create a new keypair on my own machine using the OpenSSH command line tool, ssh-keygen:
 
@@ -125,7 +125,7 @@ First of all, I am going to create a new keypair on my own machine using the Ope
 $ cd ~/.ssh && ssh-keygen -t rsa -f id_rsa_coreos          #(for Linux)
 cd C:/ && ssh-keygen -t rsa -f id_rsa_coreos 		   #(for Windows)
 ``` 
-The next step is to 'register' your keypair, which means storing your public key in VDC, so that VMs can boot with that information:
+The next step is to 'register' your keypair, which means storing your public key in VDC, so that VMs can boot up with that information:
 
 
 ```cloudmonkey
@@ -135,11 +135,11 @@ name = CoreOS-Key01
 fingerprint = 55:33:b4:d3:b6:52:fb:79:97:fc:e8:16:58:6e:42:ce
 ```
 
-The "name" parameter is arbitrary and is used for your reference only.
+The keypair 'name' parameter is arbitrary and is used for your reference only.
 
 ### Name
 
-The final "name" parameter is the name of the VM. You can choose any name that is unique and is not used by any existing VM on your VDC account. I will choose the name 'DockerTutorialVM01'.
+The final 'name' parameter is the name of the VM. You can choose any name that is unique and is not used by any existing VM on your VDC account. I will choose the name 'DockerTutorialVM01'.
 
 I am going to make sure that Cloudmonkey is set to the mode of waiting for deployment to complete (known as 'asynchronous blocking'), otherwise the VM information will not be output to the terminal:
 
@@ -161,7 +161,7 @@ The last configuration step is to set an egress firewall rule for the network so
 > createEgressFirewallRule networkid=e9e1220b-76c8-47cd-a6c2-885ffee49972 protocol=all cidr=0.0.0.0/0
 ```
 
-Note that allowing traffic from any iP is not a good practice.
+Note that allowing traffic from any IP is not a good practice.
 
 So finally my VM is set up for me to connect to it, using the 'ipaddress' found from the listPublicIpAddresses command and specifying the private SSH key file to match the public key which I registered in VDC. Type this ssh command into a terminal:
 
@@ -182,5 +182,5 @@ core@DockerTutorialVM01 ~ $
 ```
 ## Using CoreOS
 
-Check out the [CoreOS and Docker in Interoute VDC](http://cloudstore.interoute.com/main/knowledge-centre/blog/coreos-docker-vdc-part2) turorial for using Docker.
+Check out the [CoreOS and Docker in Interoute VDC](http://cloudstore.interoute.com/main/knowledge-centre/blog/coreos-docker-vdc-part2) turorial.
 
