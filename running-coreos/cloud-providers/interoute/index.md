@@ -40,11 +40,11 @@ The following API call from Cloudmonkey is used to deploy a new virtual machine 
 ```cloudmonkey
 > deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 networkids=e9e1220b-76c8-47cd-a6c2-885ffee49972 keypair=CoreOS-Key01 name=DockerTutorialVM01
 ```
-As you can see that 6 parameter values were provided above. 
+As you can see there were 6 parameter values provided above. 
 
 ### Service Offering
 
-The first parameter is the 'service offering id' which represents the amount of memory and number of CPUs that you want to allocate to the VM.I have decided to use the service offering with 4 Gigabytes of RAM and 2 CPU cores.
+The first parameter is the 'serviceofferingid' which represents the amount of RAM memory and number of CPUs that you want to allocate to the VM.In this tutorial 4 Gigabytes of RAM and 2 CPU cores as chosen.
 
 ```cloudmonkey
 > listServiceOfferings name=4096-2 filter=id
@@ -86,7 +86,7 @@ You should get the following result, if you are working in the Europe region of 
 
 ### Template
 
-The 'templateid' parameter specifies the operating system of the VM. I am going to choose the templateid of CoreOS, which is named 'IRT-COREOS' in VDC. Here is how to find out the required UUID:
+The 'templateid' parameter specifies the operating system of the VM. CoreOS template is selected, which is named 'IRT-COREOS' in VDC. Here is how to find out the required UUID:
 
 ```cloudmonkey
 > listTemplates templatefilter=featured zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d name=IRT-COREOS filter=id,name
@@ -96,7 +96,7 @@ Note this is the 'CoreOS stable' version, there is another template for 'CoreOS 
 
 ### Network
 
-The 'networkids' parameter specifies the network or networks that the deployed VM will be using.As I chose the VM to be located in London then the chosen network(s) should also be located in London. Type the following to show your networks in the London zone:
+The 'networkids' parameter specifies the network or networks that the deployed VM will be using.As the VM is to be located in London then the chosen network(s) should also be located in London. Type the following to show your networks in the London zone:
 
 ```cloudmonkey
 > listNetworks zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d filter=id,name
@@ -113,13 +113,13 @@ This is the output for my VDC account:
 +--------------------------------------+--------------------+
 ```
 
-As you can see above, I have two networks in the London zone. I want my deployed VM to be connected to only one network, so I choose networkids to be 'e9e1220b-76c8-47cd-a6c2-885ffee49972'. (If I wanted two or more networks, I would make a list using commas to separate, such as: 'networkids=e9e1220b-76c8-47cd-a6c2-885ffee49972,182e8be5-6f73-4a31-a9f9-b6f445a46b53'.)
+As you can see above, there are two networks in the London zone. Only one network is required to connect to the VM, so I choose networkids to be 'e9e1220b-76c8-47cd-a6c2-885ffee49972'. (If two or more networks are required, list could be used using commas to separate, such as: 'networkids=e9e1220b-76c8-47cd-a6c2-885ffee49972,182e8be5-6f73-4a31-a9f9-b6f445a46b53'.)
 
 ### SSH Keys
 
 The 'keypair' parameter specifies the SSH keypair used to login to the CoreOS as the CoreOS template does not allow any logins (root user or otherwise) using passwords.
 
-First of all, I am going to create a new keypair on my own machine using the OpenSSH command line tool, ssh-keygen:
+At first a new keypair is generated on using the OpenSSH command line tool, ssh-keygen:
 
 ```cmd
 $ cd ~/.ssh && ssh-keygen -t rsa -f id_rsa_coreos          #(for Linux)
@@ -139,9 +139,9 @@ The keypair 'name' parameter is arbitrary and is used for your reference only.
 
 ### Name
 
-The final 'name' parameter is the name of the VM. You can choose any name that is unique and is not used by any existing VM on your VDC account. I will choose the name 'DockerTutorialVM01'.
+The final 'name' parameter is the name of the VM. You can choose any name that is unique and is not used by any existing VM on your VDC account. 
 
-I am going to make sure that Cloudmonkey is set to the mode of waiting for deployment to complete (known as 'asynchronous blocking'), otherwise the VM information will not be output to the terminal:
+Cloudmonkey is to be set to the mode of waiting for deployment to complete (known as 'asynchronous blocking'), otherwise the VM information will not be output to the terminal:
 
 ```cloudmonkey
 > set asyncblock true
@@ -163,7 +163,7 @@ The last configuration step is to set an egress firewall rule for the network so
 
 Note that allowing traffic from any IP is not a good practice.
 
-So finally my VM is set up for me to connect to it, using the 'ipaddress' found from the listPublicIpAddresses command and specifying the private SSH key file to match the public key which I registered in VDC. Type this ssh command into a terminal:
+So finally the VM is set up for connection, using the 'ipaddress' found from the listPublicIpAddresses command and specifying the private SSH key file to match the public key which I registered in VDC. Type this ssh command into a terminal:
 
 
 ```cmd
