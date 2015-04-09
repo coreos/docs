@@ -27,7 +27,7 @@ A snippet to configure the credentials via write_files looks like:
 #cloud-config
 
 write_files:
-  - path: /home/root/.dockercfg
+  - path: /root/.dockercfg
     permissions: 0644
     content: |
       {
