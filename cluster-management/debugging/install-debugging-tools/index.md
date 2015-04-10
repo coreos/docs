@@ -41,6 +41,19 @@ Pulling repository index.example.com/debug
 ...
 ```
 
+You can also specify this in cloud-config:
+
+```
+#cloud-config
+write_files:
+  - path: /home/core/.toolboxrc
+    owner: core
+    content: |
+      TOOLBOX_DOCKER_IMAGE=index.example.com/debug
+      TOOLBOX_DOCKER_TAG=v1
+      TOOLBOX_USER=root
+```
+
 ## SSH Directly Into A Toolbox
 
 Advanced users can SSH directly into a toolbox by setting up an `/etc/passwd` entry:
