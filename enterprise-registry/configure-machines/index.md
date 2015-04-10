@@ -85,4 +85,4 @@ ExecStart=/usr/bin/docker run --rm --name hello-world quay.io/example/hello-worl
 ExecStop=-/usr/bin/docker stop hello-world
 ```
 
-Without setting the working directory, docker will not be able to discover the .dockercfg file and will not have the credentials to pull private images.
+If the working directory is not set, docker will not be able to discover the .dockercfg file and will not have the credentials to pull private images.
