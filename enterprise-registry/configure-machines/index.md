@@ -27,7 +27,7 @@ A snippet to configure the credentials via write_files looks like:
 #cloud-config
 
 write_files:
-  - path: /home/root/.dockercfg
+  - path: /root/.dockercfg
     permissions: 0644
     content: |
       {
@@ -39,6 +39,7 @@ write_files:
 ```
 
 Each machine booted with this cloud-config should automatically be authenticated with your Enterprise Registry.
+
 
 ### Manual Login
 
@@ -66,3 +67,22 @@ If you already have images in your registry, test out a pull:
 ```sh
 docker pull registry.domain.com/myapp
 ```
+
+## Pulling via systemd
+
+Assuming a .dockercfg is present in /root, the following is an example systemd unit file that pulls a docker image:
+
+```
+[Unit]
+Description=Hello World
+
+[Service]
+WorkingDirectory=/root
+ExecStartPre=-/usr/bin/docker kill hello-world
+ExecStartPre=-/usr/bin/docker rm -f hello-world
+ExecStartPre=/usr/bin/docker pull quay.io/example/hello-world:latest
+ExecStart=/usr/bin/docker run --rm --name hello-world quay.io/example/hello-world:latest
+ExecStop=-/usr/bin/docker stop hello-world
+```
+
+If the working directory is not set, docker will not be able to discover the .dockercfg file and will not have the credentials to pull private images.
