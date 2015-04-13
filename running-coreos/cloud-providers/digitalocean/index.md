@@ -201,7 +201,7 @@ For more details, check out [DigitalOcean's API documentation][do-api-docs].
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12 co-m-screenshot">
     <a href="size.png">
       <img src="size.png" />
-    </div>
+    </a>
     <div class="co-m-screenshot-caption">Choosing a CoreOS channel</div>
   </div>
 </div>
