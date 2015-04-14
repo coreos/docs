@@ -14,7 +14,7 @@ Building a new VM image is a time consuming process. On development images you
 can use `gmerge` to build packages on your workstation and ship them to your
 target VM.
 
-1. On your workstation start the dev server inside the SDK chroot:
+On your workstation start the dev server inside the SDK chroot:
 
 ```sh
 start_devserver --port 8080
@@ -22,8 +22,8 @@ start_devserver --port 8080
 
 NOTE: This port will need to be Internet accessible if your VM is remote.
 
-2. Run `gmerge` from your VM and ensure that the `DEVSERVER` setting in
-   `/etc/coreos/update.conf` point to your workstation IP/hostname and port.
+Run `gmerge` from your VM and ensure that the `DEVSERVER` setting in
+`/etc/coreos/update.conf` points to your workstation IP/hostname and port.
 
 ```sh
 gmerge coreos-base/update_engine
@@ -32,16 +32,30 @@ gmerge coreos-base/update_engine
 ### Updating an Image with Update Engine
 
 If you want to test that an image you built can successfully upgrade a running
-VM you can use the `--image` argument to the devserver. Here is an example:
+VM you can use devserver. To specify the version to upgrade to you can use the
+`--image` argument. This should be a newer build than the VM is currently
+running, otherwise devserver will answer "no update" to any requests. Here is
+an example using the default value:
 
 ```sh
-start_devserver --image ../build/images/amd64-usr/latest/chromiumos_image.bin
+start_devserver --image ../build/images/amd64-usr/latest/coreos_developer_image.bin
 ```
 
-From the target virtual machine you run:
+On the target VM ensure that the `SERVER` setting in `/etc/coreos/update.conf`
+points to your workstation, for example:
 
 ```sh
-update_engine_client -update -omaha_url http://$WORKSTATION_HOSTNAME:8080/update
+GROUP=developer
+SERVER=http://you.example.com:8080/update
+DEVSERVER=http://you.example.com:8080
+```
+
+If you modify this file restart update engine: `systemctl restart update-engine`
+
+On the VM force an immediate update check:
+
+```sh
+update_engine_client -update
 ```
 
 If the update fails you can check the logs of the update engine by running:
