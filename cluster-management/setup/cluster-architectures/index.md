@@ -153,13 +153,6 @@ write_files:
     content: |
       # configure etcdctl to work with our etcd servers set above
       export ETCDCTL_PEERS="http://10.0.0.101:4001"
-  - path: /etc/profile.d/fleetctl.sh
-    permissions: 0644
-    owner: core
-    content: |
-      # configure fleetctl to work with our etcd servers set above
-      export FLEETCTL_ENDPOINT=unix:///var/run/fleet.sock
-      export FLEETCTL_EXPERIMENTAL_API=true
 ```
 
 ## Production Cluster with Central Services
@@ -254,11 +247,4 @@ write_files:
     content: |
       # configure etcdctl to work with our etcd servers set above
       export ETCDCTL_PEERS="http://10.0.0.101:4001,http://10.0.0.102:4001,http://10.0.0.103:4001,http://10.0.0.104:4001,http://10.0.0.105:4001"
-  - path: /etc/profile.d/fleetctl.sh
-    permissions: 0644
-    owner: core
-    content: |
-      # configure fleetctl to work with our etcd servers set above
-      export FLEETCTL_ENDPOINT=unix:///var/run/fleet.sock
-      export FLEETCTL_EXPERIMENTAL_API=true
 ```
