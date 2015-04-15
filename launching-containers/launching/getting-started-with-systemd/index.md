@@ -40,7 +40,7 @@ ExecStart=/usr/bin/docker run --name busybox1 busybox /bin/sh -c "while true; do
 WantedBy=multi-user.target
 ```
 
-The description shows up in the systemd log and a few other places. Write something that will help you understand exactly what this does later on.
+The `Description` shows up in the systemd log and a few other places. Write something that will help you understand exactly what this does later on.
 
 `After=docker.service` and `Requires=docker.service` means this unit will only start after `docker.service` is active. You can define as many of these as you want.
 
