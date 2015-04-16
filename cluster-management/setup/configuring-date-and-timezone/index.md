@@ -13,7 +13,7 @@ NTP is used to to keep clocks in sync across machines in a CoreOS cluster. The n
 ```
 systemctl status ntpd
 ntpd.service - Network Time Service
-   Loaded: loaded (/usr/lib64/systemd/system/ntpd.service; enabled)
+   Loaded: loaded (/usr/lib64/systemd/system/ntpd.service; disabled; vendor preset: disabled)
    Active: active (running) since Tue 2014-08-26 15:10:23 UTC; 4h 23min ago
  Main PID: 483 (ntpd)
    CGroup: /system.slice/ntpd.service
@@ -25,7 +25,6 @@ ntpd.service - Network Time Service
 The ntpd service can be configured via the /etc/ntp.conf configuration file. By default systems will sync time with NTP servers from ntp.org. If you would like to use a different set of NTP servers edit /etc/ntp.conf:
 
 ```
-# Common pool
 server 0.pool.example.com
 server 1.pool.example.com
 ...
@@ -73,7 +72,7 @@ timedatectl
   Universal time: Tue 2014-08-26 19:44:07 UTC
         RTC time: Tue 2014-08-26 19:44:07
        Time zone: America/New_York (EDT, -0400)
-     NTP enabled: yes
+     NTP enabled: no
 NTP synchronized: yes
  RTC in local TZ: no
       DST active: yes
@@ -100,15 +99,15 @@ sudo timedatectl set-timezone UTC
 Unless you have a highly reliable and precise time server pool you should stick to the default NTP servers from the ntp.org server pool.
 
 ```
-server 0.pool.ntp.org
-server 1.pool.ntp.org
-server 2.pool.ntp.org
-server 3.pool.ntp.org
+server 0.coreos.pool.ntp.org
+server 1.coreos.pool.ntp.org
+server 2.coreos.pool.ntp.org
+server 3.coreos.pool.ntp.org
 ```
 
 ## Automating with cloud-config
 
-The following cloud-config snippet can be used setup and configure NTP and timezone settings: 
+The following cloud-config snippet can be used setup and configure NTP and timezone settings:
 
 ```
 #cloud-config
@@ -129,8 +128,10 @@ write_files:
   - path: /etc/ntp.conf
     content: |
       # Common pool
-      server 0.pool.ntp.org
-      server 1.pool.ntp.org
+      server 0.coreos.pool.ntp.org
+      server 1.coreos.pool.ntp.org
+      server 2.coreos.pool.ntp.org
+      server 3.coreos.pool.ntp.org
 
       # - Allow only time queries, at a limited rate.
       # - Allow all local queries (IPv4, IPv6)
