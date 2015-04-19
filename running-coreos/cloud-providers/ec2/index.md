@@ -231,15 +231,16 @@ First we need to create a security group to allow CoreOS instances to communicat
     * VPC: No VPC
     * Click: "Yes, Create"
 3. In the details of the security group, click the `Inbound` tab
-4. First, create an open rule for SSH
+4. First, create a security group rule for SSH
     * Create a new rule: `SSH`
     * Source: 0.0.0.0/0
     * Click: "Add Rule"
-5. Add rule for etcd internal communication
+5. Add two security group rules for etcd communication
     * Create a new rule: `Custom TCP rule`
-    * Port range: 7001, 4001
+    * Port range: 4001
     * Source: type "coreos-testing" until your security group auto-completes. Should be something like "sg-8d4feabc"
     * Click: "Add Rule"
+    * Repeat this process for port range 7001 as well
 6. Click "Apply Rule Changes"
 
 [sg]: https://console.aws.amazon.com/ec2/home?region=us-east-1#s=SecurityGroups
