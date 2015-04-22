@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Mantle: Gluing CoreOS together
+title: "Mantle: Gluing CoreOS together"
 category: sdk_distributors
 sub_category: sdk
 weight: 10 
