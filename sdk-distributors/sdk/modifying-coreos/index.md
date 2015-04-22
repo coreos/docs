@@ -167,3 +167,8 @@ There are separate workflows for [building production](/docs/sdk-distributors/sd
 ## Tips and Tricks
 
 We've compiled a [list of tips and tricks](/docs/sdk-distributors/sdk/tips-and-tricks) that can make working with the SDK a bit easier.
+
+## Testing Images
+
+[Mantle](/docs/sdk-distributors/sdk/mantle) is a collection of utilities
+used in testing and launching SDK images.
