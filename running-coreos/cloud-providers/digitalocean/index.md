@@ -61,7 +61,7 @@ The following command will create a single droplet. For more details, check out
     <div class="tab-pane active" id="stable">
       <div class="channel-info">
         <div class="channel-info">
-        <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.data.beta-channel.do-version}}.</p>
+        <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.data.stable-channel.do-version}}.</p>
         <a href="https://cloud.digitalocean.com/droplets/new?image=coreos-stable" class="btn btn-default">Launch CoreOS Droplet</a><br/><br/>
         <p>Launch via DigitalOcean API by specifying <code>$REGION</code>, <code>$SIZE</code> and <code>$SSH_KEY_ID</code>:</p>
         <pre>curl --request POST "https://api.digitalocean.com/v2/droplets" \
