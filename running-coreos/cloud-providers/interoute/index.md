@@ -8,7 +8,7 @@ weight: 11
 
 # Running CoreOS on Interoute VDC
 
-Interoute Communications Limited is the owner operator of Europe's largest cloud services platform, which encompasses over 67,000 km of lit fiber, 12 data centres, 13 Virtual Data Centres and 31 colocation centres, with connections to 195 additional third-party data centres across Europe. 
+Interoute VDC is Europe's largest cloud services platform, which is powered by Apache Cloudstack.
 
 To run a single CoreOS node on Interoute VDC the following is assumed:
 
@@ -31,20 +31,25 @@ Using management server profile: local
 
 (local) >
 ```
-After running this, you should see that Cloudmonkey has started successfully and that it's ready to accept API calls.All of the VDC API commands that can be accepted by Cloudmonkey can be found in the [API Command Reference](http://cloudstore.interoute.com/main/knowledge-centre/library/api-command-reference).
+After running this, you should see that Cloudmonkey has started successfully and that it's ready to accept API calls. All of the VDC API commands that can be accepted by Cloudmonkey can be found in the [API Command Reference](http://cloudstore.interoute.com/main/knowledge-centre/library/api-command-reference).
 
 ## Deploy a CoreOS node
 
 The following API call from Cloudmonkey is used to deploy a new virtual machine running CoreOS in VDC:
 
 ```cloudmonkey
-> deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 networkids=e9e1220b-76c8-47cd-a6c2-885ffee49972 keypair=CoreOS-Key01 name=DockerTutorialVM01
+> deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d \
+  zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d \
+  templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 \
+  networkids=e9e1220b-76c8-47cd-a6c2-885ffee49972 \
+  keypair=CoreOS-Key01 \
+  name=DockerTutorialVM01
 ```
 As you can see there were 6 parameter values provided above. 
 
 ### Service Offering
 
-The first parameter is the 'serviceofferingid' which represents the amount of RAM memory and number of CPUs that you want to allocate to the VM.In this tutorial 4 Gigabytes of RAM and 2 CPU cores as chosen.
+The first parameter is the 'serviceofferingid' which represents the amount of RAM memory and number of CPUs that you want to allocate to the VM. In this tutorial 4 Gigabytes of RAM and 2 CPU cores as chosen.
 
 ```cloudmonkey
 > listServiceOfferings name=4096-2 filter=id
@@ -66,7 +71,7 @@ The 'zoneid' parameter specifies the zone (data centre of VDC) of the VM to be d
 ```cloudmonkey
 > listZones filter=id,name
 ```
-You should get the following result, if you are working in the Europe region of VDC.Note that the UUID values required for most of the input parameters will be different from the ones shown here: 
+You should get the following result, if you are working in the Europe region of VDC. Note that the UUID values required for most of the input parameters will be different from the ones shown here: 
 
 ```cloudmonkey
 +--------------------------------------+-------------------+
@@ -96,7 +101,7 @@ Note this is the 'CoreOS stable' version, there is another template for 'CoreOS 
 
 ### Network
 
-The 'networkids' parameter specifies the network or networks that the deployed VM will be using.As the VM is to be located in London then the chosen network(s) should also be located in London. Type the following to show your networks in the London zone:
+The 'networkids' parameter specifies the network or networks that the deployed VM will be using. As the VM is to be located in London then the chosen network(s) should also be located in London. Type the following to show your networks in the London zone:
 
 ```cloudmonkey
 > listNetworks zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d filter=id,name
