@@ -16,7 +16,7 @@ To run a single CoreOS node on Interoute VDC the following is assumed:
 * You have the  Cloudmonkey command line tool installed and configured on the computer that you are working on. Instructions on how to install and configure Cloudmonkey so that it can communicate with the VDC API can be found in the [Introduction to the VDC API](http://cloudstore.interoute.com/main/knowledge-centre/library/vdc-api-introduction-api).
 * You have installed OpenSSH client software. This is usually already installed in Linux and Mac OS. For Windows it can be downloaded at the [OpenSSH website](http://www.openssh.com/).
 
-Note: In the following steps, commands beginning with '$' are to be typed into the command line, and commands beginning '>' are to be typed into Cloudmonkey. 
+Note: In the following steps, commands beginning with '$' are to be typed into the command line, and commands beginning '>' are to be typed into Cloudmonkey. Long lines of code have been broken up for display purposes, indicated by a continuation symbol '\', but if you copy the code make sure to remove any linebreaks. 
 
 ## Cloudmonkey Setup
 
@@ -39,11 +39,11 @@ The following API call from Cloudmonkey is used to deploy a new virtual machine 
 
 ```cloudmonkey
 > deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d \
-  zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d \
-  templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 \
-  networkids=e9e1220b-76c8-47cd-a6c2-885ffee49972 \
-  keypair=CoreOS-Key01 \
-  name=DockerTutorialVM01
+    zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d \
+    templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 \
+    networkids=e9e1220b-76c8-47cd-a6c2-885ffee49972 \
+    keypair=CoreOS-Key01 \
+    name=DockerTutorialVM01
 ```
 As you can see there were 6 parameter values provided above. 
 
@@ -94,7 +94,9 @@ You should get the following result, if you are working in the Europe region of 
 The 'templateid' parameter specifies the operating system of the VM. CoreOS template is selected, which is named 'IRT-COREOS' in VDC. Here is how to find out the required UUID:
 
 ```cloudmonkey
-> listTemplates templatefilter=featured zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d name=IRT-COREOS filter=id,name
+> listTemplates templatefilter=featured \
+    zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d \
+    name=IRT-COREOS filter=id,name
 ```  
 
 Note this is the 'CoreOS stable' version, there is another template for 'CoreOS alpha'.
@@ -104,7 +106,8 @@ Note this is the 'CoreOS stable' version, there is another template for 'CoreOS 
 The 'networkids' parameter specifies the network or networks that the deployed VM will be using. As the VM is to be located in London then the chosen network(s) should also be located in London. Type the following to show your networks in the London zone:
 
 ```cloudmonkey
-> listNetworks zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d filter=id,name
+> listNetworks zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d \
+    filter=id,name
 ``` 
 
 This is the output for my VDC account:
@@ -127,14 +130,15 @@ The 'keypair' parameter specifies the SSH keypair used to login to the CoreOS as
 At first a new keypair is generated on using the OpenSSH command line tool, ssh-keygen:
 
 ```cmd
-$ cd ~/.ssh && ssh-keygen -t rsa -f id_rsa_coreos          #(for Linux)
-cd C:/ && ssh-keygen -t rsa -f id_rsa_coreos 		   #(for Windows)
+$ cd ~/.ssh && ssh-keygen -t rsa -f id_rsa_coreos     #(for Linux)
+cd C:/ && ssh-keygen -t rsa -f id_rsa_coreos     #(for Windows)
 ``` 
 The next step is to 'register' your keypair, which means storing your public key in VDC, so that VMs can boot up with that information:
 
 
 ```cloudmonkey
-> registerSSHKeyPair name=CoreOS-Key01 publickey="ssh-rsa AAAAB3NzaC1y...........fyskMb4oBw== PapanCostas@interoute.com"
+> registerSSHKeyPair name=CoreOS-Key01 \
+    publickey="ssh-rsa AAAAB3NzaC1y...........fyskMb4oBw== PapanCostas@interoute.com"
 keypair:
 name = CoreOS-Key01
 fingerprint = 55:33:b4:d3:b6:52:fb:79:97:fc:e8:16:58:6e:42:ce
@@ -157,13 +161,21 @@ Cloudmonkey is to be set to the mode of waiting for deployment to complete (know
 To be able to SSH to the VM a port forwarding rule is required to allow connection on port 22:
 
 ```cloudmonkey
-> createPortForwardingRule protocol=TCP publicport=22 ipaddressid=value1 virtualmachineid=value2 privateport=22 openfirewall=true
+> createPortForwardingRule \
+    protocol=TCP \
+    publicport=22 \
+    ipaddressid=value1 \
+    virtualmachineid=value2 \
+    privateport=22 \
+    openfirewall=true
 ```
 The last configuration step is to set an egress firewall rule for the network so that the CoreOS VM will be able to get outward access to the internet. This is needed for Docker to access repositories for container images, and to allow CoreOS to access internet update servers to do automatic updating:
 
 
 ```cloudmonkey
-> createEgressFirewallRule networkid=e9e1220b-76c8-47cd-a6c2-885ffee49972 protocol=all cidr=0.0.0.0/0
+> createEgressFirewallRule networkid=e9e1220b-76c8-47cd-a6c2-885ffee49972 \
+    protocol=all \
+    cidr=0.0.0.0/0
 ```
 
 Note that allowing traffic from any IP is not a good practice.
