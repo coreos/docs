@@ -52,7 +52,8 @@ As you can see there were 6 parameter values provided above.
 The first parameter is the 'serviceofferingid' which represents the amount of RAM memory and number of CPUs that you want to allocate to the VM. In this tutorial 4 Gigabytes of RAM and 2 CPU cores as chosen.
 
 ```cloudmonkey
-> listServiceOfferings name=4096-2 filter=id
+> listServiceOfferings name=4096-2 \
+    filter=id
 ```
 The name parameter above denotes how much RAM (in Mbytes) and CPU cores you want to have. You should see an output like the following:
 
