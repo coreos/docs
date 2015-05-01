@@ -29,7 +29,7 @@ If you are using the ISO with VMware, first sudo to root:
 sudo su - root
 ```
 
-Then install as you would with the PXE booted system, but be sure to include user information, especially an ssh key, in a Cloud-Config file, or else you will not be able to log into your CoreOS instance.  
+Then install as you would with the PXE booted system, but be sure to include user information, especially an SSH key, in a [Cloud-Config](#cloud-config) file, or else you will not be able to log into your CoreOS instance.  
 
 
 ```sh
