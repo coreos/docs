@@ -166,7 +166,7 @@ read SSH_KEY_ID
 # Enter your SSH key ID
 ```
 
-Create a 512MB droplet with private networking in NYC3 from the CoreOS Alpha
+Create a 512MB droplet with private networking in NYC3 from the CoreOS Stable
 image:
 
 ```sh
@@ -194,7 +194,7 @@ For more details, check out [DigitalOcean's API documentation][do-api-docs].
 
 ### Via the Web Console
 
-1. Open the "<a href="https://cloud.digitalocean.com/droplets/new?image=coreos-alpha">new droplet</a>"
+1. Open the "<a href="https://cloud.digitalocean.com/droplets/new?image=coreos-stable">new droplet</a>"
    page in the web console.
 2. Give the machine a hostname, select the size, and choose a region.<br/><br/>
 <div class="row">
