@@ -175,7 +175,7 @@ curl --request POST "https://api.digitalocean.com/v2/droplets" \
      --header "Authorization: Bearer $TOKEN" \
      --data '{
       "region":"nyc3",
-      "image":"{{site.data.alpha-channel.do-image-path}}",
+      "image":"{{site.data.stable-channel.do-image-path}}",
       "size":"512mb",
       "name":"core-1",
       "private_networking":true,
