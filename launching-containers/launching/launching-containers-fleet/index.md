@@ -96,7 +96,7 @@ c9de9451-6a6f-1d80-b7e6-46e996bfc4d1    10.10.1.3   -
 
 ## Run a High Availability Service
 
-The main benefit of using CoreOS is to have your services run in a highly available manner. Let's walk through deploying a service that consists of two identical containers running the Apache web server.
+The main benefit of using CoreOS is to have your services run in a highly available manner. Let's walk through deploying a service that consists of two identical containers running the Apache web server. Afterwards, we'll walk through the failure of a machine and the steps fleet takes to relaunch our tasks on another machine.
 
 First, let's write a unit file that we'll run two copies of. To do that, we'll use a template unit, named `apache@.service`. We'll use that template to launch two instances, name `apache@1.service` and `apache@2.service`:
 
@@ -136,6 +136,14 @@ apache@2.service  148a18ff.../10.10.1.1   active    running
 As you can see, the Apache units are now running on two different machines in our cluster.
 
 How do we route requests to these containers? The best strategy is to run a "sidekick" container that performs other duties that are related to our main container but shouldn't be directly built into that application. Examples of common sidekick containers are for service discovery and controlling external services such as cloud load balancers or DNS.
+
+### Recovering from Machine Failure
+
+Machines in your fleet cluster are constantly in communication with the rest of cluster and elect a leader to make scheduling decisions. The leader is responsible for parsing newly submitted/started units, finding a qualified machine to run them (via X-Fleet parameters), and then informing the machine(s) to start the unit.
+
+When a machine fails to heartbeat back to the fleet leader, all units running on that machine are marked for rescheduling. During that process, qualified machines are found for each unit and they are started on the new machine. Units that can't be rescheduled will remain stopped until a qualified machine can be found. If the failed machine recovers, the fleet leader will tell it to cease operations of the old units, which have been rescheduled,  and then the machine will be available for new work.
+
+You can test out this process by stopping fleet (`sudo systemctl stop fleet`) on one of the machines running our Apache unit. The fleet logs (`sudo journalctl -u fleet`) will provide more clarity on what's going on under the hood.
 
 ## Run a Simple Sidekick
 
