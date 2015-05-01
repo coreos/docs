@@ -51,7 +51,7 @@ As you can see there were 6 parameter values provided above.
 
 The first parameter is the 'serviceofferingid' which represents the amount of RAM memory and number of CPUs that you want to allocate to the VM. In this tutorial 4 Gigabytes of RAM and 2 CPU cores as chosen.
 
-```cloudmonkey
+```sh
 > listServiceOfferings name=4096-2 \
     filter=id
 ```
@@ -69,7 +69,7 @@ The name parameter above denotes how much RAM (in Mbytes) and CPU cores you want
 
 The 'zoneid' parameter specifies the zone (data centre of VDC) of the VM to be deployed. You can view the list of the available zones by typing:
 
-```cloudmonkey
+```sh
 > listZones filter=id,name
 ```
 You should get the following result, if you are working in the Europe region of VDC. Note that the UUID values required for most of the input parameters will be different from the ones shown here: 
