@@ -22,7 +22,7 @@ Note: In the following steps, commands beginning with '$' are to be typed into t
 
 First you should open a new terminal or command prompt window and start Cloudmonkey by typing:
 
-```cloudmonkey
+```sh
 $ cloudmonkey set display table && cloudmonkey sync && cloudmonkey
 252 APIs discovered and cached
 Apache CloudStack cloudmonkey 5.3.0. Type help or ? to list commands.
@@ -37,7 +37,7 @@ After running this, you should see that Cloudmonkey has started successfully and
 
 The following API call from Cloudmonkey is used to deploy a new virtual machine running CoreOS in VDC:
 
-```cloudmonkey
+```sh
 > deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d \
     zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d \
     templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 \
@@ -57,7 +57,7 @@ The first parameter is the 'serviceofferingid' which represents the amount of RA
 ```
 The name parameter above denotes how much RAM (in Mbytes) and CPU cores you want to have. You should see an output like the following:
 
-```cloudmonkey
+```sh
 +--------------------------------------+
 |                  id                  |
 +--------------------------------------+
@@ -74,7 +74,7 @@ The 'zoneid' parameter specifies the zone (data centre of VDC) of the VM to be d
 ```
 You should get the following result, if you are working in the Europe region of VDC. Note that the UUID values required for most of the input parameters will be different from the ones shown here: 
 
-```cloudmonkey
+```sh
 +--------------------------------------+-------------------+
 |                  id                  |        name       |
 +--------------------------------------+-------------------+
@@ -94,7 +94,7 @@ You should get the following result, if you are working in the Europe region of 
 
 The 'templateid' parameter specifies the operating system of the VM. CoreOS template is selected, which is named 'IRT-COREOS' in VDC. Here is how to find out the required UUID:
 
-```cloudmonkey
+```sh
 > listTemplates templatefilter=featured \
     zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d \
     name=IRT-COREOS filter=id,name
@@ -106,14 +106,14 @@ Note this is the 'CoreOS stable' version, there is another template for 'CoreOS 
 
 The 'networkids' parameter specifies the network or networks that the deployed VM will be using. As the VM is to be located in London then the chosen network(s) should also be located in London. Type the following to show your networks in the London zone:
 
-```cloudmonkey
+```sh
 > listNetworks zoneid=f6b0d029-8e53-413b-99f3-e0a2a543ee1d \
     filter=id,name
 ``` 
 
 This is the output for my VDC account:
 
-```cloudmonkey
+```sh
 +--------------------------------------+--------------------+
 |                  id                  |        name        |
 +--------------------------------------+--------------------+
@@ -130,14 +130,14 @@ The 'keypair' parameter specifies the SSH keypair used to login to the CoreOS as
 
 At first a new keypair is generated on using the OpenSSH command line tool, ssh-keygen:
 
-```cmd
+```sh
 $ cd ~/.ssh && ssh-keygen -t rsa -f id_rsa_coreos     #(for Linux)
 cd C:/ && ssh-keygen -t rsa -f id_rsa_coreos     #(for Windows)
 ``` 
 The next step is to 'register' your keypair, which means storing your public key in VDC, so that VMs can boot up with that information:
 
 
-```cloudmonkey
+```sh
 > registerSSHKeyPair name=CoreOS-Key01 \
     publickey="ssh-rsa AAAAB3NzaC1y...........fyskMb4oBw== PapanCostas@interoute.com"
 keypair:
@@ -153,7 +153,7 @@ The final 'name' parameter is the name of the VM. You can choose any name that i
 
 Cloudmonkey is to be set to the mode of waiting for deployment to complete (known as 'asynchronous blocking'), otherwise the VM information will not be output to the terminal:
 
-```cloudmonkey
+```sh
 > set asyncblock true
 ```
 
@@ -161,7 +161,7 @@ Cloudmonkey is to be set to the mode of waiting for deployment to complete (know
 
 To be able to SSH to the VM a port forwarding rule is required to allow connection on port 22:
 
-```cloudmonkey
+```sh
 > createPortForwardingRule \
     protocol=TCP \
     publicport=22 \
@@ -173,7 +173,7 @@ To be able to SSH to the VM a port forwarding rule is required to allow connecti
 The last configuration step is to set an egress firewall rule for the network so that the CoreOS VM will be able to get outward access to the internet. This is needed for Docker to access repositories for container images, and to allow CoreOS to access internet update servers to do automatic updating:
 
 
-```cloudmonkey
+```sh
 > createEgressFirewallRule networkid=e9e1220b-76c8-47cd-a6c2-885ffee49972 \
     protocol=all \
     cidr=0.0.0.0/0
@@ -184,13 +184,13 @@ Note that allowing traffic from any IP is not a good practice.
 So finally the VM is set up for connection, using the 'ipaddress' found from the listPublicIpAddresses command and specifying the private SSH key file to match the public key which I registered in VDC. Type this ssh command into a terminal:
 
 
-```cmd
+```sh
 $ ssh -i ~/.ssh/id_rsa_coreos core@IPADDRESS
 ```
 
 Upon the first connection to the VM I am asked to check authenticity of the VM:
 
-```cmd  
+```sh
 The authenticity of host '[IPADDRESS]:22 ([IPADDRESS]:22)' can't be established.
 ED25519 key fingerprint is 4a:f4:85:c0:1d:e0:fa:26:94:89:7c:39:1b:57:42:d2.
 Are you sure you want to continue connecting (yes/no)? yes
