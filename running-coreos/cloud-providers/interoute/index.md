@@ -3,7 +3,7 @@ layout: docs
 title: Interoute VDC
 category: running_coreos
 sub_category: cloud_provider
-weight: 11
+weight: 9
 ---
 
 # Running CoreOS on Interoute VDC
