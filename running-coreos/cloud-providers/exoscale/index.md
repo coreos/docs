@@ -91,6 +91,23 @@ cloud-config adjusting the FQDN or removing the statement.
 New instances will join the cluster regardless of location
 provided that security groups are correctly configured.
 
+### Modifying cloud-config
+It is possible to modify the cloud-config contents during the lifetime
+of an instance. In order to modify the contents, you need to use
+the API command `updateVirtualMachine` with the machine in a stopped
+state.
+
+```sh
+cs stopVirtualMachine id=<UUID of instance>
+cs updateVirtualMachine id=<UUID of instance> userData=<base64 encoded value of your cloud-config>
+cs startVirtualMachine id=<UUID of instance>
+```
+
+*note:* switch the request type from GET to POST if the userData
+payload is longer than 2KB.
+
+[API reference for updateVirtualMachine](https://community.exoscale.ch/compute/api/#updatevirtualmachine_GET)
+
 ## SSH to your CoreOS instances
 
 CoreOS does not allow root connection to the instance. By default, it uses the `core` user 
