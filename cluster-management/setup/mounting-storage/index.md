@@ -43,6 +43,8 @@ coreos:
       content: |
         [Unit]
         Description=Formats the ephemeral drive
+        After=dev-xvdb.device
+        Requires=dev-xvdb.device
         [Service]
         Type=oneshot
         RemainAfterExit=yes
