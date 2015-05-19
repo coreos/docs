@@ -8,26 +8,95 @@ weight: 7
 
 # Configuring Date and Timezone
 
-NTP is used to to keep clocks in sync across machines in a CoreOS cluster. The ntpd service is responsible for keeping each machines local clock in sync with a configured set of time servers. The services will automatically start by default. To check if the ntpd service is running, run the follow command:
+NTP is used to to keep clocks in sync across machines in a CoreOS cluster.
+CoreOS [681.0.0][681.0.0] uses [systemd-timesyncd][systemd-timesyncd] as the
+default NTP client, prior to that [ntpd][ntp.org] was used. Depending on the
+your version of CoreOS one of the two services will automatically start. To
+check which service is running, run the follow command:
 
 ```
-systemctl status ntpd
-ntpd.service - Network Time Service
+sudo systemctl status systemd-timesyncd ntpd
+● systemd-timesyncd.service - Network Time Synchronization
+   Loaded: loaded (/usr/lib64/systemd/system/systemd-timesyncd.service; disabled; vendor preset: disabled)
+   Active: active (running) since Thu 2015-05-14 05:43:20 UTC; 5 days ago
+     Docs: man:systemd-timesyncd.service(8)
+ Main PID: 480 (systemd-timesyn)
+   Status: "Using Time Server 169.254.169.254:123 (169.254.169.254)."
+   Memory: 448.0K
+   CGroup: /system.slice/systemd-timesyncd.service
+           └─480 /usr/lib/systemd/systemd-timesyncd
+
+● ntpd.service - Network Time Service
    Loaded: loaded (/usr/lib64/systemd/system/ntpd.service; disabled; vendor preset: disabled)
-   Active: active (running) since Tue 2014-08-26 15:10:23 UTC; 4h 23min ago
- Main PID: 483 (ntpd)
-   CGroup: /system.slice/ntpd.service
-           └─483 /usr/sbin/ntpd -g -n -u ntp:ntp -f /var/lib/ntp/ntp.drift
+   Active: inactive (dead)
 ```
+
+[681.0.0]: https://coreos.com/releases/#681.0.0
+[ntp.org]: http://ntp.org/
+[systemd-timesyncd]: http://www.freedesktop.org/software/systemd/man/systemd-timesyncd.service.html
+
+## Switching between systemd-timesyncd and ntpd
+
+If you are on CoreOS 681.0.0 or later you can switch back to the classic ntpd
+with the following commands or cloud config:
+
+```
+sudo systemctl stop systemd-timesyncd
+sudo systemctl mask systemd-timesyncd
+sudo systemctl enable ntpd
+sudo systemctl start ntpd
+```
+
+```yaml
+#cloud-config
+
+coreos:
+  units:
+    - name: systemd-timesyncd.service
+      command: stop
+      mask: true
+    - name: ntpd.service
+      command: start
+      enable: true
+```
+
+It important to mask the service you do not want to start. The
+`systemctl disable` command will not override the system default to start.
 
 ## Changing NTP time servers
 
-The ntpd service can be configured via the /etc/ntp.conf configuration file. By default systems will sync time with NTP servers from ntp.org. If you would like to use a different set of NTP servers edit /etc/ntp.conf:
+When using systemd-timesyncd NTP servers can be provided via DHCP, individual
+[network][systemd.network] configs, [timesyncd.conf][timesyncd.conf], or the
+built in default `*.coreos.pool.ntp.org` pool. For example, to disable the
+default behavior of using NTP serviers from DHCP write the following to
+`/etc/systemd/network/50-dhcp-no-ntp.conf`:
+
+```ini
+[Network]
+DHCP=v4
+NTP=0.pool.example.com 1.pool.example.com
+
+[DHCP]
+UseMTU=true
+UseDomains=true
+UseNTP=false
+```
+
+[systemd.network]: http://www.freedesktop.org/software/systemd/man/systemd.network.html
+[timesyncd.conf]: http://www.freedesktop.org/software/systemd/man/timesyncd.conf.html
+
+The ntpd service can be configured via the /etc/ntp.conf configuration file. It
+does not use DHCP or other configuration sources. If you would like to use a
+different set of NTP servers edit replace the `/etc/ntp.conf` symlink with
+something like the following:
 
 ```
 server 0.pool.example.com
 server 1.pool.example.com
-...
+
+restrict default nomodify nopeer noquery limited kod
+restrict 127.0.0.1
+restrict [::1]
 ```
 
 ## Viewing the date and timezone settings with timedatectl
@@ -88,7 +157,9 @@ NTP synchronized: yes
 
 ### What time should I use?
 
-To avoid time zone confusion and the complexities of adjusting clocks for daylight saving time it’s recommended that all machines in a CoreOS cluster use Coordinated Universal Time (UTC).
+To avoid time zone confusion and the complexities of adjusting clocks for
+daylight saving time it’s recommended that all machines in a CoreOS cluster use
+Coordinated Universal Time (UTC). This is the default.
 
 ```
 sudo timedatectl set-timezone UTC
@@ -109,7 +180,7 @@ server 3.coreos.pool.ntp.org
 
 The following cloud-config snippet can be used setup and configure NTP and timezone settings:
 
-```
+```yaml
 #cloud-config
 
 coreos:
@@ -121,21 +192,22 @@ coreos:
         Description=Set the timezone
 
         [Service]
-        ExecStart=/usr/bin/timedatectl set-timezone UTC
+        ExecStart=/usr/bin/timedatectl set-timezone America/New_York
         RemainAfterExit=yes
         Type=oneshot
 write_files:
   - path: /etc/ntp.conf
     content: |
-      # Common pool
-      server 0.coreos.pool.ntp.org
-      server 1.coreos.pool.ntp.org
-      server 2.coreos.pool.ntp.org
-      server 3.coreos.pool.ntp.org
+      server 0.pool.example.com
+      server 1.pool.example.com
 
       # - Allow only time queries, at a limited rate.
       # - Allow all local queries (IPv4, IPv6)
       restrict default nomodify nopeer noquery limited kod
       restrict 127.0.0.1
       restrict [::1]
+  - path: /etc/systemd/timesyncd.conf
+    content: |
+      [Time]
+      NTP=0.pool.example.com 1.pool.example.com
 ```
