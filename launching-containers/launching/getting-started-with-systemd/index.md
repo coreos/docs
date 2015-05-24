@@ -153,7 +153,7 @@ We can enhance this by using `%H` and `%i` to dynamically announce the hostname 
 ExecStartPost=/usr/bin/etcdctl set /domains/example.com/%H:%i running
 ```
 
-This gives us the flexiblity to use a single unit file to announce multiple copies of the same container on a single machine (no port overlap) and on multiple machines (no hostname overlap).
+This gives us the flexibility to use a single unit file to announce multiple copies of the same container on a single machine (no port overlap) and on multiple machines (no hostname overlap).
 
 #### More Information
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">systemd.service Docs</a>

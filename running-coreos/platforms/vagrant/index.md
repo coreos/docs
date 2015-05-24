@@ -16,7 +16,7 @@ You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev]
 
 ## Install Vagrant and VirtualBox
 
-Vagrant is a simple-to-use command line virtual machine manager. There are install packages available for Windows, Linux and OSX. Find the latest installer on the [Vagrant downloads page][vagrant]. Be sure to get version 1.6.3 or greater.
+Vagrant is a simple-to-use command line virtual machine manager. There are install packages available for Windows, Linux and OS X. Find the latest installer on the [Vagrant downloads page][vagrant]. Be sure to get version 1.6.3 or greater.
 
 [vagrant]: http://www.vagrantup.com/downloads.html
 
@@ -49,7 +49,7 @@ Our cluster will use an etcd [discovery URL]({{site.url}}/docs/cluster-managemen
 coreos:
   etcd:
       # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-      # specify the intial size of your cluster with ?size=X
+      # specify the initial size of your cluster with ?size=X
       # WARNING: replace each time you 'vagrant destroy'
       discovery: https://discovery.etcd.io/<token>
       addr: $public_ipv4:4001

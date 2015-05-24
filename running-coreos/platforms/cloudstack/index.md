@@ -66,7 +66,7 @@ Alternatively <a href="http://cloudstack.apache.org/docs/api/apidocs-4.4/user/re
 ### CoreOS Templates
 
 Apache CloudStack community created CoreOS templates are located at <a href="http://dl.openvm.eu/cloudstack/coreos/x86_64/">http://dl.openvm.eu/cloudstack/coreos/x86_64/</a>
-CoreOS templates are currently available for XenServer, KVM, VmWare and HyperV hypervisors.
+CoreOS templates are currently available for XenServer, KVM, VMware and HyperV hypervisors.
 
 ### Deploy CoreOS Instance
 

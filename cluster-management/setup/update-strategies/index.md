@@ -8,7 +8,7 @@ weight: 7
 
 # Update Strategies
 
-The overarching goal of CoreOS is to secure the internet's backend infrastructure. We believe that [automatically updating]({{site.url}}/using-coreos/updates) the operating system is one of the best tools to achieve this goal.
+The overarching goal of CoreOS is to secure the Internet's backend infrastructure. We believe that [automatically updating]({{site.url}}/using-coreos/updates) the operating system is one of the best tools to achieve this goal.
 
 We realize that each CoreOS cluster has a unique tolerance for risk and the operational needs of your applications are complex. In order to meet everyone's needs, there are four update strategies that we have developed based on feedback during our alpha period.
 
@@ -113,7 +113,7 @@ $ update_engine_client -check_for_update
 
 ## Auto-Updates with a Maintenance Window
 
-In this example, auto-reboot strategy is turned off so we can schedule it in a maintencence window in which a script checks if an update has been downloaded. If a reboot is needed and etcd service is running on the system, then call locksmithctl reboot to get a lock and reboot; otherwise, run a simple reboot after a random delay to prevent workers from rebooting at the same time. 
+In this example, auto-reboot strategy is turned off so we can schedule it in a maintenance window in which a script checks if an update has been downloaded. If a reboot is needed and etcd service is running on the system, then call locksmithctl reboot to get a lock and reboot; otherwise, run a simple reboot after a random delay to prevent workers from rebooting at the same time. 
 
 A timeframe in which to update can be specified by using two systemd units, a very simple service and a timer to run it on your schedule:
 

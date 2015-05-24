@@ -26,7 +26,7 @@ The cloud-config files provided with each section are valid, but you will need t
 |------|-----------|-------------|------------|
 | Low | Laptop development | Minutes | No |
 
-If you're developing locally but plan to run containers in production, it helps to mirror that environment locally. This can easily be done by running docker commands on your laptop that control a CoreOS VM in VMWare Fusion or VirtualBox.
+If you're developing locally but plan to run containers in production, it helps to mirror that environment locally. This can easily be done by running docker commands on your laptop that control a CoreOS VM in VMware Fusion or VirtualBox.
 
 ### Configuring Your Laptop
 
@@ -191,7 +191,7 @@ Here's an example cloud-config for one of the central service machines. Be sure 
 coreos:
   etcd:
     # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-    # specify the intial size of your cluster with ?size=X
+    # specify the initial size of your cluster with ?size=X
     discovery: https://discovery.etcd.io/<token>
     # multi-region and multi-cloud deployments need to use $public_ipv4
     addr: 10.0.0.101:4001

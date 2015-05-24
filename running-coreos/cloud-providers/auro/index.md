@@ -39,7 +39,7 @@ startup and more via [cloud-config][cloud-config].  We're going to provide the
 [cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 You are able to supply the `user-data` using the AURO control panel when launching
-an instance, in the "Post Creation" tab, as well as using the CLI to deploy your 
+an instance, in the "Post Creation" tab, as well as using the CLI to deploy your
 cluster on the AURO cloud.
 
 A sample common `cloud-config` file will look something like the following:
@@ -50,7 +50,7 @@ A sample common `cloud-config` file will look something like the following:
 coreos:
   etcd:
     # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-    # specify the intial size of your cluster with ?size=X
+    # specify the initial size of your cluster with ?size=X
     discovery: https://discovery.etcd.io/<token>
     # multi-region and multi-cloud deployments need to use $public_ipv4
     addr: $private_ipv4:4001
@@ -83,7 +83,7 @@ $ sudo pip install python-novaclient
 You will need to have your API credentials configured on the machine that you're
 going to be launching your cluster from.  The easiest way to do this is by
 logging into the AURO control panel and in the "Access & Security" section go to
-the "API Access" tab and clicking "Download Openstack RC File".
+the "API Access" tab and clicking "Download OpenStack RC File".
 
 From there, you must create a file on your system with the contents of the
 `<project name>-openrc.sh` file provided.  Once done, you will need to `source` that file in your

@@ -8,7 +8,7 @@ weight: 9
 
 # CoreOS Disk Layout
 
-CoreOS is designed to be reliably updated via a [continous stream of updates]({{site.url}}/using-coreos/updates). The operating system has 9 different disk partitions, utilizing a subset of those to make each update safe and enable a roll-back to a previous version if anything goes wrong.
+CoreOS is designed to be reliably updated via a [continuous stream of updates]({{site.url}}/using-coreos/updates). The operating system has 9 different disk partitions, utilizing a subset of those to make each update safe and enable a roll-back to a previous version if anything goes wrong.
 
 ## Partition Table
 

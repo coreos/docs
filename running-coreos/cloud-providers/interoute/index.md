@@ -200,5 +200,5 @@ core@DockerTutorialVM01 ~ $
 ```
 ## Using CoreOS
 
-Check out the [CoreOS and Docker in Interoute VDC](http://cloudstore.interoute.com/main/knowledge-centre/blog/coreos-docker-vdc-part2) turorial.
+Check out the [CoreOS and Docker in Interoute VDC](http://cloudstore.interoute.com/main/knowledge-centre/blog/coreos-docker-vdc-part2) tutorial.
 

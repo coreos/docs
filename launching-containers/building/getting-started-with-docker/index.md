@@ -15,7 +15,7 @@ Docker containers can boot extremely fast (in milliseconds!) which gives you unp
 
 ## Docker CLI Basics
 
-Docker has a [straightforward CLI](http://docs.docker.io/en/latest/reference/commandline/) that allows you to do almost everything you could want to a container. All of these commands use the image id (ex. be29975e0098), the image name (ex. myusername/webapp) and the container id (ex. 72d468f455ea) interchangably depending on the operation you are trying to do. This is confusing at first, so pay special attention to what you're using.
+Docker has a [straightforward CLI](http://docs.docker.io/en/latest/reference/commandline/) that allows you to do almost everything you could want to a container. All of these commands use the image id (ex. be29975e0098), the image name (ex. myusername/webapp) and the container id (ex. 72d468f455ea) interchangeably depending on the operation you are trying to do. This is confusing at first, so pay special attention to what you're using.
 
 ## Launching a Container
 

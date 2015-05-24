@@ -17,7 +17,7 @@ There is a script that simplify the VDI building. It downloads a bare-metal
 image, verifies it with GPG and convert the image to VirtualBox format.
 
 The script is located at
-[Github](https://github.com/coreos/scripts/blob/master/contrib/create-coreos-vdi
+[GitHub](https://github.com/coreos/scripts/blob/master/contrib/create-coreos-vdi
 "create-coreos-vdi").
 The running host must support VirtualBox tools.
 
@@ -82,9 +82,9 @@ coreos_production_stable.vdi
 Cloud-config can be specified by attaching a
 [config-drive]({{site.url}}/docs/cluster-management/setup/cloudinit-config-drive/)
 with the label `config-2`. This is commonly done through whatever interface
-allows for attaching cd-roms or new drives.
+allows for attaching CD-ROMs or new drives.
 
-Note that the config-drive standard was originally an Openstack feature, which
+Note that the config-drive standard was originally an OpenStack feature, which
 is why you'll see strings containing `openstack`. This filepath needs to be
 retained, although CoreOS supports config-drive on all platforms.
 
