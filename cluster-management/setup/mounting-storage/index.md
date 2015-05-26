@@ -64,6 +64,47 @@ coreos:
 
 Notice that we're starting both units at the same time and using the power of systemd to work out the dependencies for us. In this case, `var-lib-docker.mount` requires `format-ephemeral.service`, ensuring that our storage will always be formatted before it is mounted. Docker will refuse to start otherwise.
 
+## Creating and Mounting a btrfs Volume File
+
+CoreOS [561.0.0](https://coreos.com/releases/#561.0.0) and later are installed with ext4 + overlayfs to provide a layered filesystem for the root partition.
+Installations from prior to this, are using btrfs for this functionality.
+If you'd like to continue using btrfs on newer CoreOS machines, you can do so with two systemd units: one that creates and formats a btrfs volume file and another that mounts it.
+
+In this example, we are going to mount a new 25GB btrfs volume file to `/var/lib/docker`, and one can verify that docker is using the btrfs storage driver once the docker service has started by executing `sudo docker info`.
+We recommend allocating **no more than 85%** of the available disk space for a btrfs filesystem as journald will also require space on the host filesystem.
+
+```yaml
+#cloud-config
+coreos:
+  units:
+    - name: format-var-lib-docker.service
+      command: start
+      content: |
+        [Unit]
+        Before=docker.service var-lib-docker.mount
+        ConditionPathExists=!/var/lib/docker.btrfs
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/bin/truncate --size=25G /var/lib/docker.btrfs
+        ExecStart=/usr/sbin/mkfs.btrfs /var/lib/docker.btrfs
+    - name: var-lib-docker.mount
+      enable: true
+      content: |
+        [Unit]
+        Before=docker.service
+        After=format-var-lib-docker.service
+        Requires=format-var-lib-docker.service
+        [Install]
+        RequiredBy=docker.service
+        [Mount]
+        What=/var/lib/docker.btrfs
+        Where=/var/lib/docker
+        Type=btrfs
+        Options=loop,discard
+```
+
+Note the declaration of `ConditionPathExists=!/var/lib/docker.btrfs`. Without this line, systemd would reformat the btrfs filesystem every time the machine starts.
+
 ## Further Reading
 
 Read the [full docs](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) to learn about the available options. Examples specific to [EC2]({{site.url}}/docs/running-coreos/cloud-providers/ec2/#instance-storage), [Google Compute Engine]({{site.url}}/docs/running-coreos/cloud-providers/google-compute-engine/#additional-storage) and [Rackspace Cloud]({{site.url}}/docs/running-coreos/cloud-providers/rackspace/#mount-data-disk) can be used as a starting point.
