@@ -26,7 +26,7 @@ list][coreos-dev].
 
 ## Install QEMU
 
-In addition to Linux it can be run on Windows and OSX but works best on
+In addition to Linux it can be run on Windows and OS X but works best on
 Linux. It should be available on just about any distro.
 
 ### Debian or Ubuntu

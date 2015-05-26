@@ -98,7 +98,7 @@ After a few moments of downloading CoreOS should boot normally.
 
 ## Update Process
 
-Since our upgrade process requires a disk, this image does not have the option to update itself. Instead, the box simply needs to be rebooted and will be running the latest verison, assuming that the image served by the PXE server is regularly updated.
+Since our upgrade process requires a disk, this image does not have the option to update itself. Instead, the box simply needs to be rebooted and will be running the latest version, assuming that the image served by the PXE server is regularly updated.
 
 ## Installation
 

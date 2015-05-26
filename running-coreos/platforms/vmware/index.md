@@ -24,7 +24,7 @@ CoreOS is released into alpha and beta channels. Releases to each channel serve 
 
 The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
 
-This is a rough sketch that should work on OSX and Linux:
+This is a rough sketch that should work on OS X and Linux:
 
 ```sh
 curl -LO http://alpha.release.core-os.net/amd64-usr/current/coreos_production_vmware_insecure.zip
@@ -35,7 +35,7 @@ open coreos_production_vmware_insecure.vmx
 
 ### To deploy on an ESXi/vSphere host, convert the VM to OVF
 * follow the steps above to download and extract the coreos_production_vmware_insecure.zip
-* download and run the [OVF Tool installer](https://developercenter.vmware.com/tool/ovf/) Requires VMware account login but the download is free. Available for Linux, OSX & Windows for both 32 & 64 bit architectures.
+* download and run the [OVF Tool installer](https://developercenter.vmware.com/tool/ovf/) Requires VMware account login but the download is free. Available for Linux, OS X & Windows for both 32 & 64 bit architectures.
 * convert VM to OVF from the extract dir
 
 ```sh
@@ -60,15 +60,15 @@ The above step creates the following files in ../coreos/:
     * name your VM
     * choose "thin provision" for the disk format
     * choose your network settings
-    * confirm the settings then click "Finish" 
-    
+    * confirm the settings then click "Finish"
+
     NOTE: unselect "Power on after deployment" so you have a chance to edit VM settings before powering it up for the first time.
 
 The last step uploads the files to your ESXi datastore and registers your VM. You can now tweak the VM settings, like memory and virtual cores, then power it on. These instructions were tested to deploy to an ESXi 5.5 host.
 
 ## Cloud-Config
 
-Cloud-config can be specified by attaching a [config-drive]({{site.url}}/docs/cluster-management/setup/cloudinit-config-drive/) with the label `config-2`. This is commonly done through whatever interface allows for attaching cd-roms or new drives.
+Cloud-config can be specified by attaching a [config-drive]({{site.url}}/docs/cluster-management/setup/cloudinit-config-drive/) with the label `config-2`. This is commonly done through whatever interface allows for attaching CD-ROMs or new drives.
 
 Note that the config-drive standard was originally an OpenStack feature, which is why you'll see strings containing `openstack`. This filepath needs to be retained, although CoreOS supports config-drive on all platforms.
 

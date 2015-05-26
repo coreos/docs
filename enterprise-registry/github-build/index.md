@@ -32,7 +32,7 @@ Sign in to a super user account and visit `http://yourregister/superuser` to vie
 
 <img src="enable-trigger.png" class="img-center" alt="Enable GitHub Trigger"/>
 
-- Click the configuration tab (<span class="fa fa-gear"></span>) and scroll down to the section entitled <strong> Github (Enterprise) Build Triggers</strong>.
+- Click the configuration tab (<span class="fa fa-gear"></span>) and scroll down to the section entitled <strong> GitHub (Enterprise) Build Triggers</strong>.
 - Check the "Enable GitHub Triggers" box
 - Fill in the credentials from the application created above
 - Click "Save Configuration Changes"

@@ -50,9 +50,9 @@ That was far too easy, if you need to do it the hard way try this:
       existing build. The `cros_sdk` uses this to pick what SDK tarball
       to use when creating a fresh chroot and provides a fallback set of
       binary packages to use when the current release's packages are
-      unavilable. Usually it will be one release behind COREOS_BUILD.
+      unavailable. Usually it will be one release behind COREOS_BUILD.
  5. Generate a release manifest: `repo manifest -r -o build-$BUILD.xml`
-    where `$BUILD` is the crrent value of COREOS_BUILD in `version.txt`.
+    where `$BUILD` is the current value of COREOS_BUILD in `version.txt`.
  6. Update `release.xml`: `ln -sf build-$BUILD.xml release.xml`
  7. Commit! `git add build-$BUILD.xml; git commit -a`
  8. Tag! `git tag v$BUILD.$BRANCH.$PATCH`
@@ -62,7 +62,7 @@ That was far too easy, if you need to do it the hard way try this:
 If a release branch needs to be updated after master has moved on the
 procedure is similar.
 Unfortunately since tagging branched releases (not on master) is a bit
-tricker to get right the `tag_release` script cannot be used.
+trickier to get right the `tag_release` script cannot be used.
 The automated build will kick off after updating the `dev-channel` branch.
 
  1. Check out the release instead of master: `repo init -b build-$BUILD
@@ -82,7 +82,7 @@ The automated build will kick off after updating the `dev-channel` branch.
     `master.xml` but it can be useful for looking up the git commit to
     update the `revision` attribute to. If the new git commit is on a
     branch other than master be sure to update the `upstream` attribute
-    with the apropriate ref spec for that branch.
+    with the appropriate ref spec for that branch.
  6. If this is the first time this branch has been updated on its own
     update the `default.xml` link so checking out this manifest branch
     with repo init but without the `-m` argument works:

@@ -68,7 +68,7 @@ It important to mask the service you do not want to start. The
 When using systemd-timesyncd NTP servers can be provided via DHCP, individual
 [network][systemd.network] configs, [timesyncd.conf][timesyncd.conf], or the
 built in default `*.coreos.pool.ntp.org` pool. For example, to disable the
-default behavior of using NTP serviers from DHCP write the following to
+default behavior of using NTP servers from DHCP write the following to
 `/etc/systemd/network/50-dhcp-no-ntp.conf`:
 
 ```ini
@@ -136,7 +136,7 @@ sudo timedatectl set-timezone America/New_York
 Check the timezone status to view the changes:
 
 ```
-timedatectl 
+timedatectl
       Local time: Tue 2014-08-26 15:44:07 EDT
   Universal time: Tue 2014-08-26 19:44:07 UTC
         RTC time: Tue 2014-08-26 19:44:07

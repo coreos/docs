@@ -44,7 +44,7 @@ docker -H tcp://127.0.0.1:2375 ps
 
 ### Cloud-Config
 
-To enable the remote API on every CoreOS machine in a cluster, use [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). We need to provide the new socket file and docker's socket activation support will automatically start using the socket:
+To enable the remote API on every CoreOS machine in a cluster, use [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). We need to provide the new socket file and Docker's socket activation support will automatically start using the socket:
 
 ```yaml
 #cloud-config

@@ -103,7 +103,7 @@ The most common cloud-config for DigitalOcean looks like:
 coreos:
   etcd:
     # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-    # specify the intial size of your cluster with ?size=X
+    # specify the initial size of your cluster with ?size=X
     discovery: https://discovery.etcd.io/<token>
     # multi-region deployments, multi-cloud deployments, and droplets without
     # private networking need to use $public_ipv4

@@ -21,7 +21,7 @@ MYSQL_DATABASE="enterpriseregistrydb"
 MYSQL_CONTAINER_NAME="mysql"
 ```
 Do not edit these values:
-(creates a 32 char password for the MySQL root user and the Enterprise Registery DB user)
+(creates a 32 char password for the MySQL root user and the Enterprise Registry DB user)
 
 ```sh
 MYSQL_ROOT_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | sed 1q)
