@@ -13,7 +13,7 @@ As much as we all love flawless, automatic updates, there may be occasions when
 an update must be rolled back. This is fairly straightforward on CoreOS, once
 you know the right commands.
 
-TL;DR; The following command will set the currently passive partition to be
+tl;dr: The following command will set the currently passive partition to be
 active on the next boot:
 
 ```
