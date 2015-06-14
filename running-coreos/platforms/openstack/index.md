@@ -90,7 +90,7 @@ We're going to provide our cloud-config to OpenStack via the user-data flag. Our
 In order for this to work your OpenStack cloud provider must support [config drive][config-drive] or the OpenStack metadata service.
 
 [cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
-[config-drive]: http://docs.openstack.org/user-guide/content/config-drive.html
+[config-drive]: http://docs.openstack.org/user-guide/cli_config_drive.html
 
 The most common cloud-config for OpenStack looks like:
 
