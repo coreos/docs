@@ -20,7 +20,7 @@ CoreOS Enterprise Registry requires three components to be running to begin the 
 
 ## Preparing the Database
 
-A MySQL RDBMS or Postgres installation with an empty database is required, and a login with full access to said database. The schema will be created the first time the registry image is run. The database install can either be pre-existing or run on CoreOS via a [Docker container]({{site.url}}/docs/enterprise-registry/mysql-container).
+A MySQL RDBMS or Postgres installation with an empty database is required, and a login with full access to said database. The schema will be created the first time the registry image is run. The database install can either be pre-existing or run on CoreOS via a [Docker container]({{site.baseurl}}/docs/enterprise-registry/mysql-container).
 
 ## Setting up Redis
 
@@ -59,14 +59,14 @@ paths to the directories created above:
 sudo docker run --restart=always -p 443:443 -p 80:80 --privileged=true -v /local/path/to/the/config/directory:/conf/stack -v /local/path/to/the/storage/directory:/datastorage -d quay.io/coreos/registry
 ```
 
-<img src="{{site.url}}/docs/enterprise-registry/initial-setup/db-setup-full.png" class="img-center" alt="Enterprise Registry Setup Screen"/>
+<img src="{{site.baseurl}}/docs/enterprise-registry/initial-setup/db-setup-full.png" class="img-center" alt="Enterprise Registry Setup Screen"/>
 
 Once started, visit: http://yourhost/setup, wait for the page to load (it may take a minute or two) and follow instructions there to setup the enterprise registry.
 
 **NOTE**: The Enterprise Registry will restart itself a few times during this setup process. If the container does not automatically come
 back up, simply run the command above again.
 
-<img src="{{site.url}}/docs/enterprise-registry/initial-setup/container-restart.png" class="img-center" alt="Enterprise Registry Restart"/>
+<img src="{{site.baseurl}}/docs/enterprise-registry/initial-setup/container-restart.png" class="img-center" alt="Enterprise Registry Restart"/>
 
 
 ## Verifying the Registry status

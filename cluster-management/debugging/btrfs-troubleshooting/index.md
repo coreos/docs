@@ -9,7 +9,7 @@ weight: 5
 
 # Working with btrfs and Common Troubleshooting
 
-btrfs is a copy-on-write filesystem with full support in the upstream Linux kernel, which is important since CoreOS frequently ships [updated versions]({{site.url}}/releases) of the kernel. Docker has a storage driver for btrfs and it is set up on CoreOS out of the box.
+btrfs is a copy-on-write filesystem with full support in the upstream Linux kernel, which is important since CoreOS frequently ships [updated versions]({{site.baseurl}}/releases) of the kernel. Docker has a storage driver for btrfs and it is set up on CoreOS out of the box.
 
 btrfs was marked as experimental for a long time, but it's now fully production-ready and supported by a number of Linux distributions.
 
@@ -80,7 +80,7 @@ Balance on '/' is running
 
 ## Adding a New Physical Disk
 
-New physical disks can be added to an existing btrfs filesystem. The first step is to have the new block device [mounted on the machine]({{site.url}}/docs/cluster-management/setup/mounting-storage/). Afterwards, let btrfs know about the new device and re-balance the file system. The key step here is re-balancing, which will move the data and metadata across both block devices. Expect this process to take some time:
+New physical disks can be added to an existing btrfs filesystem. The first step is to have the new block device [mounted on the machine]({{site.baseurl}}/docs/cluster-management/setup/mounting-storage/). Afterwards, let btrfs know about the new device and re-balance the file system. The key step here is re-balancing, which will move the data and metadata across both block devices. Expect this process to take some time:
 
 ```sh
 $ btrfs device add /dev/sdc /

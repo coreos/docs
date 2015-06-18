@@ -14,7 +14,7 @@ CoreOS is currently in heavy development and actively being tested.  These instr
 
 ## Choosing a Channel
 
-CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.
+CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
 
 <div id="rax-images">
   <ul class="nav nav-tabs">
@@ -25,7 +25,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing.
+        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing.
         {% if site.data.alpha-channel.rackspace-version != site.data.alpha-channel.rackspace-onmetal-version %}
           Current version for Cloud Servers is CoreOS {{site.data.alpha-channel.rackspace-version}} and the current version for OnMetal servers is {{site.data.alpha-channel.rackspace-onmetal-version}}.
         {% elsif site.data.alpha-channel.rackspace-version == site.data.alpha-channel.rackspace-onmetal-version %}
@@ -45,12 +45,12 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
           <tr>
             <td>Cloud Servers</td>
             <td>{{site.data.alpha-channel.rackspace-image-id}}</td>
-            <td><a href="{{site.url}}/dist/rackspace/heat-alpha.yaml">heat-alpha.yaml</td>
+            <td><a href="{{site.baseurl}}/dist/rackspace/heat-alpha.yaml">heat-alpha.yaml</td>
           </tr>
           <tr>
             <td>OnMetal</td>
             <td>{{site.data.alpha-channel.rackspace-onmetal-id}}</td>
-            <td><a href="{{site.url}}/dist/rackspace/heat-onmetal-alpha.yaml">heat-onmetal-alpha.yaml</td>
+            <td><a href="{{site.baseurl}}/dist/rackspace/heat-onmetal-alpha.yaml">heat-onmetal-alpha.yaml</td>
           </tr>
         </tbody>
       </table>
@@ -77,12 +77,12 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
           <tr>
             <td>Cloud Server</td>
             <td>{{site.data.beta-channel.rackspace-image-id}}</td>
-            <td><a href="{{site.url}}/dist/rackspace/heat-beta.yaml">heat-beta.yaml</td>
+            <td><a href="{{site.baseurl}}/dist/rackspace/heat-beta.yaml">heat-beta.yaml</td>
           </tr>
           <tr>
             <td>OnMetal</td>
             <td>{{site.data.beta-channel.rackspace-onmetal-id}}</td>
-            <td><a href="{{site.url}}/dist/rackspace/heat-onmetal-beta.yaml">heat-onmetal-beta.yaml</td>
+            <td><a href="{{site.baseurl}}/dist/rackspace/heat-onmetal-beta.yaml">heat-onmetal-beta.yaml</td>
           </tr>
         </tbody>
       </table>
@@ -109,12 +109,12 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
           <tr>
             <td>Cloud Server</td>
             <td>{{site.data.stable-channel.rackspace-image-id}}</td>
-            <td><a href="{{site.url}}/dist/rackspace/heat-stable.yaml">heat-stable.yaml</td>
+            <td><a href="{{site.baseurl}}/dist/rackspace/heat-stable.yaml">heat-stable.yaml</td>
           </tr>
           <tr>
             <td>OnMetal</td>
             <td>{{site.data.stable-channel.rackspace-onmetal-id}}</td>
-            <td><a href="{{site.url}}/dist/rackspace/heat-onmetal-stable.yaml">heat-onmetal-stable.yaml</td>
+            <td><a href="{{site.baseurl}}/dist/rackspace/heat-onmetal-stable.yaml">heat-onmetal-stable.yaml</td>
           </tr>
         </tbody>
       </table>
@@ -150,7 +150,7 @@ coreos:
 
 The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on Rackspace.
 
-[cloud-config-docs]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 ### Mount Data Disk
 
@@ -171,7 +171,7 @@ coreos:
 
 Mounting Cloud Block Storage can be done with a mount unit, but should not be included in cloud-config unless the disk is present on the first boot.
 
-For more general information, check out [mounting storage on CoreOS]({{site.url}}/docs/cluster-management/setup/mounting-storage).
+For more general information, check out [mounting storage on CoreOS]({{site.baseurl}}/docs/cluster-management/setup/mounting-storage).
 
 ## Launch with Nova
 
@@ -317,20 +317,20 @@ source ~/.bash_profile
     <div class="tab-pane" id="alpha-heat">
       <p>Launch the stack by providing the specified parameters. This command will reference the local file <code>data.yml</code> in the current working directory that contains the cloud-config parameters. <code>$(< data.yaml)</code> prints the contents of this file into our heat command:</p>
       <pre>heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-alpha.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=5 -P user-data="$(< data.yaml)" -P name="CoreOS-alpha"</pre>
-      <p>You can view the <a href="{{site.url}}/dist/rackspace/heat-alpha.yaml">template here</a>.</p>
+      <p>You can view the <a href="{{site.baseurl}}/dist/rackspace/heat-alpha.yaml">template here</a>.</p>
       <p>To boot an OnMetal cluster, use a slightly modified template:</p>
       <pre>heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-onmetal-alpha.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=3 -P user-data="$(< data.yaml)" -P name="CoreOS-alpha"</pre>
-      <p>You can view the <a href="{{site.url}}/dist/rackspace/heat-onmetal-alpha.yaml">template here</a>.</p>
+      <p>You can view the <a href="{{site.baseurl}}/dist/rackspace/heat-onmetal-alpha.yaml">template here</a>.</p>
     </div>
     <div class="tab-pane" id="beta-heat">
       <p>Launch the stack by providing the specified parameters. This command will reference the local file <code>data.yml</code> in the current working directory that contains the cloud-config parameters. <code>$(< data.yaml)</code> prints the contents of this file into our heat command:</p>
       <pre>heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-beta.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=5 -P user-data="$(< data.yaml)" -P name="CoreOS-beta"</pre>
-      <p>You can view the <a href="{{site.url}}/dist/rackspace/heat-beta.yaml">template here</a>.</p>
+      <p>You can view the <a href="{{site.baseurl}}/dist/rackspace/heat-beta.yaml">template here</a>.</p>
     </div>
     <div class="tab-pane active" id="stable-heat">
       <p>Launch the stack by providing the specified parameters. This command will reference the local file <code>data.yml</code> in the current working directory that contains the cloud-config parameters. <code>$(< data.yaml)</code> prints the contents of this file into our heat command:</p>
       <pre>heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-stable.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=5 -P user-data="$(< data.yaml)" -P name="CoreOS-stable"</pre>
-      <p>You can view the <a href="{{site.url}}/dist/rackspace/heat-stable.yaml">template here</a>.</p>
+      <p>You can view the <a href="{{site.baseurl}}/dist/rackspace/heat-stable.yaml">template here</a>.</p>
     </div>
   </div>
 </div>
@@ -352,4 +352,4 @@ You can also launch servers with either the `alpha` and `beta` channel versions 
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

@@ -8,9 +8,9 @@ weight: 7
 
 # Network Configuration with networkd
 
-CoreOS machines are preconfigured with [networking customized]({{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors) for each platform. You can write your own networkd units to replace or override the units created for each platform. This article covers a subset of networkd functionality. You can view the [full docs here](http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html).
+CoreOS machines are preconfigured with [networking customized]({{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors) for each platform. You can write your own networkd units to replace or override the units created for each platform. This article covers a subset of networkd functionality. You can view the [full docs here](http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html).
 
-Drop a networkd unit in `/etc/systemd/network/` or inject a unit on boot via [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/#coreos) to override an existing unit. Network units injected via the `coreos.units` node in the cloud-config will automatically trigger a networkd reload in order for changes to be applied. Files placed on the filesystem will need to reload networkd afterwards with `sudo systemctl restart systemd-networkd`.
+Drop a networkd unit in `/etc/systemd/network/` or inject a unit on boot via [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/#coreos) to override an existing unit. Network units injected via the `coreos.units` node in the cloud-config will automatically trigger a networkd reload in order for changes to be applied. Files placed on the filesystem will need to reload networkd afterwards with `sudo systemctl restart systemd-networkd`.
 
 Let's take a look at two common situations: using a static IP and turning off DHCP.
 

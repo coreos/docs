@@ -35,13 +35,13 @@ sudo coreos-install -d /dev/vda -c cloud-config.yaml
 sudo reboot
 ```
 
-Please be sure to check out [Using Cloud-Config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config).
+Please be sure to check out [Using Cloud-Config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config).
 
-You must add to your ssh public key to your `cloud-config`'s [ssh authorized keys]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/#ssh_authorized_keys) so you'll be able to log in.
+You must add to your ssh public key to your `cloud-config`'s [ssh authorized keys]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/#ssh_authorized_keys) so you'll be able to log in.
 
 ## Choosing a Channel
 
-CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.
+CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
 
 <div id="vultr-images">
   <ul class="nav nav-tabs">
@@ -52,7 +52,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.data.alpha-channel.rackspace-version}}.</p>
+        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.data.alpha-channel.rackspace-version}}.</p>
       </div>
       <p>A sample script will look like this:</p>
 
@@ -134,4 +134,4 @@ core@localhost ~ $
 
 ## Using CoreOS
 
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

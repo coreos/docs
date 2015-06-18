@@ -81,7 +81,7 @@ image.
 
 ### Choosing a Channel
 
-CoreOS is released into stable, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
+CoreOS is released into stable, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes in each channel.
 
 <div id="qemu-images">
   <ul class="nav nav-tabs">
@@ -179,4 +179,4 @@ ssh coreos
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

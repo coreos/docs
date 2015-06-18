@@ -15,7 +15,7 @@ weight: 7
 There is a simple installer that will destroy everything on the given target disk and install CoreOS.
 Essentially it downloads an image, verifies it with gpg and then copies it bit for bit to disk.
 
-The script is self-contained and located [on GitHub here](https://raw.github.com/coreos/init/master/bin/coreos-install "coreos-install") and can be run from any Linux distribution. You cannot normally install CoreOS to the same device that is currently booted. However, the [CoreOS ISO]({{site.url}}/docs/running-coreos/platforms/iso/) or any Linux liveCD will allow CoreOS to install to a non-active device. 
+The script is self-contained and located [on GitHub here](https://raw.github.com/coreos/init/master/bin/coreos-install "coreos-install") and can be run from any Linux distribution. You cannot normally install CoreOS to the same device that is currently booted. However, the [CoreOS ISO]({{site.baseurl}}/docs/running-coreos/platforms/iso/) or any Linux liveCD will allow CoreOS to install to a non-active device. 
 
 If you boot CoreOS via PXE, the install script is already installed. By default the install script will attempt to install the same version and channel that was PXE-booted:
 
@@ -48,7 +48,7 @@ CoreOS is released into alpha and beta channels. Releases to each channel serve 
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
-      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
       <p>If you want to ensure you are installing the latest alpha version, use the <code>-C</code> option:</p>
       <pre>coreos-install -d /dev/sda -C alpha</pre>
     </div>
@@ -103,7 +103,7 @@ To start the installation script with a reference to our cloud-config file, run:
 coreos-install -d /dev/sda -C beta -c ~/cloud-config.yaml
 ```
 
-[cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 ## Manual Tweaks
 
@@ -116,4 +116,4 @@ mount -o subvol=root /dev/sda9 /mnt/
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

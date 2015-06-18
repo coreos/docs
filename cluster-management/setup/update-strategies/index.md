@@ -8,7 +8,7 @@ weight: 7
 
 # Update Strategies
 
-The overarching goal of CoreOS is to secure the Internet's backend infrastructure. We believe that [automatically updating]({{site.url}}/using-coreos/updates) the operating system is one of the best tools to achieve this goal.
+The overarching goal of CoreOS is to secure the Internet's backend infrastructure. We believe that [automatically updating]({{site.baseurl}}/using-coreos/updates) the operating system is one of the best tools to achieve this goal.
 
 We realize that each CoreOS cluster has a unique tolerance for risk and the operational needs of your applications are complex. In order to meet everyone's needs, there are four update strategies that we have developed based on feedback during our alpha period.
 
@@ -23,7 +23,7 @@ It's important to note that updates are always downloaded to the passive partiti
 
 ## Strategy Options
 
-The update strategy is defined in [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/#coreos):
+The update strategy is defined in [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/#coreos):
 
 ```yaml
 #cloud-config
@@ -81,7 +81,7 @@ The `off` strategy is also straightforward. The update will be installed onto th
 
 PXE/iPXE machines download a new copy of CoreOS every time they are started thus are dependent on the version of CoreOS they are served. If you don't automatically load new CoreOS images into your PXE/iPXE server, your machines will never have new features or security updates.
 
-An easy solution to this problem is to use iPXE and reference images [directly from the CoreOS storage site]({{site.url}}/docs/running-coreos/bare-metal/booting-with-ipxe/#setting-up-the-boot-script). The `alpha` URL is automatically pointed to the new version of CoreOS as it is released.
+An easy solution to this problem is to use iPXE and reference images [directly from the CoreOS storage site]({{site.baseurl}}/docs/running-coreos/bare-metal/booting-with-ipxe/#setting-up-the-boot-script). The `alpha` URL is automatically pointed to the new version of CoreOS as it is released.
 
 ## Updating Behind a Proxy
 

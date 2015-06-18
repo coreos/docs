@@ -8,7 +8,7 @@ weight: 9
 
 # CoreOS Disk Layout
 
-CoreOS is designed to be reliably updated via a [continuous stream of updates]({{site.url}}/using-coreos/updates). The operating system has 9 different disk partitions, utilizing a subset of those to make each update safe and enable a roll-back to a previous version if anything goes wrong.
+CoreOS is designed to be reliably updated via a [continuous stream of updates]({{site.baseurl}}/using-coreos/updates). The operating system has 9 different disk partitions, utilizing a subset of those to make each update safe and enable a roll-back to a previous version if anything goes wrong.
 
 ## Partition Table
 
@@ -26,7 +26,7 @@ CoreOS is designed to be reliably updated via a [continuous stream of updates]({
 
 For more information, [read more about the disk layout][chromium disk format] used by Chromium and ChromeOS, which inspired the layout used by CoreOS.
 
-[OEM docs]: {{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors
+[OEM docs]: {{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors
 [chromium disk format]: http://www.chromium.org/chromium-os/chromiumos-design-docs/disk-format
 
 ## Mounted Filesystems

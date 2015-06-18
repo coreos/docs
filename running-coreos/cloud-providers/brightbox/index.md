@@ -91,7 +91,7 @@ CoreOS allows you to configure machine parameters, launch systemd units on
 startup and more via [cloud-config][cloud-config].  We're going to provide the
 `cloud-config` data via the `user-data-file` flag.
 
-[cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 A sample common `cloud-config` file will look something like the following:
 
@@ -157,5 +157,5 @@ If you don’t have ipv6, you’ll need to [create and map a Cloud IP](http://br
 ## Using CoreOS
 
 Now that you have a cluster bootstrapped it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
 

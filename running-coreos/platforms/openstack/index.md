@@ -20,7 +20,7 @@ into the glance image store.
 
 ## Choosing a Channel
 
-CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.
+CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
 
 <div id="openstack-create">
   <ul class="nav nav-tabs">
@@ -30,7 +30,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
-      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
 <pre>
 $ wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
 $ bunzip2 coreos_production_openstack_image.img.bz2
@@ -89,7 +89,7 @@ CoreOS allows you to configure machine parameters, launch systemd units on start
 We're going to provide our cloud-config to OpenStack via the user-data flag. Our cloud-config will also contain SSH keys that will be used to connect to the instance.
 In order for this to work your OpenStack cloud provider must support [config drive][config-drive] or the OpenStack metadata service.
 
-[cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 [config-drive]: http://docs.openstack.org/user-guide/cli_config_drive.html
 
 The most common cloud-config for OpenStack looks like:
@@ -204,4 +204,4 @@ new discovery token. Change the token value on the etcd discovery parameter in t
 ## Using CoreOS
 
 Now that you have instances booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

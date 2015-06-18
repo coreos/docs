@@ -6,7 +6,7 @@ title: CoreOS Quick Start
 
 # Quick Start
 
-If you don't have a CoreOS machine running, check out the guides on [running CoreOS]({{site.url}}/docs/#running-coreos) on most cloud providers ([EC2]({{site.url}}/docs/running-coreos/cloud-providers/ec2), [Rackspace]({{site.url}}/docs/running-coreos/cloud-providers/rackspace), [GCE]({{site.url}}/docs/running-coreos/cloud-providers/google-compute-engine)), virtualization platforms ([Vagrant]({{site.url}}/docs/running-coreos/platforms/vagrant), [VMware]({{site.url}}/docs/running-coreos/platforms/vmware), [OpenStack]({{site.url}}/docs/running-coreos/platforms/openstack), [QEMU/KVM]({{site.url}}/docs/running-coreos/platforms/qemu)) and bare metal servers ([PXE]({{site.url}}/docs/running-coreos/bare-metal/booting-with-pxe), [iPXE]({{site.url}}/docs/running-coreos/bare-metal/booting-with-ipxe), [ISO]({{site.url}}/docs/running-coreos/platforms/iso), [Installer]({{site.url}}/docs/running-coreos/bare-metal/installing-to-disk)). With any of these guides you will have machines up and running in a few minutes.
+If you don't have a CoreOS machine running, check out the guides on [running CoreOS]({{site.baseurl}}/docs/#running-coreos) on most cloud providers ([EC2]({{site.baseurl}}/docs/running-coreos/cloud-providers/ec2), [Rackspace]({{site.baseurl}}/docs/running-coreos/cloud-providers/rackspace), [GCE]({{site.baseurl}}/docs/running-coreos/cloud-providers/google-compute-engine)), virtualization platforms ([Vagrant]({{site.baseurl}}/docs/running-coreos/platforms/vagrant), [VMware]({{site.baseurl}}/docs/running-coreos/platforms/vmware), [OpenStack]({{site.baseurl}}/docs/running-coreos/platforms/openstack), [QEMU/KVM]({{site.baseurl}}/docs/running-coreos/platforms/qemu)) and bare metal servers ([PXE]({{site.baseurl}}/docs/running-coreos/bare-metal/booting-with-pxe), [iPXE]({{site.baseurl}}/docs/running-coreos/bare-metal/booting-with-ipxe), [ISO]({{site.baseurl}}/docs/running-coreos/platforms/iso), [Installer]({{site.baseurl}}/docs/running-coreos/bare-metal/installing-to-disk)). With any of these guides you will have machines up and running in a few minutes.
 
 It's highly recommended that you set up a cluster of at least 3 machines &mdash; it's not as much fun on a single machine. If you don't want to break the bank, [Vagrant][vagrant-guide] allows you to run an entire cluster on your laptop. For a cluster to be properly bootstrapped, you have to provide cloud-config via user-data, which is covered in each platform's guide.
 
@@ -44,7 +44,7 @@ CoreOS (beta)
 
 The first building block of CoreOS is service discovery with **etcd** ([docs][etcd-docs]). Data stored in etcd is distributed across all of your machines running CoreOS. For example, each of your app containers can announce itself to a proxy container, which would automatically know which machines should receive traffic. Building service discovery into your application allows you to add more machines and scale your services seamlessly.
 
-If you used an example [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config) from a guide linked in the first paragraph, etcd is automatically started on boot.
+If you used an example [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config) from a guide linked in the first paragraph, etcd is automatically started on boot.
 
 A good starting point would be something like:
 
@@ -85,8 +85,8 @@ curl -L http://127.0.0.1:4001/v2/keys/message
 If you followed a guide to set up more than one CoreOS machine, you can SSH into another machine and can retrieve this same value.
 
 #### More Detailed Information
-<a class="btn btn-primary" href="{{ site.url }}/docs/distributed-configuration/getting-started-with-etcd/" data-category="More Information" data-event="Docs: Getting Started etcd">View Complete Guide</a>
-<a class="btn btn-default" href="{{site.url}}/docs/distributed-configuration/etcd-api/">Read etcd API Docs</a>
+<a class="btn btn-primary" href="{{ site.baseurl }}/docs/distributed-configuration/getting-started-with-etcd/" data-category="More Information" data-event="Docs: Getting Started etcd">View Complete Guide</a>
+<a class="btn btn-default" href="{{site.baseurl}}/docs/distributed-configuration/etcd-api/">Read etcd API Docs</a>
 
 ## Container Management with docker
 
@@ -105,14 +105,14 @@ docker run -i -t busybox /bin/sh
 ```
 
 #### More Detailed Information
-<a class="btn btn-primary" href="{{ site.url }}/docs/launching-containers/building/getting-started-with-docker" data-category="More Information" data-event="Docs: Getting Started docker">View Complete Guide</a>
+<a class="btn btn-primary" href="{{ site.baseurl }}/docs/launching-containers/building/getting-started-with-docker" data-category="More Information" data-event="Docs: Getting Started docker">View Complete Guide</a>
 <a class="btn btn-default" href="http://docs.docker.io/">Read docker Docs</a>
 
 ## Process Management with fleet
 
 The third building block of CoreOS is **fleet**, a distributed init system for your cluster. You should use fleet to manage the life cycle of your docker containers.
 
-Fleet works by receiving [systemd unit files]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd/) and scheduling them onto machines in the cluster based on declared conflicts and other preferences encoded in the unit file. Using the `fleetctl` tool, you can query the status of a unit, remotely access its logs and more.
+Fleet works by receiving [systemd unit files]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd/) and scheduling them onto machines in the cluster based on declared conflicts and other preferences encoded in the unit file. Using the `fleetctl` tool, you can query the status of a unit, remotely access its logs and more.
 
 First, let's construct a simple systemd unit that runs a docker container. Save this as `hello.service` in the home directory:
 
@@ -132,7 +132,7 @@ ExecStart=/usr/bin/docker run --name hello busybox /bin/sh -c "while true; do ec
 ExecStop=/usr/bin/docker stop hello
 ```
 
-The [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd) guide explains the format of this file in more detail.
+The [Getting Started with systemd]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd) guide explains the format of this file in more detail.
 
 Then load and start the unit:
 
@@ -169,5 +169,5 @@ fleetctl destroy hello.service
 Fleet has many more features that you can explore in the guides below.
 
 #### More Detailed Information
-<a class="btn btn-primary" href="{{ site.url }}/docs/launching-containers/launching/launching-containers-fleet/" data-category="More Information" data-event="Docs: Launching Containers Fleet">View Complete Guide</a>
-<a class="btn btn-default" href="{{ site.url }}/docs/launching-containers/launching/getting-started-with-systemd/" data-category="More Information" data-event="Docs: Getting Started with systemd">View Getting Started with systemd Guide</a>
+<a class="btn btn-primary" href="{{ site.baseurl }}/docs/launching-containers/launching/launching-containers-fleet/" data-category="More Information" data-event="Docs: Launching Containers Fleet">View Complete Guide</a>
+<a class="btn btn-default" href="{{ site.baseurl }}/docs/launching-containers/launching/getting-started-with-systemd/" data-category="More Information" data-event="Docs: Getting Started with systemd">View Getting Started with systemd Guide</a>

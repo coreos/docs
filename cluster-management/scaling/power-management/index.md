@@ -34,7 +34,7 @@ modprobe cpufreq_conservative
 echo "conservative" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor > /dev/null
 ```
 
-This can be configured with [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/#coreos) as well:
+This can be configured with [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/#coreos) as well:
 
 ```yaml
 coreos:

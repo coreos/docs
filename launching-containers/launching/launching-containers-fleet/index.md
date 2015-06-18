@@ -9,11 +9,11 @@ weight: 2
 
 # Launching Containers with fleet
 
-`fleet` is a cluster manager that controls `systemd` at the cluster level. To run your services in the cluster, you must submit regular systemd units combined with a few [fleet-specific properties]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/).
+`fleet` is a cluster manager that controls `systemd` at the cluster level. To run your services in the cluster, you must submit regular systemd units combined with a few [fleet-specific properties]({{site.baseurl}}/docs/launching-containers/launching/fleet-unit-files/).
 
-If you're not familiar with systemd units, check out our [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd) guide.
+If you're not familiar with systemd units, check out our [Getting Started with systemd]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd) guide.
 
-This guide assumes you're running `fleetctl` locally from a CoreOS machine that's part of a CoreOS cluster. You can also [control your cluster remotely]({{site.url}}/docs/launching-containers/launching/fleet-using-the-client/#get-up-and-running). All of the units referenced in this blog post are contained in the [unit-examples](https://github.com/coreos/unit-examples/tree/master/simple-fleet) repository. You can clone this onto your CoreOS box to make unit submission easier.
+This guide assumes you're running `fleetctl` locally from a CoreOS machine that's part of a CoreOS cluster. You can also [control your cluster remotely]({{site.baseurl}}/docs/launching-containers/launching/fleet-using-the-client/#get-up-and-running). All of the units referenced in this blog post are contained in the [unit-examples](https://github.com/coreos/unit-examples/tree/master/simple-fleet) repository. You can clone this onto your CoreOS box to make unit submission easier.
 
 ## Types of Fleet Units
 
@@ -51,7 +51,7 @@ standard-unit.service   148a18ff.../10.10.1.1    active    running
 
 ## Run a Container in the Cluster
 
-Running a single container is very easy. All you need to do is provide a regular unit file without an `[Install]` section. Let's run the same unit from the [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd) guide. First save these contents as `myapp.service` on the CoreOS machine:
+Running a single container is very easy. All you need to do is provide a regular unit file without an `[Install]` section. Let's run the same unit from the [Getting Started with systemd]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd) guide. First save these contents as `myapp.service` on the CoreOS machine:
 
 ```ini
 [Unit]
@@ -118,7 +118,7 @@ ExecStop=/usr/bin/docker stop apache1
 Conflicts=apache@*.service
 ```
 
-The `Conflicts` attribute tells `fleet` that these two services can't be run on the same machine, giving us high availability. A full list of options for this section can be found in the [fleet units guide]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/).
+The `Conflicts` attribute tells `fleet` that these two services can't be run on the same machine, giving us high availability. A full list of options for this section can be found in the [fleet units guide]({{site.baseurl}}/docs/launching-containers/launching/fleet-unit-files/).
 
 Let's start both units and verify that they're on two different machines:
 
@@ -159,9 +159,9 @@ This unit has a few interesting properties. First, it uses `BindsTo` to link the
 
 Second is `%i`, a variable built into systemd that represents the instance name of an instantiated unit (a unit launched from a template). This variable expands to any value after the `@` in the unit's name. In our case, it will expand to `1` (for `apache-discovery@1`) and `2` (for `apache-discovery@2`). 
 
-Third is `%H`, a variable built into systemd, that represents the hostname of the machine running this unit. Variable usage is covered in our [Getting Started with systemd]({{site.url}}/docs/launching-containers/launching/getting-started-with-systemd/#unit-variables) guide as well as in [systemd documentation](http://www.freedesktop.org/software/systemd/man/systemd.unit.html#Specifiers).
+Third is `%H`, a variable built into systemd, that represents the hostname of the machine running this unit. Variable usage is covered in our [Getting Started with systemd]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd/#unit-variables) guide as well as in [systemd documentation](http://www.freedesktop.org/software/systemd/man/systemd.unit.html#Specifiers).
 
-The fourth is a [fleet-specific property]({{site.url}}/docs/launching-containers/launching/fleet-unit-files/) called `MachineOf`. This property causes the unit to be placed onto the same machine that the corresponding apache service is running on (e.g., `apache-discovery@1.service` will be scheduled on the same machine as `apache@1.service`).
+The fourth is a [fleet-specific property]({{site.baseurl}}/docs/launching-containers/launching/fleet-unit-files/) called `MachineOf`. This property causes the unit to be placed onto the same machine that the corresponding apache service is running on (e.g., `apache-discovery@1.service` will be scheduled on the same machine as `apache@1.service`).
 
 Let's verify that each unit was placed on to the same machine as the Apache service is bound to:
 
@@ -191,7 +191,7 @@ $ etcdctl get /services/website/apache@1
 
 ## Run an External Service Sidekick
 
-If you're running in the cloud, many services have APIs that can be automated based on actions in the cluster. For example, you may update DNS records or add new containers to a cloud load balancer. Our [Example Deployment with fleet]({{site.url}}/docs/launching-containers/launching/fleet-example-deployment/#service-files) contains a pre-made presence container that updates an Amazon Elastic Load Balancer with new backends.
+If you're running in the cloud, many services have APIs that can be automated based on actions in the cluster. For example, you may update DNS records or add new containers to a cloud load balancer. Our [Example Deployment with fleet]({{site.baseurl}}/docs/launching-containers/launching/fleet-example-deployment/#service-files) contains a pre-made presence container that updates an Amazon Elastic Load Balancer with new backends.
 
 <iframe width="636" height="375" src="//www.youtube.com/embed/u91DnN-yaJ8?rel=0" frameborder="0" allowfullscreen></iframe>
 
@@ -242,7 +242,7 @@ Global units can deployed to a subset of matching machines with the `MachineMeta
 
 Applications with complex and specific requirements can target a subset of the cluster for scheduling via machine metadata. Powerful deployment topologies can be achieved &mdash; schedule units based on the machine's region, rack location, disk speed or anything else you can think of.
 
-Metadata can be provided via [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/#coreos) or a [config file](https://github.com/coreos/fleet/blob/master/Documentation/deployment-and-configuration.md). Here's an example config file:
+Metadata can be provided via [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/#coreos) or a [config file](https://github.com/coreos/fleet/blob/master/Documentation/deployment-and-configuration.md). Here's an example config file:
 
 ```ini
 # Comma-delimited key/value pairs that are published to the fleet registry.
@@ -295,6 +295,6 @@ MachineMetadata=region=east
 ```
 
 #### More Information
-<a class="btn btn-default" href="{{site.url}}/docs/launching-containers/launching/fleet-example-deployment">Example Deployment with fleet</a>
-<a class="btn btn-default" href="{{site.url}}/docs/launching-containers/launching/fleet-unit-files/">fleet Unit Specifications</a>
+<a class="btn btn-default" href="{{site.baseurl}}/docs/launching-containers/launching/fleet-example-deployment">Example Deployment with fleet</a>
+<a class="btn btn-default" href="{{site.baseurl}}/docs/launching-containers/launching/fleet-unit-files/">fleet Unit Specifications</a>
 <a class="btn btn-default" href="https://github.com/coreos/fleet/blob/master/Documentation/deployment-and-configuration.md">fleet Configuration</a>

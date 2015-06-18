@@ -22,11 +22,11 @@ wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_openst
 gpg --verify coreos_production_openstack_image.img.bz2.sig
 ```
 
-[signing-key]: {{site.url}}/security/image-signing-key
+[signing-key]: {{site.baseurl}}/security/image-signing-key
 
 ## Image Customization
 
-Customizing a CoreOS image for a specific operating environment is easily done through [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/), a YAML-based configuration standard that is widely supported. As a provider, you must ensure that your platform makes this data available to CoreOS, where it will be parsed during the boot process.
+Customizing a CoreOS image for a specific operating environment is easily done through [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/), a YAML-based configuration standard that is widely supported. As a provider, you must ensure that your platform makes this data available to CoreOS, where it will be parsed during the boot process.
 
 Use cloud-config to handle platform specific configuration such as custom networking, running an agent on the machine or injecting files onto disk. CoreOS will automatically parse and execute `/usr/share/oem/cloud-config.yml` if it exists. Your cloud-config should create additional units that process user-provided metadata, as described below.
 
@@ -44,7 +44,7 @@ You can find the [code for this process on GitHub][amazon-github]. End-user inst
 
 [amazon-github]: https://github.com/coreos/coreos-overlay/tree/master/coreos-base/oem-ec2-compat
 [amazon-user-data-doc]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html#instancedata-user-data-retrieval
-[amazon-cloud-config]: {{site.url}}/docs/running-coreos/cloud-providers/ec2#cloud-config
+[amazon-cloud-config]: {{site.baseurl}}/docs/running-coreos/cloud-providers/ec2#cloud-config
 
 ### Rackspace Cloud Example
 
@@ -53,4 +53,4 @@ Rackspace passes configuration data to a VM by mounting [config-drive][config-dr
 You can find the [code for this process on GitHub][rackspace-github]. End-user instructions for this process can be found on our [Rackspace docs][rackspace-cloud-config].
 
 [rackspace-github]: https://github.com/coreos/coreos-overlay/tree/master/coreos-base/oem-rackspace
-[rackspace-cloud-config]: {{site.url}}/docs/running-coreos/cloud-providers/rackspace#cloud-config
+[rackspace-cloud-config]: {{site.baseurl}}/docs/running-coreos/cloud-providers/rackspace#cloud-config

@@ -9,7 +9,7 @@ weight: 5
 
 # Reading the System Log
 
-`journalctl` is your interface into a single machine's journal/logging and `fleetctl journal` will fetch the journal for containers started with [fleet]({{site.url}}/using-coreos/clustering/). All service files and docker containers insert data into the systemd journal. There are a few helpful commands to read the journal:
+`journalctl` is your interface into a single machine's journal/logging and `fleetctl journal` will fetch the journal for containers started with [fleet]({{site.baseurl}}/using-coreos/clustering/). All service files and docker containers insert data into the systemd journal. There are a few helpful commands to read the journal:
 
 ## Read the Entire Journal
 
@@ -40,7 +40,7 @@ Dec 22 12:32:39 localhost docker[9772]: /usr/sbin/apache2ctl: 87: ulimit: error 
 Dec 22 12:32:39 localhost docker[9772]: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.6 for ServerName
 ```
 
-Using the `--tunnel` flag ([docs](https://github.com/coreos/fleet/blob/master/Documentation/using-the-client.md#from-an-external-host)), you can remotely read the journal for a specific unit started via [fleet]({{site.url}}/using-coreos/clustering/). This command will figure out which machine the unit is currently running on, fetch the journal and output it:
+Using the `--tunnel` flag ([docs](https://github.com/coreos/fleet/blob/master/Documentation/using-the-client.md#from-an-external-host)), you can remotely read the journal for a specific unit started via [fleet]({{site.baseurl}}/using-coreos/clustering/). This command will figure out which machine the unit is currently running on, fetch the journal and output it:
 
 ```sh
 $ fleetctl --tunnel 10.10.10.10 journal apache.service
@@ -73,4 +73,4 @@ journalctl -u apache.service -f
 ```
 
 #### More Information
-<a class="btn btn-default" href="{{site.url}}/docs/launching-containers/launching/getting-started-with-systemd">Getting Started with systemd</a>
+<a class="btn btn-default" href="{{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd">Getting Started with systemd</a>
