@@ -12,7 +12,7 @@ You can create user accounts on a CoreOS machine manually with `useradd` or via 
 
 ## Add Users via Cloud-Config
 
-Managing users via cloud-config is preferred because it allows you to use the same configuration across many servers and the cloud-config file can be stored in a repo and versioned. In your cloud-config, you can specify many [different parameters]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/#users) for each user. Here's an example:
+Managing users via cloud-config is preferred because it allows you to use the same configuration across many servers and the cloud-config file can be stored in a repo and versioned. In your cloud-config, you can specify many [different parameters]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/#users) for each user. Here's an example:
 
 ```yaml
 #cloud-config
@@ -27,7 +27,7 @@ users:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0g+ZTxC7weoIJLUafOgrm+h...
 ```
 
-Check out the entire [Customize with Cloud-Config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/) guide for the full details.
+Check out the entire [Customize with Cloud-Config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/) guide for the full details.
 
 ## Add User Manually
 
@@ -54,4 +54,4 @@ update-ssh-keys -u user1 user1.pem
 
 ## Further Reading
 
-Read the [full cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/) guide to install users and more.
+Read the [full cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/) guide to install users and more.

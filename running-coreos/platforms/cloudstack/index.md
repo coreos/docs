@@ -95,4 +95,4 @@ cloud-config can be provided using userdata while deploying virtual machine. use
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

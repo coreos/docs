@@ -20,7 +20,7 @@ In order to convert the image you will need to install ```qemu-img``` with your 
 
 CoreOS is released into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
-The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
+The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes in each channel.
 
 ```sh
 $ wget -q http://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
@@ -74,4 +74,4 @@ core@10-0-0-3 ~ $
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

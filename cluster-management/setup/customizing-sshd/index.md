@@ -53,4 +53,4 @@ coreos:
 
 ## Further Reading
 
-Read the [full cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/) guide to install users and more.
+Read the [full cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/) guide to install users and more.

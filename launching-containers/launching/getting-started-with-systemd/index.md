@@ -66,8 +66,8 @@ Feb 11 17:46:28 localhost docker[23470]: Hello World
 ...
 ```
 
-<a class="btn btn-default" href="{{site.url}}/docs/launching-containers/launching/overview-of-systemctl">Overview of systemctl</a>
-<a class="btn btn-default" href="{{site.url}}/docs/cluster-management/debugging/reading-the-system-log">Reading the System Log</a>
+<a class="btn btn-default" href="{{site.baseurl}}/docs/launching-containers/launching/overview-of-systemctl">Overview of systemctl</a>
+<a class="btn btn-default" href="{{site.baseurl}}/docs/cluster-management/debugging/reading-the-system-log">Reading the System Log</a>
 
 ## Advanced Unit Files
 

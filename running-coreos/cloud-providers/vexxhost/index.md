@@ -36,7 +36,7 @@ CoreOS allows you to configure machine parameters, launch systemd units on
 startup and more via [cloud-config][cloud-config].  We're going to provide the
 `cloud-config` data via the `user-data` flag.
 
-[cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 At the moment, you cannot supply the `user-data` using the CloudConsole control
 panel therefore you must use the CLI to deploy your cluster on the VEXXHOST
@@ -116,7 +116,7 @@ cluster using the `nova` CLI command.
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
-      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
       <pre>nova boot --user-data cloud-config.yaml --image "CoreOS Alpha {{site.alpha-channel}}" --key-name coreos-key --flavor nb.2G --num-instances 3 coreos</pre>
     </div>
     <div class="tab-pane active" id="beta-create">
@@ -157,4 +157,4 @@ new discovery token. Change the token value on the etcd discovery parameter in t
 ## Using CoreOS
 
 Now that you have instances booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

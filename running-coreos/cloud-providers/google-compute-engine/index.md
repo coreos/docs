@@ -18,7 +18,7 @@ After installation, log into your account with `gcloud auth login` and enter you
 
 ## Cloud-Config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. On GCE, the cloud-config can be modified while the instance is running and will be processed next time the machine boots.
+CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. On GCE, the cloud-config can be modified while the instance is running and will be processed next time the machine boots.
 
 You can provide cloud-config to CoreOS via the Google Cloud console's metadata field `user-data` or via a flag using `gcloud`.
 
@@ -46,7 +46,7 @@ The `$private_ipv4` and `$public_ipv4` substitution variables are fully supporte
 
 ## Choosing a Channel
 
-CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.
+CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
 
 Create 3 instances from the image above using our cloud-config from `cloud-config.yaml`:
 
@@ -58,7 +58,7 @@ Create 3 instances from the image above using our cloud-config from `cloud-confi
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
-      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
       <pre>gcloud compute instances create core1 core2 core3 --image https://www.googleapis.com/compute/v1/{{site.data.alpha-channel.gce-image-path}} --zone us-central1-a --machine-type n1-standard-1 --metadata-from-file user-data=cloud-config.yaml</pre>
     </div>
     <div class="tab-pane" id="beta-create">
@@ -89,7 +89,7 @@ coreos:
         Type=ext3
 ```
 
-For more information about mounting storage, Google's [own documentation](https://developers.google.com/compute/docs/disks#attach_disk) is the best source. You can also read about [mounting storage on CoreOS]({{site.url}}/docs/cluster-management/setup/mounting-storage).
+For more information about mounting storage, Google's [own documentation](https://developers.google.com/compute/docs/disks#attach_disk) is the best source. You can also read about [mounting storage on CoreOS]({{site.baseurl}}/docs/cluster-management/setup/mounting-storage).
 
 ### Adding More Machines
 To add more instances to the cluster, just launch more with the same cloud-config inside of the project.
@@ -169,4 +169,4 @@ zone: us-central1-a
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

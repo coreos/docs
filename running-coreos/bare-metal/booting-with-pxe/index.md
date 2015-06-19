@@ -10,7 +10,7 @@ weight: 5
 
 # Booting CoreOS via PXE
 
-These instructions will walk you through booting CoreOS via PXE on real or virtual hardware. By default, this will run CoreOS completely out of RAM. CoreOS can also be [installed to disk]({{site.url}}/docs/running-coreos/bare-metal/installing-to-disk).
+These instructions will walk you through booting CoreOS via PXE on real or virtual hardware. By default, this will run CoreOS completely out of RAM. CoreOS can also be [installed to disk]({{site.baseurl}}/docs/running-coreos/bare-metal/installing-to-disk).
 
 ## Configuring pxelinux
 
@@ -68,13 +68,13 @@ ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQC2PxAKTLdczK9+RNsGGPsz0eC2pBlydBEcrbI7LSfiN7Bo5hQQVjki+Xpnp8EEYKpzu6eakL8MJj3E28wT/vNklT1KyMZrXnVhtsmOtBKKG/++odpaavdW2/AU0l7RZiE=
 ```
 
-You can view all of the [cloud-config options here]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/).
+You can view all of the [cloud-config options here]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/).
 
 Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are *not* supported on PXE systems.
 
 ### Choose a Channel
 
-CoreOS is [released]({{site.url}}/releases/) into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+CoreOS is [released]({{site.baseurl}}/releases/) into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 PXE booted machines cannot currently update themselves when new versions are released to a channel. To update to the latest version of CoreOS download/verify these files again and reboot.
 
@@ -87,7 +87,7 @@ PXE booted machines cannot currently update themselves when new versions are rel
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
       <p>In the config above you can see that a Kernel image and a initramfs file is needed. Download these two files into your tftp root.</p>
-      <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="{{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images">verify the downloaded files</a>.</p>
+      <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="{{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images">verify the downloaded files</a>.</p>
       <pre>
 cd /var/lib/tftpboot
 wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz
@@ -100,7 +100,7 @@ gpg --verify coreos_production_pxe_image.cpio.gz.sig
     </div>
     <div class="tab-pane" id="beta-create">
       <p>In the config above you can see that a Kernel image and a initramfs file is needed. Download these two files into your tftp root.</p>
-      <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="{{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images">verify the downloaded files</a>.</p>
+      <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="{{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images">verify the downloaded files</a>.</p>
       <pre>
 cd /var/lib/tftpboot
 wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz
@@ -113,7 +113,7 @@ gpg --verify coreos_production_pxe_image.cpio.gz.sig
     </div>
     <div class="tab-pane active" id="stable-create">
       <p>In the config above you can see that a Kernel image and a initramfs file is needed. Download these two files into your tftp root.</p>
-      <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="{{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images">verify the downloaded files</a>.</p>
+      <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="{{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images">verify the downloaded files</a>.</p>
       <pre>
 cd /var/lib/tftpboot
 wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz
@@ -169,7 +169,7 @@ mkfs.btrfs -L ROOT /dev/sda1
 
 And add `root=/dev/sda1` or `root=LABEL=ROOT` to the kernel options as documented above.
 
-[install-to-disk]: {{site.url}}/docs/running-coreos/bare-metal/installing-to-disk
+[install-to-disk]: {{site.baseurl}}/docs/running-coreos/bare-metal/installing-to-disk
 
 ## Adding a Custom OEM
 
@@ -195,10 +195,10 @@ usr/share/oem
 usr/share/oem/cloud-config.yml
 ```
 
-[oem]: {{site.url}}/docs/sdk-distributors/distributors/notes-for-distributors/#image-customization
-[cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/
+[oem]: {{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors/#image-customization
+[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/
 
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

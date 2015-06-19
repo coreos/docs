@@ -20,7 +20,7 @@ The current AMIs for all CoreOS channels and EC2 regions are listed below and up
 
 ## Choosing a Channel
 
-CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.
+CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
 
 <div id="ec2-images">
   <ul class="nav nav-tabs">
@@ -31,7 +31,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
       </div>
       <table>
         <thead>
@@ -158,21 +158,21 @@ The `$private_ipv4` and `$public_ipv4` substitution variables are fully supporte
 </br>
 <div class="row">
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 co-m-screenshot">
-    <a href="{{site.url}}/assets/images/media/ec2-cloudformation-cloud-config.png">
-      <img src="{{site.url}}/assets/images/media/ec2-cloudformation-cloud-config.png" />
+    <a href="{{site.baseurl}}/assets/images/media/ec2-cloudformation-cloud-config.png">
+      <img src="{{site.baseurl}}/assets/images/media/ec2-cloudformation-cloud-config.png" />
     </a>
     <div class="co-m-screenshot-caption">Providing options during CloudFormation.</div>
   </div>
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 co-m-screenshot">
-    <a href="{{site.url}}/assets/images/media/ec2-instance-cloud-config.png">
-      <img src="{{site.url}}/assets/images/media/ec2-instance-cloud-config.png" class="screenshot" />
+    <a href="{{site.baseurl}}/assets/images/media/ec2-instance-cloud-config.png">
+      <img src="{{site.baseurl}}/assets/images/media/ec2-instance-cloud-config.png" class="screenshot" />
     </a>
     <div class="co-m-screenshot-caption">Providing cloud-config during EC2 boot wizard.</div>
   </div>
 </div>
 
 [ec2-cloud-config]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
-[cloud-config-docs]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 ### Instance Storage
 
@@ -191,7 +191,7 @@ coreos:
         Type=ext3
 ```
 
-For more information about mounting storage, Amazon's [own documentation](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html) is the best source. You can also read about [mounting storage on CoreOS]({{site.url}}/docs/cluster-management/setup/mounting-storage).
+For more information about mounting storage, Amazon's [own documentation](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html) is the best source. You can also read about [mounting storage on CoreOS]({{site.baseurl}}/docs/cluster-management/setup/mounting-storage).
 
 ### Adding More Machines
 To add more instances to the cluster, just launch more with the same cloud-config, the appropriate security group and the AMI for that region. New instances will join the cluster regardless of region if the security groups are configured correctly.
@@ -206,7 +206,7 @@ To connect to an instance after it's created, run:
 ssh core@<ip address>
 ```
 
-Optionally, you may want to [configure your ssh-agent]({{site.url}}/docs/launching-containers/launching/fleet-using-the-client/#remote-fleet-access) to more easily run [fleet commands]({{site.url}}/docs/launching-containers/launching/launching-containers-fleet/).
+Optionally, you may want to [configure your ssh-agent]({{site.baseurl}}/docs/launching-containers/launching/fleet-using-the-client/#remote-fleet-access) to more easily run [fleet commands]({{site.baseurl}}/docs/launching-containers/launching/launching-containers-fleet/).
 
 ## Multiple Clusters
 If you would like to create multiple clusters you will need to change the "Stack Name". You can find the direct [template file on S3]({{ cf_beta_pv_template }}).
@@ -492,4 +492,4 @@ Amazon EC2 uses Xen paravirtualization which is incompatible with kexec.  CoreOS
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

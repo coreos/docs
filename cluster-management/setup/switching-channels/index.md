@@ -46,4 +46,4 @@ cat /etc/os-release
 
 ## Release Information
 
-You can read more about the current releases and channels on the [releases page]({{site.url}}/releases).
+You can read more about the current releases and channels on the [releases page]({{site.baseurl}}/releases).

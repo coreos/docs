@@ -11,9 +11,9 @@ weight: 5
 
 etcd is an open-source distributed key value store that provides shared configuration and service discovery for CoreOS clusters. etcd runs on each machine in a cluster and gracefully handles master election during network partitions and the loss of the current master.
 
-Application containers running on your cluster can read and write data into etcd. Common examples are storing database connection details, cache settings, feature flags, and more. This guide will walk you through a basic example of reading and writing to etcd then proceed to other features like TTLs, directories and watching a prefix. This guide is way more fun when you've got at least one CoreOS machine up and running &mdash; try it on [Amazon EC2]({{site.url}}/docs/running-coreos/cloud-providers/ec2) or locally with [Vagrant]({{site.url}}/docs/running-coreos/platforms/vagrant).
+Application containers running on your cluster can read and write data into etcd. Common examples are storing database connection details, cache settings, feature flags, and more. This guide will walk you through a basic example of reading and writing to etcd then proceed to other features like TTLs, directories and watching a prefix. This guide is way more fun when you've got at least one CoreOS machine up and running &mdash; try it on [Amazon EC2]({{site.baseurl}}/docs/running-coreos/cloud-providers/ec2) or locally with [Vagrant]({{site.baseurl}}/docs/running-coreos/platforms/vagrant).
 
-<a class="btn btn-default" href="{{site.url}}/docs/distributed-configuration/etcd-api/">Complete etcd API Docs</a>
+<a class="btn btn-default" href="{{site.baseurl}}/docs/distributed-configuration/etcd-api/">Complete etcd API Docs</a>
 
 ## Reading and Writing to etcd
 
@@ -76,7 +76,7 @@ ETCD_ENDPOINT="$(ifconfig docker0 | awk '/\<inet\>/ { print $2}'):4001"
 
 ## Proxy Example
 
-Let's pretend we're setting up a service that consists of a few containers that are behind a proxy container. We can use etcd to announce these containers when they start by creating a directory, having each container write a key within that directory and have the proxy watch the entire directory. We're going to skip creating the containers here but the [docker guide]({{site.url}}/docs/launching-containers/building/getting-started-with-docker) is a good place to start for that.
+Let's pretend we're setting up a service that consists of a few containers that are behind a proxy container. We can use etcd to announce these containers when they start by creating a directory, having each container write a key within that directory and have the proxy watch the entire directory. We're going to skip creating the containers here but the [docker guide]({{site.baseurl}}/docs/launching-containers/building/getting-started-with-docker) is a good place to start for that.
 
 ### Create the directory
 
@@ -187,6 +187,6 @@ $ curl -L http://127.0.0.1:4001/v2/keys/foo
 ```
 
 #### More Information
-<a class="btn btn-default" href="{{site.url}}/using-coreos/etcd">etcd Overview</a>
+<a class="btn btn-default" href="{{site.baseurl}}/using-coreos/etcd">etcd Overview</a>
 <a class="btn btn-default" href="https://github.com/coreos/etcd">Full etcd API Docs</a>
 <a class="btn btn-default" href="https://github.com/coreos/etcd/blob/master/Documentation/libraries-and-tools.md">Projects using etcd</a>

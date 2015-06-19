@@ -44,7 +44,7 @@ docker -H tcp://127.0.0.1:2375 ps
 
 ### Cloud-Config
 
-To enable the remote API on every CoreOS machine in a cluster, use [cloud-config]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config). We need to provide the new socket file and Docker's socket activation support will automatically start using the socket:
+To enable the remote API on every CoreOS machine in a cluster, use [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config). We need to provide the new socket file and Docker's socket activation support will automatically start using the socket:
 
 ```yaml
 #cloud-config
@@ -76,7 +76,7 @@ To keep access to the port local, replace the `ListenStream` configuration above
 
 ## Use Attached Storage for Docker Images
 
-Docker containers can be very large and debugging a build process makes it easy to accumulate hundreds of containers. It's advantageous to use attached storage to expand your capacity for container images. Check out the guide to [mounting storage to your CoreOS machine]({{site.url}}/docs/cluster-management/setup/mounting-storage/#use-attached-storage-for-docker) for an example of how to bind mount storage into `/var/lib/docker`.
+Docker containers can be very large and debugging a build process makes it easy to accumulate hundreds of containers. It's advantageous to use attached storage to expand your capacity for container images. Check out the guide to [mounting storage to your CoreOS machine]({{site.baseurl}}/docs/cluster-management/setup/mounting-storage/#use-attached-storage-for-docker) for an example of how to bind mount storage into `/var/lib/docker`.
 
 ## Enabling the docker Debug Flag
 
@@ -223,4 +223,4 @@ coreos:
 
 A json file `.dockercfg` can be created in your home directory that holds authentication information for a public or private docker registry.
 
-Read more about [registry authentication]({{site.url}}/docs/launching-containers/building/registry-authentication).
+Read more about [registry authentication]({{site.baseurl}}/docs/launching-containers/building/registry-authentication).

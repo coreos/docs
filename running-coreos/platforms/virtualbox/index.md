@@ -46,7 +46,7 @@ Choose a channel to base your disk image on. Specific versions of CoreOS can als
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
-      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
       <p>Create a disk image from this channel by running:</p>
 <pre>
 ./create-coreos-vdi -V alpha
@@ -80,7 +80,7 @@ coreos_production_stable.vdi
 ## Creating a Config-Drive
 
 Cloud-config can be specified by attaching a
-[config-drive]({{site.url}}/docs/cluster-management/setup/cloudinit-config-drive/)
+[config-drive]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-config-drive/)
 with the label `config-2`. This is commonly done through whatever interface
 allows for attaching CD-ROMs or new drives.
 
@@ -90,7 +90,7 @@ retained, although CoreOS supports config-drive on all platforms.
 
 For more information on customization that can be done with cloud-config, head
 on over to the
-[cloud-config guide]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/).
+[cloud-config guide]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/).
 
 You need a config-drive to configure at least one SSH key to access the virtual
 machine. If you are in hurry you can create a basic config-drive with following
@@ -149,5 +149,5 @@ ssh core@192.168.56.101
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig
-into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig
+into [more specific topics]({{site.baseurl}}/docs).

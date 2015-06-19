@@ -20,11 +20,11 @@ is a unique fresh instance. By default, only stable channel are deployed on
 Exoscale, you can easily [switch to Beta or Alpha channel][switching-channels].
 
 
-[update-docs]: {{site.url}}/using-coreos/updates
-[reboot-docs]: {{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update
-[switching-channels]: {{site.url}}/docs/cluster-management/setup/switching-channels
-[release-notes]: {{site.url}}/releases
-[cloud-config-docs]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
+[update-docs]: {{site.baseurl}}/using-coreos/updates
+[reboot-docs]: {{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update
+[switching-channels]: {{site.baseurl}}/docs/cluster-management/setup/switching-channels
+[release-notes]: {{site.baseurl}}/releases
+[cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 ## Security Groups
 
@@ -120,7 +120,7 @@ To log in to a CoreOS instance after it's created click on its IP address or run
 ssh core@<ip address>
 ```
 
-Optionally, you may want to [configure your ssh-agent]({{site.url}}/docs/launching-containers/launching/fleet-using-the-client/#remote-fleet-access) to more easily run [fleet commands]({{site.url}}/docs/launching-containers/launching/launching-containers-fleet/).
+Optionally, you may want to [configure your ssh-agent]({{site.baseurl}}/docs/launching-containers/launching/fleet-using-the-client/#remote-fleet-access) to more easily run [fleet commands]({{site.baseurl}}/docs/launching-containers/launching/launching-containers-fleet/).
 
 ## Launching instances
 
@@ -194,5 +194,5 @@ Now that you have a machine booted it is time to play around.
 Check out the [CoreOS Quickstart][quick-start] guide or dig into
 [more specific topics][docs].
 
-[quick-start]: {{site.url}}/docs/quickstart
-[docs]: {{site.url}}/docs
+[quick-start]: {{site.baseurl}}/docs/quickstart
+[docs]: {{site.baseurl}}/docs

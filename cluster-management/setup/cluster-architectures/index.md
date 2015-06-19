@@ -84,7 +84,7 @@ Getting started is easy &mdash; a single cloud-config can be used to start all m
 
 ### Configuring the Machines
 
-Following the guide for each of the [supported platforms]({{site.url}}/docs#running-coreos) will be the easiest way to get started with this architecture. Boot the desired number of machines with the same cloud-config and discovery token. The cloud-config specifies that etcd and fleet will be started on each machine.
+Following the guide for each of the [supported platforms]({{site.baseurl}}/docs#running-coreos) will be the easiest way to get started with this architecture. Boot the desired number of machines with the same cloud-config and discovery token. The cloud-config specifies that etcd and fleet will be started on each machine.
 
 ## Easy Development/Testing Cluster
 
@@ -181,7 +181,7 @@ Our Central Services machines will run services that support the rest of the clu
 
 fleet will be started with metadata indicating the role of these machines, which allows us to schedule global units that will only run on these machines with `Global=true` and `MachineMetadata=role=services`. Optionally, set additional machine metadata for availability zones, cabinet number, location, etc. to ensure that each central service machine is distributed correctly across your infrastructure.
 
-[Managed Linux]({{site.url}}/products/managed-linux) customers can also specify a [CoreUpdate]({{site.url}}/products/coreupdate) group ID which will allow you to attach these machines to a different channel and control updates separately from the worker machines.
+[Managed Linux]({{site.baseurl}}/products/managed-linux) customers can also specify a [CoreUpdate]({{site.baseurl}}/products/coreupdate) group ID which will allow you to attach these machines to a different channel and control updates separately from the worker machines.
 
 Here's an example cloud-config for one of the central service machines. Be sure to generate a new discovery token with the initial size of your cluster:
 
@@ -225,7 +225,7 @@ The worker roles will use DHCP and should be easy to add capacity or autoscaling
 
 Similar to the central services machines, fleet will be configured with metadata specifying the role and any additional metadata you wish to set. If not all machines have SSDs or you have a subset of machines with a ton of RAM, it's useful to set metadata for those attributes.
 
-[Managed Linux]({{site.url}}/products/managed-linux) customers can also specify a [CoreUpdate]({{site.url}}/products/coreupdate) group ID to use a different channel and control updates separately from the central machines.
+[Managed Linux]({{site.baseurl}}/products/managed-linux) customers can also specify a [CoreUpdate]({{site.baseurl}}/products/coreupdate) group ID to use a different channel and control updates separately from the central machines.
 
 Here's an example cloud-config for a worker:
 

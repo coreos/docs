@@ -22,7 +22,7 @@ you will need to launch the `coreos_developer_vmware_insecure.vmx` file to creat
 
 CoreOS is released into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
-The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
+The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes in each channel.
 
 This is a rough sketch that should work on OS X and Linux:
 
@@ -68,11 +68,11 @@ The last step uploads the files to your ESXi datastore and registers your VM. Yo
 
 ## Cloud-Config
 
-Cloud-config can be specified by attaching a [config-drive]({{site.url}}/docs/cluster-management/setup/cloudinit-config-drive/) with the label `config-2`. This is commonly done through whatever interface allows for attaching CD-ROMs or new drives.
+Cloud-config can be specified by attaching a [config-drive]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-config-drive/) with the label `config-2`. This is commonly done through whatever interface allows for attaching CD-ROMs or new drives.
 
 Note that the config-drive standard was originally an OpenStack feature, which is why you'll see strings containing `openstack`. This filepath needs to be retained, although CoreOS supports config-drive on all platforms.
 
-For more information on customization that can be done with cloud-config, head on over to the [cloud-config guide]({{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config/).
+For more information on customization that can be done with cloud-config, head on over to the [cloud-config guide]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/).
 
 Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are *not* supported on VMware.
 
@@ -107,4 +107,4 @@ ssh core@10.0.1.81 update-ssh-keys -D oem
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

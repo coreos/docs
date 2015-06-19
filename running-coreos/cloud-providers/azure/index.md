@@ -28,7 +28,7 @@ The following command will create a single instance. For more details, check out
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and frequently has new releases. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a>, and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+        <p>The alpha channel closely tracks master and frequently has new releases. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a>, and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
         <pre>azure vm create --custom-data=cloud-config.yaml --vm-size=Small --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --location="West US" my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Alpha-{{site.alpha-channel}} core</pre>
       </div>
     </div>
@@ -47,9 +47,9 @@ The following command will create a single instance. For more details, check out
   </div>
 </div>
 
-[update-docs]: {{site.url}}/using-coreos/updates
-[reboot-docs]: {{site.url}}/docs/cluster-management/debugging/prevent-reboot-after-update
-[release-notes]: {{site.url}}/releases
+[update-docs]: {{site.baseurl}}/using-coreos/updates
+[reboot-docs]: {{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update
+[release-notes]: {{site.baseurl}}/releases
 
 ## Cloud-Config
 
@@ -88,7 +88,7 @@ supported in cloud-config on Azure. The private address is the address of the
 single network interface of the instance and the public address is the address
 of the cloud service to which the instance belongs.
 
-[cloud-config-docs]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 ### Adding More Machines
 To add more instances to the cluster, just launch more with the same
@@ -155,5 +155,5 @@ Now that you have a machine booted it is time to play around.
 Check out the [CoreOS Quickstart][quick-start] guide or dig into
 [more specific topics][docs].
 
-[quick-start]: {{site.url}}/docs/quickstart
-[docs]: {{site.url}}/docs
+[quick-start]: {{site.baseurl}}/docs/quickstart
+[docs]: {{site.baseurl}}/docs

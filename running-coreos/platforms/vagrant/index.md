@@ -41,7 +41,7 @@ To start our cluster, we need to provide some config parameters in cloud-config 
 
 CoreOS allows you to configure machine parameters, launch systemd units on start-up and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. You can provide cloud-config data to your CoreOS Vagrant VM by editing the `user-data` file inside of the cloned directory. A sample file `user-data.sample` exists as a base and must be renamed to `user-data` for it to be processed.
 
-Our cluster will use an etcd [discovery URL]({{site.url}}/docs/cluster-management/setup/etcd-cluster-discovery/) to bootstrap the cluster of machines and elect an initial etcd leader. Be sure to replace `<token>` with your own URL from [https://discovery.etcd.io/new](https://discovery.etcd.io/new):
+Our cluster will use an etcd [discovery URL]({{site.baseurl}}/docs/cluster-management/setup/etcd-cluster-discovery/) to bootstrap the cluster of machines and elect an initial etcd leader. Be sure to replace `<token>` with your own URL from [https://discovery.etcd.io/new](https://discovery.etcd.io/new):
 
 ```yaml
 #cloud-config
@@ -70,13 +70,13 @@ Your Vagrantfile should copy your cloud-config file to `/var/lib/coreos-vagrant/
 If you need to update your cloud-config later on, run `vagrant reload --provision` to reboot your VM and apply the new file.
 
 
-[cloud-config-docs]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 ### Start up CoreOS
 
 The `config.rb.sample` file contains a few useful settings about your Vagrant environment and most importantly, how many machines you'd like in your cluster.
 
-CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updates) with different schedules per channel. Select the channel you'd like to use for this cluster below. Read the [release notes]({{site.url}}/releases) for specific features and bug fixes.
+CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. Select the channel you'd like to use for this cluster below. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
 
 <div id="vagrant-create">
   <ul class="nav nav-tabs">
@@ -86,7 +86,7 @@ CoreOS is designed to be [updated automatically]({{site.url}}/using-coreos/updat
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
-      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
       <p>Rename the file to <code>config.rb</code> and modify a few lines:</p>
       <h4>config.rb</h4>
       <pre># Size of the CoreOS cluster created by Vagrant
@@ -188,7 +188,7 @@ The `config.rb.sample` file contains a few useful settings about your Vagrant en
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-single">
-      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.url}}/using-coreos/docker">docker</a>, <a href="{{site.url}}/using-coreos/etcd">etcd</a> and <a href="{{site.url}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
       <p>Rename the file to <code>config.rb</code> then uncomment and modify:</p>
       <h4>config.rb</h4>
       <pre># Official CoreOS channel from which updates should be downloaded
@@ -257,4 +257,4 @@ vagrant box add coreos-alpha <path-to-box-file>
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide, learn about [CoreOS clustering with Vagrant]({{site.url}}/blog/coreos-clustering-with-vagrant/), or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide, learn about [CoreOS clustering with Vagrant]({{site.baseurl}}/blog/coreos-clustering-with-vagrant/), or dig into [more specific topics]({{site.baseurl}}/docs).

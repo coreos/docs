@@ -26,7 +26,7 @@ to substitute that path if you use another one.
 
 CoreOS is released into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
-Read the [release notes]({{site.url}}/releases) for specific features and bug fixes in each channel.
+Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes in each channel.
 
 <div id="libvirt-create">
   <ul class="nav nav-tabs">
@@ -145,7 +145,7 @@ ssh_authorized_keys:
 
 Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are *not* supported on libvirt.
 
-[cloud-config]: {{site.url}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 ### Network configuration
 
@@ -213,4 +213,4 @@ ssh coreos0
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.url}}/docs/quickstart) guide or dig into [more specific topics]({{site.url}}/docs).
+Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
