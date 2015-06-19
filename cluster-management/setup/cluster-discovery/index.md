@@ -28,7 +28,7 @@ Boot each one of the machines with identical cloud-config and they should be aut
 #cloud-config
 
 coreos:
-  etcd:
+  etcd2:
     # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
     # specify the initial size of your cluster with ?size=X
     discovery: https://discovery.etcd.io/<token>
@@ -49,18 +49,20 @@ Specific documentation are provided for each platform's guide. Not all providers
 Starting a CoreOS cluster requires one of the new machines to become the first leader of the cluster. The initial leader is stored as metadata with the discovery URL in order to inform the other members of the new cluster. Let's walk through a timeline a new 3 machine CoreOS cluster discovering each other:
 
 1. All three machines are booted via a cloud-provider with the same cloud-config in the user-data.
-2. Machine 1 starts up first. It requests information about the cluster from the discovery token and submits its `peer-addr` address `10.10.10.1`.
+2. Machine 1 starts up first. It requests information about the cluster from the discovery token and submits its `-initial-advertise-peer-urls` address `10.10.10.1`.
 3. No state is recorded into the discovery URL metadata, so machine 1 becomes the leader and records the state as `started`.
-4. Machine 2 boots and submits its `peer-addr` address `10.10.10.2`. It also reads back the list of existing peers (only `10.10.10.1`) and attempts to connect to the address listed.
+4. Machine 2 boots and submits its `-initial-advertise-peer-urls` address `10.10.10.2`. It also reads back the list of existing peers (only `10.10.10.1`) and attempts to connect to the address listed.
 5. Machine 2 connects to Machine 1 and is now part of the cluster as a follower.
-6. Machine 3 boots and submits its `peer-addr` address `10.10.10.3`. It reads back the list of peers ( `10.10.10.1` and `10.10.10.2`) and selects one of the addresses to try first. When it connects to a machine in the cluster, the machine is given a full list of the existing other members of the cluster.
+6. Machine 3 boots and submits its `-initial-advertise-peer-urls` address `10.10.10.3`. It reads back the list of peers (`10.10.10.1` and `10.10.10.2`) and selects one of the addresses to try first. When it connects to a machine in the cluster, the machine is given a full list of the existing other members of the cluster.
 7. The cluster is now bootstrapped with an initial leader and two followers.
 
-There are two interesting things happening during this process.
+There are a few interesting things happening during this process.
 
 First, each machine is configured with the same discovery URL and etcd figured out what to do. This allows you to load the same cloud-config into an auto-scaling group and it will work whether it is the first or 30th machine in the group.
 
 Second, machine 3 only needed to use one of the addresses stored in the discovery URL to connect to the cluster. Since etcd uses the Raft consensus algorithm, existing machines in the cluster already maintain a list of healthy members in order for the algorithm to function properly. This list is given to the new machine and it starts normal operations with each of the other cluster members.
+
+Third, if you specified `?size=3` upon discovery URL creation, any other machines that join the cluster in the future will automatically start as etcd proxies.
 
 ## Existing Clusters
 
@@ -137,16 +139,18 @@ To rule out firewall settings as a source of your issue, ensure that you can cur
 If all of the IPs can be reached, the etcd log can provide more clues:
 
 ```
-journalctl -u etcd
+journalctl -u etcd2
 ```
 
 ### Communicating with discovery.etcd.io
 
 If your CoreOS cluster can't communicate out to the public internet, [https://discovery.etcd.io](https://discovery.etcd.io) won't work and you'll have to run your own discovery endpoint, which is described below.
 
-### Setting Peer Addresses Correctly
+### Setting Advertised Client Addresses Correctly
 
-Each etcd instance submits the `-peer-addr` of each etcd instance to the configured discovery service. It's important to select an address that *all* peers in the cluster can communicate with. For example, if you're located in two regions of a cloud provider, configuring a private `10.x` address will not work between the two regions, and communication will not be possible between all peers. The `--bindaddr` flag allows you to bind to a specific interface (or all interfaces) to ensure your etcd traffic is routed properly.
+Each etcd instance submits the list of `-initial-advertise-peer-urls` of each etcd instance to the configured discovery service. It's important to select an address that *all* peers in the cluster can communicate with. If you are configuring a list of addresses, make sure each member can communicate with at least one of the addresses.
+
+For example, if you're located in two regions of a cloud provider, configuring a private `10.x` address will not work between the two regions, and communication will not be possible between all peers. The `-listen-client-urls` flag allows you to bind to a specific list of interfaces and ports (or all interfaces) to ensure your etcd traffic is routed properly.
 
 ## Running Your Own Discovery Service
 
@@ -154,4 +158,4 @@ The public discovery service is just an etcd cluster made available to the publi
 
 Since etcd is designed to this type of leader election, it was an obvious choice to use it for everyone's initial leader election. This means that it's easy to run your own etcd cluster for this purpose.
 
-If you're interested in how discovery API works behind the scenes in etcd, read about [etcd clustering](https://github.com/coreos/etcd/blob/master/Documentation/clustering.md).
+If you're interested in how discovery API works behind the scenes in etcd, read about [etcd clustering]({{site.baseurl}}/etcd/docs/latest/clustering.html).
