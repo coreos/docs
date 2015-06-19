@@ -156,20 +156,6 @@ coreos:
       command: start
     - name: fleet.service
       command: start
-write_files:
-  - path: /etc/profile.d/etcdctl.sh
-    permissions: 0644
-    owner: core
-    content: |
-      # configure etcdctl to work with our etcd proxy set above
-      export ETCDCTL_PEERS="http://localhost:2379"
-  - path: /etc/profile.d/fleetctl.sh
-    permissions: 0644
-    owner: core
-    content: |
-      # configure fleetctl to work with our etcd servers set above
-      export FLEETCTL_ENDPOINT=unix:///var/run/fleet.sock
-      export FLEETCTL_EXPERIMENTAL_API=true
 ```
 
 ## Production Cluster with Central Services
@@ -270,18 +256,4 @@ coreos:
     # CoreUpdate group ID for "Production Workers"
     group: f118a298-2a8a-460b-9edd-3a9b49df504e
     server: https://customer.update.core-os.net/v1/update/
-write_files:
-  - path: /etc/profile.d/etcdctl.sh
-    permissions: 0644
-    owner: core
-    content: |
-      # configure etcdctl to work with our etcd proxy set above
-      export ETCDCTL_PEERS="http://localhost:2379"
-  - path: /etc/profile.d/fleetctl.sh
-    permissions: 0644
-    owner: core
-    content: |
-      # configure fleetctl to work with our etcd proxy set above
-      export FLEETCTL_ENDPOINT=unix:///var/run/fleet.sock
-      export FLEETCTL_EXPERIMENTAL_API=true
 ```
