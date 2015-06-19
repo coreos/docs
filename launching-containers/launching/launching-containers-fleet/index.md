@@ -98,7 +98,7 @@ c9de9451-6a6f-1d80-b7e6-46e996bfc4d1    10.10.1.3   -
 
 The main benefit of using CoreOS is to have your services run in a highly available manner. Let's walk through deploying a service that consists of two identical containers running the Apache web server.
 
-First, let's write a unit file that we'll run two copies of. To do that, we'll use a template unit, named `apache@.service`. We'll use that template to launch two instances, name `apache@1.service` and `apache@2.service`:
+First, let's write a unit file that we'll run two copies of. To do that, we'll use a template unit, named `apache@.service`. The template stays on disk and is used as a base to generate two instances, named `apache@1.service` and `apache@2.service`:
 
 ```ini
 [Unit]
@@ -123,7 +123,6 @@ The `Conflicts` attribute tells `fleet` that these two services can't be run on 
 Let's start both units and verify that they're on two different machines:
 
 ```sh
-$ fleetctl submit apache@.service
 $ fleetctl start apache@1
 $ fleetctl start apache@2
 $ fleetctl list-units
@@ -166,7 +165,6 @@ The fourth is a [fleet-specific property]({{site.baseurl}}/docs/launching-contai
 Let's verify that each unit was placed on to the same machine as the Apache service is bound to:
 
 ```sh
-$ fleetctl submit apache-discovery@.service
 $ fleetctl start apache-discovery@1
 $ fleetctl start apache-discovery@2
 $ fleetctl list-units
