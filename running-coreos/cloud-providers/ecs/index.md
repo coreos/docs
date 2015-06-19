@@ -33,6 +33,8 @@ coreos:
        Description=Amazon ECS Agent
        After=docker.service
        Requires=docker.service
+       Requires=network-online.target
+       After=network-online.target
        
        [Service]
        Environment=ECS_CLUSTER=your_cluster_name
@@ -59,6 +61,8 @@ Connecting an existing cluster to ECS is simple with [fleet]({{site.baseurl}}/do
 Description=Amazon ECS Agent
 After=docker.service
 Requires=docker.service
+Requires=network-online.target
+After=network-online.target
 
 [Service]
 Environment=ECS_CLUSTER=your_cluster_name
