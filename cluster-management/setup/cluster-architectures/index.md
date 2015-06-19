@@ -111,10 +111,17 @@ Here's the cloud-config for the etcd machine:
 #cloud-config
 
 coreos:
-  etcd:
-    addr: 10.0.0.101:4001
+  etcd2:
+    name: etcdserver
+    initial-cluster: etcdserver=http://10.0.0.101:2380
+    initial-advertise-peer-urls: http://10.0.0.101:2380
+    advertise-client-urls: http://10.0.0.101:2379
+    # listen on both the official ports and the legacy ports
+    # legacy ports can be omitted if your application doesn't depend on them
+    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
+    listen-peer-urls: http://0.0.0.0:2380
   units:
-    - name: etcd.service
+    - name: etcd2.service
       command: start
     - name: 00-eth0.network
       runtime: true
@@ -130,7 +137,7 @@ coreos:
 
 ### Configuration for Worker Role
 
-This architecture allows you to boot any number of workers, as few as 1 or up to a large cluster for load testing. The notable configuration difference for this role is specifying that fleet should use our etcd machine instead of starting etcd locally.
+This architecture allows you to boot any number of workers, as few as 1 or up to a large cluster for load testing. The notable configuration difference for this role is specifying that fleet should use our etcd proxy instead of starting etcd server locally.
 
 Look how simple the cloud-config becomes:
 
@@ -138,12 +145,15 @@ Look how simple the cloud-config becomes:
 #cloud-config
 
 coreos:
+  etcd2:
+    proxy: on 
+    listen-client-urls: http://localhost:2379
+    initial-cluster: etcdserver=http://10.0.0.101:2380
   fleet:
-    # replace this IP
-    etcd_servers: "http://10.0.0.101:4001"
+    etcd_servers: "http://localhost:2379"
   units:
-    - name: etcd.service
-      mask: true
+    - name: etcd2.service
+      command: start
     - name: fleet.service
       command: start
 write_files:
@@ -151,8 +161,8 @@ write_files:
     permissions: 0644
     owner: core
     content: |
-      # configure etcdctl to work with our etcd servers set above
-      export ETCDCTL_PEERS="http://10.0.0.101:4001"
+      # configure etcdctl to work with our etcd proxy set above
+      export ETCDCTL_PEERS="http://localhost:2379"
   - path: /etc/profile.d/fleetctl.sh
     permissions: 0644
     owner: core
@@ -171,7 +181,7 @@ write_files:
 |------|-----------|-------------|------------|
 | High | Large bare-metal installations | Hours | Yes |
 
-For large clusters, it's recommended to set aside 3-5 machines to run central services. Once those are set up, you can boot as many workers as your heart desires. Each of the workers will use the distributed etcd cluster on the central machines.
+For large clusters, it's recommended to set aside 3-5 machines to run central services. Once those are set up, you can boot as many workers as your heart desires. Each of the workers will use the distributed etcd cluster on the central machines via local etcd proxies.
 
 fleet will be used to bootstrap both the central services and jobs on the worker machines by taking advantage of machine metadata and global units.
 
@@ -189,13 +199,17 @@ Here's an example cloud-config for one of the central service machines. Be sure 
 #cloud-config
 
 coreos:
-  etcd:
+  etcd2:
     # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
     # specify the initial size of your cluster with ?size=X
     discovery: https://discovery.etcd.io/<token>
     # multi-region and multi-cloud deployments need to use $public_ipv4
-    addr: 10.0.0.101:4001
-    peer-addr: 10.0.0.101:7001
+    advertise-client-urls: http://10.0.0.101:2379
+    initial-advertise-peer-urls: http://10.0.0.101:2380
+    # listen on both the official ports and the legacy ports
+    # legacy ports can be omitted if your application doesn't depend on them
+    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
+    listen-peer-urls: http://10.0.0.101:2380
   fleet:
     metadata: "role=services,cabinet=one"
   update:
@@ -203,7 +217,7 @@ coreos:
     group: 9e98ecae-4623-48c1-9679-423549c44da6
     server: https://customer.update.core-os.net/v1/update/
   units:
-    - name: etcd.service
+    - name: etcd2.service
       command: start
     - name: fleet.service
       command: start
@@ -223,7 +237,7 @@ coreos:
 
 The worker roles will use DHCP and should be easy to add capacity or autoscaling.
 
-Similar to the central services machines, fleet will be configured with metadata specifying the role and any additional metadata you wish to set. If not all machines have SSDs or you have a subset of machines with a ton of RAM, it's useful to set metadata for those attributes.
+Similar to the central services machines, fleet will be configured with metadata specifying the role and any additional metadata you wish to set. etcd will automatically fallback to a local proxy via discovery service.If not all machines have SSDs or you have a subset of machines with a ton of RAM, it's useful to set metadata for those attributes.
 
 [Managed Linux]({{site.baseurl}}/products/managed-linux) customers can also specify a [CoreUpdate]({{site.baseurl}}/products/coreupdate) group ID to use a different channel and control updates separately from the central machines.
 
@@ -233,14 +247,23 @@ Here's an example cloud-config for a worker:
 #cloud-config
 
 coreos:
+  etcd2:
+    # use the same discovery token for the central service machines
+    # make sure you have used the discovery token to bootstrap the 
+    # central service successfully
+    # this etcd will fallback to proxy automatically
+    discovery: https://discovery.etcd.io/<token>
+    # listen on both the official ports and the legacy ports
+    # legacy ports can be omitted if your application doesn't depend on them
+    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
   fleet:
     metadata: "role=worker,cabinet=two,disk=spinning"
-    etcd_servers: "http://10.0.0.101:4001,http://10.0.0.102:4001,http://10.0.0.103:4001,http://10.0.0.104:4001,http://10.0.0.105:4001"
+    etcd_servers: "http://localhost:2379"
   locksmith:
-    endpoint: "http://10.0.0.101:4001,http://10.0.0.102:4001,http://10.0.0.103:4001,http://10.0.0.104:4001,http://10.0.0.105:4001"
+    endpoint: "http://localhost:2379"
   units:
-    - name: etcd.service
-      mask: true
+    - name: etcd2.service
+      command: start
     - name: fleet.service
       command: start
   update:
@@ -252,13 +275,13 @@ write_files:
     permissions: 0644
     owner: core
     content: |
-      # configure etcdctl to work with our etcd servers set above
-      export ETCDCTL_PEERS="http://10.0.0.101:4001,http://10.0.0.102:4001,http://10.0.0.103:4001,http://10.0.0.104:4001,http://10.0.0.105:4001"
+      # configure etcdctl to work with our etcd proxy set above
+      export ETCDCTL_PEERS="http://localhost:2379"
   - path: /etc/profile.d/fleetctl.sh
     permissions: 0644
     owner: core
     content: |
-      # configure fleetctl to work with our etcd servers set above
+      # configure fleetctl to work with our etcd proxy set above
       export FLEETCTL_ENDPOINT=unix:///var/run/fleet.sock
       export FLEETCTL_EXPERIMENTAL_API=true
 ```
