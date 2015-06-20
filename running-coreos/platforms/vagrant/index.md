@@ -47,17 +47,21 @@ Our cluster will use an etcd [discovery URL]({{site.baseurl}}/docs/cluster-manag
 #cloud-config
 
 coreos:
-  etcd:
-      # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-      # specify the initial size of your cluster with ?size=X
-      # WARNING: replace each time you 'vagrant destroy'
-      discovery: https://discovery.etcd.io/<token>
-      addr: $public_ipv4:4001
-      peer-addr: $public_ipv4:7001
+  etcd2:
+    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+    # specify the initial size of your cluster with ?size=X
+    # WARNING: replace each time you 'vagrant destroy'
+    discovery: https://discovery.etcd.io/<token>
+    advertise-client-urls: http://$public_ipv4:2379,http://$public_ipv4:4001
+    initial-advertise-peer-urls: http://$public_ipv4:2380,http://$public_ipv4:7001
+    # listen on both the official ports and the legacy ports
+    # legacy ports can be omitted if your application doesn't depend on them
+    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
+    listen-peer-urls: http://$public_ipv4:2380,http://$public_ipv4:7001
   fleet:
       public-ip: $public_ipv4
   units:
-    - name: etcd.service
+    - name: etcd2.service
       command: start
     - name: fleet.service
       command: start

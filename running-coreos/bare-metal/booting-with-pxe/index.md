@@ -60,7 +60,7 @@ Here's a common cloud-config example which should be located at the URL from abo
 #cloud-config
 coreos:
   units:
-    - name: etcd.service
+    - name: etcd2.service
       command: start
     - name: fleet.service
       command: start
