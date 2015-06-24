@@ -53,11 +53,11 @@ coreos:
     # WARNING: replace each time you 'vagrant destroy'
     discovery: https://discovery.etcd.io/<token>
     advertise-client-urls: http://$public_ipv4:2379,http://$public_ipv4:4001
-    initial-advertise-peer-urls: http://$public_ipv4:2380,http://$public_ipv4:7001
+    initial-advertise-peer-urls: http://$public_ipv4:2380
     # listen on both the official ports and the legacy ports
     # legacy ports can be omitted if your application doesn't depend on them
     listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    listen-peer-urls: http://$public_ipv4:2380,http://$public_ipv4:7001
+    listen-peer-urls: http://$public_ipv4:2380
   fleet:
       public-ip: $public_ipv4
   units:
