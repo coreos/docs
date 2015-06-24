@@ -3,6 +3,7 @@ layout: docs
 title: Tips and Other Settings
 category: cluster_management
 sub_category: setting_up
+fork_url: https://github.com/coreos/docs/blob/master/cluster-management/setup/other-settings/index.md
 weight: 8
 ---
 

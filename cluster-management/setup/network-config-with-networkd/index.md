@@ -3,6 +3,7 @@ layout: docs
 title: Network Configuration
 category: cluster_management
 sub_category: setting_up
+fork_url: https://github.com/coreos/docs/blob/master/cluster-management/setup/network-config-with-networkd/index.md
 weight: 7
 ---
 

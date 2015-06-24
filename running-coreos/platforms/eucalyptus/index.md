@@ -3,6 +3,7 @@ layout: docs
 title: Eucalyptus
 category: running_coreos
 sub_category: platforms
+fork_url: https://github.com/coreos/docs/blob/master/running-coreos/cloud-providers/eucalyptus/index.md
 weight: 5
 ---
 

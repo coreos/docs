@@ -3,7 +3,7 @@ layout: docs
 title: Clustering Machines
 category: cluster_management
 sub_category: setting_up
-forkurl: https://github.com/coreos/docs/blob/master/cluster-management/setup/cluster-discovery/index.md
+fork_url: https://github.com/coreos/docs/blob/master/cluster-management/setup/cluster-discovery/index.md
 weight: 4
 ---
 

@@ -3,6 +3,7 @@ layout: docs
 title: VEXXHOST Cloud
 category: running_coreos
 sub_category: cloud_provider
+fork_url: https://github.com/coreos/docs/blob/master/running-coreos/cloud-providers/vexxhost/index.md
 weight: 5
 ---
 

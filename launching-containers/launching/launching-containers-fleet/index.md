@@ -4,6 +4,7 @@ slug: guides
 title: Launching Containers with fleet
 category: launching_containers
 sub_category: launching
+fork_url: https://github.com/coreos/docs/blob/master/launching-containers/building/launching-containers-fleet/index.md
 weight: 2
 ---
 

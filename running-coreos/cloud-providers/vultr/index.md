@@ -3,6 +3,7 @@ layout: docs
 title: Vultr VPS
 category: running_coreos
 sub_category: cloud_provider
+fork_url: https://github.com/coreos/docs/blob/master/running-coreos/cloud-providers/vultr/index.md
 weight: 10
 ---
 

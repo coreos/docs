@@ -3,6 +3,7 @@ layout: docs
 title: Modifying CoreOS
 category: sdk_distributors
 sub_category: sdk
+fork_url: https://github.com/coreos/docs/blob/master/sdk-distributors/sdk/modifying-coreos/index.md
 weight: 3
 ---
 

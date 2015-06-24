@@ -6,6 +6,7 @@ sub_category: cloud_provider
 supported: true
 weight: 1
 cloud-formation-launch-logo: https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png
+fork_url: https://github.com/coreos/docs/blob/master/running-coreos/cloud-providers/ec2/index.md
 ---
 {% capture cf_alpha_pv_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha-pv.template{% endcapture %}
 {% capture cf_alpha_hvm_template %}{{ site.https-s3 }}/dist/aws/coreos-alpha-hvm.template{% endcapture %}

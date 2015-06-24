@@ -3,6 +3,7 @@ layout: docs
 title: Update Strategies
 category: cluster_management
 sub_category: planning
+fork_url: https://github.com/coreos/docs/blob/master/cluster-management/setup/update-strategies/index.md
 weight: 7
 ---
 

@@ -3,6 +3,7 @@ layout: docs
 title: Interoute VDC
 category: running_coreos
 sub_category: cloud_provider
+fork_url: https://github.com/coreos/docs/blob/master/running-coreos/cloud-providers/interoute/index.md
 weight: 9
 ---
 

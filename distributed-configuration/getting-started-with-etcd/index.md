@@ -4,6 +4,7 @@ slug: guides/etcd
 title: Getting Started with etcd
 category: distributed_configuration
 sub_category: reading_writing
+fork_url: https://github.com/coreos/docs/blob/master/distributed-configuration/getting-started-with-etcd/index.md
 weight: 5
 ---
 

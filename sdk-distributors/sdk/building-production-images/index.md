@@ -3,6 +3,7 @@ layout: docs
 title: Building Production Images
 category: sdk_distributors
 sub_category: sdk
+fork_url: https://github.com/coreos/docs/blob/master/sdk-distributors/sdk/building-production-images/index.md
 weight: 5
 ---
 

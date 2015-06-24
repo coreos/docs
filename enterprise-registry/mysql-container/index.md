@@ -2,6 +2,7 @@
 layout: docs
 title: Setting Up a MySQL Docker Container
 category: registry
+fork_url: https://github.com/coreos/docs/blob/master/enterprise-registry/mysql-container/index.md
 weight: 5
 ---
 

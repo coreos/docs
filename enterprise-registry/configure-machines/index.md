@@ -3,7 +3,7 @@ layout: docs
 title: Configure Machines for Enterprise Registry
 category: registry
 sub_category: usage
-forkurl: https://github.com/coreos/docs/blob/master/enterprise-registry/configure-machines/index.md
+fork_url: https://github.com/coreos/docs/blob/master/enterprise-registry/configure-machines/index.md
 weight: 5
 ---
 

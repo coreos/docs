@@ -4,6 +4,7 @@ slug: guides/resize
 title: Adding Disk Space
 category: cluster_management
 sub_category: scaling
+fork_url: https://github.com/coreos/docs/blob/master/cluster-management/scaling/adding-disk-space/index.md
 weight: 5
 ---
 

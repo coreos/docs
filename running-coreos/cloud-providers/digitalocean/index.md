@@ -4,6 +4,7 @@ title: DigitalOcean
 category: running_coreos
 sub_category: cloud_provider
 supported: true
+fork_url: https://github.com/coreos/docs/blob/master/running-coreos/cloud-providers/digitalocean/index.md
 weight: 1
 ---
 

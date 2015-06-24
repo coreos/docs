@@ -3,7 +3,7 @@ layout: docs
 title: Setup GitHub Build Triggers
 category: registry
 sub_category: setup
-forkurl: https://github.com/coreos/docs/blob/master/enterprise-registry/github-build/index.md
+fork_url: https://github.com/coreos/docs/blob/master/enterprise-registry/github-build/index.md
 weight: 5
 ---
 

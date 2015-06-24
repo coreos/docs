@@ -4,6 +4,7 @@ slug: guides
 title: Reading the System Log
 category: cluster_management
 sub_category: debugging
+fork_url: https://github.com/coreos/docs/blob/master/cluster-management/debugging/reading-the-system-log/index.md
 weight: 5
 ---
 

@@ -3,6 +3,7 @@ layout: docs
 title: Disk Layout
 category: sdk_distributors
 sub_category: sdk
+fork_url: https://github.com/coreos/docs/blob/master/sdk-distributors/sdk/disk-partitions/index.md
 weight: 9
 ---
 

@@ -4,6 +4,7 @@ slug: guides/power
 title: Power Management
 category: cluster_management
 sub_category: scaling
+fork_url: https://github.com/coreos/docs/blob/master/cluster-management/scaling/power-management/index.md
 weight: 5
 ---
 

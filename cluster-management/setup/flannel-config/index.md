@@ -3,6 +3,7 @@ layout: docs
 title: Configuring flannel Networking
 category: cluster_management
 sub_category: setting_up
+fork_url: https://github.com/coreos/docs/blob/master/cluster-management/setup/flannel-config/index.md
 weight: 10
 ---
 

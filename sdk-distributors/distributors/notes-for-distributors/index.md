@@ -3,6 +3,7 @@ layout: docs
 title: Notes for Distributors
 category: sdk_distributors
 sub_category: distributors
+fork_url: https://github.com/coreos/docs/blob/master/sdk-distributors/distributors/notes-for-distributors/index.md
 weight: 5
 ---
 

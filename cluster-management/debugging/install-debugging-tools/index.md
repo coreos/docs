@@ -4,6 +4,7 @@ slug: guides
 title: Install Debugging Tools
 category: cluster_management
 sub_category: debugging
+fork_url: https://github.com/coreos/docs/blob/master/cluster-management/debugging/install-debugging-tools/index.md
 weight: 7
 ---
 

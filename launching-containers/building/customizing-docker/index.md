@@ -3,6 +3,7 @@ layout: docs
 title: Customizing docker
 category: launching_containers
 sub_category: building
+fork_url: https://github.com/coreos/docs/blob/master/launching-containers/building/customizing-docker/index.md
 weight: 7
 ---
 

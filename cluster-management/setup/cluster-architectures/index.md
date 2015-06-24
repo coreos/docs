@@ -3,7 +3,7 @@ layout: docs
 title: Cluster Architectures
 category: cluster_management
 sub_category: planning
-forkurl: https://github.com/coreos/docs/blob/master/cluster-management/setup/cluster-architectures/index.md
+fork_url: https://github.com/coreos/docs/blob/master/cluster-management/setup/cluster-architectures/index.md
 weight: 5
 ---
 

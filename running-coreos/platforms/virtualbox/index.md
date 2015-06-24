@@ -4,6 +4,7 @@ slug: virtualbox
 title: VirtualBox
 category: running_coreos
 sub_category: platforms
+fork_url: https://github.com/coreos/docs/blob/master/running-coreos/platforms/virtualbox/index.md
 weight: 7
 ---
 

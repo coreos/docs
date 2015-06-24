@@ -4,6 +4,7 @@ slug: guides
 title: Working with btrfs
 category: cluster_management
 sub_category: debugging
+fork_url: https://github.com/coreos/docs/blob/master/cluster-management/debugging/btrfs-troubleshooting/index.md
 weight: 5
 ---
 

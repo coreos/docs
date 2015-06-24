@@ -3,6 +3,7 @@ layout: docs
 title: Mounting Storage
 category: cluster_management
 sub_category: setting_up
+fork_url: https://github.com/coreos/docs/blob/master/cluster-management/setup/mounting-storage/index.md
 weight: 7
 ---
 

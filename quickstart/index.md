@@ -2,6 +2,7 @@
 layout: docs
 title: CoreOS Quick Start
 #redirect handled in alias_generator.rb
+fork_url: https://github.com/coreos/docs/blob/master/quickstart/index.md
 ---
 
 # Quick Start

@@ -3,6 +3,7 @@ layout: docs
 title: Building Development Images
 category: sdk_distributors
 sub_category: sdk
+fork_url: https://github.com/coreos/docs/blob/master/sdk-distributors/sdk/building-development-images/index.md
 weight: 5
 ---
 

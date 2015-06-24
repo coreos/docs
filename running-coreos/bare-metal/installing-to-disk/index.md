@@ -5,6 +5,7 @@ title: Installing to Disk
 category: running_coreos
 sub_category: bare_metal
 supported: true
+fork_url: https://github.com/coreos/docs/blob/master/running-coreos/bare-metal/installing-to-disk/index.md
 weight: 7
 ---
 

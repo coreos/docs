@@ -3,6 +3,7 @@ layout: docs
 category: running_coreos
 sub_category: none
 weight: 6
+fork_url: https://github.com/coreos/docs/blob/master/running-coreos/cloud-providers/niftycloud/index.md
 title: NIFTY Cloud
 ---
 

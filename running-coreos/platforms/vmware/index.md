@@ -4,6 +4,7 @@ slug: vmware
 title: VMware
 category: running_coreos
 sub_category: platforms
+fork_url: https://github.com/coreos/docs/blob/master/running-coreos/platforms/vmware/index.md
 weight: 5
 ---
 

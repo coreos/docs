@@ -4,6 +4,7 @@ slug: guides
 title: Manual CoreOS Rollbacks
 category: cluster_management
 sub_category: debugging
+fork_url: https://github.com/coreos/docs/blob/master/cluster-management/debugging/manual-rollbacks/index.md
 weight: 5
 ---
 

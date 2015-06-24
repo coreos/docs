@@ -3,6 +3,7 @@ layout: docs
 title: Enterprise Registry Log Debugging
 category: registry
 sub_category: setup
+fork_url: https://github.com/coreos/docs/blob/master/enterprise-registry/log-debugging/index.md
 weight: 5
 ---
 

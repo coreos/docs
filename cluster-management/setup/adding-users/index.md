@@ -3,6 +3,7 @@ layout: docs
 title: Adding Users
 category: cluster_management
 sub_category: setting_up
+fork_url: https://github.com/coreos/docs/blob/master/cluster-management/setup/adding-users/index.md
 weight: 7
 ---
 

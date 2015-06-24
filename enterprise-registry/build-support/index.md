@@ -3,7 +3,7 @@ layout: docs
 title: Automatically Build Dockerfiles
 category: registry
 sub_category: setup
-forkurl: https://github.com/coreos/docs/blob/master/enterprise-registry/build-support/index.md
+fork_url: https://github.com/coreos/docs/blob/master/enterprise-registry/build-support/index.md
 weight: 5
 ---
 

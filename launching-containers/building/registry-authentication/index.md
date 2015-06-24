@@ -3,6 +3,7 @@ layout: docs
 title: Using Authentication for a Registry
 category: launching_containers
 sub_category: building
+fork_url: https://github.com/coreos/docs/blob/master/launching-containers/building/registry-authentication/index.md
 weight: 7
 ---
 

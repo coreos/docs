@@ -3,6 +3,7 @@ layout: docs
 title: AURO Cloud
 category: running_coreos
 sub_category: cloud_provider
+fork_url: https://github.com/coreos/docs/blob/master/running-coreos/cloud-providers/auro/index.md
 weight: 5
 ---
 

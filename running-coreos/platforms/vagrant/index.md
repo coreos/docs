@@ -5,6 +5,7 @@ title: Vagrant
 category: running_coreos
 sub_category: platforms
 supported: true
+fork_url: https://github.com/coreos/docs/blob/master/running-coreos/platforms/vagrant/index.md
 weight: 5
 ---
 

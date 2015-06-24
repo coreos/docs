@@ -3,6 +3,7 @@ layout: docs
 title: SDK Tips and Tricks
 category: sdk_distributors
 sub_category: sdk
+fork_url: https://github.com/coreos/docs/blob/master/sdk-distributors/sdk/tips-and-tricks/index.md
 weight: 7
 ---
 

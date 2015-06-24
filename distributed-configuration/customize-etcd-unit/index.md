@@ -3,6 +3,7 @@ layout: docs
 title: Customizing the etcd Unit
 category: distributed_configuration
 sub_category: configuration
+fork_url: https://github.com/coreos/docs/blob/master/distributed-configuration/customize-etcd-unit/index.md
 weight: 5
 ---
 
