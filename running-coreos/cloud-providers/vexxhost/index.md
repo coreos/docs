@@ -21,8 +21,8 @@ CLI tools.
 
 ## Choosing a Channel
 
-CoreOS is released into alpha and beta channels. Releases to each channel serve
-as a release-candidate for the next channel. For example, a bug-free alpha
+CoreOS is released into stable, alpha and beta channels. Releases to each channel
+serve as a release-candidate for the next channel. For example, a bug-free alpha
 release is promoted bit-for-bit to the beta channel.
 
 CoreOS releases are automatically built and deployed on the VEXXHOST cloud,

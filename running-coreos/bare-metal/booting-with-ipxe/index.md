@@ -18,11 +18,11 @@ CoreOS is currently in heavy development and actively being tested. These instru
 iPXE can be used on any platform that can boot an ISO image.
 This includes many cloud providers and physical hardware.
 
-To illustrate iPXE in action we will qemu-kvm in this guide.
+To illustrate iPXE in action we will use qemu-kvm in this guide.
 
 ### Choose a Channel
 
-CoreOS is released into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+CoreOS is released into stable, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 ### Setting up the Boot Script
 
