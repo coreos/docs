@@ -39,7 +39,7 @@ coreos-install -d /dev/sda -c cloud-config.yml
 
 ## Choose a Channel
 
-CoreOS is released into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+CoreOS is released into stable, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 <div id="install">
   <ul class="nav nav-tabs">
