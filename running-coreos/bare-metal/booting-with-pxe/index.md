@@ -27,10 +27,7 @@ If you need suggestions on how to set a server up, check out guides for [Debian]
 
 When configuring the CoreOS pxelinux.cfg there are a few kernel options that may be useful but all are optional.
 
-If you plan to use docker, `/var/lib/docker` must have a btrfs filesystem. This is most easily accomplished by using btrfs for the entire root filesystem via `rootfstype=btrfs`.
-
 - **rootfstype=tmpfs**: Use tmpfs for the writable root filesystem. This is the default behavior.
-- **rootfstype=btrfs**: Use btrfs in RAM for the writable root filesystem. The filesystem will consume more RAM as it grows, up to a max of 50%. The limit isn't currently configurable.
 - **root**: Use a local filesystem for root instead of one of two in-ram options above. The filesystem must be formatted in advance but may be completely blank, it will be initialized on boot. The filesystem may be specified by any of the usual ways including device, label, or UUID; e.g: `root=/dev/sda1`, `root=LABEL=ROOT` or `root=UUID=2c618316-d17a-4688-b43b-aa19d97ea821`.
 - **sshkey**: Add the given SSH public key to the `core` user's authorized_keys file. Replace the example key below with your own (it is usually in `~/.ssh/id_rsa.pub`)
 - **console**: Enable kernel output and a login prompt on a given tty. The default, `tty0`, generally maps to VGA. Can be used multiple times, e.g. `console=tty0 console=ttyS0`
@@ -66,7 +63,7 @@ coreos:
     - name: fleet.service
       command: start
 ssh_authorized_keys:
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQC2PxAKTLdczK9+RNsGGPsz0eC2pBlydBEcrbI7LSfiN7Bo5hQQVjki+Xpnp8EEYKpzu6eakL8MJj3E28wT/vNklT1KyMZrXnVhtsmOtBKKG/++odpaavdW2/AU0l7RZiE=
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
 ```
 
 You can view all of the [cloud-config options here]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/).
@@ -159,13 +156,11 @@ Since our upgrade process requires a disk, this image does not have the option t
 ## Installation
 
 Once booted it is possible to [install CoreOS on a local disk][install-to-disk] or to just use local storage for the writable root filesystem while continuing to boot CoreOS itself via PXE.
-If you plan on using Docker we recommend using a local btrfs filesystem but ext4 is also available if supporting Docker is not required.
-For example, to setup a btrfs root filesystem on `/dev/sda`:
+For example, to setup a ext4 root filesystem on `/dev/sda`:
 
 ```sh
 cfdisk -z /dev/sda
-touch "/usr.squashfs (deleted)"     # work around a bug in mkfs.btrfs 3.12
-mkfs.btrfs -L ROOT /dev/sda1
+mkfs.ext4 -L ROOT /dev/sda1
 ```
 
 And add `root=/dev/sda1` or `root=LABEL=ROOT` to the kernel options as documented above.
