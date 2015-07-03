@@ -112,7 +112,7 @@ $ curl -L http://127.0.0.1:4001/v2/keys/foo-service
 Now let's try watching the `foo-service` directory for changes, just like our proxy would have to. First, open up another shell on a CoreOS host in the cluster. In one window, start watching the directory and in the other window, add another key `container2` with the value `localhost:2222` into the directory. This command shouldn't output anything until the key has changed. Many events can trigger a change, including a new, updated, deleted or expired key.
 
 ```sh
-$ etcdctl watch /foo-service --recursive
+$ etcdctl watch --recursive /foo-service
 
 ```
 
@@ -136,13 +136,41 @@ $ curl -L -X PUT http://127.0.0.1:4001/v2/keys/foo-service/container2 -d value="
 In the first window, you should get the notification that the key has changed. In a real application, this would trigger reconfiguration.
 
 ```sh
-$ etcdctl watch /foo-service --recursive
+$ etcdctl watch --recursive /foo-service
 localhost:2222
 ```
 
 ```sh
 $ curl -L http://127.0.0.1:4001/v2/keys/foo-service?wait=true\&recursive=true
 {"action":"set","node":{"key":"/foo-service/container2","value":"localhost:2222","modifiedIndex":23,"createdIndex":23}}
+```
+
+### Watching the Directory and triggering an executable
+
+Now let's try watching the `foo-service` directory for changes and if there are any run the command. In one window, start watching the directory and in the other window, add another key `container3` with the value `localhost:2222` into the directory. This command shouldn't trigger anything until the key has changed. The same events as in previous example can trigger a change. `exec-watch` command considers `etcdctl` to run continuously (for `watch` command you can use `--forever` option)
+
+```sh
+$ etcdctl exec-watch --recursive /foo-service -- sh -c 'echo "\"$ETCD_WATCH_KEY\" key was updated to \"$ETCD_WATCH_VALUE\" value by \"$ETCD_WATCH_ACTION\" action"'
+
+```
+
+In the other window, let's pretend a new container has started and announced itself to the proxy by running:
+
+```sh
+$ etcdctl set /foo-service/container3 localhost:2222
+localhost:2222
+```
+
+```sh
+$ curl -L -X PUT http://127.0.0.1:4001/v2/keys/foo-service/container3 -d value="localhost:2222"
+{"action":"set","node":{"key":"/foo-service/container3","value":"localhost:2222","modifiedIndex":23,"createdIndex":23}}
+```
+
+In the first window, you should get the notification that the key has changed. We have used `$ETCD_WATCH_*` environment variables which were set by `etcdctl`.
+
+```sh
+$ etcdctl exec-watch --recursive /foo-service -- sh -c 'echo "\"$ETCD_WATCH_KEY\" key was updated to \"$ETCD_WATCH_VALUE\" value by \"$ETCD_WATCH_ACTION\" action"'
+"/foo-service/container3" key was updated to "localhost:2222" value by "set" action
 ```
 
 ## Test and Set
