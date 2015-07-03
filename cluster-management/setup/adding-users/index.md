@@ -25,7 +25,7 @@ users:
       - sudo
       - docker
     ssh-authorized-keys:
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0g+ZTxC7weoIJLUafOgrm+h...
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
 ```
 
 Check out the entire [Customize with Cloud-Config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/) guide for the full details.
