@@ -132,6 +132,7 @@ Here is an example nginx configuration which will substitude `$public_ipv4` and 
 
 ```
 location ~ ^/user_data {
+  root /path/to/cloud/config/files;
   sub_filter $public_ipv4 '$remote_addr';
 # sub_filter $private_ipv4 '$http_x_forwarded_for';
 # sub_filter $private_ipv4 '$http_x_real_ip';
