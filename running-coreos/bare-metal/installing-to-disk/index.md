@@ -114,6 +114,15 @@ If cloud config doesn't handle something you need to do or you just want to take
 mount -o subvol=root /dev/sda9 /mnt/
 ```
 
+## Convert ext4 to btrfs
+
+If you want to convert the ext4 partition to btrfs *during installation*, you can run the following after the coreos-install script:
+
+```sh
+fsck /dev/sda9
+btrfs-convert -l ROOT /dev/sda9
+```
+
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
