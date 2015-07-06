@@ -27,7 +27,6 @@ If you need suggestions on how to set a server up, check out guides for [Debian]
 
 When configuring the CoreOS pxelinux.cfg there are a few kernel options that may be useful but all are optional.
 
-- **rootfstype=tmpfs**: Use tmpfs for the writable root filesystem. This is the default behavior.
 - **root**: Use a local filesystem for root instead of one of two in-ram options above. The filesystem must be formatted in advance but may be completely blank, it will be initialized on boot. The filesystem may be specified by any of the usual ways including device, label, or UUID; e.g: `root=/dev/sda1`, `root=LABEL=ROOT` or `root=UUID=2c618316-d17a-4688-b43b-aa19d97ea821`.
 - **sshkey**: Add the given SSH public key to the `core` user's authorized_keys file. Replace the example key below with your own (it is usually in `~/.ssh/id_rsa.pub`)
 - **console**: Enable kernel output and a login prompt on a given tty. The default, `tty0`, generally maps to VGA. Can be used multiple times, e.g. `console=tty0 console=ttyS0`
@@ -156,7 +155,10 @@ Since our upgrade process requires a disk, this image does not have the option t
 ## Installation
 
 Once booted it is possible to [install CoreOS on a local disk][install-to-disk] or to just use local storage for the writable root filesystem while continuing to boot CoreOS itself via PXE.
-For example, to setup a ext4 root filesystem on `/dev/sda`:
+
+If you plan on using Docker we recommend using a local ext4 filesystem with overlayfs, however, btrfs is also available to use if needed.
+
+For example, to setup an ext4 root filesystem on '/dev/sda':
 
 ```sh
 cfdisk -z /dev/sda
@@ -164,6 +166,13 @@ mkfs.ext4 -L ROOT /dev/sda1
 ```
 
 And add `root=/dev/sda1` or `root=LABEL=ROOT` to the kernel options as documented above.
+
+Similarly, to setup a btrfs root filesystem on `/dev/sda`:
+
+```sh
+cfdisk -z /dev/sda
+mkfs.btrfs -L ROOT /dev/sda1
+```
 
 [install-to-disk]: {{site.baseurl}}/docs/running-coreos/bare-metal/installing-to-disk
 

@@ -108,10 +108,10 @@ coreos-install -d /dev/sda -C beta -c ~/cloud-config.yaml
 
 ## Manual Tweaks
 
-If cloud config doesn't handle something you need to do or you just want to take a look at the root btrfs filesystem before booting your new install just mount the ninth partition:
+If cloud config doesn't handle something you need to do or you just want to take a look at the root filesystem before booting your new install just mount the ninth partition. For example, with an ext4 root filesystem:
 
 ```sh
-mount -o subvol=root /dev/sda9 /mnt/
+mount /dev/sda9 /mnt/
 ```
 
 ## Using CoreOS
