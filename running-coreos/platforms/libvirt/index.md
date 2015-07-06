@@ -11,16 +11,16 @@ weight: 5
 
 This guide explains how to run CoreOS with libvirt. The libvirt configuration
 file can be used (for example) with virsh or virt-manager. The guide assumes
-that you already have a running libvirt setup. If you don’t have that, other
-solutions are most likely easier.
+that you already have a running libvirt setup and virt-install tool. If you
+don’t have that, other solutions are most likely easier.
 
 You can direct questions to the [IRC channel][irc] or [mailing
 list][coreos-dev].
 
 ## Download the CoreOS image
 
-In this guide, the example virtual machine we are creating is called coreos0 and
-all files are stored in /var/lib/libvirt/images/coreos0. This is not a requirement — feel free
+In this guide, the example virtual machine we are creating is called coreos1 and
+all files are stored in /var/lib/libvirt/images/coreos. This is not a requirement — feel free
 to substitute that path if you use another one.
 
 ### Choosing a Channel
@@ -39,22 +39,22 @@ Read the [release notes]({{site.baseurl}}/releases) for specific features and bu
     <div class="tab-pane" id="alpha-create">
       <p>We start by downloading the most recent disk image:</p>
       <pre>
-mkdir -p /var/lib/libvirt/images/coreos0
-cd /var/lib/libvirt/images/coreos0
+mkdir -p /var/lib/libvirt/images/coreos
+cd /var/lib/libvirt/images/coreos
 wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img</pre>
     </div>
     <div class="tab-pane" id="beta-create">
       <p>We start by downloading the most recent disk image:</p>
       <pre>
-mkdir -p /var/lib/libvirt/images/coreos0
-cd /var/lib/libvirt/images/coreos0
+mkdir -p /var/lib/libvirt/images/coreos
+cd /var/lib/libvirt/images/coreos
 wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img</pre>
     </div>
     <div class="tab-pane active" id="stable-create">
       <p>We start by downloading the most recent disk image:</p>
       <pre>
-mkdir -p /var/lib/libvirt/images/coreos0
-cd /var/lib/libvirt/images/coreos0
+mkdir -p /var/lib/libvirt/images/coreos
+cd /var/lib/libvirt/images/coreos
 wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img</pre>
     </div>
   </div>
@@ -62,75 +62,22 @@ wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_
 
 ## Virtual machine configuration
 
-Now create /tmp/coreos0.xml with the following contents:
+Now create a qcow2 image snapshot using the command below:
 
-```xml
-<domain type='kvm'>
-  <name>coreos0</name>
-  <memory unit='KiB'>1048576</memory>
-  <currentMemory unit='KiB'>1048576</currentMemory>
-  <vcpu placement='static'>1</vcpu>
-  <os>
-    <type arch='x86_64' machine='pc'>hvm</type>
-    <boot dev='hd'/>
-  </os>
-  <features>
-    <acpi/>
-    <apic/>
-    <pae/>
-  </features>
-  <clock offset='utc'/>
-  <on_poweroff>destroy</on_poweroff>
-  <on_reboot>restart</on_reboot>
-  <on_crash>restart</on_crash>
-  <devices>
-    <emulator>/usr/bin/qemu-kvm</emulator>
-    <disk type='file' device='disk'>
-      <driver name='qemu' type='qcow2'/>
-      <source file='/var/lib/libvirt/images/coreos0/coreos_production_qemu_image.img'/>
-      <target dev='vda' bus='virtio'/>
-    </disk>
-    <controller type='usb' index='0'>
-    </controller>
-    <filesystem type='mount' accessmode='squash'>
-      <source dir='/var/lib/libvirt/images/coreos0/configdrive/'/>
-      <target dir='config-2'/>
-      <readonly/>
-    </filesystem>
-    <interface type='direct'>
-      <mac address='52:54:00:fe:b3:c0'/>
-      <source dev='eth0' mode='bridge'/>
-      <model type='virtio'/>
-    </interface>
-    <serial type='pty'>
-      <target port='0'/>
-    </serial>
-    <console type='pty'>
-      <target type='serial' port='0'/>
-    </console>
-    <input type='tablet' bus='usb'/>
-    <input type='mouse' bus='ps2'/>
-    <graphics type='vnc' port='-1' autoport='yes'/>
-    <sound model='ich6'>
-    </sound>
-    <video>
-      <model type='cirrus' vram='9216' heads='1'/>
-    </video>
-    <memballoon model='virtio'>
-    </memballoon>
-  </devices>
-</domain>
+```sh
+cd /var/lib/libvirt/images/coreos
+qemu-img create -f qcow2 -b coreos_production_qemu_image.img coreos1.qcow2
 ```
 
-You can change any of these parameters later.
+It will create coreos1.qcow2 snapshot image. Any changes to coreos1.qcow2 will not be reflected in coreos_production_qemu_image.img. Making any changes to a base image (coreos_production_qemu_image.img in our example) will corrupt its snapshots.
 
 ### Config drive
 
 Now create a config drive file system to configure CoreOS itself:
 
 ```sh
-mkdir -p /var/lib/libvirt/images/coreos0/configdrive/openstack/latest
-touch /var/lib/libvirt/images/coreos0/configdrive/openstack/latest/user_data
+mkdir -p /var/lib/libvirt/images/coreos/coreos1/openstack/latest
+touch /var/lib/libvirt/images/coreos/coreos1/openstack/latest/user_data
 ```
 
 The `user_data` file may contain a script for a [cloud config][cloud-config]
@@ -142,7 +89,7 @@ contents of `user_data` should look something like this:
 
 ssh_authorized_keys:
  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
- ```
+```
 
 Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are *not* supported on libvirt.
 
@@ -152,7 +99,7 @@ Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced i
 
 By default, CoreOS uses DHCP to get its network configuration. In this
 example the VM will be attached directly to the local network via a bridge
-on the host's eth0 and the local network. To configure a static address
+on the host's virbr0 and the local network. To configure a static address
 add a [networkd unit][systemd-network] to `user_data`:
 
 ```yaml
@@ -160,6 +107,8 @@ add a [networkd unit][systemd-network] to `user_data`:
 
 ssh_authorized_keys:
  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
+
+hostname: coreos1
 
 coreos:
     units:
@@ -179,10 +128,10 @@ coreos:
 
 ## Virtual machine startup
 
-Now import the XML as new VM into your libvirt instance and start it:
+Now start new libvirt instance with 1024Mb of RAM and 1 CPU:
 
 ```sh
-virsh create /tmp/coreos0.xml
+virt-install --connect qemu:///system --import --name coreos1 --ram 1024 --vcpus 1 --os-type=linux --os-variant=virtio26 --disk path=/var/lib/libvirt/images/coreos/coreos1.qcow2,format=qcow2,bus=virtio --filesystem /var/lib/libvirt/images/coreos/coreos1/,config-2,type=mount,mode=squash --network bridge=virbr0,mac=52:54:00:fe:b3:c0,type=bridge --vnc --noautoconsole
 ```
 
 Once the virtual machine has started you can log in via SSH:
@@ -197,7 +146,7 @@ To simplify this and avoid potential host key errors in the future add
 the following to `~/.ssh/config`:
 
 ```ini
-Host coreos0
+Host coreos1
 HostName 203.0.113.2
 User core
 StrictHostKeyChecking no
@@ -207,7 +156,7 @@ UserKnownHostsFile /dev/null
 Now you can log in to the virtual machine with:
 
 ```sh
-ssh coreos0
+ssh coreos1
 ```
 
 
@@ -215,3 +164,78 @@ ssh coreos0
 
 Now that you have a machine booted it is time to play around.
 Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+
+# Running CoreOS cluster demo on libvirt
+
+This guide explains how to run three-nodes demo CoreOS cluster with libvirt.
+
+## Bash Script
+
+Save following `deploy_coreos_cluster.sh` script into your host filesystem:
+
+```sh
+wget https://raw.githubusercontent.com/coreos/docs/master/running-coreos/platforms/libvirt/deploy_coreos_cluster.sh
+chmod +x deploy_coreos_cluster.sh
+```
+
+Each libvirt instance will have 1024Mb of RAM and 1 CPU (RAM and CPUs variables).
+You can change these parameters to meet your needs.
+
+## Cloud config template
+
+Save the following template into `/var/lib/libvirt/images/coreos/user_data`:
+
+```yaml
+#cloud-config
+ssh_authorized_keys:
+ - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
+hostname: %HOSTNAME%
+coreos:
+  units:
+    - name: etcd2.service
+      command: start
+    - name: fleet.service
+      command: start
+    - name:  systemd-networkd.service
+      command: restart
+    - name: flanneld.service
+      drop-ins:
+        - name: 50-network-config.conf
+          content: |
+            [Service]
+            ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
+      command: start
+  etcd2:
+    advertise-client-urls: http://%HOSTNAME%:2379
+    initial-advertise-peer-urls: http://%HOSTNAME%:2380
+    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
+    listen-peer-urls: http://0.0.0.0:2380
+    discovery: %DISCOVERY%
+  fleet:
+    public-ip: %HOSTNAME%
+```
+
+## Virtual machines startup
+
+Run the script:
+
+```sh
+./deploy_coreos_cluster.sh 3
+```
+
+Script will deploy three-nodes CoreOS cluster (`coreos{1..3}` hostnames) with
+ready-to-use etcd2, fleet and flannel.
+
+If your host configuration uses libvirt's dnsmasq as a resolver, you can
+simply log in into your new CoreOS instance:
+
+```sh
+ssh core@coreos1
+```
+
+Otherwise you can get IP addresses from leases file (for "default" libvirt
+network):
+
+```sh
+cat /var/lib/libvirt/dnsmasq/default.leases
+```
