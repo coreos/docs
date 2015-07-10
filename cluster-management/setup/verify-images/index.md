@@ -22,7 +22,7 @@ After downloading your image, you should verify it with `gpg` tool. First, downl
 curl -O https://coreos.com/security/image-signing-key/CoreOS_Image_Signing_Key.asc
 ```
 
-Next, import the public key and verify that the ID matches the website: {{site.baseurl}}/security/image-signing-key
+Next, import the public key and verify that the ID matches the website: [CoreOS Image Signing Key][signing-key]
 
 ```sh
 gpg --import --keyid-format LONG CoreOS_Image_Signing_Key.asc
