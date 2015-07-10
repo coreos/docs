@@ -108,6 +108,36 @@ coreos:
 
 Note the declaration of `ConditionPathExists=!/var/lib/docker.btrfs`. Without this line, systemd would reformat the btrfs filesystem every time the machine starts.
 
+## Mounting NFS shares
+
+This example will show how you can mount NFS share. First of all we will enable rpc-statd for NFS host monitoring. Then we will mount `/var/www` share into local `/var/www` path. Please pay attention on the unit name `var-www.mount` it should correspend to mount path `/var/www`.
+
+```yaml
+#cloud-config
+coreos:
+  units:
+    - name: rpc-statd.service
+      command: start
+      enable: true
+    - name: var-www.mount
+      command: start
+      content: |
+        [Mount]
+        What=nfs.example.com:/var/www
+        Where=/var/www
+        Type=nfs
+```
+
+If you would like to add NFS mount as dependency for certain unit you have to use these options:
+
+```yaml
+[Unit]
+After=var-www.mount
+Requires=var-www.mount
+```
+
+If the mount point can't be mounted correctly, the dependent unit will not start.
+
 ## Further Reading
 
 Read the [full docs](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) to learn about the available options. Examples specific to [EC2]({{site.baseurl}}/docs/running-coreos/cloud-providers/ec2/#instance-storage), [Google Compute Engine]({{site.baseurl}}/docs/running-coreos/cloud-providers/google-compute-engine/#additional-storage) and [Rackspace Cloud]({{site.baseurl}}/docs/running-coreos/cloud-providers/rackspace/#mount-data-disk) can be used as a starting point.
