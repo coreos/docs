@@ -93,7 +93,7 @@ A cloud-config that specifies an SSH key for the `core` user but doesn't use any
 #cloud-config
 
 ssh_authorized_keys:
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0g+ZTxC7weoIJLUafOgrm+h...
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
 ```
 
 Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are *not* supported when installing via the `coreos-install` script.
@@ -108,10 +108,10 @@ coreos-install -d /dev/sda -C beta -c ~/cloud-config.yaml
 
 ## Manual Tweaks
 
-If cloud config doesn't handle something you need to do or you just want to take a look at the root btrfs filesystem before booting your new install just mount the ninth partition:
+If cloud config doesn't handle something you need to do or you just want to take a look at the root filesystem before booting your new install just mount the ninth partition. For example, with an ext4 root filesystem:
 
 ```sh
-mount -o subvol=root /dev/sda9 /mnt/
+mount /dev/sda9 /mnt/
 ```
 
 ## Using CoreOS

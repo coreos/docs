@@ -35,7 +35,7 @@ Use cloud-config to handle platform specific configuration such as custom networ
 
 End-users should be able to provide a cloud-config file to your platform while specifying their VM's parameters. This file should be made available to CoreOS at a known network address, injected directly onto disk or contained within a [config-drive][config-drive-docs]. Below are a few examples of how this process works on a few different providers.
 
-[config-drive-docs]: http://docs.openstack.org/grizzly/openstack-compute/admin/content/config-drive.html
+[config-drive-docs]: http://docs.openstack.org/user-guide/cli_config_drive.html
 
 ### Amazon EC2 Example
 

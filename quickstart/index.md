@@ -57,11 +57,11 @@ ssh_authorized_keys:
   - ssh-rsa AAAA...
 coreos:
   units:
-    - name: etcd.service
+    - name: etcd2.service
       command: start
     - name: fleet.service
       command: start
-  etcd:
+  etcd2:
     # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
     # specify the initial size of your cluster with ?size=X
     discovery: https://discovery.etcd.io/<token>
@@ -69,18 +69,32 @@ coreos:
 
 In order to get the discovery token, visit [https://discovery.etcd.io/new](https://discovery.etcd.io/new) and you will receive a URL including your token. Paste the whole thing into your cloud-config file.
 
-The API is easy to use. From a CoreOS machine, you can simply use curl to set and retrieve a key from etcd:
+`etcdctl` is a command line interface to etcd that is preinstalled on CoreOS. To set and retrieve a key from etcd you can use the following examples:
 
 Set a key `message` with value `Hello world`:
 
 ```sh
-curl -L http://127.0.0.1:4001/v2/keys/message -XPUT -d value="Hello world"
+etcdctl set /message "Hello world"
 ```
 
 Read the value of `message` back:
 
 ```sh
-curl -L http://127.0.0.1:4001/v2/keys/message
+etcdctl get /message
+```
+
+You can also use simple `curl`. These examples correspond to previous ones:
+
+Set the value:
+
+```sh
+curl -L http://127.0.0.1:2379/v2/keys/message -XPUT -d value="Hello world"
+```
+
+Read the value:
+
+```sh
+curl -L http://127.0.0.1:2379/v2/keys/message
 ```
 
 If you followed a guide to set up more than one CoreOS machine, you can SSH into another machine and can retrieve this same value.
