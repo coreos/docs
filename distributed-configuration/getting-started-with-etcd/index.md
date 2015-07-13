@@ -161,11 +161,6 @@ $ etcdctl set /foo-service/container3 localhost:2222
 localhost:2222
 ```
 
-```sh
-$ curl -L -X PUT http://127.0.0.1:4001/v2/keys/foo-service/container3 -d value="localhost:2222"
-{"action":"set","node":{"key":"/foo-service/container3","value":"localhost:2222","modifiedIndex":23,"createdIndex":23}}
-```
-
 In the first window, you should get the notification that the key has changed. We have used `$ETCD_WATCH_*` environment variables which were set by `etcdctl`.
 
 ```sh
