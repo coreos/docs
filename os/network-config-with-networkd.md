@@ -86,6 +86,53 @@ DHCP=yes
 
 To apply the configuration, run `sudo systemctl restart systemd-networkd`. Check the status with `systemctl status systemd-networkd` and read the full log with `journalctl -u systemd-networkd`.
 
+## Debugging networkd
+
+If you've faced some problems with networkd you can enable debug mode following the instructions below.
+
+### Enable debugging manually
+
+```sh
+mkdir -p /etc/systemd/system/systemd-networkd.service.d/
+```
+
+Create [Drop-In][drop-ins] `/etc/systemd/system/systemd-networkd.service.d/10-debug.conf` with following content:
+
+```sh
+[Service]
+Environment=SYSTEMD_LOG_LEVEL=debug
+```
+
+And restart systemd-networkd service:
+
+```sh
+systemctl daemon-reload
+systemctl restart systemd-networkd
+journalctl -b -u systemd-networkd
+```
+
+### Enable debugging through Cloud-Config
+
+Define [Drop-In][drop-ins] in [Cloud-Config][cloud-config]:
+
+```yaml
+#cloud-config
+coreos:
+  units:
+    - name: systemd-networkd.service
+      drop-ins:
+        - name: 10-debug.conf
+          content: |
+            [Service]
+            Environment=SYSTEMD_LOG_LEVEL=debug
+      command: start
+```
+
+And run `coreos-cloudinit` or reboot your CoreOS host to apply the changes.
+
+[drop-ins]: using-systemd-drop-in-units.html
+[cloud-config]: cloud-config.html
+
 ## Further Reading
 
 If you're interested in more general networkd features, check out the [full documentation](http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html).
