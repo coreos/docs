@@ -91,7 +91,7 @@ When the service is told to stop, we need to stop the docker container using its
 ```ini
 [Unit]
 Description=My Advanced Service
-After=etcd.service
+After=etcd2.service
 After=docker.service
 
 [Service]
