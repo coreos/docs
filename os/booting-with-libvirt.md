@@ -165,7 +165,7 @@ This guide explains how to run three-nodes demo CoreOS cluster with libvirt.
 Save following `deploy_coreos_cluster.sh` script into your host filesystem:
 
 ```sh
-wget https://raw.githubusercontent.com/coreos/docs/master/running-coreos/platforms/libvirt/deploy_coreos_cluster.sh
+wget https://raw.githubusercontent.com/coreos/docs/master/os/deploy_coreos_libvirt.sh
 chmod +x deploy_coreos_cluster.sh
 ```
 
