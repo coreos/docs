@@ -1,13 +1,3 @@
----
-layout: docs
-slug: guides
-title: Launching Containers with fleet
-category: launching_containers
-sub_category: launching
-fork_url: https://github.com/coreos/docs/blob/master/launching-containers/building/launching-containers-fleet/index.md
-weight: 2
----
-
 # Launching Containers with fleet
 
 `fleet` is a cluster manager that controls `systemd` at the cluster level. To run your services in the cluster, you must submit regular systemd units combined with a few [fleet-specific properties]({{site.baseurl}}/docs/launching-containers/launching/fleet-unit-files/).
