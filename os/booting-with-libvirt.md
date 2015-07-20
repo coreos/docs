@@ -162,11 +162,11 @@ This guide explains how to run three-nodes demo CoreOS cluster with libvirt.
 
 ## Bash Script
 
-Save following `deploy_coreos_cluster.sh` script into your host filesystem:
+Save following `deploy_coreos_libvirt.sh` script into your host filesystem:
 
 ```sh
 wget https://raw.githubusercontent.com/coreos/docs/master/os/deploy_coreos_libvirt.sh
-chmod +x deploy_coreos_cluster.sh
+chmod +x deploy_coreos_libvirt.sh
 ```
 
 Each libvirt instance will have 1024Mb of RAM and 1 CPU (RAM and CPUs variables).
