@@ -39,7 +39,7 @@ $ sudo timedatectl set-timezone UTC
 ### Changing the time zone
 
 If your site or application requires a different system time zone, start by
-listing the available time zones:
+listing the available options:
 
 ```
 $ timedatectl list-timezones
