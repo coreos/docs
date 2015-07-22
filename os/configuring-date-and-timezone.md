@@ -27,7 +27,7 @@ NTP synchronized: yes
 
 ### Changing the timezone
 
-Start by listing the available time zones:
+Start by listing the available timezones:
 
 ```
 $ timedatectl list-timezones
