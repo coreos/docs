@@ -117,11 +117,12 @@ $ sudo systemctl status systemd-timesyncd ntpd
 ## Changing NTP time sources
 
 *Systemd-timesyncd* can discover NTP servers from DHCP, individual
-[network][systemd.network] configs, [timesyncd.conf][timesyncd.conf], or use
-the built-in `*.coreos.pool.ntp.org` pool.
+[network][systemd.network] configs, the file [timesyncd.conf][timesyncd.conf],
+or the default `*.coreos.pool.ntp.org` pool.
 
-For example, to disable the default behavior of using NTP servers from DHCP,
-write the following to `/etc/systemd/network/50-dhcp-no-ntp.conf`:
+The default behavior uses NTP servers provided by DHCP. To disable this, write
+a configuration listing your preferred NTP servers into the file
+`/etc/systemd/network/50-dhcp-no-ntp.conf`:
 
 ```ini
 [Network]
@@ -134,7 +135,7 @@ UseDomains=true
 UseNTP=false
 ```
 
-The same can be accomplished with a snippet in cloud-config like:
+NTP time sources can be set with a snippet in cloud-config like:
 
 ```yaml
 #cloud-config
@@ -144,11 +145,6 @@ coreos:
     content: |
       [Time]
       NTP=0.pool.example.com 1.pool.example.com
-
-      [DHCP]
-      UseMTU=true
-      UseDomains=true
-      UseNTP=false
 ```
 
 [systemd.network]: http://www.freedesktop.org/software/systemd/man/systemd.network.html
