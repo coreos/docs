@@ -1,6 +1,6 @@
-# Configuring Date and Timezone
+# Configuring Date and Time Zone
 
-By default, CoreOS machines keep time in the UTC timezone and synchronize
+By default, CoreOS machines keep time in the UTC time zone and synchronize
 their clocks with NTP. This page contains information about customizing
 those defaults to meet site requirements, explains the change in NTP client
 daemons in recent CoreOS versions, and offers advice on best practices for
@@ -8,7 +8,7 @@ timekeeping in a CoreOS cluster.
 
 ## Viewing and changing date and time settings with *timedatectl*
 
-The [*timedatectl*(1)][timedatectl] command displays and sets the timezone
+The [*timedatectl*(1)][timedatectl] command displays and sets the time zone
 and current time.
 
 ### Show the date, time, and zone:
@@ -25,9 +25,9 @@ NTP synchronized: yes
       DST active: n/a
 ```
 
-### Changing the timezone
+### Changing the time zone
 
-Start by listing the available timezones:
+Start by listing the available time zones:
 
 ```
 $ timedatectl list-timezones
@@ -37,7 +37,7 @@ Africa/Addis_Ababa
 …
 ```
 
-Pick a timezone from the list and set it:
+Pick a time zone from the list and set it:
 
 ```
 $ sudo timedatectl set-timezone America/New_York
@@ -63,7 +63,7 @@ NTP synchronized: yes
                   Sun 2014-11-02 01:00:00 EST
 ```
 
-Timezone may instead be set in cloud-config, with something like the following
+Time zone may instead be set in cloud-config, with something like the following
 excerpt:
 
 ```yaml
@@ -74,7 +74,7 @@ coreos:
       command: start
       content: |
         [Unit]
-        Description=Set the timezone
+        Description=Set the time zone
 
         [Service]
         ExecStart=/usr/bin/timedatectl set-timezone America/New_York
@@ -218,7 +218,7 @@ coreos:
 
 ## CoreOS Recommendations
 
-### What time zone should I use?
+### Time zone simplicity
 
 To avoid time zone confusion and the complexities of adjusting clocks for
 daylight saving time, we recommend that all machines in a CoreOS cluster use
@@ -228,7 +228,7 @@ Coordinated Universal Time (UTC). This is the default.
 $ sudo timedatectl set-timezone UTC
 ```
 
-### Which NTP servers should I sync against?
+### Which NTP servers should I synchronize with?
 
 Unless you have a highly reliable and precise time server pool, use the default
 CoreOS NTP servers:
