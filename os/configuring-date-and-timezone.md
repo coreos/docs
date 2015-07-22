@@ -126,7 +126,7 @@ $ systemctl status systemd-timesyncd ntpd
 [ntp.org]: http://ntp.org/
 [systemd-timesyncd]: http://www.freedesktop.org/software/systemd/man/systemd-timesyncd.service.html
 
-### CoreOS Recommends: CoreOS NTP pool
+### *CoreOS Recommends: CoreOS NTP pool*
 
 Unless you have a highly reliable and precise time server pool, use the default
 CoreOS NTP servers:
