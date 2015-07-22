@@ -135,7 +135,7 @@ UseDomains=true
 UseNTP=false
 ```
 
-NTP time sources can be set with a snippet in cloud-config like:
+NTP time sources can be set in `timesyncd.conf` with a cloud-config snippet like:
 
 ```yaml
 #cloud-config
@@ -230,8 +230,8 @@ $ sudo timedatectl set-timezone UTC
 
 ### Which NTP servers should I sync against?
 
-Unless you have a highly reliable and precise time server pool,
-you should stick with the default NTP servers from the ntp.org server pool.
+Unless you have a highly reliable and precise time server pool, use the default
+CoreOS NTP servers:
 
 ```
 server 0.coreos.pool.ntp.org
