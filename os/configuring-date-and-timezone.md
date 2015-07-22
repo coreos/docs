@@ -12,7 +12,7 @@ clusters.
 The [*timedatectl*(1)][timedatectl] command displays and sets the time zone
 and current time.
 
-### Show the date, time, and zone:
+### Show the date, time, and time zone:
 
 ```
 $ timedatectl status
@@ -26,9 +26,20 @@ NTP synchronized: yes
       DST active: n/a
 ```
 
+### *CoreOS Recommends: UTC time*
+To avoid time zone confusion and the complexities of adjusting clocks for
+daylight saving time (or not) in accordance with regional custom, we recommend
+that all machines in CoreOS clusters use UTC. This is the default time zone. To
+reset a machine to this default:
+
+```
+$ sudo timedatectl set-timezone UTC
+```
+
 ### Changing the time zone
 
-Start by listing the available time zones:
+If your site or application requires a different system time zone, start by
+listing the available time zones:
 
 ```
 $ timedatectl list-timezones
@@ -115,7 +126,19 @@ $ systemctl status systemd-timesyncd ntpd
 [ntp.org]: http://ntp.org/
 [systemd-timesyncd]: http://www.freedesktop.org/software/systemd/man/systemd-timesyncd.service.html
 
-## Changing NTP time sources
+### CoreOS Recommends: CoreOS NTP pool
+
+Unless you have a highly reliable and precise time server pool, use the default
+CoreOS NTP servers:
+
+```
+server 0.coreos.pool.ntp.org
+server 1.coreos.pool.ntp.org
+server 2.coreos.pool.ntp.org
+server 3.coreos.pool.ntp.org
+```
+
+### Changing NTP time sources
 
 *Systemd-timesyncd* can discover NTP servers from DHCP, individual
 [network][systemd.network] configs, the file [timesyncd.conf][timesyncd.conf],
@@ -214,29 +237,4 @@ coreos:
       restrict default nomodify nopeer noquery limited kod
       restrict 127.0.0.1
       restrict [::1]
-```
-
-
-## CoreOS Recommendations
-
-### Time zone simplicity
-
-To avoid time zone confusion and the complexities of adjusting clocks for
-daylight saving time (or not) in accordance with regional custom, we recommend
-that all machines in CoreOS clusters use UTC. This is the default time zone.
-
-```
-$ sudo timedatectl set-timezone UTC
-```
-
-### Which NTP servers should I synchronize with?
-
-Unless you have a highly reliable and precise time server pool, use the default
-CoreOS NTP servers:
-
-```
-server 0.coreos.pool.ntp.org
-server 1.coreos.pool.ntp.org
-server 2.coreos.pool.ntp.org
-server 3.coreos.pool.ntp.org
 ```
