@@ -91,7 +91,7 @@ CoreOS clusters use NTP to synchronize the clocks of member nodes, and all
 machines start an NTP client at boot. CoreOS versions later than
 [681.0.0][681.0.0] use [*systemd-timesyncd*(8)][systemd-timesyncd] as the
 default NTP client. Earlier versions used [*ntpd*(8)][ntp.org]. To check which
-service is active, run the follow command:
+service is active, use *systemctl* to check the status of both:
 
 ```
 $ sudo systemctl status systemd-timesyncd ntpd
