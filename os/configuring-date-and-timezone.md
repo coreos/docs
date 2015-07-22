@@ -1,10 +1,11 @@
 # Configuring Date and Time Zone
 
-By default, CoreOS machines keep time in the UTC time zone and synchronize
-their clocks with NTP. This page contains information about customizing
-those defaults to meet site requirements, explains the change in NTP client
-daemons in recent CoreOS versions, and offers advice on best practices for
-timekeeping in a CoreOS cluster.
+By default, CoreOS machines keep time in the Coordinated Universal Time (UTC)
+zone and synchronize their clocks with the Network Time Protocol (NTP).
+This page contains information about customizing those defaults to meet site
+requirements, explains the change in NTP client daemons in recent CoreOS
+versions, and offers advice on best practices for timekeeping in CoreOS
+clusters.
 
 ## Viewing and changing date and time settings with *timedatectl*
 
@@ -221,8 +222,8 @@ coreos:
 ### Time zone simplicity
 
 To avoid time zone confusion and the complexities of adjusting clocks for
-daylight saving time, we recommend that all machines in a CoreOS cluster use
-Coordinated Universal Time (UTC). This is the default.
+daylight saving time (or not) in accordance with regional custom, we recommend
+that all machines in CoreOS clusters use UTC. This is the default time zone.
 
 ```
 $ sudo timedatectl set-timezone UTC
