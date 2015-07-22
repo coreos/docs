@@ -26,7 +26,7 @@ NTP synchronized: yes
       DST active: n/a
 ```
 
-### *CoreOS Recommends: UTC time*
+### Recommended: UTC time
 To avoid time zone confusion and the complexities of adjusting clocks for
 daylight saving time (or not) in accordance with regional custom, we recommend
 that all machines in CoreOS clusters use UTC. This is the default time zone. To
@@ -126,7 +126,7 @@ $ systemctl status systemd-timesyncd ntpd
 [ntp.org]: http://ntp.org/
 [systemd-timesyncd]: http://www.freedesktop.org/software/systemd/man/systemd-timesyncd.service.html
 
-### *CoreOS Recommends: NTP sources*
+### Recommended NTP sources
 
 Unless you have a highly reliable and precise time server pool, use your cloud
 provider's NTP source, or, on bare metal, the default CoreOS NTP servers:
