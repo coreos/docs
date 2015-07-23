@@ -6,7 +6,7 @@ This page contains information about customizing those defaults, explains
 the change in NTP client daemons in recent CoreOS versions, and offers advice
 on best practices for timekeeping in CoreOS clusters.
 
-## Viewing and changing time and date with `timedatectl`
+## Viewing and Changing Time and Date
 
 The [`timedatectl(1)`][timedatectl] command displays and sets the date, time,
 and time zone.
@@ -23,7 +23,7 @@ NTP synchronized: yes
       DST active: n/a
 ```
 
-### Recommended: UTC time
+### Recommended: UTC Time
 To avoid time zone confusion and the complexities of adjusting clocks for
 daylight saving time (or not) in accordance with regional custom, we recommend
 that all machines in CoreOS clusters use UTC. This is the default time zone. To
@@ -33,7 +33,7 @@ reset a machine to this default:
 $ sudo timedatectl set-timezone UTC
 ```
 
-### Changing the time zone
+### Changing the Time Zone
 
 If your site or application requires a different system time zone, start by
 listing the available options:
@@ -92,7 +92,7 @@ coreos:
 ```
 
 
-## Time synchronization
+## Time Synchronization
 
 CoreOS clusters use NTP to synchronize the clocks of member nodes, and all
 machines start an NTP client at boot. CoreOS versions later than
@@ -117,7 +117,7 @@ $ systemctl status systemd-timesyncd ntpd
    Active: inactive (dead)
 ```
 
-### Recommended NTP sources
+### Recommended NTP Sources
 
 Unless you have a highly reliable and precise time server pool, use your cloud
 provider's NTP source, or, on bare metal, the default CoreOS NTP servers:
@@ -129,7 +129,7 @@ provider's NTP source, or, on bare metal, the default CoreOS NTP servers:
 3.coreos.pool.ntp.org
 ```
 
-### Changing NTP time sources
+### Changing NTP Time Sources
 
 `Systemd-timesyncd` can discover NTP servers from DHCP, individual
 [network][systemd.network] configs, the file [`timesyncd.conf`][timesyncd.conf],
@@ -169,7 +169,7 @@ coreos:
 ```
 
 
-## Switching between `timesyncd` and `ntpd`
+## Switching from `timesyncd` to `ntpd`
 
 On CoreOS 681.0.0 or later, you can switch from `systemd-timesyncd` back
 to `ntpd` with the following commands:
