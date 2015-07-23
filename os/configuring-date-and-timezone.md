@@ -91,8 +91,6 @@ coreos:
         Type=oneshot
 ```
 
-[timedatectl]: http://www.freedesktop.org/software/systemd/man/timedatectl.html
-
 
 ## Time synchronization
 
@@ -118,10 +116,6 @@ $ systemctl status systemd-timesyncd ntpd
    Loaded: loaded (/usr/lib64/systemd/system/ntpd.service; disabled; vendor preset: disabled)
    Active: inactive (dead)
 ```
-
-[681.0.0]: https://coreos.com/releases/#681.0.0
-[ntp.org]: http://ntp.org/
-[systemd-timesyncd]: http://www.freedesktop.org/software/systemd/man/systemd-timesyncd.service.html
 
 ### Recommended NTP sources
 
@@ -167,9 +161,6 @@ coreos:
       [Time]
       NTP=0.pool.example.com 1.pool.example.com
 ```
-
-[systemd.network]: http://www.freedesktop.org/software/systemd/man/systemd.network.html
-[timesyncd.conf]: http://www.freedesktop.org/software/systemd/man/timesyncd.conf.html
 
 
 ## Switching between `systemd-timesyncd` and `ntpd`
@@ -235,3 +226,10 @@ coreos:
       restrict 127.0.0.1
       restrict [::1]
 ```
+
+[timedatectl]: http://www.freedesktop.org/software/systemd/man/timedatectl.html
+[681.0.0]: https://coreos.com/releases/#681.0.0
+[ntp.org]: http://ntp.org/
+[systemd-timesyncd]: http://www.freedesktop.org/software/systemd/man/systemd-timesyncd.service.html
+[systemd.network]: http://www.freedesktop.org/software/systemd/man/systemd.network.html
+[timesyncd.conf]: http://www.freedesktop.org/software/systemd/man/timesyncd.conf.html
