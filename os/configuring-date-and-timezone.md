@@ -123,10 +123,10 @@ Unless you have a highly reliable and precise time server pool, use your cloud
 provider's NTP source, or, on bare metal, the default CoreOS NTP servers:
 
 ```
-server 0.coreos.pool.ntp.org
-server 1.coreos.pool.ntp.org
-server 2.coreos.pool.ntp.org
-server 3.coreos.pool.ntp.org
+0.coreos.pool.ntp.org
+1.coreos.pool.ntp.org
+2.coreos.pool.ntp.org
+3.coreos.pool.ntp.org
 ```
 
 ### Changing NTP time sources
