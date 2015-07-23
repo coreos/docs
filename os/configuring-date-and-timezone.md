@@ -7,9 +7,9 @@ requirements, explains the change in NTP client daemons in recent CoreOS
 versions, and offers advice on best practices for timekeeping in CoreOS
 clusters.
 
-## Viewing and changing date and time settings with *timedatectl*
+## Viewing and changing date and time settings with `timedatectl`
 
-The [*timedatectl*(1)][timedatectl] command displays and sets the time zone
+The [`timedatectl`(1)][timedatectl] command displays and sets the time zone
 and current time.
 
 ### Show the date, time, and time zone:
@@ -101,8 +101,8 @@ coreos:
 
 CoreOS clusters use NTP to synchronize the clocks of member nodes, and all
 machines start an NTP client at boot. CoreOS versions later than
-[681.0.0][681.0.0] use [*systemd-timesyncd*(8)][systemd-timesyncd] as the
-default NTP client. Earlier versions used [*ntpd*(8)][ntp.org]. Use *systemctl*
+[681.0.0][681.0.0] use [`systemd-timesyncd`(8)][systemd-timesyncd] as the
+default NTP client. Earlier versions used [`ntpd`(8)][ntp.org]. Use `systemctl`
 to check which service is running:
 
 ```
@@ -140,8 +140,8 @@ server 3.coreos.pool.ntp.org
 
 ### Changing NTP time sources
 
-*Systemd-timesyncd* can discover NTP servers from DHCP, individual
-[network][systemd.network] configs, the file [timesyncd.conf][timesyncd.conf],
+`Systemd-timesyncd` can discover NTP servers from DHCP, individual
+[network][systemd.network] configs, the file [`timesyncd.conf`][timesyncd.conf],
 or the default `*.coreos.pool.ntp.org` pool.
 
 The default behavior uses NTP servers provided by DHCP. To disable this, write
@@ -175,10 +175,10 @@ coreos:
 [timesyncd.conf]: http://www.freedesktop.org/software/systemd/man/timesyncd.conf.html
 
 
-## Switching between systemd-timesyncd and ntpd
+## Switching between `systemd-timesyncd` and `ntpd`
 
-On CoreOS 681.0.0 or later, you can switch from *timesyncd* back
-to *ntpd* with the following commands:
+On CoreOS 681.0.0 or later, you can switch from `timesyncd` back
+to `ntpd` with the following commands:
 
 ```
 $ sudo systemctl stop systemd-timesyncd
@@ -201,13 +201,13 @@ coreos:
       enable: true
 ```
 
-Because timesyncd and ntpd are mutually exclusive, it's important to `mask`
+Because `timesyncd` and `ntpd` are mutually exclusive, it's important to `mask`
 the `stop`ped service. `Systemctl disable` or `stop` alone will not prevent a
 default service from starting again.
 
-### Configuring *ntpd*
+### Configuring `ntpd`
 
-The *ntpd* service reads all configuration from the file `/etc/ntp.conf`. It
+The `ntpd` service reads all configuration from the file `/etc/ntp.conf`. It
 does not use DHCP or other configuration sources. To use a
 different set of NTP servers, replace the `/etc/ntp.conf` symlink with
 something like the following:
