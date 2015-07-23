@@ -150,6 +150,12 @@ UseDomains=true
 UseNTP=false
 ```
 
+Then restart the network daemon:
+
+```
+$ sudo systemctl restart systemd-networkd
+```
+
 NTP time sources can be set in `timesyncd.conf` with a cloud-config snippet like:
 
 ```yaml
