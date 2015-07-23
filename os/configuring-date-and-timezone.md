@@ -169,9 +169,9 @@ coreos:
 ```
 
 
-## Switching between `systemd-timesyncd` and `ntpd`
+## Switching between `timesyncd` and `ntpd`
 
-On CoreOS 681.0.0 or later, you can switch from `timesyncd` back
+On CoreOS 681.0.0 or later, you can switch from `systemd-timesyncd` back
 to `ntpd` with the following commands:
 
 ```
