@@ -209,6 +209,12 @@ restrict 127.0.0.1
 restrict [::1]
 ```
 
+Then reload the `ntpd` configuration:
+
+```
+$ sudo systemctl reload ntpd
+```
+
 Or, in cloud-config:
 
 ```yaml
