@@ -215,7 +215,7 @@ restrict 127.0.0.1
 restrict [::1]
 ```
 
-Then reload the `ntpd` configuration:
+Then ask `ntpd` to reload its configuration:
 
 ```
 $ sudo systemctl reload ntpd
