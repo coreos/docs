@@ -2,17 +2,14 @@
 
 By default, CoreOS machines keep time in the Coordinated Universal Time (UTC)
 zone and synchronize their clocks with the Network Time Protocol (NTP).
-This page contains information about customizing those defaults to meet site
-requirements, explains the change in NTP client daemons in recent CoreOS
-versions, and offers advice on best practices for timekeeping in CoreOS
-clusters.
+This page contains information about customizing those defaults, explains
+the change in NTP client daemons in recent CoreOS versions, and offers advice
+on best practices for timekeeping in CoreOS clusters.
 
 ## Viewing and changing time and date with `timedatectl`
 
-The [`timedatectl(1)`][timedatectl] command displays and sets the time zone
-and current time.
-
-### Show the date, time, and time zone:
+The [`timedatectl(1)`][timedatectl] command displays and sets the date, time,
+and time zone.
 
 ```
 $ timedatectl status
