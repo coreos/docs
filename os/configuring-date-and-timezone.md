@@ -7,7 +7,7 @@ requirements, explains the change in NTP client daemons in recent CoreOS
 versions, and offers advice on best practices for timekeeping in CoreOS
 clusters.
 
-## Viewing and changing date and time settings with `timedatectl`
+## Viewing and changing time and date with `timedatectl`
 
 The [`timedatectl(1)`][timedatectl] command displays and sets the time zone
 and current time.
