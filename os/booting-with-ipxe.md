@@ -104,16 +104,16 @@ Since our upgrade process requires a disk, this image does not have the option t
 
 ## Installation
 
-CoreOS can be completely installed on disk or run from RAM but store user data on disk. Read more in our [Installing CoreOS guide]({{site.baseurl}}/docs/running-coreos/bare-metal/booting-with-pxe/#installation).
+CoreOS can be completely installed on disk or run from RAM but store user data on disk. Read more in our [Installing CoreOS guide]({{site.baseurl}}/os/docs/latest/booting-with-pxe.html#installation).
 
 ## Adding a Custom OEM
 
-Similar to the [OEM partition][oem] in CoreOS disk images, iPXE images can be customized with a [cloud config][cloud-config] bundled in the initramfs. You can view the [instructions on the PXE docs]({{site.baseurl}}/docs/running-coreos/bare-metal/booting-with-pxe/#adding-a-custom-oem).
+Similar to the [OEM partition][oem] in CoreOS disk images, iPXE images can be customized with a [cloud config][cloud-config] bundled in the initramfs. You can view the [instructions on the PXE docs]({{site.baseurl}}/os/docs/latest/booting-with-pxe.html#adding-a-custom-oem).
 
-[oem]: {{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors/#image-customization
-[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/
+[oem]: {{site.baseurl}}/os/docs/latest/notes-for-distributors.html#image-customization
+[cloud-config]: {{site.baseurl}}/os/docs/latest/cloud-config.html
 
-## Hosting `cloud-config`
+## Hosting Cloud-Config
 
 One of the ways to host your `cloud-config` files is to use [nginx][nginx]. You can also use [http_sub_module][http_sub_module] which will allow you to use `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents. By default this module is enabled in official nginx packages and in most Linux distributions.
 

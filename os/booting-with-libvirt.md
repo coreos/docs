@@ -1,8 +1,8 @@
 # Running CoreOS on libvirt
 
 This guide explains how to run CoreOS with libvirt. The libvirt configuration
-file can be used (for example) with virsh or virt-manager. The guide assumes
-that you already have a running libvirt setup and virt-install tool. If you
+file can be used (for example) with `virsh` or `virt-manager`. The guide assumes
+that you already have a running libvirt setup and `virt-install` tool. If you
 don’t have that, other solutions are most likely easier.
 
 You can direct questions to the [IRC channel][irc] or [mailing
@@ -11,7 +11,7 @@ list][coreos-dev].
 ## Download the CoreOS image
 
 In this guide, the example virtual machine we are creating is called coreos1 and
-all files are stored in /var/lib/libvirt/images/coreos. This is not a requirement — feel free
+all files are stored in `/var/lib/libvirt/images/coreos`. This is not a requirement — feel free
 to substitute that path if you use another one.
 
 ### Choosing a Channel
@@ -60,7 +60,7 @@ cd /var/lib/libvirt/images/coreos
 qemu-img create -f qcow2 -b coreos_production_qemu_image.img coreos1.qcow2
 ```
 
-It will create coreos1.qcow2 snapshot image. Any changes to coreos1.qcow2 will not be reflected in coreos_production_qemu_image.img. Making any changes to a base image (coreos_production_qemu_image.img in our example) will corrupt its snapshots.
+It will create `coreos1.qcow2` snapshot image. Any changes to `coreos1.qcow2` will not be reflected in `coreos_production_qemu_image.img`. Making any changes to a base image (`coreos_production_qemu_image.img` in our example) will corrupt its snapshots.
 
 ### Config drive
 
