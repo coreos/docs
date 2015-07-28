@@ -211,13 +211,13 @@ If you would like to create multiple clusters you will need to change the "Stack
 
 {% for region in site.data.alpha-channel.amis %}
   {% if region.name == 'us-east-1' %}
-**TL;DR:** launch three instances of [{{region.pv}}](https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.pv}}) in **{{region.name}}** with a security group that has open port 22, 4001, and 7001 and the same "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [docker][docker-docs] to play with.
+**TL;DR:** launch three instances of [{{region.pv}}](https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.pv}}) in **{{region.name}}** with a security group that has open port 22, 2379, 2380, 4001, and 7001 and the same "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [docker][docker-docs] to play with.
   {% endif %}
 {% endfor %}
 
 ### Creating the security group
 
-You need open port 7001 and 4001 between servers in the `etcd` cluster. Step by step instructions below.
+You need open port 2379, 2380, 7001 and 4001 between servers in the `etcd` cluster. Step by step instructions below.
 
 _This step is only needed once_
 
@@ -236,10 +236,10 @@ First we need to create a security group to allow CoreOS instances to communicat
     * Click: "Add Rule"
 5. Add two security group rules for etcd communication
     * Create a new rule: `Custom TCP rule`
-    * Port range: 4001
+    * Port range: 2379
     * Source: type "coreos-testing" until your security group auto-completes. Should be something like "sg-8d4feabc"
     * Click: "Add Rule"
-    * Repeat this process for port range 7001 as well
+    * Repeat this process for port range 2380, 4001 and 7001 as well
 6. Click "Apply Rule Changes"
 
 [sg]: https://console.aws.amazon.com/ec2/home?region=us-east-1#s=SecurityGroups
