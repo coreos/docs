@@ -1,71 +1,68 @@
 # Running CoreOS on VMware
 
-CoreOS is currently in heavy development and actively being tested.
-These instructions will walk you through running CoreOS on VMware Fusion or ESXi.
-If you are familiar with another VMware product you can use these instructions as a starting point.
+These instructions will walk you through running CoreOS on VMware Fusion or
+ESXi. If you are familiar with another VMware product you can use these
+instructions as a starting point.
 
 ## Running the VM
 
-These steps will download the VMware image and extract the zip file. After that
-you will need to launch the `coreos_developer_vmware_insecure.vmx` file to create a VM.
-
 ### Choosing a Channel
 
-CoreOS is released into stable, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+CoreOS is released into alpha, beta, and stable channels. Releases to each
+channel serve as a release-candidate for the next channel. For example, a
+bug-free alpha release is promoted bit-for-bit to the beta channel.
 
-The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes in each channel.
-
-This is a rough sketch that should work on OS X and Linux:
-
-```sh
-curl -LO http://alpha.release.core-os.net/amd64-usr/current/coreos_production_vmware_insecure.zip
-unzip coreos_production_vmware_insecure.zip -d coreos_production_vmware_insecure
-cd coreos_production_vmware_insecure
-open coreos_production_vmware_insecure.vmx
-```
-
-### To deploy on an ESXi/vSphere host, convert the VM to OVF
-* follow the steps above to download and extract the coreos_production_vmware_insecure.zip
-* download and run the [OVF Tool installer](https://developercenter.vmware.com/tool/ovf/) Requires VMware account login but the download is free. Available for Linux, OS X & Windows for both 32 & 64 bit architectures.
-* convert VM to OVF from the extract dir
+The channel is selected based on the URLs below. Simply replace `stable` with
+`alpha` or `beta`. Read the [release notes][release notes] for specific
+features and bug fixes in each channel.
 
 ```sh
-cd coreos_developer_vmware_insecure
-mkdir coreos
-ovftool coreos_production_vmware_insecure.vmx coreos/coreos.insecure.ovf
+curl -LO http://stable.release.core-os.net/amd64-usr/current/coreos_production_vmware_ova.ova
 ```
 
-NOTE: This uses defaults and creates a single core, 1024MB type 4 VM when deployed. To change before deployment, see ovftool --help or manually edit the coreos.insecure.ovf If you do manually edit the OVF file, you will also need to recalculate the SHA1 and update the coreos.insecure.mf accordingly
+[release notes]: {{site.baseurl}}/releases
 
-The above step creates the following files in ../coreos/:
+### Booting with VMware Fusion
 
-```sh
-  coreos.insecure-disk1.vmdk
-  coreos.insecure.ovf
-  coreos.insecure.mf
-```
+After downloading the proper VMware image, you will need to launch the
+`coreos_production_vmware_ova.ova` file to create a VM.
 
-* use the vSphere Client to deploy the VM as follows:
-    * menu "File"..."Deploy OVF Template..."
-    * in the wizard, specify the location of the /coresos/ coreos.insecure.ovf created earlier
-    * name your VM
-    * choose "thin provision" for the disk format
-    * choose your network settings
-    * confirm the settings then click "Finish"
+### Booting with VMware ESXi
 
-    NOTE: unselect "Power on after deployment" so you have a chance to edit VM settings before powering it up for the first time.
+Use the vSphere Client to deploy the VM as follows:
 
-The last step uploads the files to your ESXi datastore and registers your VM. You can now tweak the VM settings, like memory and virtual cores, then power it on. These instructions were tested to deploy to an ESXi 5.5 host.
+1. in the menu, click "File > Deploy OVF Template..."
+2. in the wizard, specify the location of the OVA downloaded earlier
+3. name your VM
+4. choose "thin provision" for the disk format
+5. choose your network settings
+6. confirm the settings then click "Finish"
+
+NOTE: Unselect "Power on after deployment" so you have a chance to edit VM
+settings before powering it up for the first time.
+
+The last step uploads the files to your ESXi datastore and registers your VM.
+You can now tweak the VM settings, like memory and virtual cores, then power it
+on. These instructions were tested to deploy to an ESXi 5.5 host.
 
 ## Cloud-Config
 
-Cloud-config can be specified by attaching a [config-drive]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-config-drive/) with the label `config-2`. This is commonly done through whatever interface allows for attaching CD-ROMs or new drives.
+Cloud-config can be specified by attaching a [config-drive][config-drive] with
+the filesystem label `config-2`. This is commonly done through whatever
+interface allows for attaching CD-ROMs or new drives.
 
-Note that the config-drive standard was originally an OpenStack feature, which is why you'll see strings containing `openstack`. This filepath needs to be retained, although CoreOS supports config-drive on all platforms.
+Note that the config-drive standard was originally an OpenStack feature, which
+is why you'll see strings containing `openstack`. This filepath needs to be
+retained, although CoreOS supports config-drive on all platforms.
 
-For more information on customization that can be done with cloud-config, head on over to the [cloud-config guide]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/).
+For more information on customization that can be done with cloud-config, head
+on over to the [cloud-config guide][cloud-config guide].
 
-Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are *not* supported on VMware.
+Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced
+in other documents are *not* supported on VMware.
+
+[config-drive]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-config-drive/
+[cloud-config guide]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/
 
 ## Logging in
 
@@ -77,25 +74,19 @@ you should see an IP address pop up:
 
 In this case the IP is `10.0.1.81`.
 
-Now you can login using the shared and insecure private SSH key.
+Now you can login using your SSH key or password set in your cloud-config.
 
 ```sh
-cd coreos_developer_vmware_insecure
-ssh -i insecure_ssh_key core@10.0.1.81
+ssh core@10.0.1.81
 ```
 
-## Replacing the key
-
-We highly recommend that you disable the original insecure OEM SSH key and
-replace it with your own. This is a simple two step process: first, add your
-public key, and then remove the original OEM one.
-
-```sh
-cat ~/.ssh/id_rsa.pub | ssh core@10.0.1.81 -i insecure_ssh_key update-ssh-keys -a user
-ssh core@10.0.1.81 update-ssh-keys -D oem
-```
+Alternatively, if you append `coreos.autologin` to the kernel parameters on
+boot, the console won't prompt for a password. This is handy for debugging.
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the
+[CoreOS Quickstart][quickstart] guide or dig into [more specific topics][docs].
+
+[quickstart]: {{site.baseurl}}/docs/quickstart
+[docs]: {{site.baseurl}}/docs
