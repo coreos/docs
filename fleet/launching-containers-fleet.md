@@ -102,7 +102,7 @@ TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill apache1
 ExecStartPre=-/usr/bin/docker rm apache1
 ExecStartPre=/usr/bin/docker pull coreos/apache
-ExecStart=/usr/bin/docker run -rm --name apache1 -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
+ExecStart=/usr/bin/docker run --rm --name apache1 -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
 ExecStop=/usr/bin/docker stop apache1
 
 [X-Fleet]
