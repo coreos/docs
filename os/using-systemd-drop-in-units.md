@@ -124,12 +124,13 @@ To see all runtime drop-in changes for system units run the command below:
 systemd-delta --type=extended
 ```
 
-## Another Examples
+## Another systemd Examples
 
-For another real examples, check out these documents:
+For another real systemd examples, check out these documents:
 
 [Customizing Docker]({{site.baseurl}}/os/docs/latest/customizing-docker.html#using-a-dockercfg-file-for-authentication)
 [Customizing the SSH Daemon]({{site.baseurl}}/os/docs/latest/customizing-sshd.html#changing-the-sshd-port)
+[Using Environment Variables In systemd Units]({{site.baseurl}}/os/docs/latest/using-environment-variables-in-systemd-units.html)
 
 ## More Information
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">systemd.service Docs</a>
