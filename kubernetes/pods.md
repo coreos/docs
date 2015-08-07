@@ -27,7 +27,34 @@ There are many types of volumes supported by Kubernetes, including native suppor
 Here's an example pod:
 
 ```
-INSERT THE EXAMPLE
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-app
+  labels:
+    app: example-app
+    version: v1
+    role=backend
+spec:
+  containers:
+  - name: java
+    image: companyname/java
+    ports:
+    - containerPort: 443
+    volumeMounts:
+    - mountPath: /volumes/logs
+      name: logs
+  - name: logger
+    image: companyname/logger:v1.2.3
+    ports:
+    - containerPort: 9999
+    volumeMounts:
+    - mountPath: /logs
+      name: logs
+  - name: monitoring
+    image: companyname/monitoring:v4.5.6
+    ports:
+    - containerPort: 1234
 ```
 
 ### Resources
