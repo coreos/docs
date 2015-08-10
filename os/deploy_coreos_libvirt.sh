@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 usage() {
-        echo "Usage: $0 number_of_coreos_nodes"
+        echo "Usage: $0 %number_of_coreos_nodes%"
 }
 
 if [ "$1" == "" ]; then
@@ -19,6 +19,7 @@ fi
 LIBVIRT_PATH=/var/lib/libvirt/images/coreos
 USER_DATA_TEMPLATE=$LIBVIRT_PATH/user_data
 ETCD_DISCOVERY=$(curl -s "https://discovery.etcd.io/new?size=$1")
+CHANNEL=stable
 RAM=1024
 CPUs=1
 
@@ -38,15 +39,15 @@ for SEQ in $(seq 1 $1); do
                 mkdir -p $LIBVIRT_PATH/$COREOS_HOSTNAME/openstack/latest || (echo "Can not create $LIBVIRT_PATH/$COREOS_HOSTNAME/openstack/latest directory" && exit 1)
         fi
 
-        if [ ! -f $LIBVIRT_PATH/coreos_production_qemu_image.img ]; then
-                wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > $LIBVIRT_PATH/coreos_production_qemu_image.img
+        if [ ! -f $LIBVIRT_PATH/coreos_${CHANNEL}_qemu_image.img ]; then
+                wget http://${CHANNEL}.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > $LIBVIRT_PATH/coreos_${CHANNEL}_qemu_image.img
         fi
 
         if [ ! -f $LIBVIRT_PATH/$COREOS_HOSTNAME.qcow2 ]; then
-                qemu-img create -f qcow2 -b $LIBVIRT_PATH/coreos_production_qemu_image.img $LIBVIRT_PATH/$COREOS_HOSTNAME.qcow2
+                qemu-img create -f qcow2 -b $LIBVIRT_PATH/coreos_${CHANNEL}_qemu_image.img $LIBVIRT_PATH/$COREOS_HOSTNAME.qcow2
         fi
 
-        sed "s#%HOSTNAME%#$COREOS_HOSTNAME#g;s#%DISCOVERY%#$ETCD_DISCOVERY#g" $LIBVIRT_PATH/user_data > $LIBVIRT_PATH/$COREOS_HOSTNAME/openstack/latest/user_data
+        sed "s#%HOSTNAME%#$COREOS_HOSTNAME#g;s#%DISCOVERY%#$ETCD_DISCOVERY#g" $USER_DATA_TEMPLATE > $LIBVIRT_PATH/$COREOS_HOSTNAME/openstack/latest/user_data
 
         virt-install --connect qemu:///system --import --name $COREOS_HOSTNAME --ram $RAM --vcpus $CPUs --os-type=linux --os-variant=virtio26 --disk path=$LIBVIRT_PATH/$COREOS_HOSTNAME.qcow2,format=qcow2,bus=virtio --filesystem $LIBVIRT_PATH/$COREOS_HOSTNAME/,config-2,type=mount,mode=squash --vnc --noautoconsole
 done
