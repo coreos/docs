@@ -96,6 +96,8 @@ This environment is now set up to take a beating. Pull the plug on a machine and
 
 Since we're only using a single etcd node, there is no need to include a discovery token. There isn't any high availability for etcd in this configuration, but that's assumed to be OK for development and testing. Boot this machine first so you can configure the rest with its IP address, which is specified with the network unit.
 
+The network unit is typically used for bare metal installations that require static networking. If you're using a cloud-provider, you can omit the network unit and use DHCP and the `$private_ipv4` and `$public_ipv4` variables on platforms that support this. Check the documentation for your specific provider for examples.
+
 Here's the cloud-config for the etcd machine:
 
 ```yaml
@@ -165,6 +167,8 @@ fleet will be used to bootstrap both the central services and jobs on the worker
 ### Configuration for Central Services Role
 
 Our Central Services machines will run services that support the rest of the cluster. etcd is configured with static networking and a peers list.
+
+If you're using a cloud-provider, you can omit the network unit and use DHCP and the `$private_ipv4` and `$public_ipv4` variables on platforms that support this. Check the documentation for your specific provider for examples.
 
 fleet will be started with metadata indicating the role of these machines, which allows us to schedule global units that will only run on these machines with `Global=true` and `MachineMetadata=role=services`. Optionally, set additional machine metadata for availability zones, cabinet number, location, etc. to ensure that each central service machine is distributed correctly across your infrastructure.
 
