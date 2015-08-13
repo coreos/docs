@@ -21,8 +21,8 @@ If you elect to use the API to provision machines on Packet you should consider 
 curl -X POST https://api.packet.net/projects/<PROJECT_ID>/devices \
 -H 'Content-Type: application/json' \
 -H 'Accept: application/json' \
--H "X-Auth-Token: <API_TOKEN>" \
--d "{\"hostname\": \"<hostname>", \"plan\": \"baremetal_1\", \"facility\": \"ewr1\", \"operating_system\": \"coreos_alpha\"}"
+-H 'X-Auth-Token: <API_TOKEN>' \
+-d '{"hostname": "<hostname>", "plan": "baremetal_1", "facility": "ewr1", "operating_system": "coreos_alpha"}'
 ```
 
 ### Cloud-Config
