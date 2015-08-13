@@ -18,11 +18,14 @@ Once logged into the portal you will be able to click the 'Deploy' button and ch
 If you elect to use the API to provision machines on Packet you should consider using [one of our language libraries](https://www.packet.net/dev/) to code against. As an example, this is how you would launch a single Type 1 machine in a curl command. [Packet API Documentation](https://www.packet.net/dev/api/)
 
 ```bash
-curl -X POST https://api.packet.net/projects/<PROJECT_ID>/devices \
+# Replace items in brackets (<EXAMPLE>) with the appropriate values.
+
+curl -X POST \
 -H 'Content-Type: application/json' \
 -H 'Accept: application/json' \
--H "X-Auth-Token: <API_TOKEN>" \
--d "{\"hostname\": \"<hostname>", \"plan\": \"baremetal_1\", \"facility\": \"ewr1\", \"operating_system\": \"coreos_alpha\"}"
+-H 'X-Auth-Token: <API_TOKEN>' \
+-d '{"hostname": "<HOSTNAME>", "plan": "baremetal_1", "facility": "ewr1", "operating_system": "coreos_alpha"}' \
+https://api.packet.net/projects/<PROJECT_ID>/devices
 ```
 
 ### Cloud-Config
