@@ -196,7 +196,7 @@ For more details, check out [DigitalOcean's API documentation][do-api-docs].
     <a href="size.png">
       <img src="img/size.png" />
     </a>
-    <div class="co-m-screenshot-caption">Choosing a CoreOS channel</div>
+    <div class="co-m-screenshot-caption">Choosing a size and hostname</div>
   </div>
 </div>
 3. Enable User Data and add your cloud-config in the text box.<br /><br />
@@ -212,7 +212,7 @@ For more details, check out [DigitalOcean's API documentation][do-api-docs].
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12 co-m-screenshot">
     <a href="img/image.png">
-      <img src="image.png" />
+      <img src="img/image.png" />
     </a>
     <div class="co-m-screenshot-caption">Choosing a CoreOS channel</div>
   </div>
