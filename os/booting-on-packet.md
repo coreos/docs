@@ -24,9 +24,11 @@ curl -X POST \
 -H 'Content-Type: application/json' \
 -H 'Accept: application/json' \
 -H 'X-Auth-Token: <API_TOKEN>' \
--d '{"hostname": "<HOSTNAME>", "plan": "baremetal_1", "facility": "ewr1", "operating_system": "coreos_alpha"}' \
+-d '{"hostname": "<HOSTNAME>", "plan": "baremetal_1", "facility": "ewr1", "operating_system": "coreos_alpha", "userdata": "<USERDATA>"}' \
 https://api.packet.net/projects/<PROJECT_ID>/devices
 ```
+
+Double quotes in the `<USERDATA>` value must be escaped such that the request body is valid JSON. See the Cloud-Config section below for more information about accepted forms of userdata.
 
 ### Cloud-Config
 
