@@ -127,13 +127,13 @@ As you can see, the Apache units are now running on two different machines in ou
 
 How do we route requests to these containers? The best strategy is to run a "sidekick" container that performs other duties that are related to our main container but shouldn't be directly built into that application. Examples of common sidekick containers are for service discovery and controlling external services such as cloud load balancers or DNS.
 
-+### Recovering from Machine Failure
-+
-+Machines in your fleet cluster are constantly in communication with the rest of cluster and elect a leader to make scheduling decisions. The leader is responsible for parsing newly submitted/started units, finding a qualified machine to run them (via X-Fleet parameters), and then informing the machine(s) to start the unit.
-+
-+When a machine fails to heartbeat back to the fleet leader, all units running on that machine are marked for rescheduling. During that process, qualified machines are found for each unit and they are started on the new machine. Units that can't be rescheduled will remain stopped until a qualified machine can be found. If the failed machine recovers, the fleet leader will tell it to cease operations of the old units, which have been rescheduled,  and then the machine will be available for new work.
-+
-+You can test out this process by stopping fleet (`sudo systemctl stop fleet`) on one of the machines running our Apache unit. The fleet logs (`sudo journalctl -u fleet`) will provide more clarity on what's going on under the hood.
+### Recovering from Machine Failure
+
+Machines in your fleet cluster are constantly in communication with the rest of cluster and elect a leader to make scheduling decisions. The leader is responsible for parsing newly submitted/started units, finding a qualified machine to run them (via X-Fleet parameters), and then informing the machine(s) to start the unit.
+
+When a machine fails to heartbeat back to the fleet leader, all units running on that machine are marked for rescheduling. During that process, qualified machines are found for each unit and they are started on the new machine. Units that can't be rescheduled will remain stopped until a qualified machine can be found. If the failed machine recovers, the fleet leader will tell it to cease operations of the old units, which have been rescheduled,  and then the machine will be available for new work.
+
+You can test out this process by stopping fleet (`sudo systemctl stop fleet`) on one of the machines running our Apache unit. The fleet logs (`sudo journalctl -u fleet`) will provide more clarity on what's going on under the hood.
 
 ## Run a Simple Sidekick
 
