@@ -23,4 +23,4 @@ To download logs, click the "<i class="fa fa-download"></i> Download All Local L
 
 ## Shell script to download logs
 
-The aforementioned operations are also available in script form at <a href="https://github.com/coreos/docs/blob/master/enterprise-registry/log-debugging/gzip-registry-logs.sh">https://github.com/coreos/docs/blob/master/enterprise-registry/log-debugging/gzip-registry-logs.sh</a>
+The aforementioned operations are also available in script form on [GitHub](https://github.com/coreos/docs/blob/master/enterprise-registry/gzip-registry-logs.sh).
