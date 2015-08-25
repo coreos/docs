@@ -137,9 +137,9 @@ managing a large number of git repos easier, from the announcement blog:
 
 [repo-blog]: http://google-opensource.blogspot.com/2008/11/gerrit-and-repo-android-source.html
 
-You can find the full manual for repo by visiting [Version Control with Repo and Git][vc-repo-git].
+You can find the full manual for repo by visiting [android.com - Developing][android-repo-git].
 
-[vc-repo-git]: http://source.android.com/source/version-control.html
+[android-repo-git]: https://source.android.com/source/developing.html
 
 ### Updating repo manifests
 
