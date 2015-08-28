@@ -81,6 +81,7 @@ A cloud-config that specifies an SSH key for the `core` user but doesn't use any
 ```yaml
 #cloud-config
 
+# include one or more SSH public keys
 ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
 ```
@@ -90,10 +91,45 @@ Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced i
 To start the installation script with a reference to our cloud-config file, run:
 
 ```
-coreos-install -d /dev/sda -C beta -c ~/cloud-config.yaml
+coreos-install -d /dev/sda -C stable -c ~/cloud-config.yaml
 ```
 
 [cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
+
+### Advanced Cloud Config Example
+
+This example will configure CoreOS components: etcd2, fleetd and flannel. You have to substitute `%HOST_IP_ADDRESS%` to your host's IP or DNS address.
+
+```yaml
+#cloud-config
+
+# include one or more SSH public keys
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
+coreos:
+  etcd2:
+    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+    # specify the initial size of your cluster with ?size=X
+    discovery: https://discovery.etcd.io/<token>
+    advertise-client-urls: http://%HOST_IP_ADDRESS%:2379,http://%HOST_IP_ADDRESS%:4001
+    initial-advertise-peer-urls: http://%HOST_IP_ADDRESS%:2380
+    # listen on both the official ports and the legacy ports
+    # legacy ports can be omitted if your application doesn't depend on them
+    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
+    listen-peer-urls: http://%HOST_IP_ADDRESS%:2380
+  units:
+    - name: etcd2.service
+      command: start
+    - name: fleet.service
+      command: start
+    - name: flanneld.service
+      command: start
+      drop-ins:
+      - name: 50-network-config.conf
+        content: |
+          [Service]
+          ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{"Network":"10.1.0.0/16", "Backend": {"Type": "vxlan"}}'
+```
 
 ## Manual Tweaks
 

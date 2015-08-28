@@ -271,7 +271,7 @@ First we need to create a security group to allow CoreOS instances to communicat
           </ul>
         </li>
         <li>
-          Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new">https://discovery.etcd.io/new</a> and add it to the metadata. You should re-use this key for each machine in the cluster.
+          Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
         <pre>
 #cloud-config
@@ -350,7 +350,7 @@ coreos:
           </ul>
         </li>
         <li>
-          Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new">https://discovery.etcd.io/new</a> and add it to the metadata. You should re-use this key for each machine in the cluster.
+          Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
         <pre>
 #cloud-config

@@ -50,20 +50,31 @@ coreos:
     listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
     listen-peer-urls: http://$private_ipv4:2380
   fleet:
-      public-ip: $public_ipv4
+    public-ip: $public_ipv4
+  flannel:
+    interface: $public_ipv4
   units:
     - name: etcd2.service
       command: start
     - name: fleet.service
       command: start
+    - name: flanneld.service
+      drop-ins:
+      - name: 50-network-config.conf
+        content: |
+          [Service]
+          ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
+      # Uncomment line above if you want to use flannel in your installation.
+      # command: start
 ```
 
 The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on Vagrant. They will map to the first statically defined private and public networks defined in the Vagrantfile.
 
+There is no need to add an SSH key since Vagrant will automatically generate and use it's own SSH key. Any keys added will be overwritten.
+
 Your Vagrantfile should copy your cloud-config file to `/var/lib/coreos-vagrant/vagrantfile-user-data`. The provided Vagrantfile is already configured to do this. `cloudinit` reads `vagrantfile-user-data` on every boot and uses it to create the machine's user-data file.
 
 If you need to update your cloud-config later on, run `vagrant reload --provision` to reboot your VM and apply the new file.
-
 
 [cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
@@ -187,7 +198,8 @@ The `config.rb.sample` file contains a few useful settings about your Vagrant en
 
 <div id="vagrant-single">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#beta-single" data-toggle="tab">Beta Channel</a></li>
+    <li class="active"><a href="#stable-single" data-toggle="tab">Stable Channel</a></li>
+    <li><a href="#beta-single" data-toggle="tab">Beta Channel</a></li>
     <li><a href="#alpha-single" data-toggle="tab">Alpha Channel</a></li>
   </ul>
   <div class="tab-content coreos-docs-image-table">
@@ -198,12 +210,19 @@ The `config.rb.sample` file contains a few useful settings about your Vagrant en
       <pre># Official CoreOS channel from which updates should be downloaded
 $update_channel='alpha'</pre>
     </div>
-    <div class="tab-pane active" id="beta-single">
+    <div class="tab-pane" id="beta-single">
       <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
       <p>Rename the file to <code>config.rb</code> then uncomment and modify:</p>
       <h4>config.rb</h4>
       <pre># Official CoreOS channel from which updates should be downloaded
 $update_channel='beta'</pre>
+    </div>
+    <div class="tab-pane active" id="stable-single">
+      <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.stable-channel}}.</p>
+      <p>Rename the file to <code>config.rb</code> then uncomment and modify:</p>
+      <h4>config.rb</h4>
+      <pre># Official CoreOS channel from which updates should be downloaded
+$update_channel='stable'</pre>
     </div>
   </div>
 </div>
