@@ -90,7 +90,7 @@ coreos:
         ExecStart=/usr/bin/ip link set eth0 down
         ExecStart=/usr/bin/ip addr flush dev eth0
     - name: systemd-networkd.service
-      command: start
+      command: restart
 ```
 
 ## Turn Off DHCP on specific interface
