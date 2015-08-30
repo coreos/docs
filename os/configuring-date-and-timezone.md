@@ -13,11 +13,11 @@ and time zone.
 
 ```
 $ timedatectl status
-      Local time: Tue 2014-08-26 19:29:12 UTC
-  Universal time: Tue 2014-08-26 19:29:12 UTC
-        RTC time: Tue 2014-08-26 19:29:12
+      Local time: Wed 2015-08-26 19:29:12 UTC
+  Universal time: Wed 2015-08-26 19:29:12 UTC
+        RTC time: Wed 2015-08-26 19:29:12
        Time zone: UTC (UTC, +0000)
-     NTP enabled: no
+ Network time on: no
 NTP synchronized: yes
  RTC in local TZ: no
       DST active: n/a
@@ -56,20 +56,20 @@ Check the changes:
 
 ```
 $ timedatectl
-      Local time: Tue 2014-08-26 15:44:07 EDT
-  Universal time: Tue 2014-08-26 19:44:07 UTC
-        RTC time: Tue 2014-08-26 19:44:07
+      Local time: Wed 2015-08-26 15:44:07 EDT
+  Universal time: Wed 2015-08-26 19:44:07 UTC
+        RTC time: Wed 2015-08-26 19:44:07
        Time zone: America/New_York (EDT, -0400)
-     NTP enabled: no
+ Network time on: no
 NTP synchronized: yes
  RTC in local TZ: no
       DST active: yes
  Last DST change: DST began at
-                  Sun 2014-03-09 01:59:59 EST
-                  Sun 2014-03-09 03:00:00 EDT
+                  Sun 2015-03-08 01:59:59 EST
+                  Sun 2015-03-08 03:00:00 EDT
  Next DST change: DST ends (the clock jumps one hour backwards) at
-                  Sun 2014-11-02 01:59:59 EDT
-                  Sun 2014-11-02 01:00:00 EST
+                  Sun 2015-11-01 01:59:59 EDT
+                  Sun 2015-11-01 01:00:00 EST
 ```
 
 Time zone may instead be set in cloud-config, with something like the following
