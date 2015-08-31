@@ -36,7 +36,7 @@ data and refuse to overwrite it.
 ## Create a RAID-enabled Data Volume ##
 
 In many scenarios, it may be useful to have an external data volume. This
-config will set up a RAID0 btrfs volume, data, between two seperate disks. It
+config will set up a RAID0 ext4 volume, data, between two seperate disks. It
 also writes a mount unit (shown below) which will automatically mount the
 volume to /var/lib/data on boot.
 
@@ -83,7 +83,7 @@ volume to /var/lib/data on boot.
 		"filesystems": [
 			{
 				"device": "/dev/md/data",
-				"format": "btrfs",
+				"format": "ext4",
 				"create": {
 					"options": [
 						"--label=DATA"
@@ -97,7 +97,7 @@ volume to /var/lib/data on boot.
 			{
 				"name": "var-lib-data.mount",
 				"enable": true,
-				"contents": "[Mount]\nWhat=/dev/md/data\nWhere=/var/lib/data\nType=btrfs\n\n[Install]\nWantedBy=local-fs.target"
+				"contents": "[Mount]\nWhat=/dev/md/data\nWhere=/var/lib/data\nType=ext4\n\n[Install]\nWantedBy=local-fs.target"
 			}
 		]
 	}
@@ -110,7 +110,7 @@ volume to /var/lib/data on boot.
 [Mount]
 What=/dev/data
 Where=/var/lib/data
-Type=btrfs
+Type=ext4
 
 [Install]
 WantedBy=local-fs.target
