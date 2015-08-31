@@ -99,9 +99,9 @@ coreos:
 
 Note the declaration of `ConditionPathExists=!/var/lib/docker.btrfs`. Without this line, systemd would reformat the btrfs filesystem every time the machine starts.
 
-## Mounting NFS shares
+## Mounting NFS Exports
 
-This example will show how you can mount NFS share. First of all we will enable rpc-statd for NFS host monitoring. Then we will mount `/var/www` share into local `/var/www` path. Please pay attention on the unit name `var-www.mount` it should correspend to mount path `/var/www`.
+This cloud-config excerpt enables the NFS host monitor [`rpc.statd(8)`](http://linux.die.net/man/8/rpc.statd), then mounts an NFS export onto the CoreOS system's `/var/www`. Mount unit names match the target mount point, with interior slashes replaced by dashes. A unit mounting onto `/var/www` is thus named `var-www.mount`.
 
 ```yaml
 #cloud-config
@@ -119,7 +119,7 @@ coreos:
         Type=nfs
 ```
 
-If you would like to add NFS mount as dependency for certain unit you have to use these options:
+To declare that another service depends on this mount, name the mount unit in the dependent unit's `After` and `Requires` properties:
 
 ```yaml
 [Unit]
@@ -127,8 +127,8 @@ After=var-www.mount
 Requires=var-www.mount
 ```
 
-If the mount point can't be mounted correctly, the dependent unit will not start.
+If the mount fails, dependent units will not start.
 
 ## Further Reading
 
-Read the [full docs](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) to learn about the available options. Examples specific to [EC2]({{site.baseurl}}/docs/running-coreos/cloud-providers/ec2/#instance-storage), [Google Compute Engine]({{site.baseurl}}/docs/running-coreos/cloud-providers/google-compute-engine/#additional-storage) and [Rackspace Cloud]({{site.baseurl}}/docs/running-coreos/cloud-providers/rackspace/#mount-data-disk) can be used as a starting point.
+Check the [`systemd mount` docs](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) to learn about the available options. Examples specific to [EC2]({{site.baseurl}}/docs/running-coreos/cloud-providers/ec2/#instance-storage), [Google Compute Engine]({{site.baseurl}}/docs/running-coreos/cloud-providers/google-compute-engine/#additional-storage) and [Rackspace Cloud]({{site.baseurl}}/docs/running-coreos/cloud-providers/rackspace/#mount-data-disk) can be used as a starting point.
