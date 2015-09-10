@@ -86,4 +86,4 @@ will be kept up-to-date as development progresses.
 Ignition is under active development. Expect to see support for more images in
 the coming months.
 
-[supported platforms]: supported-platforms.md
+[supported platforms]: https://github.com/coreos/ignition/blob/master/doc/supported-platforms.md

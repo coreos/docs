@@ -4,6 +4,38 @@ Each of these examples is written in version 1 of the config. Always double
 check to make sure that your config matches the version that Ignition is
 expecting.
 
+## Starting Services ##
+
+This config will write a single service unit (shown below) with the contents of
+an example service. This unit will be enabled as a dependency of
+multi-user.target and therefore start on boot.
+
+```json
+{
+	"ignitionVersion": 1,
+	"systemd": {
+		"units": [
+			{
+				"name": "example.service",
+				"enable": true,
+				"contents": "[Service]\nType=oneshot\nExecStart=/usr/bin/echo Hello World\n\n[Install]\nWantedBy=multi-user.target"
+			}
+		]
+	}
+}
+```
+
+### example.service ###
+
+```
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/echo Hello World
+
+[Install]
+WantedBy=multi-user.target
+```
+
 ## Reformat the Root Filesystem ##
 
 In many scenarios, it may be preferable to use btrfs for the root filesystem.
