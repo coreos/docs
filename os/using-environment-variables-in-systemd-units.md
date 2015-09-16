@@ -4,7 +4,7 @@
 
 Systemd has Environment directive which sets environment variables for executed processes. It takes a space-separated list of variable assignments. This option may be specified more than once in which case all listed variables will be set. If the same variable is set twice, the later setting will override the earlier setting. If the empty string is assigned to this option, the list of environment variables is reset, all prior assignments have no effect. Environments directives are used in built-in CoreOS systemd units, for example in etcd2 and flannel.
 
-With example below you can configure your etcd2 daemon to use encryption. Just create `run/systemd/system/etcd2.service.d/30-certificates.conf` [drop-in] for etcd2.service:
+With example below you can configure your etcd2 daemon to use encryption. Just create `/etc/systemd/system/etcd2.service.d/30-certificates.conf` [drop-in] for etcd2.service:
 
 ```
 [Service]

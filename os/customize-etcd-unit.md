@@ -6,7 +6,7 @@ The etcd systemd unit can be customized by overriding the unit that ships with t
 
 etcd supports client certificates as a way to provide secure communication between clients &#8596; leader and internal traffic between etcd peers in the cluster. Configuring certificates for both scenarios is done through environment variables. We can use a systemd drop-in unit to augment the unit that ships with CoreOS.
 
-This site has a [good reference for how to generate self-signed key pairs](http://www.g-loaded.eu/2005/11/10/be-your-own-ca/) or you could use [etcd-ca](https://github.com/coreos/etcd-ca) to generate certs and keys. 
+Please follow the [instruction](generate-self-signed-certificates.md) to know how to create self-signed certificates and private keys.
 
 We need to create our drop-in unit in `/etc/systemd/system/etcd.service.d/`. If you run `systemctl status etcd2` you can see that CoreOS is already generating a few drop-in units for etcd as part of the OEM and cloudinit processes. To ensure that our drop-in runs after these, we name it `30-certificates.conf` and place them in `/etc/systemd/system/etcd2.service.d/`.
 
