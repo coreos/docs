@@ -12,7 +12,7 @@ When creating a service, one or more **ports** can be configured. A common examp
 
 A core design feature of Kubernetes is a routable IP address for every service and pod in the cluster. Assigning IPs this way eliminates port conflicts between applications across the cluster. This allows any application team to bind to any port they require instead of reconfiguring databases or web servers to listen on non-standard ports.
 
-Google learned this lession the hard way over their decade of experience deploying this type of infrastructure and Kubernetes empowers you to avoid these mistakes before years of cruft, complexity and technical debt build up.
+Google learned this lesson the hard way over their decade of experience deploying this type of infrastructure. Kubernetes empowers you to avoid these mistakes before years of cruft, complexity and technical debt build up.
 
 While this design decision complicates the networking configuraton slightly, your operations team can set up and configure [flannel][flannel], which is an open-source project designed by CoreOS to enable this type of routing for Kubernetes.
 
@@ -95,7 +95,7 @@ During a deployment, new pods will be launched, running the updated version of y
 
 Modifying this label query to be broad or specific is a flexible mechanism to point traffic towards a specific version of your application, either old or new, or send traffic to both at the same time.
 
-Using a label query to select the pods that receive traffic is another Google design choice that comes their container deployment experience. Maintaining a query to select pods prevents a brittle registration and removal process. Instead, pods matching the query can be constantly updated safely in an infinite loop.
+Using a label query to select the pods that receive traffic is another Google design choice that comes from their container deployment experience. Maintaining a query to select pods prevents a brittle registration and removal process. Instead, pods matching the query can be constantly updated safely in an infinite loop.
 
 Mentally compare the experience of updating a label query versus obtaining a static list of all application instances, sub-selecting the ones you care about, inspecting them to figure out if they are still valid and finally updating the load balancer with that list. 
 

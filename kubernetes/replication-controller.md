@@ -10,7 +10,7 @@ Each replication controller has a **desired state** that is managed by the appli
 
 In Kubernetes, the base unit of deployment is a **pod** ([intro to pods][pod-overview]), which is a group of containers that work together and therefore are logically grouped. The replication controller stores a **pod template** in order to create new pods if needed.
 
-Like all Kubernetes features, the replication controller makes use of label queries to inspect only the pods that it is responsible for. For example, a "frontend webapp" replication controller might be responsible for all pods matching the labels `app=myapp` and `role=frontend`. The pod template should contain these labels in order for the replication controller to manage the pods that it creates.
+Like all Kubernetes features, the replication controller makes use of label queries to inspect only the pods that it is responsible for. For example, a "frontend webapp" replication controller might be responsible for all pods matching the labels `app=webapp` and `role=frontend`. The pod template should contain these labels in order for the replication controller to manage the pods that it creates.
 
 <img src="img/controller.svg" alt="Kubernetes Replication Controller and Labels" class="img-center" />
 
@@ -49,11 +49,11 @@ Both of the examples below reference another Kubernetes feature: services. Be su
   <img src="img/rolling-deploy.svg" alt="Kubernetes Rolling Deployment" />
 </a>
 
-To execute a rolling deployment without downtime you need three Kubernetes objects: a service and two replication controllers, one for version A and one for version B.
+To execute a rolling deployment without downtime you need three Kubernetes objects: a service and two replication controllers, one for version 1 and one for version 2.
 
 The service should be configured with a fairly broad label query that will match pods created by both replication controllers, such as `app=webapp, env=prod`. Each replication controller could optionally set additional labels such as `version=X`.
 
-The rate of the deployment is controlled by the speed at which the desired count of the version A replication controller is turned down, and version B is turned up. This process could be executed manually, or more sophisticated software could be written to monitor error rates and other metrics to influence the process or halt it altogether.
+The rate of the deployment is controlled by the speed at which the desired count of the version 1 replication controller is turned down, and version 2 is turned up. This process could be executed manually, or more sophisticated software could be written to monitor error rates and other metrics to influence the process or halt it altogether.
 
 ### Traffic Shift
 
@@ -63,11 +63,11 @@ The rate of the deployment is controlled by the speed at which the desired count
 
 If your application requires all traffic to shift to the new version at the same time, a similar method can be used as above. The same three Kubernetes objects are used, but the sequence of events is different. 
 
-First, the service has a more specific label query that includes the version of the software running, such as `app=webapp, env=prod, version=A`. Instead of modifying the desired count of each replication controller, the version B controller is configured to support the same amount of load as version A.
+First, the service has a more specific label query that includes the version of the software running, such as `app=webapp, env=prod, version=1`. Instead of modifying the desired count of each replication controller, the version 2 controller is configured to support the same amount of load as version 1.
 
-After all of the pods are started (and warmed if needed), the label query of the service is modifed to include version B instead of version A. All traffic has now been shifted towards the new version.
+After all of the pods are started (and warmed if needed), the label query of the service is modifed to include version 2 instead of version 1. All traffic has now been shifted towards the new version.
 
-An advantage of this strategy is that failing back to the old version is a simple label query modification. The elegance and flexibility of Kubernetes labels shows here. Once version B is confirmed to be stable, the old replication controller and pods can be terminated.
+An advantage of this strategy is that failing back to the old version is a simple label query modification. The elegance and flexibility of Kubernetes labels shows here. Once version 2 is confirmed to be stable, the old replication controller and pods can be terminated.
 
 ## The Reconciliation Loop in Detail
 
