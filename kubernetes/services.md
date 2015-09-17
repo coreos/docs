@@ -12,7 +12,7 @@ When creating a service, one or more **ports** can be configured. A common examp
 
 A core design feature of Kubernetes is a routable IP address for every service and pod in the cluster. Assigning IPs this way eliminates port conflicts between applications across the cluster. This allows any application team to bind to any port they require instead of reconfiguring databases or web servers to listen on non-standard ports.
 
-Google learned this lession the hard way over their decade of experience deploying this type of infrastructure and Kubernetes empowers you to avoid these mistakes before years of cruft, complexity and technical debt build up.
+Google learned this lesson the hard way over their decade of experience deploying this type of infrastructure. Kubernetes empowers you to avoid these mistakes before years of cruft, complexity and technical debt build up.
 
 While this design decision complicates the networking configuraton slightly, your operations team can set up and configure [flannel][flannel], which is an open-source project designed by CoreOS to enable this type of routing for Kubernetes.
 
