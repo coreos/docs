@@ -95,7 +95,7 @@ During a deployment, new pods will be launched, running the updated version of y
 
 Modifying this label query to be broad or specific is a flexible mechanism to point traffic towards a specific version of your application, either old or new, or send traffic to both at the same time.
 
-Using a label query to select the pods that receive traffic is another Google design choice that comes their container deployment experience. Maintaining a query to select pods prevents a brittle registration and removal process. Instead, pods matching the query can be constantly updated safely in an infinite loop.
+Using a label query to select the pods that receive traffic is another Google design choice that comes from their container deployment experience. Maintaining a query to select pods prevents a brittle registration and removal process. Instead, pods matching the query can be constantly updated safely in an infinite loop.
 
 Mentally compare the experience of updating a label query versus obtaining a static list of all application instances, sub-selecting the ones you care about, inspecting them to figure out if they are still valid and finally updating the load balancer with that list. 
 
