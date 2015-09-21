@@ -108,7 +108,7 @@ You should now see it in the list of apps:
 ```
 $updateservicectl app list
 Id                                    Label     Description
-e96281a6-d1af-4bde-9a0a-97b76e56dc56  FakeApp   Fake app for testing
+e96281a6-d1af-4bde-9a0a-97b76e56dc57  FakeApp   Fake app for testing
 f217d8ba-76e6-4b07-8136-049c54b30f21  CoreOS    Linux for Servers
 ```
 
