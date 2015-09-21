@@ -18,7 +18,7 @@ Hello
 ```
 
 ```
-$ curl -L -X PUT http://127.0.0.1:4001/v2/keys/message -d value="Hello"
+$ curl -L -X PUT http://127.0.0.1:2379/v2/keys/message -d value="Hello"
 {"action":"set","node":{"key":"/message","value":"Hello","modifiedIndex":4,"createdIndex":4}}
 ```
 
@@ -30,7 +30,7 @@ Hello
 ```
 
 ```sh
-$ curl -L http://127.0.0.1:4001/v2/keys/message
+$ curl -L http://127.0.0.1:2379/v2/keys/message
 {"action":"get","node":{"key":"/message","value":"Hello","modifiedIndex":4,"createdIndex":4}}
 ```
 
@@ -44,7 +44,7 @@ $ etcdctl rm /message
 ```
 
 ```sh
-$ curl -L -X DELETE http://127.0.0.1:4001/v2/keys/message
+$ curl -L -X DELETE http://127.0.0.1:2379/v2/keys/message
 {"action":"delete","node":{"key":"/message","modifiedIndex":19,"createdIndex":4}}
 ```
 
@@ -55,14 +55,14 @@ To read and write to etcd from *within a container* you must use the IP address 
 To read from etcd, replace `127.0.0.1` when running `curl` in the container:
 
 ```
-$ curl -L http://172.17.42.1:4001/v2/keys/
+$ curl -L http://172.17.42.1:2379/v2/keys/
 {"action":"get","node":{"key":"/","dir":true,"nodes":[{"key":"/coreos.com","dir":true,"modifiedIndex":4,"createdIndex":4}]}}
 ```
 
 You can also fetch the `docker0` IP programmatically:
 
 ```
-ETCD_ENDPOINT="$(ifconfig docker0 | awk '/\<inet\>/ { print $2}'):4001"
+ETCD_ENDPOINT="$(ifconfig docker0 | awk '/\<inet\>/ { print $2}'):2379"
 ```
 
 ## Proxy Example
@@ -81,7 +81,7 @@ localhost:1111
 ```
 
 ```sh
-$ curl -L -X PUT http://127.0.0.1:4001/v2/keys/foo-service/container1 -d value="localhost:1111"
+$ curl -L -X PUT http://127.0.0.1:2379/v2/keys/foo-service/container1 -d value="localhost:1111"
 {"action":"set","node":{"key":"/foo-service/container1","value":"localhost:1111","modifiedIndex":17,"createdIndex":17}}
 ```
 
@@ -93,7 +93,7 @@ $ etcdctl ls /foo-service
 ```
 
 ```sh
-$ curl -L http://127.0.0.1:4001/v2/keys/foo-service
+$ curl -L http://127.0.0.1:2379/v2/keys/foo-service
 {"action":"get","node":{"key":"/foo-service","dir":true,"nodes":[{"key":"/foo-service/container1","value":"localhost:1111","modifiedIndex":17,"createdIndex":17}],"modifiedIndex":17,"createdIndex":17}}
 ```
 
@@ -107,7 +107,7 @@ $ etcdctl watch --recursive /foo-service
 ```
 
 ```sh
-$ curl -L http://127.0.0.1:4001/v2/keys/foo-service?wait=true\&recursive=true
+$ curl -L http://127.0.0.1:2379/v2/keys/foo-service?wait=true\&recursive=true
 
 ```
 
@@ -119,7 +119,7 @@ localhost:2222
 ```
 
 ```sh
-$ curl -L -X PUT http://127.0.0.1:4001/v2/keys/foo-service/container2 -d value="localhost:2222"
+$ curl -L -X PUT http://127.0.0.1:2379/v2/keys/foo-service/container2 -d value="localhost:2222"
 {"action":"set","node":{"key":"/foo-service/container2","value":"localhost:2222","modifiedIndex":23,"createdIndex":23}}
 ```
 
@@ -131,7 +131,7 @@ localhost:2222
 ```
 
 ```sh
-$ curl -L http://127.0.0.1:4001/v2/keys/foo-service?wait=true\&recursive=true
+$ curl -L http://127.0.0.1:2379/v2/keys/foo-service?wait=true\&recursive=true
 {"action":"set","node":{"key":"/foo-service/container2","value":"localhost:2222","modifiedIndex":23,"createdIndex":23}}
 ```
 
@@ -168,7 +168,7 @@ Hi
 ```
 
 ```sh
-$ curl -L -X PUT http://127.0.0.1:4001/v2/keys/message?prevValue=Hello -d value=Hi
+$ curl -L -X PUT http://127.0.0.1:2379/v2/keys/message?prevValue=Hello -d value=Hi
 {"action":"compareAndSwap","node":{"key":"/message","value":"Hi","modifiedIndex":28,"createdIndex":27}}
 ```
 
@@ -184,7 +184,7 @@ Expiring Soon
 The `curl` response will contain an absolute timestamp of when the key will expire and a relative number of seconds until that timestamp:
 
 ```sh
-$ curl -L -X PUT http://127.0.0.1:4001/v2/keys/foo?ttl=20 -d value=bar
+$ curl -L -X PUT http://127.0.0.1:2379/v2/keys/foo?ttl=20 -d value=bar
 {"action":"set","node":{"key":"/foo","value":"bar","expiration":"2014-02-10T19:54:49.357382223Z","ttl":20,"modifiedIndex":31,"createdIndex":31}}
 ```
 
@@ -196,7 +196,7 @@ Error: 100: Key not found (/foo) [32]
 ```
 
 ```sh
-$ curl -L http://127.0.0.1:4001/v2/keys/foo
+$ curl -L http://127.0.0.1:2379/v2/keys/foo
 {"errorCode":100,"message":"Key not found","cause":"/foo","index":32}
 ```
 
