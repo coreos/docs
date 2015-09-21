@@ -75,6 +75,27 @@ Synchronize all of the required git repos from the manifest.
 repo sync
 ```
 
+### Registering QEMU for cross-compiled builds
+
+Currently the tool that generates our initramfs, dracut, assumes it is
+running on the target system. For cross-compiled builds this is not true
+so QEMU's user mode emulation is used to fake it. If your dev system uses
+systemd write the following to `/etc/binfmt.d/qemu-aarch64.conf`:
+
+```
+:qemu-aarch64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff:/usr/bin/qemu-aarch64-static:
+```
+
+And run:
+
+```sh
+systemctl restart systemd-binfmt.service
+```
+
+The qemu binary, `/usr/bin/qemu-aarch64-static` is not expected to be on
+your host system. It will be inside the `arm64-usr` build root that is
+entered via chroot prior to running dracut.
+
 ### Building an image
 
 Download and enter the SDK chroot which contains all of the compilers and
@@ -100,14 +121,31 @@ Setup a board root filesystem for the amd64-usr target in /build/amd64-usr:
 ./setup_board --default --board=amd64-usr
 ```
 
+Similarly, use `arm64-usr` for the cross-compiled ARM target. If you switch
+between different targets in a single SDK you can add the `--board=` option
+to `build_packages`, `build_image`, and so on to select either target.
+
 Build all of the target binary packages:
 
 ```sh
 ./build_packages
 ```
 
-Build an image based on the built binary packages along with the developer
-overlay:
+An extra step is required before building `arm64-usr` images. We need to
+build GRUB for `arm64` but this isn't handled automatically yet. Just write
+the following to `/etc/portage/package.use/grub`:
+
+```
+sys-boot/grub grub_platforms_arm64
+```
+
+And run:
+
+```sh
+sudo emerge -v grub
+```
+
+Build an image based on the built binary packages, including development tools:
 
 ```sh
 ./build_image dev
