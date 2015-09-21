@@ -20,9 +20,9 @@ While this design decision complicates the networking configuraton slightly, you
   <img src="img/service.svg" alt="Kubernetes Service" class="img-center" />
 </a>
 
-Here's the YAML representation of the frontend service:
+Here's the JSON representation of the frontend service:
 
-```yaml
+```json
 {
     "kind": "Service",
     "apiVersion": "v1",
