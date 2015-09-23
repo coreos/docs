@@ -14,7 +14,7 @@ To place a CoreOS machine in one of these groups, you must configure the update 
 
 ### Join Preconfigured Group
 
-Set the value of `server` to the custom address of your installation and `group` to one of the default application groups: `alpha`, `beta`, or `stable`.
+Set the value of `server` to the custom address of your installation and append "/v1/update/". Set `group` to one of the default application groups: `alpha`, `beta`, or `stable`.
 
 For example, here is what the Alpha group looks like in CoreUpdate:
 
@@ -33,7 +33,7 @@ coreos:
 
 ### Join Custom Group
 
-Set the value of `server` to the custom address of your installation and `group` to the unique identifier of your application group.
+Set the value of `server` to the custom address of your installation and append "/v1/update/". Set `group` to the unique identifier of your application group.
 
 For example, here is what "NYC Production" looks like in CoreUpdate:
 
