@@ -6,7 +6,7 @@ For these purposes you have to use Certificate Authority (CA), private keys and 
 
 Let's use [cfssl][cfssl] and walk through the whole process to create all these components.
 
-*NOTE:* We will use basic procedure here. If your configuration requires advanced security options, please refer to official [cfssl][cfssl] documentation.
+**NOTE:** We will use basic procedure here. If your configuration requires advanced security options, please refer to official [cfssl][cfssl] documentation.
 
 ## Download cfssl
 
@@ -56,6 +56,7 @@ For compliance let's rename **www** profile into **server**, create additional *
         },
         "profiles": {
             "server": {
+                "expiry": "43800h",
                 "usages": [
                     "signing",
                     "key encipherment",
@@ -63,6 +64,7 @@ For compliance let's rename **www** profile into **server**, create additional *
                 ]
             },
             "client": {
+                "expiry": "43800h",
                 "usages": [
                     "signing",
                     "key encipherment",
@@ -70,6 +72,7 @@ For compliance let's rename **www** profile into **server**, create additional *
                 ]
             },
             "client-server": {
+                "expiry": "43800h",
                 "usages": [
                     "signing",
                     "key encipherment",
@@ -110,12 +113,6 @@ And generate CA with defined options:
 cfssl gencert -initca ca-csr.json | cfssljson -bare ca -
 ```
 
-Or generate CA with **default** options:
-
-```sh
-cfssl print-defaults csr | cfssl gencert -initca - | cfssljson -bare ca -
-``` 
-
 You'll get following files:
 
 ```
@@ -124,8 +121,8 @@ ca.csr
 ca.pem
 ```
 
-* Please keep `ca-key.pem` file in safe, i.e. on your local host. This key allows to create any kind of certificates within your CA.
-* **\*.csr** files are not used and you can delete them.
+* Please keep `ca-key.pem` file in safe. This key allows to create any kind of certificates within your CA.
+* **\*.csr** files are not used in our example.
 
 ### Generate server certificate
 
@@ -147,13 +144,13 @@ Most important values for server certificate are **Common Name (CN)** and **host
 ...
 ```
 
-Now we are ready to generate server certificate and provate key:
+Now we are ready to generate server certificate and private key:
 
 ```sh
 cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=server server.json | cfssljson -bare server
 ```
 
-Or without config file:
+Or without CSR json file:
 
 ```sh
 echo '{"CN":"coreos1","hosts":[""],"key":{"algo":"rsa","size":2048}}' | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=server -hostname="192.168.122.68,ext.example.com,coreos1.local,coreos1" - | cfssljson -bare server
@@ -193,7 +190,7 @@ Now we are ready to generate member1 certificate and private key:
 cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=client-server member1.json | cfssljson -bare member1
 ```
 
-Or without config file:
+Or without CSR json file:
 
 ```sh
 echo '{"CN":"member1","hosts":[""],"key":{"algo":"rsa","size":2048}}' | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=client-server -hostname="192.168.122.101,ext.example.com,member1.local,member1" - | cfssljson -bare member1
@@ -230,7 +227,7 @@ Generate client certificate:
 cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=client client.json | cfssljson -bare client
 ```
 
-Or without config file:
+Or without CSR json file:
 
 ```sh
 echo '{"CN":"client","hosts":[""],"key":{"algo":"rsa","size":2048}}' | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=client - | cfssljson -bare client
@@ -286,9 +283,9 @@ openssl x509 -in client.pem -text -noout
 
 ### Things to know
 
-* Don't put your `ca-key.pem` into cloud-config, it is better to keep it on your local host. This key allows to generate as much certificates as possible.
+* Don't put your `ca-key.pem` into cloud-config, it is recommended to store it in safe place. This key allows to generate as much certificates as possible.
 * Keep **key** files in safe. Don't forget to set proper file permissions, i.e. `chmod 0600 server-key.pem`.
-* These certificates has both `server auth` and `client auth` X509 V3 extensions and you can use them with servers and clients' authintication.
+* Certificates in this **TLDR** example have both `server auth` and `client auth` X509 V3 extensions and you can use them with servers and clients' authintication.
 * You are free to generate keys and certificates for wildcard `*` address as well. They will work on any machine. It will simplify certificates routine but increase security risks.
 
 [cfssl]: https://github.com/cloudflare/cfssl
