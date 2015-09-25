@@ -61,6 +61,32 @@ coreos:
         Gateway=10.0.0.1
 ```
 
+### networkd and bond0
+
+By default, the kernel creates a `bond0` network device as soon as the `bonding` module is loaded.
+The device is created with default bonding options, such as "round-robin" mode.
+This leads to confusing behavior with `systemd-networkd` since
+networkd does not alter options of an existing network device.
+
+You have two options:
+
+* Name your bond something other than `bond0`, or
+* Prevent the kernel from automatically creating `bond0`.
+
+To defer creating `bond0`, add to your cloud-config
+before any other network configuration:
+
+```yaml
+#cloud-config
+
+write_files:
+  - path: /etc/modprobe.d/bonding.conf
+    content: |
+      # Prevent kernel from automatically creating bond0 when the module is loaded.
+      # This allows systemd-networkd to create and apply options to bond0.
+      options bonding max_bonds=0
+```
+
 ### networkd and DHCP behavior
 
 By default, even if you've already set a static IP address and you have a working DHCP server in your network, systemd-networkd will nevertheless assign IP address using DHCP. If you would like to remove this address, you have to use the following cloud-config example:
