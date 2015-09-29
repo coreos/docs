@@ -22,9 +22,9 @@ It's important to note that [systemd requires](http://www.freedesktop.org/softwa
 
 ## Use Attached Storage for Docker
 
-Docker containers can be very large and debugging a build process makes it easy to accumulate hundreds of containers. It's advantageous to use attached storage to expand your capacity for container images. Be aware that some cloud providers treat certain disks as ephemeral and you will lose all docker images contained on that disk.
+Docker containers can be very large and debugging a build process makes it easy to accumulate hundreds of containers. It's advantageous to use attached storage to expand your capacity for container images. Be aware that some cloud providers treat certain disks as ephemeral and you will lose all Docker images contained on that disk.
 
-We're going to mount a btrfs device to `/var/lib/docker`, where docker stores images. We can do this on the fly when the machines starts up with a oneshot unit that formats the drive and another one that runs afterwards to mount it. Be sure to hardcode the correct device or look for a device by label:
+We're going to mount a btrfs device to `/var/lib/docker`, where Docker stores images. We can do this on the fly when the machines starts up with a oneshot unit that formats the drive and another one that runs afterwards to mount it. Be sure to hardcode the correct device or look for a device by label:
 
 ```yaml
 #cloud-config
@@ -64,7 +64,7 @@ CoreOS [561.0.0](https://coreos.com/releases/#561.0.0) and later are installed w
 Installations from prior to this, are using btrfs for this functionality.
 If you'd like to continue using btrfs on newer CoreOS machines, you can do so with two systemd units: one that creates and formats a btrfs volume file and another that mounts it.
 
-In this example, we are going to mount a new 25GB btrfs volume file to `/var/lib/docker`, and one can verify that docker is using the btrfs storage driver once the docker service has started by executing `sudo docker info`.
+In this example, we are going to mount a new 25GB btrfs volume file to `/var/lib/docker`, and one can verify that Docker is using the btrfs storage driver once the Docker service has started by executing `sudo docker info`.
 We recommend allocating **no more than 85%** of the available disk space for a btrfs filesystem as journald will also require space on the host filesystem.
 
 ```yaml

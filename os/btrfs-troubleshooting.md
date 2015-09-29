@@ -27,7 +27,7 @@ When the filesystem is out of chunks to write data into, `No space left on devic
 
 The common reaction to this error is to run `df -h` and you'll see that there is still some free space. That command isn't measuring the btrfs primitives (chunks, metadata, etc), which is what really matters.
 
-Running `sudo btrfs fi show` will give you the btrfs view of how much free space you have. When starting/stopping many docker containers or doing a large amount of random writes, chunks will become duplicated in an inefficient manner over time.
+Running `sudo btrfs fi show` will give you the btrfs view of how much free space you have. When starting/stopping many Docker containers or doing a large amount of random writes, chunks will become duplicated in an inefficient manner over time.
 
 Re-balancing the filesystem ([official btrfs docs](https://btrfs.wiki.kernel.org/index.php/Balance_Filters)) will relocate data from empty or near-empty chunks to free up space. This operation can be done without downtime.
 
@@ -91,7 +91,7 @@ $ sudo mkdir /var/lib/mysql
 $ sudo chattr -R +C /var/lib/mysql
 ```
 
-The directory `/var/lib/mysql` is now ready to be used by a docker container without COW. Let's break down the command:
+The directory `/var/lib/mysql` is now ready to be used by a Docker container without COW. Let's break down the command:
 
 `-R` indicates that want to recursively change the file attribute
 `+C` means we want to set the NOCOW attribute on the file/directory

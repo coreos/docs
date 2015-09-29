@@ -16,7 +16,7 @@ CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/u
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing.
+        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">Docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing.
         {% if site.data.alpha-channel.rackspace-version != site.data.alpha-channel.rackspace-onmetal-version %}
           Current version for Cloud Servers is CoreOS {{site.data.alpha-channel.rackspace-version}} and the current version for OnMetal servers is {{site.data.alpha-channel.rackspace-onmetal-version}}.
         {% elsif site.data.alpha-channel.rackspace-version == site.data.alpha-channel.rackspace-onmetal-version %}

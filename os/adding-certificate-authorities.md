@@ -4,7 +4,7 @@ CoreOS supports custom Certificate Authorities (CAs) in addition to the default 
 
 - Use a corporate wildcard certificate
 - Use your own CA to communicate with an installation of CoreUpdate
-- Use your own CA to communicate with a private docker registry
+- Use your own CA to communicate with a private Docker registry
 
 The setup process for any of these use-cases is the same:
 

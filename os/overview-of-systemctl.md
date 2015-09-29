@@ -1,10 +1,10 @@
 # Overview of systemctl
 
-`systemctl` is your interface to systemd, the init system used in CoreOS. All processes on a single machine are started and managed by systemd, including your docker containers. You can learn more in our [Getting Started with systemd]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd) guide. Let's explore a few helpful `systemctl` commands. You must run all of these commands locally on the CoreOS machine:
+`systemctl` is your interface to systemd, the init system used in CoreOS. All processes on a single machine are started and managed by systemd, including your Docker containers. You can learn more in our [Getting Started with systemd]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd) guide. Let's explore a few helpful `systemctl` commands. You must run all of these commands locally on the CoreOS machine:
 
 ## Find the Status of a Container
 
-The first step to troubleshooting with `systemctl` is to find the status of the item in question. If you have multiple `Exec` commands in your service file, you can see which one of them is failing and view the exit code. Here's a failing service that starts a private docker registry in a container:
+The first step to troubleshooting with `systemctl` is to find the status of the item in question. If you have multiple `Exec` commands in your service file, you can see which one of them is failing and view the exit code. Here's a failing service that starts a private Docker registry in a container:
 
 ```sh
 $ sudo systemctl status custom-registry.service

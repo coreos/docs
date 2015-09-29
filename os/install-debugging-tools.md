@@ -1,10 +1,10 @@
 # Install Debugging Tools
 
-You can use common debugging tools like tcpdump or strace with Toolbox. Using the filesystem of a specified docker container Toolbox will launch a container with full system privileges including access to system PIDs, network interfaces and other global information. Inside of the toolbox, the machine's filesystem is mounted to `/media/root`.
+You can use common debugging tools like tcpdump or strace with Toolbox. Using the filesystem of a specified Docker container Toolbox will launch a container with full system privileges including access to system PIDs, network interfaces and other global information. Inside of the toolbox, the machine's filesystem is mounted to `/media/root`.
 
 ## Quick Debugging
 
-By default, Toolbox uses the stock Fedora docker container. To start using it, simply run:
+By default, Toolbox uses the stock Fedora Docker container. To start using it, simply run:
 
 ```sh
 /usr/bin/toolbox
@@ -21,7 +21,7 @@ listening on ens3, link-type EN10MB (Ethernet), capture size 65535 bytes
 
 ### Specify a Custom Docker Image
 
-Create a `.toolboxrc` in the user's home folder to use a specific docker image:
+Create a `.toolboxrc` in the user's home folder to use a specific Docker image:
 
 ```sh
 $ cat .toolboxrc

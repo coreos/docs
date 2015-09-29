@@ -1,10 +1,10 @@
-# Customizing docker
+# Customizing Docker
 
-The docker systemd unit can be customized by overriding the unit that ships with the default CoreOS settings. Common use-cases for doing this are covered below.
+The Docker systemd unit can be customized by overriding the unit that ships with the default CoreOS settings. Common use-cases for doing this are covered below.
 
 ## Enable the Remote API on a New Socket
 
-Create a file called `/etc/systemd/system/docker-tcp.socket` to make docker available on a TCP socket on port 2375.
+Create a file called `/etc/systemd/system/docker-tcp.socket` to make Docker available on a TCP socket on port 2375.
 
 ```ini
 [Unit]
@@ -186,7 +186,7 @@ coreos:
 
 Docker containers can be very large and debugging a build process makes it easy to accumulate hundreds of containers. It's advantageous to use attached storage to expand your capacity for container images. Check out the guide to [mounting storage to your CoreOS machine]({{site.baseurl}}/docs/cluster-management/setup/mounting-storage/#use-attached-storage-for-docker) for an example of how to bind mount storage into `/var/lib/docker`.
 
-## Enabling the docker Debug Flag
+## Enabling the Docker Debug Flag
 
 First, copy the existing unit from the read-only file system into the read/write file system, so we can edit it:
 
@@ -200,14 +200,14 @@ Edit the `ExecStart` line to add the -D flag:
 ExecStart=/usr/bin/docker -d -s=btrfs -r=false -H fd:// -D
 ```
 
-Now lets tell systemd about the new unit and restart docker:
+Now lets tell systemd about the new unit and restart Docker:
 
 ```sh
 systemctl daemon-reload
 systemctl restart docker
 ```
 
-To test our debugging stream, run a docker command and then read the systemd journal, which should contain the output:
+To test our debugging stream, run a Docker command and then read the systemd journal, which should contain the output:
 
 ```sh
 docker ps
@@ -242,7 +242,7 @@ coreos:
 
 ## Use an HTTP Proxy
 
-If you're operating in a locked down networking environment, you can specify an HTTP proxy for docker to use via an environment variable. First, create a directory for drop-in configuration for docker:
+If you're operating in a locked down networking environment, you can specify an HTTP proxy for Docker to use via an environment variable. First, create a directory for drop-in configuration for Docker:
 
 ```sh
 mkdir /etc/systemd/system/docker.service.d
@@ -255,7 +255,7 @@ Now, create a file called `/etc/systemd/system/docker.service.d/http-proxy.conf`
 Environment="HTTP_PROXY=http://proxy.example.com:8080"
 ```
 
-To apply the change, reload the unit and restart docker:
+To apply the change, reload the unit and restart Docker:
 
 ```sh
 systemctl daemon-reload
@@ -282,7 +282,7 @@ coreos:
 
 ## Increase ulimits
 
-If you need to increase certain ulimits that are too low for your application by default, like memlock, you will need to modify the docker service to increase the limit. First, create a directory for drop-in configuration for docker:
+If you need to increase certain ulimits that are too low for your application by default, like memlock, you will need to modify the Docker service to increase the limit. First, create a directory for drop-in configuration for Docker:
 
 ```sh
 mkdir /etc/systemd/system/docker.service.d
@@ -295,7 +295,7 @@ Now, create a file called `/etc/systemd/system/docker.service.d/increase-ulimit.
 LimitMEMLOCK=infinity
 ```
 
-To apply the change, reload the unit and restart docker:
+To apply the change, reload the unit and restart Docker:
 
 ```sh
 systemctl daemon-reload
@@ -326,6 +326,6 @@ coreos:
 
 ## Using a dockercfg File for Authentication
 
-A json file `.dockercfg` can be created in your home directory that holds authentication information for a public or private docker registry.
+A json file `.dockercfg` can be created in your home directory that holds authentication information for a public or private Docker registry.
 
 Read more about [registry authentication]({{site.baseurl}}/docs/launching-containers/building/registry-authentication).
