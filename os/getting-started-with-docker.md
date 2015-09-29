@@ -10,7 +10,7 @@ Docker has a [straightforward CLI](http://docs.docker.io/en/latest/reference/com
 
 ## Launching a Container
 
-Launching a container is simple as `docker run` + the image name you would like to run + the command to run within the container. If the image doesn't exist on your local machine, docker will attempt to fetch it from the public image registry. Later we'll explore how to use docker with a private registry. It's important to note that containers are designed to stop once the command executed within them has exited. For example, if you ran `/bin/echo hello world` as your command, the container will start, print hello world and then stop:
+Launching a container is simple as `docker run` + the image name you would like to run + the command to run within the container. If the image doesn't exist on your local machine, Docker will attempt to fetch it from the public image registry. Later we'll explore how to use Docker with a private registry. It's important to note that containers are designed to stop once the command executed within them has exited. For example, if you ran `/bin/echo hello world` as your command, the container will start, print hello world and then stop:
 
 ```sh
 docker run ubuntu /bin/echo hello world
@@ -50,7 +50,7 @@ Now we have our Ubuntu container with Apache running in one shell and an image o
 docker run [options] [image] [process]
 ```
 
-The first step is to tell docker that we want to run our `coreos/apache` image:
+The first step is to tell Docker that we want to run our `coreos/apache` image:
 
 ```sh
 docker run [options] coreos/apache [process]
@@ -58,7 +58,7 @@ docker run [options] coreos/apache [process]
 
 ### Run Container Detached
 
-When running docker containers manually, the most important option is to run the container in detached mode with the `-d` flag. This will output the container ID to show that the command was successful, but nothing else. At any time you can run `docker ps` in the other shell to view a list of the running containers. Our command now looks like:
+When running Docker containers manually, the most important option is to run the container in detached mode with the `-d` flag. This will output the container ID to show that the command was successful, but nothing else. At any time you can run `docker ps` in the other shell to view a list of the running containers. Our command now looks like:
 
 ```sh
 docker run -d coreos/apache [process]
@@ -100,7 +100,7 @@ You can now run this command on your CoreOS host to create the container. You sh
 
 ## Using the Docker Registry
 
-Earlier we downloaded the ubuntu image remotely from the docker public registry because it didn't exist on our local machine. We can also push local images to the public registry (or a private registry) very easily with the `push` command:
+Earlier we downloaded the ubuntu image remotely from the Docker public registry because it didn't exist on our local machine. We can also push local images to the public registry (or a private registry) very easily with the `push` command:
 
 ```sh
 docker push coreos/apache

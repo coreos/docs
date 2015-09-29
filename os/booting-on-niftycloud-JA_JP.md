@@ -48,7 +48,7 @@ CoreOSはチャンネル毎に別のスケジュールで[自動アップデー�
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha">
-      <p>AlphaチャンネルはMasterをぴったりと追っていて、頻繁にリリースされます。テストのために最新の<a href="{{site.baseurl}}/using-coreos/docker">docker</a>、<a href="{{site.baseurl}}/using-coreos/etcd">etcd</a>、<a href="{{site.baseurl}}/using-coreos/clustering">fleet</a>の利用が可能です。現在のバージョンはCoreOS {{site.alpha-channel}}です。</p>
+      <p>AlphaチャンネルはMasterをぴったりと追っていて、頻繁にリリースされます。テストのために最新の<a href="{{site.baseurl}}/using-coreos/docker">Docker</a>、<a href="{{site.baseurl}}/using-coreos/etcd">etcd</a>、<a href="{{site.baseurl}}/using-coreos/clustering">fleet</a>の利用が可能です。現在のバージョンはCoreOS {{site.alpha-channel}}です。</p>
       <p><code>$ZONE</code>, <code>$TYPE</code>, <code>$FW_ID</code> and <code>$SSH_KEY_ID</code>を指定し、ニフティクラウドCLIで立ち上げます。</p>
       <pre>nifty-run-instances $(nifty-describe-images --delimiter ',' --image-name "CoreOS Alpha {{site.alpha-channel}}" | awk -F',' '{print $2}') --key $SSH_KEY_ID --availability-zone $ZONE --instance-type $TYPE -g $FW_ID -f cloud-config.yml -q POST</pre>
     </div>

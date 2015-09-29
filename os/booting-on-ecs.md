@@ -2,7 +2,7 @@
 
 [Amazon EC2 Container Service (ECS)](http://aws.amazon.com/ecs/) is a container management service which provides a set of APIs for scheduling container workloads across EC2 clusters. It supports CoreOS with Docker containers.
 
-Your CoreOS machines communicate with ECS via an agent. The agent interacts with docker to start new containers and gather information about running containers.
+Your CoreOS machines communicate with ECS via an agent. The agent interacts with Docker to start new containers and gather information about running containers.
 
 ## Set Up A New Cluster
 

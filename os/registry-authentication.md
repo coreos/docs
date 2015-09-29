@@ -1,10 +1,10 @@
 # Using Authentication for a Registry
 
-A json file `.dockercfg` is generated in your home directory on `docker login`. It holds authentication information for a public or private docker registry. This `.dockercfg` can be reused in other home directories to authenticate. One way to do this is using Cloud-Config which is discussed more below. If you want to populate these values without running docker login, the auth token is a base64 encoded string: base64(<username>:<password>).
+A json file `.dockercfg` is generated in your home directory on `docker login`. It holds authentication information for a public or private Docker registry. This `.dockercfg` can be reused in other home directories to authenticate. One way to do this is using Cloud-Config which is discussed more below. If you want to populate these values without running Docker login, the auth token is a base64 encoded string: base64(<username>:<password>).
 
 ## The .dockercfg File
 
-Here's what an example looks like with credentials for docker's public index and a private index:
+Here's what an example looks like with credentials for Docker's public index and a private index:
 
 
 #### .dockercfg
@@ -23,7 +23,7 @@ Here's what an example looks like with credentials for docker's public index and
 ```
 
 
-The last step is to tell your systemd units to run as the `core` user in order for docker to use the credentials we just set up. This is done in the service section of the unit:
+The last step is to tell your systemd units to run as the `core` user in order for Docker to use the credentials we just set up. This is done in the service section of the unit:
 
 ```ini
 [Unit]

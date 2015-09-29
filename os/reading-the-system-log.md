@@ -1,6 +1,6 @@
 # Reading the System Log
 
-`journalctl` is your interface into a single machine's journal/logging and `fleetctl journal` will fetch the journal for containers started with [fleet]({{site.baseurl}}/using-coreos/clustering/). All service files and docker containers insert data into the systemd journal. There are a few helpful commands to read the journal:
+`journalctl` is your interface into a single machine's journal/logging and `fleetctl journal` will fetch the journal for containers started with [fleet]({{site.baseurl}}/using-coreos/clustering/). All service files and Docker containers insert data into the systemd journal. There are a few helpful commands to read the journal:
 
 ## Read the Entire Journal
 

@@ -78,15 +78,15 @@ The full list is located on the [systemd man page](http://www.freedesktop.org/so
 
 Let's put a few of these concepts together to register new units within etcd. Imagine we had another container running that would read these values from etcd and act upon them.
 
-We can use `ExecStartPre` to scrub existing container state. The `docker kill` will force any previous copy of this container to stop, which is useful if we restarted the unit but docker didn't stop the container for some reason. The `=-` is systemd syntax to ignore errors for this command. We need to do this because docker will return a non-zero exit code if we try to stop a container that doesn't exist. We don't consider this an error (because we want the container stopped) so we tell systemd to ignore the possible failure.
+We can use `ExecStartPre` to scrub existing container state. The `docker kill` will force any previous copy of this container to stop, which is useful if we restarted the unit but Docker didn't stop the container for some reason. The `=-` is systemd syntax to ignore errors for this command. We need to do this because Docker will return a non-zero exit code if we try to stop a container that doesn't exist. We don't consider this an error (because we want the container stopped) so we tell systemd to ignore the possible failure.
 
-`docker rm` will remove the container and `docker pull` will pull down the latest version. You can optionally pull down a specific version as a docker tag: `coreos/apache:1.2.3`
+`docker rm` will remove the container and `docker pull` will pull down the latest version. You can optionally pull down a specific version as a Docker tag: `coreos/apache:1.2.3`
 
 `ExecStart` is where the container is started from the container image that we pulled above.
 
 Since our container will be started in `ExecStart`, it makes sense for our etcd command to run as `ExecStartPost` to ensure that our container is started and functioning.
 
-When the service is told to stop, we need to stop the docker container using its `--name` from the run command. We also need to clean up our etcd key when the container exits or the unit is failed by using `ExecStopPost`.
+When the service is told to stop, we need to stop the Docker container using its `--name` from the run command. We also need to clean up our etcd key when the container exits or the unit is failed by using `ExecStopPost`.
 
 ```ini
 [Unit]

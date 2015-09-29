@@ -53,7 +53,7 @@ Create 3 instances from the image above using our cloud-config from `cloud-confi
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
-      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">Docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
       <pre>gcloud compute instances create core1 core2 core3 --image https://www.googleapis.com/compute/v1/{{site.data.alpha-channel.gce-image-path}} --zone us-central1-a --machine-type n1-standard-1 --metadata-from-file user-data=cloud-config.yaml</pre>
     </div>
     <div class="tab-pane" id="beta-create">

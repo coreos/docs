@@ -17,11 +17,11 @@ The cloud-config files provided with each section are valid, but you will need t
 |------|-----------|-------------|------------|
 | Low | Laptop development | Minutes | No |
 
-If you're developing locally but plan to run containers in production, it helps to mirror that environment locally. This can easily be done by running docker commands on your laptop that control a CoreOS VM in VMware Fusion or VirtualBox.
+If you're developing locally but plan to run containers in production, it helps to mirror that environment locally. This can easily be done by running Docker commands on your laptop that control a CoreOS VM in VMware Fusion or VirtualBox.
 
 ### Configuring Your Laptop
 
-Start a single CoreOS VM with the docker remote socket enabled in the cloud-config. Once it's running, tell your local docker binary to use the remote port by exporting an environment variable and start running docker commands:
+Start a single CoreOS VM with the Docker remote socket enabled in the cloud-config. Once it's running, tell your local Docker binary to use the remote port by exporting an environment variable and start running Docker commands:
 
 ```
 $ export DOCKER_HOST=tcp://localhost:2375

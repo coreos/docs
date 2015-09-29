@@ -46,7 +46,7 @@ ExecStart=/usr/bin/sh -c "/usr/bin/fleetctl list-machines -fields='ip,machine' -
 ```
 cat container.service
 [Unit]
-Description=My test docker container
+Description=My test Docker container
 After=docker.service
 Requires=docker.service
 After=fleet_machines.service
@@ -83,7 +83,7 @@ ExecStop=/usr/bin/docker stop nginx
 ExecStopPost=/usr/bin/etcdctl rm /services/nginx
 ```
 
-This unit file will run nginx docker container and bind it to specific IP address and port.
+This unit file will run nginx Docker container and bind it to specific IP address and port.
 
 ### etcd2.service Unit Advanced Example
 

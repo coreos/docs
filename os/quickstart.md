@@ -96,9 +96,9 @@ If you followed a guide to set up more than one CoreOS machine, you can SSH into
 <a class="btn btn-primary" href="{{ site.baseurl }}/docs/distributed-configuration/getting-started-with-etcd/" data-category="More Information" data-event="Docs: Getting Started etcd">View Complete Guide</a>
 <a class="btn btn-default" href="{{site.baseurl}}/docs/distributed-configuration/etcd-api/">Read etcd API Docs</a>
 
-## Container Management with docker
+## Container Management with Docker
 
-The second building block, **docker** ([docs][docker-docs]), is where your applications and code run. It is installed on each CoreOS machine. You should make each of your services (web server, caching, database) into a container and connect them together by reading and writing to etcd. You can quickly try out a minimal busybox container in two different ways:
+The second building block, **Docker** ([docs][docker-docs]), is where your applications and code run. It is installed on each CoreOS machine. You should make each of your services (web server, caching, database) into a container and connect them together by reading and writing to etcd. You can quickly try out a minimal busybox container in two different ways:
 
 Run a command in the container and then stop it: 
 
@@ -114,15 +114,15 @@ docker run -i -t busybox /bin/sh
 
 #### More Detailed Information
 <a class="btn btn-primary" href="{{ site.baseurl }}/docs/launching-containers/building/getting-started-with-docker" data-category="More Information" data-event="Docs: Getting Started docker">View Complete Guide</a>
-<a class="btn btn-default" href="http://docs.docker.io/">Read docker Docs</a>
+<a class="btn btn-default" href="http://docs.docker.io/">Read Docker Docs</a>
 
 ## Process Management with fleet
 
-The third building block of CoreOS is **fleet**, a distributed init system for your cluster. You should use fleet to manage the life cycle of your docker containers.
+The third building block of CoreOS is **fleet**, a distributed init system for your cluster. You should use fleet to manage the life cycle of your Docker containers.
 
 Fleet works by receiving [systemd unit files]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd/) and scheduling them onto machines in the cluster based on declared conflicts and other preferences encoded in the unit file. Using the `fleetctl` tool, you can query the status of a unit, remotely access its logs and more.
 
-First, let's construct a simple systemd unit that runs a docker container. Save this as `hello.service` in the home directory:
+First, let's construct a simple systemd unit that runs a Docker container. Save this as `hello.service` in the home directory:
 
 #### hello.service
 
