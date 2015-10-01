@@ -148,6 +148,24 @@ DHCP=yes
 
 To apply the configuration, run `sudo systemctl restart systemd-networkd`. Check the status with `systemctl status systemd-networkd` and read the full log with `journalctl -u systemd-networkd`.
 
+## Configure Multiple IP Addresses
+
+If you would like to configure multiple IP addresses on one interface you have to define multiple `Address` keys. In example below we've also defined multiple gateways.
+
+#### 20-multi_ip.network
+
+```ini
+[Match]
+Name=eth0
+
+[Network]
+DNS=8.8.8.8
+Address=10.0.0.101/24
+Gateway=10.0.0.1
+Address=10.0.1.101/24
+Gateway=10.0.1.1
+```
+
 ## Debugging networkd
 
 If you've faced some problems with networkd you can enable debug mode following the instructions below.
