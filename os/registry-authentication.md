@@ -1,6 +1,6 @@
 # Using Authentication for a Registry
 
-A json file `.dockercfg` is generated in your home directory on `docker login`. It holds authentication information for a public or private Docker registry. This `.dockercfg` can be reused in other home directories to authenticate. One way to do this is using Cloud-Config which is discussed more below. If you want to populate these values without running Docker login, the auth token is a base64 encoded string: base64(<username>:<password>).
+A json file `.dockercfg` is generated in your home directory on `docker login`. It holds authentication information for a public or private Docker registry. This `.dockercfg` can be reused in other home directories to authenticate. One way to do this is using Cloud-Config which is discussed more below. If you want to populate these values without running Docker login, the auth token is a base64 encoded string: `base64(<username>:<password>)`.
 
 ## The .dockercfg File
 
