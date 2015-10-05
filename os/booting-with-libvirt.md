@@ -211,7 +211,7 @@ coreos:
 Run the script:
 
 ```sh
-./deploy_coreos_cluster.sh 3
+./deploy_coreos_libvirt.sh 3
 ```
 
 Script will deploy three-nodes CoreOS cluster (`coreos{1..3}` hostnames) with
