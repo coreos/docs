@@ -1,10 +1,10 @@
-# Update Strategies
+# Reboot Strategies on Updates
 
-The overarching goal of CoreOS is to secure the Internet's backend infrastructure. We believe that [automatically updating]({{site.baseurl}}/using-coreos/updates) the operating system is one of the best tools to achieve this goal.
+The overarching goal of CoreOS is to secure the Internet's backend infrastructure. We believe that [automatically updating](https://coreos.com/using-coreos/updates/) the operating system is one of the best tools to achieve this goal.
 
 We realize that each CoreOS cluster has a unique tolerance for risk and the operational needs of your applications are complex. In order to meet everyone's needs, there are four update strategies that we have developed based on feedback during our alpha period.
 
-It's important to note that updates are always downloaded to the passive partition when they become available. A reboot is the last step of the update, where the active and passive partitions are swapped. These strategies control how that reboot occurs:
+It's important to note that updates are always downloaded to the passive partition when they become available. A reboot is the last step of the update, where the active and passive partitions are swapped ([rollback instructions][rollback]). These strategies control how that reboot occurs:
 
 | Strategy           | Description |
 |--------------------|-------------|
@@ -13,9 +13,9 @@ It's important to note that updates are always downloaded to the passive partiti
 | `reboot`             | Reboot immediately after an update is applied. |
 | `off`                | Do not reboot after updates are applied. |
 
-## Strategy Options
+## Reboot Strategy Options
 
-The update strategy is defined in [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/#coreos):
+The reboot strategy is defined in [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md#update):
 
 ```yaml
 #cloud-config
@@ -73,7 +73,19 @@ The `off` strategy is also straightforward. The update will be installed onto th
 
 PXE/iPXE machines download a new copy of CoreOS every time they are started thus are dependent on the version of CoreOS they are served. If you don't automatically load new CoreOS images into your PXE/iPXE server, your machines will never have new features or security updates.
 
-An easy solution to this problem is to use iPXE and reference images [directly from the CoreOS storage site]({{site.baseurl}}/docs/running-coreos/bare-metal/booting-with-ipxe/#setting-up-the-boot-script). The `alpha` URL is automatically pointed to the new version of CoreOS as it is released.
+An easy solution to this problem is to use iPXE and reference images [directly from the CoreOS storage site](booting-with-ipxe.md#setting-up-ipxe-boot-script). The `alpha` URL is automatically pointed to the new version of CoreOS as it is released.
+
+## Disable Automatic Updates Daemon
+
+In case when you don't want to install updates onto the passive partition and avoid update process on failure reboot, you can disable `update-engine` service manually with `sudo systemctl stop update-engine` command (it will be enabled automatically next reboot). Or if you wish to disable automatic updates permanently, use Cloud-Config:
+
+```yaml
+#cloud-config
+coreos:
+  units:
+    - name: update-engine.service
+      command: stop
+```
 
 ## Updating Behind a Proxy
 
@@ -86,12 +98,12 @@ See [curl's documentation](http://curl.haxx.se/docs/manpage.html#ALLPROXY) for d
 write_files:
   - path: /etc/systemd/system/update-engine.service.d/proxy.conf
     content: |
-        [Service]
-        Environment=ALL_PROXY=http://proxy.example.com:3128
+      [Service]
+      Environment=ALL_PROXY=http://proxy.example.com:3128
 coreos:
-    units:
-      - name: update-engine.service
-        command: restart
+  units:
+    - name: update-engine.service
+      command: restart
 ```
 
 ## Manually Triggering an Update
@@ -189,23 +201,25 @@ write_files:
     permissions: 0755
     owner: root
     content: |
-        #!/bin/bash
-        # If etcd is active, this uses locksmith. Otherwise, it randomly delays. 
-        delay=$(/usr/bin/expr $RANDOM % 3600 )
-        rebootflag='NEED_REBOOT'
+      #!/bin/bash
+      # If etcd is active, this uses locksmith. Otherwise, it randomly delays. 
+      delay=$(/usr/bin/expr $RANDOM % 3600 )
+      rebootflag='NEED_REBOOT'
 
-        if update_engine_client -status | grep $rebootflag;
-        then
-            echo -n "etcd is "
-            if systemctl is-active etcd;
-            then
-                echo "Update reboot with locksmithctl."
-                locksmithctl reboot
-            else
-                echo "Update reboot in $delay seconds."
-                sleep $delay
-                reboot
-            fi
-        fi
-        exit 0
+      if update_engine_client -status | grep $rebootflag;
+      then
+          echo -n "etcd is "
+          if systemctl is-active etcd;
+          then
+              echo "Update reboot with locksmithctl."
+              locksmithctl reboot
+          else
+              echo "Update reboot in $delay seconds."
+              sleep $delay
+              reboot
+          fi
+      fi
+      exit 0
 ```
+
+[rollback]: manual-rollbacks.md
