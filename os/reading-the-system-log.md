@@ -1,6 +1,6 @@
 # Reading the System Log
 
-`journalctl` is your interface into a single machine's journal/logging and `fleetctl journal` will fetch the journal for containers started with [fleet]({{site.baseurl}}/using-coreos/clustering/). All service files and Docker containers insert data into the systemd journal. There are a few helpful commands to read the journal:
+`journalctl` is your interface into a single machine's journal/logging and `fleetctl journal` will fetch the journal for containers started with [fleet](https://coreos.com/using-coreos/clustering/). All service files and Docker containers insert data into the systemd journal. There are a few helpful commands to read the journal:
 
 ## Read the Entire Journal
 
@@ -31,7 +31,7 @@ Dec 22 12:32:39 localhost docker[9772]: /usr/sbin/apache2ctl: 87: ulimit: error 
 Dec 22 12:32:39 localhost docker[9772]: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.6 for ServerName
 ```
 
-Using the `--tunnel` flag ([docs](https://github.com/coreos/fleet/blob/master/Documentation/using-the-client.md#from-an-external-host)), you can remotely read the journal for a specific unit started via [fleet]({{site.baseurl}}/using-coreos/clustering/). This command will figure out which machine the unit is currently running on, fetch the journal and output it:
+Using the `--tunnel` flag ([docs](https://github.com/coreos/fleet/blob/master/Documentation/using-the-client.md#from-an-external-host)), you can remotely read the journal for a specific unit started via [fleet](https://coreos.com/using-coreos/clustering/). This command will figure out which machine the unit is currently running on, fetch the journal and output it:
 
 ```sh
 $ fleetctl --tunnel 10.10.10.10 journal apache.service
@@ -63,5 +63,67 @@ journalctl -f
 journalctl -u apache.service -f
 ```
 
+## Red Entries with Line Wrapping
+
+By default `journalctl` passes `FRSXMK` command line options to [`less`](http://linux.die.net/man/1/less). You can override these options by setting a custom [`SYSTEMD_LESS`](http://www.freedesktop.org/software/systemd/man/journalctl.html#%24SYSTEMD_LESS) environment variable with omitted `S` option:
+
+```sh
+SYSTEMD_LESS=FRXMK journalctl
+```
+
+Read logs without pager:
+
+```sh
+journalctl --no-pager
+```
+
+# Debugging journald
+
+If you've faced some problems with journald you can enable debug mode following the instructions below.
+
+## Enable Debugging Manually
+
+```sh
+mkdir -p /etc/systemd/system/systemd-journald.service.d/
+```
+
+Create [Drop-In][drop-ins] `/etc/systemd/system/systemd-journald.service.d/10-debug.conf` with following content:
+
+```sh
+[Service]
+Environment=SYSTEMD_LOG_LEVEL=debug
+```
+
+And restart `systemd-journald` service:
+
+```sh
+systemctl daemon-reload
+systemctl restart systemd-journald
+dmesg | grep systemd-journald
+```
+
+## Enable debugging through Cloud-Config
+
+Define [Drop-In][drop-ins] in [Cloud-Config][cloud-config]:
+
+```yaml
+#cloud-config
+coreos:
+  units:
+    - name: systemd-journald.service
+      drop-ins:
+        - name: 10-debug.conf
+          content: |
+            [Service]
+            Environment=SYSTEMD_LOG_LEVEL=debug
+      command: restart
+```
+
+And run `coreos-cloudinit` or reboot your CoreOS host to apply the changes.
+
+[drop-ins]: using-systemd-drop-in-units.md
+[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
+
 #### More Information
-<a class="btn btn-default" href="{{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd">Getting Started with systemd</a>
+<a class="btn btn-default" href="getting-started-with-systemd.md">Getting Started with systemd</a>
+<a class="btn btn-default" href="network-config-with-networkd.md">Network Configuration with networkd</a>
