@@ -1,6 +1,8 @@
 # Mounting Storage
 
-Many platforms provide attached storage, but it must be mounted for you to take advantage of it. You can easily do this via [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config) with a `.mount` unit. Here's an example that mounts an [EC2 ephemeral disk]({{site.baseurl}}/docs/running-coreos/cloud-providers/ec2/#instance-storage):
+The [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config) *mount unit* mechanism is used to attach additional filesystems to CoreOS nodes, whether such storage is provided by an underlying cloud platform, physical disk, SAN, or NAS system. By [systemd convention](http://www.freedesktop.org/software/systemd/man/systemd.mount.html), mount unit names derive from the target mount point, with interior slashes replaced by dashes, and the `.mount` extension appended. A unit mounting onto `/var/www` is thus named `var-www.mount`.
+
+Mount units name the source filesystem and target mount point, and optionally the filesystem type. Cloud-config writes mount unit files beneath `/etc/systemd/system`. *Systemd* mounts filesystems defined in such units at boot time. The following example mounts an [EC2 ephemeral disk]({{site.baseurl}}/docs/running-coreos/cloud-providers/ec2/#instance-storage) at the node's `/media/ephemeral` directory, and is therefore named `media-ephemeral.mount`:
 
 ```yaml
 #cloud-config
@@ -15,10 +17,6 @@ coreos:
         Where=/media/ephemeral
         Type=ext3
 ```
-
-As you can see, it's pretty simple. You specify the attached device and where you want it mounted. Optionally, you can provide a file system type.
-
-It's important to note that [systemd requires](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) mount units to be named after the "mount point directories they control". In our example above, we want our device mounted at `/media/ephemeral` so it must be named `media-ephemeral.mount`.
 
 ## Use Attached Storage for Docker
 
@@ -101,7 +99,7 @@ Note the declaration of `ConditionPathExists=!/var/lib/docker.btrfs`. Without th
 
 ## Mounting NFS Exports
 
-This cloud-config excerpt enables the NFS host monitor [`rpc.statd(8)`](http://linux.die.net/man/8/rpc.statd), then mounts an NFS export onto the CoreOS system's `/var/www`. Mount unit names match the target mount point, with interior slashes replaced by dashes. A unit mounting onto `/var/www` is thus named `var-www.mount`.
+This cloud-config excerpt enables the NFS host monitor [`rpc.statd(8)`](http://linux.die.net/man/8/rpc.statd), then mounts an NFS export onto the CoreOS node's `/var/www`.
 
 ```yaml
 #cloud-config
