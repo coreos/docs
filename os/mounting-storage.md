@@ -1,6 +1,6 @@
 # Mounting Storage
 
-Many platforms provide attached storage, but it must be mounted for you to take advantage of it. You can easily do this via [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config) with a `.mount` unit. Here's an example that mounts an [EC2 ephemeral disk]({{site.baseurl}}/docs/running-coreos/cloud-providers/ec2/#instance-storage):
+Many platforms provide attached storage, but it must be mounted for you to take advantage of it. You can easily do this via [Cloud-Config][cloud-config] with a `.mount` unit. Here's an example that mounts an [EC2 ephemeral disk][ec2-instance-storage]:
 
 ```yaml
 #cloud-config
@@ -16,9 +16,13 @@ coreos:
         Type=ext3
 ```
 
-As you can see, it's pretty simple. You specify the attached device and where you want it mounted. Optionally, you can provide a file system type.
+[Cloud-Config][cloud-config] will store `media-ephemeral.mount` unit file into `/etc/systemd/system` directory and systemd will catch it on boot. As you can see, it's pretty simple. You specify the attached device and where you want it mounted. Optionally, you can provide a file system type.
 
-It's important to note that [systemd requires](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) mount units to be named after the "mount point directories they control". In our example above, we want our device mounted at `/media/ephemeral` so it must be named `media-ephemeral.mount`.
+It's important to note that [systemd requires][systemd-mount] mount units to be named after the "mount point directories they control". In our example above, we want our device mounted at `/media/ephemeral` so it must be named `media-ephemeral.mount`.
+
+[cloud-config]: /os/docs/latest/cloud-config.html
+[ec2-instance-storage]: /os/docs/latest/booting-on-ec2.html#instance-storage
+[systemd-mount]: http://www.freedesktop.org/software/systemd/man/systemd.mount.html
 
 ## Use Attached Storage for Docker
 
