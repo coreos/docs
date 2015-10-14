@@ -1,4 +1,4 @@
-Customizing the SSH Daemon
+# Customizing the SSH Daemon
 
 CoreOS defaults to running an OpenSSH daemon using `systemd` socket activation -- when a client connects to the port configured for SSH, `sshd` is started on the fly for that client using a `systemd` unit derived automatically from a template. In some cases you may want to customize this daemon's authentication methods or other configuration. This guide will show you how to do that at build time using `cloud-config`, and after building by modifying the `systemd` unit file.
 
