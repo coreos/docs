@@ -1,6 +1,6 @@
-ustomizing the SSH Daemon
+Customizing the SSH Daemon
 
-CoreOS defaults to running an OpenSSH daemon using `systemd` socket activation -- when a client connects to the port configured for SSH, `sshd` is started on the fly for that client using a `systemd` unit derived automatically from a template. In some cases you may want to customize this daemon's authentication methods or other configuration. This guide will show you how to do that at install time using `cloud-config`, and after install by modifying the `systemd` unit file.
+CoreOS defaults to running an OpenSSH daemon using `systemd` socket activation -- when a client connects to the port configured for SSH, `sshd` is started on the fly for that client using a `systemd` unit derived automatically from a template. In some cases you may want to customize this daemon's authentication methods or other configuration. This guide will show you how to do that at build time using `cloud-config`, and after building by modifying the `systemd` unit file.
 
 As a practical example, when a client fails to connect by not completing the TCP connection (e.g. because the "client" is actually a TCP port scanner), the MOTD may report failures of `systemd` units (which will be named by the source IP that failed to connect) next time you log in to the CoreOS host.  These failures are not themselves harmful, but it is a good general practice to change how SSH listens, either by changing the IP address `sshd` listens to from the default setting (which listens on all configured interfaces), changing the default port, or both.
 
@@ -30,7 +30,7 @@ write_files:
 
 ### Changing the sshd Port
 
-CoreOS ships with socket-activated SSH by default. The configuration for this can be found at `/usr/lib/systemd/system/sshd.socket`. We're going to override this in the cloud-config provided at boot:
+CoreOS ships with socket-activated SSH by default. The configuration for this can be found at `/usr/lib/systemd/system/sshd.socket`. We're going to override some of the default settings for this in the cloud-config provided at boot:
 
 ```yaml
 #cloud-config
@@ -45,13 +45,15 @@ coreos:
       Accept=yes
 ```
 
+`sshd` will now listen only on port 2222 on all interfaces when the system is built.
+
 ### Further Reading
 
 Read the [full cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/) guide to install users and more.
 
-## Customizing sshd after install
+## Customizing sshd after build
 
-If you have CoreOS hosts that need configuration changes made after install, log into the CoreOS host as the core user, then:
+If you have CoreOS hosts that need configuration changes made after build, log into the CoreOS host as the core user, then:
 
 ```
 $ sudo cp /usr/lib/systemd/system/sshd.socket /etc/systemd/system/sshd.socket
