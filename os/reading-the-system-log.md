@@ -64,4 +64,5 @@ journalctl -u apache.service -f
 ```
 
 #### More Information
-<a class="btn btn-default" href="{{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd">Getting Started with systemd</a>
+<a class="btn btn-default" href="getting-started-with-systemd.md">Getting Started with systemd</a>
+<a class="btn btn-default" href="centralized-logging.md">Centralized Logging</a>
