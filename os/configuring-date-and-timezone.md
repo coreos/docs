@@ -160,8 +160,7 @@ NTP time sources can be set in `timesyncd.conf` with a cloud-config snippet like
 
 ```yaml
 #cloud-config
-coreos:
-  write_files:
+write_files:
   - path: /etc/systemd/timesyncd.conf
     content: |
       [Time]
@@ -225,8 +224,7 @@ Or, in cloud-config:
 
 ```yaml
 #cloud-config
-coreos:
-  write_files:
+write_files:
   - path: /etc/ntp.conf
     content: |
       server 0.pool.example.com
