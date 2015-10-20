@@ -10,6 +10,7 @@ not enforce SELinux protections by default.
 
 To verify whether the current SELinux policy would inhibit your containers,
 enable SELinux logging by running the following commands as root:
+
 * rm /etc/audit/rules.d/80-selinux.rules
 * rm /etc/audit/rules.d/99-default.rules
 * semodule -DB
