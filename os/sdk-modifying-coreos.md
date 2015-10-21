@@ -154,7 +154,7 @@ mind when making changes, the origin git repository should not have a
 
 ## Building Images
 
-There are separate workflows for [building production](/docs/sdk-distributors/sdk/building-production-images) images and [development images](/docs/sdk-distributors/sdk/building-development-images).
+There are separate workflows for building [production images](/docs/sdk-distributors/sdk/building-production-images) and [development images](/docs/sdk-distributors/sdk/building-development-images).
 
 ## Tips and Tricks
 
