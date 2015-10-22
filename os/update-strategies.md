@@ -148,24 +148,40 @@ This script should be installed in a location to match the script path used in t
 
 ```yaml
 #!/bin/bash
+# If the system is a member of an etcd cluster, uses locksmithctl to reboot. 
+# Otherwise, it randomly delays the reboot.
 
-# If etcd is active, this uses locksmith. Otherwise, it randomly delays. 
 delay=$(/usr/bin/expr $RANDOM % 3600 )
 rebootflag='NEED_REBOOT'
+hostip=$(hostname --ip-address | tr -d ' ')
+rebootcmd="reboot"
 
-if update_engine_client -status | grep $rebootflag;
+if ! update_engine_client -status | grep $rebootflag;
 then
-    echo -n "etcd is "
-    if systemctl is-active etcd;
-    then
-        echo "Update reboot with locksmithctl."
-        locksmithctl reboot
-    else
-        echo "Update reboot in $delay seconds."
-        sleep $delay
-        reboot
-    fi
+  echo "No update."
+  exit 0
 fi
+
+if systemctl is-active etcd2;
+then
+  ismember=$(etcdctl member list |grep -Eo "(https?://$hostip:2380)")
+  if [[ $ismember != "" ]];
+  then
+    echo "etcd2 is active and I am a member of the cluster."
+    rebootcmd="locksmithctl reboot"
+  else
+    echo "Reboot in $delay seconds."
+  fi
+elif systemctl is-active etcd;
+then
+  echo "etcd1 is active"
+  rebootcmd="locksmithctl reboot"
+else
+  echo "Reboot in $delay seconds."
+fi
+
+echo "$rebootcmd"
+$rebootcmd
 exit 0
 ```
 
@@ -202,23 +218,40 @@ write_files:
     owner: root
     content: |
       #!/bin/bash
-      # If etcd is active, this uses locksmith. Otherwise, it randomly delays. 
+      # If the system is a member of an etcd cluster, uses locksmithctl to reboot. 
+      # Otherwise, it randomly delays the reboot.
+
       delay=$(/usr/bin/expr $RANDOM % 3600 )
       rebootflag='NEED_REBOOT'
+      hostip=$(hostname --ip-address | tr -d ' ')
+      rebootcmd="reboot"
 
-      if update_engine_client -status | grep $rebootflag;
+      if ! update_engine_client -status | grep $rebootflag;
       then
-          echo -n "etcd is "
-          if systemctl is-active etcd;
-          then
-              echo "Update reboot with locksmithctl."
-              locksmithctl reboot
-          else
-              echo "Update reboot in $delay seconds."
-              sleep $delay
-              reboot
-          fi
+        echo "No update."
+        exit 0
       fi
+
+      if systemctl is-active etcd2;
+      then
+        ismember=$(etcdctl member list |grep -Eo "(https?://$hostip:2380)")
+        if [[ $ismember != "" ]];
+        then
+          echo "etcd2 is active and I am a member of the cluster."
+          rebootcmd="locksmithctl reboot"
+        else
+          echo "Reboot in $delay seconds."
+        fi
+      elif systemctl is-active etcd;
+      then
+        echo "etcd1 is active"
+        rebootcmd="locksmithctl reboot"
+      else
+        echo "Reboot in $delay seconds."
+      fi
+
+      echo "$rebootcmd"
+      $rebootcmd
       exit 0
 ```
 
