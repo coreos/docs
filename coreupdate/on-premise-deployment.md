@@ -10,7 +10,7 @@ You should now be able to execute `docker pull quay.io/coreos/coreupdate` to dow
 
 ## Database Server
 
-CoreUpdate requires an instance of a Postres database server.
+CoreUpdate requires an instance of a Postgres database server.
 You can use an existing instance if you have one, or use [the official Postgres docker image](https://registry.hub.docker.com/_/postgres/).
 
 Postgres can be run on CoreOS with a systemd unit file similar to this one: 
