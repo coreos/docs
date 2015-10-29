@@ -6,7 +6,7 @@ Docker containers can boot extremely fast (in milliseconds!) which gives you unp
 
 ## Docker CLI Basics
 
-Docker has a [straightforward CLI](http://docs.docker.io/en/latest/reference/commandline/) that allows you to do almost everything you could want to a container. All of these commands use the image id (ex. be29975e0098), the image name (ex. myusername/webapp) and the container id (ex. 72d468f455ea) interchangeably depending on the operation you are trying to do. This is confusing at first, so pay special attention to what you're using.
+Docker has a [straightforward CLI](https://docs.docker.com/reference/commandline/cli/) that allows you to do almost everything you could want to a container. All of these commands use the image id (ex. be29975e0098), the image name (ex. myusername/webapp) and the container id (ex. 72d468f455ea) interchangeably depending on the operation you are trying to do. This is confusing at first, so pay special attention to what you're using.
 
 ## Launching a Container
 
@@ -127,4 +127,4 @@ docker run -d -p 80:80 registry.example.com:5000/apache /usr/sbin/apache2ctl -D 
 #### More Information
 <a class="btn btn-default" href="{{site.baseurl}}/using-coreos/docker">Docker Overview</a>
 <a class="btn btn-default" href="http://www.docker.com/">Docker Website</a>
-<a class="btn btn-default" href="http://www.docker.com/gettingstarted/">docker's Getting Started Guide</a>
+<a class="btn btn-default" href="https://docs.docker.com/mac/started/">docker's Getting Started Guide</a>
