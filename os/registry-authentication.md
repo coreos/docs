@@ -47,7 +47,7 @@ Since each machine in your cluster is going to have to pull images, cloud-config
 write_files:
     - path: /home/core/.dockercfg
       owner: core:core
-      permissions: 0644
+      permissions: '0644'
       content: |
         {
           "https://index.docker.io/v1/": {
