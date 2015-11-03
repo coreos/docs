@@ -4,7 +4,7 @@ CoreOS Enterprise Registry supports using GitHub or GitHub Enterprise as an auth
 
 ## Create an OAuth Application in GitHub
 
-Following the instructions at <a href="{{site.baseurl}}/docs/enterprise-registry/github-app/">Create a GitHub Application</a>.
+Following the instructions at [Create a GitHub Application](github-app.md).
 
 **NOTE:** This application must be **different** from that used for GitHub Build Triggers.
 
