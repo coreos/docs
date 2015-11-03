@@ -1,8 +1,8 @@
 # Network Configuration with networkd
 
-CoreOS machines are preconfigured with [networking customized]({{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors) for each platform. You can write your own networkd units to replace or override the units created for each platform. This article covers a subset of networkd functionality. You can view the [full docs here](http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html).
+CoreOS machines are preconfigured with [networking customized](notes-for-distributors.md) for each platform. You can write your own networkd units to replace or override the units created for each platform. This article covers a subset of networkd functionality. You can view the [full docs here](http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html).
 
-Drop a networkd unit in `/etc/systemd/network/` or inject a unit on boot via [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/#coreos) to override an existing unit. Network units injected via the `coreos.units` node in the cloud-config will automatically trigger a networkd reload in order for changes to be applied. Files placed on the filesystem will need to reload networkd afterwards with `sudo systemctl restart systemd-networkd`.
+Drop a networkd unit in `/etc/systemd/network/` or inject a unit on boot via [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md#units) to override an existing unit. Network units injected via the `coreos.units` node in the cloud-config will automatically trigger a networkd reload in order for changes to be applied. Files placed on the filesystem will need to reload networkd afterwards with `sudo systemctl restart systemd-networkd`.
 
 Let's take a look at two common situations: using a static IP and turning off DHCP.
 
@@ -183,7 +183,7 @@ Create [Drop-In][drop-ins] `/etc/systemd/system/systemd-networkd.service.d/10-de
 Environment=SYSTEMD_LOG_LEVEL=debug
 ```
 
-And restart systemd-networkd service:
+And restart `systemd-networkd` service:
 
 ```sh
 systemctl daemon-reload
@@ -205,14 +205,18 @@ coreos:
           content: |
             [Service]
             Environment=SYSTEMD_LOG_LEVEL=debug
-      command: start
+      command: restart
 ```
 
 And run `coreos-cloudinit` or reboot your CoreOS host to apply the changes.
 
-[drop-ins]: using-systemd-drop-in-units.html
-[cloud-config]: cloud-config.html
+[drop-ins]: using-systemd-drop-in-units.md
+[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 
 ## Further Reading
 
 If you're interested in more general networkd features, check out the [full documentation](http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html).
+
+#### More Information
+<a class="btn btn-default" href="getting-started-with-systemd.md">Getting Started with systemd</a>
+<a class="btn btn-default" href="reading-the-system-log.md">Reading the System Log</a>
