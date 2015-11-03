@@ -11,7 +11,7 @@ CoreOS Enterprise Registry requires three components to be running to begin the 
 
 ## Preparing the Database
 
-A MySQL RDBMS or Postgres installation with an empty database is required, and a login with full access to said database. The schema will be created the first time the registry image is run. The database install can either be pre-existing or run on CoreOS via a [Docker container]({{site.baseurl}}/docs/enterprise-registry/mysql-container).
+A MySQL RDBMS or Postgres installation with an empty database is required, and a login with full access to said database. The schema will be created the first time the registry image is run. The database install can either be pre-existing or run on CoreOS via a [Docker container](mysql-container.md).
 
 ## Setting up Redis
 

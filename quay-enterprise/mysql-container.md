@@ -42,7 +42,7 @@ Wait about 30 seconds for the new DB to be created before testing the connection
 Alternatively you can download a simple shell script to perform the steps above:
 
 ```sh
-curl --location https://raw.githubusercontent.com/coreos/docs/master/enterprise-registry/provision_mysql.sh -o /tmp/provision_mysql.sh -#
+curl --location https://raw.githubusercontent.com/coreos/docs/master/quay-enterprise/provision_mysql.sh -o /tmp/provision_mysql.sh -#
 ```
 Then run:
 

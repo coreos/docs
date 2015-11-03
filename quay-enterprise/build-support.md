@@ -1,6 +1,6 @@
 # Automatically build Dockerfiles with Build Workers
 
-CoreOS Enterprise Registry supports building Dockerfiles using a set of worker nodes. Build triggers, such as GitHub webhooks ([Setup Instructions]({{site.baseurl}}/docs/enterprise-registry/github-build)), can be configured to automatically build new versions of your repositories when new code is committed. This document will walk you through enabling the feature flag and setting up multiple build workers to enable this feature.
+CoreOS Enterprise Registry supports building Dockerfiles using a set of worker nodes. Build triggers, such as GitHub webhooks ([Setup Instructions](github-build.md)), can be configured to automatically build new versions of your repositories when new code is committed. This document will walk you through enabling the feature flag and setting up multiple build workers to enable this feature.
 
 *Note:* This feature is currently in *beta*, so it may encounter issues every so often. Please report
 any issues encountered to support so we can fix it ASAP.
@@ -58,5 +58,5 @@ When the container starts, each build worker will auto-register with the Enterpr
 ### Setup GitHub Build (optional)
 
 If your organization plans to have builds be conducted via pushes to GitHub (or GitHub Enterprise), please continue
-with the <a href="../github-build/">Setting up GitHub Build</a>.
+with the <a href="github-build.md">Setting up GitHub Build</a>.
 

@@ -5,11 +5,11 @@ images.
 
 ## Initial Setup
 
-If you have not yet done so, please <a href="{{site.baseurl}}/docs/enterprise-registry/build-support/">enable build support</a> in the Enterprise Registry.
+If you have not yet done so, please [enable build support](build-support.md) in the Enterprise Registry.
 
 ## Create an OAuth Application in GitHub
 
-Following the instructions at <a href="{{site.baseurl}}/docs/enterprise-registry/github-app/">Create a GitHub Application</a>.
+Following the instructions at [Create a GitHub Application](github-app.md).
 
 **NOTE:** This application must be **different** from that used for GitHub Authentication.
 
