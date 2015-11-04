@@ -63,7 +63,7 @@ journalctl -f
 journalctl -u apache.service -f
 ```
 
-## Red Entries with Line Wrapping
+## Read Entries with Line Wrapping
 
 By default `journalctl` passes `FRSXMK` command line options to [`less`](http://linux.die.net/man/1/less). You can override these options by setting a custom [`SYSTEMD_LESS`](http://www.freedesktop.org/software/systemd/man/journalctl.html#%24SYSTEMD_LESS) environment variable with omitted `S` option:
 
