@@ -35,7 +35,7 @@ coreos:
 
 ### Loading Kernel Modules with Options
 
-This example cloud-config excerpt loads the `dummy` network interface module with option specifying the number of interfaces the module should create when loaded (`numdummies=5`):
+This example cloud-config excerpt loads the `dummy` network interface module with an option specifying the number of interfaces the module should create when loaded (`numdummies=5`):
 
 ```yaml
 #cloud-config
