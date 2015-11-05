@@ -159,7 +159,7 @@ automatically.
 
 Before deploying CoreOS on cloud.ca, you need the following: 
 
-* An account on https://your_organization_name.cloud.ca.
+* An account on ``https://your_organization_name.cloud.ca``.
 * Access to an Environment with a running VPC. VPC and subnet creation are not
   part of the current documentation, refer to cloud.ca online help. 
 * Your public SSH-key added into your cloud.ca environment.
