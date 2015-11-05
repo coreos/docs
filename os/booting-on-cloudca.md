@@ -1,22 +1,16 @@
 # Running CoreOS on cloud.ca
 
-[cloud.ca](http://www.cloud.ca) is a regional self-service IaaS platform
-designed for workspaces, applications and data. It delivers scalable,
-high-performance and resilient cloud infrastructure at competitive utility
-costs. CloudOps provides [cloud.ca as a service](http://www.cloudops.com/services/managed-services/managed-cloud/)
-for businesses requiring that all or some of their data remain in Canada, for
-reasons of compliance, performance, cost or privacy. cloud.ca's platform can be
-used as a standalone IaaS and also fits into CloudOps’ hybrid cloud services,
-allowing a mix of private cloud and other public cloud infrastructures such as
-AWS.
+[cloud.ca](http://www.cloud.ca) is a regional IaaS designed to help meet
+regulatory or security requirements by storing data in Canada. CoreOS is a
+supported operating system for VMs on the cloud.ca infrastructure.
 
 
 ## Choosing a Channel
 
-CoreOS is designed to be [updated automatically][update-docs] with different
-schedules per channel. You can [disable this feature][reboot-docs], although we
-don't recommend it. Read the [release notes][release-notes] for specific
-features and bug fixes.
+CoreOS is designed to be [updated automatically][update-docs], with three
+channels of different update schedules: Stable, Beta, and Alpha. You can
+[disable this feature][reboot-docs], although we don't recommend it. Read the
+[release notes][release-notes] for specific features and bug fixes.
 
 The cloud.ca CoreOS image is built from the official stable release CloudStack
 image.
@@ -188,8 +182,8 @@ Before deploying CoreOS on cloud.ca, you need the following:
     <div class="caption">New instance details</div>
   </div>
 </div>
-3. Create a data disk. This volume will be mount in ``/var/lib/docker`` defined
-   in the cloud-config snippet (Optional):
+3. Create a data volume. This volume will be mounted in ``/var/lib/docker``, as
+   defined in the cloud-config excerpt. This step is optional:
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12">
     <img src="img/cloudca-addinstance_step2.png" class="screenshot" />
