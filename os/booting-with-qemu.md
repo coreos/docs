@@ -89,7 +89,12 @@ CoreOS is released into stable, alpha and beta channels. Releases to each channe
       format) and the wrapper shell script to start QEMU.</p>
       <pre>mkdir coreos; cd coreos
 wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh
-wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img
+wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh.sig
+wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2
+wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2.sig
+gpg --verify coreos_production_qemu.sh.sig
+gpg --verify coreos_production_qemu_image.img.bz2.sig
+bzip2 -d coreos_production_qemu_image.img
 chmod +x coreos_production_qemu.sh</pre>
     </div>
     <div class="tab-pane" id="alpha">
@@ -100,7 +105,12 @@ chmod +x coreos_production_qemu.sh</pre>
       format) and the wrapper shell script to start QEMU.</p>
       <pre>mkdir coreos; cd coreos
 wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh
-wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img
+wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh.sig
+wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2
+wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2.sig
+gpg --verify coreos_production_qemu.sh.sig
+gpg --verify coreos_production_qemu_image.img.bz2.sig
+bzip2 -d coreos_production_qemu_image.img
 chmod +x coreos_production_qemu.sh</pre>
     </div>
     <div class="tab-pane" id="beta">
@@ -111,7 +121,12 @@ chmod +x coreos_production_qemu.sh</pre>
       format) and the wrapper shell script to start QEMU.</p>
       <pre>mkdir coreos; cd coreos
 wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh
-wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img
+wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh.sig
+wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2
+wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2.sig
+gpg --verify coreos_production_qemu.sh.sig
+gpg --verify coreos_production_qemu_image.img.bz2.sig
+bzip2 -d coreos_production_qemu_image.img
 chmod +x coreos_production_qemu.sh</pre>
     </div>
   </div>
