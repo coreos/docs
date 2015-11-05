@@ -33,10 +33,31 @@ coreos:
       command: restart
 ```
 
+### Loading Kernel Modules with Options
+
+This example cloud-config excerpt loads the `dummy` network interface module with option specifying the number of interfaces the module should create when loaded (`numdummies=5`):
+
+```yaml
+#cloud-config
+
+write_files:
+  - path: /etc/modprobe.d/dummy.conf
+    content: options dummy numdummies=5
+  - path: /etc/modules-load.d/dummy.conf
+    content: dummy
+
+coreos:
+  units:
+    - name: systemd-modules-load.service
+      command: restart
+```
+
+After this cloud-config is processed, the dummy module is loaded into the kernel, and five dummy interfaces are added to the network stack.
+
 Further details can be found in the systemd man pages:
 [modules-load.d(5)](http://www.freedesktop.org/software/systemd/man/modules-load.d.html)
 [systemd-modules-load.service(8)](http://www.freedesktop.org/software/systemd/man/systemd-modules-load.service.html)
-
+[modprobe.d(5)](http://linux.die.net/man/5/modprobe.d)
 
 ## Tuning sysctl Parameters
 
