@@ -24,7 +24,7 @@ Then create `/etc/systemd/system/etcd2.service.d/` directory if it doesn't exist
 Environment="ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379,http://127.0.0.1:4001"
 ```
 
-Then run `systemctl daemon-reload` and `systemctl restart etcd2` to restart etcd. Check cluster availability using these commands:
+Then run `systemctl daemon-reload` and `systemctl restart etcd2` to restart etcd. Check cluster availability using [`etcdctl`][etcdctl] commands listed below:
 
 ```sh
 etcdctl member list
@@ -46,8 +46,6 @@ server1.pem
 server1-key.pem
 ```
 
-Copy your `ca.pem` CA certificate into `/etc/ssl/certs` directory and run `update-ca-certificates` script to update your certificates bundle.
-
 Create `/etc/etcd2` directory, copy there corresponding certificate and key and set file permissions:
 
 ```
@@ -55,11 +53,17 @@ chown -R etcd:etcd /etc/etcd2/
 chmod 600 /etc/etcd2/*-key.pem
 ```
 
+Copy `ca.pem` CA certificate into `/etc/etcd2`.
+
+Or copy your `ca.pem` CA certificate into `/etc/ssl/certs` directory and run `update-ca-certificates` script to update your certificates bundle. In this case CA will be available system wide and there will be not necessary to set CA path for each app.
+
 Repeat this step on rest of the member nodes.
 
 ### Using etcd Proxy
 
 If you typically connect to an etcd cluster at a remote location, it's recommended to use this opportunity to configure an [etcd proxy][etcd proxy] that handles the remote connection logic and TLS termination, and reconfigure your apps to communicate through the proxy on localhost. In this case you have to generate client keypair (i.e. `client1.pem` and `client1-key.pem`) and follow the previous step.
+
+In addition it is necessary to modify your systemd [unit files][systemd-unit-file] or [drop-ins][drop-ins] which use `etcdctl` in `ExecStart*=` or `ExecStop*=` directives and replace `/usr/bin/etcdctl` with the `/usr/bin/etcdctl --no-sync`. This will force `etcdctl` to use proxy for all operations (not only members list).
 
 ## Configure etcd Keypair
 
@@ -69,8 +73,12 @@ Now we should configure etcd paths to the new certificates. Create `/etc/systemd
 [Service]
 Environment="ETCD_CERT_FILE=/etc/etcd2/server1.pem"
 Environment="ETCD_KEY_FILE=/etc/etcd2/server1-key.pem"
+Environment="ETCD_TRUSTED_CA_FILE=/etc/etcd2/ca.pem"
+Environment="ETCD_CLIENT_CERT_AUTH=true"
 Environment="ETCD_PEER_CERT_FILE=/etc/etcd2/server1.pem"
 Environment="ETCD_PEER_KEY_FILE=/etc/etcd2/server1-key.pem"
+Environment="ETCD_PEER_TRUSTED_CA_FILE=/etc/etcd2/ca.pem"
+Environment="ETCD_PEER_CLIENT_CERT_AUTH=true"
 ```
 
 Reload systemd config files `systemctl daemon-reload` and restart etcd2 `systemctl restart etcd2`. Then check your cluster health:
@@ -90,6 +98,10 @@ In the case of using an etcd proxy you have to use `/etc/systemd/system/etcd2.se
 [Service]
 Environment="ETCD_CERT_FILE=/etc/etcd2/client1.pem"
 Environment="ETCD_KEY_FILE=/etc/etcd2/client1-key.pem"
+Environment="ETCD_TRUSTED_CA_FILE=/etc/etcd2/ca.pem"
+Environment="ETCD_PEER_CERT_FILE=/etc/etcd2/client1.pem"
+Environment="ETCD_PEER_KEY_FILE=/etc/etcd2/client1-key.pem"
+Environment="ETCD_PEER_TRUSTED_CA_FILE=/etc/etcd2/ca.pem"
 # listen only loopback interface for security reasons
 Environment="ETCD_LISTEN_CLIENT_URLS=http://127.0.0.1:2379,http://127.0.0.1:4001"
 ```
@@ -130,12 +142,14 @@ etcdctl member update 50da8780fd6c8919 https://172.16.0.103:2380
 etcdctl member update 81901418ed658b78 https://172.16.0.101:2380
 ```
 
-You have to run each generated command on one of the member nodes and check etcd cluster health:
+You have to run generated commands **except last one** on one of the member nodes and check etcd cluster health:
 
 ```sh
 etcdctl member list
 etcdctl cluster-health
 ```
+
+**NOTE**: We will change URL for the last etcd member once we finish final step. This will help to avoid etcd proxy misconfiguration.
 
 If everything is ok we are ready to configure etcd members to use secure client URLs.
 
@@ -154,11 +168,17 @@ Environment="ETCD_LISTEN_CLIENT_URLS=https://0.0.0.0:2379,http://127.0.0.1:4001"
 Environment="ETCD_LISTEN_PEER_URLS=https://0.0.0.0:2380"
 ```
 
-Reload systemd config files `systemctl daemon-reload` and restart etcd2 `systemctl restart etcd2`. Then check your cluster health already with certificates:
+Reload systemd config files `systemctl daemon-reload` and restart etcd2 `systemctl restart etcd2`. Then check whether HTTPS is valid:
 
 ```sh
-etcdctl --cert-file /etc/etcd2/server1.pem --key-file /etc/etcd2/server1-key.pem member list
-etcdctl --cert-file /etc/etcd2/server1.pem --key-file /etc/etcd2/server1-key.pem cluster-health
+curl --cacert /etc/etcd2/ca.pem --cert /etc/etcd2/server1.pem --key /etc/etcd2/server1-key.pem https://172.16.0.101:2379/v2/stats/self
+```
+
+Check your cluster health using `etcdctl`:
+
+```sh
+etcdctl --ca-file /etc/etcd2/ca.pem --cert-file /etc/etcd2/server1.pem --key-file /etc/etcd2/server1-key.pem member list
+etcdctl --ca-file /etc/etcd2/ca.pem --cert-file /etc/etcd2/server1.pem --key-file /etc/etcd2/server1-key.pem cluster-health
 ```
 
 or using environment variables:
@@ -166,6 +186,7 @@ or using environment variables:
 ```sh
 export ETCDCTL_CERT_FILE=/etc/etcd2/server1.pem
 export ETCDCTL_KEY_FILE=/etc/etcd2/server1-key.pem
+export ETCDCTL_CA_FILE=/etc/etcd2/ca.pem
 etcdctl member list
 etcdctl cluster-health
 ```
@@ -190,4 +211,6 @@ If everything is ok, repeat this step on all your etcd member nodes.
 
 [drop-ins]: /os/using-systemd-drop-in-units.md
 [self-signed-ca]: /os/generate-self-signed-certificates.md
+[systemd-unit-file]: /os/getting-started-with-systemd.md#unit-file
 [etcd proxy]: https://github.com/coreos/etcd/blob/master/Documentation/proxy.md
+[etcdctl]: https://github.com/coreos/etcd/blob/master/etcdctl/README.md
