@@ -45,7 +45,7 @@ coreos:
                                      --volume=/var/log/ecs:/log \
                                      --volume=/var/ecs-data:/data \
                                      --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro \
-                                     --volume=/run/docker/execdriver/native:/run/docker/execdriver/native:ro \
+                                     --volume=/run/docker/execdriver/native:/var/lib/docker/execdriver/native:ro
                                      --publish=127.0.0.1:51678:51678 \
                                      --env=ECS_LOGFILE=/log/ecs-agent.log \
                                      --env=ECS_LOGLEVEL=${ECS_LOGLEVEL} \
