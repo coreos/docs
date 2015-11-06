@@ -96,7 +96,7 @@ You can provide cloud-config data using cloud.ca management portal or through th
 CloudStack API. When using CloudStack API, the cloud-conf must be base64 encoded
 as the ``userdata`` parameter.
 
-The current cloud-config example use a data disk as the docker datastore
+The current cloud-config example uses a data disk as the docker datastore
 (/var/lib/docker).
 
 
@@ -157,11 +157,11 @@ automatically.
 
 ## Launching Instances
 
-Before deploying CoreOS on cloud.ca, you need the following: 
+Before deploying CoreOS on cloud.ca, you need the following:
 
 * An account on ``https://your_organization_name.cloud.ca``.
 * Access to an Environment with a running VPC. VPC and subnet creation are not
-  part of the current documentation, refer to cloud.ca online help. 
+  part of the current documentation, refer to cloud.ca online help.
 * Your public SSH-key added into your cloud.ca environment.
 
 
@@ -250,5 +250,3 @@ Check out the [CoreOS Quickstart][quick-start] guide or dig into
 [cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 [quick-start]: {{site.baseurl}}/docs/quickstart
 [docs]: {{site.baseurl}}/docs
-
-
