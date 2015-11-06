@@ -11,10 +11,10 @@ not enforce SELinux protections by default.
 To verify whether the current SELinux policy would inhibit your containers,
 enable SELinux logging by running the following commands as root:
 
-* rm /etc/audit/rules.d/80-selinux.rules
-* rm /etc/audit/rules.d/99-default.rules
-* semodule -DB
-* systemctl restart audit-rules
+* `rm /etc/audit/rules.d/80-selinux.rules`
+* `rm /etc/audit/rules.d/99-default.rules`
+* `semodule -DB`
+* `systemctl restart audit-rules`
 
 and then run your container. Check the system logs for any messages
 containing "avc: denied". If any appear, SELinux would prevent your
@@ -31,8 +31,8 @@ root:
 
 To enable it across reboots, do the following:
 
-* cp --remove-destination `readlink /etc/selinux/config` /etc/selinux/config
-* Edit /etc/selinux/config and replace "SELINUX=permissive" with "SELINUX=enforcing"
+* `cp --remove-destination $(readlink /etc/selinux/config) /etc/selinux/config`
+* Edit `/etc/selinux/config` and replace "SELINUX=permissive" with "SELINUX=enforcing"
 
 ## Limitations
 
