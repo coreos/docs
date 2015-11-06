@@ -295,5 +295,5 @@ openssl x509 -in client.pem -text -noout
 
 For another examples, check out these documents:
 
-[Custom Certificate Authorities]({{site.baseurl}}/os/docs/latest/adding-certificate-authorities)
-[etcd Security Model]({{site.baseurl}}/etcd/docs/latest/security.html)
+[Custom Certificate Authorities](adding-certificate-authorities.md)
+[etcd Security Model](https://github.com/coreos/etcd/blob/master/Documentation/security.md)
