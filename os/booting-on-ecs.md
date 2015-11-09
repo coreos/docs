@@ -21,10 +21,10 @@ coreos:
      runtime: true
      content: |
        [Unit]
-       Description=AWS ECS Agent (https://github.com/aws/amazon-ecs-agent)
+       Description=AWS ECS Agent
        Documentation=https://docs.aws.amazon.com/AmazonECS/latest/developerguide/
        Requires=network-online.target docker.socket
-       After=network.target docker.socket
+       After=docker.socket
 
        [Service]
        Environment=ECS_CLUSTER=your_cluster_name
