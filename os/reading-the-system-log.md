@@ -126,4 +126,4 @@ And run `coreos-cloudinit` or reboot your CoreOS host to apply the changes.
 
 #### More Information
 <a class="btn btn-default" href="getting-started-with-systemd.md">Getting Started with systemd</a>
-<a class="btn btn-default" href="network-config-with-networkd.md">Network Configuration with networkd</a>
+<a class="btn btn-default" href="centralized-logging.md">Centralized Logging</a>
