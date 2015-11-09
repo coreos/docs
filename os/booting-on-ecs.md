@@ -23,7 +23,7 @@ coreos:
        [Unit]
        Description=AWS ECS Agent
        Documentation=https://docs.aws.amazon.com/AmazonECS/latest/developerguide/
-       Requires=network-online.target docker.socket
+       Requires=docker.socket
        After=docker.socket
 
        [Service]
