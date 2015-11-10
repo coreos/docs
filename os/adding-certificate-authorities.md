@@ -8,13 +8,11 @@ CoreOS supports custom Certificate Authorities (CAs) in addition to the default 
 
 The setup process for any of these use-cases is the same:
 
-1. Drop the certificate authority PEM file into `/etc/ssl/certs`
+1. Copy the PEM-encoded certificate authority file (usually with a `.pem` file name extension) to `/etc/ssl/certs`
 
-2. Run the `update-ca-certificates` script
+2. Run the `update-ca-certificates` script to update the system bundle of Certificate Authorities. All programs running on the system will now trust the added CA.
 
-# More Information
+## More Information
 
-For another examples, check out these documents:
-
-[Generate Self Signed Certificates]({{site.baseurl}}/os/docs/latest/generate-self-signed-certificates)
+[Generate Self Signed Certificates](generate-self-signed-certificates.md)
 [etcd Security Model]({{site.baseurl}}/etcd/docs/latest/security.html)
