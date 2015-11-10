@@ -4,7 +4,7 @@ CoreOS supports custom Certificate Authorities (CAs) in addition to the default 
 
 - Use a corporate wildcard certificate
 - Use your own CA to communicate with an installation of CoreUpdate
-- Use your own CA to communicate with a private Docker registry
+- Use your own CA to [encrypt communications with a container registry](registry-authentication.md)
 
 The setup process for any of these use-cases is the same:
 
@@ -14,5 +14,8 @@ The setup process for any of these use-cases is the same:
 
 ## More Information
 
-[Generate Self Signed Certificates](generate-self-signed-certificates.md)
+[Generate Self-Signed Certificates](generate-self-signed-certificates.md)
+
+[Use an insecure registry behind a firewall](registry-authentication.md#using-a-registry-without-ssl-configured)
+
 [etcd Security Model]({{site.baseurl}}/etcd/docs/latest/security.html)
