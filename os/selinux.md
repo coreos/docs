@@ -27,11 +27,11 @@ Once you're happy that your workload is compatible with the SELinux policy,
 you can temporarily enable enforcement by running the following command as
 root:
 
-* setenforce 1
+* `setenforce 1`
 
 To enable it across reboots, do the following:
 
-* `cp --remove-destination $(readlink /etc/selinux/config) /etc/selinux/config`
+* `cp --remove-destination $(realpath /etc/selinux/config) /etc/selinux/config`
 * Edit `/etc/selinux/config` and replace "SELINUX=permissive" with "SELINUX=enforcing"
 
 ## Limitations
