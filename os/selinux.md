@@ -13,6 +13,10 @@ enable SELinux logging by running the following commands as root:
 
 * `rm /etc/audit/rules.d/80-selinux.rules`
 * `rm /etc/audit/rules.d/99-default.rules`
+* `rm /etc/selinux/mcs`
+* `cp -a /usr/lib/selinux/mcs /etc/selinux`
+* `rm /var/lib/selinux`
+* `cp -a /usr/lib/selinux/policy /var/lib/selinux`
 * `semodule -DB`
 * `systemctl restart audit-rules`
 
