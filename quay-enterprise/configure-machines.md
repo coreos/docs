@@ -1,12 +1,12 @@
-# Configure Machines for Enterprise Registry
+# Configure Machines for Quay Enterprise
 
-The Enterprise Registry allows you to create teams and user accounts that match your existing business unit organization. A special type of user, a robot account, is designed to be used programatically by deployment systems and other pieces of software. Robot accounts are commonly configured with read-only access to an organizations repositories.
+Quay Enterprise allows you to create teams and user accounts that match your existing business unit organization. A special type of user, a robot account, is designed to be used programatically by deployment systems and other pieces of software. Robot accounts are commonly configured with read-only access to an organizations repositories.
 
 This guide we will assume you have the DNS record `registry.example.com` configured to point to your Enterprise Registry.
 
 ## Credentials
 
-Each CoreOS machine needs to be configured with the username and password for a robot account in order to deploy your containers. Docker looks for configured credentials in a `.dockercfg` file located within the user's home directory. You can download this file directly from the Enterprise Registry interface. Let's assume you've created a robot account called `myapp+deployment`.
+Each CoreOS machine needs to be configured with the username and password for a robot account in order to deploy your containers. Docker looks for configured credentials in a `.dockercfg` file located within the user's home directory. You can download this file directly from the Quay Enterprise interface. Let's assume you've created a robot account called `myapp+deployment`.
 
 Writing the `.dockercfg` can be specified in [cloud-config](https://coreos.com/os/docs/latest/cloud-config.html) with the write_files parameter, or created manually on each machine.
 
@@ -29,12 +29,12 @@ write_files:
       }
 ```
 
-Each machine booted with this cloud-config should automatically be authenticated with your Enterprise Registry.
+Each machine booted with this cloud-config should automatically be authenticated with Quay Enterprise.
 
 
 ### Manual Login
 
-To temporarily login to an Enterprise Registry account on a machine, run `docker login`:
+To temporarily login to a Quay Enterprise account on a machine, run `docker login`:
 
 ```sh
 $ docker login registry.example.com
