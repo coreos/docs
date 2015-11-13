@@ -10,6 +10,49 @@ Each CoreOS machine needs to be configured with the username and password for a 
 
 Writing the `.dockercfg` can be specified in [cloud-config](https://coreos.com/os/docs/latest/cloud-config.html) with the write_files parameter, or created manually on each machine.
 
+### Kubernetes Pull Secret
+
+If you are using Quay Enterprise in conjunction with a Kubernetes or Tectonic cluster, it's easiest to use the built in secret distribution method. This method allows for you to use different sets of robot accounts on a per-app basis, and also allows for them to be updated or rotated at any time across all machines in the cluster.
+
+An "Image Pull Secret" is a special secret that Kubernetes will use when pulling down the containers in a pod. It is a base64-encoded Docker config file. Here's an example:
+
+```sh
+$ cat ~/.dockercfg | base64
+eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaGMzTjNiM0prTVRJSyIsICJlbWFpbCI6ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K
+```
+
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: FoobarQuayCreds
+data:
+  .dockercfg: eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaGMzTjNiM0prTVRJSyIsICJlbWFpbCI6ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K
+type: kubernetes.io/dockercfg
+```
+
+To use this secret, first submit it into the cluster:
+
+```sh
+$ kubectl create -f /tmp/foobarquaycreds.yaml
+secrets/FoobarQuayCreds
+```
+
+And then reference it in a Pod or Replication Controller:
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: Foobar
+spec:
+  containers:
+    - name: foo
+      image: quay.io/coreos/etcd:v2.2.1
+  imagePullSecrets:
+    - name: FoobarQuayCreds
+```
+
 ### Cloud-Config
 
 A snippet to configure the credentials via write_files looks like:
