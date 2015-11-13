@@ -85,6 +85,48 @@ write_files:
       # Prevent kernel from automatically creating bond0 when the module is loaded.
       # This allows systemd-networkd to create and apply options to bond0.
       options bonding max_bonds=0
+  - path: /etc/systemd/network/10-eth.network
+    permissions: 0644
+    owner: root
+    content: |
+      [Match]
+      Name=eth*
+
+      [Network]
+      Bond=bond0
+  - path: /etc/systemd/network/20-bond.netdev
+    permissions: 0644
+    owner: root
+    content: |
+      [NetDev]
+      Name=bond0
+      Kind=bond
+
+      [Bond]
+      Mode=0 # defaults to balance-rr
+      MIIMonitorSec=100
+  - path: /etc/systemd/network/30-bond-dhcp.network
+    permissions: 0644
+    owner: root
+    content: |
+      [Match]
+      Name=bond0
+
+      [Network]
+      DHCP=ipv4
+coreos:
+  units:
+    - name: down-interfaces.service
+      command: start
+      content: |
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/bin/ip link set eth0 down
+        ExecStart=/usr/bin/ip addr flush dev eth0
+        ExecStart=/usr/bin/ip link set eth1 down
+        ExecStart=/usr/bin/ip addr flush dev eth1
+    - name: systemd-networkd.service
+      command: restart
 ```
 
 ### networkd and DHCP behavior
