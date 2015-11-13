@@ -12,7 +12,7 @@ Writing the `.dockercfg` can be specified in [cloud-config](https://coreos.com/o
 
 ### Kubernetes Pull Secret
 
-If you are using Quay Enterprise in conjunction with a Kubernetes or Tectonic cluster, it's easiest to use the built in secret distribution method. This method allows for you to use different sets of robot accounts on a per-app basis, and also allows for them to be updated or rotated at any time across all machines in the cluster.
+If you are using Quay Enterprise in conjunction with a Kubernetes or Tectonic cluster, it's easiest to use the built-in secret distribution method. This method allows for you to use different sets of robot accounts on a per-app basis, and also allows for them to be updated or rotated at any time across all machines in the cluster.
 
 An "Image Pull Secret" is a special secret that Kubernetes will use when pulling down the containers in a pod. It is a base64-encoded Docker config file. Here's an example:
 
@@ -38,7 +38,7 @@ $ kubectl create -f /tmp/foobarquaycreds.yaml
 secrets/foobarquaycreds
 ```
 
-And then reference it in a Pod:
+And then reference it in a Pod YAML definition:
 
 ```
 apiVersion: v1
@@ -53,7 +53,7 @@ spec:
     - name: foobarquaycreds
 ```
 
-Or a Replication Controller:
+Or a Replication Controller YAML definition:
 
 ```
 apiVersion: v1
