@@ -25,7 +25,7 @@ eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaGMzTjNiM0pr
 apiVersion: v1
 kind: Secret
 metadata:
-  name: FoobarQuayCreds
+  name: foobarquaycreds
 data:
   .dockercfg: eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaGMzTjNiM0prTVRJSyIsICJlbWFpbCI6ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K
 type: kubernetes.io/dockercfg
@@ -35,7 +35,7 @@ To use this secret, first submit it into the cluster:
 
 ```sh
 $ kubectl create -f /tmp/foobarquaycreds.yaml
-secrets/FoobarQuayCreds
+secrets/foobarquaycreds
 ```
 
 And then reference it in a Pod or Replication Controller:
@@ -44,13 +44,13 @@ And then reference it in a Pod or Replication Controller:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: Foobar
+  name: foobar
 spec:
   containers:
     - name: foo
       image: quay.io/coreos/etcd:v2.2.1
   imagePullSecrets:
-    - name: FoobarQuayCreds
+    - name: foobarquaycreds
 ```
 
 ### Cloud-Config
