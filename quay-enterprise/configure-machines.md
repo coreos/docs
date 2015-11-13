@@ -38,7 +38,7 @@ $ kubectl create -f /tmp/foobarquaycreds.yaml
 secrets/foobarquaycreds
 ```
 
-And then reference it in a Pod or Replication Controller:
+And then reference it in a Pod:
 
 ```
 apiVersion: v1
@@ -51,6 +51,31 @@ spec:
       image: quay.io/coreos/etcd:v2.2.1
   imagePullSecrets:
     - name: foobarquaycreds
+```
+
+Or a Replication Controller:
+
+```
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: foobar
+spec:
+  replicas: 2
+  selector:
+    app: fooapp
+  template:
+    metadata:
+      labels:
+        app: fooapp
+    spec:
+      containers:
+        - name: foo
+          image: quay.io/coreos/etcd:v2.2.1
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: foobarquaycreds
 ```
 
 ### Cloud-Config
