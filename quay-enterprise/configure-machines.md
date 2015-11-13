@@ -38,22 +38,9 @@ $ kubectl create -f /tmp/foobarquaycreds.yaml
 secrets/foobarquaycreds
 ```
 
-And then reference it in a Pod YAML definition:
+#### Reference Pull Secret with RC
 
-```
-apiVersion: v1
-kind: Pod
-metadata:
-  name: foobar
-spec:
-  containers:
-    - name: foo
-      image: quay.io/coreos/etcd:v2.2.1
-  imagePullSecrets:
-    - name: foobarquaycreds
-```
-
-Or a Replication Controller YAML definition:
+Reference your new secret in a Replication Controller YAML definition:
 
 ```
 apiVersion: v1
@@ -77,6 +64,10 @@ spec:
       imagePullSecrets:
         - name: foobarquaycreds
 ```
+
+#### Assign a Default Pull Secret per Namespace
+
+To use a specific pull secret as the default in a specific namespace, you can create a [Service Account](http://kubernetes.io/v1.1/docs/user-guide/service-accounts.html) that will be available to each pod. This is new in Kubernetes v1.1.
 
 ### Cloud-Config
 
