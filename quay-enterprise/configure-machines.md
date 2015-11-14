@@ -1,14 +1,73 @@
-# Configure Machines for Enterprise Registry
+# Configure Machines for Quay Enterprise
 
-The Enterprise Registry allows you to create teams and user accounts that match your existing business unit organization. A special type of user, a robot account, is designed to be used programatically by deployment systems and other pieces of software. Robot accounts are commonly configured with read-only access to an organizations repositories.
+Quay Enterprise allows you to create user accounts and teams, or groups, of those users that mirror your existing org chart. A special type of user, a robot account, is designed to be used programatically by deployment systems and other pieces of software. Robot accounts are usually configured with read-only access to a repository.
 
 This guide we will assume you have the DNS record `registry.example.com` configured to point to your Enterprise Registry.
 
 ## Credentials
 
-Each CoreOS machine needs to be configured with the username and password for a robot account in order to deploy your containers. Docker looks for configured credentials in a `.dockercfg` file located within the user's home directory. You can download this file directly from the Enterprise Registry interface. Let's assume you've created a robot account called `myapp+deployment`.
+Each CoreOS machine needs to be configured with the username and password for a robot account in order to deploy your containers. Docker looks for configured credentials in a `.dockercfg` file located within the user's home directory. You can download this file directly from the Quay Enterprise interface. Let's assume you've created a robot account called `myapp+deployment`.
 
 Writing the `.dockercfg` can be specified in [cloud-config](https://coreos.com/os/docs/latest/cloud-config.html) with the write_files parameter, or created manually on each machine.
+
+### Kubernetes Pull Secret
+
+If you are using Quay Enterprise in conjunction with a Kubernetes or Tectonic cluster, it's easiest to use the built-in secret distribution method. This method allows for you to use different sets of robot accounts on a per-app basis, and also allows for them to be updated or rotated at any time across all machines in the cluster.
+
+An "Image Pull Secret" is a special secret that Kubernetes will use when pulling down the containers in a pod. It is a base64-encoded Docker config file. Here's an example:
+
+```sh
+$ cat ~/.dockercfg | base64
+eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaGMzTjNiM0prTVRJSyIsICJlbWFpbCI6ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K
+```
+
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: myappcreds
+data:
+  .dockercfg: eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaGMzTjNiM0prTVRJSyIsICJlbWFpbCI6ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K
+type: kubernetes.io/dockercfg
+```
+
+To use this secret, first submit it into the cluster:
+
+```sh
+$ kubectl create -f /tmp/myappcreds.yaml
+secrets/myappcreds
+```
+
+#### Reference Pull Secret with RC
+
+Reference your new secret in a Replication Controller YAML definition:
+
+```
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: myapp
+spec:
+  replicas: 1
+  selector:
+    tier: webapp
+  template:
+    metadata:
+      labels:
+        tier: webapp
+    spec:
+      containers:
+        - name: foo
+          image: quay.io/coreos/etcd:v2.2.1
+          ports:
+            - containerPort: 2380
+      imagePullSecrets:
+        - name: myappcreds
+```
+
+#### Assign a Default Pull Secret per Namespace
+
+To use a specific pull secret as the default in a specific namespace, you can create a [Service Account](http://kubernetes.io/v1.1/docs/user-guide/service-accounts.html) that will be available to each pod. This is new in Kubernetes v1.1.
 
 ### Cloud-Config
 
@@ -29,12 +88,12 @@ write_files:
       }
 ```
 
-Each machine booted with this cloud-config should automatically be authenticated with your Enterprise Registry.
+Each machine booted with this cloud-config should automatically be authenticated with Quay Enterprise.
 
 
 ### Manual Login
 
-To temporarily login to an Enterprise Registry account on a machine, run `docker login`:
+To temporarily login to a Quay Enterprise account on a machine, run `docker login`:
 
 ```sh
 $ docker login registry.example.com
