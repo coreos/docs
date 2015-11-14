@@ -1,6 +1,6 @@
 # Configure Machines for Quay Enterprise
 
-Quay Enterprise allows you to create teams and user accounts that match your existing business unit organization. A special type of user, a robot account, is designed to be used programatically by deployment systems and other pieces of software. Robot accounts are commonly configured with read-only access to an organizations repositories.
+Quay Enterprise allows you to create user accounts and teams, or groups, of those users that mirror your existing org chart. A special type of user, a robot account, is designed to be used programatically by deployment systems and other pieces of software. Robot accounts are usually configured with read-only access to a repository.
 
 This guide we will assume you have the DNS record `registry.example.com` configured to point to your Enterprise Registry.
 
@@ -25,7 +25,7 @@ eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaGMzTjNiM0pr
 apiVersion: v1
 kind: Secret
 metadata:
-  name: foobarquaycreds
+  name: myappcreds
 data:
   .dockercfg: eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaGMzTjNiM0prTVRJSyIsICJlbWFpbCI6ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K
 type: kubernetes.io/dockercfg
@@ -34,8 +34,8 @@ type: kubernetes.io/dockercfg
 To use this secret, first submit it into the cluster:
 
 ```sh
-$ kubectl create -f /tmp/foobarquaycreds.yaml
-secrets/foobarquaycreds
+$ kubectl create -f /tmp/myappcreds.yaml
+secrets/myappcreds
 ```
 
 #### Reference Pull Secret with RC
@@ -46,23 +46,23 @@ Reference your new secret in a Replication Controller YAML definition:
 apiVersion: v1
 kind: ReplicationController
 metadata:
-  name: foobar
+  name: myapp
 spec:
-  replicas: 2
+  replicas: 1
   selector:
-    app: fooapp
+    tier: webapp
   template:
     metadata:
       labels:
-        app: fooapp
+        tier: webapp
     spec:
       containers:
         - name: foo
           image: quay.io/coreos/etcd:v2.2.1
           ports:
-            - containerPort: 80
+            - containerPort: 2380
       imagePullSecrets:
-        - name: foobarquaycreds
+        - name: myappcreds
 ```
 
 #### Assign a Default Pull Secret per Namespace
