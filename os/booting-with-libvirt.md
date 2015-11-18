@@ -82,7 +82,7 @@ ssh_authorized_keys:
  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
 ```
 
-Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are *not* supported on libvirt.
+Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are *not* supported on libvirt. But you can host your Cloud-Config using nginx and automatically sunstitute these variables following [nginx][nginx] doc.
 
 [cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
@@ -230,3 +230,5 @@ network):
 ```sh
 cat /var/lib/libvirt/dnsmasq/default.leases
 ```
+
+[nginx]: hosting-cloud-config-using-nginx.md

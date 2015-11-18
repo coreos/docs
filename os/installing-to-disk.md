@@ -86,7 +86,7 @@ ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
 ```
 
-Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are *not* supported when installing via the `coreos-install` script.
+Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are *not* supported when installing via the `coreos-install` script. But you can host your Cloud-Config using nginx and automatically sunstitute these variables following [nginx][nginx] doc.
 
 To start the installation script with a reference to our cloud-config file, run:
 
@@ -143,3 +143,5 @@ mount /dev/sda9 /mnt/
 
 Now that you have a machine booted it is time to play around.
 Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+
+[nginx]: hosting-cloud-config-using-nginx.md
