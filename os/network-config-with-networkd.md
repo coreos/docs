@@ -31,7 +31,7 @@ Setting up static networking in your cloud-config can be done by writing out the
 
 ```yaml
 #cloud-config
- 
+
 coreos:
   etcd2:
     # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
@@ -54,7 +54,7 @@ coreos:
       content: |
         [Match]
         Name=eth0
- 
+
         [Network]
         DNS=1.2.3.4
         Address=10.0.0.101/24
@@ -150,7 +150,9 @@ To apply the configuration, run `sudo systemctl restart systemd-networkd`. Check
 
 ## Configure Static Routes
 
-If you would like to configure static routes you can use `[Route]` section in systemd network unit. In example below we've defined static route to `172.16.0.0/24` network:
+Specify static routes in a systemd network unit's `[Route]` section. In this
+example, we create a unit file, `10-static.network`, and define in it a static
+route to the `172.16.0.0/24` subnet:
 
 #### 10-static.network
 
@@ -160,7 +162,8 @@ Gateway=192.168.122.1
 Destination=172.16.0.0/24
 ```
 
-Cloud-Config example:
+To specify the same route in a cloud-config, create the systemd network unit
+there instead:
 
 ```yaml
 coreos:
@@ -174,7 +177,9 @@ coreos:
 
 ## Configure Multiple IP Addresses
 
-If you would like to configure multiple IP addresses on one interface you have to define multiple `Address` keys. In example below we've also defined multiple gateways.
+To configure multiple IP addresses on one interface, we define multiple
+`Address` keys in the network unit. In the example below, we've also defined
+a different gateway for each IP address.
 
 #### 20-multi_ip.network
 
@@ -190,7 +195,7 @@ Address=10.0.1.101/24
 Gateway=10.0.1.1
 ```
 
-Cloud-Config example:
+To do the same thing through the cloud-config mechanism:
 
 ```yaml
 coreos:
