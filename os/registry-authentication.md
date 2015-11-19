@@ -55,7 +55,7 @@ write_files:
       content: |
         {
           "quay.io": {
-          "auth": "xXxXxXxXxXx=",
+            "auth": "xXxXxXxXxXx=",
             "email": "username@example.com"
           },
           "https://index.docker.io/v1/": {
