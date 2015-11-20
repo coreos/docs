@@ -170,7 +170,7 @@ README][coreos-metadata]
 				"dropins": [
 					{
 						"name": "metadata.conf",
-						"contents": "[Unit]\nRequires=coreos-metadata.service\nAfter=coreos-metadata.service\n\n[Service]\nEnvironmentFile=/run/metadata/coreos\nExecStart=\nExecStart=/usr/bin/etcd2 --advertise-client-urls=http://${COREOS_IPV4_PUBLIC}:2379 --initial-advertise-peer-urls=http://${COREOS_IPV4_LOCAL}:2380 --listen-client-urls=http://0.0.0.0:2379 --listen-peer-urls=http://${COREOS_IPV4_LOCAL}:2380 --initial-cluster=${ETCD_NAME}=http://${COREOS_IPV4_LOCAL}:2380"
+						"contents": "[Unit]\nRequires=coreos-metadata.service\nAfter=coreos-metadata.service\n\n[Service]\nEnvironmentFile=/run/metadata/coreos\nExecStart=\nExecStart=/usr/bin/etcd2 --advertise-client-urls=http://${COREOS_IPV4_PUBLIC}:2379 --initial-advertise-peer-urls=http://${COREOS_IPV4_LOCAL}:2380 --listen-client-urls=http://0.0.0.0:2379 --listen-peer-urls=http://${COREOS_IPV4_LOCAL}:2380 --initial-cluster=%m=http://${COREOS_IPV4_LOCAL}:2380"
 					}
 				]
 			}
@@ -196,7 +196,7 @@ ExecStart=/usr/bin/etcd2 \
 	--initial-advertise-peer-urls=http://${COREOS_IPV4_LOCAL}:2380 \
 	--listen-client-urls=http://0.0.0.0:2379 \
 	--listen-peer-urls=http://${COREOS_IPV4_LOCAL}:2380 \
-	--initial-cluster=${ETCD_NAME}=http://${COREOS_IPV4_LOCAL}:2380
+	--initial-cluster=%m=http://${COREOS_IPV4_LOCAL}:2380
 ```
 
 ## Custom Metadata Agent ##
