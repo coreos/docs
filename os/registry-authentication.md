@@ -11,6 +11,10 @@ Here's what an example looks like with credentials for Docker's public index and
 
 ```json
 {
+  "quay.io": {
+    "auth": "xXxXxXxXxXx=",
+    "email": "username@example.com"
+  },
   "https://index.docker.io/v1/": {
     "auth": "xXxXxXxXxXx=",
     "email": "username@example.com"
@@ -50,6 +54,10 @@ write_files:
       permissions: '0644'
       content: |
         {
+          "quay.io": {
+            "auth": "xXxXxXxXxXx=",
+            "email": "username@example.com"
+          },
           "https://index.docker.io/v1/": {
             "auth": "xXxXxXxXxXx=",
             "email": "username@example.com"
