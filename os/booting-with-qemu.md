@@ -94,7 +94,7 @@ wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_
 wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2.sig
 gpg --verify coreos_production_qemu.sh.sig
 gpg --verify coreos_production_qemu_image.img.bz2.sig
-bzip2 -d coreos_production_qemu_image.img
+bzip2 -d coreos_production_qemu_image.img.bz2
 chmod +x coreos_production_qemu.sh</pre>
     </div>
     <div class="tab-pane" id="alpha">
@@ -110,7 +110,7 @@ wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_i
 wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2.sig
 gpg --verify coreos_production_qemu.sh.sig
 gpg --verify coreos_production_qemu_image.img.bz2.sig
-bzip2 -d coreos_production_qemu_image.img
+bzip2 -d coreos_production_qemu_image.img.bz2
 chmod +x coreos_production_qemu.sh</pre>
     </div>
     <div class="tab-pane" id="beta">
@@ -126,7 +126,7 @@ wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_im
 wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2.sig
 gpg --verify coreos_production_qemu.sh.sig
 gpg --verify coreos_production_qemu_image.img.bz2.sig
-bzip2 -d coreos_production_qemu_image.img
+bzip2 -d coreos_production_qemu_image.img.bz2
 chmod +x coreos_production_qemu.sh</pre>
     </div>
   </div>
