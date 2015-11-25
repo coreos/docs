@@ -190,4 +190,4 @@ In the UI, navigate to the app and group, then click on "View All Graphs". You s
 
 ## Further Reading
 
-If you're ready to start writing a custom update client for your application, the [Omaha protocol spec](https://github.com/coreos/updateservicectl/blob/master/Documentation/protocol.md) is a good place to start. The complete list of update service docs can be [found here](https://github.com/coreos/updateservicectl/tree/master/Documentation).
+If you're ready to start writing a custom update client for your application, the [Omaha protocol spec](https://github.com/coreos/docs/blob/master/coreupdate/update-protocol.md) is a good place to start. The complete list of update service docs can be [found here](https://github.com/coreos/docs/tree/master/coreupdate).
