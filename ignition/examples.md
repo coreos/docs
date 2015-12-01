@@ -38,12 +38,15 @@ WantedBy=multi-user.target
 
 ## Reformat the Root Filesystem ##
 
-In many scenarios, it may be preferable to use btrfs for the root filesystem.
-This config will find the device with the filesystem label "ROOT" (the root
-filesystem) and reformat it to btrfs, maintaining the filesystem label. The
-force flag is needed here because CoreOS currently ships with an ext4 root
-filesystem. Without this flag, Ignition would recognize that there is existing
-data and refuse to overwrite it.
+Although CoreOS uses ext4 by default, the btrfs filesystem may be an
+appropriate choice for the system root partition in some scenarios.
+This example Ignition configuration will locate the device with the "ROOT"
+filesystem label (the root filesystem) and reformat it to btrfs, recreating
+the filesystem label. The force flag is needed here because CoreOS
+currently ships with an ext4 root filesystem. Without this flag, mkfs.btrfs
+would recognize that there is existing data and refuse to overwrite it.
+
+### Btrfs ###
 
 ```json
 {
@@ -64,6 +67,31 @@ data and refuse to overwrite it.
 	}
 }
 ```
+
+### XFS ###
+
+```json
+{
+	"ignitionVersion": 1,
+	"storage": {
+		"filesystems": [
+			{
+				"device": "/dev/disk/by-label/ROOT",
+				"format": "xfs",
+				"create": {
+					"force": true,
+					"options": [
+						"-L", "ROOT"
+					]
+				}
+			}
+		]
+	}
+}
+```
+
+The create options are forwarded as-is to the underlying mkfs.$format
+utility, their respective man pages document what's appropriate here.
 
 ## Create a RAID-enabled Data Volume ##
 
