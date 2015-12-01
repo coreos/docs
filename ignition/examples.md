@@ -91,7 +91,34 @@ would recognize that there is existing data and refuse to overwrite it.
 ```
 
 The create options are forwarded as-is to the underlying mkfs.$format
-utility, their respective man pages document what's appropriate here.
+utility, their respective man pages document the available options.
+
+## Create Files on the Root Filesystem ##
+
+Whether formatting a new filesystem or reusing an existing one, files may be
+created in the filesystem on the named device.  When using an existing,
+already-formatted filesystem, be sure to supply its filesystem format
+(e.g., `ext4`, `btrfs`) in the configuration used to create files.
+
+```json
+{
+	"ignitionVersion": 1,
+	"storage": {
+		"filesystems": [
+			{
+				"device": "/dev/disk/by-label/ROOT",
+				"format": "ext4",
+				"files": [
+					{
+						"path": "/foo/bar",
+						"contents": "example file\n"
+					}
+				]
+			}
+		]
+	}
+}
+```
 
 ## Create a RAID-enabled Data Volume ##
 
