@@ -1,14 +1,10 @@
-# Example Configs #
+# Example Configs
 
-Each of these examples is written in version 1 of the config. Always double
-check to make sure that your config matches the version that Ignition is
-expecting.
+Each of these examples is written in version 1 of the config. Ensure that any configuration matches the version that Ignition expects.
 
-## Starting Services ##
+## Starting Services
 
-This config will write a single service unit (shown below) with the contents of
-an example service. This unit will be enabled as a dependency of
-multi-user.target and therefore start on boot.
+This config will write a single service unit (shown below) with the contents of an example service. This unit will be enabled as a dependency of multi-user.target and therefore start on boot.
 
 ```json
 {
@@ -25,7 +21,7 @@ multi-user.target and therefore start on boot.
 }
 ```
 
-### example.service ###
+### example.service
 
 ```
 [Service]
@@ -36,17 +32,11 @@ ExecStart=/usr/bin/echo Hello World
 WantedBy=multi-user.target
 ```
 
-## Reformat the Root Filesystem ##
+## Reformat the Root Filesystem
 
-Although CoreOS uses ext4 by default, the btrfs filesystem may be an
-appropriate choice for the system root partition in some scenarios.
-This example Ignition configuration will locate the device with the "ROOT"
-filesystem label (the root filesystem) and reformat it to btrfs, recreating
-the filesystem label. The force flag is needed here because CoreOS
-currently ships with an ext4 root filesystem. Without this flag, mkfs.btrfs
-would recognize that there is existing data and refuse to overwrite it.
+Although CoreOS uses ext4 by default, the btrfs filesystem may be an appropriate choice for the system root partition in some scenarios. This example Ignition configuration will locate the device with the "ROOT" filesystem label (the root filesystem) and reformat it to btrfs, recreating the filesystem label. The `force` option must be set because otherwise `mkfs.btrfs` would recognize the existing filesystem and refuse to overwrite it.
 
-### Btrfs ###
+### Btrfs
 
 ```json
 {
@@ -68,7 +58,7 @@ would recognize that there is existing data and refuse to overwrite it.
 }
 ```
 
-### XFS ###
+### XFS
 
 ```json
 {
@@ -90,15 +80,11 @@ would recognize that there is existing data and refuse to overwrite it.
 }
 ```
 
-The create options are forwarded as-is to the underlying mkfs.$format
-utility, their respective man pages document the available options.
+The create options are forwarded to the underlying `mkfs.$format` utility. The respective `mkfs.$format` manual pages document the available options.
 
-## Create Files on the Root Filesystem ##
+## Create Files on the Root Filesystem
 
-Whether formatting a new filesystem or reusing an existing one, files may be
-created in the filesystem on the named device.  When using an existing,
-already-formatted filesystem, be sure to supply its filesystem format
-(e.g., `ext4`, `btrfs`) in the configuration used to create files.
+Whether formatting a new filesystem or reusing an existing one, files may be created in the filesystem on the named device.  When using an existing, already-formatted filesystem, supply its filesystem format (e.g., `ext4`, `btrfs`) in the configuration used to create files.
 
 ```json
 {
@@ -120,12 +106,9 @@ already-formatted filesystem, be sure to supply its filesystem format
 }
 ```
 
-## Create a RAID-enabled Data Volume ##
+## Create a RAID-enabled Data Volume
 
-In many scenarios, it may be useful to have an external data volume. This
-config will set up a RAID0 ext4 volume, data, between two seperate disks. It
-also writes a mount unit (shown below) which will automatically mount the
-volume to /var/lib/data on boot.
+In many scenarios, it may be useful to have an external data volume. This config will set up a RAID0 ext4 volume, `data`, between two separate disks. It also writes a mount unit (shown below) which will automatically mount the volume to `/var/lib/data`.
 
 ```json
 {
@@ -191,7 +174,7 @@ volume to /var/lib/data on boot.
 }
 ```
 
-### var-lib-data.mount ###
+### var-lib-data.mount
 
 ```
 [Mount]
@@ -203,16 +186,9 @@ Type=ext4
 WantedBy=local-fs.target
 ```
 
-## etcd2 With coreos-metadata ##
+## etcd2 with coreos-metadata
 
-This config will write a systemd drop-in (shown below) for etcd2.service. The
-drop-in modifies the ExecStart option, adding a few flags to etcd2's
-invocation. These flags use variables defined by coreos-metadata.service to
-change the interfaces on which etcd2 listens. coreos-metadata is provided by
-CoreOS and will read the appropriate metadata for the cloud environment and
-write the results to /run/metadata/coreos. For more information on the
-supported platforms and environment variables, refer to the [coreos-metadata
-README][coreos-metadata]
+This config will write a systemd drop-in (shown below) for the etcd2.service. The drop-in modifies the ExecStart option, adding a few flags to etcd2's invocation. These flags use variables defined by coreos-metadata.service to change the interfaces on which etcd2 listens. coreos-metadata is provided by CoreOS and will read the appropriate metadata for the cloud environment and write the results to `/run/metadata/coreos`. For more information on the supported platforms and environment variables, refer to the [coreos-metadata README](https://github.com/coreos/coreos-metadata/blob/master/README.md)
 
 ```json
 {
@@ -234,9 +210,7 @@ README][coreos-metadata]
 }
 ```
 
-[coreos-metadata]: https://github.com/coreos/coreos-metadata/blob/master/README.md
-
-### metadata.conf ###
+### metadata.conf
 
 ```
 [Unit]
@@ -254,18 +228,11 @@ ExecStart=/usr/bin/etcd2 \
 	--initial-cluster=%m=http://${COREOS_IPV4_LOCAL}:2380
 ```
 
-## Custom Metadata Agent ##
+## Custom Metadata Agent
 
-In the event that CoreOS is being used outside of a supported cloud environment
-(e.g. PXE booted, bare-metal installation, Mom and Pop Compute),
-coreos-metadata won't work. However, it is possible to write a custom metadata
-service if needed.
+In the event that CoreOS is being used outside of a supported cloud environment (e.g., a PXE booted, bare-metal installation), coreos-metadata won't work. However, it is possible to write a custom metadata service.
 
-
-This config will write a single service unit with the contents of a metadata
-agent service (shown below). This unit will not start on its own because it is
-not enabled and it is not a dependency of any other units. This metadata agent
-will fetch instance metadata from EC2 and save it to an ephemeral file.
+This config will write a single service unit with the contents of a metadata agent service (shown below). This unit will not start on its own, because it is not enabled and is not a dependency of any other units. This metadata agent will fetch instance metadata from EC2 and save it to an ephemeral file.
 
 ```json
 {
@@ -281,7 +248,7 @@ will fetch instance metadata from EC2 and save it to an ephemeral file.
 }
 ```
 
-### metadata.service ###
+### metadata.service
 
 ```
 [Unit]
