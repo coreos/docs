@@ -71,9 +71,7 @@ mkdir -p /var/lib/libvirt/images/coreos/coreos1/openstack/latest
 touch /var/lib/libvirt/images/coreos/coreos1/openstack/latest/user_data
 ```
 
-The `user_data` file may contain a script for a [cloud config][cloud-config]
-file. We recommend using ssh keys to log into the VM so at a minimum the
-contents of `user_data` should look something like this:
+The `user_data` file declares machine configuration in the [cloud config](https://coreos.com/os/docs/latest/cloud-config.html) format. We recommend using ssh keys to log into the VM, and since those keys are stored in `user_data,` at minimum that file should contain something like this:
 
 ```yaml
 #cloud-config
@@ -82,9 +80,7 @@ ssh_authorized_keys:
  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
 ```
 
-Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are *not* supported on libvirt. But you can host your Cloud-Config using nginx and automatically sunstitute these variables following [nginx][nginx] doc.
-
-[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
+Note: The `$private_ipv4` and `$public_ipv4` cloud-config substitution variables referenced in other documents are not supported on libvirt. The convenience of these automatic variables can be emulated by [using nginx to host your cloud-config](nginx-host-cloud-config.md).
 
 ### Network configuration
 
@@ -149,7 +145,6 @@ Now you can log in to the virtual machine with:
 ```sh
 ssh coreos1
 ```
-
 
 ## Using CoreOS
 
@@ -230,5 +225,3 @@ network):
 ```sh
 cat /var/lib/libvirt/dnsmasq/default.leases
 ```
-
-[nginx]: hosting-cloud-config-using-nginx.md

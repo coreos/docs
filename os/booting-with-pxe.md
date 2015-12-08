@@ -56,7 +56,7 @@ ssh_authorized_keys:
 
 You can view all of the [cloud-config options here]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/).
 
-Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are *not* supported on PXE systems. But you can host your Cloud-Config using nginx and automatically sunstitute these variables following [nginx][nginx] doc.
+Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are not supported on libvirt. The convenience of these automatic variables can be emulated by [using nginx to host your cloud-config](nginx-host-cloud-config.md).
 
 ### Choose a Channel
 
@@ -190,7 +190,6 @@ usr/share/oem/cloud-config.yml
 [oem]: {{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors/#image-customization
 [cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/
 [install-to-disk]: {{site.baseurl}}/docs/running-coreos/bare-metal/installing-to-disk
-[nginx]: hosting-cloud-config-using-nginx.md
 
 ## Using CoreOS
 
