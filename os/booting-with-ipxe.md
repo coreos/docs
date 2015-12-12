@@ -69,7 +69,7 @@ boot</pre>
 
 An easy place to host this boot script is on [http://pastie.org](http://pastie.org). Be sure to reference the "raw" version of script, which is accessed by clicking on the clipboard in the top right.
 
-Note: the iPXE environment won't open https links, which means you can't use [https://gist.github.com](https://gist.github.com) to store your script. Bummer, right?
+Note: The stock iPXE build doesn't include HTTPS support. You need to [build iPXE](https://ipxe.org/download#choosing_what_to_build) with the [`DOWNLOAD_PROTO_HTTPS` configuration option enabled](https://ipxe.org/crypto).
 
 
 ### Booting iPXE
