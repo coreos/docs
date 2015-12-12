@@ -193,27 +193,21 @@ For more details, check out [DigitalOcean's API documentation][do-api-docs].
 2. Give the machine a hostname, select the size, and choose a region.<br/><br/>
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12 co-m-screenshot">
-    <a href="size.png">
-      <img src="img/size.png" />
-    </a>
+    <img src="img/size.png" />
     <div class="co-m-screenshot-caption">Choosing a size and hostname</div>
   </div>
 </div>
 3. Enable User Data and add your cloud-config in the text box.<br /><br />
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12 co-m-screenshot">
-    <a href="settings.png">
-      <img src="img/settings.png" />
-    </a>
+    <img src="img/settings.png" />
     <div class="co-m-screenshot-caption">Droplet settings for networking and cloud-config</div>
   </div>
 </div>
 4. Choose your <a href="#choosing-a-channel">preferred channel</a> of CoreOS.<br/><br/>
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12 co-m-screenshot">
-    <a href="img/image.png">
-      <img src="img/image.png" />
-    </a>
+    <img src="img/image.png" />
     <div class="co-m-screenshot-caption">Choosing a CoreOS channel</div>
   </div>
 </div>
