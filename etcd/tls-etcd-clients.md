@@ -45,7 +45,7 @@ coreos:
     etcd_keyfile: /etc/ssl/etcd/client-key.pem
 ```
 
-will generate a `/run/systemd/system/fleet.service.d/20-cloudinit.conf` drop-in with these contents:
+will generate a [systemd drop-in][drop-ins] at `/run/systemd/system/fleet.service.d/20-cloudinit.conf` with these contents:
 
 ```ini
 [Service]
@@ -70,7 +70,7 @@ coreos:
     etcd_keyfile: /etc/ssl/etcd/client-key.pem
 ```
 
-This results in a
+This results in a systemd drop-in file
 `/run/systemd/system/locksmithd.service.d/20-cloudinit.conf` that looks like:
 
 ```ini
