@@ -23,7 +23,7 @@ Then install as you would with the PXE booted system, but be sure to include use
 
 
 ```sh
-coreos-install -d /dev/sda -c cloud-config.yml
+coreos-install -d /dev/sda -c cloud-config.yaml
 ```
 
 ## Choose a Channel
