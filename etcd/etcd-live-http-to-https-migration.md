@@ -46,14 +46,14 @@ server1.pem
 server1-key.pem
 ```
 
-Create the `/etc/etcd2` directory, then copy the corresponding certificate and key there. Set permissions to secure the directory and key file:
+Create the `/etc/ssl/etcd` directory, then copy the corresponding certificate and key there. Set permissions to secure the directory and key file:
 
 ```
-$ chown -R etcd:etcd /etc/etcd2
-$ chmod 600 /etc/etcd2/*-key.pem
+$ chown -R etcd:etcd /etc/ssl/etcd
+$ chmod 600 /etc/ssl/etcd/*-key.pem
 ```
 
-Copy the `ca.pem` CA certificate file into `/etc/etcd2` as well.
+Copy the `ca.pem` CA certificate file into `/etc/ssl/etcd` as well.
 
 Alternatively, copy `ca.pem` into `/etc/ssl/certs` instead, and run the `update-ca-certificates` script to update the system certificates bundle. After doing so, the added CA will be available to any program running on the node, and it will not be necessary to set the CA path for each application.
 
@@ -71,13 +71,13 @@ Now we will configure etcd to use the new certificates. Create a `/etc/systemd/s
 
 ```
 [Service]
-Environment="ETCD_CERT_FILE=/etc/etcd2/server1.pem"
-Environment="ETCD_KEY_FILE=/etc/etcd2/server1-key.pem"
-Environment="ETCD_TRUSTED_CA_FILE=/etc/etcd2/ca.pem"
+Environment="ETCD_CERT_FILE=/etc/ssl/etcd/server1.pem"
+Environment="ETCD_KEY_FILE=/etc/ssl/etcd/server1-key.pem"
+Environment="ETCD_TRUSTED_CA_FILE=/etc/ssl/etcd/ca.pem"
 Environment="ETCD_CLIENT_CERT_AUTH=true"
-Environment="ETCD_PEER_CERT_FILE=/etc/etcd2/server1.pem"
-Environment="ETCD_PEER_KEY_FILE=/etc/etcd2/server1-key.pem"
-Environment="ETCD_PEER_TRUSTED_CA_FILE=/etc/etcd2/ca.pem"
+Environment="ETCD_PEER_CERT_FILE=/etc/ssl/etcd/server1.pem"
+Environment="ETCD_PEER_KEY_FILE=/etc/ssl/etcd/server1-key.pem"
+Environment="ETCD_PEER_TRUSTED_CA_FILE=/etc/ssl/etcd/ca.pem"
 Environment="ETCD_PEER_CLIENT_CERT_AUTH=true"
 ```
 
@@ -96,12 +96,12 @@ If proxying etcd connections as discussed above, create a systemd [drop-in][drop
 
 ```
 [Service]
-Environment="ETCD_CERT_FILE=/etc/etcd2/client1.pem"
-Environment="ETCD_KEY_FILE=/etc/etcd2/client1-key.pem"
-Environment="ETCD_TRUSTED_CA_FILE=/etc/etcd2/ca.pem"
-Environment="ETCD_PEER_CERT_FILE=/etc/etcd2/client1.pem"
-Environment="ETCD_PEER_KEY_FILE=/etc/etcd2/client1-key.pem"
-Environment="ETCD_PEER_TRUSTED_CA_FILE=/etc/etcd2/ca.pem"
+Environment="ETCD_CERT_FILE=/etc/ssl/etcd/client1.pem"
+Environment="ETCD_KEY_FILE=/etc/ssl/etcd/client1-key.pem"
+Environment="ETCD_TRUSTED_CA_FILE=/etc/ssl/etcd/ca.pem"
+Environment="ETCD_PEER_CERT_FILE=/etc/ssl/etcd/client1.pem"
+Environment="ETCD_PEER_KEY_FILE=/etc/ssl/etcd/client1-key.pem"
+Environment="ETCD_PEER_TRUSTED_CA_FILE=/etc/ssl/etcd/ca.pem"
 # Listen only on loopback interface.
 Environment="ETCD_LISTEN_CLIENT_URLS=http://127.0.0.1:2379,http://127.0.0.1:4001"
 ```
@@ -178,22 +178,22 @@ Environment="ETCD_LISTEN_PEER_URLS=https://0.0.0.0:2380"
 Reload systemd configs with `systemctl daemon-reload` and restart etcd by issuing `systemctl restart etcd2`. Check that HTTPS connections are working properly with, e.g.:
 
 ```sh
-$ curl --cacert /etc/etcd2/ca.pem --cert /etc/etcd2/server1.pem --key /etc/etcd2/server1-key.pem https://172.16.0.101:2379/v2/stats/self
+$ curl --cacert /etc/ssl/etcd/ca.pem --cert /etc/ssl/etcd/server1.pem --key /etc/ssl/etcd/server1-key.pem https://172.16.0.101:2379/v2/stats/self
 ```
 
 Check cluster health with `etcdctl`, now under HTTPS encryption:
 
 ```sh
-$ etcdctl --ca-file /etc/etcd2/ca.pem --cert-file /etc/etcd2/server1.pem --key-file /etc/etcd2/server1-key.pem member list
-$ etcdctl --ca-file /etc/etcd2/ca.pem --cert-file /etc/etcd2/server1.pem --key-file /etc/etcd2/server1-key.pem cluster-health
+$ etcdctl --ca-file /etc/ssl/etcd/ca.pem --cert-file /etc/ssl/etcd/server1.pem --key-file /etc/ssl/etcd/server1-key.pem member list
+$ etcdctl --ca-file /etc/ssl/etcd/ca.pem --cert-file /etc/ssl/etcd/server1.pem --key-file /etc/ssl/etcd/server1-key.pem cluster-health
 ```
 
 The certificate options can be read from environment variables to shorten the commands:
 
 ```sh
-$ export ETCDCTL_CERT_FILE=/etc/etcd2/server1.pem
-$ export ETCDCTL_KEY_FILE=/etc/etcd2/server1-key.pem
-$ export ETCDCTL_CA_FILE=/etc/etcd2/ca.pem
+$ export ETCDCTL_CERT_FILE=/etc/ssl/etcd/server1.pem
+$ export ETCDCTL_KEY_FILE=/etc/ssl/etcd/server1-key.pem
+$ export ETCDCTL_CA_FILE=/etc/ssl/etcd/ca.pem
 $ etcdctl member list
 $ etcdctl cluster-health
 ```
