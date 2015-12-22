@@ -1,27 +1,32 @@
 # CoreOS Documentation
 
-These are publicly accessible versions of the documentation on [coreos.com](http://coreos.com/docs/).
+This repository contains the Markdown source of the [CoreOS documentation][coreos-docs].
 
-Check out the [help-wanted tag](https://github.com/coreos/docs/issues?q=is%3Aopen+label%3Ahelp-wanted) if you're not sure what to help out with.
+## Contributing
 
-1. Fork this repo
-2. Send a Pull Request
-3. We will get your fix up on [coreos.com](http://coreos.com/docs/)
+The CoreOS documentation is released under the [Apache 2.0 License][asl], and we welcome contributions. Check out the [help-wanted tag][help-wanted] in this project's Issues list for good places to start participating.
 
-Thanks for your contributions and fixes!
+Submit fixes and additions in the form of `git` *Pull Requests* (PRs). The general process is the typical git fork-branch-PR-review-merge cycle:
 
-## Translations
+1. Fork this repository into your git workspace and/or GitHub account
+2. Make changes in a topic branch or your fork's `master`
+3. Send a Pull Request from the branch containing the changes
+4. Maintainers will review the PR and either merge it or make comments
 
-We accept patches for documentation translation. Please send the
-documents as a pull request and follow two guidelines:
+### Style guide
 
-1. Name the files identically to the originals but put them in a
-   directory that matches the language locale. For example: JA\_JP,
-   ZH\_CN or KO\_KN.
+The [style guide][style] prescribes the conventions of formatting and English style preferred in CoreOS project documentation.
 
-2. Add an explanation about the translated document to the top of the
-   file: "These documents were localized into Esperanto by Community
-   Member <person@example.com> and last updated on 2014-04-04. If you
-   find inaccuracies or problems please file an issue on GitHub."
+### Translations
 
-Thank you for your contributions.
+We happily accept accurate translations. Please send the documents as a pull request and follow two guidelines:
+
+1. Name the files identically to the originals, but put them beneath a directory named for the translation's `gettext` locale. For example: `JA_JP/doc.md`, `ZH_CN/doc.md,` or `KO_KN/doc.md`.
+
+2. Add an explanation about the translated document to the top of the file: "These documents were translated into Esperanto by Community Member <person@example.com> and last updated on 2015-12-01. If you find inaccuracies or problems please file an issue on GitHub."
+
+
+[asl]: LICENSE
+[coreos-docs]: https://coreos.com/docs/
+[help-wanted]: https://github.com/coreos/docs/issues?q=is%3Aopen+label%3Ahelp-wanted
+[style]: STYLE.md "CoreOS Documentation Style and Formatting"
