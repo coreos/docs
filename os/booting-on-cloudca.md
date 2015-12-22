@@ -33,12 +33,14 @@ image.
         [change the channel to alpha][switching-channels]:
         </p>
       </div>
+
 ```yaml
 #cloud-config
 coreos:
   update:
     group: alpha
 ```
+
     </div>
     <div class="tab-pane" id="beta">
       <div class="channel-info">
@@ -47,12 +49,14 @@ coreos:
         cloud-config to [change the channel to beta][switching-channels]:
         </p>
       </div>
+
 ```yaml
 #cloud-config
 coreos:
   update:
     group: beta
 ```
+
     </div>
     <div class="tab-pane active" id="stable">
       <div class="channel-info">
@@ -216,6 +220,7 @@ Before deploying CoreOS on cloud.ca, you need the following:
     <div class="caption">Instance details</div>
   </div>
 </div>
+
 ```sh
 $ ssh -i ~/.ssh/user1_rsa core@74.X.X.X
 CoreOS stable (766.4.0)
