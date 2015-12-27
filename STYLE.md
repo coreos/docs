@@ -128,8 +128,6 @@ CoreOS documents have two major publication targets: the [coreos.com documentati
 
 ## Command line grammar
 
-### Terms
-
 *Commands* *invoke* or *execute* programs. Commands *take* *arguments* and *accept* *options*, which themselves may be *set* to *values*.
 
 ### Example: Documenting `echo(1)`
