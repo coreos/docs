@@ -1,4 +1,4 @@
-# Running CoreOS on Azure
+# Running CoreOS on Microsoft Azure
 
 ## Choosing a Channel
 
@@ -49,10 +49,10 @@ startup, and more via cloud-config. Jump over to the [docs to learn about the
 supported features][cloud-config-docs]. Cloud-config is intended to bring up a
 cluster of machines into a minimal useful state and ideally shouldn't be used
 to configure anything that isn't standard across many hosts. Once an instance
-is provisioned on Azure, the cloud-config cannot be modified.
+is provisioned on Microsoft Azure, the cloud-config cannot be modified.
 
 You can provide raw cloud-config data to CoreOS
-<a href="#via-the-cross-platform-cli">via the Azure cross-platform CLI</a>.
+<a href="#via-the-cross-platform-cli">via the Microsoft Azure Cross-Platform CLI</a>.
 
 The most common cloud-config for Azure looks like:
 
@@ -95,12 +95,12 @@ service.
 
 ### Via the Cross-Platform CLI
 
-Follow the [installation and configuration guides][xplat-cli] for the Azure
-Cross-Platform CLI to set up your local installation. This tool can be used to
-perform most of the needed tasks.
+Follow the [installation and configuration guides][xplat-cli] for the Microsoft
+Azure Cross-Platform CLI to set up your local installation. This tool can be
+used to perform most of the needed tasks.
 
-Instances on Azure must be connected to a cloud service. Create a new cloud
-service with the following command:
+Instances on Microsoft Azure must be connected to a cloud service. Create a new
+cloud service with the following command:
 
 ```sh
 azure service create my-cloud-service
