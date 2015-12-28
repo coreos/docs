@@ -74,18 +74,25 @@ The abridged skeletal markdown source for this document's headings:
 
 ### Heading style
 
-### Heading semantics and the sidebar outline
+[...]
+
+## Hyperlink Considerations
+
+### Naming
+
+### Marking down the link
+
+#### Example: Reference-style hyperlinking
 
 [...]
 
 ## Command line grammar
 
-### Terms
+### Example: Documenting `echo(1)`
 
 [...]
 
 ## File name extension conventions
-
 ```
 
 ### Example: The "average" document
