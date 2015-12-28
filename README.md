@@ -6,7 +6,7 @@ This repository contains the Markdown source of the [CoreOS documentation][coreo
 
 The CoreOS documentation is released under the [Apache 2.0 License][asl], and we welcome contributions. Check out the [help-wanted tag][help-wanted] in this project's Issues list for good places to start participating.
 
-Submit fixes and additions in the form of `git` *Pull Requests* (PRs). The general process is the typical git fork-branch-PR-review-merge cycle:
+Submit fixes and additions in the form of [GitHub *Pull Requests* (PRs)][pull-requests]. The general process is the typical git fork-branch-PR-review-merge cycle:
 
 1. Fork this repository into your git workspace and/or GitHub account
 2. Make changes in a topic branch or your fork's `master`
@@ -27,6 +27,7 @@ We happily accept accurate translations. Please send the documents as a pull req
 
 
 [asl]: LICENSE
+[pull-requests]: https://help.github.com/articles/using-pull-requests/
 [coreos-docs]: https://coreos.com/docs/
 [help-wanted]: https://github.com/coreos/docs/issues?q=is%3Aopen+label%3Ahelp-wanted
 [style]: STYLE.md "CoreOS Documentation Style and Formatting"
