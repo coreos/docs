@@ -1,7 +1,5 @@
 # Running CoreOS on Interoute VDC
 
-(Version date: 2015-12-23. Author: Phillip Kent for Interoute)
-
 [Interoute Virtual Data Centre](https://cloudstore.interoute.com/what_is_vdc) is an Infrastructure-as-a-Service platform, which is integrated into Interoute's high-performance [global fibre optic network](https://cloudstore.interoute.com/networking).
 
 This document is a guide to deploying a single CoreOS virtual machine on Interoute VDC. The CoreOS default configuration of SSH keypair-based authentication will be used.
