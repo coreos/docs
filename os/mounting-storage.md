@@ -22,7 +22,7 @@ coreos:
 
 Docker containers can be very large and debugging a build process makes it easy to accumulate hundreds of containers. It's advantageous to use attached storage to expand your capacity for container images. Be aware that some cloud providers treat certain disks as ephemeral and you will lose all Docker images contained on that disk.
 
-We're going to mount a btrfs device to `/var/lib/docker`, where Docker stores images. We can do this on the fly when the machines starts up with a oneshot unit that formats the drive and another one that runs afterwards to mount it. Be sure to hardcode the correct device or look for a device by label:
+We're going to mount a ext4 device to `/var/lib/docker`, where Docker stores images. We can do this on the fly when the machines starts up with a oneshot unit that formats the drive and another one that runs afterwards to mount it. Be sure to hardcode the correct device or look for a device by label:
 
 ```yaml
 #cloud-config
@@ -39,7 +39,7 @@ coreos:
         Type=oneshot
         RemainAfterExit=yes
         ExecStart=/usr/sbin/wipefs -f /dev/xvdb
-        ExecStart=/usr/sbin/mkfs.btrfs -f /dev/xvdb
+        ExecStart=/usr/sbin/mkfs.ext4 -F /dev/xvdb
     - name: var-lib-docker.mount
       command: start
       content: |
@@ -51,7 +51,7 @@ coreos:
         [Mount]
         What=/dev/xvdb
         Where=/var/lib/docker
-        Type=btrfs
+        Type=ext4
 ```
 
 Notice that we're starting both units at the same time and using the power of systemd to work out the dependencies for us. In this case, `var-lib-docker.mount` requires `format-ephemeral.service`, ensuring that our storage will always be formatted before it is mounted. Docker will refuse to start otherwise.
