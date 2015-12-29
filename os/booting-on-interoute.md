@@ -199,7 +199,6 @@ To be able to make an SSH connection from the Internet to the virtual machine a 
 ```sh
 > createPortForwardingRule protocol=TCP publicport=22 ipaddressid=b2b68408-76a9-4dc7-9a2f-f3cf10616aca virtualmachineid=e08a3199-9d16-4244-aa89-23395d9627d7 privateport=22 openfirewall=true
 ```
-
 The 'virtualmachineid' can be read from the deploy output above. 'ipaddressid' can be found with the API command listPublicIpAddresses, and (if there is more than one public IP address) you look for the 'associatednetworkid' matching the id of the network that the virtual machine is attached to:
 
 ```sh
