@@ -1,18 +1,18 @@
 # Running CoreOS on Interoute VDC
 
-[Interoute Virtual Data Centre](https://cloudstore.interoute.com/what_is_vdc) is an Infrastructure-as-a-Service platform, which is integrated into Interoute's high-performance [global fibre optic network](https://cloudstore.interoute.com/networking).
+[Interoute Virtual Data Centre](https://cloudstore.interoute.com/what_is_vdc) is an Infrastructure-as-a-Service platform, which is integrated into Interoute's [global fibre optic network](https://cloudstore.interoute.com/networking).
 
 This document is a guide to deploying a single CoreOS virtual machine on Interoute VDC. The CoreOS default configuration of SSH keypair-based authentication will be used.
 
-Note: commands beginning with '$' are to be typed into the command line, and commands beginning '>' are to be typed into Cloudmonkey. Long lines of code have been broken up for display purposes, indicated by a continuation symbol '\', but if you copy the code make sure to remove any linebreaks. 
+Note: commands beginning with '$' are to be typed into the command line, and commands beginning '>' are to be typed into Cloudmonkey.
 
 ## Prerequisites
 
 The following are assumed:
 
 * You have an Interoute VDC account. You can easily [sign up for a free trial](https://cloudstore.interoute.com/vdc-trial).
-* You have got an API key and Secret key for your VDC account ([how to generate API access keys for VDC](http://cloudstore.interoute.com/knowledge-centre/library/vdc-api-introduction-api)).
-* You have the  Cloudmonkey command line tool installed and configured for Interoute VDC on the computer that you are working on. 
+* You have an API key and a Secret key for your VDC account. See [how to generate API access keys for VDC](http://cloudstore.interoute.com/knowledge-centre/library/vdc-api-introduction-api) if you need to create these.
+* You have the Cloudmonkey command line tool installed and configured for Interoute VDC on the computer that you are working on. 
 
 ## Cloudmonkey Setup
 
@@ -59,13 +59,12 @@ private key should always be held securely on your own computer.
 The next step is to 'register' your keypair by uploading your public key to VDC, so that virtual machines can boot up with that information:
 
 ```sh
-> registerSSHKeyPair name=CoreOS-Key01 \
-    publickey="ssh-rsa AAAAB3NzaC1y...........fyskMb4oBw== demo.user@interoute.com"
+> registerSSHKeyPair name=CoreOS-Key01 publickey="ssh-rsa AAAAB3NzaC1y...........fyskMb4oBw== demo.user@interoute.com"
 keypair:
 name = CoreOS-Key01
 fingerprint = 55:33:b4:d3:b6:52:fb:79:97:fc:e8:16:58:6e:42:ce
 ```
-(The public key has been abbreviated here; it must be entered as a single long sequence, be careful when copying the public key that you don't introduce any linebreaks.)
+(The public key input has been abbreviated here; it must be entered as a single long sequence, be careful when copying the public key that you don't introduce any linebreaks.)
 
 The keypair 'name' parameter is arbitrary and is used to identify this public key. Multiple keys can be stored in your VDC account.
 
@@ -100,12 +99,7 @@ There are 109 templates in the list, only the relevant COREOS ones are shown her
 The following API call is used to deploy a new virtual machine running CoreOS in VDC:
 
 ```sh
-> deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d \
-    zoneid=a5d3e015-0797-4283-b562-84feea6f66af \
-    templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 \
-    networkids=c5841e7c-e69e-432b-878b-c108b07a160f \
-    keypair=CoreOS-Key01 \
-    name=CoreOS-VM-01
+> deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d zoneid=a5d3e015-0797-4283-b562-84feea6f66af templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 networkids=c5841e7c-e69e-432b-878b-c108b07a160f keypair=CoreOS-Key01 name=CoreOS-VM-01
 ```
 Six parameter values are required. 'keypair' and 'templateid' you have already seen above. 'name' can be any string of your choice.
 
@@ -141,7 +135,7 @@ The 'serviceofferingid' represents the amount of RAM memory and number of CPUs t
 +--------------------------------------+
 ```
 
-Finally, the 'networkids' parameter specifies the network(s) which the virtual machine will be attached to. You need to specify at least one network.
+Finally, the 'networkids' parameter specifies the network(s) to which the virtual machine will be attached. You need to specify at least one network.
 
 You can use the listNetworks command to get information about the available networks.
 
@@ -203,13 +197,7 @@ Note that no root password is output because password access is not enabled for 
 To be able to make an SSH connection from the Internet to the virtual machine a port forwarding rule for the network must be created.
 
 ```sh
-> createPortForwardingRule \
-    protocol=TCP \
-    publicport=22 \
-    ipaddressid=b2b68408-76a9-4dc7-9a2f-f3cf10616aca \
-    virtualmachineid=e08a3199-9d16-4244-aa89-23395d9627d7 \
-    privateport=22 \
-    openfirewall=true
+> createPortForwardingRule protocol=TCP publicport=22 ipaddressid=b2b68408-76a9-4dc7-9a2f-f3cf10616aca virtualmachineid=e08a3199-9d16-4244-aa89-23395d9627d7 privateport=22 openfirewall=true
 ```
 
 The 'virtualmachineid' can be read from the deploy output above. 'ipaddressid' can be found with the API command listPublicIpAddresses, and (if there is more than one public IP address) you look for the 'associatednetworkid' matching the id of the network that the virtual machine is attached to:
@@ -235,7 +223,7 @@ The last configuration step is to create an egress firewall rule for the network
 
 (Note that these network rules are simple and permissive, while rules for production virtual machines should always be more strictly defined.)
 
-The virtual machine is now set up for connection, using the 'ipaddress' found above and specifying the private SSH key file to match the public key which was registered in VDC (and there is no root user in CoreOS, the default user is 'core'):
+The virtual machine is now set up for connection, using the 'ipaddress' found above and specifying the private SSH key file to match the public key which was registered in VDC. Note that there is no root user in CoreOS, the default user is 'core':
 
 ```sh
 $ ssh -i ~/.ssh/id_rsa_coreos core@213.XXX.XXX.185
