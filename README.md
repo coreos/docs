@@ -13,6 +13,29 @@ Submit fixes and additions in the form of [GitHub *Pull Requests* (PRs)][pull-re
 3. Send a Pull Request from the branch containing the changes
 4. Maintainers will review the PR and either merge it or make comments
 
+### Clear commit messages
+
+Commit messages should loosely follow a format that makes clear **what** changed and **why** it changed. The first line of each commit message should clearly state what module or file changed, summarize the change very briefly, and should end, without a period, somewhere short of 70 characters. After a blank line, the body of the commit message should then explain why the change was needed, with lines wrapped at 72 characters wide and sentences normally punctuated. Cite related issues or previous revisions as appropriate. For example:
+
+```
+ignition: Update etcd example to use %m
+
+Make the etcd configuration example use ignition's %m instead of the
+ETCD_NAME environment variable. Fixes #123.
+```
+
+This format can be described somewhat more formally as:
+
+```
+<module or file name>: <what changed>
+<BLANK LINE>
+<why this change was made>
+<BLANK LINE>
+[<footer>]
+```
+
+Where the optional `[<footer>]` might include `signed-off-by` lines and other metadata.
+
 ### Style guide
 
 The [style guide][style] prescribes the conventions of formatting and English style preferred in CoreOS project documentation.
