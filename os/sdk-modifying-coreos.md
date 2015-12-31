@@ -196,10 +196,10 @@ We've compiled a [list of tips and tricks][sdktips] that can make working with t
 
 [android-repo-git]: https://source.android.com/source/developing.html
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
-[devimages]: /docs/sdk-distributors/sdk/building-development-images
+[devimages]: sdk-building-development-images.md
 [github-coreos]: https://github.com/coreos/
 [irc]: irc://irc.freenode.org:6667/#coreos
-[mantle]: /docs/sdk-distributors/sdk/mantle
-[prodimages]: /docs/sdk-distributors/sdk/building-production-images
+[mantle]: sdk-testing-with-mantle.md
+[prodimages]: sdk-building-production-images.md
 [repo-blog]: http://google-opensource.blogspot.com/2008/11/gerrit-and-repo-android-source.html
-[sdktips]: /docs/sdk-distributors/sdk/tips-and-tricks
+[sdktips]: sdk-tips-and-tricks.md
