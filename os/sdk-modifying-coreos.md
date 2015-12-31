@@ -1,33 +1,22 @@
 # CoreOS Developer SDK Guide
 
-These are the instructions for building CoreOS itself. By the end of
-the guide you will build a developer image that you can run under
-KVM and have tools for making changes to the code.
+These are the instructions for building CoreOS itself. By the end of the guide you will build a developer image that you can run under KVM and have tools for making changes to the code.
 
-CoreOS is an open source project. All of the source for CoreOS is
-available on [github][github-coreos]. If you find issues with these docs
-or the code please send a pull request.
+CoreOS is an open source project. All of the source for CoreOS is available on [github][github-coreos]. If you find issues with these docs or the code please send a pull request.
 
-You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
+Direct questions and suggestions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
-[github-coreos]: https://github.com/coreos/
-[irc]: irc://irc.freenode.org:6667/#coreos
-[coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
+## Getting started
 
-## Getting Started
-
-Let's get set up with an SDK chroot and build a bootable image of CoreOS. The
-SDK chroot has a full toolchain and isolates the build process from quirks and
-differences between host OSes. The SDK must be run on an x86-64 Linux machine,
-the distro should not matter (Ubuntu, Fedora, etc).
+Let's get set up with an SDK chroot and build a bootable image of CoreOS. The SDK chroot has a full toolchain and isolates the build process from quirks and differences between host OSes. The SDK must be run on an x86-64 Linux machine, the distro should not matter (Ubuntu, Fedora, etc).
 
 ### Prerequisites
 
 System requirements to get started:
 
-- curl
-- git
-- python2
+* curl
+* git
+* python2
 
 You also need a proper git setup:
 
@@ -40,8 +29,7 @@ git config --global user.name "Your Name"
 
 ### Install repo
 
-`repo` helps to manage the collection of git repositories that makes up CoreOS.
-Pull down the code and add it to your path:
+The `repo` utility helps to manage the collection of git repositories that makes up CoreOS. Download repo and add it to `$PATH`:
 
 ```sh
 mkdir ~/bin
@@ -50,20 +38,17 @@ curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
 chmod a+x ~/bin/repo
 ```
 
-You may want to add this to your .bashrc or /etc/profile.d/ so that you don’t
-need to reset your $PATH manually each time you open a new shell.
+You may want to add this to `.bashrc` or `/etc/profile.d/` so that you don’t need to reset `$PATH` in every new shell.
 
 ### Bootstrap the SDK chroot
 
-Create a project directory. This will hold all of your git repos and the SDK
-chroot. A few gigs of space will be necessary.
+Create a project directory. This will hold all of your git repos and the SDK chroot. A few gigabytes of space will be necessary.
 
 ```sh
 mkdir coreos; cd coreos
 ```
 
-Initialize the .repo directory with the manifest that describes all of the git
-repos required to get started.
+Initialize the .repo directory with the manifest that describes all of the git repos required to get started.
 
 ```sh
 repo init -u https://github.com/coreos/manifest.git
@@ -99,8 +84,7 @@ Note that "64 bit ARM" is known by two short forms: `aarch64` (as seen in the co
 
 ### Building an image
 
-Download and enter the SDK chroot which contains all of the compilers and
-tooling.
+Download and enter the SDK chroot which contains all of the compilers and tooling.
 
 ```sh
 ./chromite/bin/cros_sdk
@@ -128,9 +112,7 @@ To create a root filesystem for the `amd64-usr` target beneath the directory `/b
 
 ##### 64 bit ARM: The `arm64-usr` target
 
-Similarly, use `arm64-usr` for the cross-compiled ARM target. If switching
-between different targets in a single SDK, you can add the `--board=` option
-to the subsequent `build_packages`, `build_image`, and other similar commands to select the given target architecture and path.
+Similarly, use `arm64-usr` for the cross-compiled ARM target. If switching between different targets in a single SDK, you can add the `--board=` option to the subsequent `build_packages`, `build_image`, and other similar commands to select the given target architecture and path.
 
 ```sh
 ./setup_board --default --board=arm64-usr
@@ -170,28 +152,23 @@ After `build_image` completes, it prints commands for converting the raw bin int
 
 ### Booting
 
-Once you build an image you can launch it with KVM (instructions will
-print out after `image_to_vm.sh` runs).
+Once you build an image you can launch it with KVM (instructions will print out after `image_to_vm.sh` runs).
 
-## Making Changes
+## Making changes
 
 ### git and repo
 
-CoreOS is managed by `repo`. It was built for the Android project and makes
-managing a large number of git repos easier, from the announcement blog:
+CoreOS is managed by `repo`, a tool built for the Android project that makes managing a large number of git repositories easier. From the repo announcement blog:
 
 > The repo tool uses an XML-based manifest file describing where the upstream
 > repositories are, and how to merge them into a single working checkout. repo
 > will recurse across all the git subtrees and handle uploads, pulls, and other
 > needed items. repo has built-in knowledge of topic branches and makes working
 > with them an essential part of the workflow.
-> -- via the [Google Open Source Blog][repo-blog]
 
-[repo-blog]: http://google-opensource.blogspot.com/2008/11/gerrit-and-repo-android-source.html
+(from the [Google Open Source Blog][repo-blog])
 
 You can find the full manual for repo by visiting [android.com - Developing][android-repo-git].
-
-[android-repo-git]: https://source.android.com/source/developing.html
 
 ### Updating repo manifests
 
@@ -204,15 +181,25 @@ specify in `repo init`, this defaults to 'origin/master'. Keep this in
 mind when making changes, the origin git repository should not have a
 'default' branch.
 
-## Building Images
+## Building images
 
-There are separate workflows for building [production images](/docs/sdk-distributors/sdk/building-production-images) and [development images](/docs/sdk-distributors/sdk/building-development-images).
+There are separate workflows for building [production images][prodimages] and [development images][devimages].
 
-## Tips and Tricks
+## Tips and tricks
 
-We've compiled a [list of tips and tricks](/docs/sdk-distributors/sdk/tips-and-tricks) that can make working with the SDK a bit easier.
+We've compiled a [list of tips and tricks][sdktips] that can make working with the SDK a bit easier.
 
-## Testing Images
+## Testing images
 
-[Mantle](/docs/sdk-distributors/sdk/mantle) is a collection of utilities
-used in testing and launching SDK images.
+[Mantle][mantle] is a collection of utilities used in testing and launching SDK images.
+
+
+[android-repo-git]: https://source.android.com/source/developing.html
+[coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
+[devimages]: /docs/sdk-distributors/sdk/building-development-images
+[github-coreos]: https://github.com/coreos/
+[irc]: irc://irc.freenode.org:6667/#coreos
+[mantle]: /docs/sdk-distributors/sdk/mantle
+[prodimages]: /docs/sdk-distributors/sdk/building-production-images
+[repo-blog]: http://google-opensource.blogspot.com/2008/11/gerrit-and-repo-android-source.html
+[sdktips]: /docs/sdk-distributors/sdk/tips-and-tricks
