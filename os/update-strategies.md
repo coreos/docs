@@ -77,7 +77,7 @@ An easy solution to this problem is to use iPXE and reference images [directly f
 
 ## Disable Automatic Updates Daemon
 
-In case when you don't want to install updates onto the passive partition and avoid update process on failure reboot, you can disable `update-engine` service manually with `sudo systemctl stop update-engine` command (it will be enabled automatically next reboot). Or if you wish to disable automatic updates permanently, use Cloud-Config (you should also stop `locksmithd` since it will report a lot of errors when `update-engine` is not running):
+In case when you don't want to install updates onto the passive partition and avoid update process on failure reboot, you can disable `update-engine` service manually with `sudo systemctl stop update-engine` command (it will be enabled automatically next reboot). Or if you wish to disable automatic updates permanently, use Cloud-Config (you should also stop `locksmithd` in this case since it will constantly report errors when `update-engine` is not running):
 
 ```yaml
 #cloud-config
