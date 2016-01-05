@@ -117,7 +117,7 @@ In many scenarios, it may be useful to have an external data volume. This config
 		"disks": [
 			{
 				"device": "/dev/sdb",
-				"wipe-table": true,
+				"wipeTable": true,
 				"partitions": [
 					{
 						"label": "raid.1.1",
@@ -129,7 +129,7 @@ In many scenarios, it may be useful to have an external data volume. This config
 			},
 			{
 				"device": "/dev/sdc",
-				"wipe-table": true,
+				"wipeTable": true,
 				"partitions": [
 					{
 						"label": "raid.1.2",
@@ -156,7 +156,7 @@ In many scenarios, it may be useful to have an external data volume. This config
 				"format": "ext4",
 				"create": {
 					"options": [
-						"--label=DATA"
+						"-L", "DATA"
 					]
 				}
 			}
