@@ -77,13 +77,17 @@ An easy solution to this problem is to use iPXE and reference images [directly f
 
 ## Disable Automatic Updates Daemon
 
-In case when you don't want to install updates onto the passive partition and avoid update process on failure reboot, you can disable `update-engine` service manually with `sudo systemctl stop update-engine` command (it will be enabled automatically next reboot). Or if you wish to disable automatic updates permanently, use Cloud-Config:
+In case when you don't want to install updates onto the passive partition and avoid update process on failure reboot, you can disable `update-engine` service manually with `sudo systemctl stop update-engine` command (it will be enabled automatically next reboot).
+
+If you wish to disable automatic updates permanently, use can configure this with Cloud-Config. This example will stop `update-engine`, which executes the updates, and `locksmithd`, which coordinates reboots across the cluster:
 
 ```yaml
 #cloud-config
 coreos:
   units:
     - name: update-engine.service
+      command: stop
+    - name: locksmithd.service
       command: stop
 ```
 
