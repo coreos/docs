@@ -7,6 +7,8 @@ schedules per channel. You can [disable this feature][reboot-docs], although we
 don't recommend it. Read the [release notes][release-notes] for specific
 features and bug fixes.
 
+**NOTE: Deploying CoreOS on DigitalOcean is by standard not secure,** because DigitalOcean does not allow private networking. That means that even though you use private networking, you can still be attacked from others inside DigitalOceans private network.
+
 The following command will create a single droplet. For more details, check out
 <a href="#via-the-api">Launching via the API</a>.
 
