@@ -1,4 +1,4 @@
-# What is Ignition? #
+# What is Ignition?
 
 Ignition is a new provisioning utility designed specifically for CoreOS. At the
 the most basic level, it is a tool for manipulating disks during early boot.
@@ -9,9 +9,7 @@ network metadata service, hypervisor bridge, etc.) and applies the configuration
 
 A [series of example configs][examples] are provided for reference.
 
-[examples]: examples.md
-
-## Ignition vs coreos-cloudinit ##
+## Ignition vs coreos-cloudinit
 
 Ignition solves many of the same problems as [coreos-cloudinit][cloudinit] but
 in a simpler, more predictable, and more flexible manner. This is achieved with
@@ -27,9 +25,7 @@ octal or decimal. Ignition's configuration is also versioned which allows it to
 be improved in the future without having to worry as much about maintaining
 backward compatibility.
 
-[cloudinit]: https://github.com/coreos/coreos-cloudinit
-
-### Ignition Only Runs Once ##
+### Ignition Only Runs Once
 
 Even though Ignition only runs once, it packs a powerful punch. Because
 Ignition runs so early in the boot process (in the initramfs, to be exact), it
@@ -43,9 +39,7 @@ systemd services are already written to disk by the time systemd starts. This
 results in a simple startup, a faster startup, and the ability to accurately
 inspect the unit dependency graphs.
 
-[network config]: network-configuration.md
-
-### No Variable Substitution ##
+### No Variable Substitution
 
 Given that Ignition only runs once, it wouldn't make much sense for it to
 incorporate dynamic data (e.g. floating IP addresses, compute region, etc.).
@@ -66,9 +60,13 @@ experince crippled because the metadata for their platform isn't supported. It
 is possible to write a [custom metadata agent][custom agent] to fetch the
 necessary data.
 
-[custom agent]: examples.md#custom-metadata-agent
+### When is Ignition Executed
 
-## Providing Ignition a Config ##
+On boot, GRUB checks the disks for the dummy disk UUID (`00000000-0000-0000-0000-000000000000`) and sets `coreos.first_boot=1` if it is found. This parameter is then processed by a [systemd-generator] in the [initramfs] and if the parameter is set to non-zero, `ignition.target` is set as a dependency of `initrd.target`, causing Ignition to run.
+
+Note that [PXE][supported platforms] deployments don't using GRUB to boot, so the `coreos.first_boot=1` parameter will need to be added to the boot arguments in order for Ignition to run.
+
+## Providing Ignition a Config
 
 Ignition can read its config from a number of different locations, although,
 only one can be used at a time. When running CoreOS on the supported cloud-
@@ -78,7 +76,7 @@ tools which also use this userdata (e.g. coreos-cloudinit). Bare metal
 installations and PXE boots can use the kernel boot parameters to point
 Ignition at the config.
 
-## Where is Ignition Supported? ##
+## Where is Ignition Supported?
 
 The [full list of supported platforms][supported platforms] is provided and
 will be kept up-to-date as development progresses.
@@ -86,4 +84,10 @@ will be kept up-to-date as development progresses.
 Ignition is under active development. Expect to see support for more images in
 the coming months.
 
+[examples]: examples.md
+[cloudinit]: https://github.com/coreos/coreos-cloudinit
+[network config]: network-configuration.md
+[custom agent]: examples.md#custom-metadata-agent
 [supported platforms]: https://github.com/coreos/ignition/blob/master/doc/supported-platforms.md
+[systemd-generator]: http://www.freedesktop.org/software/systemd/man/systemd.generator.html
+[initramfs]: https://www.kernel.org/doc/Documentation/filesystems/ramfs-rootfs-initramfs.txt
