@@ -36,7 +36,7 @@ After=docker.service
 
 [Service]
 User=core
-ExecStart=/usr/bin/docker run busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"
+ExecStart=/usr/bin/docker run busybox /bin/sh -c "trap 'exit 0' INT TERM; while true; do echo Hello World; sleep 1; done"
 
 [Install]
 WantedBy=multi-user.target

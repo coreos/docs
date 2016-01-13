@@ -57,7 +57,7 @@ EnvironmentFile=/etc/fleet_machines.env
 ExecStartPre=-/usr/bin/docker kill %p
 ExecStartPre=-/usr/bin/docker rm %p
 ExecStartPre=/usr/bin/docker pull ubuntu:latest
-ExecStart=/usr/bin/docker run --rm --name %p -e FLEET_MACHINES ubuntu:latest bash -c 'while true; do echo "$FLEET_MACHINES"; sleep 1; done'
+ExecStart=/usr/bin/docker run --rm --name %p -e FLEET_MACHINES ubuntu:latest /bin/bash -c "trap 'exit 0' INT TERM; while true; do echo "$FLEET_MACHINES"; sleep 1; done"
 ```
 
 ## Another Examples
