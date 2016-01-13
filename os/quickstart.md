@@ -136,7 +136,7 @@ TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill hello
 ExecStartPre=-/usr/bin/docker rm hello
 ExecStartPre=/usr/bin/docker pull busybox
-ExecStart=/usr/bin/docker run --name hello busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"
+ExecStart=/usr/bin/docker run --name hello busybox /bin/sh -c "trap 'exit 0' INT TERM; while true; do echo Hello World; sleep 1; done"
 ExecStop=/usr/bin/docker stop hello
 ```
 
@@ -160,8 +160,7 @@ $ fleetctl status hello.service
    Active: active (running) since Wed 2014-06-04 19:04:13 UTC; 44s ago
  Main PID: 27503 (bash)
    CGroup: /system.slice/hello.service
-           ├─27503 /bin/bash -c /usr/bin/docker start -a hello || /usr/bin/docker run --name hello busybox /bin/sh -c "while true; do echo Hello World; sleep 1; done"
-           └─27509 /usr/bin/docker run --name hello busybox /bin/sh -c while true; do echo Hello World; sleep 1; done
+           └─27503 /usr/bin/docker run --name hello busybox /bin/sh -c trap 'exit 0' INT TERM; while true; do echo Hello World; sleep 1; done
 
 Jun 04 19:04:57 core-01 bash[27503]: Hello World
 ..snip...
