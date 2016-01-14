@@ -76,7 +76,7 @@ The abridged skeletal markdown source for this document's headings:
 
 [...]
 
-## Hyperlink Considerations
+## Hyperlink considerations
 
 ### Naming
 
