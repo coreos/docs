@@ -100,7 +100,7 @@ If you followed a guide to set up more than one CoreOS machine, you can SSH into
 
 The second building block, **Docker** ([docs][docker-docs]), is where your applications and code run. It is installed on each CoreOS machine. You should make each of your services (web server, caching, database) into a container and connect them together by reading and writing to etcd. You can quickly try out a minimal busybox container in two different ways:
 
-Run a command in the container and then stop it: 
+Run a command in the container and then stop it:
 
 ```sh
 docker run busybox /bin/echo hello world
@@ -178,3 +178,8 @@ Fleet has many more features that you can explore in the guides below.
 #### More Detailed Information
 <a class="btn btn-primary" href="{{ site.baseurl }}/docs/launching-containers/launching/launching-containers-fleet/" data-category="More Information" data-event="Docs: Launching Containers Fleet">View Complete Guide</a>
 <a class="btn btn-default" href="{{ site.baseurl }}/docs/launching-containers/launching/getting-started-with-systemd/" data-category="More Information" data-event="Docs: Getting Started with systemd">View Getting Started with systemd Guide</a>
+
+
+[docker-docs]: https://docs.docker.io
+[etcd-docs]: {{site.baseurl}}/etcd/docs/latest/
+[vagrant-guide]: booting-on-vagrant.md
