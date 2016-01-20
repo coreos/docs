@@ -186,3 +186,7 @@ ssh coreos
 
 Now that you have a machine booted it is time to play around.
 Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+
+
+[coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
+[irc]: irc://irc.freenode.org:6667/#coreos

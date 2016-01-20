@@ -224,12 +224,12 @@ You need open port 2379, 2380, 7001 and 4001 between servers in the `etcd` clust
 
 _This step is only needed once_
 
-First we need to create a security group to allow CoreOS instances to communicate with one another. 
+First we need to create a security group to allow CoreOS instances to communicate with one another.
 
 1. Go to the [security group][sg] page in the EC2 console.
 2. Click "Create Security Group"
     * Name: coreos-testing
-    * Description: CoreOS instances 
+    * Description: CoreOS instances
     * VPC: No VPC
     * Click: "Yes, Create"
 3. In the details of the security group, click the `Inbound` tab
@@ -298,7 +298,7 @@ coreos:
       command: start
 </pre>
         <li>
-          Back in the EC2 dashboard, paste this information verbatim into the "User Data" field. 
+          Back in the EC2 dashboard, paste this information verbatim into the "User Data" field.
           <ul>
             <li>Paste link into "User Data"</li>
             <li>"Continue"</li>
@@ -377,7 +377,7 @@ coreos:
       command: start
 </pre>
         <li>
-          Back in the EC2 dashboard, paste this information verbatim into the "User Data" field. 
+          Back in the EC2 dashboard, paste this information verbatim into the "User Data" field.
           <ul>
             <li>Paste link into "User Data"</li>
             <li>"Continue"</li>
@@ -456,7 +456,7 @@ coreos:
       command: start
 </pre>
         <li>
-          Back in the EC2 dashboard, paste this information verbatim into the "User Data" field. 
+          Back in the EC2 dashboard, paste this information verbatim into the "User Data" field.
           <ul>
             <li>Paste link into "User Data"</li>
             <li>"Continue"</li>
@@ -507,3 +507,9 @@ rollbacks to work properly on Amazon EC2.
 
 Now that you have a machine booted it is time to play around.
 Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+
+
+[coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
+[docker-docs]: https://docs.docker.io
+[etcd-docs]: {{site.baseurl}}/etcd/docs/latest/
+[irc]: irc://irc.freenode.org:6667/#coreos

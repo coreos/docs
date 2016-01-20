@@ -225,3 +225,7 @@ network):
 ```sh
 cat /var/lib/libvirt/dnsmasq/default.leases
 ```
+
+
+[coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
+[irc]: irc://irc.freenode.org:6667/#coreos
