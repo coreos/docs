@@ -64,8 +64,8 @@ coreos:
         content: |
           [Service]
           ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
-      # Uncomment line above if you want to use flannel in your installation.
       # command: start
+      # Uncomment the line above if you want to use flannel in your installation.
 ```
 
 The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on Vagrant. They will map to the first statically defined private and public networks defined in the Vagrantfile.
