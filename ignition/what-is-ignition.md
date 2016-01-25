@@ -62,7 +62,7 @@ necessary data.
 
 ### When is Ignition Executed
 
-On boot, GRUB checks the disks for the dummy disk UUID (`00000000-0000-0000-0000-000000000000`) and sets `coreos.first_boot=1` if it is found. This parameter is then processed by a [systemd-generator] in the [initramfs] and if the parameter is set to non-zero, `ignition.target` is set as a dependency of `initrd.target`, causing Ignition to run.
+On boot, GRUB checks the disks for the dummy disk UUID (`00000000-0000-0000-0000-000000000001`) and sets `coreos.first_boot=1` if it is found. This parameter is then processed by a [systemd-generator] in the [initramfs] and if the parameter is set to non-zero, `ignition.target` is set as a dependency of `initrd.target`, causing Ignition to run.
 
 Note that [PXE][supported platforms] deployments don't using GRUB to boot, so the `coreos.first_boot=1` parameter will need to be added to the boot arguments in order for Ignition to run.
 
