@@ -87,51 +87,7 @@ This unit file will run nginx Docker container and bind it to specific IP addres
 
 ### etcd2.service Unit Advanced Example
 
-Let's review another etcd2.service [drop-in] unit example. [Cloud-config][cloud-config] compiles special `/run/systemd/system/etcd2.service.d/20-cloudinit.conf` [drop-in] unit file using options defined in "etcd2:" yaml section: 
-
-```
-[Service]
-Environment="ETCD_ADVERTISE_CLIENT_URLS=http://10.0.1.10:2379"
-Environment="ETCD_DISCOVERY=https://discovery.etcd.io/<token>"
-Environment="ETCD_INITIAL_ADVERTISE_PEER_URLS=http://10.0.1.10:2380"
-Environment="ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379,http://0.0.0.0:4001"
-Environment="ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380"
-```
-
-For example you have created five-nodes CoreOS cluster but have forgot to set cluster size in [discovery][etcd-discovery] URL and its cluster size is three by default. Your rest two nodes became proxy and you would like to convert them to etcd2 member.
-
-You can solve this problem without new cluster bootstrapping. Run `etcdctl member add node4 http://10.0.1.13:2380` and remember its output (we will use it later):
-
-```
-added member 9bf1b35fc7761a23 to cluster
-
-ETCD_NAME="node4"
-ETCD_INITIAL_CLUSTER="node1=http://10.0.1.10:2380,node2=http://10.0.1.11:2380,node3=http://10.0.1.12:2380,node4=http://10.0.1.13:2380"
-ETCD_INITIAL_CLUSTER_STATE=existing
-```
-
-Already defined in `20-cloudinit.conf` `ETCD_DISCOVERY` conflicts with `ETCD_INITIAL_CLUSTER` environment variable, so we have to clean it. We can do that overriding `20-cloudinit.conf` by `99-restore.conf` drop-in with the `Environment="ETCD_DISCOVERY="` string.
-
-The complete example will look this way. On `node4` CoreOS host create temporarily systemd drop-in unit `/run/systemd/system/etcd2.service.d/99-restore.conf` with the content below (we use variables from `etcdctl member add` output):
-
-```
-[Service]
-# remove previously created proxy directory
-ExecStartPre=/usr/bin/rm -rf /var/lib/etcd2/proxy
-# here we clean previously defined ETCD_DISCOVERY environment variable, we don't need it as we've already bootstrapped etcd cluster and ETCD_DISCOVERY conflicts with ETCD_INITIAL_CLUSTER environment variable
-Environment="ETCD_DISCOVERY="
-Environment="ETCD_NAME=node4"
-Environment="ETCD_INITIAL_CLUSTER=node1=http://10.0.1.10:2380,node2=http://10.0.1.11:2380,node3=http://10.0.1.12:2380,node4=http://10.0.1.13:2380"
-Environment="ETCD_INITIAL_CLUSTER_STATE=existing"
-```
-
-Run `sudo systemctl daemon-reload` and `sudo systemctl restart etcd2` to apply your changes. You will see that your proxy node became cluster member:
-
-```
-etcdserver: start member 9bf1b35fc7761a23 in cluster 36cce781cb4f1292
-```
-
-Once your proxy node became member node and `etcdctl cluster-health` shows healthy cluster, you can remove your temporarily drop-in `sudo rm /run/systemd/system/etcd2.service.d/99-restore.conf && sudo systemctl daemon-reload`.
+This example moved [here][etcd-cluster-reconfiguration].
 
 ## More systemd Examples
 
@@ -140,6 +96,7 @@ For more systemd examples, check out these documents:
 [Customizing Docker][customizing-docker]
 [Customizing the SSH Daemon][customizing-sshd]
 [Using systemd Drop-In Units][drop-in]
+[etcd Cluster Runtime Reconfiguration on CoreOS][etcd-cluster-reconfiguration]
 
 [drop-in]: using-systemd-drop-in-units.html
 [customizing-sshd]: customizing-sshd.html#changing-the-sshd-port
@@ -147,6 +104,7 @@ For more systemd examples, check out these documents:
 [cloud-config]: cloud-config.html
 [etcd-discovery]: cluster-discovery.html
 [systemd-udev]: using-systemd-and-udev-rules.html
+[etcd-cluster-reconfiguration]: /etcd/etcd-cluster-runtime-reconfiguration-on-coreos.md
 
 ## More Information
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.exec.html">systemd.exec Docs</a>
