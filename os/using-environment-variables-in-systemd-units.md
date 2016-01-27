@@ -87,7 +87,7 @@ This unit file will run nginx Docker container and bind it to specific IP addres
 
 ### etcd2.service Unit Advanced Example
 
-This example moved [here][etcd-cluster-reconfiguration].
+A [complete example][etcd-cluster-reconfiguration] of combining environment variables and systemd [drop-ins] to reconfigure an existing machine running etcd.
 
 ## More systemd Examples
 
