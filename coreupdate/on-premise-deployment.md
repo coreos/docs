@@ -200,7 +200,8 @@ updateservicectl --server=http://localhost:8000 --user=admin --key=<previously-g
 #### Create the "CoreOS" Application
 
 To sync the "CoreOS" application it must exist and have the same application id as the public CoreUpdate instance.
-NOTE: the application id must match exactly what is listed here:
+CoreUpdate has the ability to serve package files without using a separate file server. Enable this functionality [via the config file](https://github.com/coreos/docs/blob/master/coreupdate/on-premise-deployment.md#configuration-file).
+
 
 ```bash
 updateservicectl --server=http://localhost:8000 --user=admin --key=<previously-generated-key> app create --label=CoreOS --app-id=e96281a6-d1af-4bde-9a0a-97b76e56dc57
@@ -208,3 +209,40 @@ updateservicectl --server=http://localhost:8000 --user=admin --key=<previously-g
 
 You can now point your browser to `http://localhost:8000` to view the control panel.
 
+### Air-Gapped Package Management
+
+On-Premise CoreUpdate instances can be managed in a completely air-gapped environment. Internet access is not required. Below are the steps you can take to update your packages in such an environment.
+
+First you will need to decide if you want your CoreUpdate to host and serve the package files itself, or serve the files from a different fileserver.
+
+#### Option 1: Serving Package Files from CoreUpdate
+
+NOTE: this approach requires [special configuration of the CoreUpdate service](https://github.com/coreos/docs/blob/master/coreupdate/on-premise-deployment.md#package-payload-hosting).
+
+The two updateservicectl commands you would need are:
+
+```
+updateservicectl package download
+```
+
+This runs against the upstream instance (usually https://public.update.core-os.net). It downloads the actual binary packages to the computer from which you run the command.
+
+```
+updateservicectl package upload bulk
+```
+
+This runs against the downstream instance (your CoreUpdate server). It uploads the metadata and binary files to your CoreUpdate service.
+
+#### Option 2: Serving Package Files from a Separate Fileserver
+
+```
+updateservicectl package download
+```
+
+This runs against the upstream instance (usually https://public.update.core-os.net). It downloads all the actual binary to the computer from which you run the command. Once complete you should copy these files to the fileserver you intend to serve the packages from.
+
+```
+updateservicectl package create bulk
+```
+
+This runs against the downstream instance (your CoreUpdate server). It takes a directory of package binaries, extracts all the necessary metadata, and saves that information to your CoreUpdate service. Since the actual package binaries are served from another location you must provide a base path of that location (see `updateservicectl package create bulk --help` for more info).
