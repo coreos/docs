@@ -309,17 +309,14 @@ The easiest way to use these new ulimits on all of your machines is via cloud-co
 ```yaml
 #cloud-config
 
-write_files:
-    - path: /etc/systemd/system/docker.service.d/increase-ulimit.conf
-      owner: core:core
-      permissions: 0644
-      content: |
-        [Service]
-        LimitMEMLOCK=infinity
-
 coreos:
   units:
     - name: docker.service
+      drop-ins:
+        - name: 30-increase-ulimit.conf
+          content: |
+            [Service]
+            LimitMEMLOCK=infinity
       command: restart
 ```
 

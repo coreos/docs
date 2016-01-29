@@ -99,14 +99,15 @@ See [curl's documentation](http://curl.haxx.se/docs/manpage.html#ALLPROXY) for d
 
 ```yaml
 #cloud-config
-write_files:
-  - path: /etc/systemd/system/update-engine.service.d/proxy.conf
-    content: |
-      [Service]
-      Environment=ALL_PROXY=http://proxy.example.com:3128
+
 coreos:
   units:
     - name: update-engine.service
+      drop-ins:
+        - name: 50-proxy.conf
+          content: |
+            [Service]
+            Environment=ALL_PROXY=http://proxy.example.com:3128
       command: restart
 ```
 

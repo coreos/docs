@@ -78,9 +78,12 @@ The best way to do this is within your cloud-config:
 ```yaml
 #cloud-config
 
-write_files:
-  - path: /etc/systemd/system/docker.service.d/50-insecure-registry.conf
-    content: |
-        [Service]
-        Environment='DOCKER_OPTS=--insecure-registry="10.0.1.0/24"'
+coreos:
+  units:
+    - name: docker.service
+      drop-ins:
+        - name: 50-insecure-registry.conf
+          content: |
+            [Service]
+            Environment='DOCKER_OPTS=--insecure-registry="10.0.1.0/24"'
 ```
