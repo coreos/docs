@@ -1,5 +1,7 @@
 # etcd Cluster Runtime Reconfiguration on CoreOS
 
+Use this document to reconfigure or recover an etcd cluster running on CoreOS, using a combination of systemd features and etcdctl commands.
+
 ## Change the etcd Cluster Size
 
 When you use [Cloud-Config][cloud-config] to configure etcd member on your CoreOS node it compiles special `/run/systemd/system/etcd2.service.d/20-cloudinit.conf` [drop-in] unit file. I.e. Cloud-Config below: 
