@@ -33,19 +33,24 @@ Cloud-config has a parameter that will place the contents of a file on disk. We'
 ```yaml
 #cloud-config
 
+coreos:
+  units:
+    - name: etcd2.service
+      drop-ins:
+        - name: 30-certificates.conf
+          content: |
+            [Service]
+            # Client Env Vars
+            Environment=ETCD_CA_FILE=/path/to/CA.pem
+            Environment=ETCD_CERT_FILE=/path/to/server.crt
+            Environment=ETCD_KEY_FILE=/path/to/server.key
+            # Peer Env Vars
+            Environment=ETCD_PEER_CA_FILE=/path/to/CA.pem
+            Environment=ETCD_PEER_CERT_FILE=/path/to/peers.crt
+            Environment=ETCD_PEER_KEY_FILE=/path/to/peers.key
+      command: start
+
 write_files:
-  - path: /etc/systemd/system/etcd2.service.d/30-certificates.conf
-    permissions: 0644
-    content: |
-      [Service]
-      # Client Env Vars
-      Environment=ETCD_CA_FILE=/path/to/CA.pem
-      Environment=ETCD_CERT_FILE=/path/to/server.crt
-      Environment=ETCD_KEY_FILE=/path/to/server.key
-      # Peer Env Vars
-      Environment=ETCD_PEER_CA_FILE=/path/to/CA.pem
-      Environment=ETCD_PEER_CERT_FILE=/path/to/peers.crt
-      Environment=ETCD_PEER_KEY_FILE=/path/to/peers.key
   - path: /path/to/CA.pem
     permissions: 0644
     content: |
