@@ -200,7 +200,7 @@ updateservicectl --server=http://localhost:8000 --user=admin --key=<previously-g
 #### Create the "CoreOS" Application
 
 To sync the "CoreOS" application it must exist and have the same application id as the public CoreUpdate instance.
-CoreUpdate has the ability to serve package files without using a separate file server. Enable this functionality [via the config file](https://github.com/coreos/docs/blob/master/coreupdate/on-premise-deployment.md#configuration-file).
+NOTE: the application id must match exactly what is listed here:
 
 
 ```bash
@@ -217,7 +217,7 @@ First you will need to decide if you want your CoreUpdate to host and serve the 
 
 #### Option 1: Serving Package Files from CoreUpdate
 
-NOTE: this approach requires [special configuration of the CoreUpdate service](https://github.com/coreos/docs/blob/master/coreupdate/on-premise-deployment.md#package-payload-hosting).
+CoreUpdate has the ability to serve package files without using a separate file server. Enable this functionality [via the config file](https://github.com/coreos/docs/blob/master/coreupdate/on-premise-deployment.md#configuration-file).
 
 The two updateservicectl commands you would need are:
 
