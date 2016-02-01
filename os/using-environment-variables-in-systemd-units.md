@@ -104,7 +104,7 @@ For more systemd examples, check out these documents:
 [cloud-config]: cloud-config.html
 [etcd-discovery]: cluster-discovery.html
 [systemd-udev]: using-systemd-and-udev-rules.html
-[etcd-cluster-reconfiguration]: /etcd/etcd-cluster-runtime-reconfiguration-on-coreos.md
+[etcd-cluster-reconfiguration]: /etcd/etcd-live-cluster-reconfiguration.md
 
 ## More Information
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.exec.html">systemd.exec Docs</a>
