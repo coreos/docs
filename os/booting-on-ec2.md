@@ -154,7 +154,6 @@ coreos:
 
 The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on EC2.
 
-</br>
 <div class="row">
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 co-m-screenshot">
     <a href="{{site.baseurl}}/assets/images/media/ec2-cloudformation-cloud-config.png">
