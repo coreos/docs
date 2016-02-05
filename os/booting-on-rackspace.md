@@ -36,12 +36,12 @@ CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/u
           <tr>
             <td>Cloud Servers</td>
             <td>{{site.data.alpha-channel.rackspace-image-id}}</td>
-            <td><a href="{{site.baseurl}}/dist/rackspace/heat-alpha.yaml">heat-alpha.yaml</td>
+            <td><a href="{{site.baseurl}}/dist/rackspace/heat-alpha.yaml">heat-alpha.yaml</a></td>
           </tr>
           <tr>
             <td>OnMetal</td>
             <td>{{site.data.alpha-channel.rackspace-onmetal-id}}</td>
-            <td><a href="{{site.baseurl}}/dist/rackspace/heat-onmetal-alpha.yaml">heat-onmetal-alpha.yaml</td>
+            <td><a href="{{site.baseurl}}/dist/rackspace/heat-onmetal-alpha.yaml">heat-onmetal-alpha.yaml</a></td>
           </tr>
         </tbody>
       </table>
@@ -68,12 +68,12 @@ CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/u
           <tr>
             <td>Cloud Server</td>
             <td>{{site.data.beta-channel.rackspace-image-id}}</td>
-            <td><a href="{{site.baseurl}}/dist/rackspace/heat-beta.yaml">heat-beta.yaml</td>
+            <td><a href="{{site.baseurl}}/dist/rackspace/heat-beta.yaml">heat-beta.yaml</a></td>
           </tr>
           <tr>
             <td>OnMetal</td>
             <td>{{site.data.beta-channel.rackspace-onmetal-id}}</td>
-            <td><a href="{{site.baseurl}}/dist/rackspace/heat-onmetal-beta.yaml">heat-onmetal-beta.yaml</td>
+            <td><a href="{{site.baseurl}}/dist/rackspace/heat-onmetal-beta.yaml">heat-onmetal-beta.yaml</a></td>
           </tr>
         </tbody>
       </table>
@@ -100,12 +100,12 @@ CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/u
           <tr>
             <td>Cloud Server</td>
             <td>{{site.data.stable-channel.rackspace-image-id}}</td>
-            <td><a href="{{site.baseurl}}/dist/rackspace/heat-stable.yaml">heat-stable.yaml</td>
+            <td><a href="{{site.baseurl}}/dist/rackspace/heat-stable.yaml">heat-stable.yaml</a></td>
           </tr>
           <tr>
             <td>OnMetal</td>
             <td>{{site.data.stable-channel.rackspace-onmetal-id}}</td>
-            <td><a href="{{site.baseurl}}/dist/rackspace/heat-onmetal-stable.yaml">heat-onmetal-stable.yaml</td>
+            <td><a href="{{site.baseurl}}/dist/rackspace/heat-onmetal-stable.yaml">heat-onmetal-stable.yaml</a></td>
           </tr>
         </tbody>
       </table>
