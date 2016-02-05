@@ -8,7 +8,7 @@
 
 # Running CoreOS on EC2
 
-The current AMIs for all CoreOS channels and EC2 regions are listed below and updated frequently. Using CloudFormation is the easiest way to launch a cluster, but you can also follow the manual steps at the end of the article. You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
+The current AMIs for all CoreOS channels and EC2 regions are listed below and updated frequently. Using CloudFormation is the easiest way to launch a cluster, but you can also follow the manual steps at the end of the article. You can direct questions to the [IRC channel](irc://irc.freenode.org:6667/#coreos) or [mailing list](https://groups.google.com/forum/#!forum/coreos-dev).
 
 ## Choosing a Channel
 
