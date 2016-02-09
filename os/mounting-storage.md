@@ -47,11 +47,17 @@ coreos:
         Description=Mount ephemeral to /var/lib/docker
         Requires=format-ephemeral.service
         After=format-ephemeral.service
-        Before=docker.service
         [Mount]
         What=/dev/xvdb
         Where=/var/lib/docker
         Type=ext4
+    - name: docker.service
+      drop-ins:
+        - name: 10-wait-docker.conf
+          content: |
+            [Unit]
+            After=var-lib-docker.mount
+            Requires=var-lib-docker.mount
 ```
 
 Notice that we're starting both units at the same time and using the power of systemd to work out the dependencies for us. In this case, `var-lib-docker.mount` requires `format-ephemeral.service`, ensuring that our storage will always be formatted before it is mounted. Docker will refuse to start otherwise.
