@@ -1,9 +1,10 @@
 # Running CoreOS on Google Compute Engine
 
-Before proceeding, you will need to [install gcloud][gcloud-documentation] and check that your GCE account/project has billing enabled (Settings &rarr; Billing). In each command below, be sure to insert your project name in place of `<project-id>`.
+Before proceeding, you will need a GCE account ([get $300 of credit here][free-trial]) and [install gcloud][gcloud-documentation] on your machine. In each command below, be sure to insert your project name in place of `<project-id>`.
 
 [gce-advanced-os]: http://developers.google.com/compute/docs/transition-v1#customkernelbinaries
 [gcloud-documentation]: https://developers.google.com/cloud/sdk/
+[free-trial]: https://cloud.google.com/free-trial/?utm_source=coreos&utm_medium=partners&utm_campaign=partner-free-trial
 
 After installation, log into your account with `gcloud auth login` and enter your project ID when prompted.
 
