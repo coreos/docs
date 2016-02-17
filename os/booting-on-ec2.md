@@ -275,14 +275,15 @@ First we need to create a security group to allow CoreOS instances to communicat
         <li>
           Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
-        <pre>
+        <li>
+          <pre>
 #cloud-config
 
 coreos:
   etcd2:
     # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
     # specify the initial size of your cluster with ?size=X
-    discovery: https://discovery.etcd.io/<token>
+    discovery: https://discovery.etcd.io/&lt;token&gt;
     # multi-region and multi-cloud deployments need to use $public_ipv4
     advertise-client-urls: http://$private_ipv4:2379,http://$private_ipv4:4001
     initial-advertise-peer-urls: http://$private_ipv4:2380
@@ -295,8 +296,7 @@ coreos:
       command: start
     - name: fleet.service
       command: start
-</pre>
-        <li>
+          </pre>
           Back in the EC2 dashboard, paste this information verbatim into the "User Data" field.
           <ul>
             <li>Paste link into "User Data"</li>
@@ -354,14 +354,15 @@ coreos:
         <li>
           Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
-        <pre>
+        <li>
+          <pre>
 #cloud-config
 
 coreos:
   etcd2:
     # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
     # specify the initial size of your cluster with ?size=X
-    discovery: https://discovery.etcd.io/<token>
+    discovery: https://discovery.etcd.io/&lt;token&gt;
     # multi-region and multi-cloud deployments need to use $public_ipv4
     advertise-client-urls: http://$private_ipv4:2379,http://$private_ipv4:4001
     initial-advertise-peer-urls: http://$private_ipv4:2380
@@ -374,8 +375,7 @@ coreos:
       command: start
     - name: fleet.service
       command: start
-</pre>
-        <li>
+          </pre>
           Back in the EC2 dashboard, paste this information verbatim into the "User Data" field.
           <ul>
             <li>Paste link into "User Data"</li>
@@ -433,14 +433,15 @@ coreos:
         <li>
           Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
-        <pre>
+        <li>
+          <pre>
 #cloud-config
 
 coreos:
   etcd2:
     # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
     # specify the initial size of your cluster with ?size=X
-    discovery: https://discovery.etcd.io/<token>
+    discovery: https://discovery.etcd.io/&lt;token&gt;
     # multi-region and multi-cloud deployments need to use $public_ipv4
     advertise-client-urls: http://$private_ipv4:2379,http://$private_ipv4:4001
     initial-advertise-peer-urls: http://$private_ipv4:2380
@@ -453,8 +454,7 @@ coreos:
       command: start
     - name: fleet.service
       command: start
-</pre>
-        <li>
+          </pre>
           Back in the EC2 dashboard, paste this information verbatim into the "User Data" field.
           <ul>
             <li>Paste link into "User Data"</li>
