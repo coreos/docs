@@ -5,7 +5,7 @@
 There is a simple installer that will destroy everything on the given target disk and install CoreOS.
 Essentially it downloads an image, verifies it with gpg and then copies it bit for bit to disk.
 
-The script is self-contained and located [on GitHub here](https://raw.github.com/coreos/init/master/bin/coreos-install "coreos-install") and can be run from any Linux distribution. You cannot normally install CoreOS to the same device that is currently booted. However, the [CoreOS ISO]({{site.baseurl}}/docs/running-coreos/platforms/iso/) or any Linux liveCD will allow CoreOS to install to a non-active device.
+The script is self-contained and located [on GitHub here][coreos-install] and can be run from any Linux distribution. You cannot normally install CoreOS to the same device that is currently booted. However, the [CoreOS ISO][coreos-iso] or any Linux liveCD will allow CoreOS to install to a non-active device.
 
 If you boot CoreOS via PXE, the install script is already installed. By default the install script will attempt to install the same version and channel that was PXE-booted:
 
@@ -19,7 +19,7 @@ If you are using the ISO with VMware, first sudo to root:
 sudo su - root
 ```
 
-Then install as you would with the PXE booted system, but be sure to include user information, especially an SSH key, in a [Cloud-Config](#cloud-config) file, or else you will not be able to log into your CoreOS instance.  
+Then install as you would with the PXE booted system, but be sure to include user information, especially an SSH key, in a [Cloud-Config][cloud-config-section] file, or else you will not be able to log into your CoreOS instance.
 
 
 ```sh
@@ -86,7 +86,7 @@ ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
 ```
 
-Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are not supported on libvirt. The convenience of these automatic variables can be emulated by [using nginx to host your cloud-config](nginx-host-cloud-config.md).
+Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are not supported on libvirt. The convenience of these automatic variables can be emulated by [using nginx to host your cloud-config][nginx].
 
 To start the installation script with a reference to our cloud-config file, run:
 
@@ -94,11 +94,9 @@ To start the installation script with a reference to our cloud-config file, run:
 coreos-install -d /dev/sda -C stable -c ~/cloud-config.yaml
 ```
 
-[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
-
 ### Advanced Cloud Config Example
 
-This example will configure CoreOS components: etcd2, fleetd and flannel. You have to substitute `%HOST_IP_ADDRESS%` to your host's IP or DNS address.
+This example will configure CoreOS components: etcd2, fleetd and flannel. You have to substitute `<PEER_ADDRESS>` to your host's IP or DNS address.
 
 ```yaml
 #cloud-config
@@ -111,12 +109,12 @@ coreos:
     # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
     # specify the initial size of your cluster with ?size=X
     discovery: https://discovery.etcd.io/<token>
-    advertise-client-urls: http://%HOST_IP_ADDRESS%:2379,http://%HOST_IP_ADDRESS%:4001
-    initial-advertise-peer-urls: http://%HOST_IP_ADDRESS%:2380
+    advertise-client-urls: http://<PEER_ADDRESS>:2379,http://<PEER_ADDRESS>:4001
+    initial-advertise-peer-urls: http://<PEER_ADDRESS>:2380
     # listen on both the official ports and the legacy ports
     # legacy ports can be omitted if your application doesn't depend on them
     listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    listen-peer-urls: http://%HOST_IP_ADDRESS%:2380
+    listen-peer-urls: http://<PEER_ADDRESS>:2380
   units:
     - name: etcd2.service
       command: start
@@ -142,6 +140,12 @@ mount /dev/sda9 /mnt/
 ## Using CoreOS
 
 Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Check out the [CoreOS Quickstart][quickstart] guide or dig into [more specific topics][docs-root].
 
 [nginx]: nginx-host-cloud-config.md
+[quickstart]: quickstart.md
+[docs-root]: https://github.com/coreos/docs
+[coreos-iso]: booting-with-iso.md
+[cloud-config-section]: #cloud-config
+[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
+[coreos-install]: https://raw.github.com/coreos/init/master/bin/coreos-install
