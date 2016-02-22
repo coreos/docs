@@ -51,7 +51,7 @@ $ cgpt show /dev/sda
 ```
 
 Looking specifically at "USR-A" and "USR-B", we see that "USR-A" is the active
-USR partition (this is what's actually mounted at /mnt). Its priority is higher
+USR partition (this is what's actually mounted at /usr). Its priority is higher
 than that of "USR-B". When the system boots, GRUB (the bootloader) looks at
 the priorities, tries, and successful flags to determine which partition to
 use.
