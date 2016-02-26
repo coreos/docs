@@ -13,14 +13,14 @@ use all of the options of a [network unit][network].
 
 ```json
 {
-	"networkd": {
-		"units": [
-			{
-				"name": "00-eth0.network",
-				"contents": "[Match]\nName=eth0\n\n[Network]\nAddress=10.0.1.7"
-			}
-		]
-	}
+  "networkd": {
+    "units": [
+      {
+        "name": "00-eth0.network",
+        "contents": "[Match]\nName=eth0\n\n[Network]\nAddress=10.0.1.7"
+      }
+    ]
+  }
 }
 ```
 
@@ -48,21 +48,21 @@ configured to use DHCP.
 
 ```json
 {
-	"networkd": {
-		"units": [
-			{
-				"name": "00-eth.network",
-				"contents": "[Match]\nName=eth*\n\n[Network]\nBond=bond0"
-			},
-			{
-				"name": "10-bond0.netdev",
-				"contents": "[NetDev]\nName=bond0\nKind=bond"
-			},
-			{
-				"name": "20-bond0.network",
-				"contents": "[Match]\nName=bond0\n\n[Network]\nDHCP=true"
-			},
-		]
-	}
+  "networkd": {
+    "units": [
+      {
+        "name": "00-eth.network",
+        "contents": "[Match]\nName=eth*\n\n[Network]\nBond=bond0"
+      },
+      {
+        "name": "10-bond0.netdev",
+        "contents": "[NetDev]\nName=bond0\nKind=bond"
+      },
+      {
+        "name": "20-bond0.network",
+        "contents": "[Match]\nName=bond0\n\n[Network]\nDHCP=true"
+      },
+    ]
+  }
 }
 ```
