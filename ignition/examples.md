@@ -8,16 +8,16 @@ This config will write a single service unit (shown below) with the contents of 
 
 ```json
 {
-	"ignitionVersion": 1,
-	"systemd": {
-		"units": [
-			{
-				"name": "example.service",
-				"enable": true,
-				"contents": "[Service]\nType=oneshot\nExecStart=/usr/bin/echo Hello World\n\n[Install]\nWantedBy=multi-user.target"
-			}
-		]
-	}
+  "ignitionVersion": 1,
+  "systemd": {
+    "units": [
+      {
+        "name": "example.service",
+        "enable": true,
+        "contents": "[Service]\nType=oneshot\nExecStart=/usr/bin/echo Hello World\n\n[Install]\nWantedBy=multi-user.target"
+      }
+    ]
+  }
 }
 ```
 
@@ -40,21 +40,21 @@ Although CoreOS uses ext4 by default, the btrfs filesystem may be an appropriate
 
 ```json
 {
-	"ignitionVersion": 1,
-	"storage": {
-		"filesystems": [
-			{
-				"device": "/dev/disk/by-label/ROOT",
-				"format": "btrfs",
-				"create": {
-					"force": true,
-					"options": [
-						"--label=ROOT"
-					]
-				}
-			}
-		]
-	}
+  "ignitionVersion": 1,
+  "storage": {
+    "filesystems": [
+      {
+        "device": "/dev/disk/by-label/ROOT",
+        "format": "btrfs",
+        "create": {
+          "force": true,
+          "options": [
+            "--label=ROOT"
+          ]
+        }
+      }
+    ]
+  }
 }
 ```
 
@@ -62,21 +62,21 @@ Although CoreOS uses ext4 by default, the btrfs filesystem may be an appropriate
 
 ```json
 {
-	"ignitionVersion": 1,
-	"storage": {
-		"filesystems": [
-			{
-				"device": "/dev/disk/by-label/ROOT",
-				"format": "xfs",
-				"create": {
-					"force": true,
-					"options": [
-						"-L", "ROOT"
-					]
-				}
-			}
-		]
-	}
+  "ignitionVersion": 1,
+  "storage": {
+    "filesystems": [
+      {
+        "device": "/dev/disk/by-label/ROOT",
+        "format": "xfs",
+        "create": {
+          "force": true,
+          "options": [
+            "-L", "ROOT"
+          ]
+        }
+      }
+    ]
+  }
 }
 ```
 
@@ -88,21 +88,21 @@ Whether formatting a new filesystem or reusing an existing one, files may be cre
 
 ```json
 {
-	"ignitionVersion": 1,
-	"storage": {
-		"filesystems": [
-			{
-				"device": "/dev/disk/by-label/ROOT",
-				"format": "ext4",
-				"files": [
-					{
-						"path": "/foo/bar",
-						"contents": "example file\n"
-					}
-				]
-			}
-		]
-	}
+  "ignitionVersion": 1,
+  "storage": {
+    "filesystems": [
+      {
+        "device": "/dev/disk/by-label/ROOT",
+        "format": "ext4",
+        "files": [
+          {
+            "path": "/foo/bar",
+            "contents": "example file\n"
+          }
+        ]
+      }
+    ]
+  }
 }
 ```
 
@@ -112,65 +112,65 @@ In many scenarios, it may be useful to have an external data volume. This config
 
 ```json
 {
-	"ignitionVersion": 1,
-	"storage": {
-		"disks": [
-			{
-				"device": "/dev/sdb",
-				"wipeTable": true,
-				"partitions": [
-					{
-						"label": "raid.1.1",
-						"number": 1,
-						"size": 20480,
-						"start": 0
-					}
-				]
-			},
-			{
-				"device": "/dev/sdc",
-				"wipeTable": true,
-				"partitions": [
-					{
-						"label": "raid.1.2",
-						"number": 1,
-						"size": 20480,
-						"start": 0
-					}
-				]
-			}
-		],
-		"raid": [
-			{
-				"devices": [
-					"/dev/disk/by-partlabel/raid.1.1",
-					"/dev/disk/by-partlabel/raid.1.2"
-				],
-				"level": "stripe",
-				"name": "data"
-			}
-		],
-		"filesystems": [
-			{
-				"device": "/dev/md/data",
-				"format": "ext4",
-				"create": {
-					"options": [
-						"-L", "DATA"
-					]
-				}
-			}
-		]
-	},
-	"systemd": {
-		"units": [
-			{
-				"name": "var-lib-data.mount",
-				"enable": true,
-				"contents": "[Mount]\nWhat=/dev/md/data\nWhere=/var/lib/data\nType=ext4\n\n[Install]\nWantedBy=local-fs.target"
-			}
-		]
-	}
+  "ignitionVersion": 1,
+  "storage": {
+    "disks": [
+      {
+        "device": "/dev/sdb",
+        "wipeTable": true,
+        "partitions": [
+          {
+            "label": "raid.1.1",
+            "number": 1,
+            "size": 20480,
+            "start": 0
+          }
+        ]
+      },
+      {
+        "device": "/dev/sdc",
+        "wipeTable": true,
+        "partitions": [
+          {
+            "label": "raid.1.2",
+            "number": 1,
+            "size": 20480,
+            "start": 0
+          }
+        ]
+      }
+    ],
+    "raid": [
+      {
+        "devices": [
+          "/dev/disk/by-partlabel/raid.1.1",
+          "/dev/disk/by-partlabel/raid.1.2"
+        ],
+        "level": "stripe",
+        "name": "data"
+      }
+    ],
+    "filesystems": [
+      {
+        "device": "/dev/md/data",
+        "format": "ext4",
+        "create": {
+          "options": [
+            "-L", "DATA"
+          ]
+        }
+      }
+    ]
+  },
+  "systemd": {
+    "units": [
+      {
+        "name": "var-lib-data.mount",
+        "enable": true,
+        "contents": "[Mount]\nWhat=/dev/md/data\nWhere=/var/lib/data\nType=ext4\n\n[Install]\nWantedBy=local-fs.target"
+      }
+    ]
+  }
 }
 ```
 
@@ -192,21 +192,21 @@ This config will write a systemd drop-in (shown below) for the etcd2.service. Th
 
 ```json
 {
-	"ignitionVersion": 1,
-	"systemd": {
-		"units": [
-			{
-				"name": "etcd2.service",
-				"enable": true,
-				"dropins": [
-					{
-						"name": "metadata.conf",
-						"contents": "[Unit]\nRequires=coreos-metadata.service\nAfter=coreos-metadata.service\n\n[Service]\nEnvironmentFile=/run/metadata/coreos\nExecStart=\nExecStart=/usr/bin/etcd2 --advertise-client-urls=http://${COREOS_IPV4_PUBLIC}:2379 --initial-advertise-peer-urls=http://${COREOS_IPV4_LOCAL}:2380 --listen-client-urls=http://0.0.0.0:2379 --listen-peer-urls=http://${COREOS_IPV4_LOCAL}:2380 --initial-cluster=%m=http://${COREOS_IPV4_LOCAL}:2380"
-					}
-				]
-			}
-		]
-	}
+  "ignitionVersion": 1,
+  "systemd": {
+    "units": [
+      {
+        "name": "etcd2.service",
+        "enable": true,
+        "dropins": [
+          {
+            "name": "metadata.conf",
+            "contents": "[Unit]\nRequires=coreos-metadata.service\nAfter=coreos-metadata.service\n\n[Service]\nEnvironmentFile=/run/metadata/coreos\nExecStart=\nExecStart=/usr/bin/etcd2 --advertise-client-urls=http://${COREOS_IPV4_PUBLIC}:2379 --initial-advertise-peer-urls=http://${COREOS_IPV4_LOCAL}:2380 --listen-client-urls=http://0.0.0.0:2379 --listen-peer-urls=http://${COREOS_IPV4_LOCAL}:2380 --initial-cluster=%m=http://${COREOS_IPV4_LOCAL}:2380"
+          }
+        ]
+      }
+    ]
+  }
 }
 ```
 
@@ -236,15 +236,15 @@ This config will write a single service unit with the contents of a metadata age
 
 ```json
 {
-	"ignitionVersion": 1,
-	"systemd": {
-		"units": [
-			{
-				"name": "metadata.service",
-				"contents": "[Unit]\nDescription=EC2 metadata agent\n\n[Service]\nType=oneshot\nEnvironment=OUTPUT=/run/metadata/ec2\nExecStart=/usr/bin/mkdir --parent /run/metadata\nExecStart=/usr/bin/bash -c 'echo \"COREOS_IPV4_PUBLIC=$(curl --url http://169.254.169.254/2009-04-04/meta-data/public-ipv4 --retry 10)\\nCOREOS_IPV4_LOCAL=$(curl --url http://169.254.169.254/2009-04-04/meta-data/local-ipv4 --retry 10)\" > ${OUTPUT}'\n"
-			}
-		]
-	}
+  "ignitionVersion": 1,
+  "systemd": {
+    "units": [
+      {
+        "name": "metadata.service",
+        "contents": "[Unit]\nDescription=EC2 metadata agent\n\n[Service]\nType=oneshot\nEnvironment=OUTPUT=/run/metadata/ec2\nExecStart=/usr/bin/mkdir --parent /run/metadata\nExecStart=/usr/bin/bash -c 'echo \"COREOS_IPV4_PUBLIC=$(curl --url http://169.254.169.254/2009-04-04/meta-data/public-ipv4 --retry 10)\\nCOREOS_IPV4_LOCAL=$(curl --url http://169.254.169.254/2009-04-04/meta-data/local-ipv4 --retry 10)\" > ${OUTPUT}'\n"
+      }
+    ]
+  }
 }
 ```
 
