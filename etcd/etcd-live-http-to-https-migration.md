@@ -145,7 +145,7 @@ If the cluster members report as expected, we can move on to configuring the loc
 
 ### etcd Proxy
 
-An operating etcd proxy will automatically adopt new peer URLs within 30 seconds of each update (that is, the default `--proxy-refresh-interval 30000`).
+An operating etcd proxy will automatically adopt new peer URLs within 30 seconds of each update (that is, the default [`--proxy-refresh-interval][proxy-refresh] 30000`).
 
 ### etcd Versions 2.1 and Older
 
@@ -221,3 +221,4 @@ Once again, after verifying status, repeat this step on each etcd cluster member
 [systemd-unit-file]: /os/getting-started-with-systemd.md#unit-file
 [etcd proxy]: https://github.com/coreos/etcd/blob/master/Documentation/proxy.md
 [etcdctl]: https://github.com/coreos/etcd/blob/master/etcdctl/README.md
+[proxy-refresh]: https://github.com/coreos/etcd/blob/master/Documentation/configuration.md#-proxy-refresh-interval
