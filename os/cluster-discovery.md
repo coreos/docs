@@ -59,15 +59,13 @@ Second, machine 3 only needed to use one of the addresses stored in the discover
 
 Third, if you specified `?size=3` upon discovery URL creation, any other machines that join the cluster in the future will automatically start as etcd proxies.
 
-## Existing Clusters
-
-If you're already operating a bootstrapped cluster with a discovery URL, adding new machines to the cluster is very easy. All you need to do is to boot the new machines with a cloud-config containing the same discovery URL. After boot, the new machines will see that a cluster already exists and attempt to join through one of the addresses stored with the discovery URL.
-
-Over time, as machines come and go, the discovery URL will eventually contain addresses of peers that are no longer alive. Each entry in the discovery URL has a TTL of 7 days, which should be long enough to make sure no extended outages cause an address to be removed erroneously. There is no harm in having stale peers in the list until they are cleaned up, since an etcd instance only needs to connect to one valid peer in the cluster to join.
-
-It's also possible that a discovery URL can contain no existing addresses, because they were all removed after 7 days. This represents a dead cluster and the discovery URL won't work any more and should be discarded.
-
 ## Common Problems with Cluster Discovery
+
+### Existing Clusters
+
+[Do not use the public discovery service to reconfigure a running etcd cluster.][etcd-reconf-no-disc] The public discovery service is a convenience for bootstrapping new clusters, especially on cloud providers with dynamic IP assignment, but is not designed for the later case when the cluster is running and member IPs are known.
+
+To promote proxy members or join new members into an existing etcd cluster, configure static discovery and add members. The [etcd cluster reconfiguration guide][etcd-reconf-on-coreos] details the steps for performing this reconfiguration on CoreOS systems that were originally deployed with public discovery. The more general [etcd cluster reconfiguration document][etcd-reconf] explains the operations for removing and adding cluster members in a cluster already configured with static discovery.
 
 ### Invalid Cloud-Config
 
@@ -154,3 +152,7 @@ The public discovery service is just an etcd cluster made available to the publi
 Since etcd is designed to this type of leader election, it was an obvious choice to use it for everyone's initial leader election. This means that it's easy to run your own etcd cluster for this purpose.
 
 If you're interested in how discovery API works behind the scenes in etcd, read about [etcd clustering]({{site.baseurl}}/etcd/docs/latest/clustering.html).
+
+[etcd-reconf]: https://coreos.com/etcd/docs/latest/runtime-configuration.html
+[etcd-reconf-no-disc]: https://github.com/coreos/etcd/blob/master/Documentation/runtime-reconf-design.md#do-not-use-public-discovery-service-for-runtime-reconfiguration
+[etcd-reconf-on-coreos]: ../etcd/etcd-live-cluster-reconfiguration.md
