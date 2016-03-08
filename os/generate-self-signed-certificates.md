@@ -285,11 +285,8 @@ openssl x509 -in client.pem -text -noout
 
 * Don't put your `ca-key.pem` into cloud-config, it is recommended to store it in safe place. This key allows to generate as much certificates as possible.
 * Keep **key** files in safe. Don't forget to set proper file permissions, i.e. `chmod 0600 server-key.pem`.
-* Certificates in this **TLDR** example have both `server auth` and `client auth` X509 V3 extensions and you can use them with servers and clients' authintication.
+* Certificates in this **TLDR** example have both `server auth` and `client auth` X509 V3 extensions and you can use them with servers and clients' authentication.
 * You are free to generate keys and certificates for wildcard `*` address as well. They will work on any machine. It will simplify certificates routine but increase security risks.
-
-[cfssl]: https://github.com/cloudflare/cfssl
-[cfssl-bin]: https://pkg.cfssl.org
 
 # More Information
 
@@ -297,3 +294,6 @@ For another examples, check out these documents:
 
 [Custom Certificate Authorities](adding-certificate-authorities.md)
 [etcd Security Model](https://github.com/coreos/etcd/blob/master/Documentation/security.md)
+
+[cfssl]: https://github.com/cloudflare/cfssl
+[cfssl-bin]: https://pkg.cfssl.org
