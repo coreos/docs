@@ -12,9 +12,9 @@ You write unambiguous documentation, so you avoid the second person. Avoiding pe
 
 There are a few other common ways to write or not write things:
 
-* Expand acronyms on their introduction in a document, with the short form following in parentheses: Trusted Platform Module (TPM)
-* Terms of art that are not commands or other literal text should often be italicized on their first appearance in a document: *Kubernetes* is a good example
-* The hyphen is overused and most English compounds do not require it
+* Expand acronyms on their introduction in a document, with the short form following in parentheses: Trusted Platform Module (TPM).
+* Terms of art that are not commands or other literal text should often be italicized on their first appearance in a document: *Kubernetes* is a good example.
+* The hyphen is overused and most English compounds do not require it.
 * There is one space (` `) after a period (aka *full stop*, `.`), comma (`,`), semicolon (`;`) and other marks of punctuation.
 
 ## Source formatting
