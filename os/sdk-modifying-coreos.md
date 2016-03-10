@@ -66,7 +66,21 @@ The CoreOS initramfs is generated with the `dracut` tool. `Dracut` assumes it is
 
 #### Configuring QEMU for 64 bit ARM binaries
 
-On systemd systems, a configuration file controls how binaries for a given architecture are handled. To register QEMU as the runtime for 64 bit ARM binaries, write the following to `/etc/binfmt.d/qemu-aarch64.conf`:
+Note that "64 bit ARM" is known by two short forms: `aarch64` (as seen in the configuration file for QEMU), and `arm64` (as seen in how CoreOS and many other distributions refer to the architecture).
+
+The QEMU binary, `/usr/bin/qemu-aarch64-static` is not expected to be on the host workstation. It will be inside the `arm64-usr` build chroot entered before running `dracut`.
+
+##### Configuring Debian based systems
+
+For Debian, Ubuntu, and other Debian based systems installing the following packages will configure the host system such that QEMU will be the runtime for 64 bit ARM binaries:
+
+    sudo apt-get install binfmt-support qemu-user-static
+
+##### Configuring other systemd based systems
+
+On systemd systems, a configuration file controls how binaries for a given architecture are handled.
+
+To register QEMU as the runtime for 64 bit ARM binaries, write the following to `/etc/binfmt.d/qemu-aarch64.conf`:
 
 ```
 :qemu-aarch64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff:/usr/bin/qemu-aarch64-static:
@@ -77,10 +91,6 @@ Then run:
 ```sh
 systemctl restart systemd-binfmt.service
 ```
-
-The qemu binary, `/usr/bin/qemu-aarch64-static` is not expected to be on the host workstation. It will be inside the `arm64-usr` build chroot entered before running `dracut`.
-
-Note that "64 bit ARM" is known by two short forms: `aarch64` (as seen in the configuration file for QEMU), and `arm64` (as seen in how CoreOS and many other distributions refer to the architecture).
 
 ### Building an image
 
@@ -124,20 +134,6 @@ Build all of the target binary packages:
 
 ```sh
 ./build_packages
-```
-
-#### Building GRUB for `arm64`
-
-For the 64 bit ARM architecture, an extra step is required before building `arm64-usr` images. We need to build GRUB for `arm64` but this isn't handled automatically yet. Write the following to `/etc/portage/package.use/grub`:
-
-```
-sys-boot/grub grub_platforms_arm64
-```
-
-Then run:
-
-```sh
-sudo emerge -v grub
 ```
 
 #### Render the CoreOS image
