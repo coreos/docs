@@ -36,7 +36,7 @@ docker -H tcp://127.0.0.1:2375 ps
 
 ### Cloud-Config
 
-To enable the remote API on every CoreOS machine in a cluster, use [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config). We need to provide the new socket file and Docker's socket activation support will automatically start using the socket:
+To enable the remote API on every CoreOS machine in a cluster, use [cloud-config][cloud-config]. We need to provide the new socket file and Docker's socket activation support will automatically start using the socket:
 
 ```yaml
 #cloud-config
@@ -68,13 +68,11 @@ To keep access to the port local, replace the `ListenStream` configuration above
 
 ## Enable the Remote API with TLS authentication
 
-Docker doesn't support HTTPS on systemd's `fd://` socket so it is impossible to configure socket activated docker service with TLS auth.
-
-Docker TLS configuration consists of two parts: keys creation and systemd drop-in configuration.
+Docker TLS configuration consists of three parts: keys creation, configuring new [systemd socket][systemd-socket] unit and systemd [drop-in][drop-in] configuration.
 
 ### TLS keys creation
 
-Please follow the [instruction](generate-self-signed-certificates.md) to know how to create self-signed certificates and private keys. Then copy with following files into `/etc/docker` CoreOS' directory and fix their permissions:
+Please follow the [instruction][self-signed-certs] to know how to create self-signed certificates and private keys. Then copy with following files into `/etc/docker` CoreOS' directory and fix their permissions:
 
 ```sh
 scp ~/cfssl/{server.pem,server-key.pem,ca.pem} coreos.example.com:
@@ -95,13 +93,40 @@ cp -p ~/cfssl/client.pem cert.pem
 cp -p ~/cfssl/client-key.pem key.pem
 ```
 
+### Enable the Secure Remote API on a New Socket
+
+**NOTE:** For CoreOS releases older than 949.0.0 you must follow [this][old-guide] guide.
+
+Create a file called `/etc/systemd/system/docker-tls-tcp.socket` to make Docker available on a secured TCP socket on port 2376.
+
+```ini
+[Unit]
+Description=Docker Secured Socket for the API
+
+[Socket]
+ListenStream=2376
+BindIPv6Only=both
+Service=docker.service
+
+[Install]
+WantedBy=sockets.target
+```
+
+Then enable this new socket:
+
+```sh
+systemctl enable docker-tls-tcp.socket
+systemctl stop docker
+systemctl start docker-tls-tcp.socket
+```
+
 ### Drop-in Configuration
 
-On remote CoreOS host create `/etc/systemd/system/docker.service.d/10-tls-verify.conf` [drop-in](using-systemd-drop-in-units.html) for systemd Docker service:
+Create `/etc/systemd/system/docker.service.d/10-tls-verify.conf` [drop-in][drop-in] for systemd Docker service:
 
-```
+```ini
 [Service]
-Environment="DOCKER_OPTS=-H=0.0.0.0:2376 --tlsverify --tlscacert=/etc/docker/ca.pem --tlscert=/etc/docker/server.pem --tlskey=/etc/docker/server-key.pem"
+Environment="DOCKER_OPTS=--tlsverify --tlscacert=/etc/docker/ca.pem --tlscert=/etc/docker/server.pem --tlskey=/etc/docker/server-key.pem"
 ```
 
 Reload systemd config files and restart docker service:
@@ -140,7 +165,7 @@ docker images
 
 ### Cloud-Config
 
-Cloud-config for Docker TLS authintication will look like:
+Cloud-config for Docker TLS authentication will look like:
 
 ```yaml
 #cloud-config
@@ -172,19 +197,32 @@ write_files:
         ... ... ...
 coreos:
   units:
+    - name: docker-tls-tcp.socket
+      command: start
+      enable: true
+      content: |
+        [Unit]
+        Description=Docker Secured Socket for the API
+
+        [Socket]
+        ListenStream=2376
+        BindIPv6Only=both
+        Service=docker.service
+
+        [Install]
+        WantedBy=sockets.target
     - name: docker.service
       drop-ins:
         - name: 10-tls-verify.conf
           content: |
             [Service]
-            Environment="DOCKER_OPTS=-H=0.0.0.0:2376 --tlsverify --tlscacert=/etc/docker/ca.pem --tlscert=/etc/docker/server.pem --tlskey=/etc/docker/server-key.pem"
-      command: start
+            Environment="DOCKER_OPTS=--tlsverify --tlscacert=/etc/docker/ca.pem --tlscert=/etc/docker/server.pem --tlskey=/etc/docker/server-key.pem"
 
 ```
 
 ## Use Attached Storage for Docker Images
 
-Docker containers can be very large and debugging a build process makes it easy to accumulate hundreds of containers. It's advantageous to use attached storage to expand your capacity for container images. Check out the guide to [mounting storage to your CoreOS machine]({{site.baseurl}}/docs/cluster-management/setup/mounting-storage/#use-attached-storage-for-docker) for an example of how to bind mount storage into `/var/lib/docker`.
+Docker containers can be very large and debugging a build process makes it easy to accumulate hundreds of containers. It's advantageous to use attached storage to expand your capacity for container images. Check out the guide to [mounting storage to your CoreOS machine][mounting-storage] for an example of how to bind mount storage into `/var/lib/docker`.
 
 ## Enabling the Docker Debug Flag
 
@@ -325,4 +363,13 @@ coreos:
 
 A json file `.dockercfg` can be created in your home directory that holds authentication information for a public or private Docker registry.
 
-Read more about [registry authentication]({{site.baseurl}}/docs/launching-containers/building/registry-authentication).
+Read more about [registry authentication][registry-authentication].
+
+[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
+[docker-socket-systemd]: https://github.com/docker/docker/pull/17211
+[drop-in]: using-systemd-drop-in-units.md
+[old-guide]: https://coreos.com/os/docs/942.0.0/customizing-docker.html#enable-the-remote-api-with-tls-authentication
+[mounting-storage]: mounting-storage.md
+[registry-authentication]: registry-authentication.md
+[self-signed-certs]: generate-self-signed-certificates.md
+[systemd-socket]: https://www.freedesktop.org/software/systemd/man/systemd.socket.html
