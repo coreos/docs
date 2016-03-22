@@ -22,9 +22,9 @@ If you wish to make further customizations see our [customize sshd guide](https:
 
 etcd, fleet, and locksmith all should be secured and authenticated using TLS if you are using these services. Please see the relevant guides for details.
 
-[etcd security guide](https://coreos.com/etcd/docs/2.2.0/security.html)
-[fleet TLS configuration](https://coreos.com/os/docs/latest/cloud-config.html#fleet)
-[locksmith TLS configuration](https://coreos.com/os/docs/latest/cloud-config.html#locksmith)
+* [etcd security guide](https://coreos.com/etcd/docs/2.2.0/security.html)
+* [fleet TLS configuration](https://coreos.com/os/docs/latest/cloud-config.html#fleet)
+* [locksmith TLS configuration](https://coreos.com/os/docs/latest/cloud-config.html#locksmith)
 
 ## Local Services
 
