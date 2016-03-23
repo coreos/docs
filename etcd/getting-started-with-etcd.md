@@ -1,6 +1,6 @@
 # Getting Started with etcd
 
-etcd is an open-source distributed key value store that provides shared configuration and service discovery for CoreOS clusters. etcd runs on each machine in a cluster and gracefully handles master election during network partitions and the loss of the current master.
+etcd is an open-source distributed key value store that provides shared configuration and service discovery for CoreOS clusters. etcd runs on each machine in a cluster and gracefully handles leader election during network partitions and the loss of the current leader.
 
 Application containers running on your cluster can read and write data into etcd. Common examples are storing database connection details, cache settings, feature flags, and more. This guide will walk you through a basic example of reading and writing to etcd then proceed to other features like TTLs, directories and watching a prefix. This guide is way more fun when you've got at least one CoreOS machine up and running &mdash; try it on [Amazon EC2]({{site.baseurl}}/docs/running-coreos/cloud-providers/ec2) or locally with [Vagrant]({{site.baseurl}}/docs/running-coreos/platforms/vagrant).
 
@@ -8,7 +8,7 @@ Application containers running on your cluster can read and write data into etcd
 
 ## Reading and Writing to etcd
 
-The HTTP-based API is easy to use. This guide will show both `etcdctl` and `curl` examples. It's important to note the `-L` flag is required for `curl`. etcd transparently redirects writes to the master and this flag allows `curl` to follow the location headers from etcd.
+The HTTP-based API is easy to use. This guide will show both `etcdctl` and `curl` examples. It's important to note the `-L` flag is required for `curl`. etcd transparently redirects writes to the leader and this flag allows `curl` to follow the location headers from etcd.
 
 From a CoreOS machine, set a key `message` with value `Hello`:
 
