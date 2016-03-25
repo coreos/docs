@@ -38,10 +38,6 @@ CoreOS is released into stable, alpha and beta channels. Releases to each channe
 
 [release notes]: https://coreos.com/releases/
 
-### Booting with VMware Fusion
-
-After downloading the VMware OVA image for your selected channel, open the `coreos_production_vmware_ova.ova` file to create a VM.
-
 ### Booting with VMware ESXi
 
 Use the vSphere Client to deploy the VM as follows:
@@ -59,7 +55,7 @@ The last step uploads the files to the ESXi datastore and registers the new VM. 
 
 *NB: These instructions were tested with an ESXi v5.5 host.*
 
-### Booting with VMware Workstation 12
+### Booting with VMware Workstation 12 or VMware Fusion
 
 Run VMware Workstation GUI:
 
@@ -68,7 +64,11 @@ Run VMware Workstation GUI:
 3. Name your VM, then click `Import`
 4. (Press `Retry` *if* VMware Workstation raises an "OVF specification" warning)
 5. Edit VM settings if necessary
-6. Start your CoreOS VM
+6. Create a cloud-config image (see below) containing at least one valid SSH key using a [config drive](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/config-drive.md).
+    * On Fusion, simply connect and mount this image as the CD, ignoring the instruction below regarding the filesystem label which are not applicable.
+7. Start your CoreOS VM
+
+*NB: These instructions were tested with a Fusion 8.1 host.*
 
 ## Cloud-config
 
