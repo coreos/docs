@@ -1,4 +1,4 @@
-# On-Premise Installation
+# On-Premises Installation
 
 CoreOS Enterprise Registry requires three components to be running to begin the setup process:
 
@@ -75,4 +75,3 @@ Once the Enterprise Registry is running, new users can be created by clicking th
 ### If using LDAP authentication:
 
 Users should be able to login to the Enterprise Registry directly with their LDAP username and password.
-

@@ -237,8 +237,8 @@ CoreUpdate supports synchronizing certain data with other "upstream" CoreUpdate 
 By default hosted instances of CoreUpdate periodically synchronize with the public instance of CoreUpdate over the internet.
 This automatically updates your instance's CoreOS application packages and channel versions.
 
-Since on-premise instances of CoreUpdate cannot access the internet [synchronization must be done manually](https://github.com/coreos/updateservicectl/blob/master/Documentation/sync-packages.md).
-If you decide to enable internet access for your on-premise instance, you can manage upstreams using these commands.
+Since on-premises instances of CoreUpdate cannot access the internet [synchronization must be done manually](https://github.com/coreos/updateservicectl/blob/master/Documentation/sync-packages.md).
+If you decide to enable internet access for your on-premises instance, you can manage upstreams using these commands.
 
 ### List upstreams
 
