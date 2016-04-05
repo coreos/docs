@@ -1,6 +1,6 @@
-# On-Premise Deployment
+# On-Premises Deployment
 
-An on-premise deployment of CoreUpdate is a self-administered instance that can be run behind a firewall.
+An on-premises deployment of CoreUpdate is a self-administered instance that can be run behind a firewall.
 
 ## Accessing the CoreUpdate Container
 
@@ -13,7 +13,7 @@ You should now be able to execute `docker pull quay.io/coreos/coreupdate` to dow
 CoreUpdate requires an instance of a Postgres database server.
 You can use an existing instance if you have one, or use [the official Postgres docker image](https://registry.hub.docker.com/_/postgres/).
 
-Postgres can be run on CoreOS with a systemd unit file similar to this one: 
+Postgres can be run on CoreOS with a systemd unit file similar to this one:
 
 ```ini
 [Service]
@@ -211,13 +211,13 @@ You can now point your browser to `http://localhost:8000` to view the control pa
 
 ### Air-Gapped Package Management
 
-On-Premise CoreUpdate instances can be managed in a completely air-gapped environment. Internet access is not required. Below are the steps you can take to update your packages in such an environment.
+On-Premises CoreUpdate instances can be managed in a completely air-gapped environment. Internet access is not required. Below are the steps you can take to update your packages in such an environment.
 
 First you will need to decide if you want your CoreUpdate to host and serve the package files itself, or serve the files from a different fileserver.
 
 #### Option 1: Serving Package Files from CoreUpdate
 
-CoreUpdate has the ability to serve package files without using a separate file server. Enable this functionality [via the config file](https://github.com/coreos/docs/blob/master/coreupdate/on-premise-deployment.md#configuration-file).
+CoreUpdate has the ability to serve package files without using a separate file server. Enable this functionality [via the config file](https://github.com/coreos/docs/blob/master/coreupdate/on-premises-deployment.md#configuration-file).
 
 The two updateservicectl commands you would need are:
 
