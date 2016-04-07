@@ -1,31 +1,26 @@
 # Network Configuration #
 
-Configuring networkd with Ignition is a very straightforward task. Because
-Ignition runs before networkd starts, configuration is just a matter of writing
-the desired config to disk. The Ignition config has a specific section
-dedicated to this.
+Configuring networkd with Ignition is a very straightforward task. Because Ignition runs before networkd starts, configuration is just a matter of writing the desired config to disk. The Ignition config has a specific section dedicated to this.
+
+Each of these examples is written in version 2.0.0 of the config. Ensure that any configuration matches the version that Ignition expects.
 
 ## Static Networking ##
 
-In this example, the network interface with the name "eth0" will be given the
-IP address 10.0.1.7. A typical interface will need more configuration and can
-use all of the options of a [network unit][network].
+In this example, the network interface with the name "eth0" will be given the IP address 10.0.1.7. A typical interface will need more configuration and can use all of the options of a [network unit][network].
 
 ```json
 {
+  "ignition": { "version": "2.0.0" },
   "networkd": {
-    "units": [
-      {
-        "name": "00-eth0.network",
-        "contents": "[Match]\nName=eth0\n\n[Network]\nAddress=10.0.1.7"
-      }
-    ]
+    "units": [{
+      "name": "00-eth0.network",
+      "contents": "[Match]\nName=eth0\n\n[Network]\nAddress=10.0.1.7"
+    }]
   }
 }
 ```
 
-This configuration will instruct Ignition to create a single network unit named
-"00-eth0.network" with the contents:
+This configuration will instruct Ignition to create a single network unit named "00-eth0.network" with the contents:
 
 ```
 [Match]
@@ -35,19 +30,17 @@ Name=eth0
 Address=10.0.1.7
 ```
 
-When the system boots, networkd will read this config and assign the IP address
-to eth0.
+When the system boots, networkd will read this config and assign the IP address to eth0.
 
 [network]: http://www.freedesktop.org/software/systemd/man/systemd.network.html
 
 ## Bonded NICs ##
 
-In this example, all of the network interfaces whose names begin with "eth"
-will be bonded together to form "bond0". This new interface will then be
-configured to use DHCP.
+In this example, all of the network interfaces whose names begin with "eth" will be bonded together to form "bond0". This new interface will then be configured to use DHCP.
 
 ```json
 {
+  "ignition": { "version": "2.0.0" },
   "networkd": {
     "units": [
       {
