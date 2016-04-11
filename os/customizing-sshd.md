@@ -39,9 +39,11 @@ coreos:
   units:
   - name: sshd.socket
     command: restart
+    runtime: true
     content: |
       [Socket]
       ListenStream=2222
+      FreeBind=true
       Accept=yes
 ```
 
