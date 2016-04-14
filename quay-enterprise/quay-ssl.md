@@ -1,6 +1,6 @@
 # SSL + Quay Enterprise
 
-**NOTE**: This document assumes you have deployed [Quay Enterprise as a single container.](https://tectonic.com/quay-enterprise/docs/latest/initial-setup.html)
+This document assumes you have deployed [Quay Enterprise as a single container.](https://tectonic.com/quay-enterprise/docs/latest/initial-setup.html)
 
 Quay Enterprise will be configured with a [self-signed certificate.](https://en.wikipedia.org/wiki/Self-signed_certificate) A Certificate Authority is required.
 
@@ -43,7 +43,7 @@ Getting CA Private Key
 ```
 The next step can be accomplished via the QE superuser panel or from the terminal:
 
-# For setting up via superuser panel:
+## To configure with the superuser GUI in QE:
 
 Set the `Server Hostname` to the appropriate value and check the `Enable SSL`:
 
@@ -62,7 +62,7 @@ Restart the container:
 <img src="img/restart-container.png" class="img-center" alt="Restart Container"/>
 
 
-# Set up via terminal
+## Setting up in the terminal
 
 By not using the web interface the configuration checking mechanism built into QE is unavailable. It is suggested to use the web interface if possible.
 
@@ -98,7 +98,7 @@ cbe7b0fa39d8        quay.io/coreos/registry   "/sbin/my_init"          22 hours 
 $ docker restart cbe7b0fa39d8
 ```
 
-# Confirm
+# Test out the secure connection
 
 Confirm the configuration by visiting the URL from a browser `https://lan-lab-07.lab.libcore.so/`
 
