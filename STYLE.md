@@ -1,4 +1,4 @@
-# Documentation Style and Formatting
+# Documentation style and formatting
 
 ## English style
 
@@ -46,11 +46,11 @@ Markdown defines two or more ways to declare some document structures. This docu
 
 ## Headings
 
-By convention, the level one heading, denoted in Markdown by a single hash character (`#`), is the document's title. This document's title is *Documentation Style and Formatting*. The document title, and only the document title, is typed in *Title Case*.
+By convention, the level one heading, denoted in Markdown by a single hash character (`#`), is the document's title. This document's title is *Documentation style and formatting*.
 
 ### Heading style
 
-Each heading is both preceded and followed by a newline. A space separates the Markdown symbols from the heading text. Headings other than the single level one title are typed in *Sentence case*, capitalizing the first letter of the first word, but other words only as they would be capitalized if appearing in the middle of a sentence.
+Each heading is both preceded and followed by a newline. A space separates the Markdown symbols from the heading text. Headings are typed in *Sentence case*, capitalizing the first letter of the first word, but other words only as they would be capitalized if appearing in the middle of a sentence.
 
 ### Heading semantics and the sidebar outline
 
@@ -63,7 +63,7 @@ The site deployment process inspects a document's headings to derive the thumb i
 The abridged skeletal markdown source for this document's headings:
 
 ```
-# Documentation Style and Formatting
+# Documentation style and formatting
 
 ## English style
 
