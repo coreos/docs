@@ -22,7 +22,7 @@ For example, here is what the Alpha group looks like in CoreUpdate:
 
 Here's the cloud-config to use:
 
-```
+```yaml
 #cloud-config
 
 coreos:
@@ -41,7 +41,7 @@ For example, here is what "NYC Production" looks like in CoreUpdate:
 
 Here's the cloud-config to use:
 
-```
+```yaml
 #cloud-config
 
 coreos:

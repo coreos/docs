@@ -34,7 +34,7 @@ Pulling repository index.example.com/debug
 
 You can also specify this in cloud-config:
 
-```
+```yaml
 #cloud-config
 write_files:
   - path: /home/core/.toolboxrc
