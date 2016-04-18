@@ -1,9 +1,8 @@
 # Running CoreOS {{site.brightbox-version}} on Brightbox Cloud
 
-CoreOS is currently in heavy development and actively being tested.  These
-instructions will walk you through running a CoreOS cluster on Brightbox. This guide uses the [Brightbox CLI](http://brightbox.com/docs/guides/cli/getting-started/) but you can also use the [Brightbox Manager](http://brightbox.com/docs/guides/manager/).
+These instructions will walk you through running a CoreOS cluster on Brightbox. This guide uses the [Brightbox CLI](http://brightbox.com/docs/guides/cli/getting-started/) but you can also use the [Brightbox Manager](http://brightbox.com/docs/guides/manager/).
 
-## Firewall Policy
+## Firewall policy
 
 First of all, let’s create a server group to put the new servers into:
 
@@ -29,7 +28,7 @@ $ brightbox firewall-policies create -n "coreos" grp-cdl6h
 ---------------------------------
 ```
 
-### Firewall Rules
+### Firewall rules
 
 Now let’s define the firewall rules for this new policy. First we’ll allow ssh access in from anywhere:
 
@@ -55,7 +54,6 @@ $ brightbox firewall-rules create --source grp-cdl6h --protocol tcp --dport 7001
 
 And then allow all outgoing access from the servers in the group:
 
-
 ```sh
 $ brightbox firewall-rules create --destination any fwp-dw0n6
 
@@ -65,7 +63,7 @@ $ brightbox firewall-rules create --destination any fwp-dw0n6
 -------------------------------------------------------------------------------- 
 ```
 
-## List Images
+## List images
 
 You can find it by listing all images and grepping for CoreOS:
 
@@ -77,11 +75,9 @@ $ brightbox images list | grep CoreOS
  {{site.brightbox-id}}  brightbox  official  2013-12-15  public   5442   CoreOS {{site.brightbox-version}} (x86_64)
  ```
 
-## Cloud-Config
+## Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on
-startup and more via [cloud-config][cloud-config].  We're going to provide the
-`cloud-config` data via the `user-data-file` flag.
+CoreOS allows you to configure machine parameters, launch systemd units on startup and more via [cloud-config][cloud-config]. We're going to provide the `cloud-config` data via the `user-data-file` flag.
 
 [cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
@@ -111,7 +107,7 @@ coreos:
 
 The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on Brightbox.
 
-## Building Servers
+## Building servers
 
 Now build three servers using the image, in the server group we created and specifying the cloud-config as the user data:
 
@@ -128,7 +124,7 @@ Creating 3 small (typ-8fych) servers with image CoreOS {{site.brightbox-version}
 --------------------------------------------------------------------------------
 ```
 
-## Accessing the Cluster
+## Accessing the cluster
 
 Those servers should take just a minute to build and boot. They automatically install your Brightbox Cloud ssh key on bootup, so you can ssh in straight away as the `core` user.
 
@@ -153,6 +149,4 @@ If you don’t have ipv6, you’ll need to [create and map a Cloud IP](http://br
 
 ## Using CoreOS
 
-Now that you have a cluster bootstrapped it is time to play around.
-Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
-
+Now that you have a cluster bootstrapped it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

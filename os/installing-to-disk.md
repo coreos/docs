@@ -1,9 +1,8 @@
-# Installing CoreOS to Disk
+# Installing CoreOS to disk
 
-## Install Script
+## Install script
 
-There is a simple installer that will destroy everything on the given target disk and install CoreOS.
-Essentially it downloads an image, verifies it with gpg and then copies it bit for bit to disk.
+There is a simple installer that will destroy everything on the given target disk and install CoreOS. Essentially it downloads an image, verifies it with gpg, and then copies it bit for bit to disk.
 
 The script is self-contained and located [on GitHub here][coreos-install] and can be run from any Linux distribution. You cannot normally install CoreOS to the same device that is currently booted. However, the [CoreOS ISO][coreos-iso] or any Linux liveCD will allow CoreOS to install to a non-active device.
 
@@ -19,16 +18,16 @@ If you are using the ISO with VMware, first sudo to root:
 sudo su - root
 ```
 
-Then install as you would with the PXE booted system, but be sure to include user information, especially an SSH key, in a [Cloud-Config][cloud-config-section] file, or else you will not be able to log into your CoreOS instance.
+Then install as you would with the PXE booted system, but be sure to include user information, especially an SSH key, in a [cloud-config][cloud-config-section] file, or else you will not be able to log into your CoreOS instance.
 
 
 ```sh
 coreos-install -d /dev/sda -c cloud-config.yaml
 ```
 
-## Choose a Channel
+## Choose a channel
 
-CoreOS is released into stable, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 <div id="install">
   <ul class="nav nav-tabs">
@@ -63,16 +62,15 @@ For reference here are the rest of the `coreos-install` options:
 -C CHANNEL  Release channel to use (e.g. beta)
 -o OEM      OEM type to install (e.g. openstack)
 -c CLOUD    Insert a cloud-init config to be executed on boot.
+-i IGNITION Insert an Ignition config to be executed on boot.
 -t TMPDIR   Temporary location with enough space to download images.
 -v          Super verbose, for debugging.
 -b BASEURL  URL to the image mirror
 ```
 
-## Cloud Config
+## Cloud-config
 
-By default there isn't a password or any other way to log into a fresh CoreOS system.
-The easiest way to configure accounts, add systemd units, and more is via cloud config.
-Jump over to the [docs to learn about the supported features][cloud-config].
+By default there isn't a password or any other way to log into a fresh CoreOS system. The easiest way to configure accounts, add systemd units, and more is via cloud config. Jump over to the [docs to learn about the supported features][cloud-config].
 
 The installation script will process your `cloud-config.yaml` file specified with the `-c` flag and place it onto disk. It will be installed to `/var/lib/coreos-install/user_data` and evaluated on every boot. Cloud-config is not the only supported format for this file &mdash; running a script is also available.
 
@@ -94,7 +92,7 @@ To start the installation script with a reference to our cloud-config file, run:
 coreos-install -d /dev/sda -C stable -c ~/cloud-config.yaml
 ```
 
-### Advanced Cloud Config Example
+### Advanced cloud-config example
 
 This example will configure CoreOS components: etcd2, fleetd and flannel. You have to substitute `<PEER_ADDRESS>` to your host's IP or DNS address.
 
@@ -129,7 +127,7 @@ coreos:
           ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{"Network":"10.1.0.0/16", "Backend": {"Type": "vxlan"}}'
 ```
 
-## Manual Tweaks
+## Manual tweaks
 
 If cloud config doesn't handle something you need to do or you just want to take a look at the root filesystem before booting your new install just mount the ninth partition. For example, with an ext4 root filesystem:
 
@@ -139,8 +137,7 @@ mount /dev/sda9 /mnt/
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart][quickstart] guide or dig into [more specific topics][docs-root].
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart][quickstart] guide or dig into [more specific topics][docs-root].
 
 [nginx]: nginx-host-cloud-config.md
 [quickstart]: quickstart.md

@@ -1,10 +1,10 @@
-# Network Configuration #
+# Network configuration #
 
 Configuring networkd with Ignition is a very straightforward task. Because Ignition runs before networkd starts, configuration is just a matter of writing the desired config to disk. The Ignition config has a specific section dedicated to this.
 
 Each of these examples is written in version 2.0.0 of the config. Ensure that any configuration matches the version that Ignition expects.
 
-## Static Networking ##
+## Static networking ##
 
 In this example, the network interface with the name "eth0" will be given the IP address 10.0.1.7. A typical interface will need more configuration and can use all of the options of a [network unit][network].
 

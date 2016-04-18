@@ -39,15 +39,15 @@ The latest CoreOS ISOs can be downloaded from the image storage site:
   </div>
 </div>
 
-## Known Limitations
+## Known limitations
 
 1. The best strategy for providing [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config) is via [config-drive]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-config-drive).
 
-## Install to Disk
+## Install to disk
 
 The most common use-case for this ISO is to install CoreOS to disk. You can [find those instructions here]({{site.baseurl}}/docs/running-coreos/bare-metal/installing-to-disk).
 
-## Bypass Authentication
+## Bypass authentication
 
 If you need to bypass authentication in order to install, the kernel option `coreos.autologin` allows you to drop directly to a shell on a given console without prompting for a password. Useful for troubleshooting but use with caution.
 

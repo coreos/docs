@@ -1,38 +1,25 @@
 # Running CoreOS on VEXXHOST
 
-VEXXHOST is a Canadian OpenStack cloud computing provider based in Canada. In
-order to get started, you must have an active account on the VEXXHOST
-[public cloud computing][cloud-compute] service.
+VEXXHOST is a Canadian OpenStack cloud computing provider based in Canada. In order to get started, you must have an active account on the VEXXHOST [public cloud computing][cloud-compute] service.
 
-The following instructions will walk you through setting up the `nova` tool with
-your appropriate credentials and launching your first cluster using the
-CLI tools.
+The following instructions will walk you through setting up the `nova` tool with your appropriate credentials and launching your first cluster using the CLI tools.
 
 [cloud-compute]: http://vexxhost.com/cloud-computing
 
-## Choosing a Channel
+## Choosing a channel
 
-CoreOS is released into stable, alpha and beta channels. Releases to each channel
-serve as a release-candidate for the next channel. For example, a bug-free alpha
-release is promoted bit-for-bit to the beta channel.
+CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
-CoreOS releases are automatically built and deployed on the VEXXHOST cloud,
-therefore it is best to launch your clusters with the following naming pattern:
-CoreOS _Channel_ _Version_.  For example, the image name of the latest alpha
-release will be "CoreOS Alpha {{site.alpha-channel}}".
+CoreOS releases are automatically built and deployed on the VEXXHOST cloud, therefore it is best to launch your clusters with the following naming pattern: CoreOS _Channel_ _Version_. For example, the image name of the latest alpha release will be "CoreOS Alpha {{site.alpha-channel}}".
 
 
-### Cloud-Config
+### Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on
-startup and more via [cloud-config][cloud-config].  We're going to provide the
-`cloud-config` data via the `user-data` flag.
+CoreOS allows you to configure machine parameters, launch systemd units on startup, and more via [cloud-config][cloud-config]. We're going to provide the `cloud-config` data via the `user-data` flag.
 
 [cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
-At the moment, you cannot supply the `user-data` using the CloudConsole control
-panel therefore you must use the CLI to deploy your cluster on the VEXXHOST
-cloud.
+At the moment, you cannot supply the `user-data` using the CloudConsole control panel therefore you must use the CLI to deploy your cluster on the VEXXHOST cloud.
 
 A sample common `cloud-config` file will look something like the following:
 
@@ -60,50 +47,40 @@ coreos:
 
 The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on VEXXHOST.
 
-## Launch Cluster
+## Launch cluster
 
-You will need to install `python-novaclient` which supplies the OpenStack CLI
-tools as well as a keypair to use in order to access your CoreOS cluster.
+You will need to install `python-novaclient` which supplies the OpenStack CLI tools as well as a keypair to use in order to access your CoreOS cluster.
 
 ### Install OpenStack CLI tools
 
-If you don't have `pip` installed, install it by running `sudo easy_install pip`.
-Now let's use `pip` to install `python-novaclient`.
+If you don't have `pip` installed, install it by running `sudo easy_install pip`. Now let's use `pip` to install `python-novaclient`.
 
 ```sh
 $ sudo pip install python-novaclient
 ```
 
-### Add API Credentials
+### Add API credentials
 
-You will need to have your API credentials configured on the machine that you're
-going to be launching your cluster from.  The easiest way to do this is by
-logging into the CloudConsole control panel and clicking on "API Credentials".
+You will need to have your API credentials configured on the machine that you're going to be launching your cluster from. The easiest way to do this is by logging into the CloudConsole control panel and clicking on "API Credentials".
 
-From there, you must create a file on your system with the contents of the
-`openrc` file provided.  Once done, you will need to `source` that file in your
-shell prior to running any API commands.  You can test that everything is running
-properly by running the following command:
+From there, you must create a file on your system with the contents of the `openrc` file provided. Once done, you will need to `source` that file in your shell prior to running any API commands. You can test that everything is running properly by running the following command:
 
 ```sh
 $ source openrc
 $ nova credentials
 ```
 
-### Create Keypair
+### Create keypair
 
-You can import an existing public key by using the `nova keypair-add` command,
-however for this guide, we will be creating a new keypair and storing the
-private key for it locally and use it to access our CoreOS cluster.
+You can import an existing public key by using the `nova keypair-add` command, however for this guide, we will be creating a new keypair and storing the private key for it locally and use it to access our CoreOS cluster.
 
 ```sh
 $ nova keypair-add coreos-key > coreos.pem
 ```
 
-### Create Servers
+### Create servers
 
-You should now be ready to launch the servers which will create your CoreOS
-cluster using the `nova` CLI command.
+You should now be ready to launch the servers which will create your CoreOS cluster using the `nova` CLI command.
 
 <div id="vexxhost-create">
   <ul class="nav nav-tabs">
@@ -122,8 +99,7 @@ cluster using the `nova` CLI command.
   </div>
 </div>
 
-Once that's done, your cluster should be up and running.  You can list the
-created servers and SSH into a server using your private key.
+Once that's done, your cluster should be up and running. You can list the created servers and SSH into a server using your private key.
 
 ```sh
 $ nova list
@@ -139,18 +115,14 @@ CoreOS (alpha)
 core@a1df1d98-622f-4f3b-adef-cb32f3e2a94d ~ $
 ```
 
-## Adding More Machines
+## Adding more machines
 
-Adding new instances to the cluster is as easy as launching more with the same
-cloud-config. New instances will join the cluster assuming they can communicate
-with the others.
+Adding new instances to the cluster is as easy as launching more with the same cloud-config. New instances will join the cluster assuming they can communicate with the others.
 
-## Multiple Clusters
+## Multiple clusters
 
-If you would like to create multiple clusters you'll need to generate and use a
-new discovery token. Change the token value on the etcd discovery parameter in the cloud-config, and boot new instances.
+If you would like to create multiple clusters you'll need to generate and use a new discovery token. Change the token value on the etcd discovery parameter in the cloud-config, and boot new instances.
 
 ## Using CoreOS
 
-Now that you have instances booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have instances booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

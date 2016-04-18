@@ -1,8 +1,8 @@
-# Running CoreOS on RimuHosting's LaunchtimeVPS Service
+# Running CoreOS on RimuHosting's LaunchtimeVPS service
 
 RimuHosting's LaunchtimeVPS service provides hosted virtual machines, and provides CoreOS as one of their standard images. Customers can launch these VMs via the web interface or via the RimuHosting server management API.
 
-## About the RimuHosting CoreOS Setup
+## About the RimuHosting CoreOS setup
 
 RimuHosting automatically creates the systemd networking files (no need to put networking setup in the cloud init block).
 
@@ -10,7 +10,7 @@ The provided image is from the CoreOS `stable` channel and is updated with each 
 
 RimuHosting uses the CoreOS PXE kernel and initrd (stored on your VM at `/boot`). We boot up the VM via pv-grub (so the kernel used is provided by CoreOS, not the Xen-based VM host).
 
-### Public SSH Keys
+### Public SSH keys
 
 The CoreOS default user is named `core`, and password authentication and root logins are both disabled. You'll need to add an SSH key(s) via the web interface or add keys/passwords via your cloud-config in order to log in.
 
@@ -30,11 +30,11 @@ The `$private_ipv4` and `$public_ipv4` substitution variables are fully supporte
 
 ## Launching VMs
 
-### Via the Web Interface
+### Via the web interface
 
 1. Ensure you have set your [SSH public keys][rh-ssh-keys-page]. If you do not have a RimuHosting account, use the register link.
 2. Configure a [new VM][rh-variable-plan-page] (including memory, disk size and data center. Start the order.
-2. In the Software installs section select the CoreOS image (currently only the stable channel is provided). Tab away from that field to reveal the cloud config input field. Then provide your cloud config.<br/><br/>
+2. In the Software installs section select the CoreOS image (currently only the stable channel is provided). Tab away from that field to reveal the cloud config input field. Then provide your cloud config.
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12 co-m-screenshot">
     <a href="rimuhosting-coreos-image-select-cloud-config.png">
@@ -105,7 +105,7 @@ $ python3 mkvm.py --server_json sample-configs/unmodified/servers/server.json \
 
 For more details, check out [RimuHosting's API documentation][rh-api-docs].
 
-### Adding More Machines
+### Adding more machines
 
 To add more instances to the cluster, just launch more with the same cloud-config. New instances will join the cluster regardless of VM location.
 

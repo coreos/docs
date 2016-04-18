@@ -1,10 +1,8 @@
-# Building Development Images
+# Building development images
 
-## Updating Packages on an Image
+## Updating packages on an image
 
-Building a new VM image is a time consuming process. On development images you
-can use `gmerge` to build packages on your workstation and ship them to your
-target VM.
+Building a new VM image is a time consuming process. On development images you can use `gmerge` to build packages on your workstation and ship them to your target VM.
 
 On your workstation start the dev server inside the SDK chroot:
 
@@ -14,27 +12,21 @@ start_devserver --port 8080
 
 NOTE: This port will need to be Internet accessible if your VM is remote.
 
-Run `gmerge` from your VM and ensure that the `DEVSERVER` setting in
-`/etc/coreos/update.conf` points to your workstation IP/hostname and port.
+Run `gmerge` from your VM and ensure that the `DEVSERVER` setting in `/etc/coreos/update.conf` points to your workstation IP/hostname and port.
 
 ```sh
 gmerge coreos-base/update_engine
 ```
 
-### Updating an Image with Update Engine
+### Updating an image with update engine
 
-If you want to test that an image you built can successfully upgrade a running
-VM you can use devserver. To specify the version to upgrade to you can use the
-`--image` argument. This should be a newer build than the VM is currently
-running, otherwise devserver will answer "no update" to any requests. Here is
-an example using the default value:
+If you want to test that an image you built can successfully upgrade a running VM you can use devserver. To specify the version to upgrade to you can use the `--image` argument. This should be a newer build than the VM is currently running, otherwise devserver will answer "no update" to any requests. Here is an example using the default value:
 
 ```sh
 start_devserver --image ../build/images/amd64-usr/latest/coreos_developer_image.bin
 ```
 
-On the target VM ensure that the `SERVER` setting in `/etc/coreos/update.conf`
-points to your workstation, for example:
+On the target VM ensure that the `SERVER` setting in `/etc/coreos/update.conf` points to your workstation, for example:
 
 ```sh
 GROUP=developer
@@ -56,8 +48,7 @@ If the update fails you can check the logs of the update engine by running:
 journalctl -u update-engine -o cat
 ```
 
-If you want to download another update you may need to clear the reboot
-pending status:
+If you want to download another update you may need to clear the reboot pending status:
 
 ```sh
 update_engine_client -reset_status
@@ -65,9 +56,7 @@ update_engine_client -reset_status
 
 ## Updating portage-stable ebuilds from Gentoo
 
-There is a utility script called `update_ebuilds` that can pull from Gentoo's
-CVS tree directly into your local portage-stable tree. Here is an example usage
-bumping go to the latest version:
+There is a utility script called `update_ebuilds` that can pull from Gentoo's git tree directly into your local portage-stable tree. Here is an example usage bumping go to the latest version:
 
 ```sh
 ./update_ebuilds --commit dev-lang/go

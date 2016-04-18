@@ -1,17 +1,14 @@
-# On-Premises Deployment
+# On-premises deployment
 
 An on-premises deployment of CoreUpdate is a self-administered instance that can be run behind a firewall.
 
-## Accessing the CoreUpdate Container
+## Accessing the CoreUpdate container
 
-After signing up you will receive a `.dockercfg` file containing your credentials to the `quay.io/coreos/coreupdate` repository.
-Save this file to your CoreOS machine in `/home/core/.dockercfg` and `/root/.dockercfg`.
-You should now be able to execute `docker pull quay.io/coreos/coreupdate` to download the container.
+After signing up you will receive a `.dockercfg` file containing your credentials to the `quay.io/coreos/coreupdate` repository. Save this file to your CoreOS machine in `/home/core/.dockercfg` and `/root/.dockercfg`. You should now be able to execute `docker pull quay.io/coreos/coreupdate` to download the container.
 
-## Database Server
+## Database server
 
-CoreUpdate requires an instance of a Postgres database server.
-You can use an existing instance if you have one, or use [the official Postgres docker image](https://registry.hub.docker.com/_/postgres/).
+CoreUpdate requires an instance of a Postgres database server. You can use an existing instance if you have one, or use [the official Postgres docker image](https://registry.hub.docker.com/_/postgres/).
 
 Postgres can be run on CoreOS with a systemd unit file similar to this one:
 
@@ -30,24 +27,22 @@ ExecStop=/usr/bin/docker kill postgres
 WantedBy=multi-user.target
 ```
 
-It is recommended to mount a volume from your host machine for data storage.
-The above example uses `/opt/coreupdate/postgres/data`.
+It is recommended to mount a volume from your host machine for data storage. The above example uses `/opt/coreupdate/postgres/data`.
 
-Start the Postgres service by running:  
+Start the Postgres service by running:
 
 ```bash
 sudo cp postgres.service /etc/systemd/system
 sudo systemctl start postgres.service
 ```
 
-View the logs and verify it is running:  
+View the logs and verify it is running:
 
 ```bash
 sudo journalctl -u postgres.service -f
 ```
 
-CoreUpdate needs a database and user for the connection, so you may need to initialize these on the Postgres server.
-You can do this manually, or execute similar commands using another instance of the Postgres container:  
+CoreUpdate needs a database and user for the connection, so you may need to initialize these on the Postgres server. You can do this manually, or execute similar commands using another instance of the Postgres container:
 
 ```bash
 docker run --net="host" postgres:9.4 psql -h localhost -U postgres --command "CREATE USER coreos WITH SUPERUSER;"
@@ -56,16 +51,15 @@ docker run --net="host" postgres:9.4 psql -h localhost -U postgres --command "CR
 
 The username, password, and database name can be anything you choose as long as they match the `DB_URL` field in the config file.
 
-## Web Service
+## Web service
 
 Once your database server is configured and running properly you can configure the web service.
 
-### Configuration File
+### Configuration file
 
-All CoreUpdate configuration options can be stored in a `.yaml` file.
-You will need to save this somewhere on your host machine such as `/etc/coreupdate/config.yaml`.
+All CoreUpdate configuration options can be stored in a `.yaml` file. You will need to save this somewhere on your host machine such as `/etc/coreupdate/config.yaml`.
 
-Below is a configuration file template. Customize the values as needed:  
+Below is a configuration file template. Customize the values as needed:
 
 ```yaml
 # Published base URL of the web service.
@@ -113,13 +107,11 @@ UPSTREAM_SYNC_INTERVAL: 0
 #TLS_KEY_FILE:
 ```
 
-#### Package Payload Hosting
+#### Package payload hosting
 
-By default the CoreUpdate database only stores meta-data about application packages.
-This enables you to host the package payloads using the file storage technology of your choice.
+By default the CoreUpdate database only stores meta-data about application packages. This enables you to host the package payloads using the file storage technology of your choice.
 
-If you prefer you can store and serve package payloads from the same machine the CoreUpdate web service is running on.
-To do so ensure the following settings exist in your configuration file:  
+If you prefer you can store and serve package payloads from the same machine the CoreUpdate web service is running on. To do so ensure the following settings exist in your configuration file:
 
 ```bash
 STATIC_PACKAGES_DIR: /packages
@@ -132,9 +124,9 @@ And add the volume flag to the `coreupdate@.service` file below:
 -v /opt/packages:/packages
 ```
 
-### Initializing the Application
+### Initializing the application
 
-The CoreUpdate web service can be run with a systemd unit file such as:  
+The CoreUpdate web service can be run with a systemd unit file such as:
 
 ```
 [Unit]
@@ -180,10 +172,9 @@ View the logs and verify it is running:
 sudo journalctl -u coreupdate@.service -f
 ```
 
-#### Create Admin Users
+#### Create admin users
 
-Now that the server is running the first user must be initialization.
-Do this using the `updateservicectl` tool.
+Now that the server is running the first user must be initialization. Do this using the `updateservicectl` tool.
 
 This will generate an `admin` user and an api `key`, make note of the key for subsequent use of `updateservicectl`.
 
@@ -197,11 +188,9 @@ Create the first control panel user:
 updateservicectl --server=http://localhost:8000 --user=admin --key=<previously-generated-key> admin-user create google.apps.email@example.com
 ```
 
-#### Create the "CoreOS" Application
+#### Create the "CoreOS" application
 
-To sync the "CoreOS" application it must exist and have the same application id as the public CoreUpdate instance.
-NOTE: the application id must match exactly what is listed here:
-
+To sync the "CoreOS" application it must exist and have the same application id as the public CoreUpdate instance. NOTE: the application id must match exactly what is listed here:
 
 ```bash
 updateservicectl --server=http://localhost:8000 --user=admin --key=<previously-generated-key> app create --label=CoreOS --app-id=e96281a6-d1af-4bde-9a0a-97b76e56dc57
@@ -209,13 +198,13 @@ updateservicectl --server=http://localhost:8000 --user=admin --key=<previously-g
 
 You can now point your browser to `http://localhost:8000` to view the control panel.
 
-### Air-Gapped Package Management
+### Air-gapped package management
 
 On-Premises CoreUpdate instances can be managed in a completely air-gapped environment. Internet access is not required. Below are the steps you can take to update your packages in such an environment.
 
 First you will need to decide if you want your CoreUpdate to host and serve the package files itself, or serve the files from a different fileserver.
 
-#### Option 1: Serving Package Files from CoreUpdate
+#### Option 1: serving package files from CoreUpdate
 
 CoreUpdate has the ability to serve package files without using a separate file server. Enable this functionality [via the config file](https://github.com/coreos/docs/blob/master/coreupdate/on-premises-deployment.md#configuration-file).
 
@@ -233,7 +222,7 @@ updateservicectl package upload bulk
 
 This runs against the downstream instance (your CoreUpdate server). It uploads the metadata and binary files to your CoreUpdate service.
 
-#### Option 2: Serving Package Files from a Separate Fileserver
+#### Option 2: serving package files from a separate fileserver
 
 ```
 updateservicectl package download

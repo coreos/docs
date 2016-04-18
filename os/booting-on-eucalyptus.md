@@ -1,16 +1,14 @@
 # Running CoreOS on Eucalyptus 3.4
 
-CoreOS is currently in heavy development and actively being tested.
 These instructions will walk you through downloading CoreOS, bundling the image, and running an instance from it.
 
-## Import the Image
+## Import the image
 
-These steps will download the CoreOS image, uncompress it, convert it from qcow->raw, and then import it into Eucalyptus.
-In order to convert the image you will need to install ```qemu-img``` with your favorite package manager.
+These steps will download the CoreOS image, uncompress it, convert it from qcow to raw, and then import it into Eucalyptus. In order to convert the image you will need to install `qemu-img` with your favorite package manager.
 
-### Choosing a Channel
+### Choosing a channel
 
-CoreOS is released into stable, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes in each channel.
 
@@ -29,8 +27,7 @@ emi-E4A33D45
 
 ## Boot it up
 
-Now generate the ssh key that will be injected into the image for the `core`
-user and boot it up!
+Now generate the ssh key that will be injected into the image for the `core` user and boot it up!
 
 ```sh
 $ euca-create-keypair coreos > core.pem
@@ -38,8 +35,7 @@ $ euca-run-instances emi-E4A33D45 -k coreos -t m1.medium -g default
 ...
 ```
 
-Your first CoreOS instance should now be running. The only thing left to do is
-find the IP and SSH in.
+Your first CoreOS instance should now be running. The only thing left to do is find the IP and SSH in.
 
 ```sh
 $ euca-describe-instances | grep coreos
@@ -65,5 +61,4 @@ core@10-0-0-3 ~ $
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

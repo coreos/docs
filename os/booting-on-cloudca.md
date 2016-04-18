@@ -1,19 +1,13 @@
 # Running CoreOS on cloud.ca
 
-[cloud.ca](http://www.cloud.ca) is a regional IaaS designed to help meet
-regulatory or security requirements by storing data in Canada. CoreOS is a
-supported operating system for VMs on the cloud.ca infrastructure.
+[cloud.ca](http://www.cloud.ca) is a regional IaaS designed to help meet regulatory or security requirements by storing data in Canada. CoreOS is a supported operating system for VMs on the cloud.ca infrastructure.
 
 
-## Choosing a Channel
+## Choosing a channel
 
-CoreOS is designed to be [updated automatically][update-docs], with three
-channels of different update schedules: Stable, Beta, and Alpha. You can
-[disable this feature][reboot-docs], although we don't recommend it. Read the
-[release notes][release-notes] for specific features and bug fixes.
+CoreOS is designed to be [updated automatically][update-docs], with three channels of different update schedules: Stable, Beta, and Alpha. You can [disable this feature][reboot-docs], although we don't recommend it. Read the [release notes][release-notes] for specific features and bug fixes.
 
-The cloud.ca CoreOS image is built from the official stable release CloudStack
-image.
+The cloud.ca CoreOS image is built from the official stable release CloudStack image.
 
 <div id="cca-images">
   <ul class="nav nav-tabs">
@@ -87,21 +81,13 @@ coreos:
 
 
 
-## Cloud-Config
+## Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on
-startup, and more via cloud-config. Jump over to the [docs to learn about the
-supported features][cloud-config-docs]. Cloud-config is intended to bring up a
-cluster of machines into a minimal useful state and ideally shouldn't be used
-to configure anything that isn't standard across many hosts. Once the machine is
-created, cloud-config cannot be modified.
+CoreOS allows you to configure machine parameters, launch systemd units on startup, and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once the machine is created, cloud-config cannot be modified.
 
-You can provide cloud-config data using cloud.ca management portal or through the
-CloudStack API. When using CloudStack API, the cloud-conf must be base64 encoded
-as the ``userdata`` parameter.
+You can provide cloud-config data using cloud.ca management portal or through the CloudStack API. When using CloudStack API, the cloud-conf must be base64 encoded as the `userdata` parameter.
 
-The current cloud-config example uses a data disk as the docker datastore
-(/var/lib/docker).
+The current cloud-config example uses a data disk as the docker datastore (/var/lib/docker).
 
 
 ```yaml
@@ -147,23 +133,19 @@ coreos:
         Type=btrfs
 ```
 
-The $public_ipv4 substitution variable is not supported in cloud-config on
-cloud.ca. To use a multi-region cluster, the cluster configuration and the
-port-forwarding must be done manually.
+The $public_ipv4 substitution variable is not supported in cloud-config on cloud.ca. To use a multi-region cluster, the cluster configuration and the port-forwarding must be done manually.
 
 
-### Adding More Machines
+### Adding more machines
 
-To add more instances to the cluster, just launch more with the same
-cloud-config in the same VPC. New instances will join the etcd2 cluster
-automatically.
+To add more instances to the cluster, just launch more with the same cloud-config in the same VPC. New instances will join the etcd2 cluster automatically.
 
 
-## Launching Instances
+## Launching instances
 
 Before deploying CoreOS on cloud.ca, you need the following:
 
-* An account on ``https://your_organization_name.cloud.ca``.
+* An account on `https://your_organization_name.cloud.ca`.
 * Access to an Environment with a running VPC. VPC and subnet creation are not
   part of the current documentation, refer to cloud.ca online help.
 * Your public SSH-key added into your cloud.ca environment.
@@ -186,16 +168,14 @@ Before deploying CoreOS on cloud.ca, you need the following:
     <div class="caption">New instance details</div>
   </div>
 </div>
-3. Create a data volume. This volume will be mounted in ``/var/lib/docker``, as
-   defined in the cloud-config excerpt. This step is optional:
+3. Create a data volume. This volume will be mounted in `/var/lib/docker`, as defined in the cloud-config excerpt. This step is optional:
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12">
     <img src="img/cloudca-addinstance_step2.png" class="screenshot" />
     <div class="caption">New instance data volumes</div>
   </div>
 </div>
-4. Enable port forwarding rule for SSH (Optional) and assign your SSH key to the
-   new instance:
+4. Enable port forwarding rule for SSH (Optional) and assign your SSH key to the new instance:
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12">
     <img src="img/cloudca-addinstance_step3.png" class="screenshot" />
@@ -209,11 +189,7 @@ Before deploying CoreOS on cloud.ca, you need the following:
     <div class="caption">New instance user data</div>
   </div>
 </div>
-6. Once the instance is created and running, you can SSH into the instance as
-   username **core**, using instance private IP if remote access to your VPC is
-   configured such as remote management VPN. If you enbled port forwarding for
-   SSH on step #4, you can find the assigned public IP in the instance details
-   section:
+6. Once the instance is created and running, you can SSH into the instance as username **core**, using instance private IP if remote access to your VPC is configured such as remote management VPN. If you enbled port forwarding for SSH on step #4, you can find the assigned public IP in the instance details section:
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12">
     <img src="img/cloudca-instance_detail.png" class="screenshot" />
@@ -243,9 +219,7 @@ core@coreos-node01 ~ $ etcdctl member list
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart][quick-start] guide or dig into
-[more specific topics][docs].
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart][quick-start] guide or dig into [more specific topics][docs].
 
 
 [update-docs]: {{site.baseurl}}/using-coreos/updates

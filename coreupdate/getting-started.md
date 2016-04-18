@@ -1,4 +1,4 @@
-# Getting Started with the Update Service
+# Getting started with the update service
 
 The update service is a tool that helps you manage large-scale rolling upgrades of software. The service consists of three main parts:
 
@@ -8,7 +8,7 @@ The update service is a tool that helps you manage large-scale rolling upgrades 
 
 The update service is based on an open protocol from Google. This protocol powers updates for the Chrome browser, ChromeOS, Google Earth and more.
 
-## Accessing the Update Service
+## Accessing the update service
 
 The update service is an optional hosted service provided by CoreOS and is not included in a standard CoreOS cluster. Head over to the [Update Service](https://coreos.com/products/coreupdate/) page for more details.
 
@@ -26,7 +26,7 @@ alias updateservicectl="/bin/updateservicectl -user user@example.com -key d3b073
 You may also specify these via the `UPDATECTL_USER`, `UPDATECTL_KEY`,
 and `UPDATECTL_SERVER` environment variables.
 
-## Anatomy of an Update
+## Anatomy of an update
 
 Let's walk through the different parts of an update then use `updateservicectl` to simulate the release of an update.
 
@@ -85,15 +85,15 @@ When an out-of-date app instance is notified of an update, it is told where to f
 
 For example, a webapp container could be stored in a private docker registry and the update response contains the full address to the registry and a specific tag to pull: `index.example.com/webapp:1.2.1`. The updater would be programmed to `docker pull` the image. If everything goes well, the updater sends the update complete event to the update service informing it that the new version is running.
 
-### Relationship Diagram
+### Relationship diagram
 
 ![Relationship Diagram](img/Relationships.png)
 
-## Test Update with Fake Clients
+## Test update with fake clients
 
 The easiest way to illustrate how these concepts work together is to trigger an example with some simulated clients. You can do this with either the UI or via `updateservicectl`, which is what we're going to use.
 
-### Create an Application, Channel and Group
+### Create an application, channel, and group
 
 First set up a new application with a unique identifier, label, and description:
 
@@ -126,7 +126,7 @@ $ updateservicectl group create --app-id=e96281a6-d1af-4bde-9a0a-97b76e56dc57
 	--channel=master --group-id=fake1 --label="Fake Clients"
 ```
 
-### Uploading and Signing a Package
+### Uploading and signing a package
 
 Now that we have our application, group and channel set up, we can almost test an upgrade. The last step is to load in a new package. In this example, the new package will be fake, with an incremented version.
 
@@ -145,7 +145,7 @@ updateservicectl package create --app-id=e96281a6-d1af-4bde-9a0a-97b76e56dc57 \
     --url=https://fakepackage.local/update-1.1.0.gz
 ```
 
-### Start Fake Clients
+### Start fake clients
 
 `updateservicectl` contains a tool to help you simulate many fake clients running your application. We're going to start 10 fake clients that are checking for updates every 30-60 seconds. This is much much faster than usual but it will allow us to see our changes take place quickly.
 
@@ -161,7 +161,7 @@ $ updateservicectl instance fake --clients-per-app=10 --min-sleep=30 \
 ...
 ```
 
-### Roll-out the Update
+### Roll out the update
 
 Now let's see how the fake clients react when we promote the new package `1.1.0` to the master channel. First, let's set the rate limit of the group to slow down the roll-out. This will make it easier to see what's going on. Since we only have 10 clients, 2 updates per 60 seconds should be slow enough:
 
@@ -187,6 +187,6 @@ In the UI, navigate to the app and group, then click on "View All Graphs". You s
 
 [screenshot]
 
-## Further Reading
+## Further reading
 
 If you're ready to start writing a custom update client for your application, the [Omaha protocol spec](update-protocol.md) is a good place to start. The complete list of update service docs can be [found here](https://coreos.com/products/coreupdate/docs/latest/).

@@ -2,7 +2,7 @@
 
 `systemctl` is your interface to systemd, the init system used in CoreOS. All processes on a single machine are started and managed by systemd, including your Docker containers. You can learn more in our [Getting Started with systemd]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd) guide. Let's explore a few helpful `systemctl` commands. You must run all of these commands locally on the CoreOS machine:
 
-## Find the Status of a Container
+## Find the status of a container
 
 The first step to troubleshooting with `systemctl` is to find the status of the item in question. If you have multiple `Exec` commands in your service file, you can see which one of them is failing and view the exit code. Here's a failing service that starts a private Docker registry in a container:
 
@@ -30,7 +30,7 @@ Hint: Some lines were ellipsized, use -l to show in full.
 
 You can see that `Process: 10171 ExecStart=/usr/bin/docker` exited with `status=1/FAILURE` and the log states that the index that we attempted to launch the container from, `54.202.26.87` wasn't valid, so the container image couldn't be downloaded.
 
-## List Status of All Units
+## List status of all units
 
 Listing all of the processes running on the box is too much information, but you can pipe the output into grep to find the services you're looking for. Here's all service files and their status:
 
@@ -38,7 +38,7 @@ Listing all of the processes running on the box is too much information, but you
 sudo systemctl list-units | grep .service
 ```
 
-## Start or Stop a Service
+## Start or stop a service
 
 ```sh
 sudo systemctl start apache.service
@@ -48,7 +48,7 @@ sudo systemctl start apache.service
 sudo systemctl stop apache.service
 ```
 
-## Kill a Service
+## Kill a service
 
 This will stop the process immediately:
 
@@ -56,7 +56,7 @@ This will stop the process immediately:
 sudo systemctl kill apache.service
 ```
 
-## Restart a Service
+## Restart a service
 
 Restarting a service is as easy as:
 
@@ -70,7 +70,8 @@ If you're restarting a service after you changed its service file, you will need
 sudo systemctl daemon-reload
 ```
 
-#### More Information
+## More information
+
 <a class="btn btn-default" href="{{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd">Getting Started with systemd</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">systemd.service Docs</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html">systemd.unit Docs</a>

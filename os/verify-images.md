@@ -1,4 +1,4 @@
-# Verify CoreOS Images with GPG
+# Verify CoreOS images with GPG
 
 CoreOS publishes new images for each release across a variety of platforms and hosting providers. Each channel has it's own set of images ([stable], [beta], [alpha]) that are posted to our storage site. Along with each image, a signature is generated from the [CoreOS Image Signing Key][signing-key] and posted.
 

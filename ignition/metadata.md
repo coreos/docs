@@ -43,7 +43,7 @@ ExecStart=/usr/bin/etcd2 \
   --initial-cluster=%m=http://${COREOS_EC2_IPV4_LOCAL}:2380
 ```
 
-## Custom Metadata Agent
+## Custom metadata agent
 
 In the event that CoreOS is being used outside of a supported cloud environment (e.g., a PXE booted, bare-metal installation), coreos-metadata won't work. However, it is possible to write a custom metadata service.
 

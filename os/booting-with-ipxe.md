@@ -1,6 +1,6 @@
 # Booting CoreOS via iPXE
 
-CoreOS is currently in heavy development and actively being tested. These instructions will walk you through booting CoreOS via iPXE on real or virtual hardware. By default, this will run CoreOS completely out of RAM. CoreOS can also be [installed to disk]({{site.baseurl}}/docs/running-coreos/bare-metal/installing-to-disk).
+These instructions will walk you through booting CoreOS via iPXE on real or virtual hardware. By default, this will run CoreOS completely out of RAM. CoreOS can also be [installed to disk]({{site.baseurl}}/docs/running-coreos/bare-metal/installing-to-disk).
 
 ## Configuring iPXE
 
@@ -23,7 +23,7 @@ When configuring the CoreOS iPXE boot script there are a few kernel options that
 
 ### Choose a Channel
 
-CoreOS is released into stable, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 ### Setting up the Boot Script
 
@@ -98,15 +98,15 @@ http://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz
 
 After a few moments of downloading CoreOS should boot normally.
 
-## Update Process
+## Update process
 
-Since our upgrade process requires a disk, this image does not have the option to update itself. Instead, the box simply needs to be rebooted and will be running the latest version, assuming that the image served by the PXE server is regularly updated.
+Since CoreOS's upgrade process requires a disk, this image does not have the option to update itself. Instead, the box simply needs to be rebooted and will be running the latest version, assuming that the image served by the PXE server is regularly updated.
 
 ## Installation
 
 CoreOS can be completely installed on disk or run from RAM but store user data on disk. Read more in our [Installing CoreOS guide]({{site.baseurl}}/os/docs/latest/booting-with-pxe.html#installation).
 
-## Adding a Custom OEM
+## Adding a custom OEM
 
 Similar to the [OEM partition][oem] in CoreOS disk images, iPXE images can be customized with a [cloud config][cloud-config] bundled in the initramfs. You can view the [instructions on the PXE docs]({{site.baseurl}}/os/docs/latest/booting-with-pxe.html#adding-a-custom-oem).
 
@@ -115,5 +115,4 @@ Similar to the [OEM partition][oem] in CoreOS disk images, iPXE images can be cu
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

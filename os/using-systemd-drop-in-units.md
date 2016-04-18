@@ -1,4 +1,4 @@
-# Using systemd Drop-In Units
+# Using systemd drop-in units
 
 There are two methods of overriding default CoreOS settings in unit files: copying the unit file from `/usr/lib64/systemd/system` to `/etc/systemd/system` and modifying the chosen settings. Alternatively, one can create a directory named `unit.d` within `/etc/systemd/system` and place a drop-in file `name.conf` there that only changes the specific settings one is interested in. Note that multiple such drop-in files are read if present.
 
@@ -10,7 +10,7 @@ Note that for drop-in files, if one wants to remove entries from a setting that 
 
 This also applies for user instances of systemd, but with different locations for the unit files. See the section on unit load paths in [official systemd doc](http://www.freedesktop.org/software/systemd/man/systemd.unit.html) for further details.
 
-## Example: Customizing fleet.service
+## Example: customizing fleet.service
 
 Let's review `/usr/lib64/systemd/system/fleet.service` unit (you can find it using this command: `systemctl list-units | grep fleet`) with the following contents:
 
@@ -32,7 +32,7 @@ RestartSec=10s
 
 Let's walk through increasing the `RestartSec` parameter via both methods:
 
-### Override Only Specific Option
+### Override only specific option
 
 You can create a drop-in file `/etc/systemd/system/fleet.service.d/10-restart_60s.conf` with the following contents:
 
@@ -71,7 +71,7 @@ coreos:
 
 This change is small and targeted. It is the easiest way to tweak unit's parameters.
 
-### Override the Whole Unit File
+### Override the whole unit file
 
 Another way is to override whole systemd unit. Copy default unit file `/usr/lib64/systemd/system/fleet.service` to `/etc/systemd/system/fleet.service` and change the chosen settings:
 
@@ -103,20 +103,20 @@ coreos:
       content: |
         [Unit]
         Description=fleet daemon
-        
+
         After=etcd.service
         After=etcd2.service
-        
+
         Wants=fleet.socket
         After=fleet.socket
-        
+
         [Service]
         ExecStart=/usr/bin/fleetd
         Restart=always
         RestartSec=60s
 ```
 
-### List Drop-Ins
+### List drop-ins
 
 To see all runtime drop-in changes for system units run the command below:
 
@@ -124,7 +124,7 @@ To see all runtime drop-in changes for system units run the command below:
 systemd-delta --type=extended
 ```
 
-## Another systemd Examples
+## Other systemd examples
 
 For another real systemd examples, check out these documents:
 
@@ -133,6 +133,7 @@ For another real systemd examples, check out these documents:
 [Using Environment Variables In systemd Units]({{site.baseurl}}/os/docs/latest/using-environment-variables-in-systemd-units.html)
 
 ## More Information
+
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">systemd.service Docs</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html">systemd.unit Docs</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.target.html">systemd.target Docs</a>

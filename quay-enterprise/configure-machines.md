@@ -1,4 +1,4 @@
-# Configure Machines for Quay Enterprise
+# Configure machines for Quay Enterprise
 
 Quay Enterprise allows you to create user accounts and teams, or groups, of those users that mirror your existing org chart. A special type of user, a robot account, is designed to be used programatically by deployment systems and other pieces of software. Robot accounts are usually configured with read-only access to a repository.
 
@@ -10,7 +10,7 @@ Each CoreOS machine needs to be configured with the username and password for a 
 
 Writing the `.dockercfg` can be specified in [cloud-config](https://coreos.com/os/docs/latest/cloud-config.html) with the write_files parameter, or created manually on each machine.
 
-### Kubernetes Pull Secret
+### Kubernetes pull secret
 
 If you are using Quay Enterprise in conjunction with a Kubernetes or Tectonic cluster, it's easiest to use the built-in secret distribution method. This method allows for you to use different sets of robot accounts on a per-app basis, and also allows for them to be updated or rotated at any time across all machines in the cluster.
 
@@ -38,7 +38,7 @@ $ kubectl create -f /tmp/myappcreds.yaml
 secrets/myappcreds
 ```
 
-#### Reference Pull Secret with RC
+#### Reference pull secret with RC
 
 Reference your new secret in a Replication Controller YAML definition:
 
@@ -65,7 +65,7 @@ spec:
         - name: myappcreds
 ```
 
-#### Assign a Default Pull Secret per Namespace
+#### Assign a default pull secret per namespace
 
 To use a specific pull secret as the default in a specific namespace, you can create a [Service Account](http://kubernetes.io/v1.1/docs/user-guide/service-accounts.html) that will be available to each pod. This is new in Kubernetes v1.1.
 
@@ -91,7 +91,7 @@ write_files:
 Each machine booted with this cloud-config should automatically be authenticated with Quay Enterprise.
 
 
-### Manual Login
+### Manual login
 
 To temporarily login to a Quay Enterprise account on a machine, run `docker login`:
 
@@ -103,7 +103,7 @@ Password: GNXEGX4Y5J63PQWIOGJHLPGM0B5GUDOBZHXMQUR2B5XOL35EFVIX7LTIWR7LXO1B
 Email: myemail@example.com
 ```
 
-## Test Push or Pull
+## Test push or pull
 
 Now that your machine is authenticated, try pulling one of your repositories. If you haven't pushed a repository into your Enterprise Registry, you will need to tag it with the full name:
 

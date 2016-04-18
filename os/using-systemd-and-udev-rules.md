@@ -1,4 +1,4 @@
-# Using systemd and udev Rules 
+# Using systemd and udev rules
 
 In our example we will use libvirt VM with CoreOS and run systemd unit on disk attach event. First of all we have to create systemd unit file `/etc/systemd/system/device-attach.service`:
 
@@ -37,7 +37,7 @@ ACTION=="add", SUBSYSTEM=="block", TAG+="systemd", ENV{SYSTEMD_WANTS}="device-at
 
 That rule means that udev will trigger `device-attach.service` systemd unit on any block device attachment. Now when we use this command `virsh attach-disk coreos /dev/VG/test vdc` on host machine, we should see `device has been attached` message in CoreOS node's journal. This example should be similar to USB/SAS/SATA device attach.
 
-## Cloud-Config example
+## Cloud-config example
 
 To use the unit and udev rule with cloud-config, modify this example as needed:
 
@@ -61,7 +61,7 @@ coreos:
         ExecStart=/usr/bin/echo 'device has been attached'
 ```
 
-## More systemd Examples
+## More systemd examples
 
 For more systemd examples, check out these documents:
 
@@ -76,7 +76,8 @@ For more systemd examples, check out these documents:
 [etcd-discovery]: cluster-discovery.html
 [systemd-udev]: using-systemd-and-udev-rules.html
 
-## More Information
+## More information
+
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">systemd.service Docs</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html">systemd.unit Docs</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.target.html">systemd.target Docs</a>

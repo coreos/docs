@@ -1,6 +1,6 @@
 # Running CoreOS on Vagrant
 
-Running CoreOS with Vagrant is the easiest way to bring up a single machine or virtualize an entire cluster on your laptop. Since the true power of CoreOS can be seen with a cluster, we're going to concentrate on that. Instructions for a single machine can be found [towards the end](#single-machine) of the guide.
+Running CoreOS with Vagrant is one way to bring up a single machine or virtualize an entire cluster on your laptop. Since the true power of CoreOS can be seen with a cluster, we're going to concentrate on that. Instructions for a single machine can be found [towards the end](#single-machine) of the guide.
 
 You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
@@ -12,7 +12,7 @@ Vagrant is a simple-to-use command line virtual machine manager. There are insta
 
 Vagrant can use either the free VirtualBox provider or the commercial VMware provider. Instructions for both are below. For the VirtualBox provider, version 4.3.10 or greater is required.
 
-## Clone Vagrant Repo
+## Clone Vagrant repo
 
 Now that you have Vagrant installed you can bring up a CoreOS instance.
 
@@ -23,11 +23,11 @@ git clone https://github.com/coreos/coreos-vagrant.git
 cd coreos-vagrant
 ```
 
-## Starting a Cluster
+## Starting a cluster
 
 To start our cluster, we need to provide some config parameters in cloud-config format via the `user-data` file and set the number of machines in the cluster in `config.rb`.
 
-### Cloud-Config
+### Cloud-config
 
 CoreOS allows you to configure machine parameters, launch systemd units on start-up and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. You can provide cloud-config data to your CoreOS Vagrant VM by editing the `user-data` file inside of the cloned directory. A sample file `user-data.sample` exists as a base and must be renamed to `user-data` for it to be processed.
 
@@ -109,7 +109,7 @@ $num_instances=3</pre>
       <pre># Official CoreOS channel from which updates should be downloaded
 $update_channel='beta'</pre>
     </div>
-	<div class="tab-pane active" id="stable-create">
+    <div class="tab-pane active" id="stable-create">
       <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.stable-channel}}.</p>
       <p>Rename the file to <code>config.rb</code> then uncomment and modify:</p>
       <h4>config.rb</h4>
@@ -121,7 +121,7 @@ $update_channel='stable'</pre>
   </div>
 </div>
 
-#### Start Machines Using Vagrant's default VirtualBox Provider
+#### Start machines using Vagrant's default VirtualBox provider
 
 Start the machine(s):
 
@@ -150,7 +150,7 @@ Connect to one of the machines:
 vagrant ssh core-01 -- -A
 ```
 
-#### Start Machines Using Vagrant's VMware Provider
+#### Start machines using Vagrant's VMware provider
 
 If you have purchased the [VMware Vagrant provider](http://www.vagrantup.com/vmware), run the following commands:
 
@@ -159,11 +159,11 @@ vagrant up --provider vmware_fusion
 vagrant ssh core-01 -- -A
 ```
 
-## Single Machine
+## Single machine
 
 To start a single machine, we need to provide some config parameters in cloud-config format via the `user-data` file.
 
-### Cloud-Config
+### Cloud-config
 
 This cloud-config starts etcd and fleet when the machine is booted:
 
@@ -194,7 +194,7 @@ coreos:
 
 ### Start up CoreOS
 
-The `config.rb.sample` file contains a few useful settings about your Vagrant environment. We're going to set the CoreOS channel that we'd like the machine to track.</p>
+The `config.rb.sample` file contains a few useful settings about your Vagrant environment. We're going to set the CoreOS channel that we'd like the machine to track.
 
 <div id="vagrant-single">
   <ul class="nav nav-tabs">
@@ -227,7 +227,7 @@ $update_channel='stable'</pre>
   </div>
 </div>
 
-#### Start Machine Using Vagrant's default VirtualBox Provider
+#### Start machine using Vagrant's default VirtualBox provider
 
 Start the machine:
 
@@ -241,7 +241,7 @@ Connect to the machine:
 vagrant ssh core-01 -- -A
 ```
 
-#### Start Machine Using Vagrant's VMware Provider
+#### Start machine using Vagrant's VMware provider
 
 If you have purchased the [VMware Vagrant provider](http://www.vagrantup.com/vmware), run the following commands:
 
@@ -250,7 +250,7 @@ vagrant up --provider vmware_fusion
 vagrant ssh core-01 -- -A
 ```
 
-## Shared Folder Setup
+## Shared folder setup
 
 Optionally, you can share a folder from your laptop into the virtual machine. This is useful for easily getting code and Dockerfiles into CoreOS.
 
@@ -260,11 +260,9 @@ config.vm.synced_folder ".", "/home/core/share", id: "core", :nfs => true,  :mou
 
 After a 'vagrant reload' you will be prompted for your local machine password.
 
-## New Box Versions
+## New box versions
 
-CoreOS is a rolling release distribution and versions that are out of date will automatically update.
-If you want to start from the most up to date version you will need to make sure that you have the latest box file of CoreOS.
-You can do this using `vagrant box update` - or, simply remove the old box file and Vagrant will download the latest one the next time you `vagrant up`.
+CoreOS is a rolling release distribution and versions that are out of date will automatically update. If you want to start from the most up to date version you will need to make sure that you have the latest box file of CoreOS. You can do this using `vagrant box update` - or, simply remove the old box file and Vagrant will download the latest one the next time you `vagrant up`.
 
 ```sh
 vagrant box remove coreos-alpha vmware_fusion
@@ -279,8 +277,7 @@ vagrant box add coreos-alpha <path-to-box-file>
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide, learn about [CoreOS clustering with Vagrant]({{site.baseurl}}/blog/coreos-clustering-with-vagrant/), or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide, learn about [CoreOS clustering with Vagrant]({{site.baseurl}}/blog/coreos-clustering-with-vagrant/), or dig into [more specific topics]({{site.baseurl}}/docs).
 
 
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev

@@ -1,10 +1,10 @@
-# Using Environment Variables In systemd Units
+# Using environment variables in systemd units
 
 ## Environment directive
 
-Systemd has Environment directive which sets environment variables for executed processes. It takes a space-separated list of variable assignments. This option may be specified more than once in which case all listed variables will be set. If the same variable is set twice, the later setting will override the earlier setting. If the empty string is assigned to this option, the list of environment variables is reset, all prior assignments have no effect. Environments directives are used in built-in CoreOS systemd units, for example in etcd2 and flannel.
+systemd has an Environment directive which sets environment variables for executed processes. It takes a space-separated list of variable assignments. This option may be specified more than once in which case all listed variables will be set. If the same variable is set twice, the later setting will override the earlier setting. If the empty string is assigned to this option, the list of environment variables is reset, all prior assignments have no effect. Environments directives are used in built-in CoreOS systemd units, for example in etcd2 and flannel.
 
-With example below you can configure your etcd2 daemon to use encryption. Just create `/etc/systemd/system/etcd2.service.d/30-certificates.conf` [drop-in] for etcd2.service:
+With the example below, you can configure your etcd2 daemon to use encryption. Just create `/etc/systemd/system/etcd2.service.d/30-certificates.conf` [drop-in] for etcd2.service:
 
 ```
 [Service]
@@ -22,7 +22,7 @@ Then run `sudo systemctl daemon-reload` and `sudo systemct restart etcd2.service
 
 ## EnvironmentFile directive
 
-EnvironmentFile similar to Environment directive but reads the environment variables from a text file. The text file should contain new-line-separated variable assignments. 
+EnvironmentFile similar to Environment directive but reads the environment variables from a text file. The text file should contain new-line-separated variable assignments.
 
 It is impossible to use scripts in Environment directive. So you can not dynamically define Environment, i.e. this doesn't work `Environment=/usr/bin/curl http://example.com/something`. When you need to update your environment values dynamically you can combine systemd service unit and EnvironmentFile directive.
 
@@ -60,7 +60,7 @@ ExecStartPre=/usr/bin/docker pull ubuntu:latest
 ExecStart=/usr/bin/docker run --rm --name %p -e FLEET_MACHINES ubuntu:latest /bin/bash -c "trap 'exit 0' INT TERM; while true; do echo "$FLEET_MACHINES"; sleep 1; done"
 ```
 
-## Another Examples
+## Other examples
 
 ### Use host IP addresses and EnvironmentFile
 
@@ -85,11 +85,11 @@ ExecStopPost=/usr/bin/etcdctl rm /services/nginx
 
 This unit file will run nginx Docker container and bind it to specific IP address and port.
 
-### etcd2.service Unit Advanced Example
+### etcd2.service unit advanced example
 
-A [complete example][etcd-cluster-reconfiguration] of combining environment variables and systemd [drop-ins] to reconfigure an existing machine running etcd.
+A [complete example][etcd-cluster-reconfiguration] of combining environment variables and systemd [drop-ins][drop-in] to reconfigure an existing machine running etcd.
 
-## More systemd Examples
+## More systemd examples
 
 For more systemd examples, check out these documents:
 
@@ -107,6 +107,7 @@ For more systemd examples, check out these documents:
 [etcd-cluster-reconfiguration]: /etcd/etcd-live-cluster-reconfiguration.md
 
 ## More Information
+
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.exec.html">systemd.exec Docs</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">systemd.service Docs</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html">systemd.unit Docs</a>

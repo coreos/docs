@@ -1,4 +1,4 @@
-# CoreOS Developer SDK Guide
+# CoreOS developer SDK guide
 
 These are the instructions for building CoreOS itself. By the end of the guide you will build a developer image that you can run under KVM and have tools for making changes to the code.
 

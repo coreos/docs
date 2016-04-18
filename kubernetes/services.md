@@ -97,7 +97,7 @@ Modifying this label query to be broad or specific is a flexible mechanism to po
 
 Using a label query to select the pods that receive traffic is another Google design choice that comes from their container deployment experience. Maintaining a query to select pods prevents a brittle registration and removal process. Instead, pods matching the query can be constantly updated safely in an infinite loop.
 
-Mentally compare the experience of updating a label query versus obtaining a static list of all application instances, sub-selecting the ones you care about, inspecting them to figure out if they are still valid and finally updating the load balancer with that list. 
+Mentally compare the experience of updating a label query versus obtaining a static list of all application instances, sub-selecting the ones you care about, inspecting them to figure out if they are still valid and finally updating the load balancer with that list.
 
 [Replication controllers][controller-overview] are used to create the pods used in your deployments. Check out the examples below for each type of deployment:
 
@@ -133,7 +133,7 @@ Mentally compare the experience of updating a label query versus obtaining a sta
 
 <hr />
 
-Using Kubernetes services to expose different microservices or tiers of an application to other in your organization will accelerate your workflow and standardize important cluster-level practices: service discovery, load balancing and deployment practices. 
+Using Kubernetes services to expose different microservices or tiers of an application to other in your organization will accelerate your workflow and standardize important cluster-level practices: service discovery, load balancing and deployment practices.
 
 <div class="co-m-docs-next-step">
   <p><strong>Are you familiar with pods and replication controllers?</strong></p>

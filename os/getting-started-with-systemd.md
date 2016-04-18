@@ -1,6 +1,6 @@
-# Getting Started with systemd
+# Getting started with systemd
 
-systemd is an init system that provides many powerful features for starting, stopping and managing processes. Within the CoreOS world, you will almost exclusively use systemd to manage the lifecycle of your Docker containers.
+systemd is an init system that provides many powerful features for starting, stopping, and managing processes. Within the CoreOS world, you will almost exclusively use systemd to manage the lifecycle of your Docker containers.
 
 ## Terminology
 
@@ -10,9 +10,9 @@ systemd is the first process started on CoreOS and it reads different targets an
 
 Each target is actually a collection of symlinks to our unit files. This is specified in the unit file by `WantedBy=multi-user.target`. Running `systemctl enable foo.service` creates symlinks to the unit inside `multi-user.target.wants`.
 
-## Unit File
+## Unit file
 
-On CoreOS, unit files are located within the R/W filesystem at `/etc/systemd/system`. Let's create a simple unit named `hello.service`:
+On CoreOS, unit files are located at `/etc/systemd/system`. Let's create a simple unit named `hello.service`:
 
 ```ini
 [Unit]
@@ -60,7 +60,7 @@ Feb 11 17:46:28 localhost docker[23470]: Hello World
 <a class="btn btn-default" href="{{site.baseurl}}/docs/launching-containers/launching/overview-of-systemctl">Overview of systemctl</a>
 <a class="btn btn-default" href="{{site.baseurl}}/docs/cluster-management/debugging/reading-the-system-log">Reading the System Log</a>
 
-## Advanced Unit Files
+## Advanced unit files
 
 systemd provides a high degree of functionality in your unit files. Here's a curated list of useful features listed in the order they'll occur in the lifecycle of a unit:
 
@@ -110,7 +110,7 @@ WantedBy=multi-user.target
 
 While it's possible to manage the starting, stopping, and removal of the container in a single `ExecStart` command by using `docker run --rm`, it's a good idea to separate the container's lifecycle into `ExecStartPre`, `ExecStart`, and `ExecStop` options as we've done above. This gives you a chance to inspect the container's state after it stops or fails.
 
-## Unit Specifiers
+## Unit specifiers
 
 In our last example we had to hardcode our IP address when we announced our container in etcd. That's not scalable and systemd has a few variables built in to help us out. Here's a few of the most useful:
 
@@ -123,7 +123,7 @@ In our last example we had to hardcode our IP address when we announced our cont
 
 A full list of specifiers can be found on the [systemd man page](http://www.freedesktop.org/software/systemd/man/systemd.unit.html#Specifiers).
 
-## Instantiated Units
+## Instantiated units
 
 Since systemd is based on symlinks, there are a few interesting tricks you can leverage that are very powerful when used with containers. If you create multiple symlinks to the same unit file, the following variables become available to you:
 
@@ -146,7 +146,8 @@ ExecStartPost=/usr/bin/etcdctl set /domains/example.com/%H:%i running
 
 This gives us the flexibility to use a single unit file to announce multiple copies of the same container on a single machine (no port overlap) and on multiple machines (no hostname overlap).
 
-#### More Information
+## More information
+
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">systemd.service Docs</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html">systemd.unit Docs</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.target.html">systemd.target Docs</a>

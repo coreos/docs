@@ -1,12 +1,12 @@
-# Switching Release Channels
+# Switching release channels
 
-CoreOS is released into stable, alpha and beta channels. New features and bug fixes are tested in the alpha channel and are promoted bit-for-bit to the beta channel if no additional bugs are found.
+CoreOS is released into alpha, beta, and stable channels. New features and bug fixes are tested in the alpha channel and are promoted bit-for-bit to the beta channel if no additional bugs are found.
 
 By design, the CoreOS update engine does not execute downgrades. If you're switching from a channel with a higher CoreOS version than the new channel, your machine won't be updated again until the new channel contains a higher version number.
 
 ![Update Timeline](img/update-timeline.png)
 
-## Create Update Config File
+## Create update config file
 
 You can switch machines between channels by creating `/etc/coreos/update.conf`:
 
@@ -14,7 +14,7 @@ You can switch machines between channels by creating `/etc/coreos/update.conf`:
 GROUP=beta
 ```
 
-## Restart Update Engine
+## Restart update engine
 
 The last step is to restart the update engine in order for it to pick up the changed channel:
 
@@ -36,6 +36,6 @@ For reference, you can find the current version:
 cat /etc/os-release
 ```
 
-## Release Information
+## Release information
 
 You can read more about the current releases and channels on the [releases page]({{site.baseurl}}/releases).

@@ -14,9 +14,9 @@ In this guide, the example virtual machine we are creating is called coreos1 and
 all files are stored in `/var/lib/libvirt/images/coreos`. This is not a requirement — feel free
 to substitute that path if you use another one.
 
-### Choosing a Channel
+### Choosing a channel
 
-CoreOS is released into stable, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes in each channel.
 
@@ -84,10 +84,7 @@ Note: The `$private_ipv4` and `$public_ipv4` cloud-config substitution variables
 
 ### Network configuration
 
-By default, CoreOS uses DHCP to get its network configuration. In this
-example the VM will be attached directly to the local network via a bridge
-on the host's virbr0 and the local network. To configure a static address
-add a [networkd unit][systemd-network] to `user_data`:
+By default, CoreOS uses DHCP to get its network configuration. In this example the VM will be attached directly to the local network via a bridge on the host's virbr0 and the local network. To configure a static address add a [networkd unit][systemd-network] to `user_data`:
 
 ```yaml
 #cloud-config
@@ -129,8 +126,7 @@ ssh core@203.0.113.2
 
 ### SSH Config
 
-To simplify this and avoid potential host key errors in the future add
-the following to `~/.ssh/config`:
+To simplify this and avoid potential host key errors in the future add the following to `~/.ssh/config`:
 
 ```ini
 Host coreos1
@@ -146,16 +142,11 @@ Now you can log in to the virtual machine with:
 ssh coreos1
 ```
 
-## Using CoreOS
-
-Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
-
-# Running CoreOS cluster demo on libvirt
+## Running a CoreOS cluster demo on libvirt
 
 This guide explains how to run three-nodes demo CoreOS cluster with libvirt.
 
-## Bash Script
+### Bash Script
 
 Save following `deploy_coreos_libvirt.sh` script into your host filesystem:
 
@@ -167,7 +158,7 @@ chmod +x deploy_coreos_libvirt.sh
 Each libvirt instance will have 1024Mb of RAM and 1 CPU (RAM and CPUs variables).
 You can change these parameters to meet your needs.
 
-## Cloud config template
+### Cloud config template
 
 Save the following template into `/var/lib/libvirt/images/coreos/user_data`:
 
@@ -201,7 +192,7 @@ coreos:
     public-ip: %HOSTNAME%
 ```
 
-## Virtual machines startup
+### Virtual machines startup
 
 Run the script:
 
@@ -226,6 +217,9 @@ network):
 cat /var/lib/libvirt/dnsmasq/default.leases
 ```
 
+## Using CoreOS
+
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
 
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
 [irc]: irc://irc.freenode.org:6667/#coreos

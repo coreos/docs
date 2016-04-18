@@ -1,24 +1,14 @@
-# Tips and Other Settings
+# Tips and other settings
 
-## Loading Kernel Modules
+## Loading kernel modules
 
-Most Linux kernel modules get automatically loaded as-needed but there
-are a some situations where this doesn't work. Problems can arise if
-there is boot-time dependencies are sensitive to exactly when the module
-gets loaded. Module auto-loading can be broken all-together if the
-operation requiring the module happens inside of a container. `iptables`
-and other netfilter features can easily encounter both of these issues.
-To force a module to be loaded early during boot simply list them in a
-file under `/etc/modules-load.d`. The file name must end in `.conf`.
+Most Linux kernel modules get automatically loaded as-needed but there are a some situations where this doesn't work. Problems can arise if there is boot-time dependencies are sensitive to exactly when the module gets loaded. Module auto-loading can be broken all-together if the operation requiring the module happens inside of a container. `iptables` and other netfilter features can easily encounter both of these issues. To force a module to be loaded early during boot simply list them in a file under `/etc/modules-load.d`. The file name must end in `.conf`.
 
 ```sh
 echo nf_conntrack > /etc/modules-load.d/nf.conf
 ```
 
-These files are processed early during the boot sequence. This means
-that updating `modules-load.d` via cloud-config will only take effect on
-the next boot unless the `systemd-modules-load` service is also
-restarted:
+These files are processed early during the boot sequence. This means that updating `modules-load.d` via cloud-config will only take effect on the next boot unless the `systemd-modules-load` service is also restarted:
 
 ```yaml
 #cloud-config
@@ -33,11 +23,9 @@ coreos:
       command: restart
 ```
 
-### Loading Kernel Modules with Options
+### Loading kernel modules with options
 
-This example cloud-config excerpt loads the `dummy` network interface module
-with an option specifying the number of interfaces the module should create
-when loaded (`numdummies=5`):
+This example cloud-config excerpt loads the `dummy` network interface module with an option specifying the number of interfaces the module should create when loaded (`numdummies=5`):
 
 ```yaml
 #cloud-config
@@ -54,30 +42,23 @@ coreos:
       command: restart
 ```
 
-After this cloud-config is processed, the dummy module is loaded into the
-kernel, and five dummy interfaces are added to the network stack.
+After this cloud-config is processed, the dummy module is loaded into the kernel, and five dummy interfaces are added to the network stack.
 
 Further details can be found in the systemd man pages:
 [modules-load.d(5)](http://www.freedesktop.org/software/systemd/man/modules-load.d.html)
 [systemd-modules-load.service(8)](http://www.freedesktop.org/software/systemd/man/systemd-modules-load.service.html)
 [modprobe.d(5)](http://linux.die.net/man/5/modprobe.d)
 
-## Tuning sysctl Parameters
+## Tuning sysctl parameters
 
-The Linux kernel offers a plethora of knobs under `/proc/sys` to control
-the availability of different features and tune performance parameters.
-For one-shot changes values can be written directly to the files under
-`/proc/sys` but persistent settings must be written to `/etc/sysctl.d`:
+The Linux kernel offers a plethora of knobs under `/proc/sys` to control the availability of different features and tune performance parameters. For one-shot changes values can be written directly to the files under `/proc/sys` but persistent settings must be written to `/etc/sysctl.d`:
 
 ```sh
 echo net.netfilter.nf_conntrack_max=131072 > /etc/sysctl.d/nf.conf
 sysctl --system
 ```
 
-Some parameters, such as the conntrack one above, are only available
-after the module they control has been loaded. To ensure any modules are
-loaded in advance use `modules-load.d` as described above. A complete
-cloud-config using both would look like:
+Some parameters, such as the conntrack one above, are only available after the module they control has been loaded. To ensure any modules are loaded in advance use `modules-load.d` as described above. A complete cloud-config using both would look like:
 
 ```yaml
 #cloud-config
@@ -102,46 +83,37 @@ Further details can be found in the systemd man pages:
 [sysctl.d(5)](http://www.freedesktop.org/software/systemd/man/sysctl.d.html)
 [systemd-sysctl.service(8)](http://www.freedesktop.org/software/systemd/man/systemd-sysctl.service.html)
 
-## Adding Custom Kernel Boot Options
+## Adding custom kernel boot options
 
-The CoreOS bootloader parses the configuration file `/usr/share/oem/grub.cfg`,
-where custom kernel boot options may be set.
+The CoreOS bootloader parses the configuration file `/usr/share/oem/grub.cfg`, where custom kernel boot options may be set.
 
-### Enable CoreOS Autologin
+### Enable CoreOS autologin
 
-To login without a password on every boot, edit `/usr/share/oem/grub.cfg`
-to add the line:
+To login without a password on every boot, edit `/usr/share/oem/grub.cfg` to add the line:
 
 ```
 set linux_append="coreos.autologin=tty1"
 ```
 
-### Enable Systemd Debug Logging
+### Enable systemd debug logging
 
-Edit `/usr/share/oem/grub.cfg` to add the following line, enabling systemd's
-most verbose `debug`-level logging:
+Edit `/usr/share/oem/grub.cfg` to add the following line, enabling systemd's most verbose `debug`-level logging:
 
 ```
 set linux_append="systemd.log_level=debug"
 ```
 
-### Mask a Systemd Unit
+### Mask a systemd unit
 
-Completely disable the `systemd-networkd.service` unit by adding this line to
-`/usr/share/oem/grub.cfg`:
+Completely disable the `systemd-networkd.service` unit by adding this line to `/usr/share/oem/grub.cfg`:
 
 ```
 set linux_append="systemd.mask=systemd-networkd.service"
 ```
 
-## Adding Custom Messages to MOTD
+## Adding custom messages to MOTD
 
-When logging in interactively, a brief message (the "Message of the Day (MOTD")
-reports the CoreOS release channel, version, and a list of any services or
-systemd units that have failed. Additional text can be added by dropping text
-files into `/etc/motd.d`. The directory may need to be created first, and the
-drop-in file name must end in `.conf`. CoreOS versions 555.0.0 and greater
-support customization of the MOTD.
+When logging in interactively, a brief message (the "Message of the Day (MOTD") reports the CoreOS release channel, version, and a list of any services or systemd units that have failed. Additional text can be added by dropping text files into `/etc/motd.d`. The directory may need to be created first, and the drop-in file name must end in `.conf`. CoreOS versions 555.0.0 and greater support customization of the MOTD.
 
 ```sh
 mkdir -p /etc/motd.d

@@ -1,4 +1,4 @@
-# etcd Cluster Runtime Reconfiguration on CoreOS
+# etcd cluster runtime reconfiguration on CoreOS
 
 This document describes the reconfiguration or recovery of an etcd cluster running on CoreOS, using a combination of `systemd` features and `etcdctl` commands.
 

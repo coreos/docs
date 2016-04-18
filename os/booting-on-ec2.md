@@ -10,7 +10,7 @@
 
 The current AMIs for all CoreOS channels and EC2 regions are listed below and updated frequently. Using CloudFormation is the easiest way to launch a cluster, but you can also follow the manual steps at the end of the article. You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
-## Choosing a Channel
+## Choosing a channel
 
 CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
 
@@ -37,7 +37,7 @@ CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/u
         </thead>
         <tbody>
         {% for region in site.data.alpha-channel.amis %}
-	{% capture region_domain %}{% if region.name == 'us-gov-west-1' %}amazonaws-us-gov.com{% else %}aws.amazon.com{% endif %}{% endcapture %}
+        {% capture region_domain %}{% if region.name == 'us-gov-west-1' %}amazonaws-us-gov.com{% else %}aws.amazon.com{% endif %}{% endcapture %}
         <tr>
           <td rowspan="2">{{ region.name }}</td>
           <td class="dashed"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
@@ -69,7 +69,7 @@ CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/u
         </thead>
         <tbody>
         {% for region in site.data.beta-channel.amis %}
-	{% capture region_domain %}{% if region.name == 'us-gov-west-1' %}amazonaws-us-gov.com{% else %}aws.amazon.com{% endif %}{% endcapture %}
+        {% capture region_domain %}{% if region.name == 'us-gov-west-1' %}amazonaws-us-gov.com{% else %}aws.amazon.com{% endif %}{% endcapture %}
         <tr>
           <td rowspan="2">{{ region.name }}</td>
           <td class="dashed"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
@@ -101,7 +101,7 @@ CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/u
         </thead>
         <tbody>
         {% for region in site.data.stable-channel.amis %}
-	{% capture region_domain %}{% if region.name == 'us-gov-west-1' %}amazonaws-us-gov.com{% else %}aws.amazon.com{% endif %}{% endcapture %}
+        {% capture region_domain %}{% if region.name == 'us-gov-west-1' %}amazonaws-us-gov.com{% else %}aws.amazon.com{% endif %}{% endcapture %}
         <tr>
           <td rowspan="2">{{ region.name }}</td>
           <td class="dashed"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
@@ -122,7 +122,7 @@ CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/u
 
 CloudFormation will launch a cluster of CoreOS machines with a security and autoscaling group.
 
-## Cloud-Config
+## Cloud-config
 
 CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a machine is created on EC2, the cloud-config can only be modified after it is stopped or recreated.
 
@@ -172,7 +172,7 @@ The `$private_ipv4` and `$public_ipv4` substitution variables are fully supporte
 [ec2-cloud-config]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
 [cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
-### Instance Storage
+### Instance storage
 
 Ephemeral disks and additional EBS volumes attached to instances can be mounted with a `.mount` unit. Amazon's block storage devices are attached differently [depending on the instance type](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#InstanceStoreDeviceNames). Here's the cloud-config to mount the first ephemeral disk, `xvdb` on most instance types:
 
@@ -191,10 +191,10 @@ coreos:
 
 For more information about mounting storage, Amazon's [own documentation](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html) is the best source. You can also read about [mounting storage on CoreOS]({{site.baseurl}}/docs/cluster-management/setup/mounting-storage).
 
-### Adding More Machines
+### Adding more machines
 To add more instances to the cluster, just launch more with the same cloud-config, the appropriate security group and the AMI for that region. New instances will join the cluster regardless of region if the security groups are configured correctly.
 
-## SSH to your Instances
+## SSH to your instances
 
 CoreOS is set up to be a little more secure than other cloud images. By default, it uses the `core` user instead of `root` and doesn't use a password for authentication. You'll need to add an SSH key(s) via the AWS console or add keys/passwords via your cloud-config in order to log in.
 
@@ -206,7 +206,7 @@ ssh core@<ip address>
 
 Optionally, you may want to [configure your ssh-agent]({{site.baseurl}}/docs/launching-containers/launching/fleet-using-the-client/#remote-fleet-access) to more easily run [fleet commands]({{site.baseurl}}/docs/launching-containers/launching/launching-containers-fleet/).
 
-## Multiple Clusters
+## Multiple clusters
 If you would like to create multiple clusters you will need to change the "Stack Name". You can find the direct [template file on S3]({{ cf_beta_pv_template }}).
 
 ## Manual setup
@@ -495,17 +495,9 @@ coreos:
   </div>
 </div>
 
-### Automatic Rollbacks on EC2
-
-Previously, automatic rollbacks were not possible on Amazon EC2 due to the
-dependency on kexec (which is not compatible with Xen paravirtualization).
-CoreOS has since moved to a GRUB-based solution which allows automatic
-rollbacks to work properly on Amazon EC2.
-
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
 
 
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev

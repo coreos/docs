@@ -1,6 +1,6 @@
-# Setting Up a MySQL Docker Container
+# Setting up a MySQL Docker container
 
-If you don't have an existing MySQL system to host the Enterprise Registry database on then you can run the steps below to create a dedicated MySQL container using the Oracle MySQL verified Docker image from https://registry.hub.docker.com/_/mysql/
+If you don't have an existing MySQL system to host the Enterprise Registry database on then you can run the steps below to create a dedicated MySQL container using the Oracle MySQL verified Docker image from [https://registry.hub.docker.com/_/mysql/](https://registry.hub.docker.com/_/mysql/).
 
 ```sh
 docker pull mysql:5.7

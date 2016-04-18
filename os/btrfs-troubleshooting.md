@@ -1,4 +1,4 @@
-# Working with btrfs and Common Troubleshooting
+# Working with btrfs and common troubleshooting
 
 btrfs is a copy-on-write filesystem with full support in the upstream Linux kernel and several desirable features. In the past, CoreOS shipped with a btrfs root filesystem to support Docker filesystem requirements at the time. As of version 561.0.0, CoreOS ships with ext4 as the default root filesystem by default while still supporting Docker. Btrfs is still supported and works with the latest CoreOS releases and Docker, but we recommend using ext4.
 
@@ -21,7 +21,7 @@ Raw data and filesystem metadata are stored in one or many chunks, typically ~1G
 
 A copy-on-write filesystem maintains many changes of a single file, which is helpful for snapshotting and other advanced features, but can lead to fragmentation with some workloads.
 
-## No Space Left on Device
+## No space left on device
 
 When the filesystem is out of chunks to write data into, `No space left on device` will be reported. This will prevent journal files from being recorded, containers from starting and so on.
 
@@ -69,7 +69,7 @@ Balance on '/' is running
 0 out of about 1 chunks balanced (1 considered), 100% left
 ```
 
-## Adding a New Physical Disk
+## Adding a new physical disk
 
 New physical disks can be added to an existing btrfs filesystem. The first step is to have the new block device [mounted on the machine]({{site.baseurl}}/docs/cluster-management/setup/mounting-storage/). Afterwards, let btrfs know about the new device and re-balance the file system. The key step here is re-balancing, which will move the data and metadata across both block devices. Expect this process to take some time:
 
@@ -78,11 +78,11 @@ $ btrfs device add /dev/sdc /
 $ btrfs filesystem balance /
 ```
 
-## Disable Copy-On-Write
+## Disable copy-on-write
 
 Copy-On-write isn't ideal for workloads that create or modify many small files, such as databases. Without disabling COW, you can heavily fragment the file system as explained above.
 
-The best strategy for successfully running a database in a container is to disable COW on directory/volume that is mounted into the container. 
+The best strategy for successfully running a database in a container is to disable COW on directory/volume that is mounted into the container.
 
 The COW setting is stored as a file attribute and is modified with a utility called `chattr`. To disable COW for a MySQL container's volume, run:
 
@@ -99,7 +99,7 @@ The directory `/var/lib/mysql` is now ready to be used by a Docker container wit
 To verify, we can run:
 
 ```sh
-$ sudo lsattr /var/lib/     
+$ sudo lsattr /var/lib/
 ---------------- /var/lib/portage
 ---------------- /var/lib/gentoo
 ---------------- /var/lib/iptables
@@ -118,9 +118,9 @@ $ sudo lsattr /var/lib/
 ---------------C /var/lib/mysql
 ```
 
-### Disable in a Unit File
+### Disable via a unit file
 
-Setting the file attributes can be done within a systemd unit using two `ExecStartPre` commands:
+Setting the file attributes can be done via a systemd unit using two `ExecStartPre` commands:
 
 ```ini
 ExecStartPre=/usr/bin/mkdir -p /var/lib/mysql

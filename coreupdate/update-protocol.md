@@ -2,7 +2,7 @@
 
 The Omaha protocol is the specification that the update service uses to communicate with updaters running in a CoreOS cluster. The protocol is a fairly simple &mdash; it specifies sending HTTP POSTs with XML data bodies for various events that happen during the execution of an update.
 
-## Update Request
+## Update request
 
 The update request sends machine metadata and a list of applications that it is responsible for. In most cases, each updater is responsible for a single package. Here's what a typical request looks like:
 
@@ -15,7 +15,7 @@ The update request sends machine metadata and a list of applications that it is 
 </request>
 ```
 
-### Application Section
+### Application section
 
 The app section is where the action happens. You can submit multiple applications or application instances in one request, but this isn't standard.
 
@@ -26,7 +26,7 @@ The app section is where the action happens. You can submit multiple application
 | track     | The channel that the application is requesting. |
 | bootid    | The unique identifier assigned to this instance. |
 
-## Already Up to Date
+## Already up-to-date
 
 If the application instance is already running the latest version, the response will be short:
 
@@ -42,7 +42,7 @@ If the application instance is already running the latest version, the response 
 
 As you can see, the response indicated that no update was required for the provided group id and version.
 
-## Update Required
+## Update required
 
 If the application is not up to date, the response returned contains all of the information needed to execute the update:
 
@@ -70,7 +70,7 @@ If the application is not up to date, the response returned contains all of the 
 
 The most important parts of the response are the `codebase`, which points to the location of the package, and the `sha256` which should be checked to make sure the package hasn't been tampered with.
 
-## Report Progress, Errors and Completion
+## Report progress, errors, and completion
 
 Events are submitted to the update service as the updater passes certain milestones such as starting the download, installing the update and confirming that the update was complete and successful. Events are specified in numerical codes corresponding to the event initiated and the resulting state. You can find a [full list of the event codes](https://code.google.com/p/omaha/wiki/ServerProtocol#event_Element) in Google's documentation. The CoreOS update service implements a subset of these events:
 
@@ -107,6 +107,6 @@ The protocol dictates that each event should be acknowledged even if no data nee
 </response>
 ```
 
-## Further Reading
+## Further reading
 
 You can read more about the [Omaha tech specs](https://code.google.com/p/omaha/wiki/ServerProtocol) or visit the [project homepage](https://code.google.com/p/omaha/).

@@ -1,4 +1,4 @@
-# On-Premises Installation
+# On-premises installation
 
 CoreOS Enterprise Registry requires three components to be running to begin the setup process:
 
@@ -9,11 +9,11 @@ CoreOS Enterprise Registry requires three components to be running to begin the 
 **NOTE**: Please have the host and port of the database and the Redis instance ready.
 
 
-## Preparing the Database
+## Preparing the database
 
 A MySQL RDBMS or Postgres installation with an empty database is required, and a login with full access to said database. The schema will be created the first time the registry image is run. The database install can either be pre-existing or run on CoreOS via a [Docker container](mysql-container.md).
 
-## Setting up Redis
+## Setting up redis
 
 Redis stores data which must be accessed quickly but doesn’t necessarily require durability guarantees. If you have an existing Redis instance, make sure to accept incoming connections on port 6379 (or change the port in the setup process) and then feel free to skip this step.
 
@@ -26,13 +26,11 @@ sudo docker run -d -p 6379:6379 quay.io/quay/redis
 
 **NOTE**: This host will have to accept incoming connections on port 6379 from the hosts on which the registry will run.
 
-## Downloading the Enterprise Registry image
+## Downloading the enterprise registry image
 
-After signing up you will receive a `.dockercfg` file containing your credentials to the `quay.io/coreos/registry` repository.
-Save this file to your CoreOS machine in `/home/core/.dockercfg` and `/root/.dockercfg`.
-You should now be able to execute `docker pull quay.io/coreos/registry` to download the container.
+After signing up you will receive a `.dockercfg` file containing your credentials to the `quay.io/coreos/registry` repository. Save this file to your CoreOS machine in `/home/core/.dockercfg` and `/root/.dockercfg`. You should now be able to execute `docker pull quay.io/coreos/registry` to download the container.
 
-## Setting up the Directories
+## Setting up the directories
 
 CoreOS Enterprise registry requires a storage directory and a configuration directory:
 
@@ -41,10 +39,9 @@ mkdir storage
 mkdir config
 ```
 
-## Setting up and running the Registry
+## Setting up and running the registry
 
-Run the following command, replacing `/local/path/to/the/config/directory` and `/local/path/to/the/storage/directory` with the absolute
-paths to the directories created above:
+Run the following command, replacing `/local/path/to/the/config/directory` and `/local/path/to/the/storage/directory` with the absolute paths to the directories created above:
 
 ```
 sudo docker run --restart=always -p 443:443 -p 80:80 --privileged=true -v /local/path/to/the/config/directory:/conf/stack -v /local/path/to/the/storage/directory:/datastorage -d quay.io/coreos/registry
@@ -60,7 +57,7 @@ back up, simply run the command above again.
 <img src="img/container-restart.png" class="img-center" alt="Enterprise Registry Restart"/>
 
 
-## Verifying the Registry status
+## Verifying the registry status
 
 Visit the `/health/endtoend` endpoint on the registry hostname and verify that the `code` is `200` and `is_testing` is `false`.
 

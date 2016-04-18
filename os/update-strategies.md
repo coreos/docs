@@ -1,4 +1,4 @@
-# Reboot Strategies on Updates
+# Reboot strategies on updates
 
 The overarching goal of CoreOS is to secure the Internet's backend infrastructure. We believe that [automatically updating](https://coreos.com/using-coreos/updates/) the operating system is one of the best tools to achieve this goal.
 
@@ -6,14 +6,14 @@ We realize that each CoreOS cluster has a unique tolerance for risk and the oper
 
 It's important to note that updates are always downloaded to the passive partition when they become available. A reboot is the last step of the update, where the active and passive partitions are swapped ([rollback instructions][rollback]). These strategies control how that reboot occurs:
 
-| Strategy           | Description |
-|--------------------|-------------|
-| `best-effort`        | Default. If etcd is running, `etcd-lock`, otherwise simply `reboot`. |
-| `etcd-lock`          | Reboot after first taking a distributed lock in etcd. |
-| `reboot`             | Reboot immediately after an update is applied. |
-| `off`                | Do not reboot after updates are applied. |
+| Strategy      | Description                                                         |
+|---------------|---------------------------------------------------------------------|
+| `best-effort` | Default. If etcd is running, `etcd-lock`, otherwise simply `reboot` |
+| `etcd-lock`   | Reboot after first taking a distributed lock in etcd                |
+| `reboot`      | Reboot immediately after an update is applied                       |
+| `off`         | Do not reboot after updates are applied                             |
 
-## Reboot Strategy Options
+## Reboot strategy options
 
 The reboot strategy is defined in [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md#update):
 
@@ -24,13 +24,13 @@ coreos:
     reboot-strategy: best-effort
 ```
 
-### Best Effort
+### Best effort
 
 The default setting is for CoreOS to make a `best-effort` to determine if the machine is part of a cluster. Currently this logic is very simple: if etcd has started, assume that the machine is part of a cluster and use the `etcd-lock` strategy.
 
 Otherwise, use the `reboot` strategy.
 
-### etcd-Lock
+### etcd-lock
 
 The `etcd-lock` strategy mandates that each machine acquire and hold a reboot lock before it is allowed to reboot. The main goal behind this strategy is to allow for an update to be applied to a cluster quickly, without losing the quorum membership in etcd or rapidly reducing capacity for the services running on the cluster. The reboot lock is held until the machine releases it after a successful update.
 
@@ -61,7 +61,7 @@ If needed, you can manually clear a lock by providing the machine ID:
 locksmithctl unlock 69d27b356a94476da859461d3a3bc6fd
 ```
 
-### Reboot Immediately
+### Reboot immediately
 
 The `reboot` strategy works exactly like it sounds: the machine is rebooted as soon as the update has been installed to the passive partition. If the applications running on your cluster are highly resilient, this strategy was made for you.
 
@@ -69,7 +69,7 @@ The `reboot` strategy works exactly like it sounds: the machine is rebooted as s
 
 The `off` strategy is also straightforward. The update will be installed onto the passive partition and await a reboot command to complete the update. We don't recommend this strategy unless you reboot frequently as part of your normal operations workflow.
 
-## Updating PXE/iPXE Machines
+## Updating PXE/iPXE machines
 
 PXE/iPXE machines download a new copy of CoreOS every time they are started thus are dependent on the version of CoreOS they are served. If you don't automatically load new CoreOS images into your PXE/iPXE server, your machines will never have new features or security updates.
 
@@ -91,10 +91,9 @@ coreos:
       command: stop
 ```
 
-## Updating Behind a Proxy
+## Updating behind a proxy
 
-Public Internet access is required to contact CoreUpdate and download new versions of CoreOS.
-If direct access is not available the `update-engine` service may be configured to use a HTTP or SOCKS proxy using curl-compatible environment variables, such as `HTTPS_PROXY` or `ALL_PROXY`.
+Public Internet access is required to contact CoreUpdate and download new versions of CoreOS. If direct access is not available the `update-engine` service may be configured to use a HTTP or SOCKS proxy using curl-compatible environment variables, such as `HTTPS_PROXY` or `ALL_PROXY`.
 See [curl's documentation](http://curl.haxx.se/docs/manpage.html#ALLPROXY) for details.
 
 ```yaml
@@ -111,7 +110,7 @@ coreos:
       command: restart
 ```
 
-## Manually Triggering an Update
+## Manually triggering an update
 
 Each machine should check in about 10 minutes after boot and roughly every hour after that. If you'd like to see it sooner, you can force an update check, which will skip any rate-limiting settings that are configured in CoreUpdate.
 
@@ -120,7 +119,7 @@ $ update_engine_client -check_for_update
 [0123/220706:INFO:update_engine_client.cc(245)] Initiating update check and install.
 ```
 
-## Auto-Updates with a Maintenance Window
+## Auto-updates with a maintenance window
 
 Locksmith supports maintenance windows in addition to the reboot strategies mentioned earlier. Maintenance windows define a window of time during which a reboot can occur. These operate in addition to reboot strategies, so if the machine has a maintenance window and requires a reboot lock, the machine will only reboot when it has the lock during that window.
 

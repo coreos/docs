@@ -4,7 +4,7 @@ NIFTY Cloud is a Japanese cloud computing provider. These instructions are also 
 
 [cli-documentation]: https://translate.google.com/translate?hl=en&sl=ja&tl=en&u=http%3A%2F%2Fcloud.nifty.com%2Fapi%2Fcli%2F
 
-## Cloud-Config
+## Cloud-config
 
 CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. On NIFTY Cloud, the cloud-config can be modified while the instance is running and will be processed next time the machine boots.
 
@@ -36,7 +36,7 @@ coreos:
 
 The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on NIFTY Cloud.
 
-## Choosing a Channel
+## Choosing a channel
 
 CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
 
@@ -65,7 +65,7 @@ CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/u
   </div>
 </div>
 
-### Adding More Machines
+### Adding more machines
 
 To add more instances to the cluster, just launch more with the same cloud-config and the appropriate firewall group.
 
@@ -79,5 +79,4 @@ ssh core@<ip address> -i <path to keyfile>
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

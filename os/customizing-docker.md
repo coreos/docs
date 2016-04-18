@@ -1,8 +1,8 @@
-# Customizing Docker
+# Customizing docker
 
 The Docker systemd unit can be customized by overriding the unit that ships with the default CoreOS settings. Common use-cases for doing this are covered below.
 
-## Enable the Remote API on a New Socket
+## Enable the remote API on a new socket
 
 Create a file called `/etc/systemd/system/docker-tcp.socket` to make Docker available on a TCP socket on port 2375.
 
@@ -34,7 +34,7 @@ Test that it's working:
 docker -H tcp://127.0.0.1:2375 ps
 ```
 
-### Cloud-Config
+### Cloud-config
 
 To enable the remote API on every CoreOS machine in a cluster, use [cloud-config][cloud-config]. We need to provide the new socket file and Docker's socket activation support will automatically start using the socket:
 
@@ -66,7 +66,7 @@ To keep access to the port local, replace the `ListenStream` configuration above
         ListenStream=127.0.0.1:2375
 ```
 
-## Enable the Remote API with TLS authentication
+## Enable the remote API with TLS authentication
 
 Docker TLS configuration consists of three parts: keys creation, configuring new [systemd socket][systemd-socket] unit and systemd [drop-in][drop-in] configuration.
 
@@ -93,7 +93,7 @@ cp -p ~/cfssl/client.pem cert.pem
 cp -p ~/cfssl/client-key.pem key.pem
 ```
 
-### Enable the Secure Remote API on a New Socket
+### Enable the secure remote API on a new socket
 
 **NOTE:** For CoreOS releases older than 949.0.0 you must follow [this][old-guide] guide.
 
@@ -120,7 +120,7 @@ systemctl stop docker
 systemctl start docker-tls-tcp.socket
 ```
 
-### Drop-in Configuration
+### Drop-in configuration
 
 Create `/etc/systemd/system/docker.service.d/10-tls-verify.conf` [drop-in][drop-in] for systemd Docker service:
 
@@ -163,7 +163,7 @@ export DOCKER_HOST=tcp://server.example.com:2376 DOCKER_TLS_VERIFY=1
 docker images
 ```
 
-### Cloud-Config
+### Cloud-config
 
 Cloud-config for Docker TLS authentication will look like:
 
@@ -217,14 +217,13 @@ coreos:
           content: |
             [Service]
             Environment="DOCKER_OPTS=--tlsverify --tlscacert=/etc/docker/ca.pem --tlscert=/etc/docker/server.pem --tlskey=/etc/docker/server-key.pem"
-
 ```
 
-## Use Attached Storage for Docker Images
+## Use attached storage for Docker images
 
 Docker containers can be very large and debugging a build process makes it easy to accumulate hundreds of containers. It's advantageous to use attached storage to expand your capacity for container images. Check out the guide to [mounting storage to your CoreOS machine][mounting-storage] for an example of how to bind mount storage into `/var/lib/docker`.
 
-## Enabling the Docker Debug Flag
+## Enabling the Docker debug flag
 
 First, copy the existing unit from the read-only file system into the read/write file system, so we can edit it:
 
@@ -252,7 +251,7 @@ docker ps
 journalctl -u docker
 ```
 
-### Cloud-Config
+### Cloud-config
 
 If you need to modify a flag across many machines, you can provide the new unit with cloud-config:
 
@@ -265,7 +264,7 @@ coreos:
       command: restart
       content: |
         [Unit]
-        Description=Docker Application Container Engine 
+        Description=Docker Application Container Engine
         Documentation=http://docs.docker.io
         After=network.target
         [Service]
@@ -278,7 +277,7 @@ coreos:
         WantedBy=multi-user.target
 ```
 
-## Use an HTTP Proxy
+## Use an HTTP proxy
 
 If you're operating in a locked down networking environment, you can specify an HTTP proxy for Docker to use via an environment variable. First, create a directory for drop-in configuration for Docker:
 
@@ -300,7 +299,7 @@ systemctl daemon-reload
 systemctl restart docker
 ```
 
-### Cloud-Config
+### Cloud-config
 
 The easiest way to use this proxy on all of your machines is via cloud-config:
 
@@ -340,7 +339,7 @@ systemctl daemon-reload
 systemctl restart docker
 ```
 
-### Cloud-Config
+### Cloud-config
 
 The easiest way to use these new ulimits on all of your machines is via cloud-config:
 
@@ -359,7 +358,7 @@ coreos:
 ```
 
 
-## Using a dockercfg File for Authentication
+## Using a dockercfg file for authentication
 
 A json file `.dockercfg` can be created in your home directory that holds authentication information for a public or private Docker registry.
 

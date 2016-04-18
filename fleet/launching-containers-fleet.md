@@ -1,4 +1,4 @@
-# Launching Containers with fleet
+# Launching containers with fleet
 
 `fleet` is a cluster manager that controls `systemd` at the cluster level. To run your services in the cluster, you must submit regular systemd units combined with a few [fleet-specific properties]({{site.baseurl}}/docs/launching-containers/launching/fleet-unit-files/).
 
@@ -6,7 +6,7 @@ If you're not familiar with systemd units, check out our [Getting Started with s
 
 This guide assumes you're running `fleetctl` locally from a CoreOS machine that's part of a CoreOS cluster. You can also [control your cluster remotely]({{site.baseurl}}/docs/launching-containers/launching/fleet-using-the-client/#get-up-and-running). All of the units referenced in this blog post are contained in the [unit-examples](https://github.com/coreos/unit-examples/tree/master/simple-fleet) repository. You can clone this onto your CoreOS box to make unit submission easier.
 
-## Types of Fleet Units
+## Types of fleet units
 
 Two types of units can be run in your cluster &mdash; standard and global units. Standard units are long-running processes that are scheduled onto a single machine. If that machine goes offline, the unit will be migrated onto a new machine and started.
 
@@ -40,7 +40,7 @@ global-unit.service     c9de9451.../10.10.1.3    active    running
 standard-unit.service   148a18ff.../10.10.1.1    active    running
 ```
 
-## Run a Container in the Cluster
+## Run a container in the cluster
 
 Running a single container is very easy. All you need to do is provide a regular unit file without an `[Install]` section. Let's run the same unit from the [Getting Started with systemd]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd) guide. First save these contents as `myapp.service` on the CoreOS machine:
 
@@ -85,7 +85,7 @@ MACHINE                                 IP          METADATA
 c9de9451-6a6f-1d80-b7e6-46e996bfc4d1    10.10.1.3   -
 ```
 
-## Run a High Availability Service
+## Run a high availability service
 
 The main benefit of using CoreOS is to have your services run in a highly available manner. Let's walk through deploying a service that consists of two identical containers running the Apache web server. Afterwards, we'll walk through the failure of a machine and the steps fleet takes to relaunch our tasks on another machine.
 
@@ -127,7 +127,7 @@ As you can see, the Apache units are now running on two different machines in ou
 
 How do we route requests to these containers? The best strategy is to run a "sidekick" container that performs other duties that are related to our main container but shouldn't be directly built into that application. Examples of common sidekick containers are for service discovery and controlling external services such as cloud load balancers or DNS.
 
-### Recovering from Machine Failure
+### Recovering from machine failure
 
 Machines in your fleet cluster are constantly in communication with the rest of cluster and elect a leader to make scheduling decisions. The leader is responsible for parsing newly submitted/started units, finding a qualified machine to run them (via X-Fleet parameters), and then informing the machine(s) to start the unit.
 
@@ -135,9 +135,9 @@ When a machine fails to heartbeat back to the fleet leader, all units running on
 
 You can test out this process by stopping fleet (`sudo systemctl stop fleet`) on one of the machines running our Apache unit. The fleet logs (`sudo journalctl -u fleet`) will provide more clarity on what's going on under the hood.
 
-## Run a Simple Sidekick
+## Run a simple sidekick
 
-The simplest sidekick example is for [service discovery](https://github.com/coreos/fleet/blob/master/Documentation/examples/service-discovery.md). This unit blindly announces that our container has been started. We'll run one of these for each Apache unit that's already running. Again, we'll use a template unit with two instances. Make a template unit called `apache-discovery@.service`. 
+The simplest sidekick example is for [service discovery](https://github.com/coreos/fleet/blob/master/Documentation/examples/service-discovery.md). This unit blindly announces that our container has been started. We'll run one of these for each Apache unit that's already running. Again, we'll use a template unit with two instances. Make a template unit called `apache-discovery@.service`.
 
 ```ini
 [Unit]
@@ -155,7 +155,7 @@ MachineOf=apache@%i.service
 
 This unit has a few interesting properties. First, it uses `BindsTo` to link the unit to our `apache@%i.service` unit. When the Apache unit is stopped, this unit will stop as well, causing it to be removed from our `/services/website` directory in `etcd`. A TTL of 60 seconds is also being used here to remove the unit from the directory if our machine suddenly died for some reason.
 
-Second is `%i`, a variable built into systemd that represents the instance name of an instantiated unit (a unit launched from a template). This variable expands to any value after the `@` in the unit's name. In our case, it will expand to `1` (for `apache-discovery@1`) and `2` (for `apache-discovery@2`). 
+Second is `%i`, a variable built into systemd that represents the instance name of an instantiated unit (a unit launched from a template). This variable expands to any value after the `@` in the unit's name. In our case, it will expand to `1` (for `apache-discovery@1`) and `2` (for `apache-discovery@2`).
 
 Third is `%H`, a variable built into systemd, that represents the hostname of the machine running this unit. Variable usage is covered in our [Getting Started with systemd]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd/#unit-variables) guide as well as in [systemd documentation](http://www.freedesktop.org/software/systemd/man/systemd.unit.html#Specifiers).
 
@@ -186,13 +186,13 @@ $ etcdctl get /services/website/apache@1
 { "host": "ip-10-182-139-116", "port": 80, "version": "52c7248a14" }
 ```
 
-## Run an External Service Sidekick
+## Run an external service sidekick
 
 If you're running in the cloud, many services have APIs that can be automated based on actions in the cluster. For example, you may update DNS records or add new containers to a cloud load balancer. Our [Example Deployment with fleet]({{site.baseurl}}/docs/launching-containers/launching/fleet-example-deployment/#service-files) contains a pre-made presence container that updates an Amazon Elastic Load Balancer with new backends.
 
 <iframe width="636" height="375" src="//www.youtube.com/embed/u91DnN-yaJ8?rel=0" frameborder="0" allowfullscreen></iframe>
 
-## Run a Global Unit
+## Run a global unit
 
 As mentioned earlier, global units are useful for running a unit across all of the machines in your cluster. It doesn't differ very much from a regular unit other than a new `X-Fleet` parameter called `Global=true`. Here's an example unit from a [blog post to use Data Dog with CoreOS](https://www.datadoghq.com/2014/08/monitor-coreos-scale-datadog/). You'll need to set an etcd key `ddapikey` before this example will work &mdash; more details are in the post.
 
@@ -235,7 +235,7 @@ datadog.service             c9de9451.../10.10.1.3   active    running
 
 Global units can deployed to a subset of matching machines with the `MachineMetadata` parameter, which is explained in the next section.
 
-## Schedule Based on Machine Metadata
+## Schedule based on machine metadata
 
 Applications with complex and specific requirements can target a subset of the cluster for scheduling via machine metadata. Powerful deployment topologies can be achieved &mdash; schedule units based on the machine's region, rack location, disk speed or anything else you can think of.
 
@@ -291,7 +291,8 @@ MachineMetadata=platform=cloud
 MachineMetadata=region=east
 ```
 
-#### More Information
+#### More information
+
 <a class="btn btn-default" href="{{site.baseurl}}/docs/launching-containers/launching/fleet-example-deployment">Example Deployment with fleet</a>
 <a class="btn btn-default" href="{{site.baseurl}}/docs/launching-containers/launching/fleet-unit-files/">fleet Unit Specifications</a>
 <a class="btn btn-default" href="https://github.com/coreos/fleet/blob/master/Documentation/deployment-and-configuration.md">fleet Configuration</a>
