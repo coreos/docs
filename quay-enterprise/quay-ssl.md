@@ -1,23 +1,25 @@
-# SSL + Quay Enterprise
+# Using SSL to protect connections to Quay Enterprise
 
-This document assumes you have deployed [Quay Enterprise as a single container.](https://tectonic.com/quay-enterprise/docs/latest/initial-setup.html)
+This document assumes you have deployed [Quay Enterprise as a single container][qe-single].
 
-Quay Enterprise will be configured with a [self-signed certificate.](https://en.wikipedia.org/wiki/Self-signed_certificate) A Certificate Authority is required.
+Quay Enterprise will be configured with a [self-signed certificate][self-signed-cert]. A Certificate Authority (CA) is required.
 
-First, create a rootCA:
+## Create a CA and sign a certificate
+
+First, create a root CA:
 
 ```
 $ openssl genrsa -out rootCA.key 2048
 $ openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.pem
 ```
 
-Next create the key and certificate that will be signed by the CA:
+Next, create the key and certificate that will be signed by the CA:
 
 ```
 $ openssl genrsa -out ssl.key 2048
 ```
 
-When creating the `ssl.csr` file it is important that the hostname of the server where QE is installed is used as the `Common Name` or QE will reject the  configuration. In this demo environment QE is currently installed at `lan-lab-07.lab.libcore.so`
+When creating the `ssl.csr` file it is important that the hostname of the server where QE is installed is used as the `Common Name` or QE will reject the  configuration. In this demo environment QE is currently installed at `reg.example.com`
 
 
 ```
@@ -29,7 +31,7 @@ State or Province Name (full name) []:California
 Locality Name (eg, city) [Default City]:SF
 Organization Name (eg, company) [Default Company Ltd]:Demo Quay
 Organizational Unit Name (eg, section) []:Demo Quay
-Common Name (eg, your name or your server's hostname) []:lan-lab-07.lab.libcore.so
+Common Name (eg, your name or your server's hostname) []:reg.example.com
 Email Address []:support@quay.io
 ```
 
@@ -38,12 +40,15 @@ Sign the certificate with the CA:
 ```
 $ openssl x509 -req -in ssl.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out ssl.cert -days 500 -sha256
 Signature ok
-subject=/C=US/ST=California/L=SF/O=Demo Quay/OU=Demo Quay/CN=lan-lab-07.lab.libcore.so/emailAddress=support@quay.io
+subject=/C=US/ST=California/L=SF/O=Demo Quay/OU=Demo Quay/CN=reg.example.com/emailAddress=support@quay.io
 Getting CA Private Key
 ```
-The next step can be accomplished via the QE superuser panel or from the terminal:
 
-## To configure with the superuser GUI in QE:
+## Configuring Quay Enterprise to use the new certificate
+
+The next step can be accomplished either in the QE superuser panel, or from the terminal.
+
+### To configure with the superuser GUI in QE
 
 Set the `Server Hostname` to the appropriate value and check the `Enable SSL`:
 
@@ -61,8 +66,7 @@ Restart the container:
 
 <img src="img/restart-container.png" class="img-center" alt="Restart Container"/>
 
-
-## Setting up in the terminal
+### To configure with the command line
 
 By not using the web interface the configuration checking mechanism built into QE is unavailable. It is suggested to use the web interface if possible.
 
@@ -73,8 +77,7 @@ Copy the `ssl.key` and `ssl.cert` into the specified `config` directory.
 ```
 $ ls
 ssl.cert  ssl.key
-
-$ scp ssl* core@10.7.8.117:/home/core/config/
+$ scp ssl.* core@10.7.8.117:/home/core/config/
 
 core@lan-lab-7 ~ $ ls config/
 config.yaml  ssl.cert  ssl.key
@@ -98,29 +101,29 @@ cbe7b0fa39d8        quay.io/coreos/registry   "/sbin/my_init"          22 hours 
 $ docker restart cbe7b0fa39d8
 ```
 
-# Test out the secure connection
+### Test the secure connection
 
-Confirm the configuration by visiting the URL from a browser `https://lan-lab-07.lab.libcore.so/`
+Confirm the configuration by visiting the URL from a browser: `https://reg.example.com/`
 
 <img src="img/https-browser.png" class="img-center" alt="Browser"/>
 
-"Your Connection is not secure" means the CA is untrusted but confirms that SSL is functioning properly. Google how to trust a CA based
+"Your Connection is not secure" means the CA is not officially and publicly trusted, but confirms that SSL is functioning properly. Check Google for how to configure your operating system and browser to trust a certificate signed by your own CA.
 
-# Configuring Docker to Trust a Certificate Authority
+## Configuring Docker to Trust a Certificate Authority
 
 Docker requires that custom certs be installed to `/etc/docker/certs.d/` under a directory with the same name as the hostname private registry. It is also required for the cert to be called `ca.crt`
 
 Copying the rootCA file.
 
 ```
-$ cp tmp/rootCA.pem /etc/docker/certs.d/lan-lab-07.lab.libcore.so/ca.crt`
+$ cp tmp/rootCA.pem /etc/docker/certs.d/reg.example.com/ca.crt`
 ```
 
 After this step is completed `docker login` should authenticate successfully and pushing to the repository should succeed.
 
 ```
-$ sudo docker push lan-lab-07.lab.libcore.so/kbrwn/hello
-The push refers to a repository [lan-lab-07.lab.libcore.so/kbrwn/hello]
+$ sudo docker push reg.example.com/kbrwn/hello
+The push refers to a repository [reg.example.com/kbrwn/hello]
 5f70bf18a086: Layer already exists
 e493e9cb9dac: Pushed
 1770dbc4af14: Pushed
@@ -134,3 +137,7 @@ a930437ab3a5: Pushed
 15eb0f73cd14: Pushed
 latest: digest: sha256:c24be6d92b0a4e2bb8a8cc7c9bd044278d6abdf31534729b1660a485b1cd315c size: 7864
 ```
+
+
+[qe-single]: https://tectonic.com/quay-enterprise/docs/latest/initial-setup.html
+[self-signed-cert]: https://en.wikipedia.org/wiki/Self-signed_certificate
