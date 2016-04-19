@@ -8,6 +8,8 @@ Most Linux kernel modules get automatically loaded as-needed but there are a som
 echo nf_conntrack > /etc/modules-load.d/nf.conf
 ```
 
+### Via cloud-init
+
 These files are processed early during the boot sequence. This means that updating `modules-load.d` via cloud-config will only take effect on the next boot unless the `systemd-modules-load` service is also restarted:
 
 ```yaml
@@ -23,7 +25,32 @@ coreos:
       command: restart
 ```
 
+### Via Ignition
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "files": [{
+    "filesystem": "root",
+    "path": "/etc/modules-load.d/nf.conf",
+    "mode": 420,
+    "contents": { "source": "data:,nf_conntrack" }
+  }]
+}
+```
+
 ### Loading kernel modules with options
+
+The following section demonstrate how to provide module options when
+loading. After these configs are processed, the dummy module is loaded
+into the kernel, and five dummy interfaces are added to the network stack.
+
+Further details can be found in the systemd man pages:
+[modules-load.d(5)](http://www.freedesktop.org/software/systemd/man/modules-load.d.html)
+[systemd-modules-load.service(8)](http://www.freedesktop.org/software/systemd/man/systemd-modules-load.service.html)
+[modprobe.d(5)](http://linux.die.net/man/5/modprobe.d)
+
+#### Via cloud-init
 
 This example cloud-config excerpt loads the `dummy` network interface module with an option specifying the number of interfaces the module should create when loaded (`numdummies=5`):
 
@@ -42,12 +69,31 @@ coreos:
       command: restart
 ```
 
-After this cloud-config is processed, the dummy module is loaded into the kernel, and five dummy interfaces are added to the network stack.
+#### Via Ignition
 
-Further details can be found in the systemd man pages:
-[modules-load.d(5)](http://www.freedesktop.org/software/systemd/man/modules-load.d.html)
-[systemd-modules-load.service(8)](http://www.freedesktop.org/software/systemd/man/systemd-modules-load.service.html)
-[modprobe.d(5)](http://linux.die.net/man/5/modprobe.d)
+This example Ignition config loads the `dummy` network interface module with
+an option specifying the number of interfaces the module should create when
+loaded (`numdummies=5`):
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "files": [
+    {
+      "filesystem": "root",
+      "path": "/etc/modules-load.d/nf.conf",
+      "mode": 420,
+      "contents": { "source": "data:,dummy" }
+    },
+    {
+      "filesystem": "root",
+      "path": "/etc/modprobe.d/dummy.conf",
+      "mode": 420,
+      "contents": { "source": "data:,options%20dummy%20numdummies=5" }
+    }
+  ]
+}
+```
 
 ## Tuning sysctl parameters
 
@@ -77,6 +123,28 @@ coreos:
       command: restart
     - name: systemd-sysctl.service
       command: restart
+```
+
+A complete Ignition config using both would look like:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "files": [
+    {
+      "filesystem": "root",
+      "path": "/etc/modules-load.d/nf.conf",
+      "mode": 420,
+      "contents": { "source": "data:,nf_conntrack" }
+    },
+    {
+      "filesystem": "root",
+      "path": "/etc/sysctl.d/nf.conf",
+      "mode": 420,
+      "contents": { "source": "data:,net.netfilter.nf_conntrack_max=131072" }
+    }
+  ]
+}
 ```
 
 Further details can be found in the systemd man pages:
@@ -128,4 +196,18 @@ Or via cloud-config:
 write_files:
   - path: /etc/motd.d/pi.conf
     content: This machine is dedicated to computing Pi
+```
+
+Or via Ignition:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "files": [{
+    "filesystem": "root",
+    "path": "/etc/motd.d/pi.conf",
+    "mode": 420,
+    "contents": { "source": "data:,This%20machine%20is%20dedicated%20to%20computing%20Pi" }
+  }]
+}
 ```

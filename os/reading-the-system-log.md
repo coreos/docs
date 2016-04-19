@@ -121,6 +121,25 @@ coreos:
 
 And run `coreos-cloudinit` or reboot your CoreOS host to apply the changes.
 
+## Enable debugging via Ignition
+
+Define a [Drop-In][drop-ins] in an Ignition config:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "systemd": {
+    "units": [{
+      "name": "systemd-journald.service",
+      "dropins": [{
+        "name": "10-debug.conf",
+        "contents": "[Service]\nEnvironment=SYSTEMD_LOG_LEVEL=debug"
+      }]
+    }]
+  }
+}
+```
+
 [drop-ins]: using-systemd-drop-in-units.md
 [cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 

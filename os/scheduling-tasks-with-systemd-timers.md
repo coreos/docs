@@ -66,6 +66,29 @@ coreos:
         OnCalendar=*:0/10
 ```
 
+## Ignition
+
+Here you'll find an example Ignition config demonstrating how to install systemd timers:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "systemd": {
+    "units": [
+      {
+        "name": "date.service",
+        "contents": "[Unit]\nDescription=Prints date into /tmp/date file\n\n[Service]\nType=oneshot\nExecStart=/usr/bin/sh -c '/usr/bin/date >> /tmp/date'"
+      },
+      {
+        "name": "date.timer",
+        "enable": true,
+        "contents": "[Unit]\nDescription=Run date.service every 10 minutes\n\n[Timer]\nOnCalendar=*:0/10\n\n[Install]\nWantedBy=multi-user.target"
+      }
+    ]
+  }
+}
+```
+
 ## Further reading
 
 If you're interested in more general systemd timers feature, check out the [full documentation](http://www.freedesktop.org/software/systemd/man/systemd.timer.html).

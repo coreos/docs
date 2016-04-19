@@ -21,6 +21,27 @@ users:
 
 Check out the entire [Customize with Cloud-Config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/) guide for the full details.
 
+## Add Users via Ignition
+
+Managing users via Ignition is preferred because it allows you to use the same configuration across many servers and the Ignition config can be stored in a repo and versioned. In your Ignition config, you can specify many [different parameters](https://github.com/coreos/ignition/blob/master/doc/configuration.md) for each user. Here's an example:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "passwd": {
+    "users": [{
+      "name": "elroy",
+      "passwordHash": "$6$5s2u6/jR$un0AvWnqilcgaNB3Mkxd5yYv6mTlWfOoCYHZmfi3LDKVltj.E8XNKEcwWm...",
+      "groups": [
+        "sudo",
+        "docker"
+      ],
+      "sshAuthorizedKeys": [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq......." ]
+    }]
+  }
+}
+```
+
 ## Add user manually
 
 If you'd like to add a user manually, SSH to the machine and use the `useradd` tool. To create the user `user`, run:

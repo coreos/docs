@@ -69,6 +69,24 @@ coreos:
       command: start
 ```
 
+Here is how that could be implemented via Ignition:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "systemd": {
+    "units": [{
+      "name": "fleet.service",
+      "enable": true,
+      "dropins": [{
+        "name": "10-restart_60s.conf",
+        "contents": "[Service]\nRestartSec=60s"
+      }]
+    }]
+  }
+}
+```
+
 This change is small and targeted. It is the easiest way to tweak unit's parameters.
 
 ### Override the whole unit file
@@ -114,6 +132,21 @@ coreos:
         ExecStart=/usr/bin/fleetd
         Restart=always
         RestartSec=60s
+```
+
+Ignition example:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "systemd": {
+    "units": [{
+      "name": "fleet.service",
+      "enable": true,
+      "contents": "[Unit]\nDescription=fleet daemon\n\nAfter=etcd.service\nAfter=etcd2.service\n\nWants=fleet.socket\nAfter=fleet.socket\n\n[Service]\nExecStart=/usr/bin/fleetd\nRestart=always\nRestartSec=60s"
+    }]
+  }
+}
 ```
 
 ### List drop-ins

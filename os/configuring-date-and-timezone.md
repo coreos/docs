@@ -82,6 +82,20 @@ coreos:
         Type=oneshot
 ```
 
+The time zone may also be set via Ignition using the following config:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "files": [{
+    "filesystem": "root",
+    "path": "/etc/timezone",
+    "mode": 420,
+    "contents": { "source": "data:,America/New_York" }
+  }]
+}
+```
+
 
 ## Time synchronization
 
@@ -149,6 +163,20 @@ write_files:
       NTP=0.pool.example.com 1.pool.example.com
 ```
 
+Ignition can also be used to set NTP time sources:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "files": [{
+    "filesystem": "root",
+    "path": "/etc/systemd/timesyncd.conf",
+    "mode": 420,
+    "contents": { "source": "data:,%5BTime%5D%0ANTP=0.pool.example.com%201.pool.example.com%0A" }
+  }]
+}
+```
+
 
 ## Switching from `timesyncd` to `ntpd`
 
@@ -173,6 +201,26 @@ coreos:
     - name: ntpd.service
       command: start
       enable: true
+```
+
+or with this Ignition snippet:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "systemd": {
+    "units": [
+      {
+        "name": "systemd-timesyncd.service",
+        "mask": true
+      },
+      {
+        "name": "ntpd.service",
+        "enable": true
+      },
+    ]
+  }
+}
 ```
 
 Because `timesyncd` and `ntpd` are mutually exclusive, it's important to `mask` the `stop`ped service. `Systemctl disable` or `stop` alone will not prevent a default service from starting again.
@@ -211,6 +259,20 @@ write_files:
       restrict default nomodify nopeer noquery limited kod
       restrict 127.0.0.1
       restrict [::1]
+```
+
+Or, in an Ignition config:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "files": [{
+    "filesystem": "root",
+    "path": "/etc/ntp.conf",
+    "mode": 420,
+    "contents": { "source": "data:,server%200.pool.example.com%0Aserver%201.pool.example.com%0A%0A#%20-%20Allow%20only%20time%20queries,%20at%20a%20limited%20rate.%0A%23%20-%20Allow%20all%20local%20queries%20%28IPv4,%20IPv6%29%0Arestrict%20default%20nomodify%20nopeer%20noquery%20limited%20kod%0Arestrict%20127.0.0.1%0Arestrict%20%5B::1%5D%0A" }
+  }]
+}
 ```
 
 [timedatectl]: http://www.freedesktop.org/software/systemd/man/timedatectl.html

@@ -61,6 +61,28 @@ coreos:
         ExecStart=/usr/bin/echo 'device has been attached'
 ```
 
+## Ignition example
+
+To use the unit and udev rule with Ignition, modify this example as needed:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "files": [{
+    "filesystem": "root",
+    "path": "/etc/udev/rules.d/01-block.rules",
+    "mode": 420,
+    "contents": { "source": "data:,ACTION==%22add%22,%20SUBSYSTEM==%22block%22,%20TAG+=%22systemd%22,%20ENV%7BSYSTEMD_WANTS%7D=%22device-attach.service%22%0A" }
+  }],
+  "systemd": {
+    "units": [{
+      "name": "device-attach.service",
+      "contents": "[Unit]\nDescription=Notify about attached device\n\n[Service]\nType=oneshot\nExecStart=/usr/bin/echo 'device has been attached'"
+    }]
+  }
+}
+```
+
 ## More systemd examples
 
 For more systemd examples, check out these documents:

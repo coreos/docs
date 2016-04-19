@@ -36,6 +36,22 @@ write_files:
       aliases:     files
 ```
 
+Here is an example Ignition config to perform the same:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "storage": {
+    "files": [{
+      "filesystem": "root",
+      "path": "/etc/nsswitch.conf",
+      "mode": 420,
+      "contents": { "source": "data:,#%20/etc/nsswitch.conf:%0A%0Apasswd:%20%20%20%20%20%20files%20usrfiles%0Ashadow:%20%20%20%20%20%20files%20usrfiles%0Agroup:%20%20%20%20%20%20%20files%20usrfiles%0A%0Ahosts:%20%20%20%20%20%20%20files%20usrfiles%20resolv%20dns%0Anetworks:%20%20%20%20files%20usrfiles%20dns%0A%0Aservices:%20%20%20%20files%20usrfiles%0Aprotocols:%20%20%20files%20usrfiles%0Arpc:%20%20%20%20%20%20%20%20%20files%20usrfiles%0A%0Aethers:%20%20%20%20%20%20files%0Anetmasks:%20%20%20%20files%0Anetgroup:%20%20%20%20files%0Abootparams:%20%20files%0Aautomount:%20%20%20files%0Aaliases:%20%20%20%20%20files%0A" }
+    }]
+  }
+}
+```
+
 Only nss-aware applications can take advantage of the `systemd-resolved` cache. Notably, this means that statically linked Go programs and programs running within Docker/rkt will use `/etc/resolv.conf` only, and will not use the `systemd-resolve` cache.
 
 [systemd-resolved]: http://www.freedesktop.org/software/systemd/man/systemd-resolved.service.html
