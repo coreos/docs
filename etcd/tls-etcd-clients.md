@@ -99,6 +99,6 @@ Then, as usual after a systemd configuration change, run `systemctl daemon-reloa
 [locksmith]: https://github.com/coreos/locksmith
 [flannel]: https://github.com/coreos/flannel
 [fleet]: https://github.com/coreos/fleet
-[systemd-environments]: /os/using-environment-variables-in-systemd-units.md
+[systemd-environments]: ../os/using-environment-variables-in-systemd-units.md
 [cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 [etcd-live-http-https]: etcd-live-http-to-https-migration.md

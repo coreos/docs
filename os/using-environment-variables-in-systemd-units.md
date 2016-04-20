@@ -104,7 +104,7 @@ For more systemd examples, check out these documents:
 [cloud-config]: cloud-config.html
 [etcd-discovery]: cluster-discovery.html
 [systemd-udev]: using-systemd-and-udev-rules.html
-[etcd-cluster-reconfiguration]: /etcd/etcd-live-cluster-reconfiguration.md
+[etcd-cluster-reconfiguration]: ../etcd/etcd-live-cluster-reconfiguration.md
 
 ## More Information
 
