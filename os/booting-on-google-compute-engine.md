@@ -8,7 +8,7 @@ Before proceeding, you will need a GCE account ([get $300 of credit here][free-t
 
 After installation, log into your account with `gcloud auth login` and enter your project ID when prompted.
 
-## Cloud-Config
+## Cloud-config
 
 CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. On GCE, the cloud-config can be modified while the instance is running and will be processed next time the machine boots.
 
@@ -40,7 +40,7 @@ coreos:
 
 The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on GCE.
 
-## Choosing a Channel
+## Choosing a channel
 
 CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
 
@@ -68,7 +68,7 @@ Create 3 instances from the image above using our cloud-config from `cloud-confi
   </div>
 </div>
 
-### Additional Storage
+### Additional storage
 
 Additional disks attached to instances can be mounted with a `.mount` unit. Each disk can be accessed via `/dev/disk/by-id/google-<disk-name>`. Here's the cloud-config to mount a disk called `database-backup`:
 
@@ -87,7 +87,7 @@ coreos:
 
 For more information about mounting storage, Google's [own documentation](https://developers.google.com/compute/docs/disks#attach_disk) is the best source. You can also read about [mounting storage on CoreOS]({{site.baseurl}}/docs/cluster-management/setup/mounting-storage).
 
-### Adding More Machines
+### Adding more machines
 To add more instances to the cluster, just launch more with the same cloud-config inside of the project.
 
 ## SSH
@@ -100,7 +100,7 @@ gcloud compute ssh --zone us-central1-a core@<instance-name>
 
 Users other than `core`, which are set up by the GCE account manager, may not be a member of required groups. If you have issues, try running commands such as `journalctl` with sudo.
 
-## Modify Existing Cloud-Config
+## Modify existing cloud-config
 
 To modify an existing instance's cloud-config, use the `add-metadata` command to overwrite the existing data with the new `cloud-config.yaml`:
 
@@ -172,5 +172,4 @@ zone: us-central1-a
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

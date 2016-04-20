@@ -1,15 +1,12 @@
 # Running CoreOS on OpenStack
 
-CoreOS is currently in heavy development and actively being tested.  These
-instructions will walk you through downloading CoreOS for OpenStack, importing
-it with the `glance` tool and running your first cluster with the `nova` tool.
+These instructions will walk you through downloading CoreOS for OpenStack, importing it with the `glance` tool, and running your first cluster with the `nova` tool.
 
-## Import the Image
+## Import the image
 
-These steps will download the CoreOS image, uncompress it and then import it
-into the glance image store.
+These steps will download the CoreOS image, uncompress it, and then import it into the glance image store.
 
-## Choosing a Channel
+## Choosing a channel
 
 CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
 
@@ -74,11 +71,9 @@ $ glance image-create --name CoreOS \
 +------------------+--------------------------------------+
 ```
 
-## Cloud-Config
+## Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config].
-We're going to provide our cloud-config to OpenStack via the user-data flag. Our cloud-config will also contain SSH keys that will be used to connect to the instance.
-In order for this to work your OpenStack cloud provider must support [config drive][config-drive] or the OpenStack metadata service.
+CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config]. We're going to provide our cloud-config to OpenStack via the user-data flag. Our cloud-config will also contain SSH keys that will be used to connect to the instance. In order for this to work your OpenStack cloud provider must support [config drive][config-drive] or the OpenStack metadata service.
 
 [cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 [config-drive]: http://docs.openstack.org/user-guide/cli_config_drive.html
@@ -112,7 +107,7 @@ ssh_authorized_keys:
 
 The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on most OpenStack deployments. Unfortunately some systems relying on config drive may leave these values undefined.
 
-## Launch Cluster
+## Launch cluster
 
 Boot the machines with the `nova` CLI, referencing the image ID from the import step above and your `cloud-config.yaml`:
 
@@ -146,8 +141,7 @@ nova network-list
 +--------------------------------------+---------+------+
 ```
 
-Your first CoreOS cluster should now be running. The only thing left to do is
-find an IP and SSH in.
+Your first CoreOS cluster should now be running. The only thing left to do is find an IP and SSH in.
 
 ```sh
 $ nova list
@@ -174,11 +168,9 @@ $ ssh -i core.pem core@10.0.0.3
 core@10-0-0-3 ~ $
 ```
 
-## Adding More Machines
+## Adding more machines
 
-Adding new instances to the cluster is as easy as launching more with the same 
-cloud-config. New instances will join the cluster assuming they can communicate 
-with the others.
+Adding new instances to the cluster is as easy as launching more with the same cloud-config. New instances will join the cluster assuming they can communicate with the others.
 
 Example:
 
@@ -191,12 +183,10 @@ nova boot \
 --security-groups default coreos
 ```
 
-## Multiple Clusters
+## Multiple clusters
 
-If you would like to create multiple clusters you'll need to generate and use a
-new discovery token. Change the token value on the etcd discovery parameter in the cloud-config, and boot new instances.
+If you would like to create multiple clusters you'll need to generate and use a new discovery token. Change the token value on the etcd discovery parameter in the cloud-config, and boot new instances.
 
 ## Using CoreOS
 
-Now that you have instances booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have instances booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

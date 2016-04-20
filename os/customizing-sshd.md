@@ -1,10 +1,10 @@
-# Customizing the SSH Daemon
+# Customizing the SSH daemon
 
 CoreOS defaults to running an OpenSSH daemon using `systemd` socket activation -- when a client connects to the port configured for SSH, `sshd` is started on the fly for that client using a `systemd` unit derived automatically from a template. In some cases you may want to customize this daemon's authentication methods or other configuration. This guide will show you how to do that at build time using `cloud-config`, and after building by modifying the `systemd` unit file.
 
-As a practical example, when a client fails to connect by not completing the TCP connection (e.g. because the "client" is actually a TCP port scanner), the MOTD may report failures of `systemd` units (which will be named by the source IP that failed to connect) next time you log in to the CoreOS host.  These failures are not themselves harmful, but it is a good general practice to change how SSH listens, either by changing the IP address `sshd` listens to from the default setting (which listens on all configured interfaces), changing the default port, or both.
+As a practical example, when a client fails to connect by not completing the TCP connection (e.g. because the "client" is actually a TCP port scanner), the MOTD may report failures of `systemd` units (which will be named by the source IP that failed to connect) next time you log in to the CoreOS host. These failures are not themselves harmful, but it is a good general practice to change how SSH listens, either by changing the IP address `sshd` listens to from the default setting (which listens on all configured interfaces), changing the default port, or both.
 
-## Customizing sshd with Cloud-Config
+## Customizing sshd with cloud-config
 
 In this example we will disable logins for the `root` user, only allow login for the `core` user and disable password based authentication. For more details on what sections can be added to `/etc/ssh/sshd_config` see the [OpenSSH manual][openssh-manual].
 
@@ -28,7 +28,7 @@ write_files:
       ChallengeResponseAuthentication no
 ```
 
-### Changing the sshd Port
+### Changing the sshd port
 
 CoreOS ships with socket-activated SSH by default. The configuration for this can be found at `/usr/lib/systemd/system/sshd.socket`. We're going to override some of the default settings for this in the cloud-config provided at boot:
 
@@ -49,7 +49,7 @@ coreos:
 
 `sshd` will now listen only on port 2222 on all interfaces when the system is built.
 
-### Further Reading
+### Further reading
 
 Read the [full cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/) guide to install users and more.
 
@@ -82,7 +82,7 @@ ListenStream=10.20.30.40:22
 FreeBind=true
 ```
 
-You can specify both an IP and an alternate port in a single ListenStream line; additionally, IPv6 address bindings would be specified as, for example, `[2001:db8::7]:22`  Note two things: first, while a specific IP address is optional, you must always specify the port, even if it is the default SSH port.  Second, the `FreeBind` option is used allow the socket to be bound on addresses that are not actually configured on an interface yet, to avoid issues caused by delays in IP configuration at boot.  (This is not needed if you are not specifying an address.)
+You can specify both an IP and an alternate port in a single ListenStream line; additionally, IPv6 address bindings would be specified as, for example, `[2001:db8::7]:22`  Note two things: first, while a specific IP address is optional, you must always specify the port, even if it is the default SSH port. Second, the `FreeBind` option is used allow the socket to be bound on addresses that are not actually configured on an interface yet, to avoid issues caused by delays in IP configuration at boot. (This is not needed if you are not specifying an address.)
 
 Multiple ListenStream lines can be specified, in which case `sshd` will listen on all the specified sockets:
 
@@ -132,9 +132,9 @@ $ systemctl status sshd.socket
  Accepted: 1; Connected: 0
 ...
 ```
- 
+
 And if we attempt to connect to port 22 on our public IP, the connection is rejected, but port 2222 works:
- 
+
 ```
 $ ssh core@[public IP]
 ssh: connect to host [public IP] port 22: Connection refused

@@ -1,14 +1,10 @@
 # Running CoreOS on DigitalOcean
 
-## Choosing a Channel
+## Choosing a channel
 
-CoreOS is designed to be [updated automatically][update-docs] with different
-schedules per channel. You can [disable this feature][reboot-docs], although we
-don't recommend it. Read the [release notes][release-notes] for specific
-features and bug fixes.
+CoreOS is designed to be [updated automatically][update-docs] with different schedules per channel. You can [disable this feature][reboot-docs], although we don't recommend it. Read the [release notes][release-notes] for specific features and bug fixes.
 
-The following command will create a single droplet. For more details, check out
-<a href="#via-the-api">Launching via the API</a>.
+The following command will create a single droplet. For more details, check out [Launching via the API](#via-the-api).
 
 <div id="do-images">
   <ul class="nav nav-tabs">
@@ -74,17 +70,11 @@ The following command will create a single droplet. For more details, check out
 [reboot-docs]: {{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update
 [release-notes]: {{site.baseurl}}/releases
 
-## Cloud-Config
+## Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on
-startup, and more via cloud-config. Jump over to the [docs to learn about the
-supported features][cloud-config-docs]. Cloud-config is intended to bring up a
-cluster of machines into a minimal useful state and ideally shouldn't be used
-to configure anything that isn't standard across many hosts. Once a droplet is
-created on DigitalOcean, the cloud-config cannot be modified.
+CoreOS allows you to configure machine parameters, launch systemd units on startup, and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a droplet is created on DigitalOcean, the cloud-config cannot be modified.
 
-You can provide raw cloud-config data to CoreOS via the DigitalOcean web
-console or <a href="#via-the-api">via the DigitalOcean API</a>.
+You can provide raw cloud-config data to CoreOS via the DigitalOcean web console or [via the DigitalOcean API](#via-the-api).
 
 The most common cloud-config for DigitalOcean looks like:
 
@@ -110,25 +100,16 @@ coreos:
       command: start
 ```
 
-The `$private_ipv4` and `$public_ipv4` substitution variables are
-fully supported in cloud-config on DigitalOcean. In order for
-`$private_ipv4` to be populated, the droplet must have "private
-networking" enabled. Digital Ocean private networking isn't
-available in all regions, and isn't actually private from others;
-instead, you can think of it as high-speed, free bandwidth between
-your droplets. etcd should be [configured with TLS][etcd-tls] when
-using this network to prevent others from gaining admission to, or
-even control of, your cluster.
+The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on DigitalOcean. In order for `$private_ipv4` to be populated, the droplet must have "private networking" enabled. Digital Ocean private networking isn't available in all regions, and isn't actually private from others; instead, you can think of it as high-speed, free bandwidth between your droplets. etcd should be [configured with TLS][etcd-tls] when using this network to prevent others from gaining admission to, or even control of, your cluster.
 
 [do-cloud-config]: https://developers.digitalocean.com/#droplets
 [cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 [etcd-tls]: https://coreos.com/etcd/docs/latest/security.html#example-3-transport-security-&-client-certificates-in-a-cluster
 
-### Adding More Machines
-To add more instances to the cluster, just launch more with the same
-cloud-config. New instances will join the cluster regardless of region.
+### Adding more machines
+To add more instances to the cluster, just launch more with the same cloud-config. New instances will join the cluster regardless of region.
 
-## SSH to your Droplets
+## SSH to your droplets
 
 CoreOS is set up to be a little more secure than other DigitalOcean images. By default, it uses the core user instead of root and doesn't use a password for authentication. You'll need to add an SSH key(s) via the web console or add keys/passwords via your cloud-config in order to log in.
 
@@ -140,20 +121,18 @@ ssh core@<ip address>
 
 Optionally, you may want to [configure your ssh-agent]({{site.baseurl}}/docs/launching-containers/launching/fleet-using-the-client/#remote-fleet-access) to more easily run [fleet commands]({{site.baseurl}}/docs/launching-containers/launching/launching-containers-fleet/).
 
-## Launching Droplets
+## Launching droplets
 
 ### Via the API
 
-For starters, generate a [Personal Access Token][do-token-settings] and save it
-in an environment variable:
+For starters, generate a [Personal Access Token][do-token-settings] and save it in an environment variable:
 
 ```sh
 read TOKEN
 # Enter your Personal Access Token
 ```
 
-Upload your SSH key via [DigitalOcean's API][do-keys-docs] or the web console.
-Retrieve the SSH key ID via the ["list all keys"][do-list-keys-docs] method:
+Upload your SSH key via [DigitalOcean's API][do-keys-docs] or the web console. Retrieve the SSH key ID via the ["list all keys"][do-list-keys-docs] method:
 
 ```sh
 curl --request GET "https://api.digitalocean.com/v2/account/keys" \
@@ -167,8 +146,7 @@ read SSH_KEY_ID
 # Enter your SSH key ID
 ```
 
-Create a 512MB droplet with private networking in NYC3 from the CoreOS Stable
-image:
+Create a 512MB droplet with private networking in NYC3 from the CoreOS Stable image:
 
 ```sh
 curl --request POST "https://api.digitalocean.com/v2/droplets" \
@@ -193,25 +171,24 @@ For more details, check out [DigitalOcean's API documentation][do-api-docs].
 [do-list-keys-docs]: https://developers.digitalocean.com/#list-all-keys
 [do-token-settings]: https://cloud.digitalocean.com/settings/applications
 
-### Via the Web Console
+### Via the web console
 
-1. Open the "<a href="https://cloud.digitalocean.com/droplets/new?image=coreos-stable">new droplet</a>"
-   page in the web console.
-2. Give the machine a hostname, select the size, and choose a region.<br/><br/>
+1. Open the ["new droplet"](https://cloud.digitalocean.com/droplets/new?image=coreos-stable) page in the web console.
+2. Give the machine a hostname, select the size, and choose a region.
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12 co-m-screenshot">
     <img src="img/size.png" />
     <div class="co-m-screenshot-caption">Choosing a size and hostname</div>
   </div>
 </div>
-3. Enable User Data and add your cloud-config in the text box.<br /><br />
+3. Enable User Data and add your cloud-config in the text box.
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12 co-m-screenshot">
     <img src="img/settings.png" />
     <div class="co-m-screenshot-caption">Droplet settings for networking and cloud-config</div>
   </div>
 </div>
-4. Choose your <a href="#choosing-a-channel">preferred channel</a> of CoreOS.<br/><br/>
+4. Choose your [preferred channel](#choosing-a-channel) of CoreOS.
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12 co-m-screenshot">
     <img src="img/image.png" />
@@ -220,15 +197,11 @@ For more details, check out [DigitalOcean's API documentation][do-api-docs].
 </div>
 5. Select your SSH keys.
 
-Note that DigitalOcean is not able to inject a root password into CoreOS images
-like it does with other images. You'll need to add your keys via the web
-console or add keys or passwords via your cloud-config in order to log in.
+Note that DigitalOcean is not able to inject a root password into CoreOS images like it does with other images. You'll need to add your keys via the web console or add keys or passwords via your cloud-config in order to log in.
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart][quick-start] guide or dig into
-[more specific topics][docs].
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart][quick-start] guide or dig into [more specific topics][docs].
 
 [quick-start]: {{site.baseurl}}/docs/quickstart
 [docs]: {{site.baseurl}}/docs

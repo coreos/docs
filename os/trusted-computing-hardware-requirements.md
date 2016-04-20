@@ -37,8 +37,7 @@ Reboot the system and check TPM status again, as in Step 3.
 
 ## 4. Check boot measurement
 
-The CoreOS bootloader will record the state of boot components during the
-boot process &mdash; *measuring* each part, in TPM parlance, and storing the result in its Platform Configuration Registers (PCR). Verify that this measurement has been successful by reading the TPM device's `pcrs` file, a textual representation of the contents of all PCRs:
+The CoreOS bootloader will record the state of boot components during the boot process &mdash; *measuring* each part, in TPM parlance, and storing the result in its Platform Configuration Registers (PCR). Verify that this measurement has been successful by reading the TPM device's `pcrs` file, a textual representation of the contents of all PCRs:
 
 `# cat /sys/class/tpm/tpm0/device/pcrs`
 

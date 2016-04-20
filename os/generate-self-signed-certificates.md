@@ -1,10 +1,6 @@
-# Generate Self Signed Certificates
+# Generate self-signed certificates
 
-If you build CoreOS cluster on top of public networks it is recommended to enable encryption for CoreOS services to prevent traffic interception and man-in-the-middle attacks.
-
-For these purposes you have to use Certificate Authority (CA), private keys and certificates signed by CA.
-
-Let's use [cfssl][cfssl] and walk through the whole process to create all these components.
+If you build CoreOS cluster on top of public networks it is recommended to enable encryption for CoreOS services to prevent traffic interception and man-in-the-middle attacks. For these purposes you have to use Certificate Authority (CA), private keys and certificates signed by CA. Let's use [cfssl][cfssl] and walk through the whole process to create all these components.
 
 **NOTE:** We will use basic procedure here. If your configuration requires advanced security options, please refer to official [cfssl][cfssl] documentation.
 
@@ -22,7 +18,7 @@ chmod +x ~/bin/{cfssl,cfssljson}
 export PATH=$PATH:~/bin
 ```
 
-## Initialize a Certificate Authority
+## Initialize a certificate authority
 
 First of all we have to save default `cfssl` options for future substitutions:
 
@@ -288,7 +284,7 @@ openssl x509 -in client.pem -text -noout
 * Certificates in this **TLDR** example have both `server auth` and `client auth` X509 V3 extensions and you can use them with servers and clients' authentication.
 * You are free to generate keys and certificates for wildcard `*` address as well. They will work on any machine. It will simplify certificates routine but increase security risks.
 
-# More Information
+## More information
 
 For another examples, check out these documents:
 

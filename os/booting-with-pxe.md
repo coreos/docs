@@ -4,8 +4,7 @@ These instructions will walk you through booting CoreOS via PXE on real or virtu
 
 ## Configuring pxelinux
 
-This guide assumes you already have a working PXE server using [pxelinux][pxelinux].
-If you need suggestions on how to set a server up, check out guides for [Debian][debian-pxe], [Fedora][fedora-pxe] or [Ubuntu][ubuntu-pxe].
+This guide assumes you already have a working PXE server using [pxelinux][pxelinux]. If you need suggestions on how to set a server up, check out guides for [Debian][debian-pxe], [Fedora][fedora-pxe] or [Ubuntu][ubuntu-pxe].
 
 [debian-pxe]: http://www.debian-administration.org/articles/478
 [ubuntu-pxe]: https://help.ubuntu.com/community/DisklessUbuntuHowto
@@ -26,8 +25,7 @@ When configuring the CoreOS pxelinux.cfg there are a few kernel options that may
 
 [cloudinit]: https://github.com/coreos/coreos-cloudinit
 
-This is an example pxelinux.cfg file that assumes CoreOS is the only option.
-You should be able to copy this verbatim into `/var/lib/tftpboot/pxelinux.cfg/default` after providing a cloud-config URL:
+This is an example pxelinux.cfg file that assumes CoreOS is the only option. You should be able to copy this verbatim into `/var/lib/tftpboot/pxelinux.cfg/default` after providing a cloud-config URL:
 
 ```sh
 default coreos
@@ -60,7 +58,7 @@ You can view all of the [cloud-config options here]({{site.baseurl}}/docs/cluste
 
 Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are not supported on libvirt. The convenience of these automatic variables can be emulated by [using nginx to host your cloud-config](nginx-host-cloud-config.md).
 
-### Choose a Channel
+### Choose a channel
 
 CoreOS is [released]({{site.baseurl}}/releases/) into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
@@ -115,11 +113,9 @@ gpg --verify coreos_production_pxe_image.cpio.gz.sig
   </div>
 </div>
 
-## Booting the Box
+## Booting the box
 
-After setting up the PXE server as outlined above you can start the target machine in PXE boot mode.
-The machine should grab the image from the server and boot into CoreOS.
-If something goes wrong you can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
+After setting up the PXE server as outlined above you can start the target machine in PXE boot mode. The machine should grab the image from the server and boot into CoreOS. If something goes wrong you can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
 ```sh
 This is localhost.unknown_domain (Linux x86_64 3.10.10+) 19:53:36
@@ -131,9 +127,7 @@ localhost login:
 
 ## Logging in
 
-The IP address for the machine should be printed out to the terminal for convenience.
-If it doesn't show up immediately, press enter a few times and it should show up.
-Now you can simply SSH in using public key authentication:
+The IP address for the machine should be printed out to the terminal for convenience. If it doesn't show up immediately, press enter a few times and it should show up. Now you can simply SSH in using public key authentication:
 
 ```sh
 ssh core@10.0.2.15
@@ -195,8 +189,7 @@ usr/share/oem/cloud-config.yml
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
 
 
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev

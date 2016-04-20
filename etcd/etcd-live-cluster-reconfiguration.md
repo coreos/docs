@@ -1,4 +1,4 @@
-# etcd Cluster Runtime Reconfiguration on CoreOS
+# etcd cluster runtime reconfiguration on CoreOS
 
 This document describes the reconfiguration or recovery of an etcd cluster running on CoreOS, using a combination of `systemd` features and `etcdctl` commands.
 
@@ -230,7 +230,7 @@ The next steps are those described in the [Change etcd cluster size][change-clus
 [cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 [data-dir]: https://github.com/coreos/etcd/blob/master/Documentation/configuration.md#-data-dir
 [disaster-recovery]: https://github.com/coreos/etcd/blob/master/Documentation/admin_guide.md#disaster-recovery
-[drop-in]: /os/using-systemd-drop-in-units.md
+[drop-in]: ../os/using-systemd-drop-in-units.md
 [etcd-discovery]: https://github.com/coreos/etcd/blob/master/Documentation/clustering.md#lifetime-of-a-discovery-url
 [etcd-member-name]: https://github.com/coreos/etcd/blob/master/Documentation/configuration.md#-name
 [etcdctl-endpoint]: https://github.com/coreos/etcd/tree/master/etcdctl#--endpoint

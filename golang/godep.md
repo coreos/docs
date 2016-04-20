@@ -1,6 +1,6 @@
 ## Using Godep
 
-This is a brief guide describing how we manage third-party dependencies using [`godep`](https://github.com/tools/godep). 
+This is a brief guide describing how we manage third-party dependencies using [`godep`](https://github.com/tools/godep).
 We're going to use the [rkt](https://github.com/coreos/rkt) repository as an example.
 
 The [build script](https://github.com/coreos/rkt/blob/master/build) is crafted to make this transparent to most users (i.e. if you're just building rkt from source, or modifying any of the codebase without changing dependencies, you should have no need to interact with godep).
@@ -72,7 +72,7 @@ In this case, assuming we're updating `github.com/foo/bar`:
 
 ```
 $ cd $GOPATH/src/github.com/foo/bar
-$ git pull   # or 'go get -d -u github.com/foo/bar/...' 
+$ git pull   # or 'go get -d -u github.com/foo/bar/...'
 $ git checkout $DESIRED_REVISION
 $ cd $GOPATH/src/github.com/coreos/rkt
 $ godep update github.com/foo/bar/...

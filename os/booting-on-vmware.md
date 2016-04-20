@@ -4,9 +4,9 @@ These instructions walk through running CoreOS on VMware Fusion or ESXi. If you 
 
 ## Running the VM
 
-### Choosing a Channel
+### Choosing a channel
 
-CoreOS is released into stable, alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel. Read the [release notes][release notes] for specific features and bug fixes in each channel.
+CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel. Read the [release notes][release notes] for specific features and bug fixes in each channel.
 
 <div id="vmware-images">
   <ul class="nav nav-tabs">
@@ -23,7 +23,7 @@ CoreOS is released into stable, alpha and beta channels. Releases to each channe
     </div>
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and is released to frequently.  Current version is CoreOS {{site.alpha-channel}}.</p>
+        <p>The alpha channel closely tracks master and is released to frequently. Current version is CoreOS {{site.alpha-channel}}.</p>
       </div>
       <pre>curl -LO http://alpha.release.core-os.net/amd64-usr/current/coreos_production_vmware_ova.ova</pre>
     </div>
@@ -104,9 +104,9 @@ coreos:
 
 For details on the options available with cloud-config, see the [cloud-config guide][cloud-config guide].
 
-## VMware Guestinfo Interface
+## VMware Guestinfo interface
 
-### Setting Guestinfo Options
+### Setting Guestinfo options
 
 The VMware guestinfo interface is an alternative to using a config-drive for VM configuration. Guestinfo properties are stored in the VMX file, or in the VMX representation in host memory. These properties are available to the VM at boot time. Within the VMX, the names of these properties are prefixed with `guestinfo.`. Guestinfo settings can be injected into VMs in one of four ways:
 
@@ -130,7 +130,7 @@ Guestinfo configuration set via the VMware API or with `vmtoolsd` from within th
 
 [This blog post][vmware-use-guestinfo] has some useful details about the guestinfo interface, while Robert Labrie's blog provides a practicum specific to [using VMware guestinfo to configure CoreOS VMs][labrie-guestinfo].
 
-### Guestinfo Example
+### Guestinfo example
 
 This example sets the hostname, interface role, static IP address, and several other network interface parameters to the VM ethernet interface matching the `.mac` and `.name` values given in the following VMX snippet:
 
@@ -166,7 +166,7 @@ Gateway=192.168.178.1
 
 This unit file will subsequently configure the matching network interface.
 
-### Defining Cloud-config in Guestinfo
+### Defining cloud-config in Guestinfo
 
 If either the `guestinfo.coreos.config.data` or `guestinfo.coreos.config.url` property is set, `coreos-cloudinit` will apply the referenced cloud-config. Cloudinit will substitute the `$private_ipv4` and `$public_ipv4` variables if you've configured network interface roles using the `guestinfo.interface.<n>.role` property.
 
@@ -198,8 +198,7 @@ Refer to the [VMware guestinfo variables documentation][VMware guestinfo] for a 
 
 ## Logging in
 
-Networking can take some time to start under VMware. Once it does, press enter a few times at the login prompt and
-you should see an IP address printed on the console:
+Networking can take some time to start under VMware. Once it does, press enter a few times at the login prompt and you should see an IP address printed on the console:
 
 ![VMware IP Address](img/vmware-ip.png)
 

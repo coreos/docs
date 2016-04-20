@@ -1,10 +1,8 @@
-# Using the Client
+# Using the client
 
-`updateservicectl` lets you control and test the CoreOS update service. Subcommands
-let you manage applications, users, groups, packages and write a very simple client that gets
-its state via environment variables.
+`updateservicectl` lets you control and test the CoreOS update service. Subcommands let you manage applications, users, groups, packages and write a very simple client that gets its state via environment variables.
 
-## Administrative Flags
+## Administrative flags
 
 There are a few flags that you must provide to the administrative commands below.
 
@@ -30,18 +28,13 @@ export UPDATECTL_KEY=d3b07384d113edec49eaa6238ad5ff00
 export UPDATECTL_SERVER=http://localhost:8000
 ```
 
-## Update Clients
+## Update clients
 
-There are two tools to test out the update service: `instance fake` and `watch`.
-`instance fake` simulates a number of clients from a single
-command. `watch` is
-used to quickly implement a simple update client with a minimal amount of code.
+There are two tools to test out the update service: `instance fake` and `watch`. `instance fake` simulates a number of clients from a single command. `watch` is used to quickly implement a simple update client with a minimal amount of code.
 
-### Fake Instances
+### Fake instances
 
-This example will start 132 fake instances pinging the update service every 1 to
-50 seconds against the CoreOS application's UUID and put them in the beta group
-starting at version 1.0.0.
+This example will start 132 fake instances pinging the update service every 1 to 50 seconds against the CoreOS application's UUID and put them in the beta group starting at version 1.0.0.
 
 ```
 updateservicectl instance fake \
@@ -53,14 +46,11 @@ updateservicectl instance fake \
 	--version=1.0.0
 ```
 
-### Update Watcher
+### Update watcher
 
-Real clients should implement the Omaha protocol but if you want a fast way to
-create your own client you can use `watch`. This will exec a program of your
-choosing every time a new update is available.
+Real clients should implement the Omaha protocol but if you want a fast way to create your own client you can use `watch`. This will exec a program of your choosing every time a new update is available.
 
-First, create a simple application that dumps the environment variables that
-the watcher will pass in. Call the script `updater.sh`.
+First, create a simple application that dumps the environment variables that the watcher will pass in. Call the script `updater.sh`.
 
 ```
 #!/bin/sh
@@ -76,17 +66,13 @@ updateservicectl watch \
 	./updater.sh
 ```
 
-If you change the version of the beta group's channel then your script will be
-re-executed and you will see the UPDATE_SERVICE environment variables change.
+If you change the version of the beta group's channel then your script will be re-executed and you will see the UPDATE_SERVICE environment variables change.
 
-## Application Management
+## Application management
 
-Applications have three pieces of data: a universal unique identifier
-(UUID), a label and a description. During a request to the update
-service, the UUID is submitted in order to retrieve the details of the
-currently available version.
+Applications have three pieces of data: a universal unique identifier (UUID), a label and a description. During a request to the update service, the UUID is submitted in order to retrieve the details of the currently available version.
 
-### Add an Application
+### Add an application
 
 Create an application called CoreOS using its UUID along with a nice description.
 
@@ -97,18 +83,17 @@ updateservicectl app create \
 	--description="Linux for Servers"
 ```
 
-### List Applications
+### List applications
 
 ```
 updateservicectl app list
 ```
 
-## Package Management
+## Package management
 
-Packages represent an individual version of an application and the URL
-associated with it.
+Packages represent an individual version of an application and the URL associated with it.
 
-### Add an Application Version
+### Add an application version
 
 This will create a new package with version 1.0.5 from the file `update.gz`.
 
@@ -120,30 +105,26 @@ updateservicectl package create \
 	--url="http://my-s3-bucket-or-fileserver.com/my-app/0.0.1/update.gz"
 ```
 
-The `--meta` option allows you to specify a cryptographic signature
-and file size for verification purposes. It should look like this:
+The `--meta` option allows you to specify a cryptographic signature and file size for verification purposes. It should look like this:
 
 ```
 {"metadata_size":"1024", "metadata_signature_rsa":"<insert hash here>"}
 ```
 
-### List Application Versions
+### List application versions
 
 ```
 updateservicectl package list \
 	--app-id=e96281a6-d1af-4bde-9a0a-97b76e56dc57
 ```
 
-## Channel Management
+## Channel management
 
-A channel gives a nice symbolic name to packages. A group tracks a specific
-channel. Think of channels as a DNS name for a package.
+A channel gives a nice symbolic name to packages. A group tracks a specific channel. Think of channels as a DNS name for a package.
 
 ### Update a channel
 
-A channel has a version of individual applications. To change the version of an
-application specify the app id, channel and the version that channel
-should present. Additionally you can publish a channel by setting the `--publish` flag, if not specified publish will always be set to `false`.
+A channel has a version of individual applications. To change the version of an application specify the app id, channel and the version that channel should present. Additionally you can publish a channel by setting the `--publish` flag, if not specified publish will always be set to `false`.
 
 ```
 updateservicectl channel update \
@@ -153,16 +134,13 @@ updateservicectl channel update \
 	--publish=true
 ```
 
-## Group Management
+## Group management
 
-Instances get their updates by giving the service a combination of their group
-and application id. Groups are usually some division of data centers,
-environments or customers.
+Instances get their updates by giving the service a combination of their group and application id. Groups are usually some division of data centers, environments or customers.
 
-### Creating a Group
+### Creating a group
 
-Create a group for the CoreOS application pointing at the master channel called
-testing. This group might be used in your test environment.
+Create a group for the CoreOS application pointing at the master channel called testing. This group might be used in your test environment.
 
 ```
 updateservicectl group create \
@@ -172,7 +150,7 @@ updateservicectl group create \
 	--label="Testing Group"
 ```
 
-### Pausing Updates on a Group
+### Pausing updates on a group
 
 ```
 updateservicectl group pause \
@@ -180,7 +158,7 @@ updateservicectl group pause \
 	--group-id=testing
 ```
 
-### List Groups
+### List groups
 
 ```
 updateservicectl group list
@@ -188,13 +166,11 @@ Label           Token                                   UpdatesPaused
 Default Group   default                                 false
 ```
 
-## Instance Management
+## Instance management
 
-The service keeps track of instances and gives you a number of tools to see their
-state. Most of these endpoints are more nicely consumed via the control panel
-but you can use them from `updateservicectl` too.
+The service keeps track of instances and gives you a number of tools to see their state. Most of these endpoints are more nicely consumed via the control panel but you can use them from `updateservicectl` too.
 
-### List Instances
+### List instances
 
 This will list all instances that have been seen since the given timestamp.
 
@@ -234,11 +210,9 @@ updateservicectl admin-user delete user@coreos.net
 
 CoreUpdate supports synchronizing certain data with other "upstream" CoreUpdate instances.
 
-By default hosted instances of CoreUpdate periodically synchronize with the public instance of CoreUpdate over the internet.
-This automatically updates your instance's CoreOS application packages and channel versions.
+By default hosted instances of CoreUpdate periodically synchronize with the public instance of CoreUpdate over the internet. This automatically updates your instance's CoreOS application packages and channel versions.
 
-Since on-premises instances of CoreUpdate cannot access the internet [synchronization must be done manually](https://github.com/coreos/updateservicectl/blob/master/Documentation/sync-packages.md).
-If you decide to enable internet access for your on-premises instance, you can manage upstreams using these commands.
+Since on-premises instances of CoreUpdate cannot access the internet [synchronization must be done manually](https://github.com/coreos/updateservicectl/blob/master/Documentation/sync-packages.md). If you decide to enable internet access for your on-premises instance, you can manage upstreams using these commands.
 
 ### List upstreams
 

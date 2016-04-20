@@ -61,7 +61,7 @@ The rate of the deployment is controlled by the speed at which the desired count
   <img src="img/traffic-shift.svg" alt="Kubernetes Traffic Shift Deployment" />
 </a>
 
-If your application requires all traffic to shift to the new version at the same time, a similar method can be used as above. The same three Kubernetes objects are used, but the sequence of events is different. 
+If your application requires all traffic to shift to the new version at the same time, a similar method can be used as above. The same three Kubernetes objects are used, but the sequence of events is different.
 
 First, the service has a more specific label query that includes the version of the software running, such as `app=webapp, env=prod, version=1`. Instead of modifying the desired count of each replication controller, the version 2 controller is configured to support the same amount of load as version 1.
 
@@ -71,7 +71,7 @@ An advantage of this strategy is that failing back to the old version is a simpl
 
 ## The Reconciliation Loop in Detail
 
-The design of the replication controller epitomizes the best practices baked into Kubernetes from Google's decade of container experience. The elegant combination of a simple infinite loop and user-provided desired state leverages the strengths of all parties involved. Developers on your team can describe what they want and let the software figure out how to best make that desire a reality. 
+The design of the replication controller epitomizes the best practices baked into Kubernetes from Google's decade of container experience. The elegant combination of a simple infinite loop and user-provided desired state leverages the strengths of all parties involved. Developers on your team can describe what they want and let the software figure out how to best make that desire a reality.
 
 Substantial efficiency gains are experienced as the software logic gets smarter while the humans in the loop don't even have to change their workflow. Compare this to writing an instruction set of how to turn a vanilla group of Linux machines into a working installation by executing a long set of steps in order and hoping nothing goes wrong or an important assumption hasn't changed.
 

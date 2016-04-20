@@ -1,8 +1,8 @@
-# Configure Machines to Use CoreUpdate
+# Configure machines to use CoreUpdate
 
 Configuring new or existing CoreOS machines to communicate with a [CoreUpdate](https://coreos.com/products/coreupdate) instance is a simple change to a configuration file.
 
-## New Machines
+## New machines
 
 New servers can be configured to communicate with your CoreUpdate installation by using [cloud-config](https://coreos.com/docs/cluster-management/setup/cloudinit-cloud-config).
 
@@ -12,7 +12,7 @@ In addition to the default groups, you may choose to create your own group that 
 
 To place a CoreOS machine in one of these groups, you must configure the update settings via cloud-config or a file on disk.
 
-### Join Preconfigured Group
+### Join preconfigured group
 
 Set the value of `server` to the custom address of your installation and append "/v1/update/". Set `group` to one of the default application groups: `alpha`, `beta`, or `stable`.
 
@@ -22,7 +22,7 @@ For example, here is what the Alpha group looks like in CoreUpdate:
 
 Here's the cloud-config to use:
 
-```
+```yaml
 #cloud-config
 
 coreos:
@@ -31,7 +31,21 @@ coreos:
     server: https://customer.update.core-os.net/v1/update/
 ```
 
-### Join Custom Group
+Or the Ignition config:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "files": [{
+    "filesystem": "root",
+    "path": "/etc/coreos/update.conf",
+    "mode": 420,
+    "contents": { "source": "data:,GROUP%3Dalpha%0ASERVER%3Dhttps%3A%2F%2Fcustomer.update.core-os.net%2Fv1%2Fupdate%2F" }
+  }]
+}
+```
+
+### Join custom group
 
 Set the value of `server` to the custom address of your installation and append "/v1/update/". Set `group` to the unique identifier of your application group.
 
@@ -41,7 +55,7 @@ For example, here is what "NYC Production" looks like in CoreUpdate:
 
 Here's the cloud-config to use:
 
-```
+```yaml
 #cloud-config
 
 coreos:
@@ -52,7 +66,21 @@ coreos:
 
 More information can be found in the [cloud-config guide](http://coreos.com/docs/cluster-management/setup/cloudinit-cloud-config/#coreos).
 
-## Existing Machines
+Or the Ignition config:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "files": [{
+    "filesystem": "root",
+    "path": "/etc/coreos/update.conf",
+    "mode": 420,
+    "contents": { "source": "data:,GROUP%3D0a809ab1-c01c-4a6b-8ac8-6b17cb9bae09%0ASERVER%3Dhttps%3A%2F%2Fcustomer.update.core-os.net%2Fv1%2Fupdate%2F" }
+  }]
+}
+```
+
+## Existing machines
 
 To change the update of existing machines, edit `/etc/coreos/update.conf` with your favorite editor and provide the `SERVER=` and `GROUP=` values:
 
@@ -75,18 +103,18 @@ In addition to `GROUP=` and `SERVER=`,  a few other internal values exist, but a
 
 `COREOS_RELEASE_BOARD`: defaults to `amd64-usr`
 
-## Viewing Machines in CoreUpdate
+## Viewing machines in CoreUpdate
 
 Each machine should check in about 10 minutes after boot and roughly every hour after that. If you'd like to see it sooner, you can force an update check, which will skip any rate-limiting settings that are configured.
 
-### Force Update in Background
+### Force update in background
 
 ```
 $ update_engine_client -check_for_update
 [0123/220706:INFO:update_engine_client.cc(245)] Initiating update check and install.
 ```
 
-### Force Update in Foreground
+### Force update in foreground
 
 If you want to see what's going on behind the scenes, you can watch the ouput in the foreground:
 

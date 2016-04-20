@@ -1,15 +1,10 @@
-# Configuring Date and Time Zone
+# Configuring date and time zone
 
-By default, CoreOS machines keep time in the Coordinated Universal Time (UTC)
-zone and synchronize their clocks with the Network Time Protocol (NTP).
-This page contains information about customizing those defaults, explains
-the change in NTP client daemons in recent CoreOS versions, and offers advice
-on best practices for timekeeping in CoreOS clusters.
+By default, CoreOS machines keep time in the Coordinated Universal Time (UTC) zone and synchronize their clocks with the Network Time Protocol (NTP). This page contains information about customizing those defaults, explains the change in NTP client daemons in recent CoreOS versions, and offers advice on best practices for timekeeping in CoreOS clusters.
 
-## Viewing and Changing Time and Date
+## Viewing and changing time and date
 
-The [`timedatectl(1)`][timedatectl] command displays and sets the date, time,
-and time zone.
+The [`timedatectl(1)`][timedatectl] command displays and sets the date, time, and time zone.
 
 ```
 $ timedatectl status
@@ -23,20 +18,17 @@ NTP synchronized: yes
       DST active: n/a
 ```
 
-### Recommended: UTC Time
-To avoid time zone confusion and the complexities of adjusting clocks for
-daylight saving time (or not) in accordance with regional custom, we recommend
-that all machines in CoreOS clusters use UTC. This is the default time zone. To
-reset a machine to this default:
+### Recommended: UTC time
+
+To avoid time zone confusion and the complexities of adjusting clocks for daylight saving time (or not) in accordance with regional custom, we recommend that all machines in CoreOS clusters use UTC. This is the default time zone. To reset a machine to this default:
 
 ```
 $ sudo timedatectl set-timezone UTC
 ```
 
-### Changing the Time Zone
+### Changing the time zone
 
-If your site or application requires a different system time zone, start by
-listing the available options:
+If your site or application requires a different system time zone, start by listing the available options:
 
 ```
 $ timedatectl list-timezones
@@ -72,8 +64,7 @@ NTP synchronized: yes
                   Sun 2015-11-01 01:00:00 EST
 ```
 
-Time zone may instead be set in cloud-config, with something like the following
-excerpt:
+Time zone may instead be set in cloud-config, with something like the following excerpt:
 
 ```yaml
 #cloud-config
@@ -91,14 +82,24 @@ coreos:
         Type=oneshot
 ```
 
+The time zone may also be set via Ignition using the following config:
 
-## Time Synchronization
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "files": [{
+    "filesystem": "root",
+    "path": "/etc/timezone",
+    "mode": 420,
+    "contents": { "source": "data:,America/New_York" }
+  }]
+}
+```
 
-CoreOS clusters use NTP to synchronize the clocks of member nodes, and all
-machines start an NTP client at boot. CoreOS versions later than
-[681.0.0][681.0.0] use [`systemd-timesyncd(8)`][systemd-timesyncd] as the
-default NTP client. Earlier versions used [`ntpd(8)`][ntp.org]. Use `systemctl`
-to check which service is running:
+
+## Time synchronization
+
+CoreOS clusters use NTP to synchronize the clocks of member nodes, and all machines start an NTP client at boot. CoreOS versions later than [681.0.0][681.0.0] use [`systemd-timesyncd(8)`][systemd-timesyncd] as the default NTP client. Earlier versions used [`ntpd(8)`][ntp.org]. Use `systemctl` to check which service is running:
 
 ```
 $ systemctl status systemd-timesyncd ntpd
@@ -117,10 +118,9 @@ $ systemctl status systemd-timesyncd ntpd
    Active: inactive (dead)
 ```
 
-### Recommended NTP Sources
+### Recommended NTP sources
 
-Unless you have a highly reliable and precise time server pool, use your cloud
-provider's NTP source, or, on bare metal, the default CoreOS NTP servers:
+Unless you have a highly reliable and precise time server pool, use your cloud provider's NTP source, or, on bare metal, the default CoreOS NTP servers:
 
 ```
 0.coreos.pool.ntp.org
@@ -129,15 +129,11 @@ provider's NTP source, or, on bare metal, the default CoreOS NTP servers:
 3.coreos.pool.ntp.org
 ```
 
-### Changing NTP Time Sources
+### Changing NTP time sources
 
-`Systemd-timesyncd` can discover NTP servers from DHCP, individual
-[network][systemd.network] configs, the file [`timesyncd.conf`][timesyncd.conf],
-or the default `*.coreos.pool.ntp.org` pool.
+`Systemd-timesyncd` can discover NTP servers from DHCP, individual [network][systemd.network] configs, the file [`timesyncd.conf`][timesyncd.conf], or the default `*.coreos.pool.ntp.org` pool.
 
-The default behavior uses NTP servers provided by DHCP. To disable this, write
-a configuration listing your preferred NTP servers into the file
-`/etc/systemd/network/50-dhcp-no-ntp.conf`:
+The default behavior uses NTP servers provided by DHCP. To disable this, write a configuration listing your preferred NTP servers into the file `/etc/systemd/network/50-dhcp-no-ntp.conf`:
 
 ```ini
 [Network]
@@ -167,11 +163,24 @@ write_files:
       NTP=0.pool.example.com 1.pool.example.com
 ```
 
+Ignition can also be used to set NTP time sources:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "files": [{
+    "filesystem": "root",
+    "path": "/etc/systemd/timesyncd.conf",
+    "mode": 420,
+    "contents": { "source": "data:,%5BTime%5D%0ANTP=0.pool.example.com%201.pool.example.com%0A" }
+  }]
+}
+```
+
 
 ## Switching from `timesyncd` to `ntpd`
 
-On CoreOS 681.0.0 or later, you can switch from `systemd-timesyncd` back
-to `ntpd` with the following commands:
+On CoreOS 681.0.0 or later, you can switch from `systemd-timesyncd` back to `ntpd` with the following commands:
 
 ```
 $ sudo systemctl stop systemd-timesyncd
@@ -194,16 +203,31 @@ coreos:
       enable: true
 ```
 
-Because `timesyncd` and `ntpd` are mutually exclusive, it's important to `mask`
-the `stop`ped service. `Systemctl disable` or `stop` alone will not prevent a
-default service from starting again.
+or with this Ignition snippet:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "systemd": {
+    "units": [
+      {
+        "name": "systemd-timesyncd.service",
+        "mask": true
+      },
+      {
+        "name": "ntpd.service",
+        "enable": true
+      },
+    ]
+  }
+}
+```
+
+Because `timesyncd` and `ntpd` are mutually exclusive, it's important to `mask` the `stop`ped service. `Systemctl disable` or `stop` alone will not prevent a default service from starting again.
 
 ### Configuring `ntpd`
 
-The `ntpd` service reads all configuration from the file `/etc/ntp.conf`. It
-does not use DHCP or other configuration sources. To use a
-different set of NTP servers, replace the `/etc/ntp.conf` symlink with
-something like the following:
+The `ntpd` service reads all configuration from the file `/etc/ntp.conf`. It does not use DHCP or other configuration sources. To use a different set of NTP servers, replace the `/etc/ntp.conf` symlink with something like the following:
 
 ```
 server 0.pool.example.com
@@ -235,6 +259,20 @@ write_files:
       restrict default nomodify nopeer noquery limited kod
       restrict 127.0.0.1
       restrict [::1]
+```
+
+Or, in an Ignition config:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "files": [{
+    "filesystem": "root",
+    "path": "/etc/ntp.conf",
+    "mode": 420,
+    "contents": { "source": "data:,server%200.pool.example.com%0Aserver%201.pool.example.com%0A%0A#%20-%20Allow%20only%20time%20queries,%20at%20a%20limited%20rate.%0A%23%20-%20Allow%20all%20local%20queries%20%28IPv4,%20IPv6%29%0Arestrict%20default%20nomodify%20nopeer%20noquery%20limited%20kod%0Arestrict%20127.0.0.1%0Arestrict%20%5B::1%5D%0A" }
+  }]
+}
 ```
 
 [timedatectl]: http://www.freedesktop.org/software/systemd/man/timedatectl.html

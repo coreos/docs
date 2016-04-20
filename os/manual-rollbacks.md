@@ -1,20 +1,16 @@
-# Performing Manual CoreOS Rollbacks
+# Performing manual CoreOS rollbacks
 
-As much as we all love flawless, automatic updates, there may be occasions when
-an update must be rolled back. This is fairly straightforward on CoreOS, once
-you know the right commands.
+As much as we all love flawless, automatic updates, there may be occasions when an update must be rolled back. This is fairly straightforward on CoreOS, once you know the right commands.
 
-tl;dr: The following command will set the currently passive partition to be
-active on the next boot:
+tl;dr: The following command will set the currently passive partition to be active on the next boot:
 
 ```
 cgpt prioritize "$(cgpt find -t coreos-usr | grep --invert-match "$(findmnt --noheadings --raw --output=source --target=/usr)")"
 ```
 
-## How Do Updates Work?
+## How do updates work?
 
-The system's GPT tables are used to encode which partition is currently active
-and which is passive. This can be seen using the `cgpt` command.
+The system's GPT tables are used to encode which partition is currently active and which is passive. This can be seen using the `cgpt` command.
 
 ```
 $ cgpt show /dev/sda
@@ -50,11 +46,7 @@ $ cgpt show /dev/sda
     41943039           1          Sec GPT header
 ```
 
-Looking specifically at "USR-A" and "USR-B", we see that "USR-A" is the active
-USR partition (this is what's actually mounted at /usr). Its priority is higher
-than that of "USR-B". When the system boots, GRUB (the bootloader) looks at
-the priorities, tries, and successful flags to determine which partition to
-use.
+Looking specifically at "USR-A" and "USR-B", we see that "USR-A" is the active USR partition (this is what's actually mounted at /usr). Its priority is higher than that of "USR-B". When the system boots, GRUB (the bootloader) looks at the priorities, tries, and successful flags to determine which partition to use.
 
 ```
       270336     2097152       3  Label: "USR-A"
@@ -67,10 +59,7 @@ use.
                                   Attr: priority=1 tries=0 successful=0
 ```
 
-You'll notice that on this machine, "USR-B" hasn't actually successfully
-booted. Not to worry! This is a fresh machine that hasn't been through an
-update cycle yet. When the machine downloads an update, the partition table is
-updated to allow the newer image to boot.
+You'll notice that on this machine, "USR-B" hasn't actually successfully booted. Not to worry! This is a fresh machine that hasn't been through an update cycle yet. When the machine downloads an update, the partition table is updated to allow the newer image to boot.
 
 
 ```
@@ -84,9 +73,7 @@ updated to allow the newer image to boot.
                                   Attr: priority=2 tries=1 successful=0
 ```
 
-In this case, we see that "USR-B" now has a higher priority and it has 1 try to
-successfully boot. Once the machine reboots, the partition table will again be
-updated.
+In this case, we see that "USR-B" now has a higher priority and it has one try to successfully boot. Once the machine reboots, the partition table will again be updated.
 
 ```
       270336     2097152       3  Label: "USR-A"
@@ -99,9 +86,7 @@ updated.
                                   Attr: priority=2 tries=0 successful=0
 ```
 
-Now we see that the number of tries for "USR-B" has been decremented to 0. The
-successful flag still hasn't been updated though. Once update-engine has had a
-chance to run, it marks the boot as being successful.
+Now we see that the number of tries for "USR-B" has been decremented to zero. The successful flag still hasn't been updated though. Once update-engine has had a chance to run, it marks the boot as being successful.
 
 ```
       270336     2097152       3  Label: "USR-A"
@@ -115,12 +100,9 @@ chance to run, it marks the boot as being successful.
 ```
 
 
-## Performing a Manual Rollback
+## Performing a manual rollback
 
-So, now that we understand what happens when the machine updates, we can tweak
-the process so that it boots an older image (assuming it's still intact on the
-passive partition). The first command we'll use is `cgpt find -t coreos-usr`.
-This will give us a list of all of the USR partitions available on the disk.
+So, now that we understand what happens when the machine updates, we can tweak the process so that it boots an older image (assuming it's still intact on the passive partition). The first command we'll use is `cgpt find -t coreos-usr`. This will give us a list of all of the USR partitions available on the disk.
 
 ```
 $ cgpt find -t coreos-usr
@@ -135,25 +117,21 @@ $ findmnt --noheadings --raw --output=source --target=/usr
 /dev/sda4
 ```
 
-So now we know that `/dev/sda3` is the passive partition on our system. We can
-compose the previous two commands to dynamically figure out the passive
-partition.
+So now we know that `/dev/sda3` is the passive partition on our system. We can compose the previous two commands to dynamically figure out the passive partition.
 
 ```
 $ cgpt find -t coreos-usr | grep --invert-match "$(findmnt --noheadings --raw --output=source --target=/usr)"
 /dev/sda3
 ```
 
-In order to rollback, we need to mark that partition as active using
-`cgpt prioritize`.
+In order to rollback, we need to mark that partition as active using `cgpt prioritize`.
 
 
 ```
 $ cgpt prioritize /dev/sda3
 ```
 
-If we take another look at the GPT tables, we'll see that the priorities have
-been updated.
+If we take another look at the GPT tables, we'll see that the priorities have been updated.
 
 ```
       270336     2097152       3  Label: "USR-A"
@@ -167,8 +145,7 @@ been updated.
 
 ```
 
-Again, composing the previous two commands we get this handy one-liner to
-revert to the previous image.
+Again, composing the previous two commands we get this handy one-liner to revert to the previous image.
 
 ```
 $ cgpt prioritize "$(cgpt find -t coreos-usr | grep --invert-match "$(findmnt --noheadings --raw --output=source --target=/usr)")"

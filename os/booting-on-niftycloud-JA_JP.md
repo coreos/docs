@@ -4,7 +4,7 @@
 
 [cli-documentation]: http://cloud.nifty.com/api/cli/
 
-## Cloud-Config
+## Cloud-config
 
 CoreOSはcloud-configにより、マシンのパラメータを設定したり、起動時にsystemdのunitを立ち上げたりすることが可能です。サポートしている機能は[こちら]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config)で確認してください。cloud-configは最小限で有用な状態にクラスターを立ち上げることを目的としており、複数のホストで共通ではない設定をするためには使うべきではありません。ニフティクラウド上では、cloud-configはサーバーの起動中に編集でき、次回起動時に反映されます。
 

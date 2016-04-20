@@ -1,4 +1,4 @@
-# Scheduling Tasks with systemd Timers
+# Scheduling tasks with systemd timers
 
 CoreOS uses systemd timers (`cron` replacement) to schedule tasks. Here we will show you how you can schedule a periodic job.
 
@@ -39,9 +39,9 @@ You can also create timer with different name, i.e. `task.timer`. In this case y
 Unit=date.service
 ```
 
-## Cloud-Config
+## Cloud-config
 
-Here you can find an example how to install systemd timers using `cloud-config`:
+Here you'll find an example cloud-config demonstrating how to install systemd timers:
 
 ```yaml
 #cloud-config
@@ -66,6 +66,29 @@ coreos:
         OnCalendar=*:0/10
 ```
 
-## Further Reading
+## Ignition
+
+Here you'll find an example Ignition config demonstrating how to install systemd timers:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "systemd": {
+    "units": [
+      {
+        "name": "date.service",
+        "contents": "[Unit]\nDescription=Prints date into /tmp/date file\n\n[Service]\nType=oneshot\nExecStart=/usr/bin/sh -c '/usr/bin/date >> /tmp/date'"
+      },
+      {
+        "name": "date.timer",
+        "enable": true,
+        "contents": "[Unit]\nDescription=Run date.service every 10 minutes\n\n[Timer]\nOnCalendar=*:0/10\n\n[Install]\nWantedBy=multi-user.target"
+      }
+    ]
+  }
+}
+```
+
+## Further reading
 
 If you're interested in more general systemd timers feature, check out the [full documentation](http://www.freedesktop.org/software/systemd/man/systemd.timer.html).

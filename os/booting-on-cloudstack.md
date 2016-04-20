@@ -3,7 +3,7 @@
 This guide explains how to deploy CoreOS with CloudStack. These instructions will walk you through downloading CoreOS image and running an instance from it. This document assumes that CloudStack is already installed. Please refer to the [Install Guide][install-guide] for CloudStack installation steps.
 
 
-## Register the CoreOS image (Template)
+## Register the CoreOS image (template)
 
 After logging in to CloudStack UI, to upload a template:
 
@@ -22,11 +22,11 @@ After logging in to CloudStack UI, to upload a template:
 
 Alternatively, the [registerTemplate API][register-template-api] can also be used.
 
-### CoreOS Templates
+### CoreOS templates
 
 Apache CloudStack community created [CoreOS templates][coreos-templates] are currently available for XenServer, KVM, VMware and HyperV hypervisors.
 
-### Deploy CoreOS Instance
+### Deploy CoreOS instance
 
 To create a VM from a template:
 

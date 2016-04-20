@@ -1,4 +1,4 @@
-# Mounting Storage
+# Mounting storage
 
 The [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config) *mount unit* mechanism is used to attach additional filesystems to CoreOS nodes, whether such storage is provided by an underlying cloud platform, physical disk, SAN, or NAS system. By [systemd convention](http://www.freedesktop.org/software/systemd/man/systemd.mount.html), mount unit names derive from the target mount point, with interior slashes replaced by dashes, and the `.mount` extension appended. A unit mounting onto `/var/www` is thus named `var-www.mount`.
 
@@ -18,7 +18,7 @@ coreos:
         Type=ext3
 ```
 
-## Use Attached Storage for Docker
+## Use attached storage for Docker
 
 Docker containers can be very large and debugging a build process makes it easy to accumulate hundreds of containers. It's advantageous to use attached storage to expand your capacity for container images. Be aware that some cloud providers treat certain disks as ephemeral and you will lose all Docker images contained on that disk.
 
@@ -60,16 +60,11 @@ coreos:
             Requires=var-lib-docker.mount
 ```
 
-Notice that we're starting both units at the same time and using the power of systemd to work out the dependencies for us. In this case, `var-lib-docker.mount` requires `format-ephemeral.service`, ensuring that our storage will always be formatted before it is mounted. Docker will refuse to start otherwise.
+## Creating and mounting a btrfs volume file
 
-## Creating and Mounting a btrfs Volume File
+CoreOS [561.0.0](https://coreos.com/releases/#561.0.0) and later are installed with ext4 + overlayfs to provide a layered filesystem for the root partition. Installations from prior to this, use btrfs for this functionality. If you'd like to continue using btrfs on newer CoreOS machines, you can do so with two systemd units: one that creates and formats a btrfs volume file and another that mounts it.
 
-CoreOS [561.0.0](https://coreos.com/releases/#561.0.0) and later are installed with ext4 + overlayfs to provide a layered filesystem for the root partition.
-Installations from prior to this, are using btrfs for this functionality.
-If you'd like to continue using btrfs on newer CoreOS machines, you can do so with two systemd units: one that creates and formats a btrfs volume file and another that mounts it.
-
-In this example, we are going to mount a new 25GB btrfs volume file to `/var/lib/docker`, and one can verify that Docker is using the btrfs storage driver once the Docker service has started by executing `sudo docker info`.
-We recommend allocating **no more than 85%** of the available disk space for a btrfs filesystem as journald will also require space on the host filesystem.
+In this example, we are going to mount a new 25GB btrfs volume file to `/var/lib/docker`, and one can verify that Docker is using the btrfs storage driver once the Docker service has started by executing `sudo docker info`. We recommend allocating **no more than 85%** of the available disk space for a btrfs filesystem as journald will also require space on the host filesystem.
 
 ```yaml
 #cloud-config
@@ -103,7 +98,7 @@ coreos:
 
 Note the declaration of `ConditionPathExists=!/var/lib/docker.btrfs`. Without this line, systemd would reformat the btrfs filesystem every time the machine starts.
 
-## Mounting NFS Exports
+## Mounting NFS exports
 
 This cloud-config excerpt enables the NFS host monitor [`rpc.statd(8)`](http://linux.die.net/man/8/rpc.statd), then mounts an NFS export onto the CoreOS node's `/var/www`.
 
@@ -133,6 +128,6 @@ Requires=var-www.mount
 
 If the mount fails, dependent units will not start.
 
-## Further Reading
+## Further reading
 
 Check the [`systemd mount` docs](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) to learn about the available options. Examples specific to [EC2]({{site.baseurl}}/docs/running-coreos/cloud-providers/ec2/#instance-storage), [Google Compute Engine]({{site.baseurl}}/docs/running-coreos/cloud-providers/google-compute-engine/#additional-storage) and [Rackspace Cloud]({{site.baseurl}}/docs/running-coreos/cloud-providers/rackspace/#mount-data-disk) can be used as a starting point.

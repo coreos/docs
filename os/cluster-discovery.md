@@ -1,4 +1,4 @@
-# CoreOS Cluster Discovery
+# CoreOS cluster discovery
 
 ## Overview
 
@@ -15,7 +15,7 @@ The discovery URL can be provided to each CoreOS machine via [cloud-config]({{si
 
 Boot each one of the machines with identical cloud-config and they should be automatically clustered:
 
-```
+```yaml
 #cloud-config
 
 coreos:
@@ -39,7 +39,7 @@ coreos:
 
 Specific documentation are provided for each platform's guide. Not all providers support the $private_ipv4 variable substitution.
 
-## New Clusters
+## New clusters
 
 Starting a CoreOS cluster requires one of the new machines to become the first leader of the cluster. The initial leader is stored as metadata with the discovery URL in order to inform the other members of the new cluster. Let's walk through a timeline a new 3 machine CoreOS cluster discovering each other:
 
@@ -59,17 +59,17 @@ Second, machine 3 only needed to use one of the addresses stored in the discover
 
 Third, if you specified `?size=3` upon discovery URL creation, any other machines that join the cluster in the future will automatically start as etcd proxies.
 
-## Common Problems with Cluster Discovery
+## Common problems with cluster discovery
 
-### Existing Clusters
+### Existing clusters
 
 [Do not use the public discovery service to reconfigure a running etcd cluster.][etcd-reconf-no-disc] The public discovery service is a convenience for bootstrapping new clusters, especially on cloud providers with dynamic IP assignment, but is not designed for the later case when the cluster is running and member IPs are known.
 
 To promote proxy members or join new members into an existing etcd cluster, configure static discovery and add members. The [etcd cluster reconfiguration guide][etcd-reconf-on-coreos] details the steps for performing this reconfiguration on CoreOS systems that were originally deployed with public discovery. The more general [etcd cluster reconfiguration document][etcd-reconf] explains the operations for removing and adding cluster members in a cluster already configured with static discovery.
 
-### Invalid Cloud-Config
+### Invalid cloud-config
 
-The most common problem with cluster discovery is using invalid cloud-config, which will prevent the cloud-config from being applied to the machine. The YAML format uses indention to represent data hierarchy, which makes it easy to create an invalid cloud-config. You should always run newly written cloud-config through a [YAML validator](http://www.yamllint.com).
+The most common problem with cluster discovery is using invalid cloud-config, which will prevent the cloud-config from being applied to the machine. The YAML format uses indention to represent data hierarchy, which makes it easy to create an invalid cloud-config. You should always run newly written cloud-config through the [cloud-config validator](https://coreos.com/validate).
 
 Unfortunately, if you are providing an SSH-key via cloud-config, it can be hard to read the `coreos-cloudinit` log to find out what's wrong. If you're using a cloud provider, you can normally provide an SSH-key via another method which will allow you to log in. If you're running on bare metal, the [coreos.autologin]({{site.baseurl}}/docs/running-coreos/bare-metal/booting-with-pxe/#setting-up-pxelinux.cfg) kernel option will bypass authentication, letting you read the journal.
 
@@ -79,7 +79,7 @@ Reading the `coreos-cloudinit` log will indicate which line is invalid:
 journalctl _EXE=/usr/bin/coreos-cloudinit
 ```
 
-### Stale Tokens
+### Stale tokens
 
 Another common problem with cluster discovery is attempting to boot a new cluster with a stale discovery URL. As explained above, the initial leader election is recorded into the URL, which indicates that the new etcd instance should be joining an existing cluster.
 
@@ -139,13 +139,13 @@ journalctl -u etcd2
 
 If your CoreOS cluster can't communicate out to the public internet, [https://discovery.etcd.io](https://discovery.etcd.io) won't work and you'll have to run your own discovery endpoint, which is described below.
 
-### Setting Advertised Client Addresses Correctly
+### Setting advertised client addresses correctly
 
 Each etcd instance submits the list of `-initial-advertise-peer-urls` of each etcd instance to the configured discovery service. It's important to select an address that *all* peers in the cluster can communicate with. If you are configuring a list of addresses, make sure each member can communicate with at least one of the addresses.
 
 For example, if you're located in two regions of a cloud provider, configuring a private `10.x` address will not work between the two regions, and communication will not be possible between all peers. The `-listen-client-urls` flag allows you to bind to a specific list of interfaces and ports (or all interfaces) to ensure your etcd traffic is routed properly.
 
-## Running Your Own Discovery Service
+## Running your own discovery service
 
 The public discovery service is just an etcd cluster made available to the public internet. Since the discovery service conducts and stores the result of the first leader election, it needs to be consistent. You wouldn't want two machines in the same cluster to think they were both the leader.
 

@@ -1,6 +1,6 @@
-# Notes for Distributors
+# Notes for distributors
 
-## Importing Images
+## Importing images
 
 Images of CoreOS alpha releases are hosted at `http://alpha.release.core-os.net/amd64-usr/`. There are directories for releases by version as well as `current` with a copy of the latest version. Similarly, beta releases can be found at `http://beta.release.core-os.net/amd64-usr/`.
 
@@ -16,19 +16,19 @@ gpg --verify coreos_production_openstack_image.img.bz2.sig
 
 [signing-key]: {{site.baseurl}}/security/image-signing-key
 
-## Image Customization
+## Image customization
 
 Customizing a CoreOS image for a specific operating environment is easily done through [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/), a YAML-based configuration standard that is widely supported. As a provider, you must ensure that your platform makes this data available to CoreOS, where it will be parsed during the boot process.
 
 Use cloud-config to handle platform specific configuration such as custom networking, running an agent on the machine or injecting files onto disk. CoreOS will automatically parse and execute `/usr/share/oem/cloud-config.yml` if it exists. Your cloud-config should create additional units that process user-provided metadata, as described below.
 
-## Handling End-User Cloud-Config Files
+## Handling end-user cloud-config files
 
 End-users should be able to provide a cloud-config file to your platform while specifying their VM's parameters. This file should be made available to CoreOS at a known network address, injected directly onto disk or contained within a [config-drive][config-drive-docs]. Below are a few examples of how this process works on a few different providers.
 
 [config-drive-docs]: http://docs.openstack.org/user-guide/cli_config_drive.html
 
-### Amazon EC2 Example
+### Amazon EC2 example
 
 CoreOS machines running on Amazon EC2 utilize a two-step cloud-config process. First, a cloud-config file baked into the image runs systemd units that execute scripts to fetch the user-provided SSH key and fetch the [user-provided cloud-config][amazon-cloud-config] from the instance [user-data service][amazon-user-data-doc] on Amazon's internal network. Afterwards, the user-provided cloud-config, specified from either the web console or API, is parsed.
 
@@ -38,7 +38,7 @@ You can find the [code for this process on GitHub][amazon-github]. End-user inst
 [amazon-user-data-doc]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html#instancedata-user-data-retrieval
 [amazon-cloud-config]: {{site.baseurl}}/docs/running-coreos/cloud-providers/ec2#cloud-config
 
-### Rackspace Cloud Example
+### Rackspace Cloud example
 
 Rackspace passes configuration data to a VM by mounting [config-drive][config-drive-docs], a special configuration drive containing machine-specific data, to the machine. Like, Amazon EC2, CoreOS images for Rackspace contain a cloud-config file baked into the image that runs units to read from the config-drive. If a user-provided cloud-config file is found, it is parsed.
 

@@ -1,9 +1,9 @@
 # Running CoreOS on Rackspace
 
-CoreOS is currently in heavy development and actively being tested.  These instructions will walk you through running CoreOS on the Rackspace OpenStack cloud, which differs slightly from the generic OpenStack instructions. There are two ways to launch a CoreOS cluster: launch an entire cluster with Heat or launch machines with Nova.
+CoreOS is currently in heavy development and actively being tested. These instructions will walk you through running CoreOS on the Rackspace OpenStack cloud, which differs slightly from the generic OpenStack instructions. There are two ways to launch a CoreOS cluster: launch an entire cluster with Heat or launch machines with Nova.
 
 
-## Choosing a Channel
+## Choosing a channel
 
 CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
 
@@ -113,7 +113,7 @@ CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/u
   </div>
 </div>
 
-## Cloud-Config
+## Cloud-config
 
 CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a machine is created on Rackspace, the cloud-config can't be modified.
 
@@ -147,7 +147,7 @@ The `$private_ipv4` and `$public_ipv4` substitution variables are fully supporte
 
 [cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
-### Mount Data Disk
+### Mount data disk
 
 Certain server flavors have separate system and data disks. To utilize the data disks, they must be mounted with a `.mount` unit. Check to make sure the `Where=` parameter accurately reflects the location of the block device:
 
@@ -172,7 +172,7 @@ For more general information, check out [mounting storage on CoreOS]({{site.base
 
 We're going to install `rackspace-novaclient`, upload a keypair and boot the image id from above.
 
-### Install Supernova Tool
+### Install Supernova tool
 
 The Supernova tool requires Python and `pip`, a Python package manger. If you don't have `pip` installed, install it by running `sudo easy_install pip`. Now let's use `pip` to install Supernova, a tool that lets you easily switch Rackspace regions. Be sure to install these in the order listed:
 
@@ -182,7 +182,7 @@ sudo pip install rackspace-novaclient
 sudo pip install supernova
 ```
 
-### Store Account Information 
+### Store account information
 
 Edit your config file (`~/.supernova`) to store your Rackspace username, API key (referenced as `OS_PASSWORD`) and some other settings. The `OS_TENANT_NAME` should be set to your Rackspace account ID, which can be found by clicking on your Rackspace username in the upper right-hand corner of the cloud control panel UI.
 
@@ -198,7 +198,7 @@ OS_AUTH_SYSTEM = rackspace
 
 We're ready to create a keypair then boot a server with it.
 
-### Create Keypair
+### Create keypair
 
 For this guide, I'm assuming you already have a public key you use for your CoreOS servers. Note that only RSA keypairs are supported. Load the public key to Rackspace:
 
@@ -216,7 +216,7 @@ Check you make sure the key is in your list by running `supernova production key
 +------------+-------------------------------------------------+
 ```
 
-### Boot a Server
+### Boot a server
 
 <div id="rax-create">
   <ul class="nav nav-tabs">
@@ -271,7 +271,7 @@ You should now see the details of your new server in your terminal and it should
 +------------------------+--------------------------------------+
 ```
 
-### Launching More Servers
+### Launching more servers
 
 To launch more servers and have them join your cluster, simply provide the same cloud-config.
 
@@ -289,7 +289,7 @@ Second, verify that you're exporting your credentials for the CLI to use in your
 export OS_AUTH_URL=https://identity.api.rackspacecloud.com/v2.0/
 export OS_USERNAME=<username>
 export OS_TENANT_ID=<tenant_id>
-export HEAT_URL=https://ord.orchestration.api.rackspacecloud.com/v1/${OS_TENANT_ID}  
+export HEAT_URL=https://ord.orchestration.api.rackspacecloud.com/v1/${OS_TENANT_ID}
 export OS_PASSWORD=<password>
 export OS_AUTH_SYSTEM=rackspace
 ```
@@ -300,7 +300,7 @@ If you have credentials already set up for use with the Nova CLI, they may confl
 source ~/.bash_profile
 ```
 
-### Launch the Stack
+### Launch the stack
 
 <div id="rax-heat">
   <ul class="nav nav-tabs">
@@ -330,10 +330,10 @@ source ~/.bash_profile
   </div>
 </div>
 
-## Launch via Control Panel
+## Launch via control panel
 
-You can also launch servers with either the `alpha` and `beta` channel versions via the web-based Control Panel, although you can't provide cloud-config via the UI. To do so: 
- 
+You can also launch servers with either the `alpha` and `beta` channel versions via the web-based Control Panel, although you can't provide cloud-config via the UI. To do so:
+
  1. Log into your Rackspace Control Panel
  2. Click on 'Servers'
  3. Click on 'Create Server'
@@ -346,5 +346,4 @@ You can also launch servers with either the `alpha` and `beta` channel versions 
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around.
-Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).

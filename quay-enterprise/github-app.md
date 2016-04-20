@@ -1,7 +1,7 @@
-# Creating an OAuth Application in GitHub
+# Creating an OAuth application in GitHub
 
 - Log into GitHub (Enterprise)
-- Visit the applications page under your organization's settings and click "<a href="https://github.com/settings/applications/new">Register New Application</a>".
+- Visit the applications page under your organization's settings and click "[Register New Application](https://github.com/settings/applications/new)".
 
 <img src="img/register-app.png" class="image-center"/>
 

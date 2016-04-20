@@ -1,10 +1,10 @@
-# Enterprise Registry Log Debugging
+# Enterprise registry log debugging
 
 ## Personal debugging
 
 When attempting to debug an issue, one should first consult the logs of the web workers running the Enterprise Registry.
 
-## Visit the Management Panel
+## Visit the management panel
 
 Sign in to a super user account and visit `http://yourregister/superuser` to view the management panel:
 

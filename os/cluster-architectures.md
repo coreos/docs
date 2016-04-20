@@ -1,4 +1,4 @@
-# CoreOS Cluster Architectures
+# CoreOS cluster architectures
 
 ## Overview
 
@@ -8,7 +8,7 @@ Most of these scenarios set aside a few machines dedicated to running central cl
 
 The cloud-config files provided with each section are valid, but you will need to add SSH keys and other desired configuration options.
 
-## Docker Dev Environment on Laptop
+## Docker dev environment on laptop
 
 <img class="img-center" src="img/laptop.png" alt="Laptop Environment Diagram"/>
 <div class="caption">Laptop development environment with CoreOS VM</div>
@@ -19,7 +19,7 @@ The cloud-config files provided with each section are valid, but you will need t
 
 If you're developing locally but plan to run containers in production, it helps to mirror that environment locally. This can easily be done by running Docker commands on your laptop that control a CoreOS VM in VMware Fusion or VirtualBox.
 
-### Configuring Your Laptop
+### Configuring your laptop
 
 Start a single CoreOS VM with the Docker remote socket enabled in the cloud-config. Once it's running, tell your local Docker binary to use the remote port by exporting an environment variable and start running Docker commands:
 
@@ -60,7 +60,7 @@ coreos:
         ExecStart=/usr/bin/systemctl enable docker-tcp.socket
 ```
 
-## Small Cluster
+## Small cluster
 
 <img class="img-center" src="img/small.png" alt="Small CoreOS Cluster Diagram"/>
 <div class="caption">Small CoreOS cluster running etcd on all machines</div>
@@ -73,11 +73,11 @@ For small clusters between 3-9 machines, running etcd on all of the machines all
 
 Getting started is easy &mdash; a single cloud-config can be used to start all machines on a cloud-provider.
 
-### Configuring the Machines
+### Configuring the machines
 
 Following the guide for each of the [supported platforms]({{site.baseurl}}/docs#running-coreos) will be the easiest way to get started with this architecture. Boot the desired number of machines with the same cloud-config and discovery token. The cloud-config specifies that etcd and fleet will be started on each machine.
 
-## Easy Development/Testing Cluster
+## Easy development/testing cluster
 
 <img class="img-center" src="img/dev.png" alt="CoreOS cluster optimized for development and testing"/>
 <div class="caption">CoreOS cluster optimized for development and testing</div>
@@ -88,11 +88,11 @@ Following the guide for each of the [supported platforms]({{site.baseurl}}/docs#
 
 When you're first getting started with CoreOS, it's common to frequently tweak your cloud-config which requires booting/rebooting/destroying many machines. Instead of being slowed down and distracted by generating new discovery URLs and bootstrapping etcd, it's easier to start a single etcd node.
 
-You are now free to boot as many machines as you'd like as test workers that read from the etcd node. All the features of fleet, locksmith and etcdctl will continue to work properly, but will connect to the etcd node instead of using a local etcd instance. Since etcd isn't running on all of the machines, you'll gain a little bit of extra CPU and RAM to play with.
+You are now free to boot as many machines as you'd like as test workers that read from the etcd node. All the features of fleet, Locksmith, and etcdctl will continue to work properly, but will connect to the etcd node instead of using a local etcd instance. Since etcd isn't running on all of the machines, you'll gain a little bit of extra CPU and RAM to play with.
 
 This environment is now set up to take a beating. Pull the plug on a machine and watch fleet reschedule the units, max out the CPU, etc.
 
-### Configuration for etcd Role
+### Configuration for etcd role
 
 Since we're only using a single etcd node, there is no need to include a discovery token. There isn't any high availability for etcd in this configuration, but that's assumed to be OK for development and testing. Boot this machine first so you can configure the rest with its IP address, which is specified with the network unit.
 
@@ -128,7 +128,7 @@ coreos:
         Gateway=10.0.0.1
 ```
 
-### Configuration for Worker Role
+### Configuration for worker role
 
 This architecture allows you to boot any number of workers, as few as 1 or up to a large cluster for load testing. The notable configuration difference for this role is specifying that fleet should use our etcd proxy instead of starting etcd server locally.
 
@@ -139,7 +139,7 @@ Look how simple the cloud-config becomes:
 
 coreos:
   etcd2:
-    proxy: on 
+    proxy: on
     listen-client-urls: http://localhost:2379
     initial-cluster: etcdserver=http://10.0.0.101:2380
   fleet:
@@ -151,7 +151,7 @@ coreos:
       command: start
 ```
 
-## Production Cluster with Central Services
+## Production cluster with central services
 
 <img class="img-center" src="img/prod.png" alt="CoreOS cluster optimized for production environments"/>
 <div class="caption">CoreOS cluster separated into central services and workers.</div>
@@ -164,7 +164,7 @@ For large clusters, it's recommended to set aside 3-5 machines to run central se
 
 fleet will be used to bootstrap both the central services and jobs on the worker machines by taking advantage of machine metadata and global units.
 
-### Configuration for Central Services Role
+### Configuration for central services role
 
 Our Central Services machines will run services that support the rest of the cluster. etcd is configured with static networking and a peers list.
 
@@ -214,7 +214,7 @@ coreos:
         Gateway=10.0.0.1
 ```
 
-### Configuration for Worker Role
+### Configuration for worker role
 
 The worker roles will use DHCP and should be easy to add capacity or autoscaling.
 
@@ -230,7 +230,7 @@ Here's an example cloud-config for a worker:
 coreos:
   etcd2:
     # use the same discovery token for the central service machines
-    # make sure you have used the discovery token to bootstrap the 
+    # make sure you have used the discovery token to bootstrap the
     # central service successfully
     # this etcd will fallback to proxy automatically
     discovery: https://discovery.etcd.io/<token>

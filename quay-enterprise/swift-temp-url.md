@@ -1,6 +1,6 @@
-# Enterprise Registry Swift Direct Download
+# Enterprise registry Swift direct download
 
-## Direct Download
+## Direct download
 
 The Swift storage engine supports using a feature called [temporary URLs](http://docs.openstack.org/juno/config-reference/content/object-storage-tempurl.html) to allow for faster pulling of images.
 
@@ -14,7 +14,7 @@ To enable temporary URLs, first set the `X-Account-Meta-Temp-URL-Key` header on 
 $ swift post -m "Temp-URL-Key:somecoolkey"
 ```
 
-## Visit the Management Panel
+## Visit the management panel
 
 Sign in to a super user account and visit `http://registry.example.com/superuser` to view the management panel:
 
@@ -22,7 +22,7 @@ Sign in to a super user account and visit `http://registry.example.com/superuser
 
 ## Go to the settings tab
 
-- Click the configuration tab (<span class="fa fa-gear"></span>) and scroll down to the section entitled <strong>Registry Storage</strong>.
+- Click the configuration tab (<span class="fa fa-gear"></span>) and scroll down to the section entitled **Registry Storage**.
 - Ensure that "OpenStack Storage (Swift)" is selected
 
 ## Enter the temporary URL key
@@ -31,5 +31,4 @@ Enter the key generated above into the `Temp URL Key` field under the Swift stor
 
 ## Save configuration
 
-Hit `Save Configuration` to save and validate your configuration. The Swift storage engine system will automatically
-test that the direct download feature is enabled and working.
+Hit `Save Configuration` to save and validate your configuration. The Swift storage engine system will automatically test that the direct download feature is enabled and working.

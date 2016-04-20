@@ -1,4 +1,4 @@
-# Running CoreOS  on a Vultr VPS
+# Running CoreOS on a Vultr VPS
 
 These instructions will walk you through running a single CoreOS node. This guide assumes:
 
@@ -7,7 +7,7 @@ These instructions will walk you through running a single CoreOS node. This guid
 
 The simplest option to boot up CoreOS is to select the "CoreOS Stable" operating system from Vultr's default offerings. However, most deployments require a custom `cloud-config`, which can only be achieved in Vultr with an iPXE script. The remainder of this article describes this process.
 
-## Cloud-Config
+## Cloud-config
 
 First, you'll need to make a shell script containing your `cloud-config` available at a public URL:
 
@@ -31,7 +31,7 @@ Please be sure to check out [Using Cloud-Config]({{site.baseurl}}/docs/cluster-m
 
 You must add to your ssh public key to your `cloud-config`'s [ssh authorized keys]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/#ssh_authorized_keys) so you'll be able to log in.
 
-## Choosing a Channel
+## Choosing a channel
 
 CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
 

@@ -1,8 +1,8 @@
-# Customizing the etcd Unit
+# Customizing the etcd unit
 
 The etcd systemd unit can be customized by overriding the unit that ships with the default CoreOS settings. Common use-cases for doing this are covered below.
 
-## Use Client Certificates
+## Use client certificates
 
 etcd supports client certificates as a way to provide secure communication between clients &#8596; leader and internal traffic between etcd peers in the cluster. Configuring certificates for both scenarios is done through environment variables. We can use a systemd drop-in unit to augment the unit that ships with CoreOS.
 
@@ -26,7 +26,7 @@ Environment=ETCD_PEER_KEY_FILE=/path/to/peers.key
 
 You'll have to put these files on disk somewhere. To do this on each of your machines, the easiest way is with cloud-config.
 
-### Cloud-Config
+### Cloud-config
 
 Cloud-config has a parameter that will place the contents of a file on disk. We're going to use this to add our drop-in unit as well as the certificate files.
 

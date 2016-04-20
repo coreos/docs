@@ -12,9 +12,9 @@ The following are assumed:
 
 * You have an Interoute VDC account. You can easily [sign up for a free trial](https://cloudstore.interoute.com/vdc-trial).
 * You have an API key and a Secret key for your VDC account. See [how to generate API access keys for VDC](http://cloudstore.interoute.com/knowledge-centre/library/vdc-api-introduction-api) if you need to create these.
-* You have the Cloudmonkey command line tool installed and configured for Interoute VDC on the computer that you are working on. 
+* You have the Cloudmonkey command line tool installed and configured for Interoute VDC on the computer that you are working on.
 
-## Cloudmonkey Setup
+## Cloudmonkey setup
 
 Instructions on how to install and configure Cloudmonkey so that it can communicate with the VDC API can be found in the [Introduction to the VDC API](http://cloudstore.interoute.com/knowledge-centre/library/vdc-api-introduction-api).
 
@@ -24,7 +24,7 @@ Open a new terminal or command prompt window and start Cloudmonkey by typing:
 $ cloudmonkey
 Apache CloudStack cloudmonkey 5.3.2. Type help or ? to list commands.
 
-Using management server profile: local 
+Using management server profile: local
 
 (local) >
 ```
@@ -50,11 +50,10 @@ A new keypair is generated using the OpenSSH command line tool, 'ssh-keygen':
 # for Linux
 $ cd ~/.ssh && ssh-keygen -t rsa -f id_rsa_coreos
 # for Windows
-cd C:/ && ssh-keygen -t rsa -f id_rsa_coreos     
+cd C:/ && ssh-keygen -t rsa -f id_rsa_coreos    
 ```
 
-The keypair consists of two files, the private key which will be in a file named 'id_rsa_coreos', and the public key in the file 'id_rsa_coreos.pub'. The 
-private key should always be held securely on your own computer.
+The keypair consists of two files, the private key which will be in a file named 'id_rsa_coreos', and the public key in the file 'id_rsa_coreos.pub'. The private key should always be held securely on your own computer.
 
 The next step is to 'register' your keypair by uploading your public key to VDC, so that virtual machines can boot up with that information:
 
@@ -64,6 +63,7 @@ keypair:
 name = CoreOS-Key01
 fingerprint = 55:33:b4:d3:b6:52:fb:79:97:fc:e8:16:58:6e:42:ce
 ```
+
 (The public key input has been abbreviated here; it must be entered as a single long sequence, be careful when copying the public key that you don't introduce any linebreaks.)
 
 The keypair 'name' parameter is arbitrary and is used to identify this public key. Multiple keys can be stored in your VDC account.
@@ -101,9 +101,11 @@ The following API call is used to deploy a new virtual machine running CoreOS in
 ```sh
 > deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d zoneid=a5d3e015-0797-4283-b562-84feea6f66af templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 networkids=c5841e7c-e69e-432b-878b-c108b07a160f keypair=CoreOS-Key01 name=CoreOS-VM-01
 ```
+
 Six parameter values are required. 'keypair' and 'templateid' you have already seen above. 'name' can be any string of your choice.
 
 VDC's zones correspond to physical data centres in different locations. Use 'listZones' to get a full list for the Europe region:
+
 ```sh
 > listZones filter=id,name
 count = 10
@@ -190,6 +192,7 @@ templatename = IRT-COREOS
 zoneid = a5d3e015-0797-4283-b562-84feea6f66af
 zonename = Zurich (ESX)
 ```
+
 Note that no root password is output because password access is not enabled for this virtual machine. You can only access by presenting the private key which matches the public key that you uploaded.
 
 ## Connecting to the new CoreOS virtual machine
@@ -250,4 +253,3 @@ core@CoreOS-VM-01 ~ $ wget www.coreos.com
 ## Using CoreOS in VDC
 
 See the [Interoute VDC documentation](https://cloudstore.interoute.com/knowledge-centre/library/vdc-v2).
-

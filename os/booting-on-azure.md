@@ -72,7 +72,7 @@ To add more instances to the cluster, just launch more with the same cloud-confi
 
 ## Launching instances
 
-### Via the Cross-Platform CLI
+### Via the cross-platform CLI
 
 Follow the [installation and configuration guides][xplat-cli] for the Microsoft Azure Cross-Platform CLI to set up your local installation. This tool can be used to perform most of the needed tasks.
 
