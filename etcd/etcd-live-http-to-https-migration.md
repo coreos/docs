@@ -217,9 +217,9 @@ Error messages from an otherwise functional cluster may be ignored on the last e
 
 Once again, after verifying status, repeat this step on each etcd cluster member.
 
-[drop-ins]: ../os/using-systemd-drop-in-units.md
-[self-signed-ca]: ../os/generate-self-signed-certificates.md
-[systemd-unit-file]: ../os/getting-started-with-systemd.md#unit-file
+[drop-ins]: ../../../os/docs/latest/using-systemd-drop-in-units.md
+[self-signed-ca]: ../../../os/docs/latest/generate-self-signed-certificates.md
+[systemd-unit-file]: ../../../os/docs/latest/getting-started-with-systemd.md#unit-file
 [etcd proxy]: https://github.com/coreos/etcd/blob/master/Documentation/proxy.md
 [etcdctl]: https://github.com/coreos/etcd/blob/master/etcdctl/README.md
 [proxy-refresh]: https://github.com/coreos/etcd/blob/master/Documentation/configuration.md#-proxy-refresh-interval
