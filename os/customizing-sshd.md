@@ -130,9 +130,9 @@ $ systemctl status sshd.socket
  Accepted: 1; Connected: 0
 ...
 ```
- 
+
 And if we attempt to connect to port 22 on our public IP, the connection is rejected, but port 2222 works:
- 
+
 ```
 $ ssh core@[public IP]
 ssh: connect to host [public IP] port 22: Connection refused
@@ -143,3 +143,99 @@ Enter passphrase for key '/home/user/.ssh/id_rsa':
 ### Further reading on systemd units
 
 For more information about configuring CoreOS hosts with `systemd`, see [Getting Started with systemd]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd/).
+
+### Override socket-activated SSH
+
+Occasionally when systemd gets into a broken state, socket activation doesn't work, which can make a system inaccessible if ssh is the only option. This can be avoided configuring a permanently active SSH daemon that forks for each incoming connection.
+
+To do this directly on the CoreOS machine, begin by replacing the default sshd unit file at `/etc/systemd/system/sshd.service` with the following:
+
+```
+# /etc/systemd/system/sshd.service
+[Unit]
+Description=OpenSSH server daemon
+
+[Service]
+Type=forking
+PIDFile=/var/run/sshd.pid
+ExecStart=/usr/sbin/sshd
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=30s
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Next mask the systemd.socket unit:
+
+```
+# systemctl mask --now sshd.socket
+```
+Finally, execute a daemon-reload, stop the sshd.socket service, and start the sshd.service unit:
+
+```
+# systemctl daemon-reload
+# systemctl restart sshd.service
+```
+
+The same configuration can be achieved and an actively listening sshd started by providing user-data like:
+
+cloud-config:
+
+```
+#cloud-config
+
+coreos:
+  units:
+  - name: sshd.socket
+    command: stop
+    mask: true
+
+  - name: sshd.service
+    command: start
+    content: |
+      [Unit]
+      Description=OpenSSH server daemon
+
+      [Service]
+      Type=forking
+      PIDFile=/var/run/sshd.pid
+      ExecStart=/usr/sbin/sshd
+      ExecReload=/bin/kill -HUP $MAINPID
+      KillMode=process
+      Restart=on-failure
+      RestartSec=30s
+
+      [Install]
+      WantedBy=multi-user.target
+
+write_files:
+  - path: "/var/run/sshd.pid"
+    permissions: "0644"
+    owner: "root"
+```
+
+Ignition:
+
+```
+{
+  "ignition": {
+    "version": "2.0.0"
+  },
+  "systemd": {
+    "units": [
+      {
+        "name": "sshd.socket",
+        "mask": true
+      },
+      {
+        "name": "sshd.service",
+        "enable": true,
+        "contents": "[Unit]\nDescription=OpenSSH server daemon\n[Service]\nType=forking\nPIDFile=/var/run/sshd.pid\nExecStart=/usr/sbin/sshd\nExecReload=/bin/kill -HUP $MAINPID\nKillMode=process\nRestart=on-failure\nRestartSec=30s\n[Install]\nWantedBy=multi-user.target\n"
+      }
+    ]
+  }
+}
+```
