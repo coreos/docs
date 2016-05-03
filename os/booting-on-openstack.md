@@ -20,21 +20,21 @@ CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/u
     <div class="tab-pane" id="alpha-create">
       <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">Docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
 <pre>
-$ wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
+$ wget https://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
 $ bunzip2 coreos_production_openstack_image.img.bz2
 </pre>
     </div>
     <div class="tab-pane" id="beta-create">
       <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
 <pre>
-$ wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
+$ wget https://beta.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
 $ bunzip2 coreos_production_openstack_image.img.bz2
 </pre>
     </div>
   <div class="tab-pane active" id="stable-create">
       <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.stable-channel}}.</p>
 <pre>
-$ wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
+$ wget https://stable.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
 $ bunzip2 coreos_production_openstack_image.img.bz2
 </pre>
     </div>

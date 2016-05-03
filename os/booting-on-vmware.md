@@ -19,19 +19,19 @@ CoreOS is released into alpha, beta, and stable channels. Releases to each chann
       <div class="channel-info">
         <p>Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. The current version is CoreOS {{site.stable-channel}}.</p>
        </div>
-      <pre>curl -LO http://stable.release.core-os.net/amd64-usr/current/coreos_production_vmware_ova.ova</pre>
+      <pre>curl -LO https://stable.release.core-os.net/amd64-usr/current/coreos_production_vmware_ova.ova</pre>
     </div>
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
         <p>The alpha channel closely tracks master and is released to frequently. Current version is CoreOS {{site.alpha-channel}}.</p>
       </div>
-      <pre>curl -LO http://alpha.release.core-os.net/amd64-usr/current/coreos_production_vmware_ova.ova</pre>
+      <pre>curl -LO https://alpha.release.core-os.net/amd64-usr/current/coreos_production_vmware_ova.ova</pre>
     </div>
     <div class="tab-pane" id="beta">
       <div class="channel-info">
         <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
       </div>
-      <pre>curl -LO http://beta.release.core-os.net/amd64-usr/current/coreos_production_vmware_ova.ova</pre>
+      <pre>curl -LO https://beta.release.core-os.net/amd64-usr/current/coreos_production_vmware_ova.ova</pre>
     </div>
   </div>
 </div>

@@ -3,9 +3,9 @@
 CoreOS publishes new images for each release across a variety of platforms and hosting providers. Each channel has it's own set of images ([stable], [beta], [alpha]) that are posted to our storage site. Along with each image, a signature is generated from the [CoreOS Image Signing Key][signing-key] and posted.
 
 [signing-key]: {{site.baseurl}}/security/image-signing-key
-[stable]: http://stable.release.core-os.net/amd64-usr/current/
-[beta]: http://beta.release.core-os.net/amd64-usr/current/
-[alpha]: http://alpha.release.core-os.net/amd64-usr/current/
+[stable]: https://stable.release.core-os.net/amd64-usr/current/
+[beta]: https://beta.release.core-os.net/amd64-usr/current/
+[alpha]: https://alpha.release.core-os.net/amd64-usr/current/
 
 After downloading your image, you should verify it with `gpg` tool. First, download the image signing key:
 
@@ -27,8 +27,8 @@ gpg: depth: 0  valid:   2  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 2u
 Now we're ready to download an image and it's signature, ending in .sig. We're using the QEMU image in this example:
 
 ```sh
-curl -O http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2
-curl -O http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2.sig
+curl -O https://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2
+curl -O https://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2.sig
 ```
 
 Verify image with `gpg` tool:

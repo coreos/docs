@@ -42,7 +42,7 @@ for SEQ in $(seq 1 $1); do
         fi
 
         if [ ! -f $LIBVIRT_PATH/$IMG_NAME ]; then
-                wget http://${CHANNEL}.release.core-os.net/amd64-usr/${RELEASE}/coreos_production_qemu_image.img.bz2 -O - | bzcat > $LIBVIRT_PATH/$IMG_NAME || (rm -f $LIBVIRT_PATH/$IMG_NAME && echo "Failed to download image" && exit 1)
+                wget https://${CHANNEL}.release.core-os.net/amd64-usr/${RELEASE}/coreos_production_qemu_image.img.bz2 -O - | bzcat > $LIBVIRT_PATH/$IMG_NAME || (rm -f $LIBVIRT_PATH/$IMG_NAME && echo "Failed to download image" && exit 1)
         fi
 
         if [ ! -f $LIBVIRT_PATH/$COREOS_HOSTNAME.qcow2 ]; then

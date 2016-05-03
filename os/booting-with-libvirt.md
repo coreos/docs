@@ -32,21 +32,21 @@ Read the [release notes]({{site.baseurl}}/releases) for specific features and bu
       <pre>
 mkdir -p /var/lib/libvirt/images/coreos
 cd /var/lib/libvirt/images/coreos
-wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img</pre>
+wget https://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img</pre>
     </div>
     <div class="tab-pane" id="beta-create">
       <p>We start by downloading the most recent disk image:</p>
       <pre>
 mkdir -p /var/lib/libvirt/images/coreos
 cd /var/lib/libvirt/images/coreos
-wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img</pre>
+wget https://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img</pre>
     </div>
     <div class="tab-pane active" id="stable-create">
       <p>We start by downloading the most recent disk image:</p>
       <pre>
 mkdir -p /var/lib/libvirt/images/coreos
 cd /var/lib/libvirt/images/coreos
-wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img</pre>
+wget https://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img</pre>
     </div>
   </div>
 </div>

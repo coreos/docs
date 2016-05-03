@@ -77,10 +77,10 @@ CoreOS is released into alpha, beta, and stable channels. Releases to each chann
       <p>There are two files you need: the disk image (provided in qcow2
       format) and the wrapper shell script to start QEMU.</p>
       <pre>mkdir coreos; cd coreos
-wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh
-wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh.sig
-wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2
-wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2.sig
+wget https://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh
+wget https://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh.sig
+wget https://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2
+wget https://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2.sig
 gpg --verify coreos_production_qemu.sh.sig
 gpg --verify coreos_production_qemu_image.img.bz2.sig
 bzip2 -d coreos_production_qemu_image.img.bz2
@@ -93,10 +93,10 @@ chmod +x coreos_production_qemu.sh</pre>
       <p>There are two files you need: the disk image (provided in qcow2
       format) and the wrapper shell script to start QEMU.</p>
       <pre>mkdir coreos; cd coreos
-wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh
-wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh.sig
-wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2
-wget http://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2.sig
+wget https://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh
+wget https://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh.sig
+wget https://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2
+wget https://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2.sig
 gpg --verify coreos_production_qemu.sh.sig
 gpg --verify coreos_production_qemu_image.img.bz2.sig
 bzip2 -d coreos_production_qemu_image.img.bz2
@@ -109,10 +109,10 @@ chmod +x coreos_production_qemu.sh</pre>
       <p>There are two files you need: the disk image (provided in qcow2
       format) and the wrapper shell script to start QEMU.</p>
       <pre>mkdir coreos; cd coreos
-wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh
-wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh.sig
-wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2
-wget http://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2.sig
+wget https://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh
+wget https://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh.sig
+wget https://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2
+wget https://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2.sig
 gpg --verify coreos_production_qemu.sh.sig
 gpg --verify coreos_production_qemu_image.img.bz2.sig
 bzip2 -d coreos_production_qemu_image.img.bz2

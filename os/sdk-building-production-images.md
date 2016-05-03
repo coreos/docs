@@ -67,7 +67,7 @@ Note: In the future builds will be triggered by pushing new tags instead of usin
 The automated build host does not have access to production signing keys so the final signing and push to roller must be done elsewhere. The `coreos_production_update.zip` archive provides the tools required to do this so a full SDK setup is not required. This does require gsutil to be installed and configured. An update payload signed by the insecure development keys is generated automatically as `coreos_production_update.gz` and `coreos_production_update.meta`. If needed the raw filesystem image used to generate the payload is `coreos_production_update.bin.bz2`. As an example, to publish the insecurely signed payload:
 
 ```sh
-URL=http://builds.release.core-os.net/alpha/amd64-usr/321.0.0
+URL=gs://builds.release.core-os.net/alpha/amd64-usr/321.0.0
 cd $(mktemp -d)
 gsutil -m cp $URL/coreos_production_update* ./
 gpg --verify coreos_production_update.zip.sig
