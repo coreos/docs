@@ -13,7 +13,7 @@ CoreOS is released into alpha, beta, and stable channels. Releases to each chann
 The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes in each channel.
 
 ```sh
-$ wget -q http://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
+$ wget -q https://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
 $ bunzip2 coreos_production_openstack_image.img.bz2
 $ qemu-img convert -O raw coreos_production_openstack_image.img coreos_production_openstack_image.raw
 $ euca-bundle-image -i coreos_production_openstack_image.raw -r x86_64 -d /var/tmp

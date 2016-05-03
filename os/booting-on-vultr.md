@@ -53,7 +53,7 @@ CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/u
 # Location of your shell script.
 set cloud-config-url http://example.com/cloud-config-bootstrap.sh
 
-set base-url http://alpha.release.core-os.net/amd64-usr/current
+set base-url https://alpha.release.core-os.net/amd64-usr/current
 kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=${cloud-config-url}
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
@@ -69,7 +69,7 @@ boot</pre>
 # Location of your shell script.
 set cloud-config-url http://example.com/cloud-config-bootstrap.sh
 
-set base-url http://beta.release.core-os.net/amd64-usr/current
+set base-url https://beta.release.core-os.net/amd64-usr/current
 kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=${cloud-config-url}
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
@@ -85,7 +85,7 @@ boot</pre>
 # Location of your shell script.
 set cloud-config-url http://example.com/cloud-config-bootstrap.sh
 
-set base-url http://stable.release.core-os.net/amd64-usr/current
+set base-url https://stable.release.core-os.net/amd64-usr/current
 kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=${cloud-config-url}
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
