@@ -47,16 +47,17 @@ write_files:
 
 ## Under the hood
 
-Behind the scenes, `toolbox` downloads, prepares and exports the image 
-you specify (or the default `fedora` image), then creates a container 
-from that extracted image by calling `systemd-nspawn`.  The exported 
-image is retained in 
-`/var/lib/toolbox/[username]-[image name]-[image tag]`, e.g. the default 
+Behind the scenes, `toolbox` downloads, prepares and exports the container
+image you specify (or the default `fedora` image), then creates a container
+from that extracted image by calling `systemd-nspawn`.  The exported
+image is retained in
+`/var/lib/toolbox/[username]-[image name]-[image tag]`, e.g. the default
 image run by the `core` user is at `/var/lib/toolbox/core-fedora-latest`.  
+
 This means two important things:
 
 * Changes made inside the container will persist between sessions
-* The container filesystem will take up space on disk (a few hundred MiB 
+* The container filesystem will take up space on disk (a few hundred MiB
 for the default `fedora` container)
 
 ## SSH directly into a toolbox
