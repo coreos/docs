@@ -1,4 +1,4 @@
-# Kubernetes Network Debugging on CoreOS
+# Kubernetes network troubleshooting on CoreOS
 
 Kubernetes networking issues can be debugged with familiar tools, once the isolated nature of the container abstraction is taken into account. This document explains some of the best places to start troubleshooting when network issues arise.
 
