@@ -41,7 +41,7 @@ cd clair-config
 
 Clair can run either as a single instance or in high-availability mode. It is recommended to run more than a single instance of Clair, ideally in an auto-scaling group with automatic healing.
 
-Create a `config.yaml` file in the config directory with the following contents, replacing appearances of {{ VARIABLE }} with the appropriate value.
+Create a `config.yaml` file in the config directory with the following contents, replacing appearances of { VARIABLE } with the appropriate value.
 
 ### Clair configuration: High availability
 
@@ -50,7 +50,7 @@ clair:
   database:
     # A PostgreSQL Connection string pointing to the Clair Postgres database.
     # Documentation on the format can be found at: http://www.postgresql.org/docs/9.4/static/libpq-connect.html
-    source: {{ POSTGRES_CONNECTION_STRING }}
+    source: { POSTGRES_CONNECTION_STRING }
     cachesize: 16384
   api:
     # The port at which Clair will report its health status. For example, if Clair is running at
@@ -73,7 +73,7 @@ clair:
       http:
         # QUAY_ENDPOINT defines the endpoint at which Quay Enterprise is running.
         # For example: https://myregistry.mycompany.com
-        endpoint: {{ QUAY_ENDPOINT }}/secscan/notify
+        endpoint: { QUAY_ENDPOINT }/secscan/notify
         proxy: http://localhost:6063
 
 jwtproxy:
@@ -92,7 +92,7 @@ jwtproxy:
         options:
           # The ID of the service key generated for Clair. The ID is returned when setting up
           # the key in [Quay Enterprise Setup](security-scanning.md)
-          key_id: {{ CLAIR_SERVICE_KEY_ID }}
+          key_id: { CLAIR_SERVICE_KEY_ID }
           private_key_path: /config/security_scanner.pem
 
   verifier_proxies:
@@ -109,7 +109,7 @@ jwtproxy:
       # CLAIR_ENDPOINT is the endpoint at which this Clair will be accessible. Note that the port
       # specified here must match the listen_addr port a few lines above this.
       # Example: https://myclair.mycompany.com:6060
-      audience: {{ CLAIR_ENDPOINT }}
+      audience: { CLAIR_ENDPOINT }
 
       upstream: http://localhost:6062
       key_server:
@@ -117,7 +117,7 @@ jwtproxy:
         options:
           # QUAY_ENDPOINT defines the endpoint at which Quay Enterprise is running.
           # Example: https://myregistry.mycompany.com
-          registry: {{ QUAY_ENDPOINT }}/keys/
+          registry: { QUAY_ENDPOINT }/keys/
 ```
 
 
@@ -128,7 +128,7 @@ clair:
   database:
     # A PostgreSQL Connection string pointing to the Clair Postgres database.
     # Documentation on the format can be found at: http://www.postgresql.org/docs/9.4/static/libpq-connect.html
-    source: {{ POSTGRES_CONNECTION_STRING }}
+    source: { POSTGRES_CONNECTION_STRING }
     cachesize: 16384
   api:
     # The port at which Clair will report its health status. For example, if Clair is running at
@@ -151,7 +151,7 @@ clair:
       http:
         # QUAY_ENDPOINT defines the endpoint at which Quay Enterprise is running.
         # For example: https://myregistry.mycompany.com
-        endpoint: {{ QUAY_ENDPOINT }}/secscan/notify
+        endpoint: { QUAY_ENDPOINT }/secscan/notify
         proxy: http://localhost:6063
 
 jwtproxy:
@@ -175,7 +175,7 @@ jwtproxy:
             options:
               # QUAY_ENDPOINT defines the endpoint at which Quay Enterprise is running.
               # For example: https://myregistry.mycompany.com
-              registry: {{ QUAY_ENDPOINT }}/keys/
+              registry: { QUAY_ENDPOINT }/keys/
 
 
   verifier_proxies:
@@ -192,7 +192,7 @@ jwtproxy:
       # CLAIR_ENDPOINT is the endpoint at which this Clair will be accessible. Note that the port
       # specified here must match the listen_addr port a few lines above this.
       # Example: https://myclair.mycompany.com:6060
-      audience: {{ CLAIR_ENDPOINT }}
+      audience: { CLAIR_ENDPOINT }
 
       upstream: http://localhost:6062
       key_server:
@@ -200,7 +200,7 @@ jwtproxy:
         options:
           # QUAY_ENDPOINT defines the endpoint at which Quay Enterprise is running.
           # Example: https://myregistry.mycompany.com
-          registry: {{ QUAY_ENDPOINT }}/keys/
+          registry: { QUAY_ENDPOINT }/keys/
 ```
 
 
@@ -222,6 +222,7 @@ docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/d
 ```
 
 Output similar to the following will be seen on success:
+
 ```
 2016-05-04 20:01:05,658 CRIT Supervisor running as root (no user in config file)
 2016-05-04 20:01:05,662 INFO supervisord started with pid 1
