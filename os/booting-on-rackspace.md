@@ -16,99 +16,24 @@ CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/u
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">Docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing.
-        {% if site.data.alpha-channel.rackspace-version != site.data.alpha-channel.rackspace-onmetal-version %}
-          Current version for Cloud Servers is CoreOS {{site.data.alpha-channel.rackspace-version}} and the current version for OnMetal servers is {{site.data.alpha-channel.rackspace-onmetal-version}}.
-        {% elsif site.data.alpha-channel.rackspace-version == site.data.alpha-channel.rackspace-onmetal-version %}
-          Current version is CoreOS {{site.data.alpha-channel.rackspace-version}}.
-        {% endif %}
-        </p>
+        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">Docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing.</p>
+        <p>The following command can be used to determine the image IDs for Alpha:</p>
+        <pre>supernova production image-list | grep 'CoreOS (Alpha)'</pre>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Server Type</th>
-            <th>Image ID</th>
-            <th>Heat Template</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Cloud Servers</td>
-            <td>{{site.data.alpha-channel.rackspace-image-id}}</td>
-            <td><a href="{{site.baseurl}}/dist/rackspace/heat-alpha.yaml">heat-alpha.yaml</a></td>
-          </tr>
-          <tr>
-            <td>OnMetal</td>
-            <td>{{site.data.alpha-channel.rackspace-onmetal-id}}</td>
-            <td><a href="{{site.baseurl}}/dist/rackspace/heat-onmetal-alpha.yaml">heat-onmetal-alpha.yaml</a></td>
-          </tr>
-        </tbody>
-      </table>
     </div>
     <div class="tab-pane" id="beta">
       <div class="channel-info">
-        <p>The beta channel consists of promoted alpha releases.
-        {% if site.data.beta-channel.rackspace-version != site.data.beta-channel.rackspace-onmetal-version %}
-          Current version for Cloud Servers is CoreOS {{site.data.beta-channel.rackspace-version}} and the current version for OnMetal servers is {{site.data.beta-channel.rackspace-onmetal-version}}.
-        {% elsif site.data.beta-channel.rackspace-version == site.data.beta-channel.rackspace-onmetal-version %}
-          Current version is CoreOS {{site.data.beta-channel.rackspace-version}}.
-        {% endif %}
-        </p>
+        <p>The beta channel consists of promoted alpha releases.</p>
+        <p>The following command can be used to determine the image IDs for Beta:</p>
+        <pre>supernova production image-list | grep 'CoreOS (Beta)'</pre>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Server Type</th>
-            <th>Image ID</th>
-            <th>Heat Template</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Cloud Server</td>
-            <td>{{site.data.beta-channel.rackspace-image-id}}</td>
-            <td><a href="{{site.baseurl}}/dist/rackspace/heat-beta.yaml">heat-beta.yaml</a></td>
-          </tr>
-          <tr>
-            <td>OnMetal</td>
-            <td>{{site.data.beta-channel.rackspace-onmetal-id}}</td>
-            <td><a href="{{site.baseurl}}/dist/rackspace/heat-onmetal-beta.yaml">heat-onmetal-beta.yaml</a></td>
-          </tr>
-        </tbody>
-      </table>
     </div>
     <div class="tab-pane active" id="stable">
       <div class="channel-info">
-        <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted.
-        {% if site.data.stable-channel.rackspace-version != site.data.stable-channel.rackspace-onmetal-version %}
-          Current version for Cloud Servers is CoreOS {{site.data.stable-channel.rackspace-version}} and the current version for OnMetal servers is {{site.data.stable-channel.rackspace-onmetal-version}}.
-        {% elsif site.data.stable-channel.rackspace-version == site.data.stable-channel.rackspace-onmetal-version %}
-          Current version is CoreOS {{site.data.stable-channel.rackspace-version}}.
-        {% endif %}
-        </p>
+        <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted.</p>
+        <p>The following command can be used to determine the image IDs for Stable:</p>
+        <pre>supernova production image-list | grep 'CoreOS (Stable)'</pre>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Server Type</th>
-            <th>Image ID</th>
-            <th>Heat Template</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Cloud Server</td>
-            <td>{{site.data.stable-channel.rackspace-image-id}}</td>
-            <td><a href="{{site.baseurl}}/dist/rackspace/heat-stable.yaml">heat-stable.yaml</a></td>
-          </tr>
-          <tr>
-            <td>OnMetal</td>
-            <td>{{site.data.stable-channel.rackspace-onmetal-id}}</td>
-            <td><a href="{{site.baseurl}}/dist/rackspace/heat-onmetal-stable.yaml">heat-onmetal-stable.yaml</a></td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </div>
@@ -227,17 +152,17 @@ Check you make sure the key is in your list by running `supernova production key
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
       <p>Boot a new Cloud Server with our new keypair and specify optional cloud-config data:</p>
-      <pre>supernova production boot --image {{site.data.alpha-channel.rackspace-image-id}} --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
+      <pre>supernova production boot --image &lt;image-id&gt; --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
       <p>Boot a new OnMetal Server with our new keypair and specify optional cloud-config data:</p>
-      <pre>supernova production boot --image {{site.data.alpha-channel.rackspace-onmetal-id}} --flavor onmetal-compute1 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
+      <pre>supernova production boot --image &lt;image-id&gt; --flavor onmetal-compute1 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
     </div>
     <div class="tab-pane" id="beta-create">
       <p>Boot a new Cloud Server with our new keypair and specify optional cloud-config data:</p>
-      <pre>supernova production boot --image {{site.data.beta-channel.rackspace-image-id}} --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
+      <pre>supernova production boot --image &lt;image-id&gt; --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
     </div>
     <div class="tab-pane active" id="stable-create">
       <p>Boot a new Cloud Server with our new keypair and specify optional cloud-config data:</p>
-      <pre>supernova production boot --image {{site.data.stable-channel.rackspace-image-id}} --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
+      <pre>supernova production boot --image &lt;image-id&gt; --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
     </div>
   </div>
 </div>
@@ -275,61 +200,6 @@ You should now see the details of your new server in your terminal and it should
 
 To launch more servers and have them join your cluster, simply provide the same cloud-config.
 
-## Launch with Heat
-
-We're going to install the `heat` tool, then use it to create a new stack with the specified number of machines, server flavor, SSH key and user-data.
-
-### Install Heat CLI
-
-First, install the [Heat CLI](https://github.com/openstack/python-heatclient) with `sudo pip install python-heatclient`. You can view the [full instructions](http://docs.rackspace.com/orchestration/api/v1/orchestration-getting-started/content/Install_Heat_Client.html) if needed.
-
-Second, verify that you're exporting your credentials for the CLI to use in your `~/bash_profile`:
-
-```sh
-export OS_AUTH_URL=https://identity.api.rackspacecloud.com/v2.0/
-export OS_USERNAME=<username>
-export OS_TENANT_ID=<tenant_id>
-export HEAT_URL=https://ord.orchestration.api.rackspacecloud.com/v1/${OS_TENANT_ID}
-export OS_PASSWORD=<password>
-export OS_AUTH_SYSTEM=rackspace
-```
-
-If you have credentials already set up for use with the Nova CLI, they may conflict due to oddities in these tools. Re-source your credentials:
-
-```sh
-source ~/.bash_profile
-```
-
-### Launch the stack
-
-<div id="rax-heat">
-  <ul class="nav nav-tabs">
-    <li class="active"><a href="#stable-heat" data-toggle="tab">Stable Channel</a></li>
-    <li><a href="#beta-heat" data-toggle="tab">Beta Channel</a></li>
-    <li><a href="#alpha-heat" data-toggle="tab">Alpha Channel</a></li>
-  </ul>
-  <div class="tab-content coreos-docs-image-table">
-    <div class="tab-pane" id="alpha-heat">
-      <p>Launch the stack by providing the specified parameters. This command will reference the local file <code>data.yml</code> in the current working directory that contains the cloud-config parameters. <code>$(< data.yaml)</code> prints the contents of this file into our heat command:</p>
-      <pre>heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-alpha.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=5 -P user-data="$(< data.yaml)" -P name="CoreOS-alpha"</pre>
-      <p>You can view the <a href="{{site.baseurl}}/dist/rackspace/heat-alpha.yaml">template here</a>.</p>
-      <p>To boot an OnMetal cluster, use a slightly modified template:</p>
-      <pre>heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-onmetal-alpha.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=3 -P user-data="$(< data.yaml)" -P name="CoreOS-alpha"</pre>
-      <p>You can view the <a href="{{site.baseurl}}/dist/rackspace/heat-onmetal-alpha.yaml">template here</a>.</p>
-    </div>
-    <div class="tab-pane" id="beta-heat">
-      <p>Launch the stack by providing the specified parameters. This command will reference the local file <code>data.yml</code> in the current working directory that contains the cloud-config parameters. <code>$(< data.yaml)</code> prints the contents of this file into our heat command:</p>
-      <pre>heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-beta.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=5 -P user-data="$(< data.yaml)" -P name="CoreOS-beta"</pre>
-      <p>You can view the <a href="{{site.baseurl}}/dist/rackspace/heat-beta.yaml">template here</a>.</p>
-    </div>
-    <div class="tab-pane active" id="stable-heat">
-      <p>Launch the stack by providing the specified parameters. This command will reference the local file <code>data.yml</code> in the current working directory that contains the cloud-config parameters. <code>$(< data.yaml)</code> prints the contents of this file into our heat command:</p>
-      <pre>heat stack-create Test --template-file https://coreos.com/dist/rackspace/heat-stable.yaml -P key-name=coreos-key -P flavor='2 GB Performance' -P count=5 -P user-data="$(< data.yaml)" -P name="CoreOS-stable"</pre>
-      <p>You can view the <a href="{{site.baseurl}}/dist/rackspace/heat-stable.yaml">template here</a>.</p>
-    </div>
-  </div>
-</div>
-
 ## Launch via control panel
 
 You can also launch servers with either the `alpha` and `beta` channel versions via the web-based Control Panel, although you can't provide cloud-config via the UI. To do so:
@@ -339,7 +209,6 @@ You can also launch servers with either the `alpha` and `beta` channel versions 
  3. Click on 'Create Server'
  4. Choose server name and region
  5. Click on 'Linux', then on 'CoreOS' and finally choose '(alpha)' or '(beta)' version
- ![Control Panel Selection](http://57711b76b91f5d65a382-e5576ae0d6cf44f41aa69b4e6e0902ca.r62.cf1.rackcdn.com/Screen%20Shot%202014-06-30%20at%209.54.43%20AM.png)  
  6. Choose flavor and use 'Advanced Options' to select SSH Key -- if available
  7. Click on 'Create Server'
 
