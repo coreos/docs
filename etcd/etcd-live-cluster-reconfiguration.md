@@ -223,6 +223,13 @@ cluster is healthy
 
 If the output contains no errors, remove the `/run/systemd/system/etcd2.service.d/98-force-new-cluster.conf` drop-in file, and reload systemd services: `sudo systemctl daemon-reload`. It is not necessary to restart the `etcd2` service after this step.
 
+If the peerURL is set to http://localhost:2380, other cluster members might not be able to communicate to this peer. In order to allow other peers to communicate to this peer, set this value to externally accessible URL:
+
+```sh
+$ etcdctl member list | sed 's/:.*//' | xargs  -i etcdctl member update {} "http://$(hostname -i | tr -d '[[:space:]]'):2380"
+Updated member with ID e6c2bda2aa1f2dcf in cluster
+```
+
 The next steps are those described in the [Change etcd cluster size][change-cluster-size] section, with one difference: Remove the `/var/lib/etcd2/member` directory as well as `/var/lib/etcd2/proxy`.
 
 
