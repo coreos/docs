@@ -36,7 +36,7 @@ Here's the JSON representation of the frontend service:
         },
         "ports": [
             {
-                "name": "https"
+                "name": "https",
                 "protocol": "TCP",
                 "port": 443,
                 "targetPort": 443
