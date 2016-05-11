@@ -151,3 +151,36 @@ Again, composing the previous two commands we get this handy one-liner to revert
 $ cgpt prioritize "$(cgpt find -t coreos-usr | grep --invert-match "$(findmnt --noheadings --raw --output=source --target=/usr)")"
 
 ```
+
+## Forcing a Channel Downgrade
+
+The procedure above restores the last known good CoreOS version from immediately before an upgrade reboot. The system remains on the same [CoreOS channel][relchans] after rebooting with the previous USR partition. It is also possible, though not recommended, to switch a CoreOS installation to an older release channel, for example to make a system running an Alpha release downgrade to the Stable channel. Root privileges are required for this procedure, noted by `sudo` in the commands below.
+
+First, edit `/etc/coreos/update.conf` to set `GROUP` to the name of the target channel, one of `stable` or `beta`:
+
+```ini
+GROUP=stable
+```
+
+Next, clear the current version number from the `release` file so that the target channel will be certain to have a higher version number, triggering the "upgrade," in this case a downgrade to the lower channel. Since `release` is on a read-only file system, it is convenient to temporarily override it with a bind mount. To do this, copy the original to a writable location, then bind the copy over the system `release` file:
+
+```sh
+$ cp /usr/share/coreos/release /tmp
+$ sudo mount -o bind /tmp/release /usr/share/coreos/release
+```
+
+The file is now writable, but the bind mount will not survive the reboot, so that the default read-only system `release` file will be restored after this procedure is complete. Edit `/usr/share/coreos/release` to replace the value of `COREOS_RELEASE_VERSION` with `0.0.0`:
+
+```ini
+COREOS_RELEASE_VERSION=0.0.0
+```
+
+Restart the update service so that it rescans the edited configuration, then initiate an update. The system will reboot into the selected lower channel after downloading the release:
+
+```sh
+$ sudo systemctl restart update-engine
+$ update_engine_client -update
+```
+
+
+[relchans]: switching-channels.md
