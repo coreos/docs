@@ -17,6 +17,14 @@ There are a few other common ways to write or not write things:
 * The hyphen is overused and most English compounds do not require it.
 * There is one space (` `) after a period (aka *full stop*, `.`), comma (`,`), semicolon (`;`) and other marks of punctuation.
 
+### Specifics
+
+There are a few prescribed ways of writing frequently questioned words and phrases:
+
+* The singular possessive form of CoreOS is *CoreOS's*. *CoreOS's mission is to secure the infrastructure that powers the Internet.*
+* Deployments may occur *on-premises*, sometimes "on-prem," but never on-premise. A *premises* is a place. A *premise* is a proposition.
+* *GIFEE* is (currently) *Google's Infrastructure for Everyone Else*.
+
 ## Source formatting
 
 CoreOS documentation is written in [Markdown][mdhome], a simple way to annotate text to indicate presentation typesetting. Markdown source is intended to be a plain text human-readable version of the document, even before conversion to HTML for the browser or other display.
