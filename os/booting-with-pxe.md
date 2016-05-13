@@ -37,7 +37,8 @@ display boot.msg
 label coreos
   menu default
   kernel coreos_production_pxe.vmlinuz
-  append initrd=coreos_production_pxe_image.cpio.gz cloud-config-url=http://example.com/pxe-cloud-config.yml
+  initrd coreos_production_pxe_image.cpio.gz
+  append cloud-config-url=http://example.com/pxe-cloud-config.yml
 ```
 
 Here's a common cloud-config example which should be located at the URL from above:
@@ -161,26 +162,31 @@ mkfs.btrfs -L ROOT /dev/sda1
 
 ## Adding a Custom OEM
 
-Similar to the [OEM partition][oem] in CoreOS disk images, PXE images can be customized with a [cloud config][cloud-config] bundled in the initramfs. Simply create a `./usr/share/oem/` directory containing `cloud-config.yml` and append it to the cpio:
+Similar to the [OEM partition][oem] in CoreOS disk images, PXE images can be customized with a [cloud config][cloud-config] bundled in the initramfs. Simply create a `./usr/share/oem/` directory containing `cloud-config.yml` and add it as an additional initramfs:
 
 ```sh
 mkdir -p usr/share/oem
 cp cloud-config.yml ./usr/share/oem
-gzip -d coreos_production_pxe_image.cpio.gz
-find usr | cpio -o -A -H newc -O coreos_production_pxe_image.cpio
-gzip coreos_production_pxe_image.cpio
+find usr | cpio -o -A -H newc -O cloud-config.cpio
+gzip cloud-config.cpio
 ```
 
 Confirm the archive looks correct and has your `run` file inside of it:
 
 ```sh
-gzip -dc coreos_production_pxe_image.cpio.gz | cpio -it
+gzip -dc cloud-config.cpio.gz | cpio -it
 ./
-usr.squashfs
 usr
 usr/share
 usr/share/oem
 usr/share/oem/cloud-config.yml
+```
+
+Add the `cloud-config.cpio.gz` to your PXE boot directory and [append it](http://www.syslinux.org/wiki/index.php?title=SYSLINUX#INITRD_initrd_file) to the `initrd` line in your `pxelinux.cfg`:
+```
+...
+initrd coreos_production_pxe_image.cpio.gz,cloud-config.cpio.gz
+...
 ```
 
 [oem]: {{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors/#image-customization
