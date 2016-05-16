@@ -8,9 +8,13 @@ A common issue with Kubernetes networking is trouble with kube-dns, the Kubernet
 
 Another technique is to forward a local port to the `kube-dns` pod's port 53:
 
+<!-- {% raw %} -->
 ```sh
-kubectl get pods --namespace=kube-system -l k8s-app=kube-dns -o template --template="{{range.items}}{{.metadata.name}}{{end}}" | xargs -I{} kubectl port-forward --namespace=kube-system {} 5300:53
+kubectl get pods --namespace=kube-system -l k8s-app=kube-dns \
+-o template --template="{{range.items}}{{.metadata.name}}{{end}}" \
+| xargs -I{} kubectl port-forward --namespace=kube-system {} 5300:53
 ```
+<!-- {% endraw %} -->
 
 This one-liner finds the pod in the `kube-system` namespace whose `k8s-app` property is `kube-dns`, and uses `xargs` to format that pod's name for a `kubectl port-forward` command. The result is that local port 5300 is forwarded to the pod's port 53. This allows host DNS tools to look up Kubernetes hostnames at your machine's port 5300:
 
@@ -201,10 +205,11 @@ bar
 
 This process can also be adapted to attach rkt containers to a Docker container's network namespace. In that case, retrieve the PID of the entrypoint in the Docker container this way:
 
-```
+<!-- {% raw %} -->
+```sh
 docker inspect -f '{{.State.Pid}}' [container ID]
 ```
-
+<!-- {% endraw %} -->
 
 [k8s-dns-check]: https://github.com/kubernetes/kubernetes/blob/release-1.2/cluster/addons/dns/README.md#how-do-i-test-if-it-is-working
 [toolbox]: ../../../os/docs/latest/install-debugging-tools.md
