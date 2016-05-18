@@ -8,7 +8,6 @@ It's important to note that updates are always downloaded to the passive partiti
 
 | Strategy      | Description                                                         |
 |---------------|---------------------------------------------------------------------|
-| `best-effort` | Default. If etcd is running, `etcd-lock`, otherwise simply `reboot` |
 | `etcd-lock`   | Reboot after first taking a distributed lock in etcd                |
 | `reboot`      | Reboot immediately after an update is applied                       |
 | `off`         | Do not reboot after updates are applied                             |
@@ -21,14 +20,8 @@ The reboot strategy is defined in [cloud-config](https://github.com/coreos/coreo
 #cloud-config
 coreos:
   update:
-    reboot-strategy: best-effort
+    reboot-strategy: etcd-lock
 ```
-
-### Best effort
-
-The default setting is for CoreOS to make a `best-effort` to determine if the machine is part of a cluster. Currently this logic is very simple: if etcd has started, assume that the machine is part of a cluster and use the `etcd-lock` strategy.
-
-Otherwise, use the `reboot` strategy.
 
 ### etcd-lock
 
