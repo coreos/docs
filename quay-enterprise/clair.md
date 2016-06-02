@@ -20,7 +20,7 @@ sleep 5
 docker run --rm --link postgres:postgres postgres sh -c 'echo "create database clairtest" | psql -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -U postgres'
 ```
 
-The configuration string for this test database is `postgresql://postgres@{DOCKER HOST GOES HERE}:5432/genschema?sslmode=disable`.
+The configuration string for this test database is `postgresql://postgres@{DOCKER HOST GOES HERE}:5432/clairtest?sslmode=disable`.
 
 ### Download the Clair image
 
@@ -62,7 +62,7 @@ clair:
     timeout: 900s
 
     # paginationkey can be any random set of characters. *Must be the same across all Clair instances*.
-    paginationkey: "oTmIJHZJifYKJ6iT9Zjy7POPk6ayL6QxGQLvMvPPsfPLXhAWbF"
+    paginationkey: "XxoPtCUzrUv4JV5dS+yQ+MdW7yLEJnRMwigVY/bpgtQ="
 
   updater:
     # interval defines how often Clair will check for updates from its upstream vulnerability databases.
@@ -140,7 +140,7 @@ clair:
     timeout: 900s
 
     # paginationkey can be any random set of characters. *Must be the same across all Clair instances*.
-    paginationkey: "oTmIJHZJifYKJ6iT9Zjy7POPk6ayL6QxGQLvMvPPsfPLXhAWbF"
+    paginationkey: "XxoPtCUzrUv4JV5dS+yQ+MdW7yLEJnRMwigVY/bpgtQ="
 
   updater:
     # interval defines how often Clair will check for updates from its upstream vulnerability databases.
