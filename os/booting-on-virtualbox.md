@@ -11,7 +11,7 @@ The script is located on [GitHub](https://github.com/coreos/scripts/blob/master/
 As first step, you must download and make it executable.
 
 ```sh
-wget https://raw.github.com/coreos/scripts/master/contrib/create-coreos-vdi
+wget https://raw.githubusercontent.com/coreos/scripts/master/contrib/create-coreos-vdi
 chmod +x create-coreos-vdi
 ```
 
