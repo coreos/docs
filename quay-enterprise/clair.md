@@ -27,7 +27,7 @@ The configuration string for this test database is `postgresql://postgres@{DOCKE
 Pull the security-enabled Clair image:
 
 ```
-docker pull quay.io/coreos/clair-jwt:latest
+docker pull quay.io/coreos/clair-jwt:v1.2.2
 ```
 
 ### Make a configuration directory for Clair
@@ -218,7 +218,7 @@ To configure Clair to run under TLS, a few additional steps are required:
 Execute the following command to run Clair:
 
 ```
-docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config quay.io/coreos/clair-jwt
+docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config quay.io/coreos/clair-jwt:v1.2.2
 ```
 
 Output similar to the following will be seen on success:
