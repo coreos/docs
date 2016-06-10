@@ -129,7 +129,7 @@ How do we route requests to these containers? The best strategy is to run a "sid
 
 ### Recovering from machine failure
 
-Machines in your fleet cluster are constantly in communication with the rest of cluster and elect a leader to make scheduling decisions. The leader is responsible for parsing newly submitted/started units, finding a qualified machine to run them (via X-Fleet parameters), and then informing the machine(s) to start the unit.
+Machines in your fleet cluster are constantly in communication with the rest of cluster and select a leader to make scheduling decisions. The leader is responsible for parsing newly submitted/started units, finding a qualified machine to run them (via X-Fleet parameters), and then informing the machine(s) to start the unit.
 
 When a machine fails to heartbeat back to the fleet leader, all units running on that machine are marked for rescheduling. During that process, qualified machines are found for each unit and they are started on the new machine. Units that can't be rescheduled will remain stopped until a qualified machine can be found. If the failed machine recovers, the fleet leader will tell it to cease operations of the old units, which have been rescheduled,  and then the machine will be available for new work.
 
