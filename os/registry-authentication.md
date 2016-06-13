@@ -1,10 +1,12 @@
 # Using authentication for a registry
 
-A json file `.docker/config.json` is generated in your home directory on `docker login`. It holds authentication information for a public or private Docker registry. This `.docker/config.json` can be reused in other home directories to authenticate. One way to do this is using Cloud-Config which is discussed more below. If you want to populate these values without running Docker login, the auth token is a base64 encoded string: `base64(<username>:<password>)`.
+A json file `config.json` is generated in your home directory on `docker login`. It holds authentication information for a public or private Docker registry. This `config.json` can be reused in other home directories to authenticate. One way to do this is using Cloud-Config which is discussed more below. If you want to populate these values without running Docker login, the auth token is a base64 encoded string: `base64(<username>:<password>)`.
 
-## The $HOME/.docker/config.json file
+## The Docker config file
 
 Here's what an example looks like with credentials for Docker's public index and a private index:
+
+#### /home/core/.docker/config.json
 
 ```json
 {
