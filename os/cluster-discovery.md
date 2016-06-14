@@ -76,7 +76,7 @@ Unfortunately, if you are providing an SSH-key via cloud-config, it can be hard 
 Reading the `coreos-cloudinit` log will indicate which line is invalid:
 
 ```
-journalctl _EXE=/usr/bin/coreos-cloudinit
+journalctl --identifier=coreos-cloudinit
 ```
 
 ### Stale tokens
