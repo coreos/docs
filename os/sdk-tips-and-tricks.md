@@ -23,7 +23,7 @@ Note: this could take some time.
 Get a view into what the base system will contain and why it will contain those things with the emerge tree view:
 
 ```sh
-emerge-amd64-usr  --emptytree  -p -v --tree  coreos-base/coreos-dev
+emerge-amd64-usr --emptytree -p -v --tree coreos-base/coreos-dev
 ```
 
 ## Add new upstream package
@@ -169,7 +169,7 @@ coreos-base/coreos-dev-0.1.0-r63
 coreos-base/coreos-0.0.1-r187
 ```
 
-### newly added package fails checking for kernel sources
+### Newly added package fails checking for kernel sources
 
 It may be necessary to comment out kernel source checks from the ebuild if the build fails, as CoreOS does not yet provide visibility of the configured kernel source at build time.  Usually this is not a problem, but may lead to warning messages.
 
