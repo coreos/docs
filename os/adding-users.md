@@ -36,7 +36,8 @@ Managing users via Ignition is preferred because it allows you to use the same c
         "sudo",
         "docker"
       ],
-      "sshAuthorizedKeys": [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq......." ]
+      "sshAuthorizedKeys": [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq......." ],
+      "create": {}
     }]
   }
 }
