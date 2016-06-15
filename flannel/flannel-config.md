@@ -51,7 +51,7 @@ or using Ignition with the following config:
       "name": "flanneld.service",
       "dropins": [{
         "name": "50-network-config.conf",
-        "contents": "[Service]\nExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'"
+        "contents": "[Service]\nExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ \"Network\": \"10.1.0.0/16\" }'"
       }]
     }]
   }
