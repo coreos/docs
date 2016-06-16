@@ -16,19 +16,19 @@ The following command will create a single instance. For more details, check out
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
         <p>The alpha channel closely tracks master and frequently has new releases. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">Docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a>, and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
-        <pre>azure vm create --custom-data=cloud-config.yaml --vm-size=Small --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --location="West US" my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Alpha-{{site.alpha-channel}} core</pre>
+        <pre>azure vm create --custom-data=cloud-config.yaml --vm-size=Small --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --location="&lt;location&gt;" my-cloud-service $(azure vm image list --json | jq --raw-output '.[].name | select(contains("__CoreOS-Alpha-{{site.alpha-channel}}"))') core</pre>
       </div>
     </div>
     <div class="tab-pane" id="beta">
       <div class="channel-info">
         <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
-        <pre>azure vm create --custom-data=cloud-config.yaml --vm-size=Small --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --location="West US" my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Beta-{{site.beta-channel}} core</pre>
+        <pre>azure vm create --custom-data=cloud-config.yaml --vm-size=Small --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --location="&lt;location&gt;" my-cloud-service $(azure vm image list --json | jq --raw-output '.[].name | select(contains("__CoreOS-Beta-{{site.beta-channel}}"))') core</pre>
       </div>
     </div>
     <div class="tab-pane active" id="stable">
       <div class="channel-info">
         <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.stable-channel}}.</p>
-        <pre>azure vm create --custom-data=cloud-config.yaml --vm-size=Small --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --location="West US" my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Stable-{{site.stable-channel}} core</pre>
+        <pre>azure vm create --custom-data=cloud-config.yaml --vm-size=Small --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --location="&lt;location&gt;" my-cloud-service $(azure vm image list --json | jq --raw-output '.[].name | select(contains("__CoreOS-Stable-{{site.stable-channel}}"))') core</pre>
       </div>
     </div>
   </div>
@@ -89,7 +89,7 @@ In order to SSH into your machine, you'll need an x509 certificate. You probably
 Now that you have a cloud service and your keys, create an instance of CoreOS Alpha {{site.alpha-channel}}, connected to your cloud service:
 
 ```sh
-azure vm create --custom-data=cloud-config.yaml --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --connect=my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Alpha-{{site.alpha-channel}} core
+azure vm create --custom-data=cloud-config.yaml --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --connect=my-cloud-service $(azure vm image list --json | jq --raw-output '.[].name | select(contains("__CoreOS-Stable-{{site.alpha-channel}}"))') core
 ```
 
 This will additionally create an endpoint allowing SSH traffic to reach the newly created instance. If you bring up more machines, you'll need to choose a different port for each instance.
@@ -97,11 +97,11 @@ This will additionally create an endpoint allowing SSH traffic to reach the newl
 Let's create two more instances:
 
 ```sh
-azure vm create --custom-data=cloud-config.yaml --ssh=2022 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-2 --connect=my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Alpha-{{site.alpha-channel}} core
+azure vm create --custom-data=cloud-config.yaml --ssh=2022 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-2 --connect=my-cloud-service $(azure vm image list --json | jq --raw-output '.[].name | select(contains("__CoreOS-Stable-{{site.alpha-channel}}"))') core
 ```
 
 ```sh
-azure vm create --custom-data=cloud-config.yaml --ssh=3022 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-3 --connect=my-cloud-service 2b171e93f07c4903bcad35bda10acf22__CoreOS-Alpha-{{site.alpha-channel}} core
+azure vm create --custom-data=cloud-config.yaml --ssh=3022 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-3 --connect=my-cloud-service $(azure vm image list --json | jq --raw-output '.[].name | select(contains("__CoreOS-Stable-{{site.alpha-channel}}"))') core
 ```
 
 If you used the recommended [cloud-config][cloud-config-heading], you should have a working, three node cluster. Great job!
