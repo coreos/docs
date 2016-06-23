@@ -102,7 +102,7 @@ $ docker restart cbe7b0fa39d8
 
 ### Test the secure connection
 
-Confirm the configuration by visiting the URL from a browser: `https://reg.example.com/`
+Confirm the configuration by visiting the URL from a browser `https://reg.example.com/`
 
 <img src="img/https-browser.png" class="img-center" alt="Browser"/>
 
