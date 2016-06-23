@@ -49,13 +49,9 @@ The next step can be accomplished either in the QE superuser panel, or from the 
 
 ### To configure with the superuser GUI in QE
 
-Set the `Server Hostname` to the appropriate value and check the `Enable SSL`:
+Set the `Server Hostname` to the appropriate value and check the `Enable SSL` then upload the `ssl.key` and `ssl.cert` files:
 
-<img src="img/server-hostname.png" class="img-center" alt="Set server hostname"/>
-
-Upload the `ssl.key` and `ssl.cert` files.
-
-<img src="img/upload-cert.png" class="img-center" alt="Upload Certificate"/>
+<img src="img/server-config.png" class="img-center" alt="Upload Certificate"/>
 
 Save the configuration. QE will automatically validate the SSL certificate.
 
