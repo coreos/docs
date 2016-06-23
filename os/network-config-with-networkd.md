@@ -324,7 +324,7 @@ And run `coreos-cloudinit` or reboot your CoreOS host to apply the changes.
 
 [cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 
-### Enable debugging through Cloud-Config
+### Enable debugging through Ignition
 
 Define a [Drop-In][drop-ins] in an Ignition config:
 
