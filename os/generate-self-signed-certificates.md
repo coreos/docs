@@ -33,7 +33,7 @@ cfssl print-defaults csr > ca-csr.json
 
 * **client certificate** is used to authenticate client by server. For example `etcdctl`, `etcd proxy`, `fleetctl` or `docker` clients.
 * **server certificate** is used by server and verified by client for server identity. For example `docker` server or `kube-apiserver`.
-* **client-server certificate** is used by etcd cluster members as they communicate with each other in both ways.
+* **peer certificate** is used by etcd cluster members as they communicate with each other in both ways.
 
 ### Configure CA options
 
@@ -42,7 +42,7 @@ Now we can configure signing options inside `ca-config.json` config file. Defaul
 * profiles: **www** with `server auth` (TLS Web Server Authentication) X509 V3 extension and **client** with `client auth` (TLS Web Client Authentication) X509 V3 extension.
 * expiry: with `8760h` default value (or 365 days)
 
-For compliance let's rename **www** profile into **server**, create additional **client-server** profile with both `server auth` and `client auth` extensions, and set expiry to 43800h (5 years):
+For compliance let's rename **www** profile into **server**, create additional **peer** profile with both `server auth` and `client auth` extensions, and set expiry to 43800h (5 years):
 
 ```json
 {
@@ -67,7 +67,7 @@ For compliance let's rename **www** profile into **server**, create additional *
                     "client auth"
                 ]
             },
-            "client-server": {
+            "peer": {
                 "expiry": "43800h",
                 "usages": [
                     "signing",
@@ -160,7 +160,7 @@ server.csr
 server.pem
 ```
 
-### Generate client-server certificate
+### Generate peer certificate
 
 ```
 cfssl print-defaults csr > member1.json
@@ -183,13 +183,13 @@ Substitute CN and hosts values, for example:
 Now we are ready to generate member1 certificate and private key:
 
 ```sh
-cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=client-server member1.json | cfssljson -bare member1
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=peer member1.json | cfssljson -bare member1
 ```
 
 Or without CSR json file:
 
 ```sh
-echo '{"CN":"member1","hosts":[""],"key":{"algo":"rsa","size":2048}}' | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=client-server -hostname="192.168.122.101,ext.example.com,member1.local,member1" - | cfssljson -bare member1
+echo '{"CN":"member1","hosts":[""],"key":{"algo":"rsa","size":2048}}' | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=peer -hostname="192.168.122.101,ext.example.com,member1.local,member1" - | cfssljson -bare member1
 ```
 
 You'll get following files:
