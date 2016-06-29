@@ -32,12 +32,10 @@ Managing users via Ignition is preferred because it allows you to use the same c
     "users": [{
       "name": "elroy",
       "passwordHash": "$6$5s2u6/jR$un0AvWnqilcgaNB3Mkxd5yYv6mTlWfOoCYHZmfi3LDKVltj.E8XNKEcwWm...",
-      "groups": [
-        "sudo",
-        "docker"
-      ],
       "sshAuthorizedKeys": [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq......." ],
-      "create": {}
+      "create": {
+        "groups": ["sudo", "docker"]
+      }
     }]
   }
 }
