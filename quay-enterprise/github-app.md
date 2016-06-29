@@ -1,17 +1,26 @@
 # Creating an OAuth application in GitHub
 
-- Log into GitHub (Enterprise)
-- Visit the applications page under your organization's settings and click "[Register New Application](https://github.com/settings/applications/new)".
+You can authorize your registry to access a GitHub account and its repositories by registering it as a GitHub OAuth application.
+
+## Create new GitHub application
+
+* Log into GitHub (Enterprise)
+* Visit the *Applications* page under your organization's settings.
+* Click [*Register New Application*](https://github.com/settings/applications/new). The *new OAuth application* configuration screen is displayed:
 
 <img src="img/register-app.png" class="image-center"/>
 
-- Enter your registry's URL as the application URL
+### Set Homepage URL
 
-Note: If using public GitHub, the URL entered must be accessible by *your users*. It can still be an internal URL.
+* Enter your registry's URL as the **Homepage URL**
 
-- Enter `https://{REGISTRY URL HERE}/oauth2/github/callback` as the Authorization callback URL.
-- Create the application
+Note: If using public GitHub, the Homepage URL entered must be accessible by *your users*. It can still be an internal URL.
+
+### Set Authorization callback URL
+
+* Enter `https://{$YOUR REGISTRY'S URL}/oauth2/github/callback` as the **Authorization callback URL**.
+* Save your settings by clicking the **Register application** button. The new new application's summary is shown:
 
 <img src="img/view-app.png" class="image-center"/>
 
-- Note down the `Client ID` and `Client Secret`.
+* Record the `Client ID` and `Client Secret` shown for the new application.
