@@ -156,6 +156,11 @@ NTP time sources can be set in `timesyncd.conf` with a cloud-config snippet like
 
 ```yaml
 #cloud-config
+coreos:
+  units:
+    - name: systemd-timesyncd.service
+      command: restart
+
 write_files:
   - path: /etc/systemd/timesyncd.conf
     content: |
