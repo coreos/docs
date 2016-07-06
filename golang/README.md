@@ -45,9 +45,10 @@ It's recommended to set a save hook in your editor of choice that runs `goimport
 ## Dependencies
 
 - Carefully consider adding dependencies to your project: Do you really need it?
-- Manage third-party dependencies with [godep][godep-guide]
+- Manage third-party dependencies with [Glide][glide] and [glide-vc][glide-vc].
 
-[godep-guide]: golang/godep.md
+[glide]: https://github.com/Masterminds/glide
+[glide-vc]: https://github.com/sgotti/glide-vc
 
 ## Shared Code
 
