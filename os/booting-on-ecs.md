@@ -24,7 +24,7 @@ coreos:
        Description=AWS ECS Agent
        Documentation=https://docs.aws.amazon.com/AmazonECS/latest/developerguide/
        Requires=docker.socket
-       After=docker.socket
+       After=docker.service
 
        [Service]
        Environment=ECS_CLUSTER=your_cluster_name
