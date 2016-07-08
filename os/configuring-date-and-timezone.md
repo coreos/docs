@@ -88,12 +88,12 @@ The time zone may also be set via Ignition using the following config:
 {
   "ignition": { "version": "2.0.0" },
   "storage": {
-   "files": [{
-     "filesystem": "root",
-     "path": "/etc/timezone",
-     "mode": 420,
-     "contents": { "source": "data:,America/New_York" }
-   }]
+    "files": [{
+      "filesystem": "root",
+      "path": "/etc/timezone",
+      "mode": 420,
+      "contents": { "source": "data:,America/New_York" }
+    }]
   }
 }
 ```
@@ -171,12 +171,12 @@ Ignition can also be used to set NTP time sources:
 {
   "ignition": { "version": "2.0.0" },
   "storage": {
-   "files": [{
-     "filesystem": "root",
-     "path": "/etc/systemd/timesyncd.conf",
-     "mode": 420,
-     "contents": { "source": "data:,%5BTime%5D%0ANTP=0.pool.example.com%201.pool.example.com%0A" }
-   }]
+    "files": [{
+      "filesystem": "root",
+      "path": "/etc/systemd/timesyncd.conf",
+      "mode": 420,
+      "contents": { "source": "data:,%5BTime%5D%0ANTP=0.pool.example.com%201.pool.example.com%0A" }
+    }]
   }
 }
 ```
@@ -271,12 +271,12 @@ Or, in an Ignition config:
 {
   "ignition": { "version": "2.0.0" },
   "storage": {
-   "files": [{
-     "filesystem": "root",
-     "path": "/etc/ntp.conf",
-     "mode": 420,
-     "contents": { "source": "data:,server%200.pool.example.com%0Aserver%201.pool.example.com%0A%0A#%20-%20Allow%20only%20time%20queries,%20at%20a%20limited%20rate.%0A%23%20-%20Allow%20all%20local%20queries%20%28IPv4,%20IPv6%29%0Arestrict%20default%20nomodify%20nopeer%20noquery%20limited%20kod%0Arestrict%20127.0.0.1%0Arestrict%20%5B::1%5D%0A" }
-   }]
+    "files": [{
+      "filesystem": "root",
+      "path": "/etc/ntp.conf",
+      "mode": 420,
+      "contents": { "source": "data:,server%200.pool.example.com%0Aserver%201.pool.example.com%0A%0A#%20-%20Allow%20only%20time%20queries,%20at%20a%20limited%20rate.%0A%23%20-%20Allow%20all%20local%20queries%20%28IPv4,%20IPv6%29%0Arestrict%20default%20nomodify%20nopeer%20noquery%20limited%20kod%0Arestrict%20127.0.0.1%0Arestrict%20%5B::1%5D%0A" }
+    }]
   }
 }
 ```
