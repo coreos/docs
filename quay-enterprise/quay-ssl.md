@@ -31,7 +31,7 @@ DNS.1 = reg.example.com
 IP.1 = 12.345.678.9
 ```
 
-The following set of shell commands invoke the `openssl` utility to create a key for Quay Enterprise, generate a request for an Authority to sign a new certificate, and finally generate a certificate for the Quay Enterprise, signed by the CA created earlier. 
+The following set of shell commands invoke the `openssl` utility to create a key for Quay Enterprise, generate a request for an Authority to sign a new certificate, and finally generate a certificate for Quay Enterprise, signed by the CA created earlier. 
 
 Make sure the CA certificate file `rootCA.pem` and the `openssl.cnf` config file are both available.
 
@@ -40,8 +40,6 @@ $ openssl genrsa -out ssl.key 2048
 $ openssl req -new -key ssl.key -out ssl.csr -subj "/CN=quay-enterprise" -config openssl.cnf 
 $ openssl x509 -req -in ssl.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out ssl.cert -days 356 -extensions v3_req -extfile openssl.cnf
 ```
-
-The next step can be accomplished via the QE superuser panel or from the terminal:
 
 ## Configuring Quay Enterprise to use the new certificate
 
@@ -103,7 +101,7 @@ Confirm the configuration by visiting the URL from a browser `https://reg.exampl
 <img src="img/https-browser.png" class="img-center" alt="Browser"/>
 
 
-"Your Connection is not secure" means the CA is untrusted but confirms that SSL is functioning properly. Google how to trust a CA based on the browser/operating system.
+"Your Connection is not secure" means the CA is untrusted but confirms that SSL is functioning properly. Check Google for how to configure your operating system and web browser to trust your new CA.
 
 
 ## Configuring Docker to Trust a Certificate Authority
