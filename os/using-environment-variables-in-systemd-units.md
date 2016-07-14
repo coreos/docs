@@ -18,7 +18,7 @@ Environment=ETCD_PEER_CERT_FILE=/path/to/peers.crt
 Environment=ETCD_PEER_KEY_FILE=/path/to/peers.key
 ```
 
-Then run `sudo systemctl daemon-reload` and `sudo systemct restart etcd2.service` to apply new environments to etcd2 daemon. You can read more about etcd2 certificates [here](customize-etcd-unit.html).
+Then run `sudo systemctl daemon-reload` and `sudo systemctl restart etcd2.service` to apply new environments to etcd2 daemon. You can read more about etcd2 certificates [here][customizing-etcd].
 
 ## EnvironmentFile directive
 
@@ -85,6 +85,48 @@ ExecStopPost=/usr/bin/etcdctl rm /services/nginx
 
 This unit file will run nginx Docker container and bind it to specific IP address and port.
 
+### System wide environment variables
+
+You can define system wide environment variables using [cloud-config] as explained below:
+
+```yaml
+#cloud-config
+
+write_files:
+  - path: "/etc/systemd/system.conf.d/10-default-env.conf"
+    content: |
+      [Manager]
+      DefaultEnvironment=HTTP_PROXY=http://192.168.0.1:3128
+  - path: "/etc/profile.env"
+    content: |
+      export HTTP_PROXY=http://192.168.0.1:3128
+```
+
+or using [Ignition][ignition]:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "files": [
+    {
+      "filesystem": "root",
+      "path": "/etc/systemd/system.conf.d/10-default-env.conf",
+      "contents": { "source": "data:,[Manager]\nDefaultEnvironment=HTTP_PROXY=http://192.168.0.1:3128" }
+    },
+    {
+      "filesystem": "root",
+      "path": "/etc/profile.env",
+      "contents": { "source": "data:,export%20HTTP_PROXY=http://192.168.0.1:3128" }
+    }
+  ]
+}
+```
+
+Where:
+
+* `/etc/systemd/system.conf.d/10-default-env.conf` config file will set default environment variables for all systemd units.
+* `/etc/profile.env` will set environment variables for all users logged in CoreOS.
+
 ### etcd2.service unit advanced example
 
 A [complete example][etcd-cluster-reconfiguration] of combining environment variables and systemd [drop-ins][drop-in] to reconfigure an existing machine running etcd.
@@ -98,13 +140,15 @@ For more systemd examples, check out these documents:
 [Using systemd Drop-In Units][drop-in]
 [etcd Cluster Runtime Reconfiguration on CoreOS][etcd-cluster-reconfiguration]
 
-[drop-in]: using-systemd-drop-in-units.html
-[customizing-sshd]: customizing-sshd.html#changing-the-sshd-port
-[customizing-docker]: customizing-docker.html#using-a-dockercfg-file-for-authentication
-[cloud-config]: cloud-config.html
-[etcd-discovery]: cluster-discovery.html
-[systemd-udev]: using-systemd-and-udev-rules.html
+[drop-in]: using-systemd-drop-in-units.md
+[customizing-sshd]: customizing-sshd.md#changing-the-sshd-port
+[customizing-etcd]: customize-etcd-unit.md
+[customizing-docker]: customizing-docker.md#using-a-dockercfg-file-for-authentication
+[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
+[etcd-discovery]: cluster-discovery.md
+[systemd-udev]: using-systemd-and-udev-rules.md
 [etcd-cluster-reconfiguration]: ../etcd/etcd-live-cluster-reconfiguration.md
+[ignition]: https://github.com/coreos/ignition/blob/master/doc/getting-started.md
 
 ## More Information
 
