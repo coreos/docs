@@ -28,7 +28,7 @@ sudo docker run -d -p 6379:6379 quay.io/quay/redis
 
 ## Downloading the enterprise registry image
 
-After signing up you will receive a `.dockercfg` file containing your credentials to the `quay.io/coreos/registry` repository. Save this file to your CoreOS machine in `/home/core/.dockercfg` and `/root/.dockercfg`. You should now be able to execute `docker pull quay.io/coreos/registry:v1.16.1` to download the container.
+After signing up you will receive a `.dockercfg` file containing your credentials to the `quay.io/coreos/registry` repository. Save this file to your CoreOS machine in `/home/core/.dockercfg` and `/root/.dockercfg`. You should now be able to execute `docker pull quay.io/coreos/registry:v1.16.3` to download the container.
 
 ## Setting up the directories
 
@@ -44,7 +44,7 @@ mkdir config
 Run the following command, replacing `/local/path/to/the/config/directory` and `/local/path/to/the/storage/directory` with the absolute paths to the directories created above:
 
 ```
-sudo docker run --restart=always -p 443:443 -p 80:80 --privileged=true -v /local/path/to/the/config/directory:/conf/stack -v /local/path/to/the/storage/directory:/datastorage -d quay.io/coreos/registry:v1.16.1
+sudo docker run --restart=always -p 443:443 -p 80:80 --privileged=true -v /local/path/to/the/config/directory:/conf/stack -v /local/path/to/the/storage/directory:/datastorage -d quay.io/coreos/registry:v1.16.3
 ```
 
 <img src="img/db-setup-full.png" class="img-center" alt="Enterprise Registry Setup Screen"/>
