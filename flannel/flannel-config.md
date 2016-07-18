@@ -149,20 +149,13 @@ The last step is to enable `flanneld.service` in the Ignition config:
 
 ## Under the hood
 
-To reduce the CoreOS image size, flannel daemon is stored in CoreOS Enterprise Registry as a Docker container and not shipped in the CoreOS image. For those users wishing not to use flannel, it helps to keep their installation minimal. When `flanneld.service` it started, it pulls the Docker image from the registry. There is, however, a chicken and the egg problem as flannel configures Docker bridge and Docker is needed to pull down the image.
-
-In order to work around this, CoreOS is configured to optionally run a second copy of Docker daemon which we call early-docker. Early-docker daemon is started with `--iptables=false` and containers that it executes need to run with host networking. This prevents Docker from starting `docker0` bridge.
+To reduce the CoreOS image size, flannel daemon is stored in CoreOS Enterprise Registry as an ACI and not shipped in the CoreOS image. For those users wishing not to use flannel, it helps to keep their installation minimal. When `flanneld.service` is started, it pulls the flannel ACI from the registry.
 
 Here is the sequence of events that happens when `flanneld.service` is started followed by a service that runs a Docker container (e.g. redis server):
 
-1. `early-docker.service` gets started since it is a dependency of `flanneld.service`.
-2. `early-docker.service` launches a Docker on a separate Unix socket &mdash; `/var/run/early-docker.sock`.
-3. `flanneld.service` executes `DOCKER_HOST=unix:///var/run/early-docker.sock docker run --net=host quay.io/coreos/flannel:$FLANNEL_VER` (actual invocation is slightly more complex).
-4. flanneld starts and writes out `/run/flannel/subnet.env` with the acquired IP subnet information.
-5. `ExecStartPost` in `flanneld.service` converts information in `/run/flannel/subnet.env` into Docker daemon command line args (such as `--bip` and `--mtu`),
-storing them in `/run/flannel_docker_opts.env`
-6. `redis.service` gets started which invokes `docker run ...`, triggering socket activation of `docker.service`.
-7. `docker.service` sources in `/run/flannel_docker_opts.env` which contains env variables with command line options and starts the Docker with them.
-8. `redis.service` runs Docker redis container.
-
-If you would like to learn more about these service files, you can check them out like so: `systemctl cat early-docker.service`.
+1. `flanneld.service` gets started and executes `/usr/bin/rkt run --net=host quay.io/coreos/flannel:$FLANNEL_VER` (the actual invocation is slightly more complex; the full version can be seen [here](https://github.com/coreos/coreos-overlay/blob/master/app-admin/flannel/files/flanneld-rkt.service) or by running `systemctl cat flanneld.service`, which also includes any drop in units).
+2. flanneld starts and writes out `/run/flannel/subnet.env` with the acquired IP subnet information.
+3. `ExecStartPost` in `flanneld.service` converts information in `/run/flannel/subnet.env` into Docker daemon command line args (such as `--bip` and `--mtu`), storing them in `/run/flannel_docker_opts.env`.
+4. `redis.service` gets started which invokes `docker run ...`, triggering socket activation of `docker.service`.
+5. `docker.service` sources in `/run/flannel_docker_opts.env` which contains env variables with command line options and starts the Docker with them.
+6. `redis.service` runs Docker redis container.
