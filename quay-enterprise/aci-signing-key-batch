@@ -1,0 +1,10 @@
+%echo Generating a default key
+Key-Type: default
+Name-Real: Quay Enterprise ACI Converter
+Name-Comment: ACI conversion signing key
+Name-Email: support@quay.io
+Expire-Date: 0
+%pubring signing.pub
+%secring signing.sec
+%commit
+%echo done
