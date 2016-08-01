@@ -10,17 +10,16 @@ Here's what an example looks like with credentials for Docker's public index and
 
 ```json
 {
-  "quay.io": {
-    "auth": "xXxXxXxXxXx=",
-    "email": "username@example.com"
-  },
-  "https://index.docker.io/v1/": {
-    "auth": "xXxXxXxXxXx=",
-    "email": "username@example.com"
-  },
-  "https://index.example.com": {
-    "auth": "XxXxXxXxXxX=",
-    "email": "username@example.com"
+  "auths": {
+    "quay.io": {
+      "auth": "xXxXxXxXxXx="
+    },
+    "https://index.docker.io/v1/": {
+      "auth": "xXxXxXxXxXx="
+    },
+    "https://index.example.com": {
+      "auth": "XxXxXxXxXxX="
+    }
   }
 }
 ```
@@ -49,20 +48,19 @@ Since each machine in your cluster is going to have to pull images, cloud-config
 write_files:
     - path: /home/core/.docker/config.json
       owner: core:core
-      permissions: '0644'
+      permissions: '0600'
       content: |
         {
-          "quay.io": {
-            "auth": "xXxXxXxXxXx=",
-            "email": "username@example.com"
-          },
-          "https://index.docker.io/v1/": {
-            "auth": "xXxXxXxXxXx=",
-            "email": "username@example.com"
-          },
-          "https://index.example.com": {
-            "auth": "XxXxXxXxXxX=",
-            "email": "username@example.com"
+          "auths": {
+            "quay.io": {
+              "auth": "xXxXxXxXxXx="
+            },
+            "https://index.docker.io/v1/": {
+              "auth": "xXxXxXxXxXx="
+            },
+            "https://index.example.com": {
+              "auth": "XxXxXxXxXxX="
+            }
           }
         }
 ```
