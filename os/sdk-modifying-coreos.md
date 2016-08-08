@@ -17,6 +17,7 @@ System requirements to get started:
 * curl
 * git
 * python2
+* repo
 
 You also need a proper git setup:
 
@@ -29,7 +30,13 @@ git config --global user.name "Your Name"
 
 ### Install repo
 
-The `repo` utility helps to manage the collection of git repositories that makes up CoreOS. Download repo and add it to `$PATH`:
+The `repo` utility helps to manage the collection of git repositories that makes up CoreOS. 
+
+For newer Debian, Ubuntu, and other Debian based systems, install the repo package from your distro:
+
+    sudo apt-get install repo
+
+For systems without a packaged repo download it and add it to `$PATH`:
 
 ```sh
 mkdir ~/bin
