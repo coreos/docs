@@ -13,35 +13,32 @@ $ openssl genrsa -out rootCA.key 2048
 $ openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.pem
 ```
 
-Next, create the key and certificate that will be signed by the CA:
+Next, create an `openssl.cnf` file. Replacing `DNS.1` and `IP.1` with the hostname and IP of the Quay Enterprise server: 
+
+`openssl.cnf `
+
+```
+[req]
+req_extensions = v3_req
+distinguished_name = req_distinguished_name
+[req_distinguished_name]
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = reg.example.com
+IP.1 = 12.345.678.9
+```
+
+The following set of shell commands invoke the `openssl` utility to create a key for Quay Enterprise, generate a request for an Authority to sign a new certificate, and finally generate a certificate for Quay Enterprise, signed by the CA created earlier. 
+
+Make sure the CA certificate file `rootCA.pem` and the `openssl.cnf` config file are both available.
 
 ```
 $ openssl genrsa -out ssl.key 2048
-```
-
-When creating the `ssl.csr` file it is important that the hostname of the server where QE is installed is used as the `Common Name` or QE will reject the  configuration. In this demo environment QE is currently installed at `reg.example.com`
-
-
-```
-$ openssl req -new -key ssl.key -out ssl.csr
-
------
-Country Name (2 letter code) [XX]:US
-State or Province Name (full name) []:California
-Locality Name (eg, city) [Default City]:SF
-Organization Name (eg, company) [Default Company Ltd]:Demo Quay
-Organizational Unit Name (eg, section) []:Demo Quay
-Common Name (eg, your name or your server's hostname) []:reg.example.com
-Email Address []:support@quay.io
-```
-
-Sign the certificate with the CA:
-
-```
-$ openssl x509 -req -in ssl.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out ssl.cert -days 500 -sha256
-Signature ok
-subject=/C=US/ST=California/L=SF/O=Demo Quay/OU=Demo Quay/CN=reg.example.com/emailAddress=support@quay.io
-Getting CA Private Key
+$ openssl req -new -key ssl.key -out ssl.csr -subj "/CN=quay-enterprise" -config openssl.cnf 
+$ openssl x509 -req -in ssl.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out ssl.cert -days 356 -extensions v3_req -extfile openssl.cnf
 ```
 
 ## Configuring Quay Enterprise to use the new certificate
@@ -50,13 +47,9 @@ The next step can be accomplished either in the QE superuser panel, or from the 
 
 ### To configure with the superuser GUI in QE
 
-Set the `Server Hostname` to the appropriate value and check the `Enable SSL`:
+Set the `Server Hostname` to the appropriate value and check the `Enable SSL` then upload the `ssl.key` and `ssl.cert` files:
 
-<img src="img/server-hostname.png" class="img-center" alt="Set server hostname"/>
-
-Upload the `ssl.key` and `ssl.cert` files.
-
-<img src="img/upload-cert.png" class="img-center" alt="Upload Certificate"/>
+<img src="img/server-config.png" class="img-center" alt="Upload Certificate"/>
 
 Save the configuration. QE will automatically validate the SSL certificate.
 
@@ -103,11 +96,13 @@ $ docker restart cbe7b0fa39d8
 
 ### Test the secure connection
 
-Confirm the configuration by visiting the URL from a browser: `https://reg.example.com/`
+Confirm the configuration by visiting the URL from a browser `https://reg.example.com/`
 
 <img src="img/https-browser.png" class="img-center" alt="Browser"/>
 
-"Your Connection is not secure" means the CA is not officially and publicly trusted, but confirms that SSL is functioning properly. Check Google for how to configure your operating system and browser to trust a certificate signed by your own CA.
+
+"Your Connection is not secure" means the CA is untrusted but confirms that SSL is functioning properly. Check Google for how to configure your operating system and web browser to trust your new CA.
+
 
 ## Configuring Docker to Trust a Certificate Authority
 
