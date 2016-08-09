@@ -182,21 +182,23 @@ usr/share/oem
 usr/share/oem/cloud-config.yml
 ```
 
-Add the `cloud-config.cpio.gz` to your PXE boot directory and [append it](http://www.syslinux.org/wiki/index.php?title=SYSLINUX#INITRD_initrd_file) to the `initrd` line in your `pxelinux.cfg`:
+Add the `cloud-config.cpio.gz` to your PXE boot directory and [append it][append-initrd] to the `initrd` line in your `pxelinux.cfg`:
 ```
 ...
 initrd coreos_production_pxe_image.cpio.gz,cloud-config.cpio.gz
 ...
 ```
 
-[oem]: {{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors/#image-customization
-[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/
-[install-to-disk]: {{site.baseurl}}/docs/running-coreos/bare-metal/installing-to-disk
-
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart][qs] guide or dig into [more specific topics][docs].
 
 
+[append-initrd]: http://www.syslinux.org/wiki/index.php?title=SYSLINUX#INITRD_initrd_file
+[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
+[docs]: {{site.baseurl}}/docs
+[install-to-disk]: {{site.baseurl}}/docs/running-coreos/bare-metal/installing-to-disk
 [irc]: irc://irc.freenode.org:6667/#coreos
+[oem]: {{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors/#image-customization
+[qs]: {{site.baseurl}}/docs/quickstart
