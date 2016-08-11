@@ -54,7 +54,7 @@ In this example, all of the network interfaces whose names begin with "eth" will
       {
         "name": "20-bond0.network",
         "contents": "[Match]\nName=bond0\n\n[Network]\nDHCP=true"
-      },
+      }
     ]
   }
 }
