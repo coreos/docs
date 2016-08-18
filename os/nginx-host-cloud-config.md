@@ -8,20 +8,20 @@ The example nginx configuration below will perform replacement of the `$public_i
 
 ```
 geo $dollar {
-default "$";
+  default "$";
 }
 
 server {
-        listen 8080;
+  listen 8080;
 
-        location ~ ^/user_data {
-            root /some/path;
-            sub_filter '${dollar}public_ipv4' '$remote_addr';
-            sub_filter '${dollar}private_ipv4' '$http_x_forwarded_for';
-            # sub_filter '${dollar}private_ipv4' '$http_x_real_ip';
-            sub_filter_once off;
-            sub_filter_types '*';
-        }
+  location ~ ^/user_data {
+    root /path/to/cloud/config/files;
+      sub_filter '${dollar}public_ipv4' '$remote_addr';
+      sub_filter '${dollar}private_ipv4' '$http_x_forwarded_for';
+      # sub_filter '${dollar}private_ipv4' '$http_x_real_ip';
+      sub_filter_once off;
+      sub_filter_types '*';
+  }
 }
 ```
 
