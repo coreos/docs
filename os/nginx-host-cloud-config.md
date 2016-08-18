@@ -4,16 +4,24 @@ The nginx HTTP server can be used to serve `could-config` files to booting CoreO
 
 ## Example
 
-The example nginx configuration below will perform replacement of the `$public_ipv4` and `$private_ipv4` variables for each client connection from a CoreOS machine booting through the cloud-init process.
+The example nginx configuration below will perform replacement of the `$public_ipv4` and `$private_ipv4` variables for each client connection from a CoreOS machine booting through the cloud-init process. This example works around a known nginx bug that prevents you from escaping the `$` with `geo`.
 
 ```
-location ~ ^/user_data {
-  root /path/to/cloud/config/files;
-  sub_filter $public_ipv4 '$remote_addr';
-  sub_filter $private_ipv4 '$http_x_forwarded_for';
-# sub_filter $private_ipv4 '$http_x_real_ip';
-  sub_filter_once off;
-  sub_filter_types '*';
+geo $dollar {
+default "$";
+}
+
+server {
+        listen 8080;
+
+        location ~ ^/user_data {
+            root /some/path;
+            sub_filter '${dollar}public_ipv4' '$remote_addr';
+            sub_filter '${dollar}private_ipv4' '$http_x_forwarded_for';
+            # sub_filter '${dollar}private_ipv4' '$http_x_real_ip';
+            sub_filter_once off;
+            sub_filter_types '*';
+        }
 }
 ```
 
