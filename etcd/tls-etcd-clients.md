@@ -49,7 +49,7 @@ coreos:
              set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
 ```
 
-Finally, if you're going to use a directory other than `/etc/ssl/etcd` to store etcd client certificates, you will need to update `flanneld.service` with your custom folder.  This is because flanneld.service is running as a container
+Finally, if you're going to use a directory other than `/etc/ssl/etcd` to store etcd client certificates, you will need to update `flanneld.service` with your custom folder.  This is because flanneld.service is running as a container.
 
 Suppose you're using `/etc/etcd/ssl` instead, you will need to adjust the flanneld.service drop in to set an updated `ETCD_SSL_DIR` environmental variable.
  
