@@ -32,6 +32,51 @@ FLANNELD_ETCD_CERTFILE=/etc/ssl/etcd/client.pem
 FLANNELD_ETCD_KEYFILE=/etc/ssl/etcd/client-key.pem
 ```
 
+If you are using etcdctl to drop in the configuration into etcd, as described in [flannel configuration](../flannel/flannel-config.md) the drop in will have to change as well.  The changes should look something similar to:
+
+```yaml
+#cloud-config
+
+coreos:
+  units:
+    - name: flanneld.service
+      drop-ins:
+        - name: 50-network-config.conf
+          content: |
+            [Service]
+            ExecStartPre=/usr/bin/etcdctl --endpoints https://172.16.0.101:2379,https://172.16.0.102:2379,https://172.16.0.103:2379 \
+             --ca-file /etc/ssl/etcd/ca.pem --cert-file /etc/ssl/etcd/client.pem --key-file /etc/ssl/etcd/client-key.pem \
+             set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
+```
+
+Finally, if you're going to use a directory other than `/etc/ssl/etcd` to store etcd client certificates, you will need to update `flanneld.service` with your custom folder.  This is because flanneld.service is running as a container
+
+Suppose you're using `/etc/etcd/ssl` instead, you will need to adjust the flanneld.service drop in to set an updated `ETCD_SSL_DIR` environmental variable.
+ 
+A complete example would look like:
+
+```yaml
+#cloud-config
+
+coreos:
+  units:
+    - name: flanneld.service
+      drop-ins:
+        - name: 50-network-config.conf
+          content: |
+            [Service]
+            Environment="ETCD_SSL_DIR=/etc/etcd/ssl"
+            ExecStartPre=/usr/bin/etcdctl --endpoints https://172.16.0.101:2379,https://172.16.0.102:2379,https://172.16.0.103:2379 \
+             --ca-file /etc/etcd/ssl/ca.pem --cert-file /etc/etcd/ssl/client.pem --key-file /etc/etcd/ssl/client-key.pem \
+             set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
+  flannel:
+    etcd_endpoints: "https://172.16.0.101:2379,https://172.16.0.102:2379,https://172.16.0.103:2379"
+    etcd_cafile: /etc/etcd/ssl/ca.pem
+    etcd_certfile: /etc/etcd/ssl/client.pem
+    etcd_keyfile: /etc/etcd/ssl/client-key.pem
+
+```
+
 ## Configure fleet to use secure etcd connection
 
 The fleet systemd unit file reads `/run/systemd/system/fleet.service.d/20-cloudinit.conf` for configuration. `20-cloudinit.conf` is created by any [cloud-config][cloud-config] that contains a `fleet:` configuration section. For example, a cloud-config with the following contents:
