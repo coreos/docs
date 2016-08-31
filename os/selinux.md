@@ -11,7 +11,6 @@ To verify whether the current SELinux policy would inhibit your containers, enab
 ```sh
 $ rm /etc/audit/rules.d/80-selinux.rules
 $ rm /etc/audit/rules.d/99-default.rules
-$ rm /etc/audit/rules.d/99-default.rules
 $ rm /etc/selinux/mcs
 $ cp -a /usr/lib/selinux/mcs /etc/selinux
 $ rm /var/lib/selinux
