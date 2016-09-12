@@ -31,7 +31,7 @@ The build worker is currently in beta. To gain access to its repository, please 
 Once given access, pull down the latest copy of the image just like any other:
 
 ```sh
-docker pull quay.io/coreos/registry-build-worker:v1.16.4
+docker pull quay.io/coreos/registry-build-worker:v1.17.0
 ```
 
 ### Run the build worker image
@@ -48,7 +48,7 @@ Use the environment variable `SERVER` to tell the worker how to communicate with
 Here's what the full command looks like:
 
 ```sh
-docker run --restart on-failure -e SERVER=wss://myenterprise.host -v /var/run/docker.sock:/var/run/docker.sock quay.io/coreos/registry-build-worker:v1.16.4
+docker run --restart on-failure -e SERVER=wss://myenterprise.host -v /var/run/docker.sock:/var/run/docker.sock quay.io/coreos/registry-build-worker:v1.17.0
 ```
 
 When the container starts, each build worker will auto-register with the Enterprise Registry and start building containers once a job triggered and it is assigned to a worker.
