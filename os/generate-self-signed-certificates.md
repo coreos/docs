@@ -263,10 +263,10 @@ echo '{"CN":"CA","key":{"algo":"rsa","size":2048}}' | cfssl gencert -initca - | 
 echo '{"signing":{"default":{"expiry":"43800h","usages":["signing","key encipherment","server auth","client auth"]}}}' > ca-config.json
 export ADDRESS=192.168.122.68,ext1.example.com,coreos1.local,coreos1
 export NAME=server
-echo '{"CN":"'$NAME'","hosts":[""],"key":{"algo":"rsa","size":2048}}' | cfssl gencert -config=ca-config.json -hostname="$ADDRESS" - | cfssljson -bare $NAME
+echo '{"CN":"'$NAME'","hosts":[""],"key":{"algo":"rsa","size":2048}}' | cfssl gencert -config=ca-config.json -ca=ca.pem -ca-key=ca-key.pem -hostname="$ADDRESS" - | cfssljson -bare $NAME
 export ADDRESS=
 export NAME=client
-echo '{"CN":"'$NAME'","hosts":[""],"key":{"algo":"rsa","size":2048}}' | cfssl gencert -config=ca-config.json -hostname="$ADDRESS" - | cfssljson -bare $NAME
+echo '{"CN":"'$NAME'","hosts":[""],"key":{"algo":"rsa","size":2048}}' | cfssl gencert -config=ca-config.json -ca=ca.pem -ca-key=ca-key.pem -hostname="$ADDRESS" - | cfssljson -bare $NAME
 ```
 
 ### Verify data
