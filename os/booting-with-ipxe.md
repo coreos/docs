@@ -2,6 +2,8 @@
 
 These instructions will walk you through booting CoreOS via iPXE on real or virtual hardware. By default, this will run CoreOS completely out of RAM. CoreOS can also be [installed to disk]({{site.baseurl}}/docs/running-coreos/bare-metal/installing-to-disk).
 
+A mininum of 1024M of RAM is required to boot CoreOS via PXE.
+
 ## Configuring iPXE
 
 iPXE can be used on any platform that can boot an ISO image.
