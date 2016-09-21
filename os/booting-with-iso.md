@@ -42,6 +42,7 @@ The latest CoreOS ISOs can be downloaded from the image storage site:
 ## Known limitations
 
 1. The best strategy for providing [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config) is via [config-drive]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-config-drive).
+2. A mininum of 1024M of RAM is required to boot CoreOS via ISO.
 
 ## Install to disk
 
