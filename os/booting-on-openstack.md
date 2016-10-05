@@ -48,7 +48,7 @@ $ glance image-create --name CoreOS \
   --container-format bare \
   --disk-format qcow2 \
   --file coreos_production_openstack_image.img \
-  --is-public True
+  --visibility public
 +------------------+--------------------------------------+
 | Property         | Value                                |
 +------------------+--------------------------------------+
@@ -117,8 +117,8 @@ nova boot \
 --image cdf3874c-c27f-4816-bc8c-046b240e0edd \
 --key-name coreos \
 --flavor m1.medium \
---num-instances 3 \
---security-groups default coreos
+--min-count 3 \
+--security-groups default,coreos
 ```
 
 To use config drive you may need to add `--config-drive=true` to command above.
@@ -180,7 +180,7 @@ nova boot \
 --image cdf3874c-c27f-4816-bc8c-046b240e0edd \
 --key-name coreos \
 --flavor m1.medium \
---security-groups default coreos
+--security-groups default,coreos
 ```
 
 ## Multiple clusters
