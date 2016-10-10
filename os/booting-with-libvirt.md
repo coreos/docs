@@ -71,6 +71,13 @@ mkdir -p /var/lib/libvirt/images/coreos/coreos1/openstack/latest
 touch /var/lib/libvirt/images/coreos/coreos1/openstack/latest/user_data
 ```
 
+If the host uses SELinux, allow the VM access to the config:
+
+```sh
+semanage fcontext -a -t virt_content_t "/var/lib/libvirt/images/coreos0/configdrive(/.*)?"
+restorecon -R "/var/lib/libvirt/images/coreos0/configdrive"
+```
+
 The `user_data` file declares machine configuration in the [cloud config](https://coreos.com/os/docs/latest/cloud-config.html) format. We recommend using ssh keys to log into the VM, and since those keys are stored in `user_data,` at minimum that file should contain something like this:
 
 ```yaml
