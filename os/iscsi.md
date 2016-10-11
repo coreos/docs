@@ -20,10 +20,10 @@ systemctl start iscsid
 
 ## Discover available iSCSI targets
 
-Run
+To discover targets, run:
 
 ```
-iscsiadm -m discovery -t sendtargets -p target_ip:port
+$ iscsiadm -m discovery -t sendtargets -p target_ip:port
 ```
 
 ## To provide target-specific credentials
@@ -31,21 +31,35 @@ iscsiadm -m discovery -t sendtargets -p target_ip:port
 You can replace the global credentials with target-specific credentials by running:
 
 ```
-iscsiadm -m node --targetname=targetname --op-update --name=node.session.auth.username --value=username
+$ iscsiadm -m node --targetname=targetname --op-update --name=node.session.auth.username --value=username
+$ iscsiadm -m node --targetname=targetname --op-update --name=node.session.auth.password --value=password
+```
 
-iscsiadm -m node --targetname=targetname --op-update --name=node.session.auth.password --value=password
+`targetname`, `username`, and `password` are specific to you, not literal strings. For example:
+
+```
+$ iscsiadm -m node --targetname=custom_target --op-update --name=node.session.auth.username --value=some_username
+$ iscsiadm -m node --targetname=custom_target --op-update --name=node.session.auth.password --value=secret_password
 ```
 
 ## Log into an iSCSI target
 
-```
-iscsiadm -m node --login
-```
-
-will log into all discovered targets. To log into a specific target:
+The following command will log into all discovered targets.
 
 ```
-iscsiadm -m node --targetname=targetname --login
+$ iscsiadm -m node --login
+```
+
+Then, to log into a specific target use:
+
+```
+$ iscsiadm -m node --targetname=targetname --login
+```
+
+The value for `targetname` is unique to your setup. For example:
+
+```
+$ iscsiadm -m node --targetname=custom_target --login
 ```
 
 ## Enable automatic iSCSI login at boot
@@ -53,8 +67,10 @@ iscsiadm -m node --targetname=targetname --login
 If you want to connect to iSCSI targets automatically at boot, run
 
 ```
-systemctl enable iscsid
+$ systemctl enable iscsid
 ```
+
+<!-- TODO: add a cloud-config or ignition example! -->
 
 ## Mounting iSCSI targets
 
