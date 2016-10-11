@@ -190,6 +190,20 @@ DHCP=yes
 
 To apply the configuration, run `sudo systemctl restart systemd-networkd`. Check the status with `systemctl status systemd-networkd` and read the full log with `journalctl -u systemd-networkd`.
 
+## Turn off IPv6 on specific interfaces
+
+While IPv6 can be disabled globally at boot by appending `ipv6.disable=1` to the kernel command line, networkd supports disabling IPv6 on a per-interface basis. When a network unit's `[Network]` section has either `LinkLocalAddressing=ipv4` or `LinkLocalAddressing=no`, networkd will not try to configure IPv6 on the matching interfaces.
+
+Note however that even when using the above option, networkd will still be expecting to receive router advertisements if IPv6 is not disabled globally. If IPv6 traffic is not being received by the interface (e.g. due to `sysctl` or `ip6tables` settings), it will remain in the `configuring` state and potentially cause timeouts for services waiting for the network to be fully configured. To avoid this, the `IPv6AcceptRA=no` option should also be set in the `[Network]` section.
+
+A network unit file's `[Network]` section should therefore contain the following to disable IPv6 on its matching interfaces.
+
+```ini
+[Network]
+LinkLocalAddressing=no
+IPv6AcceptRA=no
+```
+
 ## Configure static routes
 
 Specify static routes in a systemd network unit's `[Route]` section. In this example, we create a unit file, `10-static.network`, and define in it a static route to the `172.16.0.0/24` subnet:
