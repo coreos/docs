@@ -102,7 +102,7 @@ write_files:
 
       [Bond]
       Mode=0 # defaults to balance-rr
-      MIIMonitorSec=100
+      MIIMonitorSec=1
   - path: /etc/systemd/network/30-bond-dhcp.network
     permissions: 0644
     owner: root
