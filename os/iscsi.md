@@ -88,6 +88,7 @@ To create and enable the iscsid service automatically using cloud-config and ign
 <!-- TODO: It's inclear based on documentation what the actual first line of this doc snippet should be.
      This is a best guess based on docs I've read, the rest I'm pretty certain of.
      I know we want to do discovery in this file, just not sure if that line accomplished the task. -->
+     
 ```
 isns.address = host_ip
 isns.port = host_port
@@ -99,22 +100,45 @@ discovery.sendtargets.auth.password = my_secret_password
 
 Enable the service with the following cloud-config and ignition configs:
 
-cloud-config:
+#### Using cloud-config
+
 ```
+#cloud-config
 coreos:
     units:
         - name: "iscsid.service"
           command: "start"
+write_files:
+  - path: "/etc/iscsi/iscsid.conf"
+    permissions: "0644"
+    owner: "root"
+    content: |
+      isns.address = host_ip
+      isns.port = host_port
+      node.session.auth.username = my_username
+      node.session.auth.password = my_secret_password
+      discovery.sendtargets.auth.username = my_username
+      discovery.sendtargets.auth.password = my_secret_password
 ```
 
-ignition config:
+#### Using Ignition
+
+Ignition uses the data URI scheme to [write out file contents](https://coreos.com/ignition/docs/latest/examples.html#create-files-on-the-root-filesystem). The generated string is the same as the config in the cloud-config above.
+
 ```
 {
   "ignition": { "version": "2.0.0" },
   "systemd": {
     "units": [{
       "name": "iscsid.service",
-      "enable": true,
+      "enable": true
+    }]
+  },
+  "storage": {
+    "files": [{
+      "filesystem": "root",
+      "path": "/etc/iscsi/iscsid.conf",
+      "contents": { "source": "data:text/plain;charset=utf-8;base64,aXNucy5hZGRyZXNzID0gaG9zdF9pcA0KaXNucy5wb3J0ID0gaG9zdF9wb3J0DQpub2RlLnNlc3Npb24uYXV0aC51c2VybmFtZSA9IG15X3VzZXJuYW1lDQpub2RlLnNlc3Npb24uYXV0aC5wYXNzd29yZCA9IG15X3NlY3JldF9wYXNzd29yZA0KZGlzY292ZXJ5LnNlbmR0YXJnZXRzLmF1dGgudXNlcm5hbWUgPSBteV91c2VybmFtZQ0KZGlzY292ZXJ5LnNlbmR0YXJnZXRzLmF1dGgucGFzc3dvcmQgPSBteV9zZWNyZXRfcGFzc3dvcmQ=" }
     }]
   }
 }
