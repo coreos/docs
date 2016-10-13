@@ -14,7 +14,7 @@ echo 'Generating public signing key'
 gpg2 --no-default-keyring --armor \
 --secret-keyring ./signing.sec --keyring ./signing.pub \
 --output $1/signing-public.gpg \
---export 
+--export $EMAIL
 
 echo 'Determining private key'
 PRIVATE_KEY=`gpg2 --no-default-keyring \
