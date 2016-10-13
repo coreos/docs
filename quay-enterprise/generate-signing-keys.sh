@@ -8,11 +8,13 @@ fi
 echo 'Generating initial keys'
 gpg2 --batch --gen-key aci-signing-key-batch.txt
 
+EMAIL=`awk '{if($1=="Name-Email:") print $2}' aci-signing-key-batch.txt`
+
 echo 'Generating public signing key'
 gpg2 --no-default-keyring --armor \
 --secret-keyring ./signing.sec --keyring ./signing.pub \
 --output $1/signing-public.gpg \
---export "<support@quay.io>"
+--export 
 
 echo 'Determining private key'
 PRIVATE_KEY=`gpg2 --no-default-keyring \
