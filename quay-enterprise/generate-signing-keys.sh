@@ -6,7 +6,7 @@ if [ $# -lt 1 ]; then
 fi
 
 echo 'Generating initial keys'
-gpg2 --batch --gen-key aci-signing-key-batch
+gpg2 --batch --gen-key aci-signing-key-batch.txt
 
 echo 'Generating public signing key'
 gpg2 --no-default-keyring --armor \

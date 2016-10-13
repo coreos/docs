@@ -4,7 +4,7 @@ This document explains how to add a pair of signing keys to your Quay Enterprise
 
 ## Download the generation script and config
 
-Download the files [aci-signing-key-batch](aci-signing-key-batch) and [generate-signing-keys.sh](generate-signing-keys.sh) next to your configuration directory.
+Download the files [aci-signing-key-batch.txt](aci-signing-key-batch.txt) and [generate-signing-keys.sh](generate-signing-keys.sh) next to your configuration directory.
 
 Make `generate-signing-keys.sh` executable:
 
@@ -14,7 +14,7 @@ chmod +x generate-signing-keys.sh
 
 ## Edit the configuration
 
-Edit the [aci-signing-key-batch](aci-signing-key-batch) configuration, replacing the email address, name, and comment with values appropriate for your site.
+Edit the [aci-signing-key-batch.txt](aci-signing-key-batch.txt) configuration, replacing the email address, name, and comment with values appropriate for your site.
 
 ## Run the generation script
 
