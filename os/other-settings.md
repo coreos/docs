@@ -181,7 +181,7 @@ set linux_append="systemd.mask=systemd-networkd.service"
 
 ## Adding custom messages to MOTD
 
-When logging in interactively, a brief message (the "Message of the Day (MOTD") reports the CoreOS release channel, version, and a list of any services or systemd units that have failed. Additional text can be added by dropping text files into `/etc/motd.d`. The directory may need to be created first, and the drop-in file name must end in `.conf`. CoreOS versions 555.0.0 and greater support customization of the MOTD.
+When logging in interactively, a brief message (the "Message of the Day (MOTD)") reports the CoreOS release channel, version, and a list of any services or systemd units that have failed. Additional text can be added by dropping text files into `/etc/motd.d`. The directory may need to be created first, and the drop-in file name must end in `.conf`. CoreOS versions 555.0.0 and greater support customization of the MOTD.
 
 ```sh
 mkdir -p /etc/motd.d
@@ -211,3 +211,44 @@ Or via Ignition:
   }]
 }
 ```
+
+## Prevent login prompts from clearing the console
+
+The system boot messages that are printed to the console will be cleared when systemd starts a login prompt. In order to preserve these messages, the `getty` services will need to have their `TTYVTDisallocate` setting disabled. This can be achieved with a drop-in for the template unit, `getty@.service`. Note that the console will still scroll so the login prompt is at the top of the screen, but the boot messages will be available by scrolling.
+
+```sh
+mkdir -p '/etc/systemd/system/getty@.service.d'
+echo -e '[Service]\nTTYVTDisallocate=no' > '/etc/systemd/system/getty@.service.d/no-disallocate.conf'
+```
+
+Or via cloud-config:
+
+```yaml
+coreos:
+  units:
+    - name: getty@.service
+      drop-ins:
+        - name: no-disallocate.conf
+          content: |
+            [Service]
+            TTYVTDisallocate=no
+```
+
+Or via Ignition:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "systemd": {
+    "units": [{
+      "name": "getty@.service",
+      "dropins": [{
+        "name": "no-disallocate.conf",
+        "contents": "[Service]\nTTYVTDisallocate=no"
+      }]
+    }]
+  }
+}
+```
+
+When the `TTYVTDisallocate` setting is disabled, the console scrollback is not cleared on logout, not even by the `clear` command in the default `.bash_logout` file. Scrollback must be cleared explicitly, e.g. by running `echo -en '\033[3J' > /dev/console` as the root user.
