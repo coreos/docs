@@ -66,7 +66,7 @@ update-ssh-keys -u user1 user1.pem
 
 ## Grant sudo Access
 
-If you trust the user you can grant administrative privileges using visudo. visudo checks the file syntax before actually overwriting the sudoers file. This command should be ran as root to avoid losing sudo access in the event of a failure. Instead of editing /etc/sudo.conf directly you will create a new file under the `/etc/sudoers.d/` directory. When you run visudo it is required that you specify which file you are attempting to edit with the -f argument: 
+If you trust the user, you can grant administrative privileges using `visudo`. `visudo` checks the file syntax before actually overwriting the `sudoers` file. This command should be run as root to avoid losing sudo access in the event of a failure. Instead of editing `/etc/sudo.conf` directly you will create a new file under the `/etc/sudoers.d/` directory. When you run visudo, it is required that you specify which file you are attempting to edit with the `-f` argument: 
 
 ```sh
 # visudo -f /etc/sudoers.d/user1
