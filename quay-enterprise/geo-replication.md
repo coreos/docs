@@ -32,7 +32,7 @@ Sign in to a super user account and visit `http://yourregister/superuser` to vie
     For example, for a machine running in Europe:
 
     ```
-    docker run -d -p 443:443 -p 80:80 -v /conf/stack:/conf/stack -e QUAY_DISTRIBUTED_STORAGE_PREFERENCE=europestorage quay.io/coreos/registry:versiontag
+    docker run -d -p 443:443 -p 80:80 -v /conf/stack:/conf/stack -e QUAY_DISTRIBUTED_STORAGE_PREFERENCE=europestorage quay.io/coreos/quay:versiontag
     ```
 
     *NOTE: The value of the environment variable specified must match the name of a storage engine as defined in the config panel*
