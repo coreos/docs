@@ -10,7 +10,7 @@ CoreOS Enterprise Registry requires three components to be running to begin the 
 
 ## Downloading your license
 
-A valid license is required to run Quay Enterprise. Your license can be found on [Tectonic Accounts](https://account.tectonic.com). Please download or copy this license as a file named "license".
+A valid license is required to run Quay Enterprise. Your license can be found on [Tectonic Accounts](https://account.tectonic.com). Please download or copy this license in **Raw Format** as a file named `license`.
 
 ## Preparing the database
 
