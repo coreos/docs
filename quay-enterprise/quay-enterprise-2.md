@@ -39,12 +39,14 @@ Ensure QE instance has been shutdown and add the raw format license in `license`
 
 #### Example:
 
-`conf/stack` is mapped to `quay2/config` in `docker run` command used to bring up Quay Enterprise: 
+`conf/stack` is mapped to `quay2/config` in `docker run` command used to bring up Quay Enterprise:
+
 ```
 docker run --restart=always -p 443:443 -p 80:80 --privileged=true -v /quay2/config:/conf/stack -v /quay2/storage:/datastorage -d quay.io/coreos/quay:v2.0.0
 ```
 
 `license` file resides in the `quay2/config` directory:
+
 ```
 $ ls quay2/config/
 config.yaml  license
