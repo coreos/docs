@@ -6,7 +6,7 @@ We **highly** recommend performing this upgrade during a scheduled maintainence 
 
 ## Download Quay Enterprise License
 
-To begin, download your Quay Enterprise License from [[Tectonic Accounts](https://account.tectonic.com). Please download or copy this license in **Raw Format** as a file named `license`:
+To begin, download your Quay Enterprise License from your [Tectonic Account](https://account.tectonic.com). Please download or copy this license in **Raw Format** as a file named `license`:
 
 <img src="img/raw-format.png" class="img-center" alt="Quay Enterprise License Raw Format"/>
 
@@ -33,7 +33,7 @@ Sign in to a super user account and visit `http://yourregister/superuser` to vie
 - Click "Save Configuration Changes"
 - Restart the container (you will be prompted)
 
-### Add License without management panel
+### Add license via the filesystem
 
 Ensure QE instance has been shutdown and add the raw format license in `license` file to the directory mapped to `conf/stack`, next to the existing `config.yaml`.
 
