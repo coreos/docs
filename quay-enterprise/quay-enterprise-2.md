@@ -20,10 +20,6 @@ Run a single instance of Quay Enterprise 2.0.0 by replacing `quay.io/coreos/regi
 
 ## Add your license to the Quay Enterprise
 
-### Quay Enterprise setup via config management
-
-Shutdown the running instance and add the `license` file downloaded above to be placed in the `conf/stack` directory, next to the existing `config.yaml`.
-
 ### Quay Enterprise setup as a container or under Kubernetes
 
 - Visit the management panel:
@@ -36,6 +32,27 @@ Sign in to a super user account and visit `http://yourregister/superuser` to vie
 - In the section entitled "License", paste in the contents of the license downloaded above
 - Click "Save Configuration Changes"
 - Restart the container (you will be prompted)
+
+### Add License without management panel
+
+Ensure QE instance has been shutdown and add the raw format license in `license` file to the directory mapped to `conf/stack`, next to the existing `config.yaml`.
+
+#### Example:
+
+`conf/stack` is mapped to `quay2/config` in `docker run` command used to bring up Quay Enterprise: 
+```
+docker run --restart=always -p 443:443 -p 80:80 --privileged=true -v /quay2/config:/conf/stack -v /quay2/storage:/datastorage -d quay.io/coreos/quay:v2.0.0
+```
+
+`license` file resides in the `quay2/config` directory:
+```
+$ ls quay2/config/
+config.yaml  license
+
+$ cat quay2/license
+eyJhbGciOiJSUzI1NiJ9.eyJzY2hlbWFWZXJzaW9uIjoidjIiLCJ2ZXJzaW9uIjoiMSIsImNyZWF0aW9uRGF0ZSI6IjIwMTYtMTAtMjZUMTc6MjM6MjJaIiwiZXhwaXJ
+[...]
+```
 
 ## Update cluster
 
