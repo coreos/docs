@@ -13,7 +13,7 @@ $ openssl genrsa -out rootCA.key 2048
 $ openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.pem
 ```
 
-Next, create an `openssl.cnf` file. Replacing `DNS.1` and `IP.1` with the hostname and IP of the Quay Enterprise server: 
+Next, create an `openssl.cnf` file. Replacing `DNS.1` and `IP.1` with the hostname and IP of the Quay Enterprise server:
 
 `openssl.cnf `
 
@@ -31,13 +31,13 @@ DNS.1 = reg.example.com
 IP.1 = 12.345.678.9
 ```
 
-The following set of shell commands invoke the `openssl` utility to create a key for Quay Enterprise, generate a request for an Authority to sign a new certificate, and finally generate a certificate for Quay Enterprise, signed by the CA created earlier. 
+The following set of shell commands invoke the `openssl` utility to create a key for Quay Enterprise, generate a request for an Authority to sign a new certificate, and finally generate a certificate for Quay Enterprise, signed by the CA created earlier.
 
 Make sure the CA certificate file `rootCA.pem` and the `openssl.cnf` config file are both available.
 
 ```
 $ openssl genrsa -out ssl.key 2048
-$ openssl req -new -key ssl.key -out ssl.csr -subj "/CN=quay-enterprise" -config openssl.cnf 
+$ openssl req -new -key ssl.key -out ssl.csr -subj "/CN=quay-enterprise" -config openssl.cnf
 $ openssl x509 -req -in ssl.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out ssl.cert -days 356 -extensions v3_req -extfile openssl.cnf
 ```
 
@@ -88,7 +88,7 @@ Restart the QE container:
 $ docker ps
 CONTAINER ID        IMAGE                     COMMAND                  CREATED             STATUS              PORTS                                                NAMES
 eaf45a4aa12d        quay.io/quay/redis        "/usr/bin/redis-serve"   22 hours ago        Up 22 hours         0.0.0.0:6379->6379/tcp                               dreamy_ramanujan
-cbe7b0fa39d8        quay.io/coreos/registry   "/sbin/my_init"          22 hours ago        Up About an hour    0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp, 8443/tcp   fervent_ptolemy
+cbe7b0fa39d8        quay.io/coreos/quay   "/sbin/my_init"          22 hours ago        Up About an hour    0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp, 8443/tcp   fervent_ptolemy
 705fe7311940        mysql:5.7                 "/entrypoint.sh mysql"   23 hours ago        Up 22 hours         0.0.0.0:3306->3306/tcp                               mysql
 
 $ docker restart cbe7b0fa39d8
