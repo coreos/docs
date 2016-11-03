@@ -39,7 +39,7 @@ Don't wrap long lines of text with manual newlines. Line wrapping churns prose d
 
 ### One sentence per line deprecated
 
-Writing Markdown source with a newline between every sentence is acceptable to most compilers and can ease change review. However, this format makes the document less readable in source form. Do not add a line break between sentences. Write natural English paragraphs, separated by a single blank line.
+Do not add a line break between sentences. Write natural English paragraphs, separated by a single blank line. Writing Markdown source with a newline between every sentence is acceptable to most compilers and can ease change review. However, this format makes the document less readable in source form. 
 
 ### Preferred markdown symbols
 
