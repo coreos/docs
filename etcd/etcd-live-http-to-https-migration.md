@@ -1,6 +1,6 @@
 # Enabling HTTPS in an existing etcd cluster
 
-This guide outlines the process of migrating an existing etcd cluster from HTTP communication to encrypted HTTPS. For added security, it also shows how to require TLS client-server certificates to authenticate connections.
+This guide outlines the process of migrating an existing etcd cluster from HTTP communication to encrypted HTTPS. For added security, it also shows how to require TLS peer certificates to authenticate connections.
 
 ## Prepare cluster components
 
