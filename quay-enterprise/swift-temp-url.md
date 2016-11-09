@@ -1,4 +1,4 @@
-# Enterprise registry Swift direct download
+# Quay Enterprise Swift direct download
 
 ## Direct download
 
@@ -18,7 +18,7 @@ $ swift post -m "Temp-URL-Key:somecoolkey"
 
 Sign in to a super user account and visit `http://registry.example.com/superuser` to view the management panel:
 
-<img src="img/superuser.png" class="img-center" alt="Enterprise Registry Management Panel"/>
+<img src="img/superuser.png" class="img-center" alt="Quay Enterprise Management Panel"/>
 
 ## Go to the settings tab
 

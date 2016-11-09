@@ -1,6 +1,6 @@
 # GitHub authentication
 
-CoreOS Enterprise Registry supports using GitHub or GitHub Enterprise as an authentication system.
+Quay Enterprise supports using GitHub or GitHub Enterprise as an authentication system.
 
 ## Create an OAuth application in GitHub
 
@@ -12,7 +12,7 @@ Following the instructions at [Create a GitHub Application](github-app.md).
 
 Sign in to a super user account and visit `http://yourregister/superuser` to view the management panel:
 
-<img src="img/superuser.png" class="img-center" alt="Enterprise Registry Management Panel"/>
+<img src="img/superuser.png" class="img-center" alt="Quay Enterprise Management Panel"/>
 
 ## Enable GitHub authentication
 

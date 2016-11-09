@@ -1,14 +1,14 @@
-# Enterprise registry log debugging
+# Quay Enterprise log debugging
 
 ## Personal debugging
 
-When attempting to debug an issue, one should first consult the logs of the web workers running the Enterprise Registry.
+When attempting to debug an issue, one should first consult the logs of the web workers running the Quay Enterprise instance.
 
 ## Visit the management panel
 
 Sign in to a super user account and visit `http://yourregister/superuser` to view the management panel:
 
-<img src="img/superuser.png" class="img-center" alt="Enterprise Registry Management Panel"/>
+<img src="img/superuser.png" class="img-center" alt="Quay Enterprise Management Panel"/>
 
 ## View the logs for each service
 
@@ -17,7 +17,7 @@ Sign in to a super user account and visit `http://yourregister/superuser` to vie
 
 ## Contacting support
 
-When contacting support, one should always include a copy of the Enterprise Registry's log directory.
+When contacting support, one should always include a copy of Quay Enterprise's log directory.
 
 To download logs, click the "<i class="fa fa-download"></i> Download All Local Logs (.tar.gz)" link
 

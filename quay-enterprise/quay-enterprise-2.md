@@ -1,4 +1,4 @@
-# Upgrade to Quay Enterprise 2
+# Upgrade to Quay Enterprise 2.0.0
 
 All Quay Enterprise instances being upgraded from versions < 2.0.0 **must** upgrade to Quay Enterprise 2.0.0 first before continuing to upgrade. This upgrade has an extra step, documented here.
 

@@ -1,6 +1,6 @@
 # Creating an OAuth Application in BitBucket
 
-This document describes how to authenticate Quay Enterprise registry users with their [BitBucket][bitbucket] identities.
+This document describes how to authenticate Quay Enterprise users with their [BitBucket][bitbucket] identities.
 
 ## Add OAuth Consumer
 
@@ -11,11 +11,11 @@ This document describes how to authenticate Quay Enterprise registry users with 
 
 <img src="img/bb-add-consumer.png" class="image-center"/>
 
-## Configure registry Callback URL
+## Configure the Callback URL
 
-Next, configure BitBucket to redirect you back to your Quay Enterprise registry upon a successful login:
+Next, configure BitBucket to redirect you back to your Quay Enterprise upon a successful login:
 
-- Enter your registry's URL as the `URL`
+- Enter the Quay Enterprise URL as the `URL`
 - Enter `https://{REGISTRY URL HERE}/oauth2/bitbucket/callback` as the `Callback URL`.
 - Grant permissions on the repositories and webhooks:
 

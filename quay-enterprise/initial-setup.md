@@ -1,10 +1,10 @@
 # On-premises installation
 
-CoreOS Enterprise Registry requires three components to be running to begin the setup process:
+Quay Enterprise requires three components to be running to begin the setup process:
 
 - A supported database (MySQL, Postgres)
 - A Redis instance (for real-time events)
-- The Enterprise Registry image
+- The Quay Enterprise image
 
 **NOTE**: Please have the host and port of the database and the Redis instance ready.
 
@@ -29,13 +29,13 @@ sudo docker run -d -p 6379:6379 quay.io/quay/redis
 
 **NOTE**: This host will have to accept incoming connections on port 6379 from the hosts on which the registry will run.
 
-## Downloading the enterprise registry image
+## Downloading the Quay Enterprise image
 
 After signing up you will receive a `.dockercfg` file containing your credentials to the `quay.io/coreos/quay` repository. Save this file to your CoreOS machine in `/home/core/.dockercfg` and `/root/.dockercfg`. You should now be able to execute `docker pull quay.io/coreos/quay:v2.0.0` to download the container.
 
 ## Setting up the directories
 
-CoreOS Enterprise registry requires a storage directory and a configuration directory:
+Quay Enterprise requires a storage directory and a configuration directory:
 
 ```
 mkdir storage
@@ -50,28 +50,28 @@ Run the following command, replacing `/local/path/to/the/config/directory` and `
 sudo docker run --restart=always -p 443:443 -p 80:80 --privileged=true -v /local/path/to/the/config/directory:/conf/stack -v /local/path/to/the/storage/directory:/datastorage -d quay.io/coreos/quay:v2.0.0
 ```
 
-<img src="img/db-setup-full.png" class="img-center" alt="Enterprise Registry Setup Screen"/>
+<img src="img/db-setup-full.png" class="img-center" alt="Quay Enterprise Setup Screen"/>
 
-Once started, visit: http://yourhost/setup, wait for the page to load (it may take a minute or two) and follow instructions there to setup the enterprise registry.
+Once started, visit: http://yourhost/setup, wait for the page to load (it may take a minute or two) and follow instructions there to setup Quay Enterprise.
 
-**NOTE**: The Enterprise Registry will restart itself a few times during this setup process. If the container does not automatically come
+**NOTE**: Quay Enterprise will restart itself a few times during this setup process. If the container does not automatically come
 back up, simply run the command above again.
 
-<img src="img/container-restart.png" class="img-center" alt="Enterprise Registry Restart"/>
+<img src="img/container-restart.png" class="img-center" alt="Quay Enterprise Restart"/>
 
 
-## Verifying the registry status
+## Verifying the status of QE
 
-Visit the `/health/endtoend` endpoint on the registry hostname and verify that the `code` is `200` and `is_testing` is `false`.
+Visit the `/health/endtoend` endpoint on the Quay Enterprise hostname and verify that the `code` is `200` and `is_testing` is `false`.
 
 
 ## Logging in
 
 ### If using database authentication:
 
-Once the Enterprise Registry is running, new users can be created by clicking the `Sign Up` button. If e-mail is enabled, the sign up process will require an e-mail confirmation step, after which repositories, organizations and teams can be setup by the user.
+Once Quay Enterprise is running, new users can be created by clicking the `Sign Up` button. If e-mail is enabled, the sign up process will require an e-mail confirmation step, after which repositories, organizations and teams can be setup by the user.
 
 
 ### If using LDAP authentication:
 
-Users should be able to login to the Enterprise Registry directly with their LDAP username and password.
+Users should be able to login to the Quay Enterprise directly with their LDAP username and password.

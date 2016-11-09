@@ -14,7 +14,7 @@ Georeplication requires that there be a high availability storage engine (S3, GC
 
 Sign in to a super user account and visit `http://yourregister/superuser` to view the management panel:
 
-<img src="img/superuser.png" class="img-center" alt="Enterprise Registry Management Panel"/>
+<img src="img/superuser.png" class="img-center" alt="Quay Enterprise Management Panel"/>
 
 ## Enable storage replication
 

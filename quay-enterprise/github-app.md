@@ -12,13 +12,13 @@ You can authorize your registry to access a GitHub account and its repositories 
 
 ### Set Homepage URL
 
-* Enter your registry's URL as the **Homepage URL**
+* Enter the Quay Enterprise URL as the **Homepage URL**
 
 Note: If using public GitHub, the Homepage URL entered must be accessible by *your users*. It can still be an internal URL.
 
 ### Set Authorization callback URL
 
-* Enter `https://{$YOUR REGISTRY'S URL}/oauth2/github/callback` as the **Authorization callback URL**.
+* Enter `https://{$QUAY ENTERPRISE URL}/oauth2/github/callback` as the **Authorization callback URL**.
 * Save your settings by clicking the **Register application** button. The new new application's summary is shown:
 
 <img src="img/view-app.png" class="image-center"/>
