@@ -2,13 +2,13 @@
 
 <img src="img/Clair_horizontal_color.png" class="img-center" alt="Clair Security Scanner"/>
 
-The <a href="https://github.com/coreos/clair">Clair</a> project is an open source engine that powers [Quay Security Scanner](security-scanning.md) to detect vulnerabilities in all images within Quay, and notify developers as those issues are discovered.
+The <a href="https://github.com/coreos/clair">Clair</a> project is an open source engine that powers [Quay Security Scanner](security-scanning.md) to detect vulnerabilities in all images within Quay Enterprise, and notify developers as those issues are discovered.
 
 ## Initial Setup
 
 ### Postgres Database
 
-In order to run Clair, a Postgres database is required. For production deployments, we recommend a PostgreSQL database running on machines other than those running Quay, and ideally with automatic replication and failover.
+In order to run Clair, a Postgres database is required. For production deployments, we recommend a PostgreSQL database running on machines other than those running Quay Enterprise, and ideally with automatic replication and failover.
 
 #### Postgres database for testing
 

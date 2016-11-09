@@ -1,4 +1,4 @@
-# Upgrade Quay Enterprise
+# Upgrading Quay Enterprise
 
 The full list of Quay Enterprise versions can be found on the [Quay Enterprise Releases](https://tectonic.com/quay-enterprise/releases/) page.
 
@@ -10,7 +10,7 @@ If you are upgrading from a version of Quay Enterprise older than 2.0.0, you **m
 
 We **highly** recommend performing upgrades during a scheduled maintainence window, as it will require taking the existing cluster down temporarily. We are working to remove this restriction in a future release.
 
-## Upgrading Quay Enterprise
+## The upgrade process
 
 1. Visit the [Quay Enterprise Releases](https://tectonic.com/quay-enterprise/releases/) page and note the latest version of Quay Enterprise.
 2. Shutdown the Quay Enterprise cluster: Remove **all** containers from service.

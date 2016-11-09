@@ -1,6 +1,6 @@
 # Setting up a MySQL Docker container
 
-If you don't have an existing MySQL system to host the Enterprise Registry database on then you can run the steps below to create a dedicated MySQL container using the Oracle MySQL verified Docker image from [https://registry.hub.docker.com/_/mysql/](https://registry.hub.docker.com/_/mysql/).
+If you don't have an existing MySQL system to host the Quay Enterprise database on then you can run the steps below to create a dedicated MySQL container using the Oracle MySQL verified Docker image from [https://registry.hub.docker.com/_/mysql/](https://registry.hub.docker.com/_/mysql/).
 
 ```sh
 docker pull mysql:5.7
@@ -14,14 +14,14 @@ MYSQL_DATABASE="enterpriseregistrydb"
 MYSQL_CONTAINER_NAME="mysql"
 ```
 Do not edit these values:
-(creates a 32 char password for the MySQL root user and the Enterprise Registry DB user)
+(creates a 32 char password for the MySQL root user and the Quay Enterprise DB user)
 
 ```sh
 MYSQL_ROOT_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | sed 1q)
 MYSQL_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | sed 1q)
 ```
 
-Start the MySQL container and create a new DB for the Enterprise registry:
+Start the MySQL container and create a new DB for Quay Enterprise:
 
 ```sh
 docker \

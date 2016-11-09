@@ -1,11 +1,11 @@
 # Setup GitHub build triggers
 
-CoreOS Enterprise Registry supports using GitHub or GitHub Enterprise as a trigger to building
+Quay Enterprise supports using GitHub or GitHub Enterprise as a trigger to building
 images.
 
 ## Initial setup
 
-If you have not yet done so, please [enable build support](build-support.md) in the Enterprise Registry.
+If you have not yet done so, please [enable build support in Quay Enterprise](build-support.md).
 
 ## Create an OAuth application in GitHub
 
@@ -17,7 +17,7 @@ Following the instructions at [Create a GitHub Application](github-app.md).
 
 Sign in to a super user account and visit `http://yourregister/superuser` to view the management panel:
 
-<img src="img/superuser.png" class="img-center" alt="Enterprise Registry Management Panel"/>
+<img src="img/superuser.png" class="img-center" alt="Quay Enterprise Management Panel"/>
 
 ## Enable GitHub triggers
 
@@ -28,11 +28,3 @@ Sign in to a super user account and visit `http://yourregister/superuser` to vie
 - Fill in the credentials from the application created above
 - Click "Save Configuration Changes"
 - Restart the container (you will be prompted)
-
-## Tag an automated build
-
-After getting automated builds working, it may be desired to tag a specific build with a name. By default, the last image pushed to a repository will be tagged as `latest`. Because tagging is [usually done client side](https://docs.docker.com/userguide/dockerimages/#setting-tags-on-an-image) before an image is pushed, it may not be clear how to tag an image that was built and pushed by GitHub. Luckily, there is a interface for doing so on the repository page. After clicking to select a given build on the build graph, the right side of the page displays tag information which when clicked provides a drop-down menu with the option of creating a new tag.
-
-<img src="img/new-tag.png" class="img-center" alt="Create a new tag"/>
-
-There is currently no ability to automatically tag GitHub triggered builds.
