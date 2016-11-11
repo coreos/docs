@@ -6,56 +6,45 @@ The <a href="https://github.com/chihaya/chihaya">Chihaya</a> project is an open 
 
 ### Basic configuration
 
-Copy the following file as `config.json`, replacing `{QE LOCATION}` and `{TRACKER LOCATION}` with
+Copy the following file as `chihaya.yaml`, replacing `{QE LOCATION}` and `{TRACKER LOCATION}` with
 the reachable endpoint for the Quay Enterprise instance and the tracker itself, respectively.
 
 ```
-{
-  "createOnAnnounce": true,
-  "purgeInactiveTorrents": true,
-  "announce": "15m",
-  "minAnnounce": "15m",
-  "reapInterval": "60s",
-  "reapRatio": 1.25,
-  "defaultNumWant": 50,
-  "torrentMapShards": 16,
-  "allowIPSpoofing": true,
-  "dualStackedPeers": true,
-  "realIPHeader": "X-Forwarded-For",
-  "respectAF": false,
-  "clientWhitelistEnabled": false,
-  "clientWhitelist": ["OP1011"],
-  "apiListenAddr": "0.0.0.0:6880",
-  "apiRequestTimeout": "4s",
-  "apiReadTimeout": "4s",
-  "apiWriteTimeout": "4s",
-  "apiListenLimit": 0,
-  "udpListenAddr": "0.0.0.0:6881",
-  "httpListenAddr": "0.0.0.0:6881",
-  "httpRequestTimeout": "4s",
-  "httpReadTimeout": "4s",
-  "httpWriteTimeout": "4s",
-  "httpListenLimit": 0,
-  "driver": "noop",
-  "statsBufferSize": 0,
-  "includeMemStats": true,
-  "verboseMemStats": false,
-  "memStatsInterval": "5s",
-  "jwkSetURI": "https://{QE LOCATION}/keys/services/quay/keys",
-  "jwkUpdateInterval": "60s",
-  "jwtAudience": "http://{TRACKER LOCATION}/announce",
-  "jwkTTL": "5m"
-}
+chihaya:
+  announce_interval: 15m
+  prometheus_addr: 0.0.0.0:6880
+
+  http:
+    addr: 0.0.0.0:6881
+    allow_ip_spoofing: true
+    real_ip_header: X-Forwarded-For
+    read_timeout: 5s
+    write_timeout: 5s
+    request_timeout: 5s
+
+  storage:
+    gc_interval: 14m
+    peer_lifetime: 15m
+    shards: 16
+    max_numwant: 50
+
+  prehooks:
+  - name: jwt
+    config:
+      issuer: '{QE LOCATION}'
+      audience: '{TRACKER LOCATION}/announce'
+      jwk_set_url: '{QE LOCATION}/keys/services/quay/keys'
+      jwk_set_update_interval: 5m
 ```
 
 
 ## Running
 
-Run the following commands to start Chihaya under a Docker container with the specified configuration mounted, making sure to point the `config.json` to the file created above.
+Run the following commands to start Chihaya under a Docker container with the specified configuration mounted, making sure to point the `chihaya.yaml` to the file created above.
 
 ```sh
-$ docker pull quay.io/jzelinskie/chihaya:v1.0.1
-$ docker run -p 6880-6882:6880-6882 -v $PWD/config.json:/config.json:ro quay.io/jzelinskie/chihaya:v1.0.1 -v=5
+$ docker pull quay.io/jzelinskie/chihaya:v2.0.0-rc.1
+$ docker run -p 6880-6882:6880-6882 -v $PWD/chihaya.yaml:/etc/chihaya.yaml:ro quay.io/jzelinskie/chihaya:v2.0.0-rc.1
 ```
 
 ## Security
