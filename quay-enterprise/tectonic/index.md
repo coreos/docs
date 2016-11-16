@@ -86,6 +86,4 @@ If this port conflicts with an existing Kubernetes Service, simply modify the sa
 All that remains is to configure Quay Enterprise itself.
 After successfully creating the quay-enterprise Kubernetes Service, navigate to `http://{quay-enterprise}/setup` in a web browser to load the Quay Enterprise setup tool, replacing `{quay-enterprise}` with a value that routes to your Service.
 
-Once at the Quay Enterprise setup UI, follow the [setup instructions][setup-instructions] to finalize your installation.
-
-[setup-instructions]: https://coreos.com/products/enterprise-registry/docs/latest/initial-setup.html
+Once at the Quay Enterprise setup UI, follow the setup instructions to finalize your installation.
