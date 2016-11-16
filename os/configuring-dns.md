@@ -4,7 +4,7 @@ By default, DNS resolution on CoreOS is handled through `/etc/resolv.conf`, whic
 
 ## Using a local DNS cache
 
-`systemd-resolved` includes a caching DNS resolver. To use it for DNS resolution and caching, you must enable it via [nsswitch.conf][nsswitch.conf] by adding `resolv` to the `hosts` section.
+`systemd-resolved` includes a caching DNS resolver. To use it for DNS resolution and caching, you must enable it via [nsswitch.conf][nsswitch.conf] by adding `resolve` to the `hosts` section.
 
 Here is an example cloud-config snippet to do that:
 
@@ -21,7 +21,7 @@ write_files:
       shadow:      files usrfiles
       group:       files usrfiles
 
-      hosts:       files usrfiles resolv dns
+      hosts:       files usrfiles resolve dns
       networks:    files usrfiles dns
 
       services:    files usrfiles
@@ -46,7 +46,7 @@ Here is an example Ignition config to perform the same:
       "filesystem": "root",
       "path": "/etc/nsswitch.conf",
       "mode": 420,
-      "contents": { "source": "data:,#%20/etc/nsswitch.conf:%0A%0Apasswd:%20%20%20%20%20%20files%20usrfiles%0Ashadow:%20%20%20%20%20%20files%20usrfiles%0Agroup:%20%20%20%20%20%20%20files%20usrfiles%0A%0Ahosts:%20%20%20%20%20%20%20files%20usrfiles%20resolv%20dns%0Anetworks:%20%20%20%20files%20usrfiles%20dns%0A%0Aservices:%20%20%20%20files%20usrfiles%0Aprotocols:%20%20%20files%20usrfiles%0Arpc:%20%20%20%20%20%20%20%20%20files%20usrfiles%0A%0Aethers:%20%20%20%20%20%20files%0Anetmasks:%20%20%20%20files%0Anetgroup:%20%20%20%20files%0Abootparams:%20%20files%0Aautomount:%20%20%20files%0Aaliases:%20%20%20%20%20files%0A" }
+      "contents": { "source": "data:,#%20/etc/nsswitch.conf:%0A%0Apasswd:%20%20%20%20%20%20files%20usrfiles%0Ashadow:%20%20%20%20%20%20files%20usrfiles%0Agroup:%20%20%20%20%20%20%20files%20usrfiles%0A%0Ahosts:%20%20%20%20%20%20%20files%20usrfiles%20resolve%20dns%0Anetworks:%20%20%20%20files%20usrfiles%20dns%0A%0Aservices:%20%20%20%20files%20usrfiles%0Aprotocols:%20%20%20files%20usrfiles%0Arpc:%20%20%20%20%20%20%20%20%20files%20usrfiles%0A%0Aethers:%20%20%20%20%20%20files%0Anetmasks:%20%20%20%20files%0Anetgroup:%20%20%20%20files%0Abootparams:%20%20files%0Aautomount:%20%20%20files%0Aaliases:%20%20%20%20%20files%0A" }
     }]
   }
 }
