@@ -1,6 +1,6 @@
 # Adding users
 
-You can create user accounts on a CoreOS machine manually with `useradd` or via cloud-config when the machine is created.
+You can create user accounts on a CoreOS machine manually with `useradd` or via Ignition or cloud-config when the machine is created.
 
 ## Add users via cloud-config
 

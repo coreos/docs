@@ -34,6 +34,30 @@ The following command will create a single instance. For more details, check out
   </div>
 </div>
 
+## Ignition Config
+
+CoreOS allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Ignition. Head over to the [docs to learn about the supported features][ignition-docs]. Note that Microsoft Azure doesn't allow an instance's userdata to be modified after the instance has been launched. This isn't a problem since Ignition only runs on the first boot.
+
+You can provide a raw Ignition config to CoreOS [via the Microsoft Azure Cross-Platform CLI][azurecli-heading].
+
+As an example, this config will configure and start etcd:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "systemd": {
+    "units": [{
+      "name": "etcd2.service",
+      "enable": true,
+      "dropins": [{
+        "name": "metadata.conf",
+        "contents": "[Unit]\nRequires=coreos-metadata.service\nAfter=coreos-metadata.service\n\n[Service]\nEnvironmentFile=/run/metadata/coreos\nExecStart=\nExecStart=/usr/bin/etcd2 --advertise-client-urls=http://${COREOS_AZURE_IPV4_DYNAMIC}:2379 --initial-advertise-peer-urls=http://${COREOS_AZURE_IPV4_DYNAMIC}:2380 --listen-client-urls=http://0.0.0.0:2379 --listen-peer-urls=http://${COREOS_AZURE_IPV4_DYNAMIC}:2380 --discovery=https://discovery.etcd.io/<token>"
+      }]
+    }]
+  }
+}
+```
+
 ## Cloud-config
 
 CoreOS allows you to configure machine parameters, launch systemd units on startup, and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once an instance is provisioned on Microsoft Azure, the cloud-config cannot be modified.
