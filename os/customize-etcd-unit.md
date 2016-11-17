@@ -24,7 +24,71 @@ Environment=ETCD_PEER_CERT_FILE=/path/to/peers.crt
 Environment=ETCD_PEER_KEY_FILE=/path/to/peers.key
 ```
 
-You'll have to put these files on disk somewhere. To do this on each of your machines, the easiest way is with cloud-config.
+You'll have to put these files on disk somewhere. To do this on each of your machines, the easiest way is with Ignition or cloud-config.
+
+### Ignition
+
+```json
+{
+  "ignition": {
+      "version": "2.0.0"
+  },
+  "systemd": {
+    "units": [{
+      "name": "etcd2.service",
+      "enable": true,
+      "dropins": [{
+        "name": "30-certificates.conf",
+        "contents": "[Service]\n# Client Env Vars\nEnvironment=ETCD_CA_FILE=/path/to/CA.pem\nEnvironment=ETCD_CERT_FILE=/path/to/server.crt\nEnvironment=ETCD_KEY_FILE=/path/to/server.key\n# Peer Env Vars\nEnvironment=ETCD_PEER_CA_FILE=/path/to/CA.pem\nEnvironment=ETCD_PEER_CERT_FILE=/path/to/peers.crt\nEnvironment=ETCD_PEER_KEY_FILE=/path/to/peers.key\n"
+      }]
+    }]
+  },
+  "storage": {
+    "files": [
+      {
+        "filesystem": "root",
+        "path": "/path/to/CA.pem",
+        "mode": 420,
+        "contents": {
+          "source": "<url to certificate>"
+        }
+      },
+      {
+        "filesystem": "root",
+        "path": "/path/to/server.crt",
+        "mode": 420,
+        "contents": {
+          "source": "<url to certificate>"
+        }
+      },
+      {
+        "filesystem": "root",
+        "path": "/path/to/server.key",
+        "mode": 420,
+        "contents": {
+          "source": "<url to certificate>"
+        }
+      },
+      {
+        "filesystem": "root",
+        "path": "/path/to/peers.crt",
+        "mode": 420,
+        "contents": {
+          "source": "<url to certificate>"
+        }
+      },
+      {
+        "filesystem": "root",
+        "path": "/path/to/peers.key",
+        "mode": 420,
+        "contents": {
+          "source": "<url to certificate>"
+        }
+      }
+    ]
+  }
+}
+```
 
 ### Cloud-config
 
