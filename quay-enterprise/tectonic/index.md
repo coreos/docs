@@ -12,7 +12,7 @@ We currently recommend running this database server outside of the cluster.
 
 ## Download Kubernetes Configuration Files
 
-Visit your [Tectonic Account][tectonic-account] and download the pre-formatted pull secret, under "Account Assets". There are several formats of the secret, be sure to download the Kubernetes-formatted file. This pull secret is used to download the Quay Enterprise containers.
+Visit your [Tectonic Account][tectonic-account] and download the pre-formatted pull secret, under "Account Assets". There are several formats of the secret, be sure to download the "dockercfg" format resulting in a `config.json` file. This pull secret is used to download the Quay Enterprise containers.
 
 This will be used later in the guide.
 
@@ -36,10 +36,10 @@ The first step is to create this namespace:
 kubectl create -f quay-enterprise-namespace.yml
 ```
 
-Next, add your pull secret to Kubernetes:
+Next, add your pull secret to Kubernetes (make sure you specify the correct path to `config.json`):
 
 ```sh
-kubectl create -f coreos-pull-secret.yml --namespace=quay-enterprise
+kubectl create secret generic coreos-pull-secret --from-file=".dockerconfigjson=config.json" --type='kubernetes.io/dockerconfigjson' --namespace=quay-enterprise
 ```
 
 Finally, the remaining Kubernetes objects can be deployed onto Kubernetes:
