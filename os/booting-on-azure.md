@@ -119,3 +119,4 @@ Now that you have a machine booted it is time to play around. Check out the [Cor
 [ssh]: http://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-use-ssh-key/
 [update-docs]: {{site.baseurl}}/using-coreos/updates
 [xplat-cli]: http://azure.microsoft.com/en-us/documentation/articles/xplat-cli/
+[ignition-docs]: https://coreos.com/ignition/docs/latest
