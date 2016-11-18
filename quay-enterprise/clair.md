@@ -278,6 +278,8 @@ Content-Type: text/plain; charset=utf-8
 
 ## Continue with Quay Setup
 
-Once Clair setup is complete, continue with [Quay Security Scanner Setup](security-scanning.md).
+Once Clair setup is complete, continue with [Quay Security Scanner Setup][quay-scanner-setup].
 
-[quay-ssl-gen]: https://tectonic.com/quay-enterprise/docs/latest/quay-ssl.html
+
+[quay-ssl-gen]: quay-ssl.md
+[quay-scanner-setup]: security-scanning.md
