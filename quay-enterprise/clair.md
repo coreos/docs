@@ -212,12 +212,12 @@ To configure Clair to run under TLS, a few additional steps are required:
 2. Place these files as `clair.crt` and `clair.key` in your Clair configuration directory
 3. Uncomment the `key_file` and `crt_file` lines under `verifier_proxies` in your Clair `config.yaml`
 
-### Configuring trust to self-signed SSL
+### Configuring trust for self-signed SSL
 
-To configure Clair with a Quay Registry that is configured with self-signed SSL certificates follow steps below:
+Follow the steps below to configure Clair with a Quay Registry that is configured with self-signed SSL certificates:
 
-1. Rename the Quay Registry trusted certificate bundle to ca.crt 
-2. Make sure that ca.crt file is mounted inside the Clair container under /usr/local/share/ca-certificates such as the example below 
+1. After generating certificates with either the [Quay recommended process][quay-ssl-gen] or your preferred tools, rename the Quay Registry trusted certificate bundle to `ca.crt`.
+2. Make sure the `ca.crt` file is mounted inside the Clair container under `/usr/local/share/ca-certificates/`, as in the example below:
 
 ```
 docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config -v /path/to/quay/cert/directory:/usr/local/share/ca-certificates  quay.io/coreos/clair-jwt:v1.2.5
@@ -279,3 +279,5 @@ Content-Type: text/plain; charset=utf-8
 ## Continue with Quay Setup
 
 Once Clair setup is complete, continue with [Quay Security Scanner Setup](security-scanning.md).
+
+[quay-ssl-gen]: https://tectonic.com/quay-enterprise/docs/latest/quay-ssl.html
