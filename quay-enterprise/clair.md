@@ -203,25 +203,28 @@ jwtproxy:
           registry: { QUAY_ENDPOINT }/keys/
 ```
 
-
 ### Configuring Clair for TLS
 
-To configure Clair to run under TLS, a few additional steps are required:
+To configure Clair to run with TLS, a few additional steps are required:
 
 1. Generate a TLS certificate and key pair for the DNS name at which Clair will be accessed
 2. Place these files as `clair.crt` and `clair.key` in your Clair configuration directory
 3. Uncomment the `key_file` and `crt_file` lines under `verifier_proxies` in your Clair `config.yaml`
 
-### Configuring trust for self-signed SSL
+If your certificates use a public CA, you are now ready to run Clair. If you are using your own certificate authority, configure Clair to trust it below.
 
-Follow the steps below to configure Clair with a Quay Registry that is configured with self-signed SSL certificates:
+### Configuring trust of self-signed SSL
 
-1. After generating certificates with either the [Quay recommended process][quay-ssl-gen] or your preferred tools, rename the Quay Registry trusted certificate bundle to `ca.crt`.
-2. Make sure the `ca.crt` file is mounted inside the Clair container under `/usr/local/share/ca-certificates/`, as in the example below:
+Similar to the process for setting up Docker to [trust your self-signed certificates][registry-self-signed], Clair must also be configured to trust your certificates. Using the same CA certificate bundle used to configure Docker, complete the following steps:
+
+1. Rename the same CA certificate bundle used to set up Quay Registry to `ca.crt`
+2. Make sure that ca.crt file is mounted inside the Clair container under /usr/local/share/ca-certificates such as the example below:
 
 ```
 docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config -v /path/to/quay/cert/directory:/usr/local/share/ca-certificates  quay.io/coreos/clair-jwt:v1.2.5
 ```
+
+Now Clair will be able to trust the source of your TLS certificates and use them to secure communicates between Clair and Quay.
 
 ## Run Clair
 
@@ -278,8 +281,6 @@ Content-Type: text/plain; charset=utf-8
 
 ## Continue with Quay Setup
 
-Once Clair setup is complete, continue with [Quay Security Scanner Setup][quay-scanner-setup].
+Once Clair setup is complete, continue with [Quay Security Scanner Setup](security-scanning.md).
 
-
-[quay-ssl-gen]: quay-ssl.md
-[quay-scanner-setup]: security-scanning.md
+[registry-self-signed]: https://tectonic.com/quay-enterprise/docs/latest/quay-ssl.html#configuring-docker-to-trust-a-certificate-authority
