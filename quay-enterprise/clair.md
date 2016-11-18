@@ -224,7 +224,7 @@ Similar to the process for setting up Docker to [trust your self-signed certific
 docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config -v /path/to/quay/cert/directory:/usr/local/share/ca-certificates  quay.io/coreos/clair-jwt:v1.2.5
 ```
 
-Now Clair will be able to trust the source of your TLS certificates and use them to secure communicates between Clair and Quay.
+Now Clair will be able to trust the source of your TLS certificates and use them to secure communication between Clair and Quay.
 
 ## Run Clair
 
@@ -283,4 +283,4 @@ Content-Type: text/plain; charset=utf-8
 
 Once Clair setup is complete, continue with [Quay Security Scanner Setup](security-scanning.md).
 
-[registry-self-signed]: https://tectonic.com/quay-enterprise/docs/latest/quay-ssl.html#configuring-docker-to-trust-a-certificate-authority
+[registry-self-signed]: quay-enterprise/quay-ssl.html#configuring-docker-to-trust-a-certificate-authority
