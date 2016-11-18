@@ -218,7 +218,7 @@ If your certificates use a public CA, you are now ready to run Clair. If you are
 Similar to the process for setting up Docker to [trust your self-signed certificates][registry-self-signed], Clair must also be configured to trust your certificates. Using the same CA certificate bundle used to configure Docker, complete the following steps:
 
 1. Rename the same CA certificate bundle used to set up Quay Registry to `ca.crt`
-2. Make sure that ca.crt file is mounted inside the Clair container under /usr/local/share/ca-certificates such as the example below:
+2. Make sure the `ca.crt` file is mounted inside the Clair container under `/usr/local/share/ca-certificates/` as in the example below:
 
 ```
 docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config -v /path/to/quay/cert/directory:/usr/local/share/ca-certificates  quay.io/coreos/clair-jwt:v1.2.5
