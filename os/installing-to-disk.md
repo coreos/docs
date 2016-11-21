@@ -2,7 +2,7 @@
 
 ## Install script
 
-There is a simple installer that will destroy everything on the given target disk and install CoreOS. Essentially it downloads an image, verifies it with gpg, and then copies it bit for bit to disk.
+There is a simple installer that will destroy everything on the given target disk and install CoreOS. Essentially it downloads an image, verifies it with gpg, and then copies it bit for bit to disk. An installation requires at least 8 GB of usable space on the device.
 
 The script is self-contained and located [on GitHub here][coreos-install] and can be run from any Linux distribution. You cannot normally install CoreOS to the same device that is currently booted. However, the [CoreOS ISO][coreos-iso] or any Linux liveCD will allow CoreOS to install to a non-active device.
 
