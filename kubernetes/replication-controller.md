@@ -102,6 +102,6 @@ For more information on replication controllers, the [Kubernetes documentation][
   <a href="index.html" class="btn btn-link">Back to Listing</a>
 </div>
 
-[upstream-rc]: http://kubernetes.io/v1.0/docs/user-guide/replication-controller.html
+[upstream-rc]: http://kubernetes.io/docs/user-guide/replication-controller/
 [pod-overview]: pods.md
 [service-overview]: services.md
