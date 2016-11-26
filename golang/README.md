@@ -7,7 +7,7 @@ This document serves as a best practices and style guide for how to work on new 
 ## Version
 
 - Wherever possible, use the [latest official release][go-dl] of go
-- Any software shipped in the CoreOS image should be developed against the [version shipped in the CoreOS image](https://github.com/coreos/portage-stable/tree/master/dev-lang/go)
+- Any software shipped in the CoreOS image should be developed against the [versions shipped in the CoreOS image](https://github.com/coreos/coreos-overlay/tree/master/dev-lang/go)
 
 [go-dl]: https://golang.org/dl/
 
@@ -30,10 +30,9 @@ It's recommended to set a save hook in your editor of choice that runs `goimport
 - Use [table-driven tests][table-driven] wherever possible ([example][table-driven-example])
 - Use [travis][travis] to run unit/integration tests against the project repository ([example][travis-example])
 - Use [SemaphoreCI][semaphore] to run functional tests where possible ([example][semaphore-example])
-- Use [GoDebug][godebug] `pretty.Compare` to compare objects (structs, maps, slices, etc.) ([example] [godebug-compare-example])
+- Use [GoDebug][godebug] `pretty.Compare` to compare objects (structs, maps, slices, etc.)
 
 [godebug]: https://github.com/kylelemons/godebug/
-[godebug-compare-example]: https://github.com/coreos-inc/auth/blob/master/functional/db_test.go#L107
 [goimports]: https://github.com/bradfitz/goimports
 [table-driven]: https://github.com/golang/go/wiki/TableDrivenTests
 [table-driven-example]: https://github.com/coreos/etcd/blob/35fddbc5d01f5e88bbc590c60f0b5e3ea8fa141b/raft/raft_paper_test.go#L186
