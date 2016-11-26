@@ -1,6 +1,6 @@
 # Booting CoreOS via PXE
 
-These instructions will walk you through booting CoreOS via PXE on real or virtual hardware. By default, this will run CoreOS completely out of RAM. CoreOS can also be [installed to disk]({{site.baseurl}}/docs/running-coreos/bare-metal/installing-to-disk).
+These instructions will walk you through booting CoreOS via PXE on real or virtual hardware. By default, this will run CoreOS completely out of RAM. CoreOS can also be [installed to disk](installing-to-disk.md).
 
 A mininum of 1024M of RAM is required to boot CoreOS via PXE.
 
@@ -63,7 +63,7 @@ Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced i
 
 ### Choose a channel
 
-CoreOS is [released]({{site.baseurl}}/releases/) into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+CoreOS is [released](https://coreos.com/releases/) into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 PXE booted machines cannot currently update themselves when new versions are released to a channel. To update to the latest version of CoreOS download/verify these files again and reboot.
 
@@ -199,8 +199,8 @@ Now that you have a machine booted it is time to play around. Check out the [Cor
 [append-initrd]: http://www.syslinux.org/wiki/index.php?title=SYSLINUX#INITRD_initrd_file
 [cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
-[docs]: {{site.baseurl}}/docs
-[install-to-disk]: {{site.baseurl}}/docs/running-coreos/bare-metal/installing-to-disk
+[docs]: https://coreos.com/docs
+[install-to-disk]: installing-to-disk.md
 [irc]: irc://irc.freenode.org:6667/#coreos
-[oem]: {{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors/#image-customization
-[qs]: {{site.baseurl}}/docs/quickstart
+[oem]: notes-for-distributors.md#image-customization
+[qs]: quickstart.md

@@ -136,11 +136,11 @@ Now that you have a machine booted it is time to play around. Check out the [Cor
 [azurecli-heading]: #via-the-cross-platform-cli
 [cloud-config-docs]: {{site.baseurl}}/os/docs/latest/cloud-config.html
 [cloud-config-heading]: #cloud-config
-[docs]: {{site.baseurl}}/docs
+[docs]: https://coreos.com/docs
 [quickstart]: quickstart.md
 [reboot-docs]: update-strategies.md
-[release-notes]: {{site.baseurl}}/releases
+[release-notes]: https://coreos.com/releases
 [ssh]: http://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-use-ssh-key/
-[update-docs]: {{site.baseurl}}/using-coreos/updates
+[update-docs]: https://coreos.com/why/#updates
 [xplat-cli]: http://azure.microsoft.com/en-us/documentation/articles/xplat-cli/
 [ignition-docs]: https://coreos.com/ignition/docs/latest

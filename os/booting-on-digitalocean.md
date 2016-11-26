@@ -66,9 +66,9 @@ The following command will create a single droplet. For more details, check out 
   </div>
 </div>
 
-[update-docs]: {{site.baseurl}}/using-coreos/updates
-[reboot-docs]: {{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update
-[release-notes]: {{site.baseurl}}/releases
+[update-docs]: https://coreos.com/why/#updates
+[reboot-docs]: update-strategies.md
+[release-notes]: https://coreos.com/releases
 
 ## Cloud-config
 
@@ -119,7 +119,7 @@ To connect to a droplet after it's created, run:
 ssh core@<ip address>
 ```
 
-Optionally, you may want to [configure your ssh-agent]({{site.baseurl}}/docs/launching-containers/launching/fleet-using-the-client/#remote-fleet-access) to more easily run [fleet commands]({{site.baseurl}}/docs/launching-containers/launching/launching-containers-fleet/).
+Optionally, you may want to [configure your ssh-agent](https://github.com/coreos/fleet/blob/master/Documentation/using-the-client.md#remote-fleet-access) to more easily run [fleet commands](../fleet/launching-containers-fleet.md).
 
 ## Launching droplets
 
@@ -203,5 +203,5 @@ Note that DigitalOcean is not able to inject a root password into CoreOS images 
 
 Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart][quick-start] guide or dig into [more specific topics][docs].
 
-[quick-start]: {{site.baseurl}}/docs/quickstart
-[docs]: {{site.baseurl}}/docs
+[quick-start]: quickstart.md
+[docs]: https://coreos.com/docs

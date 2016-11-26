@@ -38,4 +38,4 @@ cat /etc/os-release
 
 ## Release information
 
-You can read more about the current releases and channels on the [releases page]({{site.baseurl}}/releases).
+You can read more about the current releases and channels on the [releases page](https://coreos.com/releases).

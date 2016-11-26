@@ -1,6 +1,6 @@
 # Overview of systemctl
 
-`systemctl` is your interface to systemd, the init system used in CoreOS. All processes on a single machine are started and managed by systemd, including your Docker containers. You can learn more in our [Getting Started with systemd]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd) guide. Let's explore a few helpful `systemctl` commands. You must run all of these commands locally on the CoreOS machine:
+`systemctl` is your interface to systemd, the init system used in CoreOS. All processes on a single machine are started and managed by systemd, including your Docker containers. You can learn more in our [Getting Started with systemd](getting-started-with-systemd.md) guide. Let's explore a few helpful `systemctl` commands. You must run all of these commands locally on the CoreOS machine:
 
 ## Find the status of a container
 
@@ -72,6 +72,6 @@ sudo systemctl daemon-reload
 
 ## More information
 
-<a class="btn btn-default" href="{{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd">Getting Started with systemd</a>
+<a class="btn btn-default" href="getting-started-with-systemd.md">Getting Started with systemd</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">systemd.service Docs</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html">systemd.unit Docs</a>

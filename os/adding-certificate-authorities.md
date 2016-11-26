@@ -15,4 +15,4 @@ The setup process for any of these use-cases is the same:
 
 [Generate Self-Signed Certificates](generate-self-signed-certificates.md)
 
-[etcd Security Model]({{site.baseurl}}/etcd/docs/latest/security.html)
+[etcd Security Model](https://github.com/coreos/etcd/blob/master/Documentation/op-guide/security.md)

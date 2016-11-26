@@ -51,7 +51,7 @@ kubectl create -f quay-enterprise-config-secret.yml -f quay-enterprise-redis.yml
 ## Expose via Kubernetes Service
 
 In order to access Quay Enterprise, a user must route to it through a Kubernetes Service.
-It is up to the deployer to decide which Service type is appropriate for their use case: a [LoadBalancer](http://kubernetes.io/v1.0/docs/user-guide/services.html#type-loadbalancer) or a [NodePort](http://kubernetes.io/v1.0/docs/user-guide/services.html#type-nodeport).
+It is up to the deployer to decide which Service type is appropriate for their use case: a [LoadBalancer](http://kubernetes.io/docs/user-guide/services/#type-loadbalancer) or a [NodePort](http://kubernetes.io/docs/user-guide/services/#type-nodeport).
 
 A LoadBalancer is recommended if the Kubernetes cluster is integrated with a cloud provider, otherwise a NodePort will suffice.
 Along with this guide are examples of this service.

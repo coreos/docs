@@ -8,7 +8,7 @@ These steps will download the CoreOS image, uncompress it, and then import it in
 
 ## Choosing a channel
 
-CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
+CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
 
 <div id="openstack-create">
   <ul class="nav nav-tabs">
@@ -189,4 +189,4 @@ If you would like to create multiple clusters you'll need to generate and use a 
 
 ## Using CoreOS
 
-Now that you have instances booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have instances booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

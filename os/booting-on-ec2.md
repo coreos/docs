@@ -12,7 +12,7 @@ The current AMIs for all CoreOS channels and EC2 regions are listed below and up
 
 ## Choosing a channel
 
-CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
+CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
 
 <div id="ec2-images">
   <ul class="nav nav-tabs">
@@ -189,7 +189,7 @@ coreos:
         Type=ext3
 ```
 
-For more information about mounting storage, Amazon's [own documentation](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html) is the best source. You can also read about [mounting storage on CoreOS]({{site.baseurl}}/docs/cluster-management/setup/mounting-storage).
+For more information about mounting storage, Amazon's [own documentation](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html) is the best source. You can also read about [mounting storage on CoreOS](mounting-storage.md).
 
 ### Adding more machines
 To add more instances to the cluster, just launch more with the same cloud-config, the appropriate security group and the AMI for that region. New instances will join the cluster regardless of region if the security groups are configured correctly.
@@ -204,7 +204,7 @@ To connect to an instance after it's created, run:
 ssh core@<ip address>
 ```
 
-Optionally, you may want to [configure your ssh-agent]({{site.baseurl}}/docs/launching-containers/launching/fleet-using-the-client/#remote-fleet-access) to more easily run [fleet commands]({{site.baseurl}}/docs/launching-containers/launching/launching-containers-fleet/).
+Optionally, you may want to [configure your ssh-agent](https://github.com/coreos/fleet/blob/master/Documentation/using-the-client.md#remote-fleet-access) to more easily run [fleet commands](../fleet/launching-containers-fleet.md).
 
 ## Multiple clusters
 If you would like to create multiple clusters you will need to change the "Stack Name". You can find the direct [template file on S3]({{ cf_beta_pv_template }}).
@@ -497,10 +497,10 @@ coreos:
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
 
 
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
 [docker-docs]: https://docs.docker.io
-[etcd-docs]: {{site.baseurl}}/etcd/docs/latest/
+[etcd-docs]: https://github.com/coreos/etcd/tree/master/Documentation
 [irc]: irc://irc.freenode.org:6667/#coreos

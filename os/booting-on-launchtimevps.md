@@ -117,11 +117,11 @@ To connect to a VM after it's created (VM creation may take up to a couple of mi
 ssh core@<ip address>
 ```
 
-Optionally, you may want to [configure your ssh-agent]({{site.baseurl}}/docs/launching-containers/launching/fleet-using-the-client/#remote-fleet-access) to more easily run [fleet commands]({{site.baseurl}}/docs/launching-containers/launching/launching-containers-fleet/).
+Optionally, you may want to [configure your ssh-agent](https://github.com/coreos/fleet/blob/master/Documentation/using-the-client.md#remote-fleet-access) to more easily run [fleet commands](../fleet/launching-containers-fleet.md).
 
 ## Using CoreOS
 
-Now that you have a cluster bootstrapped it is time to play around. Check out the [CoreOS quickstart guide](quickstart.md) or dig into [more specific topics]({{site.baseurl}}/docs/).
+Now that you have a cluster bootstrapped it is time to play around. Check out the [CoreOS quickstart guide](quickstart.md) or dig into [more specific topics](https://coreos.com/docs).
 
 [rh-api-docs]: http://apidocs.rimuhosting.com/jaxrsdocs/index.html
 [rh-ssh-keys-page]: https://launchtimevps.com/cp/sshkeys.jsp

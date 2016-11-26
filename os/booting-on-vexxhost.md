@@ -4,7 +4,7 @@ VEXXHOST is a Canadian OpenStack cloud computing provider based in Canada. In or
 
 The following instructions will walk you through setting up the `nova` tool with your appropriate credentials and launching your first cluster using the CLI tools.
 
-[cloud-compute]: http://vexxhost.com/cloud-computing
+[cloud-compute]: https://vexxhost.com/
 
 ## Choosing a channel
 
@@ -125,4 +125,4 @@ If you would like to create multiple clusters you'll need to generate and use a 
 
 ## Using CoreOS
 
-Now that you have instances booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have instances booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

@@ -20,7 +20,7 @@ Once logged into the portal you will be able to click the 'Deploy' button and ch
 
 ### API instructions
 
-If you elect to use the API to provision machines on Packet you should consider using [one of our language libraries](https://www.packet.net/dev/) to code against. As an example, this is how you would launch a single Type 1 machine in a curl command. [Packet API Documentation](https://www.packet.net/dev/api/).
+If you elect to use the API to provision machines on Packet you should consider using [one of our language libraries](https://www.packet.net/integrations/libraries/) to code against. As an example, this is how you would launch a single Type 1 machine in a curl command. [Packet API Documentation](https://www.packet.net/dev/api/).
 
 ```bash
 # Replace items in brackets (<EXAMPLE>) with the appropriate values.
@@ -65,4 +65,4 @@ The `$private_ipv4`, `$public_ipv4`, and `$public_ipv6` variables are fully supp
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

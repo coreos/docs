@@ -125,4 +125,4 @@ If you would like to create multiple clusters you'll need to generate and use a 
 
 ## Using CoreOS
 
-Now that you have instances booted, it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have instances booted, it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

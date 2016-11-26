@@ -289,7 +289,7 @@ openssl x509 -in client.pem -text -noout
 For another examples, check out these documents:
 
 [Custom Certificate Authorities](adding-certificate-authorities.md)
-[etcd Security Model](https://github.com/coreos/etcd/blob/master/Documentation/security.md)
+[etcd Security Model](https://github.com/coreos/etcd/blob/master/Documentation/op-guide/security.md)
 
 [cfssl]: https://github.com/cloudflare/cfssl
 [cfssl-bin]: https://pkg.cfssl.org

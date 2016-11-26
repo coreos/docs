@@ -5,8 +5,8 @@
 - [CoreOS Issues][issues]
 - [CoreOS Pull Requests][pullrequests]
 
-[issues]: https://github.com/organizations/coreos/dashboard/issues/
-[pullrequests]: https://github.com/organizations/coreos/dashboard/pulls/
+[issues]: https://github.com/issues?user=coreos
+[pullrequests]: https://github.com/pulls?user=coreos
 
 ## Searching all repo code
 

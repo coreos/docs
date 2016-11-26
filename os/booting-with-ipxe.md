@@ -1,6 +1,6 @@
 # Booting CoreOS via iPXE
 
-These instructions will walk you through booting CoreOS via iPXE on real or virtual hardware. By default, this will run CoreOS completely out of RAM. CoreOS can also be [installed to disk]({{site.baseurl}}/docs/running-coreos/bare-metal/installing-to-disk).
+These instructions will walk you through booting CoreOS via iPXE on real or virtual hardware. By default, this will run CoreOS completely out of RAM. CoreOS can also be [installed to disk](installing-to-disk.md).
 
 A mininum of 1024M of RAM is required to boot CoreOS via PXE.
 
@@ -108,15 +108,15 @@ Since CoreOS's upgrade process requires a disk, this image does not have the opt
 
 ## Installation
 
-CoreOS can be completely installed on disk or run from RAM but store user data on disk. Read more in our [Installing CoreOS guide]({{site.baseurl}}/os/docs/latest/booting-with-pxe.html#installation).
+CoreOS can be completely installed on disk or run from RAM but store user data on disk. Read more in our [Installing CoreOS guide](booting-with-pxe.md#installation).
 
 ## Adding a custom OEM
 
-Similar to the [OEM partition][oem] in CoreOS disk images, iPXE images can be customized with a [cloud config][cloud-config] bundled in the initramfs. You can view the [instructions on the PXE docs]({{site.baseurl}}/os/docs/latest/booting-with-pxe.html#adding-a-custom-oem).
+Similar to the [OEM partition][oem] in CoreOS disk images, iPXE images can be customized with a [cloud config][cloud-config] bundled in the initramfs. You can view the [instructions on the PXE docs](booting-with-pxe.md#adding-a-custom-oem).
 
-[oem]: {{site.baseurl}}/os/docs/latest/notes-for-distributors.html#image-customization
+[oem]: notes-for-distributors.md#image-customization
 [cloud-config]: {{site.baseurl}}/os/docs/latest/cloud-config.html
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

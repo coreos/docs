@@ -144,7 +144,7 @@ Enter passphrase for key '/home/user/.ssh/id_rsa':
 
 ### Further reading on systemd units
 
-For more information about configuring CoreOS hosts with `systemd`, see [Getting Started with systemd]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd/).
+For more information about configuring CoreOS hosts with `systemd`, see [Getting Started with systemd](getting-started-with-systemd.md).
 
 ### Override socket-activated SSH
 

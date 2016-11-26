@@ -42,7 +42,7 @@ The `$private_ipv4` and `$public_ipv4` substitution variables are fully supporte
 
 ## Choosing a channel
 
-CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
+CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
 
 Create 3 instances from the image above using our cloud-config from `cloud-config.yaml`:
 
@@ -85,7 +85,7 @@ coreos:
         Type=ext3
 ```
 
-For more information about mounting storage, Google's [own documentation](https://developers.google.com/compute/docs/disks#attach_disk) is the best source. You can also read about [mounting storage on CoreOS]({{site.baseurl}}/docs/cluster-management/setup/mounting-storage).
+For more information about mounting storage, Google's [own documentation](https://developers.google.com/compute/docs/disks#attach_disk) is the best source. You can also read about [mounting storage on CoreOS](mounting-storage.md).
 
 ### Adding more machines
 To add more instances to the cluster, just launch more with the same cloud-config inside of the project.
@@ -172,4 +172,4 @@ zone: us-central1-a
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

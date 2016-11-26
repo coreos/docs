@@ -31,7 +31,7 @@ To start our cluster, we need to provide some config parameters in cloud-config 
 
 CoreOS allows you to configure machine parameters, launch systemd units on start-up and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. You can provide cloud-config data to your CoreOS Vagrant VM by editing the `user-data` file inside of the cloned directory. A sample file `user-data.sample` exists as a base and must be renamed to `user-data` for it to be processed.
 
-Our cluster will use an etcd [discovery URL]({{site.baseurl}}/docs/cluster-management/setup/etcd-cluster-discovery/) to bootstrap the cluster of machines and elect an initial etcd leader. Be sure to replace `<token>` with your own URL from [https://discovery.etcd.io/new](https://discovery.etcd.io/new):
+Our cluster will use an etcd [discovery URL](cluster-discovery.md) to bootstrap the cluster of machines and elect an initial etcd leader. Be sure to replace `<token>` with your own URL from [https://discovery.etcd.io/new](https://discovery.etcd.io/new):
 
 ```yaml
 #cloud-config
@@ -82,7 +82,7 @@ If you need to update your cloud-config later on, run `vagrant reload --provisio
 
 The `config.rb.sample` file contains a few useful settings about your Vagrant environment and most importantly, how many machines you'd like in your cluster.
 
-CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. Select the channel you'd like to use for this cluster below. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
+CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. Select the channel you'd like to use for this cluster below. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
 
 <div id="vagrant-create">
   <ul class="nav nav-tabs">
@@ -277,7 +277,7 @@ vagrant box add coreos-alpha <path-to-box-file>
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide, learn about [CoreOS clustering with Vagrant]({{site.baseurl}}/blog/coreos-clustering-with-vagrant/), or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide, learn about [CoreOS clustering with Vagrant](https://coreos.com/blog/coreos-clustering-with-vagrant/), or dig into [more specific topics](https://coreos.com/docs).
 
 
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev

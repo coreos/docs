@@ -2,7 +2,7 @@
 
 CoreOS publishes new images for each release across a variety of platforms and hosting providers. Each channel has it's own set of images ([stable], [beta], [alpha]) that are posted to our storage site. Along with each image, a signature is generated from the [CoreOS Image Signing Key][signing-key] and posted.
 
-[signing-key]: {{site.baseurl}}/security/image-signing-key
+[signing-key]: https://coreos.com/security/image-signing-key
 [stable]: https://stable.release.core-os.net/amd64-usr/current/
 [beta]: https://beta.release.core-os.net/amd64-usr/current/
 [alpha]: https://alpha.release.core-os.net/amd64-usr/current/

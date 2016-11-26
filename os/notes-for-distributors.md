@@ -14,7 +14,7 @@ wget https://alpha.release.core-os.net/amd64-usr/current/coreos_production_opens
 gpg --verify coreos_production_openstack_image.img.bz2.sig
 ```
 
-[signing-key]: {{site.baseurl}}/security/image-signing-key
+[signing-key]: https://coreos.com/security/image-signing-key
 
 ## Image customization
 
@@ -36,7 +36,7 @@ You can find the [code for this process on GitHub][amazon-github]. End-user inst
 
 [amazon-github]: https://github.com/coreos/coreos-overlay/tree/master/coreos-base/oem-ec2-compat
 [amazon-user-data-doc]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html#instancedata-user-data-retrieval
-[amazon-cloud-config]: {{site.baseurl}}/docs/running-coreos/cloud-providers/ec2#cloud-config
+[amazon-cloud-config]: booting-on-ec2.md#cloud-config
 
 ### Rackspace Cloud example
 
@@ -45,4 +45,4 @@ Rackspace passes configuration data to a VM by mounting [config-drive][config-dr
 You can find the [code for this process on GitHub][rackspace-github]. End-user instructions for this process can be found on our [Rackspace docs][rackspace-cloud-config].
 
 [rackspace-github]: https://github.com/coreos/coreos-overlay/tree/master/coreos-base/oem-rackspace
-[rackspace-cloud-config]: {{site.baseurl}}/docs/running-coreos/cloud-providers/rackspace#cloud-config
+[rackspace-cloud-config]: booting-on-rackspace.md#cloud-config

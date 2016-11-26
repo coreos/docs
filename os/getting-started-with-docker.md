@@ -2,7 +2,7 @@
 
 Docker is an open-source project that makes creating and managing Linux containers really easy. Containers are like extremely lightweight VMs – they allow code to run in isolation from other containers but safely share the machine’s resources, all without the overhead of a hypervisor.
 
-Docker containers can boot extremely fast (in milliseconds!) which gives you unprecedented flexibility in managing load across your cluster. For example, instead of running chef on each of your VMs, it’s faster and more reliable to have your build system create a container and launch it on the appropriate number of CoreOS hosts. This guide will show you how to launch a container, install some software on it, commit that container, and optionally launch it on another CoreOS machine. Before starting, make sure you've got at least one CoreOS machine up and running &mdash; try it on [Amazon EC2]({{site.baseurl}}/docs/running-coreos/cloud-providers/ec2/) or locally with [Vagrant]({{site.baseurl}}/docs/running-coreos/platforms/vagrant).
+Docker containers can boot extremely fast (in milliseconds!) which gives you unprecedented flexibility in managing load across your cluster. For example, instead of running chef on each of your VMs, it’s faster and more reliable to have your build system create a container and launch it on the appropriate number of CoreOS hosts. This guide will show you how to launch a container, install some software on it, commit that container, and optionally launch it on another CoreOS machine. Before starting, make sure you've got at least one CoreOS machine up and running &mdash; try it on [Amazon EC2](booting-on-ec2.md) or locally with [Vagrant](booting-on-vagrant.md).
 
 ## Docker CLI basics
 
@@ -64,7 +64,7 @@ When running Docker containers manually, the most important option is to run the
 docker run -d coreos/apache [process]
 ```
 
-After you are comfortable with the mechanics of running containers by hand, it's recommended to use [systemd units]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd) and/or [fleet]({{site.baseurl}}/docs/launching-containers/launching/launching-containers-fleet) to run your containers on a cluster of CoreOS machines.
+After you are comfortable with the mechanics of running containers by hand, it's recommended to use [systemd units](getting-started-with-systemd.md) and/or [fleet](../fleet/launching-containers-fleet.md) to run your containers on a cluster of CoreOS machines.
 
 Do not run containers with detached mode inside of systemd unit files. Detached mode prevents your init system, in our case systemd, from monitoring the process that owns the container because detached mode forks it into the background. To prevent this issue, just omit the `-d` flag if you aren't running something manually.
 
@@ -86,7 +86,7 @@ docker run -d coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
 
 While the sections above explained how to run a container when configuring it, for a production setup, you should not manually start and babysit containers.
 
-Instead, create a systemd unit file to make systemd keep that container running. See the [Getting Started with systemd]({{site.baseurl}}/docs/launching-containers/launching/getting-started-with-systemd) for details.
+Instead, create a systemd unit file to make systemd keep that container running. See the [Getting Started with systemd](getting-started-with-systemd.md) for details.
 
 ### Network access to 80
 
@@ -126,6 +126,6 @@ docker run -d -p 80:80 registry.example.com:5000/apache /usr/sbin/apache2ctl -D 
 
 ## More information
 
-<a class="btn btn-default" href="{{site.baseurl}}/using-coreos/docker">Docker Overview</a>
+<a class="btn btn-default" href="https://coreos.com/why/#containers">Docker Overview</a>
 <a class="btn btn-default" href="http://www.docker.com/">Docker Website</a>
 <a class="btn btn-default" href="https://docs.docker.com/mac/started/">docker's Getting Started Guide</a>
