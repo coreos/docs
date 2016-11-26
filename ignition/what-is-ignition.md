@@ -40,10 +40,10 @@ The [full list of supported platforms][supported platforms] is provided and will
 
 Ignition is under active development. Expect to see support for more images in the coming months.
 
-[examples]: examples.md
+[examples]: https://github.com/coreos/ignition/blob/master/doc/examples.md
 [cloudinit]: https://github.com/coreos/coreos-cloudinit
 [network config]: network-configuration.md
-[custom agent]: examples.md#custom-metadata-agent
+[custom agent]: https://github.com/coreos/ignition/blob/master/doc/examples.md#custom-metadata-agent
 [supported platforms]: https://github.com/coreos/ignition/blob/master/doc/supported-platforms.md
 [systemd-generator]: http://www.freedesktop.org/software/systemd/man/systemd.generator.html
 [initramfs]: https://www.kernel.org/doc/Documentation/filesystems/ramfs-rootfs-initramfs.txt

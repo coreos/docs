@@ -6,7 +6,7 @@ The CoreOS startup process is built on the standard [Linux startup process][linu
 
 [GRUB][grub] is the first program executed when a CoreOS system boots.
 
-The CoreOS [GRUB config][grubconfig] has several roles. First, the GRUB config [specifies which `usr` partition to use][gptprio.next] from the two `usr` partitions CoreOS uses to provide atomic upgrades and rollbacks.
+The CoreOS [GRUB config][grub config] has several roles. First, the GRUB config [specifies which `usr` partition to use][gptprio.next] from the two `usr` partitions CoreOS uses to provide atomic upgrades and rollbacks.
 
 Additionally, GRUB determines if this is the first time a machine has booted. This is accomplished by [searching for the initial disk GUID][search] (00000000-0000-0000-0000-000000000001). CoreOS is built with this well-known disk GUID in order to detect the first boot. This GUID is randomized later in the boot process so that individual disks may be uniquely identified. If GRUB detects that this is in fact a first boot, it sets two Linux kernel command line parameters: `coreos.randomize_guid=00000000-0000-0000-0000-000000000001` and `coreos.first_boot=1`. These parameters are used by various programs in later stages of the boot process.
 
