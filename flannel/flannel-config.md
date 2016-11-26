@@ -1,6 +1,6 @@
 # Configuring flannel for container networking
 
-*Note*: flannel is only available in [CoreOS versions 554]({{site.baseurl}}/releases/#554.0.0) and later.
+*Note*: flannel is only available in [CoreOS versions 554](https://coreos.com/releases/#554.0.0) and later.
 
 ## Overview
 
