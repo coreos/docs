@@ -228,15 +228,15 @@ The next steps are those described in the [Change etcd cluster size][change-clus
 
 [change-cluster-size]: #change-etcd-cluster-size
 [cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
-[data-dir]: https://github.com/coreos/etcd/blob/master/Documentation/configuration.md#-data-dir
-[disaster-recovery]: https://github.com/coreos/etcd/blob/master/Documentation/admin_guide.md#disaster-recovery
+[data-dir]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/configuration.md#-data-dir
+[disaster-recovery]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/recovery.md#disaster-recovery
 [drop-in]: ../os/using-systemd-drop-in-units.md
-[etcd-discovery]: https://github.com/coreos/etcd/blob/master/Documentation/clustering.md#lifetime-of-a-discovery-url
-[etcd-member-name]: https://github.com/coreos/etcd/blob/master/Documentation/configuration.md#-name
+[etcd-discovery]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/clustering.md#lifetime-of-a-discovery-url
+[etcd-member-name]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/configuration.md#--name
 [etcdctl-endpoint]: https://github.com/coreos/etcd/tree/master/etcdctl#--endpoint
-[etcdctl-member-remove]: https://github.com/coreos/etcd/blob/master/Documentation/runtime-configuration.md#remove-a-member
+[etcdctl-member-remove]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/runtime-configuration.md#remove-a-member
 [fleet]: https://github.com/coreos/fleet
 [locksmith]: https://github.com/coreos/locksmith
 [machine-id]: http://www.freedesktop.org/software/systemd/man/machine-id.html
-[majority]: https://github.com/coreos/etcd/blob/master/Documentation/admin_guide.md#fault-tolerance-table
-[proxy-refresh]: https://github.com/coreos/etcd/blob/master/Documentation/configuration.md#-proxy-refresh-interval
+[majority]: https://github.com/coreos/etcd/blob/master/Documentation/v2/admin_guide.md#fault-tolerance-table
+[proxy-refresh]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/configuration.md#--proxy-refresh-interval
