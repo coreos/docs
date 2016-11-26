@@ -183,9 +183,7 @@ In the terminal window running the fake clients, you should see a few of them st
 {fake-client-000}: updated from 1.0.0 to 1.1.0
 ```
 
-In the UI, navigate to the app and group, then click on "View All Graphs". You should see the instances slowly start to converge on version `1.1.0`:
-
-[screenshot]
+In the UI, navigate to the app and group, then click on "View All Graphs". You should see the instances slowly start to converge on version `1.1.0`.
 
 ## Further reading
 
