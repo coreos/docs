@@ -113,7 +113,7 @@ After the listeners have been configured, the health checking endpoint needs to 
 
 ### Check Functionality 
 
-If the ELB with Proxy Protocol is functioning properly curling the `/v1/_ping` endpoint should return `true`. Replace ${LoadBalancer} with the A record of the quay-loadbalancer ELB..
+If the ELB with Proxy Protocol is functioning properly curling the `/v1/_ping` endpoint should return `true`. Replace ${LoadBalancer} with the `A` record of the quay-loadbalancer ELB..
 
 ```
 $ curl -k https://${LoadBalancer}/v1/_ping
