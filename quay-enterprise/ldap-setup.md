@@ -10,7 +10,7 @@ Once the user is created, click on the Settings icon next to the user and choose
 
 <img src="img/superuser-user-settings.png" class="img-center" alt="Enable GitHub Authentication"/> 
 
-You will be prompted to restart the container once the new user is created. Restart Quay Enterprise container and log in to the Superuser panel as the user that was just created. 
+You will be prompted to restart the container once the new user is created. Restart Quay Enterprise container and log in to the Superuser panel ***as the user that was just created.*** 
 
 ## Setup LDAP Configuration
 
@@ -36,8 +36,10 @@ Once the configuration is completed, click on “Save Configuration Changes” b
 
 ## Common Issues
 
-*** Invalid credentials*** 
+***Invalid credentials*** 
+
 Administrator DN or Administrator DN Password values are incorrect
 
-*** Verification of superuser %USERNAME% failed: Username not found The user either does not exist in the remote authentication system OR LDAP auth is misconfigured.*** 
+***Verification of superuser %USERNAME% failed: Username not found The user either does not exist in the remote authentication system OR LDAP auth is misconfigured.***
+
 Quay can connect to the LDAP server via Username/Password specified in the Administrator DN fields however cannot find the current logged in user with the UID Attribute or Mail Attribute fields in the User Relative DN Path. Either current logged in user does not exist in User Relative DN Path, or Administrator DN user do not have rights to search/read this LDAP path.
