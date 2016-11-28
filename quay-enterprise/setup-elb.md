@@ -26,9 +26,9 @@ Load balancer requirements include:
 
 Setting up an ELB with Proxy Protocol enabled requires an existing classic ELB and access to the [aws cli tool](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html). AWS documentation on creating an ELB can be found [here](http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-getting-started.html).
 
-ELB Name: quay-loadbalancer 
+ELB Name: `quay-loadbalancer` 
 
-Policy Name: quay-ProxyProtocol-policy
+Policy Name: `quay-ProxyProtocol-policy`
 
 ### Create a load balancer policy that enables the Proxy Protocol 
 
@@ -124,8 +124,11 @@ true
 
 ## Troubleshooting 
 
-[Security group](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html) settings are often the culprit if the ELB is not resolving but the health check reports the instance as in service. The security group for the ELB should be open for inbound traffic from port `80`, `443`, and `8443`. 
+[Security group](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html) settings are often the culprit if the ELB is not resolving but the health check reports the instance as in service. Misconfiguration of the security group generally shows up as the connection to the ELB hanging during requests.
+
+The security group for the ELB should be open for inbound traffic from port `80`, `443`, and `8443`. 
 
 <img src="img/elbsg.png" class="img-center" alt="ELB Security Group">
+
 
 Setting new ELB policy occasionally requires removing and reassociating the instance for the policy to be applied. 
