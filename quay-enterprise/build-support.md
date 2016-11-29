@@ -28,7 +28,7 @@ One or more build workers will communicate with Quay Enterprise to build new con
 Pull down the latest copy of the image. **Make sure to pull the version tagged matching your Quay Enterprise version**.
 
 ```sh
-docker pull quay.io/coreos/quay-builder:v2.0.0
+docker pull quay.io/coreos/quay-builder:v2.0.1
 ```
 
 ### Run the build worker image
@@ -45,7 +45,7 @@ Use the environment variable `SERVER` to tell the worker the hostname at which Q
 Here's what the full command looks like:
 
 ```sh
-docker run --restart on-failure -e SERVER=wss://myquayenterprise -v /var/run/docker.sock:/var/run/docker.sock quay.io/coreos/quay-builder:v2.0.0
+docker run --restart on-failure -e SERVER=wss://myquayenterprise -v /var/run/docker.sock:/var/run/docker.sock quay.io/coreos/quay-builder:v2.0.1
 ```
 
 When the container starts, each build worker will auto-register and start building containers once a job is triggered and it is assigned to a worker.
