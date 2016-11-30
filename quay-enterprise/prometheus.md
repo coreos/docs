@@ -1,6 +1,6 @@
 # Prometheus metrics under Quay Enterprise
 
-Quay Enterprise exports a [Prometheus](prometheus.io)-compatible endpoint on each instance to allow for easy monitoring and alerting.
+Quay Enterprise exports a [Prometheus][prometheus.io]-compatible endpoint on each instance to allow for easy monitoring and alerting.
 
 ## Exposing the prometheus endpoint
 
@@ -16,7 +16,7 @@ A simple [Kubernetes service](k8s service) can be configured to provide the DNS 
 
 ### DNS configuration for a manual cluster
 
-[SkyDNS](skydns) is a simple solution for managing this DNS record when not using Kubernetes. SkyDNS can run atop an [etcd](etcd) cluster. Entries for each Quay Enterprise instance in the cluster can be added and removed in the etcd store. SkyDNS will regularly read them from there and update the list of Quay instances in the DNS record accordingly.
+[SkyDNS][skydns] is a simple solution for managing this DNS record when not using Kubernetes. SkyDNS can run atop an [etcd][etcd] cluster. Entries for each Quay Enterprise instance in the cluster can be added and removed in the etcd store. SkyDNS will regularly read them from there and update the list of Quay instances in the DNS record accordingly.
 
 
 [etcd]: https://github.com/coreos/etcd

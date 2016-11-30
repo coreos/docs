@@ -7,10 +7,10 @@ CoreOS is designed to be [updated automatically][update-docs] with different sch
 The Exoscale CoreOS image is built officially and each CoreOS instance deployment is a unique fresh instance. By default, only the stable channel is deployed on Exoscale, you can easily [switch to Beta or Alpha channel][switching-channels].
 
 
-[update-docs]: {{site.baseurl}}/using-coreos/updates
-[reboot-docs]: {{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update
-[switching-channels]: {{site.baseurl}}/docs/cluster-management/setup/switching-channels
-[release-notes]: {{site.baseurl}}/releases
+[update-docs]: https://coreos.com/why/#updates
+[reboot-docs]: update-strategies.md
+[switching-channels]: switching-channels.md
+[release-notes]: https://coreos.com/releases
 [cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
 
 ## Security groups
@@ -80,7 +80,7 @@ To log in to a CoreOS instance after it's created click on its IP address or run
 ssh core@<ip address>
 ```
 
-Optionally, you may want to [configure your ssh-agent]({{site.baseurl}}/docs/launching-containers/launching/fleet-using-the-client/#remote-fleet-access) to more easily run [fleet commands]({{site.baseurl}}/docs/launching-containers/launching/launching-containers-fleet/).
+Optionally, you may want to [configure your ssh-agent](https://github.com/coreos/fleet/blob/master/Documentation/using-the-client.md#remote-fleet-access) to more easily run [fleet commands](../fleet/launching-containers-fleet.md).
 
 ## Launching instances
 
@@ -144,5 +144,5 @@ Unlike other Exoscale images where the root password is randomly set at startup,
 
 Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart][quick-start] guide or dig into [more specific topics][docs].
 
-[quick-start]: {{site.baseurl}}/docs/quickstart
-[docs]: {{site.baseurl}}/docs
+[quick-start]: quickstart.md
+[docs]: https://coreos.com/docs

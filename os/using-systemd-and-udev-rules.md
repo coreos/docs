@@ -91,12 +91,9 @@ For more systemd examples, check out these documents:
 [Customizing the SSH Daemon][customizing-sshd]
 [Using systemd Drop-In Units][drop-in]
 
-[drop-in]: using-systemd-drop-in-units.html
-[customizing-sshd]: customizing-sshd.html#changing-the-sshd-port
-[customizing-docker]: customizing-docker.html#using-a-dockercfg-file-for-authentication
-[cloud-config]: cloud-config.html
-[etcd-discovery]: cluster-discovery.html
-[systemd-udev]: using-systemd-and-udev-rules.html
+[drop-in]: using-systemd-drop-in-units.md
+[customizing-sshd]: customizing-sshd.md#changing-the-sshd-port
+[customizing-docker]: customizing-docker.md#using-a-dockercfg-file-for-authentication
 
 ## More information
 

@@ -81,4 +81,4 @@ Note: prefixing the command with a space will avoid recording your API key in yo
 
 ## Tips and Tricks
 
-We've compiled a [list of tips and tricks](/docs/sdk-distributors/sdk/tips-and-tricks) that can make working with the SDK a bit easier.
+We've compiled a [list of tips and tricks](sdk-tips-and-tricks.md) that can make working with the SDK a bit easier.

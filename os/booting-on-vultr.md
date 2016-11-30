@@ -33,7 +33,7 @@ You must add to your ssh public key to your `cloud-config`'s [ssh authorized key
 
 ## Choosing a channel
 
-CoreOS is designed to be [updated automatically]({{site.baseurl}}/using-coreos/updates) with different schedules per channel. You can [disable this feature]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update), although we don't recommend it. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes.
+CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
 
 <div id="vultr-images">
   <ul class="nav nav-tabs">
@@ -95,7 +95,7 @@ boot</pre>
 
 Go to My Servers > Startup Scripts > Add Startup Script, select type "PXE", and input your script. Be sure to replace the cloud-config-url with that of the shell script you created above.
 
-Additional reading can be found at [Booting CoreOS with iPXE](http://coreos.com/docs/running-coreos/bare-metal/booting-with-ipxe/) and [Embedded scripts for iPXE](http://ipxe.org/embed).
+Additional reading can be found at [Booting CoreOS with iPXE](booting-with-ipxe.md) and [Embedded scripts for iPXE](http://ipxe.org/embed).
 
 ## Create the VPS
 
@@ -126,4 +126,4 @@ core@localhost ~ $
 
 ## Using CoreOS
 
-Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

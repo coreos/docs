@@ -71,7 +71,7 @@ Balance on '/' is running
 
 ## Adding a new physical disk
 
-New physical disks can be added to an existing btrfs filesystem. The first step is to have the new block device [mounted on the machine]({{site.baseurl}}/docs/cluster-management/setup/mounting-storage/). Afterwards, let btrfs know about the new device and re-balance the file system. The key step here is re-balancing, which will move the data and metadata across both block devices. Expect this process to take some time:
+New physical disks can be added to an existing btrfs filesystem. The first step is to have the new block device [mounted on the machine](mounting-storage.md). Afterwards, let btrfs know about the new device and re-balance the file system. The key step here is re-balancing, which will move the data and metadata across both block devices. Expect this process to take some time:
 
 ```sh
 $ btrfs device add /dev/sdc /

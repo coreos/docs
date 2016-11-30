@@ -71,7 +71,7 @@ To promote proxy members or join new members into an existing etcd cluster, conf
 
 The most common problem with cluster discovery is using invalid cloud-config, which will prevent the cloud-config from being applied to the machine. The YAML format uses indention to represent data hierarchy, which makes it easy to create an invalid cloud-config. You should always run newly written cloud-config through the [cloud-config validator](https://coreos.com/validate).
 
-Unfortunately, if you are providing an SSH-key via cloud-config, it can be hard to read the `coreos-cloudinit` log to find out what's wrong. If you're using a cloud provider, you can normally provide an SSH-key via another method which will allow you to log in. If you're running on bare metal, the [coreos.autologin]({{site.baseurl}}/docs/running-coreos/bare-metal/booting-with-pxe/#setting-up-pxelinux.cfg) kernel option will bypass authentication, letting you read the journal.
+Unfortunately, if you are providing an SSH-key via cloud-config, it can be hard to read the `coreos-cloudinit` log to find out what's wrong. If you're using a cloud provider, you can normally provide an SSH-key via another method which will allow you to log in. If you're running on bare metal, the [coreos.autologin](booting-with-pxe.md#setting-up-pxelinux.cfg) kernel option will bypass authentication, letting you read the journal.
 
 Reading the `coreos-cloudinit` log will indicate which line is invalid:
 
@@ -151,8 +151,8 @@ The public discovery service is just an etcd cluster made available to the publi
 
 Since etcd is designed to this type of leader election, it was an obvious choice to use it for everyone's initial leader election. This means that it's easy to run your own etcd cluster for this purpose.
 
-If you're interested in how discovery API works behind the scenes in etcd, read about [etcd clustering]({{site.baseurl}}/etcd/docs/latest/clustering.html).
+If you're interested in how discovery API works behind the scenes in etcd, read about [etcd clustering](https://github.com/coreos/etcd/blob/master/Documentation/op-guide/clustering.md).
 
-[etcd-reconf]: https://coreos.com/etcd/docs/latest/runtime-configuration.html
-[etcd-reconf-no-disc]: https://github.com/coreos/etcd/blob/master/Documentation/runtime-reconf-design.md#do-not-use-public-discovery-service-for-runtime-reconfiguration
+[etcd-reconf]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/runtime-configuration.md
+[etcd-reconf-no-disc]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/runtime-reconf-design.md#do-not-use-public-discovery-service-for-runtime-reconfiguration
 [etcd-reconf-on-coreos]: ../etcd/etcd-live-cluster-reconfiguration.md

@@ -67,7 +67,7 @@ spec:
 
 #### Assign a default pull secret per namespace
 
-To use a specific pull secret as the default in a specific namespace, you can create a [Service Account](http://kubernetes.io/v1.1/docs/user-guide/service-accounts.html) that will be available to each pod. This is new in Kubernetes v1.1.
+To use a specific pull secret as the default in a specific namespace, you can create a [Service Account](http://kubernetes.io/docs/user-guide/service-accounts/) that will be available to each pod. This is new in Kubernetes v1.1.
 
 ### Cloud-Config
 

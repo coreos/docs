@@ -2,7 +2,7 @@
 
 The [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config) *mount unit* mechanism is used to attach additional filesystems to CoreOS nodes, whether such storage is provided by an underlying cloud platform, physical disk, SAN, or NAS system. By [systemd convention](http://www.freedesktop.org/software/systemd/man/systemd.mount.html), mount unit names derive from the target mount point, with interior slashes replaced by dashes, and the `.mount` extension appended. A unit mounting onto `/var/www` is thus named `var-www.mount`.
 
-Mount units name the source filesystem and target mount point, and optionally the filesystem type. Cloud-config writes mount unit files beneath `/etc/systemd/system`. *Systemd* mounts filesystems defined in such units at boot time. The following example mounts an [EC2 ephemeral disk]({{site.baseurl}}/docs/running-coreos/cloud-providers/ec2/#instance-storage) at the node's `/media/ephemeral` directory, and is therefore named `media-ephemeral.mount`:
+Mount units name the source filesystem and target mount point, and optionally the filesystem type. Cloud-config writes mount unit files beneath `/etc/systemd/system`. *Systemd* mounts filesystems defined in such units at boot time. The following example mounts an [EC2 ephemeral disk](booting-on-ec2.md#instance-storage) at the node's `/media/ephemeral` directory, and is therefore named `media-ephemeral.mount`:
 
 ```yaml
 #cloud-config
@@ -130,4 +130,4 @@ If the mount fails, dependent units will not start.
 
 ## Further reading
 
-Check the [`systemd mount` docs](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) to learn about the available options. Examples specific to [EC2]({{site.baseurl}}/docs/running-coreos/cloud-providers/ec2/#instance-storage), [Google Compute Engine]({{site.baseurl}}/docs/running-coreos/cloud-providers/google-compute-engine/#additional-storage) and [Rackspace Cloud]({{site.baseurl}}/docs/running-coreos/cloud-providers/rackspace/#mount-data-disk) can be used as a starting point.
+Check the [`systemd mount` docs](http://www.freedesktop.org/software/systemd/man/systemd.mount.html) to learn about the available options. Examples specific to [EC2](booting-on-ec2.md#instance-storage), [Google Compute Engine](booting-on-google-compute-engine.md#additional-storage) and [Rackspace Cloud](booting-on-rackspace.md#mount-data-disk) can be used as a starting point.

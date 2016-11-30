@@ -149,4 +149,4 @@ If you don’t have ipv6, you’ll need to [create and map a Cloud IP](http://br
 
 ## Using CoreOS
 
-Now that you have a cluster bootstrapped it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a cluster bootstrapped it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

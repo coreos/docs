@@ -6,7 +6,7 @@ Your CoreOS machines communicate with ECS via an agent. The agent interacts with
 
 ## Set up a new cluster
 
-When booting your [CoreOS Machines on EC2]({{site.baseurl}}/docs/running-coreos/cloud-providers/ec2), specify that the ECS agent is started via [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config).
+When booting your [CoreOS Machines on EC2](booting-on-ec2.md), specify that the ECS agent is started via [cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config).
 
 Be sure to change `ECS_CLUSTER` to the cluster name you've configured via the ECS CLI or leave it empty for the default. Here's a full cloud-config example:
 
@@ -60,7 +60,7 @@ If you want to configure SSH keys in order to log in, mount disks or configure o
 
 ## Connect ECS to an existing cluster
 
-Connecting an existing cluster to ECS is simple with [fleet]({{site.baseurl}}/docs/launching-containers/launching/launching-containers-fleet) &mdash; the agent can be run as a global unit. The unit looks similar to the example above:
+Connecting an existing cluster to ECS is simple with [fleet](../fleet/launching-containers-fleet.md) &mdash; the agent can be run as a global unit. The unit looks similar to the example above:
 
 #### amazon-ecs-agent.service
 

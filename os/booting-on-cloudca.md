@@ -222,10 +222,10 @@ core@coreos-node01 ~ $ etcdctl member list
 Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart][quick-start] guide or dig into [more specific topics][docs].
 
 
-[update-docs]: {{site.baseurl}}/using-coreos/updates
-[reboot-docs]: {{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update
+[update-docs]: https://coreos.com/why/#updates
+[reboot-docs]: update-strategies.md
 [switching-channels]: {{site.baseurl}}/docs/cluster-management/setup/switching-channels
-[release-notes]: {{site.baseurl}}/releases
+[release-notes]: https://coreos.com/releases
 [cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
-[quick-start]: {{site.baseurl}}/docs/quickstart
-[docs]: {{site.baseurl}}/docs
+[quick-start]: quickstart.md
+[docs]: https://coreos.com/docs

@@ -46,7 +46,7 @@ The latest CoreOS ISOs can be downloaded from the image storage site:
 
 ## Install to disk
 
-The most common use-case for this ISO is to install CoreOS to disk. You can [find those instructions here]({{site.baseurl}}/docs/running-coreos/bare-metal/installing-to-disk).
+The most common use-case for this ISO is to install CoreOS to disk. You can [find those instructions here](installing-to-disk.md).
 
 ## Bypass authentication
 

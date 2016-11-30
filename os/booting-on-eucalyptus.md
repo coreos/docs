@@ -10,7 +10,7 @@ These steps will download the CoreOS image, uncompress it, convert it from qcow 
 
 CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
-The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes in each channel.
+The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes in each channel.
 
 ```sh
 $ wget -q https://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
@@ -61,4 +61,4 @@ core@10-0-0-3 ~ $
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

@@ -61,7 +61,7 @@ Once QEMU is installed you can download and start the latest CoreOS image.
 
 ### Choosing a channel
 
-CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel. Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes in each channel.
+CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes in each channel.
 
 <div id="qemu-images">
   <ul class="nav nav-tabs">
@@ -164,7 +164,7 @@ ssh coreos
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
 
 
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev

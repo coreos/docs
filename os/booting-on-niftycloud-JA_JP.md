@@ -38,7 +38,7 @@ coreos:
 
 ## チャンネルの選択
 
-CoreOSはチャンネル毎に別のスケジュールで[自動アップデート]({{site.baseurl}}/using-coreos/updates)されるように設計されています。推奨はしませんが、この機能は[無効にする]({{site.baseurl}}/docs/cluster-management/debugging/prevent-reboot-after-update)こともできます。各機能やバグフィックスについては[リリースノート]({{site.baseurl}}/releases)を読んでください。
+CoreOSはチャンネル毎に別のスケジュールで[自動アップデート](https://coreos.com/why/#updates)されるように設計されています。推奨はしませんが、この機能は[無効にする](update-strategies.md)こともできます。各機能やバグフィックスについては[リリースノート](https://coreos.com/releases)を読んでください。
 
 <div id="niftycloud-images">
   <ul class="nav nav-tabs">
@@ -80,4 +80,4 @@ ssh core@<ip address> -i <path to keyfile>
 ## CoreOSの利用
 
 起動済みのマシンを手に入れたら、遊ぶ時間です。
-[CoreOSクイックスタート]({{site.baseurl}}/docs/quickstart)を見るか、[各トピックス]({{site.baseurl}}/docs)を掘り下げましょう。
+[CoreOSクイックスタート](quickstart.md)を見るか、[各トピックス](https://coreos.com/docs)を掘り下げましょう。

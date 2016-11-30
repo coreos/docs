@@ -18,7 +18,7 @@ to substitute that path if you use another one.
 
 CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
-Read the [release notes]({{site.baseurl}}/releases) for specific features and bug fixes in each channel.
+Read the [release notes](https://coreos.com/releases) for specific features and bug fixes in each channel.
 
 <div id="libvirt-create">
   <ul class="nav nav-tabs">
@@ -226,7 +226,7 @@ cat /var/lib/libvirt/dnsmasq/default.leases
 
 ## Using CoreOS
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart]({{site.baseurl}}/docs/quickstart) guide or dig into [more specific topics]({{site.baseurl}}/docs).
+Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
 
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
 [irc]: irc://irc.freenode.org:6667/#coreos
