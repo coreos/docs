@@ -52,5 +52,5 @@ Check out the [CoreOS Quickstart][coreos-quickstart] guide or dig into [more spe
 [register-template-api]: http://cloudstack.apache.org/docs/api/apidocs-4.4/user/registerTemplate.html
 [deploy-vm-api]: http://cloudstack.apache.org/docs/api/apidocs-4.4/user/deployVirtualMachine.html
 [coreos-templates]: http://dl.openvm.eu/cloudstack/coreos/x86_64/
-[coreos-quickstart]: https://coreos.com/docs/quickstart
+[coreos-quickstart]: quickstart.md
 [coreos-docs]: https://coreos.com/docs
