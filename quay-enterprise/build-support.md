@@ -50,6 +50,12 @@ docker run --restart on-failure -e SERVER=wss://myquayenterprise -v /var/run/doc
 
 When the container starts, each build worker will auto-register and start building containers once a job is triggered and it is assigned to a worker.
 
+If Quay is setup to use SSL certificate that is not globally trusted, you must mount Quay's public SSL certificates into the quay-builder container's SSL trust store. Full command looks like:
+
+```sh
+docker run --restart on-failure -e SERVER=wss://myquayenterprise -v /path/to/ssl:/usr/local/share/ca-certificates -v /var/run/docker.sock:/var/run/docker.sock quay.io/coreos/quay-builder:v2.0.1 /bin/sh -c "/usr/sbin/update-ca-certificates ; /quay-builder"
+```
+
 ### Setup GitHub build (optional)
 
 If your organization plans to have builds be conducted via pushes to GitHub (or GitHub Enterprise), please continue
