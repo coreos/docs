@@ -21,12 +21,10 @@ $ mkdir -p quay/config/extra_ca_certs
 
 $ cp storage.crt quay/config/extra_ca_certs/
 
-$ ls quay/config/
-config.yaml
-extra_ca_certs/
-
-$ ls quay/config/extra_ca_certs/
-storage.crt
+$ tree quay/config/
+├── config.yaml
+├── extra_ca_certs
+│   ├── storage.crt
 ```
 
 ### Restart QE container and check cert with `docker exec`:
