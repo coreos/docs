@@ -17,12 +17,16 @@ MIIDTTCCAjWgAwIBAgIJAMVr9ngjJhzbMA0GCSqGSIb3DQEBCwUAMD0xCzAJBgNV
 ### Create certs directory and copy certificate there:
 
 ```
-$ mkdir quay/config/extra_ca_certs
+$ mkdir -p quay/config/extra_ca_certs
 
 $ cp storage.crt quay/config/extra_ca_certs/
 
+$ ls quay/config/
+config.yaml
+extra_ca_certs/
+
 $ ls quay/config/extra_ca_certs/
-storage.crt 
+storage.crt
 ```
 
 ### Restart QE container and check cert with `docker exec`:
