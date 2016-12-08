@@ -67,7 +67,7 @@ Pods are considered ephemeral "cattle" and won't survive a machine failure and m
 
 [Kubernetes services][service-overview] should always be used to expose pod(s) to the rest of the cluster in order to provide the proper level of abstraction since individual pods will come and go.
 
-Replication controllers and services use the *pod labels* to select a group of pods that they interact with. Your pods will typically have labels for the application name, role, environment, version, etc. Each of these can be combined in order to select all pods with a certain role, a certain application, or a more complex query. The label system is extremely flexible by design and experimentation is encouraged to estabilish the practices that work best for your company or team.
+Replication controllers and services use the *pod labels* to select a group of pods that they interact with. Your pods will typically have labels for the application name, role, environment, version, etc. Each of these can be combined in order to select all pods with a certain role, a certain application, or a more complex query. The label system is extremely flexible by design and experimentation is encouraged to establish the practices that work best for your company or team.
 
 <div class="co-m-docs-next-step">
   <p><strong>Are you familiar with replication controllers and services?</strong></p>
