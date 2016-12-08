@@ -31,7 +31,7 @@ sudo docker run -d -p 6379:6379 quay.io/quay/redis
 
 ## Downloading the Quay Enterprise image
 
-After signing up you will be able to download a pull secret that you can rename to `config.json`.
+After signing up you will be able to download a pull secret saved as `config.json`.
 
 The file will look like this:
 
