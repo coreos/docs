@@ -31,9 +31,9 @@ sudo docker run -d -p 6379:6379 quay.io/quay/redis
 
 ## Downloading the Quay Enterprise image
 
-After signing up you will be able to download a pull secret saved as `config.json`.
+After signing up you will be able to download a pull secret file named `config.json`.
 
-The file will look like this:
+The `config.json` file will look like this:
 
 ```
 {
@@ -46,7 +46,7 @@ The file will look like this:
 }
 ```
 
-This file contains your credentials to the `quay.io/coreos/quay` repository. Save this file to your CoreOS machine in `/home/core/.docker/config.json` and `/root/.docker/config.json`. You should now be able to execute `docker pull quay.io/coreos/quay:v2.0.1` to download the container.
+`config.json` contains your credentials for the `quay.io/coreos/quay` repository. Save this file to your CoreOS machine in `/home/core/.docker/config.json` and `/root/.docker/config.json`. You should now be able to execute `docker pull quay.io/coreos/quay:v2.0.1` to download the container.
 
 ## Setting up the directories
 
