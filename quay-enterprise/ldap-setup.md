@@ -29,6 +29,7 @@ Enter LDAP configuration fields as required.
 - Logged in Username must exist in User Relative DN
 - You can enter multiple “Secondary User Relative DNs” if there are multiple Organizational Units where User objects are located at. (ex: ou=Users,ou=NYC and ou=Users,ou=SFO). Simply type in the Organizational Units and click on Add button to add multiple RDNs
 - sAMAccountName is the UID attribute for against Microsoft Active Directory setups
+- Quay Enterprise searches "User Relative DN" with subtree scope. As an example, if your Organization has NYC and SFO Organizational Units under Users OU (ou=SFO,ou=Users and ou=NYC,ou=Users), Quay Enterprise can log-in users from both NYC and SFO Organizational Units if User RDN is set to Users (ou=Users)
 
 Once the configuration is completed, click on “Save Configuration Changes” button. You will be prompted to login with ***LDAP credentials***. 
 
