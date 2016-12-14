@@ -1,6 +1,6 @@
-# Depricated functionality
+# Deprecated functionality
 
-Despite their many functional similarities, some features just don't exist in in Kubernetes like they did in the fleet.
+Despite many functional similarities, some fleet features don't exist in Kubernetes.
 
 
 ## Socket Activation
@@ -10,8 +10,11 @@ Despite their many functional similarities, some features just don't exist in in
 
 ## Container Dependencies
 
-Kubernetes does not have this concept. Users trying to achieve this functionality should depend on retry-loops and monitoring solutions.
+Kubernetes groups related containers in resource-sharing *pods*, rather than having systemd dependencies enforce a graph of interservice relationships.
 
+- Fleet container dependencies defined in unit files, enforced grouping of services. Order and `requires`, sequence timing.
+- k8s sidekicks for this kind of work?
+- k8s pod structure for comm dependencies
 
 ## ExecStop
 
