@@ -30,12 +30,14 @@ coreos:
 ```json
 {
   "ignition": { "version": "2.0.0" },
-  "files": [{
-    "filesystem": "root",
-    "path": "/etc/modules-load.d/nf.conf",
-    "mode": 420,
-    "contents": { "source": "data:,nf_conntrack" }
-  }]
+  "storage": {
+    "files": [{
+      "filesystem": "root",
+      "path": "/etc/modules-load.d/nf.conf",
+      "mode": 420,
+      "contents": { "source": "data:,nf_conntrack" }
+    }]
+  }
 }
 ```
 
