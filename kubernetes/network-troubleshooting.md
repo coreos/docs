@@ -212,4 +212,4 @@ docker inspect -f '{{.State.Pid}}' [container ID]
 <!-- {% endraw %} -->
 
 [k8s-dns-check]: https://github.com/kubernetes/kubernetes/blob/release-1.2/cluster/addons/dns/README.md#how-do-i-test-if-it-is-working
-[toolbox]: ../os/install-debugging-tools.md
+[toolbox]: os/docs/latest/install-debugging-tools.md
