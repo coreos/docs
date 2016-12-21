@@ -291,6 +291,30 @@ MachineMetadata=platform=cloud
 MachineMetadata=region=east
 ```
 
+## Running fleet via Ignition
+
+On Container Linux, only fleet 0.11.x is available under /usr/bin. That one might be obsolete for users who want to try out more recent versions. In that case, users should define own custom Ignition configuration to be able to run any version of fleet as they want. For example:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "systemd": {
+    "units": [
+      {
+        "name": "fleet.service",
+        "enable": true,
+        "contents": "[Unit]\nAfter=etcd.service etcd2.service etcd-member.service\nWants=network.target fleet.socket\n\n[Service]\nType=notify\nRestart=always\nRestartSec=10s\nLimitNOFILE=40000\nTimeoutStartSec=0\nExecStartPre=/usr/bin/mkdir -p /etc/fleet /run/dbus /run/fleet/units\nExecStartPre=/usr/bin/rkt trust --prefix \"quay.io/coreos/fleet\" --skip-fingerprint-review\nExecStart=/usr/bin/rkt run --net=host --volume etc-fleet,kind=host,source=/etc/fleet,readOnly=true --volume machine-id,kind=host,source=/etc/machine-id,readOnly=true --volume dbus-socket,kind=host,source=/run/dbus/system_bus_socket,readOnly=false --volume fleet-units,kind=host,source=/run/fleet/units,readOnly=false --volume notify,kind=host,source=/run/systemd/notify,readOnly=false --volume systemd-dir,kind=host,source=/run/systemd/system,readOnly=true --mount volume=etc-fleet,target=/etc/fleet --mount volume=machine-id,target=/etc/machine-id --mount volume=dbus-socket,target=/run/dbus/system_bus_socket --mount volume=fleet-units,target=/run/fleet/units --mount volume=notify,target=/run/systemd/notify --mount volume=systemd-dir,target=/run/systemd/system --inherit-env --set-env=DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket quay.io/coreos/fleet:v0.13.0\n\n[Install]\nWantedBy=multi-user.target"
+      },
+      {
+        "name": "fleet.socket",
+        "enable": true,
+        "contents": "[Unit]\nDescription=Fleet API Socket\nPartOf=fleet.service\n\n[Socket]\nListenStream=/var/run/fleet.sock\nSocketMode=0660\nSocketUser=fleet\nSocketGroup=fleet"
+      }
+    ]
+  }
+}
+```
+
 #### More information
 
 <a class="btn btn-default" href="{{site.baseurl}}/docs/launching-containers/launching/fleet-example-deployment">Example Deployment with fleet</a>
