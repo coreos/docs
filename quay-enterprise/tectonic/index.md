@@ -27,6 +27,22 @@ Next, download each of the following files to your workstation, placing them alo
 - [quay-enterprise-service-nodeport.yml](files/quay-enterprise-service-nodeport.yml)
 - [quay-enterprise-service-loadbalancer.yml](files/quay-enterprise-service-loadbalancer.yml)
 
+## Role Based Access Control
+
+Quay Enterprise has native Kubernetes integrations. These integrations require Service Account to have access to Kubernetes API. When Kubernetes RBAC is enabled (Tectonic  v1.4 and later), Role Based Access Control policy manifests also have to be deployed.
+
+Kubernetes API has minor changes between versions 1.4 and 1.5, Download appropiate versions of Role Based Access Control (RBAC) Policies.
+
+### Tectonic v1.5.x RBAC Policies
+
+- [quay-enterprise-service-nodeport.yml](files/quay-enterprise-service-nodeport.yml)
+- [quay-servicetoken-role-binding.yaml](files/quay-servicetoken-role-binding.yaml)
+
+### Tectonic v1.4.x RBAC Policies
+
+- [quay-servicetoken-role.yaml](files/quay-servicetoken-role.yaml)
+- [quay-servicetoken-role-binding-k8s1-4.yaml](files/quay-servicetoken-role-binding-k8s1-4.yaml)
+
 ## Deploy to Kubernetes
 
 All Kubernetes objects will be deployed under the "quay-enterprise" namespace.
@@ -41,6 +57,22 @@ Next, add your pull secret to Kubernetes (make sure you specify the correct path
 ```sh
 kubectl create secret generic coreos-pull-secret --from-file=".dockerconfigjson=config.json" --type='kubernetes.io/dockerconfigjson' --namespace=quay-enterprise
 ```
+
+### Tectonic v1.5.x : Deploy RBAC Policies
+
+```sh
+kubectl create -f quay-servicetoken-role.yaml
+kubectl create -f quay-servicetoken-role-binding.yaml
+```
+
+### Tectonic v1.4.x : Deploy RBAC Policies
+
+```sh
+kubectl create -f quay-servicetoken-role.yaml
+kubectl create -f quay-servicetoken-role-binding-k8s1-4.yaml
+```
+
+### Deploy Quay Enterprise objects
 
 Finally, the remaining Kubernetes objects can be deployed onto Kubernetes:
 
