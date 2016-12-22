@@ -112,6 +112,19 @@ $ update_engine_client -check_for_update
 [0123/220706:INFO:update_engine_client.cc(245)] Initiating update check and install.
 ```
 
+### Running Manual Update with update-engine disabled
+
+If you disabled update-engine.service and wish to run the manual update, you must first enable the update-service to run the update_engine_client:
+
+```
+$ systemctl start update-engine.service
+$ update_engine_client -check_for_update
+```
+
+After the update you must comment out or remove the disabling of the update-engine.service for this first reboot. This allows for the update-engine to mark the new active partition, being your updated one, as a successful boot. If you do not run update-engine upon the first reboot, there is a chance that your machine will mark the new active partition as a failure and revert back to the passive partition (being the previous version) on the next reboot of the machine. Once rebooted you are able to again stop the update-engine and uncomment or add the update-engine.service disabling in your cloud-config.yml.
+
+To avoid this process, a potential option is to use a Service for disabling update-engine and locksmithd using the [Systemd OnCalendar setting](oncalendar-option) which will disable the update-engine.service and locksmithd.service in a particular time period after reboot.
+
 ## Auto-updates with a maintenance window
 
 Locksmith supports maintenance windows in addition to the reboot strategies mentioned earlier. Maintenance windows define a window of time during which a reboot can occur. These operate in addition to reboot strategies, so if the machine has a maintenance window and requires a reboot lock, the machine will only reboot when it has the lock during that window.
@@ -130,3 +143,4 @@ For more information about the supported syntax, refer to the [Locksmith documen
 
 [rollback]: manual-rollbacks.md
 [reboot-windows]: https://github.com/coreos/locksmith#reboot-windows
+[oncalendar-option]:  https://coreos.com/os/docs/latest/scheduling-tasks-with-systemd-timers.html
