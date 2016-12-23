@@ -293,7 +293,7 @@ MachineMetadata=region=east
 
 ## Running fleet via Ignition
 
-On Container Linux, only fleet 0.11.x is available under /usr/bin. That one might be obsolete for users who want to try out more recent versions. In that case, users should define own custom Ignition configuration to be able to run any version of fleet as they want. For example:
+On Container Linux, only fleet 0.11.x is available under /usr/bin. That one might be obsolete for users who want to try out more recent versions. In that case, users should define their own custom Ignition configuration to be able to run any version of fleet as they want. For example:
 
 ```json
 {
@@ -313,7 +313,7 @@ On Container Linux, only fleet 0.11.x is available under /usr/bin. That one migh
       {
         "name": "fleet.service",
         "enable": true,
-        "contents": "[Unit]\nAfter=etcd.service etcd2.service etcd-member.service\nWants=network.target fleet.socket\n\n[Service]\nType=notify\nRestart=always\nRestartSec=10s\nLimitNOFILE=40000\nTimeoutStartSec=0\nExecStartPre=/usr/bin/mkdir -p /etc/fleet /run/dbus /run/fleet/units\nExecStartPre=/usr/bin/rkt trust --prefix \"quay.io/coreos/fleet\" --skip-fingerprint-review\nExecStart=/opt/bin/fleet-wrapper\n\n[Install]\nWantedBy=multi-user.target"
+        "contents": "[Unit]\nAfter=etcd.service etcd2.service etcd-member.service\nWants=network.target fleet.socket\n\n[Service]\nType=notify\nRestart=always\nRestartSec=10s\nLimitNOFILE=40000\nTimeoutStartSec=0\nExecStartPre=/usr/bin/mkdir --parents /etc/fleet /run/dbus /run/fleet/units\nExecStartPre=/usr/bin/rkt trust --prefix \"quay.io/coreos/fleet\" --skip-fingerprint-review\nExecStart=/opt/bin/fleet-wrapper\n\n[Install]\nWantedBy=multi-user.target"
       },
       {
         "name": "fleet.socket",
