@@ -298,12 +298,22 @@ On Container Linux, only fleet 0.11.x is available under /usr/bin. That one migh
 ```json
 {
   "ignition": { "version": "2.0.0" },
+  "storage": {
+    "files": [{
+      "filesystem": "root",
+      "path": "/opt/bin/fleet-wrapper",
+      "mode": 493,
+      "contents": {
+        "source": "https://raw.githubusercontent.com/coreos/fleet/master/scripts/fleet-wrapper"
+      }
+    }]
+  },
   "systemd": {
     "units": [
       {
         "name": "fleet.service",
         "enable": true,
-        "contents": "[Unit]\nAfter=etcd.service etcd2.service etcd-member.service\nWants=network.target fleet.socket\n\n[Service]\nType=notify\nRestart=always\nRestartSec=10s\nLimitNOFILE=40000\nTimeoutStartSec=0\nExecStartPre=/usr/bin/mkdir -p /etc/fleet /run/dbus /run/fleet/units\nExecStartPre=/usr/bin/rkt trust --prefix \"quay.io/coreos/fleet\" --skip-fingerprint-review\nExecStart=/usr/bin/rkt --insecure-options=image --stage1-path=/usr/lib/rkt/stage1-images/stage1-fly.aci  run --net=host --volume etc-fleet,kind=host,source=/etc/fleet,readOnly=true --volume run,kind=host,source=/run,readOnly=false --volume machine-id,kind=host,source=/etc/machine-id,readOnly=true --mount volume=etc-fleet,target=/etc/fleet --mount volume=machine-id,target=/etc/machine-id --mount volume=run,target=/run --inherit-env --set-env=DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket quay.io/coreos/fleet:v1.0.0\n\n[Install]\nWantedBy=multi-user.target"
+        "contents": "[Unit]\nAfter=etcd.service etcd2.service etcd-member.service\nWants=network.target fleet.socket\n\n[Service]\nType=notify\nRestart=always\nRestartSec=10s\nLimitNOFILE=40000\nTimeoutStartSec=0\nExecStartPre=/usr/bin/mkdir -p /etc/fleet /run/dbus /run/fleet/units\nExecStartPre=/usr/bin/rkt trust --prefix \"quay.io/coreos/fleet\" --skip-fingerprint-review\nExecStart=/opt/bin/fleet-wrapper\n\n[Install]\nWantedBy=multi-user.target"
       },
       {
         "name": "fleet.socket",
