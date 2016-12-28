@@ -201,6 +201,6 @@ $ curl -L http://127.0.0.1:2379/v2/keys/foo
 ```
 
 #### More information
-<a class="btn btn-default" href="{{site.baseurl}}/using-coreos/etcd">etcd Overview</a>
+<a class="btn btn-default" href="https://coreos.com/etcd">etcd Overview</a>
 <a class="btn btn-default" href="https://github.com/coreos/etcd">Full etcd API Docs</a>
 <a class="btn btn-default" href="https://github.com/coreos/etcd/blob/master/Documentation/libraries-and-tools.md">Projects using etcd</a>
