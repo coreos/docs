@@ -7,7 +7,7 @@ This document serves as a best practices and style guide for how to work on new 
 ## Version
 
 - Wherever possible, use the [latest official release][go-dl] of go
-- Any software shipped in the CoreOS image should be developed against the [versions shipped in the CoreOS image](https://github.com/coreos/coreos-overlay/tree/master/dev-lang/go)
+- Any software shipped in the Container Linux image should be developed against the [versions shipped in the Container Linux image](https://github.com/coreos/coreos-overlay/tree/master/dev-lang/go)
 
 [go-dl]: https://golang.org/dl/
 
