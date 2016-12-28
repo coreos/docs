@@ -23,7 +23,7 @@ The ensure high availability, it is recommended that machines running in the clu
 
 Each machine will need to be able to:
 
-1. Start from a predefined init script. [coreos-cloudinit](https://github.com/coreos/coreos-cloudinit) can be used with CoreOS.
+1. Start from a predefined init script. [coreos-cloudinit](https://github.com/coreos/coreos-cloudinit) can be used with Container Linux.
 2. Populate the `conf/stack` directory saved in the previous step
 3. Pull down the Quay Enterprise image via `docker pull`. **It is _highly_ recommended that you lock to a specific tagged version of Quay Enterprise**
 4. Run the Quay Enterprise image, with the configuration directory mounted
