@@ -1,4 +1,4 @@
-# CoreOS cluster architectures
+# CoreOS Container Linux cluster architectures
 
 ## Overview
 
@@ -11,17 +11,17 @@ The cloud-config files provided with each section are valid, but you will need t
 ## Docker dev environment on laptop
 
 <img class="img-center" src="img/laptop.png" alt="Laptop Environment Diagram"/>
-<div class="caption">Laptop development environment with CoreOS VM</div>
+<div class="caption">Laptop development environment with Container Linux VM</div>
 
 | Cost | Great For | Set Up Time | Production |
 |------|-----------|-------------|------------|
 | Low | Laptop development | Minutes | No |
 
-If you're developing locally but plan to run containers in production, it helps to mirror that environment locally. This can easily be done by running Docker commands on your laptop that control a CoreOS VM in VMware Fusion or VirtualBox.
+If you're developing locally but plan to run containers in production, it helps to mirror that environment locally. This can easily be done by running Docker commands on your laptop that control a Container Linux VM in VMware Fusion or VirtualBox.
 
 ### Configuring your laptop
 
-Start a single CoreOS VM with the Docker remote socket enabled in the cloud-config. Once it's running, tell your local Docker binary to use the remote port by exporting an environment variable and start running Docker commands:
+Start a single Container Linux VM with the Docker remote socket enabled in the cloud-config. Once it's running, tell your local Docker binary to use the remote port by exporting an environment variable and start running Docker commands:
 
 ```
 $ export DOCKER_HOST=tcp://localhost:2375
@@ -62,12 +62,12 @@ coreos:
 
 ## Small cluster
 
-<img class="img-center" src="img/small.png" alt="Small CoreOS Cluster Diagram"/>
-<div class="caption">Small CoreOS cluster running etcd on all machines</div>
+<img class="img-center" src="img/small.png" alt="Small Container Linux Cluster Diagram"/>
+<div class="caption">Small Container Linux cluster running etcd on all machines</div>
 
 | Cost | Great For | Set Up Time | Production |
 |------|-----------|-------------|------------|
-| Low | Small clusters, trying out CoreOS | Minutes | Yes |
+| Low | Small clusters, trying out Container Linux | Minutes | Yes |
 
 For small clusters between 3-9 machines, running etcd on all of the machines allows for high availability without paying for extra machines that just run etcd.
 
@@ -79,14 +79,14 @@ Following the guide for each of the [supported platforms](https://coreos.com/doc
 
 ## Easy development/testing cluster
 
-<img class="img-center" src="img/dev.png" alt="CoreOS cluster optimized for development and testing"/>
-<div class="caption">CoreOS cluster optimized for development and testing</div>
+<img class="img-center" src="img/dev.png" alt="Container Linux cluster optimized for development and testing"/>
+<div class="caption">Container Linux cluster optimized for development and testing</div>
 
 | Cost | Great For | Set Up Time | Production |
 |------|-----------|-------------|------------|
 | Low | Development/Testing | Minutes | No |
 
-When you're first getting started with CoreOS, it's common to frequently tweak your cloud-config which requires booting/rebooting/destroying many machines. Instead of being slowed down and distracted by generating new discovery URLs and bootstrapping etcd, it's easier to start a single etcd node.
+When you're first getting started with Container Linux, it's common to frequently tweak your cloud-config which requires booting/rebooting/destroying many machines. Instead of being slowed down and distracted by generating new discovery URLs and bootstrapping etcd, it's easier to start a single etcd node.
 
 You are now free to boot as many machines as you'd like as test workers that read from the etcd node. All the features of fleet, Locksmith, and etcdctl will continue to work properly, but will connect to the etcd node instead of using a local etcd instance. Since etcd isn't running on all of the machines, you'll gain a little bit of extra CPU and RAM to play with.
 
@@ -153,8 +153,8 @@ coreos:
 
 ## Production cluster with central services
 
-<img class="img-center" src="img/prod.png" alt="CoreOS cluster optimized for production environments"/>
-<div class="caption">CoreOS cluster separated into central services and workers.</div>
+<img class="img-center" src="img/prod.png" alt="Container Linux cluster optimized for production environments"/>
+<div class="caption">Container Linux cluster separated into central services and workers.</div>
 
 | Cost | Great For | Set Up Time | Production |
 |------|-----------|-------------|------------|

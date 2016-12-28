@@ -1,6 +1,6 @@
-# Running CoreOS on QEMU
+# Running CoreOS Container Linux on QEMU
 
-These instructions will bring up a single CoreOS instance under QEMU, the small Swiss Army knife of virtual machine and CPU emulators. If you need to do more such as [configuring networks][qemunet] differently refer to the [QEMU Wiki][qemuwiki] and [User Documentation][qemudoc].
+These instructions will bring up a single Container Linux instance under QEMU, the small Swiss Army knife of virtual machine and CPU emulators. If you need to do more such as [configuring networks][qemunet] differently refer to the [QEMU Wiki][qemuwiki] and [User Documentation][qemudoc].
 
 You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
@@ -55,13 +55,13 @@ emerge -av app-emulation/qemu
 [qemugen]: http://wiki.gentoo.org/wiki/QEMU
 
 
-## Startup CoreOS
+## Startup CoreOS Container Linux
 
-Once QEMU is installed you can download and start the latest CoreOS image.
+Once QEMU is installed you can download and start the latest Container Linux image.
 
 ### Choosing a channel
 
-CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes in each channel.
+Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes in each channel.
 
 <div id="qemu-images">
   <ul class="nav nav-tabs">
@@ -162,9 +162,9 @@ Now you can log in to the virtual machine with:
 ssh coreos
 ```
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
 
 
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev

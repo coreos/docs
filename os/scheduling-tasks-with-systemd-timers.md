@@ -1,6 +1,6 @@
 # Scheduling tasks with systemd timers
 
-CoreOS uses systemd timers (`cron` replacement) to schedule tasks. Here we will show you how you can schedule a periodic job.
+Container Linux uses systemd timers (`cron` replacement) to schedule tasks. Here we will show you how you can schedule a periodic job.
 
 Let's create an alternative for this `crontab` job:
 

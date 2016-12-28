@@ -1,6 +1,6 @@
 # Verify CoreOS images with GPG
 
-CoreOS publishes new images for each release across a variety of platforms and hosting providers. Each channel has it's own set of images ([stable], [beta], [alpha]) that are posted to our storage site. Along with each image, a signature is generated from the [CoreOS Image Signing Key][signing-key] and posted.
+Container Linux publishes new images for each release across a variety of platforms and hosting providers. Each channel has it's own set of images ([stable], [beta], [alpha]) that are posted to our storage site. Along with each image, a signature is generated from the [CoreOS Image Signing Key][signing-key] and posted.
 
 [signing-key]: https://coreos.com/security/image-signing-key
 [stable]: https://stable.release.core-os.net/amd64-usr/current/
@@ -39,4 +39,4 @@ gpg: Signature made Tue Jun 23 09:39:04 2015 CEST using RSA key ID E5676EFC
 gpg: Good signature from "CoreOS Buildbot (Offical Builds) <buildbot@coreos.com>"
 ```
 
-The `Good signature` message indicates that the file signature is valid. Go launch some machines now that we've successfully verified that this CoreOS image isn't corrupt, that it was authored by CoreOS, and wasn't tampered with in transit.
+The `Good signature` message indicates that the file signature is valid. Go launch some machines now that we've successfully verified that this Container Linux image isn't corrupt, that it was authored by CoreOS, and wasn't tampered with in transit.

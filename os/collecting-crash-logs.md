@@ -1,10 +1,10 @@
 # Collecting crash logs
 
-In the unfortunate case that an OS crashes, it's often extremely helpful to gather information about the event. There are two popular tools used to accomplished this goal: kdump and pstore. CoreOS relies on pstore, a persistent storage abstraction provided by the Linux kernel, to store logs in the event of a kernel panic. Since this mechanism is just an abstraction, it depends on hardware support to actually persist the data across reboots. If the hardware support is absent, the pstore will remain empty. On AMD64 machines, pstore is typically backed by the ACPI error record serialization table (ERST).
+In the unfortunate case that an OS crashes, it's often extremely helpful to gather information about the event. There are two popular tools used to accomplished this goal: kdump and pstore. Container Linux relies on pstore, a persistent storage abstraction provided by the Linux kernel, to store logs in the event of a kernel panic. Since this mechanism is just an abstraction, it depends on hardware support to actually persist the data across reboots. If the hardware support is absent, the pstore will remain empty. On AMD64 machines, pstore is typically backed by the ACPI error record serialization table (ERST).
 
 ## Using pstore
 
-On CoreOS, the pstore is automatically mounted to `/sys/fs/pstore`. The contents of the store can be explored using standard filesystem tools:
+On Container Linux, the pstore is automatically mounted to `/sys/fs/pstore`. The contents of the store can be explored using standard filesystem tools:
 
 ```
 $ ls /sys/fs/pstore/
@@ -91,4 +91,4 @@ $ head --lines=1 /sys/fs/pstore/dmesg-erst-6319986351055831045
 Panic#2 Part3
 ```
 
-It is important to note that the pstore typically has very limited storage space (on the order of kilobytes) and will not overwrite entries when out of space. The files in `/sys/fs/pstore` must be removed to free up space. The typical approach is to move the files from the pstore to a more permanent storage location on boot, but CoreOS will not do this automatically for you.
+It is important to note that the pstore typically has very limited storage space (on the order of kilobytes) and will not overwrite entries when out of space. The files in `/sys/fs/pstore` must be removed to free up space. The typical approach is to move the files from the pstore to a more permanent storage location on boot, but Container Linux will not do this automatically for you.

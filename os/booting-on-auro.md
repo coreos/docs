@@ -1,4 +1,4 @@
-# Running CoreOS on AURO
+# Running CoreOS Container Linux on AURO
 
 AURO is a Canadian OpenStack cloud computing provider based in Canada. In order to get started, you must have an active account on the AURO [public cloud computing][cloud-compute] service.
 
@@ -8,14 +8,14 @@ The following instructions will walk you through setting up the `nova` tool with
 
 ## Choosing a Channel
 
-CoreOS is released into stable, alpha, and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+Container Linux is released into stable, alpha, and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
-CoreOS releases are automatically built and deployed on the AURO cloud, therefore it is best to launch your clusters with the following naming pattern: CoreOS _Channel_ _Version_. For example, the image name of the latest alpha release will be "CoreOS Alpha {{site.alpha-channel}}".
+Container Linux releases are automatically built and deployed on the AURO cloud, therefore it is best to launch your clusters with the following naming pattern: Container Linux _Channel_ _Version_. For example, the image name of the latest alpha release will be "Container Linux Alpha {{site.alpha-channel}}".
 
 
 ### Cloud-Config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via [cloud-config][cloud-config]. We're going to provide the `cloud-config` data via the `user-data` flag.
+Container Linux allows you to configure machine parameters, launch systemd units on startup and more via [cloud-config][cloud-config]. We're going to provide the `cloud-config` data via the `user-data` flag.
 
 [cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 
@@ -49,7 +49,7 @@ The `$private_ipv4` and `$public_ipv4` substitution variables are fully supporte
 
 ## Launch Cluster
 
-You will need to install `python-novaclient` which supplies the OpenStack CLI tools as well as a keypair to use in order to access your CoreOS cluster.
+You will need to install `python-novaclient` which supplies the OpenStack CLI tools as well as a keypair to use in order to access your Container Linux cluster.
 
 ### Install OpenStack CLI tools
 
@@ -72,7 +72,7 @@ $ nova credentials
 
 ### Create Keypair
 
-You can import an existing public key by using the `nova keypair-add` command, however for this guide, we will be creating a new keypair and storing the private key for it locally and use it to access our CoreOS cluster.
+You can import an existing public key by using the `nova keypair-add` command, however for this guide, we will be creating a new keypair and storing the private key for it locally and use it to access our Container Linux cluster.
 
 ```sh
 $ nova keypair-add coreos-key > coreos.pem
@@ -80,7 +80,7 @@ $ nova keypair-add coreos-key > coreos.pem
 
 ### Create Servers
 
-You should now be ready to launch the servers which will create your CoreOS cluster using the `nova` CLI command.
+You should now be ready to launch the servers which will create your Container Linux cluster using the `nova` CLI command.
 
 <div id="AURO-create">
   <ul class="nav nav-tabs">
@@ -123,6 +123,6 @@ Adding new instances to the cluster is as easy as launching more with the same c
 
 If you would like to create multiple clusters you'll need to generate and use a new discovery token. Change the token value on the etcd discovery parameter in the cloud-config, and boot new instances.
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have instances booted, it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+Now that you have instances booted, it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

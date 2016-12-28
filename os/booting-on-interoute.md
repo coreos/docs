@@ -1,8 +1,8 @@
-# Running CoreOS on Interoute VDC
+# Running CoreOS Container Linux on Interoute VDC
 
 [Interoute Virtual Data Centre](https://cloudstore.interoute.com/what_is_vdc) is an Infrastructure-as-a-Service platform, which is integrated into Interoute's [global fibre optic network](https://cloudstore.interoute.com/networking).
 
-This document is a guide to deploying a single CoreOS virtual machine on Interoute VDC. The CoreOS default configuration of SSH keypair-based authentication will be used.
+This document is a guide to deploying a single Container Linux virtual machine on Interoute VDC. The Container Linux default configuration of SSH keypair-based authentication will be used.
 
 Note: commands beginning with '$' are to be typed into the command line, and commands beginning '>' are to be typed into Cloudmonkey.
 
@@ -42,7 +42,7 @@ Type the three following commands to set the configuration as it is used in the 
 
 ## Create a new SSH keypair and store it in VDC
 
-The CoreOS virtual machine template does not allow any logins (root user or otherwise) using passwords. So you must have a SSH keypair ready for use before you deploy the virtual machine.
+The Container Linux virtual machine template does not allow any logins (root user or otherwise) using passwords. So you must have a SSH keypair ready for use before you deploy the virtual machine.
 
 A new keypair is generated using the OpenSSH command line tool, 'ssh-keygen':
 
@@ -58,9 +58,9 @@ The keypair consists of two files, the private key which will be in a file named
 The next step is to 'register' your keypair by uploading your public key to VDC, so that virtual machines can boot up with that information:
 
 ```sh
-> registerSSHKeyPair name=CoreOS-Key01 publickey="ssh-rsa AAAAB3NzaC1y...........fyskMb4oBw== demo.user@interoute.com"
+> registerSSHKeyPair name=Container-Linux-Key01 publickey="ssh-rsa AAAAB3NzaC1y...........fyskMb4oBw== demo.user@interoute.com"
 keypair:
-name = CoreOS-Key01
+name = Container-Linux-Key01
 fingerprint = 55:33:b4:d3:b6:52:fb:79:97:fc:e8:16:58:6e:42:ce
 ```
 
@@ -70,7 +70,7 @@ The keypair 'name' parameter is arbitrary and is used to identify this public ke
 
 For security reasons you can't extract the value of the public key from VDC, only its 'fingerprint' value which you can compare against the fingerprint generated from the keypair on your own computer.
 
-## Choosing a CoreOS virtual machine template
+## Choosing a CoreOS Container Linux virtual machine template
 
 Interoute VDC has 'CoreOS Stable' and 'CoreOS Alpha' templates ready-to-use, look for the template names IRT-COREOS and IRT-COREOS-ALPHA, respectively.
 
@@ -94,12 +94,12 @@ There are 109 templates in the list, only the relevant COREOS ones are shown her
 > listTemplates templatefilter=executable zoneid=a5d3e015-0797-4283-b562-84feea6f66af filter=id,name | grep COREOS
 ```
 
-## Deploy a CoreOS virtual machine
+## Deploy a CoreOS Container Linux virtual machine
 
-The following API call is used to deploy a new virtual machine running CoreOS in VDC:
+The following API call is used to deploy a new virtual machine running Container Linux in VDC:
 
 ```sh
-> deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d zoneid=a5d3e015-0797-4283-b562-84feea6f66af templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 networkids=c5841e7c-e69e-432b-878b-c108b07a160f keypair=CoreOS-Key01 name=CoreOS-VM-01
+> deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d zoneid=a5d3e015-0797-4283-b562-84feea6f66af templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 networkids=c5841e7c-e69e-432b-878b-c108b07a160f keypair=Container-Linux-Key01 name=Container-Linux-VM-01
 ```
 
 Six parameter values are required. 'keypair' and 'templateid' you have already seen above. 'name' can be any string of your choice.
@@ -168,25 +168,25 @@ jobprocstatus = 0
 jobresult:
 virtualmachine:
 id = e08a3199-9d16-4244-aa89-23395d9627d7
-name = CoreOS-VM-01
+name = Container-Linux-VM-01
 account = Interoute Demo
 affinitygroup:
 cpunumber = 2
 cpuspeed = 2000
 created = 2015-12-22T19:51:26+0000
-displayname = CoreOS-VM-01
+displayname = Container-Linux-VM-01
 domain = Interoute Demo
 haenable = True
 hypervisor = VMware
 isdynamicallyscalable = True
 jobid = 353896d4-3160-465e-a746-a417ab40eec4
-keypair = CoreOS-Key01
+keypair = Container-Linux-Key01
 memory = 4096
 passwordenabled = False
 serviceofferingid = 85228261-fc66-4092-8e54-917d1702979d
 serviceofferingname = 4096-2
 state = Running
-templatedisplaytext = CoreOS (Must be deployed with CLI e.g. CloudMonkey)
+templatedisplaytext = Container Linux (Must be deployed with CLI e.g. CloudMonkey)
 templateid = 73bc5066-b536-4325-8e27-ec873cea6ce7
 templatename = IRT-COREOS
 zoneid = a5d3e015-0797-4283-b562-84feea6f66af
@@ -195,7 +195,7 @@ zonename = Zurich (ESX)
 
 Note that no root password is output because password access is not enabled for this virtual machine. You can only access by presenting the private key which matches the public key that you uploaded.
 
-## Connecting to the new CoreOS virtual machine
+## Connecting to the new CoreOS Container Linux virtual machine
 
 To be able to make an SSH connection from the Internet to the virtual machine a port forwarding rule for the network must be created.
 
@@ -217,7 +217,7 @@ publicipaddress:
 
 (The full IP address has been Xed out for privacy reasons.)
 
-The last configuration step is to create an egress firewall rule for the network so that the CoreOS virtual machine will be able to get outward access to the Internet. This is needed to allow CoreOS to access update servers to do automatic updating, and for Docker to access repositories for container images:
+The last configuration step is to create an egress firewall rule for the network so that the Container Linux virtual machine will be able to get outward access to the Internet. This is needed to allow Container Linux to access update servers to do automatic updating, and for Docker to access repositories for container images:
 
 ```sh
 > createEgressFirewallRule networkid=c5841e7c-e69e-432b-878b-c108b07a160f protocol=all cidr=0.0.0.0/0
@@ -225,7 +225,7 @@ The last configuration step is to create an egress firewall rule for the network
 
 (Note that these network rules are simple and permissive, while rules for production virtual machines should always be more strictly defined.)
 
-The virtual machine is now set up for connection, using the 'ipaddress' found above and specifying the private SSH key file to match the public key which was registered in VDC. Note that there is no root user in CoreOS, the default user is 'core':
+The virtual machine is now set up for connection, using the 'ipaddress' found above and specifying the private SSH key file to match the public key which was registered in VDC. Note that there is no root user in Container Linux, the default user is 'core':
 
 ```sh
 $ ssh -i ~/.ssh/id_rsa_coreos core@213.XXX.XXX.185
@@ -239,17 +239,17 @@ ED25519 key fingerprint is e8:6a:a9:02:09:93:4a:2c:20:97:e4:56:da:c1:b7:a0.
 Are you sure you want to continue connecting (yes/no)? yes
 Warning: Permanently added '213.XXX.XXX.185' (ED25519) to the list of known hosts.
 CoreOS stable (835.9.0)
-core@CoreOS-VM-01 ~ $
+core@Container-Linux-VM-01 ~ $
 ```
 
 Check that the Internet egress is working by trying to connect to a remote location, for example:
 
 ```sh
-core@CoreOS-VM-01 ~ $ ping 8.8.8.8
+core@Container-Linux-VM-01 ~ $ ping 8.8.8.8
 
-core@CoreOS-VM-01 ~ $ wget www.coreos.com
+core@Container-Linux-VM-01 ~ $ wget www.coreos.com
 ```
 
-## Using CoreOS in VDC
+## Using CoreOS Container Linux in VDC
 
 See the [Interoute VDC documentation](https://cloudstore.interoute.com/knowledge-centre/library/vdc-v2).

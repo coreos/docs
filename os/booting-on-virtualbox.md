@@ -1,6 +1,6 @@
-# Running CoreOS on VirtualBox
+# Running CoreOS Container Linux on VirtualBox
 
-These instructions will walk you through running CoreOS on Oracle VM VirtualBox.
+These instructions will walk you through running Container Linux on Oracle VM VirtualBox.
 
 ## Building the virtual disk
 
@@ -15,7 +15,7 @@ wget https://raw.githubusercontent.com/coreos/scripts/master/contrib/create-core
 chmod +x create-coreos-vdi
 ```
 
-To run the script you can specify a destination location and the CoreOS version.
+To run the script you can specify a destination location and the Container Linux version.
 
 ```sh
 ./create-coreos-vdi -d /data/VirtualBox/Templates
@@ -23,7 +23,7 @@ To run the script you can specify a destination location and the CoreOS version.
 
 ## Choose a channel
 
-Choose a channel to base your disk image on. Specific versions of CoreOS can also be referenced by version number.
+Choose a channel to base your disk image on. Specific versions of Container Linux can also be referenced by version number.
 
 <div id="virtualbox-create">
   <ul class="nav nav-tabs">
@@ -56,7 +56,7 @@ Choose a channel to base your disk image on. Specific versions of CoreOS can als
   </div>
 </div>
 
-After the script is finished successfully, will be available at the specified destination location the CoreOS image or at current location. The file name will be something like:
+After the script is finished successfully, will be available at the specified destination location the Container Linux image or at current location. The file name will be something like:
 
 ```
 coreos_production_stable.vdi
@@ -66,7 +66,7 @@ coreos_production_stable.vdi
 
 Cloud-config can be specified by attaching a [config-drive](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/config-drive.md) with the label `config-2`. This is commonly done through whatever interface allows for attaching CD-ROMs or new drives.
 
-Note that the config-drive standard was originally an OpenStack feature, which is why you'll see strings containing `openstack`. This filepath needs to be retained, although CoreOS supports config-drive on all platforms.
+Note that the config-drive standard was originally an OpenStack feature, which is why you'll see strings containing `openstack`. This filepath needs to be retained, although Container Linux supports config-drive on all platforms.
 
 For more information on customization that can be done with cloud-config, head on over to the [cloud-config guide](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md/).
 
@@ -90,7 +90,7 @@ VBoxManage clonehd coreos_production_stable.vdi my_vm01.vdi
 VBoxManage modifyhd my_vm01.vdi --resize 10240
 ```
 
-At boot time the CoreOS will detect that the volume size changed and will resize the filesystem according.
+At boot time the Container Linux will detect that the volume size changed and will resize the filesystem according.
 
 Open VirtualBox Manager and go to menu Machine > New. Type the desired machine name and choose 'Linux' type and 'Linux 2.6 / 3.x (64 bit)' version.
 
@@ -114,6 +114,6 @@ Now you can login using your private SSH key.
 ssh core@192.168.56.101
 ```
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

@@ -1,6 +1,6 @@
-# CoreOS disk layout
+# CoreOS Container Linux disk layout
 
-CoreOS is designed to be reliably updated via a [continuous stream of updates](https://coreos.com/why/#updates). The operating system has 9 different disk partitions, utilizing a subset of those to make each update safe and enable a roll-back to a previous version if anything goes wrong.
+Container Linux is designed to be reliably updated via a [continuous stream of updates](https://coreos.com/why/#updates). The operating system has 9 different disk partitions, utilizing a subset of those to make each update safe and enable a roll-back to a previous version if anything goes wrong.
 
 ## Partition table
 
@@ -8,26 +8,26 @@ CoreOS is designed to be reliably updated via a [continuous stream of updates](h
 |:------:|------------|-------------------------------------------------------------------|-----------------------|
 | 1      | EFI-SYSTEM | Contains the bootloader                                           | VFAT                  |
 | 2      | BIOS-BOOT  | This partition is reserved for future use                         | (none)                |
-| 3      | USR-A      | One of two active/passive partitions holding CoreOS               | EXT4                  |
-| 4      | USR-B      | One of two active/passive partitions holding CoreOS               | (empty on first boot) |
+| 3      | USR-A      | One of two active/passive partitions holding Container Linux      | EXT4                  |
+| 4      | USR-B      | One of two active/passive partitions holding Container Linux      | (empty on first boot) |
 | 5      | ROOT-C     | This partition is reserved for future use                         | (none)                |
 | 6      | OEM        | Stores configuration data specific to an [OEM platform][OEM docs] | EXT4                  |
 | 7      | OEM-CONFIG | Optional storage for an OEM                                       | (defined by OEM)      |
 | 8      | (unused)   | This partition is reserved for future use                         | (none)                |
 | 9      | ROOT       | Stateful partition for storing persistent data                    | EXT4, BTRFS, or XFS   |
 
-For more information, [read more about the disk layout][chromium disk format] used by Chromium and ChromeOS, which inspired the layout used by CoreOS.
+For more information, [read more about the disk layout][chromium disk format] used by Chromium and ChromeOS, which inspired the layout used by Container Linux.
 
 [OEM docs]: notes-for-distributors.md
 [chromium disk format]: http://www.chromium.org/chromium-os/chromiumos-design-docs/disk-format
 
 ## Mounted filesystems
 
-CoreOS is divided into two main filesystems, a read-only `/usr` and a stateful read/write `/`.
+Container Linux is divided into two main filesystems, a read-only `/usr` and a stateful read/write `/`.
 
 ### Read-only /usr
 
-The `USR-A` or `USR-B` partitions are interchangeable and one of the two is mounted as a read-only filesystem at `/usr`. After an update, CoreOS will re-configure the GPT priority attribute, instructing the bootloader to boot from the passive (newly updated) partition. Here's an example of the priority flags set on an Amazon EC2 machine:
+The `USR-A` or `USR-B` partitions are interchangeable and one of the two is mounted as a read-only filesystem at `/usr`. After an update, Container Linux will re-configure the GPT priority attribute, instructing the bootloader to boot from the passive (newly updated) partition. Here's an example of the priority flags set on an Amazon EC2 machine:
 
 ```
 $ sudo cgpt show /dev/xvda
@@ -38,7 +38,7 @@ $ sudo cgpt show /dev/xvda
                                   Attr: priority=1 tries=0 successful=1
 ```
 
-CoreOS images ship with the `USR-B` partition empty to reduce the image filesize. The first CoreOS update will populate it and start the normal active/passive scheme.
+Container Linux images ship with the `USR-B` partition empty to reduce the image filesize. The first Container Linux update will populate it and start the normal active/passive scheme.
 
 The OEM partition is also mounted as read-only at `/usr/share/oem`.
 
@@ -48,4 +48,4 @@ All stateful data, including container images, is stored within the read/write f
 
 The data stored on the root partition isn't manipulated by the update process. In return, we do our best to prevent you from modifying the data in /usr.
 
-Due to the unique disk layout of CoreOS, an `rm -rf /` is an un-supported but valid operation to do a "factory reset". The machine should boot and operate normally afterwards.
+Due to the unique disk layout of Container Linux, an `rm -rf /` is an un-supported but valid operation to do a "factory reset". The machine should boot and operate normally afterwards.

@@ -1,6 +1,6 @@
 # Mounting storage
 
-The [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md) *mount unit* mechanism is used to attach additional filesystems to CoreOS nodes, whether such storage is provided by an underlying cloud platform, physical disk, SAN, or NAS system. By [systemd convention](http://www.freedesktop.org/software/systemd/man/systemd.mount.html), mount unit names derive from the target mount point, with interior slashes replaced by dashes, and the `.mount` extension appended. A unit mounting onto `/var/www` is thus named `var-www.mount`.
+The [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md) *mount unit* mechanism is used to attach additional filesystems to Container Linux nodes, whether such storage is provided by an underlying cloud platform, physical disk, SAN, or NAS system. By [systemd convention](http://www.freedesktop.org/software/systemd/man/systemd.mount.html), mount unit names derive from the target mount point, with interior slashes replaced by dashes, and the `.mount` extension appended. A unit mounting onto `/var/www` is thus named `var-www.mount`.
 
 Mount units name the source filesystem and target mount point, and optionally the filesystem type. Cloud-config writes mount unit files beneath `/etc/systemd/system`. *Systemd* mounts filesystems defined in such units at boot time. The following example mounts an [EC2 ephemeral disk](booting-on-ec2.md#instance-storage) at the node's `/media/ephemeral` directory, and is therefore named `media-ephemeral.mount`:
 
@@ -62,7 +62,7 @@ coreos:
 
 ## Creating and mounting a btrfs volume file
 
-CoreOS [561.0.0](https://coreos.com/releases/#561.0.0) and later are installed with ext4 + overlayfs to provide a layered filesystem for the root partition. Installations from prior to this, use btrfs for this functionality. If you'd like to continue using btrfs on newer CoreOS machines, you can do so with two systemd units: one that creates and formats a btrfs volume file and another that mounts it.
+Container Linux [561.0.0](https://coreos.com/releases/#561.0.0) and later are installed with ext4 + overlayfs to provide a layered filesystem for the root partition. Installations from prior to this, use btrfs for this functionality. If you'd like to continue using btrfs on newer Container Linux machines, you can do so with two systemd units: one that creates and formats a btrfs volume file and another that mounts it.
 
 In this example, we are going to mount a new 25GB btrfs volume file to `/var/lib/docker`, and one can verify that Docker is using the btrfs storage driver once the Docker service has started by executing `sudo docker info`. We recommend allocating **no more than 85%** of the available disk space for a btrfs filesystem as journald will also require space on the host filesystem.
 
@@ -100,7 +100,7 @@ Note the declaration of `ConditionPathExists=!/var/lib/docker.btrfs`. Without th
 
 ## Mounting NFS exports
 
-This cloud-config excerpt enables the NFS host monitor [`rpc.statd(8)`](http://linux.die.net/man/8/rpc.statd), then mounts an NFS export onto the CoreOS node's `/var/www`.
+This cloud-config excerpt enables the NFS host monitor [`rpc.statd(8)`](http://linux.die.net/man/8/rpc.statd), then mounts an NFS export onto the Container Linux node's `/var/www`.
 
 ```yaml
 #cloud-config

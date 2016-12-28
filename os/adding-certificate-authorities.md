@@ -1,6 +1,6 @@
 # Custom certificate authorities
 
-CoreOS supports custom Certificate Authorities (CAs) in addition to the default list of trusted CAs. Adding your own CA allows you to:
+CoreOS Container Linux supports custom Certificate Authorities (CAs) in addition to the default list of trusted CAs. Adding your own CA allows you to:
 
 - Use a corporate wildcard certificate
 - Use your own CA to communicate with an installation of CoreUpdate

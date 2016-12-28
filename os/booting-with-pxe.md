@@ -1,8 +1,8 @@
-# Booting CoreOS via PXE
+# Booting CoreOS Container Linux via PXE
 
-These instructions will walk you through booting CoreOS via PXE on real or virtual hardware. By default, this will run CoreOS completely out of RAM. CoreOS can also be [installed to disk](installing-to-disk.md).
+These instructions will walk you through booting Container Linux via PXE on real or virtual hardware. By default, this will run Container Linux completely out of RAM. Container Linux can also be [installed to disk](installing-to-disk.md).
 
-A mininum of 1024M of RAM is required to boot CoreOS via PXE.
+A mininum of 1024M of RAM is required to boot Container Linux via PXE.
 
 ## Configuring pxelinux
 
@@ -15,7 +15,7 @@ This guide assumes you already have a working PXE server using [pxelinux][pxelin
 
 ### Setting up pxelinux.cfg
 
-When configuring the CoreOS pxelinux.cfg there are a few kernel options that may be useful but all are optional.
+When configuring the Container Linux pxelinux.cfg there are a few kernel options that may be useful but all are optional.
 
 - **rootfstype=tmpfs**: Use tmpfs for the writable root filesystem. This is the default behavior.
 - **rootfstype=btrfs**: Use btrfs in RAM for the writable root filesystem. The filesystem will consume more RAM as it grows, up to a max of 50%. The limit isn't currently configurable.
@@ -23,11 +23,11 @@ When configuring the CoreOS pxelinux.cfg there are a few kernel options that may
 - **sshkey**: Add the given SSH public key to the `core` user's authorized_keys file. Replace the example key below with your own (it is usually in `~/.ssh/id_rsa.pub`)
 - **console**: Enable kernel output and a login prompt on a given tty. The default, `tty0`, generally maps to VGA. Can be used multiple times, e.g. `console=tty0 console=ttyS0`
 - **coreos.autologin**: Drop directly to a shell on a given console without prompting for a password. Useful for troubleshooting but use with caution. For any console that doesn't normally get a login prompt by default be sure to combine with the `console` option, e.g. `console=tty0 console=ttyS0 coreos.autologin=tty1 coreos.autologin=ttyS0`. Without any argument it enables access on all consoles. Note that for the VGA console the login prompts are on virtual terminals (`tty1`, `tty2`, etc), not the VGA console itself (`tty0`).
-- **cloud-config-url**: CoreOS will attempt to download a cloud-config document and use it to provision your booted system. See the [coreos-cloudinit-project][cloudinit] for more information.
+- **cloud-config-url**: Container Linux will attempt to download a cloud-config document and use it to provision your booted system. See the [coreos-cloudinit-project][cloudinit] for more information.
 
 [cloudinit]: https://github.com/coreos/coreos-cloudinit
 
-This is an example pxelinux.cfg file that assumes CoreOS is the only option. You should be able to copy this verbatim into `/var/lib/tftpboot/pxelinux.cfg/default` after providing a cloud-config URL:
+This is an example pxelinux.cfg file that assumes Container Linux is the only option. You should be able to copy this verbatim into `/var/lib/tftpboot/pxelinux.cfg/default` after providing a cloud-config URL:
 
 ```sh
 default coreos
@@ -63,9 +63,9 @@ Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced i
 
 ### Choose a channel
 
-CoreOS is [released](https://coreos.com/releases/) into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+Container Linux is [released](https://coreos.com/releases/) into alpha and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
-PXE booted machines cannot currently update themselves when new versions are released to a channel. To update to the latest version of CoreOS download/verify these files again and reboot.
+PXE booted machines cannot currently update themselves when new versions are released to a channel. To update to the latest version of Container Linux download/verify these files again and reboot.
 
 <div id="pxe-create">
   <ul class="nav nav-tabs">
@@ -118,7 +118,7 @@ gpg --verify coreos_production_pxe_image.cpio.gz.sig
 
 ## Booting the box
 
-After setting up the PXE server as outlined above you can start the target machine in PXE boot mode. The machine should grab the image from the server and boot into CoreOS. If something goes wrong you can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
+After setting up the PXE server as outlined above you can start the target machine in PXE boot mode. The machine should grab the image from the server and boot into Container Linux. If something goes wrong you can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
 ```sh
 This is localhost.unknown_domain (Linux x86_64 3.10.10+) 19:53:36
@@ -142,7 +142,7 @@ Since our upgrade process requires a disk, this image does not have the option t
 
 ## Installation
 
-Once booted it is possible to [install CoreOS on a local disk][install-to-disk] or to just use local storage for the writable root filesystem while continuing to boot CoreOS itself via PXE.
+Once booted it is possible to [install Container Linux on a local disk][install-to-disk] or to just use local storage for the writable root filesystem while continuing to boot Container Linux itself via PXE.
 
 If you plan on using Docker we recommend using a local ext4 filesystem with overlayfs, however, btrfs is also available to use if needed.
 
@@ -164,7 +164,7 @@ mkfs.btrfs -L ROOT /dev/sda1
 
 ## Adding a Custom OEM
 
-Similar to the [OEM partition][oem] in CoreOS disk images, PXE images can be customized with a [cloud config][cloud-config] bundled in the initramfs. Simply create a `./usr/share/oem/` directory containing `cloud-config.yml` and add it as an additional initramfs:
+Similar to the [OEM partition][oem] in Container Linux disk images, PXE images can be customized with a [cloud config][cloud-config] bundled in the initramfs. Simply create a `./usr/share/oem/` directory containing `cloud-config.yml` and add it as an additional initramfs:
 
 ```sh
 mkdir -p usr/share/oem
@@ -191,9 +191,9 @@ initrd coreos_production_pxe_image.cpio.gz,cloud-config.cpio.gz
 ...
 ```
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart][qs] guide or dig into [more specific topics][docs].
+Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart][qs] guide or dig into [more specific topics][docs].
 
 
 [append-initrd]: http://www.syslinux.org/wiki/index.php?title=SYSLINUX#INITRD_initrd_file

@@ -1,4 +1,4 @@
-# Running CoreOS on NIFTY Cloud
+# Running CoreOS Container Linux on NIFTY Cloud
 
 NIFTY Cloud is a Japanese cloud computing provider. These instructions are also [available in Japanese](booting-on-niftycloud-JA_JP.md). Before proceeding, you will need to [install NIFTY Cloud CLI][cli-documentation].
 
@@ -6,9 +6,9 @@ NIFTY Cloud is a Japanese cloud computing provider. These instructions are also 
 
 ## Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. On NIFTY Cloud, the cloud-config can be modified while the instance is running and will be processed next time the machine boots.
+Container Linux allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. On NIFTY Cloud, the cloud-config can be modified while the instance is running and will be processed next time the machine boots.
 
-You can provide cloud-config to CoreOS via [NIFTY Cloud CLI][cli-documentation].
+You can provide cloud-config to Container Linux via [NIFTY Cloud CLI][cli-documentation].
 
 The most common cloud-config for NIFTY Cloud looks like:
 
@@ -38,7 +38,7 @@ The `$private_ipv4` and `$public_ipv4` substitution variables are fully supporte
 
 ## Choosing a channel
 
-CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
+Container Linux is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
 
 <div id="niftycloud-images">
   <ul class="nav nav-tabs">
@@ -71,12 +71,12 @@ To add more instances to the cluster, just launch more with the same cloud-confi
 
 ## SSH
 
-You can log in your CoreOS instances using:
+You can log in your Container Linux instances using:
 
 ```sh
 ssh core@<ip address> -i <path to keyfile>
 ```
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

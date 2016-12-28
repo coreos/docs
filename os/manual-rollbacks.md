@@ -1,6 +1,6 @@
-# Performing manual CoreOS rollbacks
+# Performing manual CoreOS Container Linux rollbacks
 
-As much as we all love flawless, automatic updates, there may be occasions when an update must be rolled back. This is fairly straightforward on CoreOS, once you know the right commands.
+As much as we all love flawless, automatic updates, there may be occasions when an update must be rolled back. This is fairly straightforward on Container Linux, once you know the right commands.
 
 tl;dr: The following command will set the currently passive partition to be active on the next boot:
 
@@ -154,7 +154,7 @@ $ cgpt prioritize "$(cgpt find -t coreos-usr | grep --invert-match "$(findmnt --
 
 ## Forcing a Channel Downgrade
 
-The procedure above restores the last known good CoreOS version from immediately before an upgrade reboot. The system remains on the same [CoreOS channel][relchans] after rebooting with the previous USR partition. It is also possible, though not recommended, to switch a CoreOS installation to an older release channel, for example to make a system running an Alpha release downgrade to the Stable channel. Root privileges are required for this procedure, noted by `sudo` in the commands below.
+The procedure above restores the last known good Container Linux version from immediately before an upgrade reboot. The system remains on the same [Container Linux channel][relchans] after rebooting with the previous USR partition. It is also possible, though not recommended, to switch a Container Linux installation to an older release channel, for example to make a system running an Alpha release downgrade to the Stable channel. Root privileges are required for this procedure, noted by `sudo` in the commands below.
 
 First, edit `/etc/coreos/update.conf` to set `GROUP` to the name of the target channel, one of `stable` or `beta`:
 

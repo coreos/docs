@@ -1,4 +1,4 @@
-# Running CoreOS on Google Compute Engine
+# Running CoreOS Container Linux on Google Compute Engine
 
 Before proceeding, you will need a GCE account ([get $300 of credit here][free-trial]) and [install gcloud][gcloud-documentation] on your machine. In each command below, be sure to insert your project name in place of `<project-id>`.
 
@@ -10,9 +10,9 @@ After installation, log into your account with `gcloud auth login` and enter you
 
 ## Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. On GCE, the cloud-config can be modified while the instance is running and will be processed next time the machine boots.
+Container Linux allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. On GCE, the cloud-config can be modified while the instance is running and will be processed next time the machine boots.
 
-You can provide cloud-config to CoreOS via the Google Cloud console's metadata field `user-data` or via a flag using `gcloud`.
+You can provide cloud-config to Container Linux via the Google Cloud console's metadata field `user-data` or via a flag using `gcloud`.
 
 The most common cloud-config for GCE looks like:
 
@@ -42,7 +42,7 @@ The `$private_ipv4` and `$public_ipv4` substitution variables are fully supporte
 
 ## Choosing a channel
 
-CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
+Container Linux is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
 
 Create 3 instances from the image above using our cloud-config from `cloud-config.yaml`:
 
@@ -85,14 +85,14 @@ coreos:
         Type=ext3
 ```
 
-For more information about mounting storage, Google's [own documentation](https://developers.google.com/compute/docs/disks#attach_disk) is the best source. You can also read about [mounting storage on CoreOS](mounting-storage.md).
+For more information about mounting storage, Google's [own documentation](https://developers.google.com/compute/docs/disks#attach_disk) is the best source. You can also read about [mounting storage on Container Linux](mounting-storage.md).
 
 ### Adding more machines
 To add more instances to the cluster, just launch more with the same cloud-config inside of the project.
 
 ## SSH
 
-You can log in your CoreOS instances using:
+You can log in your Container Linux instances using:
 
 ```sh
 gcloud compute ssh --zone us-central1-a core@<instance-name>
@@ -170,6 +170,6 @@ tags:
 zone: us-central1-a
 ```
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

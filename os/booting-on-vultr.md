@@ -1,11 +1,11 @@
-# Running CoreOS on a Vultr VPS
+# Running CoreOS Container Linux on a Vultr VPS
 
-These instructions will walk you through running a single CoreOS node. This guide assumes:
+These instructions will walk you through running a single Container Linux node. This guide assumes:
 
 * You have an account at [Vultr.com](https://www.vultr.com).
 * You have a public + private key combination generated. Here's a helpful guide if you need to generate these keys: [How to set up SSH keys](https://help.github.com/articles/generating-ssh-keys).
 
-The simplest option to boot up CoreOS is to select the "CoreOS Stable" operating system from Vultr's default offerings. However, most deployments require a custom `cloud-config`, which can only be achieved in Vultr with an iPXE script. The remainder of this article describes this process.
+The simplest option to boot up Container Linux is to select the "CoreOS Stable" operating system from Vultr's default offerings. However, most deployments require a custom `cloud-config`, which can only be achieved in Vultr with an iPXE script. The remainder of this article describes this process.
 
 ## Cloud-config
 
@@ -33,7 +33,7 @@ You must add to your ssh public key to your `cloud-config`'s [ssh authorized key
 
 ## Choosing a channel
 
-CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
+Container Linux is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
 
 <div id="vultr-images">
   <ul class="nav nav-tabs">
@@ -95,7 +95,7 @@ boot</pre>
 
 Go to My Servers > Startup Scripts > Add Startup Script, select type "PXE", and input your script. Be sure to replace the cloud-config-url with that of the shell script you created above.
 
-Additional reading can be found at [Booting CoreOS with iPXE](booting-with-ipxe.md) and [Embedded scripts for iPXE](http://ipxe.org/embed).
+Additional reading can be found at [Booting Container Linux with iPXE](booting-with-ipxe.md) and [Embedded scripts for iPXE](http://ipxe.org/embed).
 
 ## Create the VPS
 
@@ -109,7 +109,7 @@ Once you receive the "Subscription Activated" email the VPS will be ready to use
 
 ## Accessing the VPS
 
-You can now log in to CoreOS using the associated private key on your local computer. You may need to specify its location using ```-i LOCATION```. If you need additional details on how to specify the location of your private key file see [here](http://www.cyberciti.biz/faq/force-ssh-client-to-use-given-private-key-identity-file/).
+You can now log in to Container Linux using the associated private key on your local computer. You may need to specify its location using ```-i LOCATION```. If you need additional details on how to specify the location of your private key file see [here](http://www.cyberciti.biz/faq/force-ssh-client-to-use-given-private-key-identity-file/).
 
 SSH to the IP of your VPS, and specify the "core" user: ```ssh core@IP```
 
@@ -124,6 +124,6 @@ CoreOS stable (557.2.0)
 core@localhost ~ $
 ```
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

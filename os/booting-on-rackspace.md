@@ -1,11 +1,11 @@
-# Running CoreOS on Rackspace
+# Running CoreOS Container Linux on Rackspace
 
-CoreOS is currently in heavy development and actively being tested. These instructions will walk you through running CoreOS on the Rackspace OpenStack cloud, which differs slightly from the generic OpenStack instructions. There are two ways to launch a CoreOS cluster: launch an entire cluster with Heat or launch machines with Nova.
+These instructions will walk you through running Container Linux on the Rackspace OpenStack cloud, which differs slightly from the generic OpenStack instructions. There are two ways to launch a Container Linux cluster: launch an entire cluster with Heat or launch machines with Nova.
 
 
 ## Choosing a channel
 
-CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
+Container Linux is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
 
 <div id="rax-images">
   <ul class="nav nav-tabs">
@@ -40,7 +40,7 @@ CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates
 
 ## Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a machine is created on Rackspace, the cloud-config can't be modified.
+Container Linux allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a machine is created on Rackspace, the cloud-config can't be modified.
 
 You can provide cloud-config data via both Heat and Nova APIs. You **cannot** provide cloud-config via the Control Panel. If you launch machines via the UI, you will have to do all configuration manually.
 
@@ -91,7 +91,7 @@ coreos:
 
 Mounting Cloud Block Storage can be done with a mount unit, but should not be included in cloud-config unless the disk is present on the first boot.
 
-For more general information, check out [mounting storage on CoreOS](mounting-storage.md).
+For more general information, check out [mounting storage on Container Linux](mounting-storage.md).
 
 ## Launch with Nova
 
@@ -125,7 +125,7 @@ We're ready to create a keypair then boot a server with it.
 
 ### Create keypair
 
-For this guide, I'm assuming you already have a public key you use for your CoreOS servers. Note that only RSA keypairs are supported. Load the public key to Rackspace:
+For this guide, I'm assuming you already have a public key you use for your Container Linux servers. Note that only RSA keypairs are supported. Load the public key to Rackspace:
 
 ```sh
 supernova production keypair-add --pub-key ~/.ssh/coreos.pub coreos-key
@@ -152,17 +152,17 @@ Check you make sure the key is in your list by running `supernova production key
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
       <p>Boot a new Cloud Server with our new keypair and specify optional cloud-config data:</p>
-      <pre>supernova production boot --image &lt;image-id&gt; --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
+      <pre>supernova production boot --image &lt;image-id&gt; --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_Container_Linux_Server</pre>
       <p>Boot a new OnMetal Server with our new keypair and specify optional cloud-config data:</p>
-      <pre>supernova production boot --image &lt;image-id&gt; --flavor onmetal-compute1 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
+      <pre>supernova production boot --image &lt;image-id&gt; --flavor onmetal-compute1 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_Container_Linux_Server</pre>
     </div>
     <div class="tab-pane" id="beta-create">
       <p>Boot a new Cloud Server with our new keypair and specify optional cloud-config data:</p>
-      <pre>supernova production boot --image &lt;image-id&gt; --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
+      <pre>supernova production boot --image &lt;image-id&gt; --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_Container_Linux_Server</pre>
     </div>
     <div class="tab-pane active" id="stable-create">
       <p>Boot a new Cloud Server with our new keypair and specify optional cloud-config data:</p>
-      <pre>supernova production boot --image &lt;image-id&gt; --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_CoreOS_Server</pre>
+      <pre>supernova production boot --image &lt;image-id&gt; --flavor performance1-2 --key-name coreos-key --user-data ~/cloud_config.yml --config-drive true My_Container_Linux_Server</pre>
     </div>
   </div>
 </div>
@@ -183,7 +183,7 @@ You should now see the details of your new server in your terminal and it should
 | flavor                 | 512MB Standard Instance              |
 | id                     | 82dbe66d-0762-4cba-a286-8c1af8431e47 |
 | user_id                | 3c55bca772ba4a4bb6a4eb5b25754738     |
-| name                   | My_CoreOS_Server                     |
+| name                   | My_Container_Linux_Server            |
 | adminPass              | mgNqEx7I9pQA                         |
 | tenant_id              | 833111                               |
 | created                | 2013-11-02T19:43:44Z                 |
@@ -213,6 +213,6 @@ You can also launch servers with either the `alpha` and `beta` channel versions 
  7. Click on 'Create Server'
 
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

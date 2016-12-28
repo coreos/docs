@@ -1,6 +1,6 @@
 # Working with btrfs and common troubleshooting
 
-btrfs is a copy-on-write filesystem with full support in the upstream Linux kernel and several desirable features. In the past, CoreOS shipped with a btrfs root filesystem to support Docker filesystem requirements at the time. As of version 561.0.0, CoreOS ships with ext4 as the default root filesystem by default while still supporting Docker. Btrfs is still supported and works with the latest CoreOS releases and Docker, but we recommend using ext4.
+btrfs is a copy-on-write filesystem with full support in the upstream Linux kernel and several desirable features. In the past, Container Linux shipped with a btrfs root filesystem to support Docker filesystem requirements at the time. As of version 561.0.0, Container Linux ships with ext4 as the default root filesystem by default while still supporting Docker. Btrfs is still supported and works with the latest Container Linux releases and Docker, but we recommend using ext4.
 
 btrfs was marked as experimental for a long time, but it's now fully production-ready and supported by a number of Linux distributions.
 

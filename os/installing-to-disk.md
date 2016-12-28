@@ -1,12 +1,12 @@
-# Installing CoreOS to disk
+# Installing CoreOS Container Linux to disk
 
 ## Install script
 
-There is a simple installer that will destroy everything on the given target disk and install CoreOS. Essentially it downloads an image, verifies it with gpg, and then copies it bit for bit to disk. An installation requires at least 8 GB of usable space on the device.
+There is a simple installer that will destroy everything on the given target disk and install Container Linux. Essentially it downloads an image, verifies it with gpg, and then copies it bit for bit to disk. An installation requires at least 8 GB of usable space on the device.
 
-The script is self-contained and located [on GitHub here][coreos-install] and can be run from any Linux distribution. You cannot normally install CoreOS to the same device that is currently booted. However, the [CoreOS ISO][coreos-iso] or any Linux liveCD will allow CoreOS to install to a non-active device.
+The script is self-contained and located [on GitHub here][coreos-install] and can be run from any Linux distribution. You cannot normally install Container Linux to the same device that is currently booted. However, the [Container Linux ISO][coreos-iso] or any Linux liveCD will allow Container Linux to install to a non-active device.
 
-If you boot CoreOS via PXE, the install script is already installed. By default the install script will attempt to install the same version and channel that was PXE-booted:
+If you boot Container Linux via PXE, the install script is already installed. By default the install script will attempt to install the same version and channel that was PXE-booted:
 
 ```sh
 coreos-install -d /dev/sda
@@ -18,7 +18,7 @@ If you are using the ISO with VMware, first sudo to root:
 sudo su - root
 ```
 
-Then install as you would with the PXE booted system, but be sure to include user information, especially an SSH key, in a [cloud-config][cloud-config-section] file, or else you will not be able to log into your CoreOS instance.
+Then install as you would with the PXE booted system, but be sure to include user information, especially an SSH key, in a [cloud-config][cloud-config-section] file, or else you will not be able to log into your Container Linux instance.
 
 
 ```sh
@@ -27,7 +27,7 @@ coreos-install -d /dev/sda -c cloud-config.yaml
 
 ## Choose a channel
 
-CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 <div id="install">
   <ul class="nav nav-tabs">
@@ -57,7 +57,7 @@ CoreOS is released into alpha, beta, and stable channels. Releases to each chann
 For reference here are the rest of the `coreos-install` options:
 
 ```
--d DEVICE   Install CoreOS to the given device.
+-d DEVICE   Install Container Linux to the given device.
 -V VERSION  Version to install (e.g. current)
 -C CHANNEL  Release channel to use (e.g. beta)
 -o OEM      OEM type to install (e.g. openstack)
@@ -70,7 +70,7 @@ For reference here are the rest of the `coreos-install` options:
 
 ## Cloud-config
 
-By default there isn't a password or any other way to log into a fresh CoreOS system. The easiest way to configure accounts, add systemd units, and more is via cloud config. Jump over to the [docs to learn about the supported features][cloud-config].
+By default there isn't a password or any other way to log into a fresh Container Linux system. The easiest way to configure accounts, add systemd units, and more is via cloud config. Jump over to the [docs to learn about the supported features][cloud-config].
 
 The installation script will process your `cloud-config.yaml` file specified with the `-c` flag and place it onto disk. It will be installed to `/var/lib/coreos-install/user_data` and evaluated on every boot. Cloud-config is not the only supported format for this file &mdash; running a script is also available.
 
@@ -94,7 +94,7 @@ coreos-install -d /dev/sda -C stable -c ~/cloud-config.yaml
 
 ### Advanced cloud-config example
 
-This example will configure CoreOS components: etcd2, fleetd and flannel. You have to substitute `<PEER_ADDRESS>` to your host's IP or DNS address.
+This example will configure Container Linux components: etcd2, fleetd and flannel. You have to substitute `<PEER_ADDRESS>` to your host's IP or DNS address.
 
 ```yaml
 #cloud-config
@@ -135,9 +135,9 @@ If cloud config doesn't handle something you need to do or you just want to take
 mount /dev/sda9 /mnt/
 ```
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart][quickstart] guide or dig into [more specific topics][docs-root].
+Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart][quickstart] guide or dig into [more specific topics][docs-root].
 
 [nginx]: nginx-host-cloud-config.md
 [quickstart]: quickstart.md

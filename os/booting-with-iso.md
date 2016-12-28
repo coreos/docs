@@ -1,6 +1,6 @@
-# Booting CoreOS from an ISO
+# Booting CoreOS Container Linux from an ISO
 
-The latest CoreOS ISOs can be downloaded from the image storage site:
+The latest Container Linux ISOs can be downloaded from the image storage site:
 
 <div id="iso-images">
   <ul class="nav nav-tabs">
@@ -42,11 +42,11 @@ The latest CoreOS ISOs can be downloaded from the image storage site:
 ## Known limitations
 
 1. The best strategy for providing [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md) is via [config-drive](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/config-drive.md).
-2. A mininum of 1024M of RAM is required to boot CoreOS via ISO.
+2. A mininum of 1024M of RAM is required to boot Container Linux via ISO.
 
 ## Install to disk
 
-The most common use-case for this ISO is to install CoreOS to disk. You can [find those instructions here](installing-to-disk.md).
+The most common use-case for this ISO is to install Container Linux to disk. You can [find those instructions here](installing-to-disk.md).
 
 ## Bypass authentication
 

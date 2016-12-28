@@ -2,7 +2,7 @@
 
 Docker is an open-source project that makes creating and managing Linux containers really easy. Containers are like extremely lightweight VMs – they allow code to run in isolation from other containers but safely share the machine’s resources, all without the overhead of a hypervisor.
 
-Docker containers can boot extremely fast (in milliseconds!) which gives you unprecedented flexibility in managing load across your cluster. For example, instead of running chef on each of your VMs, it’s faster and more reliable to have your build system create a container and launch it on the appropriate number of CoreOS hosts. This guide will show you how to launch a container, install some software on it, commit that container, and optionally launch it on another CoreOS machine. Before starting, make sure you've got at least one CoreOS machine up and running &mdash; try it on [Amazon EC2](booting-on-ec2.md) or locally with [Vagrant](booting-on-vagrant.md).
+Docker containers can boot extremely fast (in milliseconds!) which gives you unprecedented flexibility in managing load across your cluster. For example, instead of running chef on each of your VMs, it’s faster and more reliable to have your build system create a container and launch it on the appropriate number of Container Linux hosts. This guide will show you how to launch a container, install some software on it, commit that container, and optionally launch it on another Container Linux machine. Before starting, make sure you've got at least one Container Linux machine up and running &mdash; try it on [Amazon EC2](booting-on-ec2.md) or locally with [Vagrant](booting-on-vagrant.md).
 
 ## Docker CLI basics
 
@@ -64,7 +64,7 @@ When running Docker containers manually, the most important option is to run the
 docker run -d coreos/apache [process]
 ```
 
-After you are comfortable with the mechanics of running containers by hand, it's recommended to use [systemd units](getting-started-with-systemd.md) and/or [fleet](../fleet/launching-containers-fleet.md) to run your containers on a cluster of CoreOS machines.
+After you are comfortable with the mechanics of running containers by hand, it's recommended to use [systemd units](getting-started-with-systemd.md) and/or [fleet](../fleet/launching-containers-fleet.md) to run your containers on a cluster of Container Linux machines.
 
 Do not run containers with detached mode inside of systemd unit files. Detached mode prevents your init system, in our case systemd, from monitoring the process that owns the container because detached mode forks it into the background. To prevent this issue, just omit the `-d` flag if you aren't running something manually.
 
@@ -96,7 +96,7 @@ The default apache install will be running on port 80. To give our container acc
 docker run -d -p 80:80 coreos/apache /usr/sbin/apache2ctl -D FOREGROUND
 ```
 
-You can now run this command on your CoreOS host to create the container. You should see the default apache webpage when you load either `localhost:80` or the IP of your remote server. Be sure that any firewall or EC2 Security Group allows traffic to port 80.
+You can now run this command on your Container Linux host to create the container. You should see the default apache webpage when you load either `localhost:80` or the IP of your remote server. Be sure that any firewall or EC2 Security Group allows traffic to port 80.
 
 ## Using the Docker registry
 
@@ -118,7 +118,7 @@ After tagging, the image needs to be pushed to the registry:
 docker push registry.example.com:5000/apache
 ```
 
-Once the image is done uploading, you should be able to start the exact same container on a different CoreOS host by running:
+Once the image is done uploading, you should be able to start the exact same container on a different Container Linux host by running:
 
 ```sh
 docker run -d -p 80:80 registry.example.com:5000/apache /usr/sbin/apache2ctl -D FOREGROUND

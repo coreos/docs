@@ -1,10 +1,10 @@
 # Using systemd drop-in units
 
-There are two methods of overriding default CoreOS settings in unit files: copying the unit file from `/usr/lib64/systemd/system` to `/etc/systemd/system` and modifying the chosen settings. Alternatively, one can create a directory named `unit.d` within `/etc/systemd/system` and place a drop-in file `name.conf` there that only changes the specific settings one is interested in. Note that multiple such drop-in files are read if present.
+There are two methods of overriding default Container Linux settings in unit files: copying the unit file from `/usr/lib64/systemd/system` to `/etc/systemd/system` and modifying the chosen settings. Alternatively, one can create a directory named `unit.d` within `/etc/systemd/system` and place a drop-in file `name.conf` there that only changes the specific settings one is interested in. Note that multiple such drop-in files are read if present.
 
-The advantage of the first method is that one easily overrides the complete unit, the default CoreOS unit is not parsed at all anymore. It has the disadvantage that improvements to the unit file supplied by CoreOS are not automatically incorporated on updates.
+The advantage of the first method is that one easily overrides the complete unit, the default Container Linux unit is not parsed at all anymore. It has the disadvantage that improvements to the unit file supplied by Container Linux are not automatically incorporated on updates.
 
-The advantage of the second method is that one only overrides the settings one specifically wants, where updates to the original CoreOS unit automatically apply. This has the disadvantage that some future CoreOS updates might be incompatible with the local changes, but the risk is much lower.
+The advantage of the second method is that one only overrides the settings one specifically wants, where updates to the original Container Linux unit automatically apply. This has the disadvantage that some future Container Linux updates might be incompatible with the local changes, but the risk is much lower.
 
 Note that for drop-in files, if one wants to remove entries from a setting that is parsed as a list (and is not a dependency), such as `ConditionPathExists=` (or e.g. `ExecStart=` in service units), one needs to first clear the list before re-adding all entries except the one that is to be removed. See below for an example.
 

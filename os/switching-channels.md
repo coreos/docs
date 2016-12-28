@@ -1,8 +1,8 @@
 # Switching release channels
 
-CoreOS is released into alpha, beta, and stable channels. New features and bug fixes are tested in the alpha channel and are promoted bit-for-bit to the beta channel if no additional bugs are found.
+Container Linux is released into alpha, beta, and stable channels. New features and bug fixes are tested in the alpha channel and are promoted bit-for-bit to the beta channel if no additional bugs are found.
 
-By design, the CoreOS update engine does not execute downgrades. If you're switching from a channel with a higher CoreOS version than the new channel, your machine won't be updated again until the new channel contains a higher version number.
+By design, the Container Linux update engine does not execute downgrades. If you're switching from a channel with a higher Container Linux version than the new channel, your machine won't be updated again until the new channel contains a higher version number.
 
 ![Update Timeline](img/update-timeline.png)
 

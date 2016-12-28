@@ -2,7 +2,7 @@
 
 ## Environment directive
 
-systemd has an Environment directive which sets environment variables for executed processes. It takes a space-separated list of variable assignments. This option may be specified more than once in which case all listed variables will be set. If the same variable is set twice, the later setting will override the earlier setting. If the empty string is assigned to this option, the list of environment variables is reset, all prior assignments have no effect. Environments directives are used in built-in CoreOS systemd units, for example in etcd2 and flannel.
+systemd has an Environment directive which sets environment variables for executed processes. It takes a space-separated list of variable assignments. This option may be specified more than once in which case all listed variables will be set. If the same variable is set twice, the later setting will override the earlier setting. If the empty string is assigned to this option, the list of environment variables is reset, all prior assignments have no effect. Environments directives are used in built-in Container Linux systemd units, for example in etcd2 and flannel.
 
 With the example below, you can configure your etcd2 daemon to use encryption. Just create `/etc/systemd/system/etcd2.service.d/30-certificates.conf` [drop-in] for etcd2.service:
 
@@ -26,7 +26,7 @@ EnvironmentFile similar to Environment directive but reads the environment varia
 
 It is impossible to use scripts in Environment directive. So you can not dynamically define Environment, i.e. this doesn't work `Environment=/usr/bin/curl http://example.com/something`. When you need to update your environment values dynamically you can combine systemd service unit and EnvironmentFile directive.
 
-For example in CoreOS `flanneld.service` unit file creates `/run/flannel_docker_opts.env` environment file which is used by `docker.service` unit to configure Docker use flannel interface. You can use similar example in your containers' unit files:
+For example in Container Linux, `flanneld.service` unit file creates `/run/flannel_docker_opts.env` environment file which is used by `docker.service` unit to configure Docker use flannel interface. You can use similar example in your containers' unit files:
 
 ```
 cat fleet_machines.service
@@ -125,7 +125,7 @@ or using [Ignition][ignition]:
 Where:
 
 * `/etc/systemd/system.conf.d/10-default-env.conf` config file will set default environment variables for all systemd units.
-* `/etc/profile.env` will set environment variables for all users logged in CoreOS.
+* `/etc/profile.env` will set environment variables for all users logged in Container Linux.
 
 ### etcd2.service unit advanced example
 
@@ -138,7 +138,7 @@ For more systemd examples, check out these documents:
 [Customizing Docker][customizing-docker]
 [Customizing the SSH Daemon][customizing-sshd]
 [Using systemd Drop-In Units][drop-in]
-[etcd Cluster Runtime Reconfiguration on CoreOS][etcd-cluster-reconfiguration]
+[etcd Cluster Runtime Reconfiguration on Container Linux][etcd-cluster-reconfiguration]
 
 [drop-in]: using-systemd-drop-in-units.md
 [customizing-sshd]: customizing-sshd.md#changing-the-sshd-port

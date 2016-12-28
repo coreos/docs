@@ -1,10 +1,10 @@
-# Running CoreOS on Exoscale
+# Running CoreOS Container Linux on Exoscale
 
 ## Choosing a channel
 
-CoreOS is designed to be [updated automatically][update-docs] with different schedules per channel. You can [disable this feature][reboot-docs], although we don't recommend it. Read the [release notes][release-notes] for specific features and bug fixes.
+Container Linux is designed to be [updated automatically][update-docs] with different schedules per channel. You can [disable this feature][reboot-docs], although we don't recommend it. Read the [release notes][release-notes] for specific features and bug fixes.
 
-The Exoscale CoreOS image is built officially and each CoreOS instance deployment is a unique fresh instance. By default, only the stable channel is deployed on Exoscale, you can easily [switch to Beta or Alpha channel][switching-channels].
+The Exoscale Container Linux image is built officially and each instance deployment is a unique fresh instance. By default, only the stable channel is deployed on Exoscale, you can easily [switch to Beta or Alpha channel][switching-channels].
 
 
 [update-docs]: https://coreos.com/why/#updates
@@ -15,7 +15,7 @@ The Exoscale CoreOS image is built officially and each CoreOS instance deploymen
 
 ## Security groups
 
-Unlike other providers, all Exoscale instances are protected by default on inbound traffic. In order to be able to work in a CoreOS cluster you should add the following rules in either your default security group or a security group of your choice and tag all CoreOS instances with it:
+Unlike other providers, all Exoscale instances are protected by default on inbound traffic. In order to be able to work in a Container Linux cluster you should add the following rules in either your default security group or a security group of your choice and tag all Container Linux instances with it:
 
 * SSH: TCP port 22
 * etcd: TCP ports 2379 for client communication and 2380 for server-to-server communication
@@ -24,11 +24,11 @@ Unlike other providers, all Exoscale instances are protected by default on inbou
 
 ## Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup, and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once the machine is created, cloud-config cannot be modified.
+Container Linux allows you to configure machine parameters, launch systemd units on startup, and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once the machine is created, cloud-config cannot be modified.
 
-You can provide raw cloud-config data to CoreOS via the Exoscale portal or [via the Exoscale compute API](#via-the-api).
+You can provide raw cloud-config data to Container Linux via the Exoscale portal or [via the Exoscale compute API](#via-the-api).
 
-In order to leverage CoreOS unique automation attributes, a standard CoreOS cloud-config on Exoscale could be configured with:
+In order to leverage Container Linux unique automation attributes, a standard CoreOS cloud-config on Exoscale could be configured with:
 
 ```yaml
 #cloud-config
@@ -70,11 +70,11 @@ cs startVirtualMachine id=<UUID of instance>
 
 [API reference for updateVirtualMachine](https://community.exoscale.ch/compute/api/#updatevirtualmachine_GET)
 
-## SSH to your CoreOS instances
+## SSH to your CoreOS Container Linux instances
 
-CoreOS does not allow root connection to the instance. By default, it uses the `core` user instead of `root` and doesn't use a password for authentication. You'll need to add an SSH key(s) via the web console or add keys/passwords via your cloud-config in order to log in.
+Container Linux does not allow root connection to the instance. By default, it uses the `core` user instead of `root` and doesn't use a password for authentication. You'll need to add an SSH key(s) via the web console or add keys/passwords via your cloud-config in order to log in.
 
-To log in to a CoreOS instance after it's created click on its IP address or run:
+To log in to a Container Linux instance after it's created click on its IP address or run:
 
 ```sh
 ssh core@<ip address>
@@ -97,7 +97,7 @@ key = api key
 secret = secret
 ```
 
-To launch a Small 2GB instance with the current Stable CoreOS image:
+To launch a Small 2GB instance with the current Stable Container Linux image:
 
 note: template ids are available on the [Exoscale website](https://www.exoscale.ch/open-cloud/templates/).
 
@@ -114,7 +114,7 @@ Be sure to specify your SSH key to be able to access the machine. Management of 
 
 1. Open the ["add new instance"](https://portal.exoscale.ch/compute/instances/add) page in the Exoscale web portal.
 2. Give the machine a hostname, and choose a zone.
-3. Choose the CoreOS template
+3. Choose the Container Linux template
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12">
     <img src="img/exoscale-template.png" class="screenshot" />
@@ -138,11 +138,11 @@ Be sure to specify your SSH key to be able to access the machine. Management of 
 </div>
 7. Create your instance
 
-Unlike other Exoscale images where the root password is randomly set at startup, CoreOS does not have password logon activated. You will need to [configure your public key with Exoscale][exo-keys-docs] in order to login to the CoreOS instances or to specify external keys using cloud-config.
+Unlike other Exoscale images where the root password is randomly set at startup, Container Linux does not have password logon activated. You will need to [configure your public key with Exoscale][exo-keys-docs] in order to login to the Container Linux instances or to specify external keys using cloud-config.
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart][quick-start] guide or dig into [more specific topics][docs].
+Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart][quick-start] guide or dig into [more specific topics][docs].
 
 [quick-start]: quickstart.md
 [docs]: https://coreos.com/docs

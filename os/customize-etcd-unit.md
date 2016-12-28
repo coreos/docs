@@ -1,14 +1,14 @@
 # Customizing the etcd unit
 
-The etcd systemd unit can be customized by overriding the unit that ships with the default CoreOS settings. Common use-cases for doing this are covered below.
+The etcd systemd unit can be customized by overriding the unit that ships with the default Container Linux settings. Common use-cases for doing this are covered below.
 
 ## Use client certificates
 
-etcd supports client certificates as a way to provide secure communication between clients &#8596; leader and internal traffic between etcd peers in the cluster. Configuring certificates for both scenarios is done through environment variables. We can use a systemd drop-in unit to augment the unit that ships with CoreOS.
+etcd supports client certificates as a way to provide secure communication between clients &#8596; leader and internal traffic between etcd peers in the cluster. Configuring certificates for both scenarios is done through environment variables. We can use a systemd drop-in unit to augment the unit that ships with Container Linux.
 
 Please follow the [instruction](generate-self-signed-certificates.md) to know how to create self-signed certificates and private keys.
 
-We need to create our drop-in unit in `/etc/systemd/system/etcd.service.d/`. If you run `systemctl status etcd2` you can see that CoreOS is already generating a few drop-in units for etcd as part of the OEM and cloudinit processes. To ensure that our drop-in runs after these, we name it `30-certificates.conf` and place them in `/etc/systemd/system/etcd2.service.d/`.
+We need to create our drop-in unit in `/etc/systemd/system/etcd.service.d/`. If you run `systemctl status etcd2` you can see that Container Linux is already generating a few drop-in units for etcd as part of the OEM and cloudinit processes. To ensure that our drop-in runs after these, we name it `30-certificates.conf` and place them in `/etc/systemd/system/etcd2.service.d/`.
 
 #### 30-certificates.conf
 

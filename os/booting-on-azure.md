@@ -1,8 +1,8 @@
-# Running CoreOS on Microsoft Azure
+# Running CoreOS Container Linux on Microsoft Azure
 
 ## Choosing a channel
 
-CoreOS is designed to be [updated automatically][update-docs] with different schedules per channel. You can [disable this feature][reboot-docs], although we don't recommend it. Read the [release notes][release-notes] for specific features and bug fixes.
+Container Linux is designed to be [updated automatically][update-docs] with different schedules per channel. This feature can be [disabled][reboot-docs], although it is not recommended. The [release notes][release-notes] contain information about specific features and bug fixes.
 
 The following command will create a single instance. For more details, check out [Launching via the Microsoft Azure Cross-Platform CLI][azurecli-heading].
 
@@ -36,9 +36,9 @@ The following command will create a single instance. For more details, check out
 
 ## Ignition Config
 
-CoreOS allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Ignition. Head over to the [docs to learn about the supported features][ignition-docs]. Note that Microsoft Azure doesn't allow an instance's userdata to be modified after the instance has been launched. This isn't a problem since Ignition only runs on the first boot.
+Container Linux allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Ignition. Head over to the [docs to learn about the supported features][ignition-docs]. Note that Microsoft Azure doesn't allow an instance's userdata to be modified after the instance has been launched. This isn't a problem since Ignition only runs on the first boot.
 
-You can provide a raw Ignition config to CoreOS [via the Microsoft Azure Cross-Platform CLI][azurecli-heading].
+You can provide a raw Ignition config to Container Linux [via the Microsoft Azure Cross-Platform CLI][azurecli-heading].
 
 As an example, this config will configure and start etcd:
 
@@ -60,9 +60,9 @@ As an example, this config will configure and start etcd:
 
 ## Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup, and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once an instance is provisioned on Microsoft Azure, the cloud-config cannot be modified.
+Container Linux allows you to configure machine parameters, launch systemd units on startup, and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once an instance is provisioned on Microsoft Azure, the cloud-config cannot be modified.
 
-You can provide raw cloud-config data to CoreOS [via the Microsoft Azure Cross-Platform CLI][azurecli-heading].
+You can provide raw cloud-config data to Container Linux [via the Microsoft Azure Cross-Platform CLI][azurecli-heading].
 
 The most common cloud-config for Azure looks like:
 
@@ -108,7 +108,7 @@ All of the instances within a cloud service can connect to one another via their
 
 In order to SSH into your machine, you'll need an x509 certificate. You probably already have an SSH key, which you can use to generate an x509 certificate. More detail can be found in [this guide to ssh keys and x509 on Microsoft Azure][ssh].
 
-Now that you have a cloud service and your keys, create an instance of CoreOS Alpha {{site.alpha-channel}}, connected to your cloud service:
+Now that you have a cloud service and your keys, create an instance of Container Linux Alpha {{site.alpha-channel}}, connected to your cloud service:
 
 ```sh
 azure vm create --custom-data=cloud-config.yaml --ssh=22 --ssh-cert=path/to/cert --no-ssh-password --vm-name=node-1 --connect=my-cloud-service $(azure vm image list --json | jq --raw-output '.[].name | select(contains("__CoreOS-Stable-{{site.alpha-channel}}"))') core
@@ -128,9 +128,9 @@ azure vm create --custom-data=cloud-config.yaml --ssh=3022 --ssh-cert=path/to/ce
 
 If you used the recommended [cloud-config][cloud-config-heading], you should have a working, three node cluster. Great job!
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS quickstart guide][quickstart] or dig into [more specific topics][docs].
+Now that you have a machine booted it is time to play around. Check out the [Container Linux quickstart guide][quickstart] or dig into [more specific topics][docs].
 
 
 [azurecli-heading]: #via-the-cross-platform-cli

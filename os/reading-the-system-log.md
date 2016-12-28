@@ -119,7 +119,7 @@ coreos:
       command: restart
 ```
 
-And run `coreos-cloudinit` or reboot your CoreOS host to apply the changes.
+And run `coreos-cloudinit` or reboot your Container Linux host to apply the changes.
 
 ## Enable debugging via Ignition
 

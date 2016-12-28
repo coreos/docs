@@ -1,10 +1,10 @@
-# Quick start
+# Container Linux quick start
 
-If you don't have a CoreOS machine running, check out the guides on [running CoreOS][running-coreos] on most cloud providers ([EC2][ec2-docs], [Rackspace][rackspace-docs], [GCE][gce-docs]), virtualization platforms ([Vagrant][vagrant-docs], [VMware][vmware-docs], [OpenStack][openstack-docs], [QEMU/KVM][qemu-docs]) and bare metal servers ([PXE][pxe-docs], [iPXE][ipxe-docs], [ISO][iso-docs], [Installer][install-docs]). With any of these guides you will have machines up and running in a few minutes.
+If you don't have a Container Linux machine running, check out the guides on [running Container Linux][running-coreos] on most cloud providers ([EC2][ec2-docs], [Rackspace][rackspace-docs], [GCE][gce-docs]), virtualization platforms ([Vagrant][vagrant-docs], [VMware][vmware-docs], [OpenStack][openstack-docs], [QEMU/KVM][qemu-docs]) and bare metal servers ([PXE][pxe-docs], [iPXE][ipxe-docs], [ISO][iso-docs], [Installer][install-docs]). With any of these guides you will have machines up and running in a few minutes.
 
 It's highly recommended that you set up a cluster of at least 3 machines &mdash; it's not as much fun on a single machine. If you don't want to break the bank, [Vagrant][vagrant-docs] allows you to run an entire cluster on your laptop. For a cluster to be properly bootstrapped, you have to provide cloud-config via user-data, which is covered in each platform's guide.
 
-CoreOS gives you three essential tools: service discovery, container management and process management. Let's try each of them out.
+Container Linux gives you three essential tools: service discovery, container management and process management. Let's try each of them out.
 
 First, on the client start your user agent by typing:
 
@@ -18,7 +18,7 @@ Then, add your private key to the agent by typing:
 ssh-add
 ```
 
-Connect to a CoreOS machine via SSH as the user `core`. For example, on Amazon, use:
+Connect to a Container Linux machine via SSH as the user `core`. For example, on Amazon, use:
 
 ```sh
 $ ssh -A core@an.ip.compute-1.amazonaws.com
@@ -38,7 +38,7 @@ CoreOS (beta)
 
 ## Service discovery with etcd
 
-The first building block of CoreOS is service discovery with **etcd** ([docs][etcd-docs]). Data stored in etcd is distributed across all of your machines running CoreOS. For example, each of your app containers can announce itself to a proxy container, which would automatically know which machines should receive traffic. Building service discovery into your application allows you to add more machines and scale your services seamlessly.
+The first building block of Container Linux is service discovery with **etcd** ([docs][etcd-docs]). Data stored in etcd is distributed across all of your machines running Container Linux. For example, each of your app containers can announce itself to a proxy container, which would automatically know which machines should receive traffic. Building service discovery into your application allows you to add more machines and scale your services seamlessly.
 
 If you used an example [cloud-config](https://coreos.com/os/docs/latest/cloud-config.html) from a guide linked in the first paragraph, etcd is automatically started on boot.
 
@@ -64,7 +64,7 @@ coreos:
 
 In order to get the discovery token, visit [https://discovery.etcd.io/new](https://discovery.etcd.io/new) and you will receive a URL including your token. Paste the whole thing into your cloud-config file.
 
-`etcdctl` is a command line interface to etcd that is preinstalled on CoreOS. To set and retrieve a key from etcd you can use the following examples:
+`etcdctl` is a command line interface to etcd that is preinstalled on Container Linux. To set and retrieve a key from etcd you can use the following examples:
 
 Set a key `message` with value `Hello world`:
 
@@ -92,7 +92,7 @@ Read the value:
 curl -L http://127.0.0.1:2379/v2/keys/message
 ```
 
-If you followed a guide to set up more than one CoreOS machine, you can SSH into another machine and can retrieve this same value.
+If you followed a guide to set up more than one Container Linux machine, you can SSH into another machine and can retrieve this same value.
 
 ### More detailed information
 
@@ -101,7 +101,7 @@ If you followed a guide to set up more than one CoreOS machine, you can SSH into
 
 ## Container management with Docker
 
-The second building block, **Docker** ([docs][docker-docs]), is where your applications and code run. It is installed on each CoreOS machine. You should make each of your services (web server, caching, database) into a container and connect them together by reading and writing to etcd. You can quickly try out a minimal busybox container in two different ways:
+The second building block, **Docker** ([docs][docker-docs]), is where your applications and code run. It is installed on each Container Linux machine. You should make each of your services (web server, caching, database) into a container and connect them together by reading and writing to etcd. You can quickly try out a minimal busybox container in two different ways:
 
 Run a command in the container and then stop it:
 
@@ -122,7 +122,7 @@ docker run -i -t busybox /bin/sh
 
 ## Process management with fleet
 
-The third building block of CoreOS is **fleet**, a distributed init system for your cluster. You should use fleet to manage the life cycle of your Docker containers.
+The third building block of Container Linux is **fleet**, a distributed init system for your cluster. You should use fleet to manage the life cycle of your Docker containers.
 
 Fleet works by receiving [systemd unit files][getting-started-systemd] and scheduling them onto machines in the cluster based on declared conflicts and other preferences encoded in the unit file. Using the `fleetctl` tool, you can query the status of a unit, remotely access its logs and more.
 

@@ -1,6 +1,6 @@
-# CoreOS hardening guide
+# CoreOS Container Linux hardening guide
 
-This guide covers the basics of securing a CoreOS Linux instance. CoreOS has a very slim network profile and the only service that listens by default on CoreOS is sshd on port 22 on all interfaces. There are also some defaults for local users and services that should be considered.
+This guide covers the basics of securing a Container Linux Linux instance. Container Linux has a very slim network profile and the only service that listens by default on Container Linux is sshd on port 22 on all interfaces. There are also some defaults for local users and services that should be considered.
 
 ## Remote listening services
 
@@ -28,7 +28,7 @@ etcd, fleet, and Locksmith all should be secured and authenticated using TLS if 
 
 ### Local users
 
-CoreOS has a single default user account called "core". Generally this user is the one that gets ssh keys added to it via cloud-config for administrators to login. The core users, by default, has access to the wheel group which grants sudo access. You can change this by removing the core user from wheel by running this command: `gpasswd -d core wheel`.
+Container Linux has a single default user account called "core". Generally this user is the one that gets ssh keys added to it via cloud-config for administrators to login. The core users, by default, has access to the wheel group which grants sudo access. You can change this by removing the core user from wheel by running this command: `gpasswd -d core wheel`.
 
 ### Docker daemon
 
@@ -40,7 +40,7 @@ Users in the "rkt" group have access to the rkt container image store. A user ma
 
 ### fleet API socket
 
-The fleet API allows management of the state of the cluster using JSON over HTTP. By default, CoreOS ships a socket unit for fleet (fleet.socket) which binds to a Unix domain socket, /var/run/fleet.sock. This socket is currently globally writable but will be restricted in a future release. Users with access to this socket and fleet configured have sudo equivalent access via systemd. To disable fleet completely run:
+The fleet API allows management of the state of the cluster using JSON over HTTP. By default, Container Linux ships a socket unit for fleet (fleet.socket) which binds to a Unix domain socket, /var/run/fleet.sock. This socket is currently globally writable but will be restricted in a future release. Users with access to this socket and fleet configured have sudo equivalent access via systemd. To disable fleet completely run:
 
 ```
 systemctl mask fleet.socket --now
