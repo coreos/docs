@@ -17,19 +17,19 @@ CoreOS is released into alpha, beta, and stable channels. Releases to each chann
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane active" id="stable">
       <div class="channel-info">
-        <p>Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. The current version is CoreOS {{site.stable-channel}}.</p>
+        <p>The Stable channel should be used by production clusters. Versions of Container Linux are battle-tested within the Beta and Alpha channels before being promoted. The current version is Container Linux {{site.stable-channel}}.</p>
        </div>
       <pre>curl -LO https://stable.release.core-os.net/amd64-usr/current/coreos_production_vmware_ova.ova</pre>
     </div>
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and is released to frequently. Current version is CoreOS {{site.alpha-channel}}.</p>
+        <p>The Alpha channel closely tracks master and is released frequently. The newest versions of system libraries and utilities will be available for testing. The current version is Container Linux {{site.alpha-channel}}.</p>
       </div>
       <pre>curl -LO https://alpha.release.core-os.net/amd64-usr/current/coreos_production_vmware_ova.ova</pre>
     </div>
     <div class="tab-pane" id="beta">
       <div class="channel-info">
-        <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
+        <p>The Beta channel consists of promoted Alpha releases. The current version is Container Linux {{site.beta-channel}}.</p>
       </div>
       <pre>curl -LO https://beta.release.core-os.net/amd64-usr/current/coreos_production_vmware_ova.ova</pre>
     </div>

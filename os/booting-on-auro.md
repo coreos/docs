@@ -89,11 +89,11 @@ You should now be ready to launch the servers which will create your CoreOS clus
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
-      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">Docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+      <p>The Alpha channel closely tracks master and is released frequently. The newest versions of system libraries and utilities will be available for testing. The current version is Container Linux {{site.alpha-channel}}.</p>
       <pre>nova boot --user-data ./cloud-config.yaml --image "CoreOS Alpha {{site.alpha-channel}}" --key-name coreos-key --flavor standard-1 --num-instances 3 --security-groups default coreos</pre>
     </div>
     <div class="tab-pane active" id="beta-create">
-      <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
+      <p>The Beta channel consists of promoted Alpha releases. The current version is Container Linux {{site.beta-channel}}.</p>
       <pre>nova boot --user-data ./cloud-config.yaml --image "CoreOS Beta {{site.beta-channel}}" --key-name coreos-key --flavor standard-1 --num-instances 3 --security-groups default coreos</pre>
     </div>
   </div>
