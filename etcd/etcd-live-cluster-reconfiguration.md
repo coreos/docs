@@ -230,6 +230,7 @@ The next steps are those described in the [Change etcd cluster size][change-clus
 [cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 [data-dir]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/configuration.md#-data-dir
 [disaster-recovery]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/recovery.md#disaster-recovery
+[drop-in]: ../os/using-systemd-drop-in-units.md
 [etcd-discovery]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/clustering.md#lifetime-of-a-discovery-url
 [etcdctl-endpoint]: https://github.com/coreos/etcd/tree/master/etcdctl#--endpoint
 [etcdctl-member-remove]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/runtime-configuration.md#remove-a-member
