@@ -16,7 +16,7 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
         <p>The Alpha channel closely tracks master and is released frequently. The newest versions of system libraries and utilities will be available for testing. The current version is Container Linux {{site.alpha-channel}}.</p>
-        <a class="btn btn-link btn-icon-left co-p-docs-rss" href="{{site.baseurl}}/dist/aws/aws-alpha.json"><span class="fa fa-rss"></span>View as json feed</a>
+        <a class="btn btn-link btn-icon-left co-p-docs-rss" href="https://coreos.com/dist/aws/aws-alpha.json"><span class="fa fa-rss"></span>View as json feed</a>
       </div>
       <table>
         <thead>
@@ -48,7 +48,7 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
     <div class="tab-pane" id="beta">
       <div class="channel-info">
         <p>The Beta channel consists of promoted Alpha releases. The current version is Container Linux {{site.beta-channel}}.</p>
-        <a class="btn btn-link btn-icon-left co-p-docs-rss" href="{{site.baseurl}}/dist/aws/aws-beta.json"><span class="fa fa-rss"></span>View as json feed</a>
+        <a class="btn btn-link btn-icon-left co-p-docs-rss" href="https://coreos.com/dist/aws/aws-beta.json"><span class="fa fa-rss"></span>View as json feed</a>
       </div>
       <table>
         <thead>
@@ -80,7 +80,7 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
     <div class="tab-pane active" id="stable">
       <div class="channel-info">
         <p>The Stable channel should be used by production clusters. Versions of Container Linux are battle-tested within the Beta and Alpha channels before being promoted. The current version is Container Linux {{site.stable-channel}}.</p>
-        <a class="btn btn-link btn-icon-left co-p-docs-rss" href="{{site.baseurl}}/dist/aws/aws-stable.json"><span class="fa fa-rss"></span>View as json feed</a>
+        <a class="btn btn-link btn-icon-left co-p-docs-rss" href="https://coreos.com/dist/aws/aws-stable.json"><span class="fa fa-rss"></span>View as json feed</a>
       </div>
       <table>
         <thead>

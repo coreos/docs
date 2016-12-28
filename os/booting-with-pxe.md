@@ -76,7 +76,7 @@ PXE booted machines cannot currently update themselves when new versions are rel
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
       <p>In the config above you can see that a Kernel image and a initramfs file is needed. Download these two files into your tftp root.</p>
-      <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="{{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images">verify the downloaded files</a>.</p>
+      <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="notes-for-distributors.md#importing-images">verify the downloaded files</a>.</p>
       <pre>
 cd /var/lib/tftpboot
 wget https://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz
@@ -89,7 +89,7 @@ gpg --verify coreos_production_pxe_image.cpio.gz.sig
     </div>
     <div class="tab-pane" id="beta-create">
       <p>In the config above you can see that a Kernel image and a initramfs file is needed. Download these two files into your tftp root.</p>
-      <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="{{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images">verify the downloaded files</a>.</p>
+      <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="notes-for-distributors.md#importing-images">verify the downloaded files</a>.</p>
       <pre>
 cd /var/lib/tftpboot
 wget https://beta.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz
@@ -102,7 +102,7 @@ gpg --verify coreos_production_pxe_image.cpio.gz.sig
     </div>
     <div class="tab-pane active" id="stable-create">
       <p>In the config above you can see that a Kernel image and a initramfs file is needed. Download these two files into your tftp root.</p>
-      <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="{{site.baseurl}}/docs/sdk-distributors/distributors/notes-for-distributors/#importing-images">verify the downloaded files</a>.</p>
+      <p>The <code>coreos_production_pxe.vmlinuz.sig</code> and <code>coreos_production_pxe_image.cpio.gz.sig</code> files can be used to <a href="notes-for-distributors.md#importing-images">verify the downloaded files</a>.</p>
       <pre>
 cd /var/lib/tftpboot
 wget https://stable.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz
