@@ -1,6 +1,6 @@
 # Omaha
 
-The Omaha protocol is the specification that the update service uses to communicate with updaters running in a CoreOS cluster. The protocol is a fairly simple &mdash; it specifies sending HTTP POSTs with XML data bodies for various events that happen during the execution of an update.
+The Omaha protocol is the specification that the update service uses to communicate with updaters running in a Container Linux cluster. The protocol is a fairly simple &mdash; it specifies sending HTTP POSTs with XML data bodies for various events that happen during the execution of an update.
 
 ## Update request
 
@@ -72,7 +72,7 @@ The most important parts of the response are the `codebase`, which points to the
 
 ## Report progress, errors, and completion
 
-Events are submitted to the update service as the updater passes certain milestones such as starting the download, installing the update and confirming that the update was complete and successful. Events are specified in numerical codes corresponding to the event initiated and the resulting state. You can find a [full list of the event codes](https://code.google.com/p/omaha/wiki/ServerProtocol#event_Element) in Google's documentation. The CoreOS update service implements a subset of these events:
+Events are submitted to the update service as the updater passes certain milestones such as starting the download, installing the update and confirming that the update was complete and successful. Events are specified in numerical codes corresponding to the event initiated and the resulting state. You can find a [full list of the event codes](https://code.google.com/p/omaha/wiki/ServerProtocol#event_Element) in Google's documentation. The Container Linux update service implements a subset of these events:
 
 | Event Description | Event Type | Event Result |
 |-------------------|------------|--------------|
