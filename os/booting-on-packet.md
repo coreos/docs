@@ -37,7 +37,7 @@ Double quotes in the `<USERDATA>` value must be escaped such that the request bo
 
 ### Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a machine is created on Packet, the cloud-config cannot be modified. This example can be used to spin up a minimal cluster.
+CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a machine is created on Packet, the cloud-config cannot be modified. This example can be used to spin up a minimal cluster.
 
 ```yaml
 #cloud-config

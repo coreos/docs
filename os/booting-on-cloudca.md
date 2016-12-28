@@ -226,6 +226,6 @@ Now that you have a machine booted it is time to play around. Check out the [Cor
 [reboot-docs]: update-strategies.md
 [switching-channels]: {{site.baseurl}}/docs/cluster-management/setup/switching-channels
 [release-notes]: https://coreos.com/releases
-[cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config-docs]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 [quick-start]: quickstart.md
 [docs]: https://coreos.com/docs

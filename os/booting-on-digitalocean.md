@@ -103,7 +103,7 @@ coreos:
 The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on DigitalOcean. In order for `$private_ipv4` to be populated, the droplet must have "private networking" enabled. Digital Ocean private networking isn't available in all regions, and isn't actually private from others; instead, you can think of it as high-speed, free bandwidth between your droplets. etcd should be [configured with TLS][etcd-tls] when using this network to prevent others from gaining admission to, or even control of, your cluster.
 
 [do-cloud-config]: https://developers.digitalocean.com/#droplets
-[cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config-docs]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 [etcd-tls]: https://coreos.com/etcd/docs/latest/security.html#example-3-transport-security-&-client-certificates-in-a-cluster
 
 ### Adding more machines

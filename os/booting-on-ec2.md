@@ -170,7 +170,7 @@ The `$private_ipv4` and `$public_ipv4` substitution variables are fully supporte
 </div>
 
 [ec2-cloud-config]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
-[cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config-docs]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 
 ### Instance storage
 

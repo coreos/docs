@@ -27,9 +27,9 @@ sudo coreos-install -d /dev/vda -c cloud-config.yaml
 sudo reboot
 ```
 
-Please be sure to check out [Using Cloud-Config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config).
+Please be sure to check out [Using Cloud-Config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md).
 
-You must add to your ssh public key to your `cloud-config`'s [ssh authorized keys]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/#ssh_authorized_keys) so you'll be able to log in.
+You must add to your ssh public key to your `cloud-config`'s [ssh authorized keys](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md/#ssh_authorized_keys) so you'll be able to log in.
 
 ## Choosing a channel
 

@@ -134,7 +134,7 @@ Now that you have a machine booted it is time to play around. Check out the [Cor
 
 
 [azurecli-heading]: #via-the-cross-platform-cli
-[cloud-config-docs]: {{site.baseurl}}/os/docs/latest/cloud-config.html
+[cloud-config-docs]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 [cloud-config-heading]: #cloud-config
 [docs]: https://coreos.com/docs
 [quickstart]: quickstart.md

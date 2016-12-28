@@ -17,7 +17,7 @@ CoreOS releases are automatically built and deployed on the VEXXHOST cloud, ther
 
 CoreOS allows you to configure machine parameters, launch systemd units on startup, and more via [cloud-config][cloud-config]. We're going to provide the `cloud-config` data via the `user-data` flag.
 
-[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 
 At the moment, you cannot supply the `user-data` using the CloudConsole control panel therefore you must use the CLI to deploy your cluster on the VEXXHOST cloud.
 

@@ -57,7 +57,7 @@ ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
 ```
 
-You can view all of the [cloud-config options here]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/).
+You can view all of the [cloud-config options here](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md/).
 
 Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are not supported on libvirt. The convenience of these automatic variables can be emulated by [using nginx to host your cloud-config](nginx-host-cloud-config.md).
 
@@ -197,7 +197,7 @@ Now that you have a machine booted it is time to play around. Check out the [Cor
 
 
 [append-initrd]: http://www.syslinux.org/wiki/index.php?title=SYSLINUX#INITRD_initrd_file
-[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/
+[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md/
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
 [docs]: https://coreos.com/docs
 [install-to-disk]: installing-to-disk.md

@@ -11,7 +11,7 @@ The Exoscale CoreOS image is built officially and each CoreOS instance deploymen
 [reboot-docs]: update-strategies.md
 [switching-channels]: switching-channels.md
 [release-notes]: https://coreos.com/releases
-[cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config-docs]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 
 ## Security groups
 

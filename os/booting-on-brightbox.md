@@ -79,7 +79,7 @@ $ brightbox images list | grep CoreOS
 
 CoreOS allows you to configure machine parameters, launch systemd units on startup and more via [cloud-config][cloud-config]. We're going to provide the `cloud-config` data via the `user-data-file` flag.
 
-[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 
 A sample common `cloud-config` file will look something like the following:
 

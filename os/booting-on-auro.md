@@ -17,7 +17,7 @@ CoreOS releases are automatically built and deployed on the AURO cloud, therefor
 
 CoreOS allows you to configure machine parameters, launch systemd units on startup and more via [cloud-config][cloud-config]. We're going to provide the `cloud-config` data via the `user-data` flag.
 
-[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 
 You are able to supply the `user-data` using the AURO control panel when launching an instance, in the "Post Creation" tab, as well as using the CLI to deploy your cluster on the AURO cloud.
 
