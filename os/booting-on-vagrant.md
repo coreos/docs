@@ -76,7 +76,7 @@ Your Vagrantfile should copy your cloud-config file to `/var/lib/coreos-vagrant/
 
 If you need to update your cloud-config later on, run `vagrant reload --provision` to reboot your VM and apply the new file.
 
-[cloud-config-docs]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config-docs]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 
 ### Start up CoreOS
 

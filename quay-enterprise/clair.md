@@ -283,4 +283,4 @@ Content-Type: text/plain; charset=utf-8
 
 Once Clair setup is complete, continue with [Quay Security Scanner Setup](security-scanning.md).
 
-[registry-self-signed]: quay-enterprise/quay-ssl.html#configuring-docker-to-trust-a-certificate-authority
+[registry-self-signed]: quay-ssl.md#configuring-docker-to-trust-a-certificate-authority

@@ -75,7 +75,7 @@ $ glance image-create --name CoreOS \
 
 CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config]. We're going to provide our cloud-config to OpenStack via the user-data flag. Our cloud-config will also contain SSH keys that will be used to connect to the instance. In order for this to work your OpenStack cloud provider must support [config drive][config-drive] or the OpenStack metadata service.
 
-[cloud-config]: {{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config
+[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 [config-drive]: http://docs.openstack.org/user-guide/cli_config_drive.html
 
 The most common cloud-config for OpenStack looks like:

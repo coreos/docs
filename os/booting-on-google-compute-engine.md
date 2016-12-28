@@ -10,7 +10,7 @@ After installation, log into your account with `gcloud auth login` and enter you
 
 ## Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. On GCE, the cloud-config can be modified while the instance is running and will be processed next time the machine boots.
+CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. On GCE, the cloud-config can be modified while the instance is running and will be processed next time the machine boots.
 
 You can provide cloud-config to CoreOS via the Google Cloud console's metadata field `user-data` or via a flag using `gcloud`.
 

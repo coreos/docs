@@ -51,7 +51,7 @@ coreos:
 
 ### Further reading
 
-Read the [full cloud-config]({{site.baseurl}}/docs/cluster-management/setup/cloudinit-cloud-config/) guide to install users and more.
+Read the [full cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md/) guide to install users and more.
 
 ## Customizing sshd after build
 
