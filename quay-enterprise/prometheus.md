@@ -12,7 +12,7 @@ Prometheus needs a way to access all Quay Enterprise instances running in a clus
 
 ### DNS configuration under Kubernetes
 
-A simple [Kubernetes service](k8s service) can be configured to provide the DNS entry for Prometheus. Details on running Prometheus under Kubernetes can be found at [Prometheus and Kubernetes](k8s + prometheus) and [Monitoring Kubernetes with Prometheus](monitoring k8s + prometheus).
+A simple [Kubernetes service][k8s service] can be configured to provide the DNS entry for Prometheus. Details on running Prometheus under Kubernetes can be found at [Prometheus and Kubernetes][k8s + prometheus] and [Monitoring Kubernetes with Prometheus][monitoring k8s + prometheus].
 
 ### DNS configuration for a manual cluster
 
