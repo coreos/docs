@@ -1,12 +1,12 @@
-# Running CoreOS on VMware
+# Running CoreOS Container Linux on VMware
 
-These instructions walk through running CoreOS on VMware Fusion or ESXi. If you are familiar with another VMware product, you can use these instructions as a starting point.
+These instructions walk through running Container Linux on VMware Fusion or ESXi. If you are familiar with another VMware product, you can use these instructions as a starting point.
 
 ## Running the VM
 
 ### Choosing a channel
 
-CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel. Read the [release notes][release notes] for specific features and bug fixes in each channel.
+Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel. Read the [release notes][release notes] for specific features and bug fixes in each channel.
 
 <div id="vmware-images">
   <ul class="nav nav-tabs">
@@ -66,7 +66,7 @@ Run VMware Workstation GUI:
 5. Edit VM settings if necessary
 6. Create a cloud-config image (see below) containing at least one valid SSH key using a [config drive](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/config-drive.md).
     * On Fusion, simply connect and mount this image as the CD, ignoring the instruction below regarding the filesystem label which are not applicable.
-7. Start your CoreOS VM
+7. Start your Container Linux VM
 
 *NB: These instructions were tested with a Fusion 8.1 host.*
 
@@ -74,9 +74,9 @@ Run VMware Workstation GUI:
 
 Cloud-config data can be passed into a VM by attaching a [config-drive][config-drive] with the filesystem label `config-2`. This is done in the same way as attaching CD-ROMs or other new drives.
 
-The config-drive standard was originally an OpenStack feature, which is why you'll see the string `openstack` in a few bits of configuration. This naming convention is retained, although CoreOS supports config-drive on all platforms.
+The config-drive standard was originally an OpenStack feature, which is why you'll see the string `openstack` in a few bits of configuration. This naming convention is retained, although Container Linux supports config-drive on all platforms.
 
-This example will configure CoreOS components: etcd2 and fleetd. `$private_ipv4` and `$public_ipv4` are supported on VMware in CoreOS releases 801.0.0 and greater, and **only** when you explicitly configure interfaces' roles to `private` or `public` in [Guestinfo][guestinfo] for each VMware instance.
+This example will configure Container Linux components: etcd2 and fleetd. `$private_ipv4` and `$public_ipv4` are supported on VMware in Container Linux releases 801.0.0 and greater, and **only** when you explicitly configure interfaces' roles to `private` or `public` in [Guestinfo][guestinfo] for each VMware instance.
 
 ```yaml
 #cloud-config
@@ -112,7 +112,7 @@ The VMware guestinfo interface is an alternative to using a config-drive for VM 
 
 * Configure guestinfo in the OVF for deployment. Software like [vcloud director][vcloud director] manipulates OVF descriptors for guest configuration. For details, check out this VMware blog post about [Self-Configuration and the OVF Environment][ovf-selfconfig].
 
-* Set guestinfo keys and values from the CoreOS guest itself, by using a VMware Tools command like:
+* Set guestinfo keys and values from the Container Linux guest itself, by using a VMware Tools command like:
 
 ```sh
 /usr/share/oem/bin/vmtoolsd --cmd "info-set guestinfo.<variable> <value>"
@@ -126,9 +126,9 @@ vmware-cmd /vmfs/volumes/[...]/<VMNAME>/<VMNAME>.vmx setguestinfo guestinfo.<pro
 
 * You can manually modify the VMX and reload it on the VMware Workstation, ESXi host, or in vCenter.
 
-Guestinfo configuration set via the VMware API or with `vmtoolsd` from within the CoreOS guest itself are stored in VM process memory and are lost on VM shutdown or reboot.
+Guestinfo configuration set via the VMware API or with `vmtoolsd` from within the Container Linux guest itself are stored in VM process memory and are lost on VM shutdown or reboot.
 
-[This blog post][vmware-use-guestinfo] has some useful details about the guestinfo interface, while Robert Labrie's blog provides a practicum specific to [using VMware guestinfo to configure CoreOS VMs][labrie-guestinfo].
+[This blog post][vmware-use-guestinfo] has some useful details about the guestinfo interface, while Robert Labrie's blog provides a practicum specific to [using VMware guestinfo to configure Container Linux VMs][labrie-guestinfo].
 
 ### Guestinfo example
 
@@ -146,7 +146,7 @@ guestinfo.interface.0.dhcp = "no"
 guestinfo.interface.0.ip.0.address = "192.168.178.97/24"
 ```
 
-The CoreOS OVA image contains the VMware tools, and a OEM cloud-config which executes `coreos-cloudinit` with the `--oem=vmware` option. This option automatically sets the additional `--from-vmware-guestinfo` and `--convert-netconf=vmware` flags. Given the `guestinfo.*` values above and these option flags, `coreos-cloudinit` will generate the following systemd network unit:
+The Container Linux OVA image contains the VMware tools, and a OEM cloud-config which executes `coreos-cloudinit` with the `--oem=vmware` option. This option automatically sets the additional `--from-vmware-guestinfo` and `--convert-netconf=vmware` flags. Given the `guestinfo.*` values above and these option flags, `coreos-cloudinit` will generate the following systemd network unit:
 
 ```
 [Match]
@@ -212,9 +212,9 @@ ssh core@10.0.1.81
 
 Alternatively, appending `coreos.autologin` to the kernel parameters at boot causes the console to accept the `core` user's login with no password. This is handy for debugging.
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted, it's time to explore. Check out the [CoreOS Quickstart][quickstart] guide, or dig into [more specific topics][docs].
+Now that you have a machine booted, it's time to explore. Check out the [Container Linux Quickstart][quickstart] guide, or dig into [more specific topics][docs].
 
 [quickstart]: quickstart.md
 [docs]: https://github.com/coreos/docs
