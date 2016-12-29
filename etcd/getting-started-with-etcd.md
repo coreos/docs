@@ -1,8 +1,8 @@
 # Getting started with etcd
 
-etcd is an open-source distributed key value store that provides shared configuration and service discovery for CoreOS clusters. etcd runs on each machine in a cluster and gracefully handles leader election during network partitions and the loss of the current leader.
+etcd is an open-source distributed key value store that provides shared configuration and service discovery for Container Linux clusters. etcd runs on each machine in a cluster and gracefully handles leader election during network partitions and the loss of the current leader.
 
-Application containers running on your cluster can read and write data into etcd. Common examples are storing database connection details, cache settings, feature flags, and more. This guide will walk you through a basic example of reading and writing to etcd then proceed to other features like TTLs, directories and watching a prefix. This guide is way more fun when you've got at least one CoreOS machine up and running &mdash; try it on [Amazon EC2](../os/booting-on-ec2.md) or locally with [Vagrant](../os/booting-on-vagrant.md).
+Application containers running on your cluster can read and write data into etcd. Common examples are storing database connection details, cache settings, feature flags, and more. This guide will walk you through a basic example of reading and writing to etcd then proceed to other features like TTLs, directories and watching a prefix. This guide is way more fun when you've got at least one Container Linux machine up and running &mdash; try it on [Amazon EC2](../os/booting-on-ec2.md) or locally with [Vagrant](../os/booting-on-vagrant.md).
 
 <a class="btn btn-default" href="../latest/api.html">Complete etcd API Docs</a>
 
@@ -10,7 +10,7 @@ Application containers running on your cluster can read and write data into etcd
 
 The HTTP-based API is easy to use. This guide will show both `etcdctl` and `curl` examples. It's important to note the `-L` flag is required for `curl`. etcd transparently redirects writes to the leader and this flag allows `curl` to follow the location headers from etcd.
 
-From a CoreOS machine, set a key `message` with value `Hello`:
+From a Container Linux machine, set a key `message` with value `Hello`:
 
 ```sh
 $ etcdctl set /message Hello
@@ -34,7 +34,7 @@ $ curl -L http://127.0.0.1:2379/v2/keys/message
 {"action":"get","node":{"key":"/message","value":"Hello","modifiedIndex":4,"createdIndex":4}}
 ```
 
-If you followed a guide to set up more than one CoreOS machine, you can SSH into another machine and can retrieve this same value.
+If you followed a guide to set up more than one Container Linux machine, you can SSH into another machine and can retrieve this same value.
 
 To delete the key run:
 
@@ -50,7 +50,7 @@ $ curl -L -X DELETE http://127.0.0.1:2379/v2/keys/message
 
 ## Reading and writing from inside a container
 
-To read and write to etcd from *within a container* you must use the IP address assigned to the `docker0` interface on the CoreOS host. From the host, run `ip address show` to find this address. It's normally `172.17.42.1`.
+To read and write to etcd from *within a container* you must use the IP address assigned to the `docker0` interface on the Container Linux host. From the host, run `ip address show` to find this address. It's normally `172.17.42.1`.
 
 To read from etcd, replace `127.0.0.1` when running `curl` in the container:
 
@@ -99,7 +99,7 @@ $ curl -L http://127.0.0.1:2379/v2/keys/foo-service
 
 ### Watching the directory
 
-Now let's try watching the `foo-service` directory for changes, just like our proxy would have to. First, open up another shell on a CoreOS host in the cluster. In one window, start watching the directory and in the other window, add another key `container2` with the value `localhost:2222` into the directory. This command shouldn't output anything until the key has changed. Many events can trigger a change, including a new, updated, deleted or expired key.
+Now let's try watching the `foo-service` directory for changes, just like our proxy would have to. First, open up another shell on a Container Linux host in the cluster. In one window, start watching the directory and in the other window, add another key `container2` with the value `localhost:2222` into the directory. This command shouldn't output anything until the key has changed. Many events can trigger a change, including a new, updated, deleted or expired key.
 
 ```sh
 $ etcdctl watch --recursive /foo-service
@@ -201,6 +201,6 @@ $ curl -L http://127.0.0.1:2379/v2/keys/foo
 ```
 
 #### More information
-<a class="btn btn-default" href="{{site.baseurl}}/using-coreos/etcd">etcd Overview</a>
+<a class="btn btn-default" href="https://coreos.com/etcd">etcd Overview</a>
 <a class="btn btn-default" href="https://github.com/coreos/etcd">Full etcd API Docs</a>
 <a class="btn btn-default" href="https://github.com/coreos/etcd/blob/master/Documentation/libraries-and-tools.md">Projects using etcd</a>

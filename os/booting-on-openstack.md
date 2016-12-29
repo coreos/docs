@@ -1,14 +1,14 @@
-# Running CoreOS on OpenStack
+# Running CoreOS Container Linux on OpenStack
 
-These instructions will walk you through downloading CoreOS for OpenStack, importing it with the `glance` tool, and running your first cluster with the `nova` tool.
+These instructions will walk you through downloading Container Linux for OpenStack, importing it with the `glance` tool, and running your first cluster with the `nova` tool.
 
 ## Import the image
 
-These steps will download the CoreOS image, uncompress it, and then import it into the glance image store.
+These steps will download the Container Linux image, uncompress it, and then import it into the glance image store.
 
 ## Choosing a channel
 
-CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
+Container Linux is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
 
 <div id="openstack-create">
   <ul class="nav nav-tabs">
@@ -18,21 +18,21 @@ CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
-      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">Docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+      <p>The Alpha channel closely tracks master and is released frequently. The newest versions of system libraries and utilities will be available for testing. The current version is Container Linux {{site.alpha-channel}}.</p>
 <pre>
 $ wget https://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
 $ bunzip2 coreos_production_openstack_image.img.bz2
 </pre>
     </div>
     <div class="tab-pane" id="beta-create">
-      <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
+      <p>The Beta channel consists of promoted Alpha releases. The current version is Container Linux {{site.beta-channel}}.</p>
 <pre>
 $ wget https://beta.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
 $ bunzip2 coreos_production_openstack_image.img.bz2
 </pre>
     </div>
   <div class="tab-pane active" id="stable-create">
-      <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.stable-channel}}.</p>
+      <p>The Stable channel should be used by production clusters. Versions of Container Linux are battle-tested within the Beta and Alpha channels before being promoted. The current version is Container Linux {{site.stable-channel}}.</p>
 <pre>
 $ wget https://stable.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
 $ bunzip2 coreos_production_openstack_image.img.bz2
@@ -41,10 +41,10 @@ $ bunzip2 coreos_production_openstack_image.img.bz2
   </div>
 </div>
 
-Once the download completes, add the CoreOS image into Glance:
+Once the download completes, add the Container Linux image into Glance:
 
 ```sh
-$ glance image-create --name CoreOS \
+$ glance image-create --name Container-Linux \
   --container-format bare \
   --disk-format qcow2 \
   --file coreos_production_openstack_image.img \
@@ -73,7 +73,7 @@ $ glance image-create --name CoreOS \
 
 ## Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config]. We're going to provide our cloud-config to OpenStack via the user-data flag. Our cloud-config will also contain SSH keys that will be used to connect to the instance. In order for this to work your OpenStack cloud provider must support [config drive][config-drive] or the OpenStack metadata service.
+Container Linux allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config]. We're going to provide our cloud-config to OpenStack via the user-data flag. Our cloud-config will also contain SSH keys that will be used to connect to the instance. In order for this to work your OpenStack cloud provider must support [config drive][config-drive] or the OpenStack metadata service.
 
 [cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 [config-drive]: http://docs.openstack.org/user-guide/cli_config_drive.html
@@ -141,7 +141,7 @@ nova network-list
 +--------------------------------------+---------+------+
 ```
 
-Your first CoreOS cluster should now be running. The only thing left to do is find an IP and SSH in.
+Your first Container Linux cluster should now be running. The only thing left to do is find an IP and SSH in.
 
 ```sh
 $ nova list
@@ -187,6 +187,6 @@ nova boot \
 
 If you would like to create multiple clusters you'll need to generate and use a new discovery token. Change the token value on the etcd discovery parameter in the cloud-config, and boot new instances.
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have instances booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+Now that you have instances booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

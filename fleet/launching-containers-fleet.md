@@ -4,7 +4,7 @@
 
 If you're not familiar with systemd units, check out our [Getting Started with systemd](../os/getting-started-with-systemd.md) guide.
 
-This guide assumes you're running `fleetctl` locally from a CoreOS machine that's part of a CoreOS cluster. You can also [control your cluster remotely](https://github.com/coreos/fleet/blob/master/Documentation/using-the-client.md#get-up-and-running). All of the units referenced in this blog post are contained in the [unit-examples](https://github.com/coreos/unit-examples/tree/master/simple-fleet) repository. You can clone this onto your CoreOS box to make unit submission easier.
+This guide assumes you're running `fleetctl` locally from a Container Linux machine that's part of a Container Linux cluster. You can also [control your cluster remotely](https://github.com/coreos/fleet/blob/master/Documentation/using-the-client.md#get-up-and-running). All of the units referenced in this blog post are contained in the [unit-examples](https://github.com/coreos/unit-examples/tree/master/simple-fleet) repository. You can clone this onto your Container Linux box to make unit submission easier.
 
 ## Types of fleet units
 
@@ -42,7 +42,7 @@ standard-unit.service   148a18ff.../10.10.1.1    active    running
 
 ## Run a container in the cluster
 
-Running a single container is very easy. All you need to do is provide a regular unit file without an `[Install]` section. Let's run the same unit from the [Getting Started with systemd](../os/getting-started-with-systemd.md) guide. First save these contents as `myapp.service` on the CoreOS machine:
+Running a single container is very easy. All you need to do is provide a regular unit file without an `[Install]` section. Let's run the same unit from the [Getting Started with systemd](../os/getting-started-with-systemd.md) guide. First save these contents as `myapp.service` on the Container Linux machine:
 
 ```ini
 [Unit]
@@ -87,7 +87,7 @@ c9de9451-6a6f-1d80-b7e6-46e996bfc4d1    10.10.1.3   -
 
 ## Run a high availability service
 
-The main benefit of using CoreOS is to have your services run in a highly available manner. Let's walk through deploying a service that consists of two identical containers running the Apache web server. Afterwards, we'll walk through the failure of a machine and the steps fleet takes to relaunch our tasks on another machine.
+The main benefit of using Container Linux is to have your services run in a highly available manner. Let's walk through deploying a service that consists of two identical containers running the Apache web server. Afterwards, we'll walk through the failure of a machine and the steps fleet takes to relaunch our tasks on another machine.
 
 First, let's write a unit file that we'll run two copies of. To do that, we'll use a template unit, named `apache@.service`. The template stays on disk and is used as a base to generate two instances, named `apache@1.service` and `apache@2.service`:
 
@@ -194,7 +194,7 @@ If you're running in the cloud, many services have APIs that can be automated ba
 
 ## Run a global unit
 
-As mentioned earlier, global units are useful for running a unit across all of the machines in your cluster. It doesn't differ very much from a regular unit other than a new `X-Fleet` parameter called `Global=true`. Here's an example unit from a [blog post to use Data Dog with CoreOS](https://www.datadoghq.com/blog/monitor-coreos-scale-datadog/). You'll need to set an etcd key `ddapikey` before this example will work &mdash; more details are in the post.
+As mentioned earlier, global units are useful for running a unit across all of the machines in your cluster. It doesn't differ very much from a regular unit other than a new `X-Fleet` parameter called `Global=true`. Here's an example unit from a [blog post to use Data Dog with Container Linux](https://www.datadoghq.com/blog/monitor-coreos-scale-datadog/). You'll need to set an etcd key `ddapikey` before this example will work &mdash; more details are in the post.
 
 ```ini
 [Unit]

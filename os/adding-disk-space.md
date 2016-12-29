@@ -1,6 +1,6 @@
-# Adding disk space to your CoreOS machine
+# Adding disk space to your CoreOS Container Linux machine
 
-On a CoreOS machine, the operating system itself is mounted as a read-only partition at `/usr`. The root partition provides read-write storage by default and on a fresh install is mostly blank. The default size of this partition depends on the platform but it is usually between 3GB and 16GB. If more space is required simply extend the virtual machine's disk image and CoreOS will fix the partition table and resize the root partition to fill the disk on the next boot.
+On a Container Linux machine, the operating system itself is mounted as a read-only partition at `/usr`. The root partition provides read-write storage by default and on a fresh install is mostly blank. The default size of this partition depends on the platform but it is usually between 3GB and 16GB. If more space is required simply extend the virtual machine's disk image and Container Linux will fix the partition table and resize the root partition to fill the disk on the next boot.
 
 ## Amazon EC2
 

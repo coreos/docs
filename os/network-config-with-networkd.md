@@ -1,6 +1,6 @@
 # Network configuration with networkd
 
-CoreOS machines are preconfigured with [networking customized](notes-for-distributors.md) for each platform. You can write your own networkd units to replace or override the units created for each platform. This article covers a subset of networkd functionality. You can view the [full docs here](http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html).
+Container Linux machines are preconfigured with [networking customized](notes-for-distributors.md) for each platform. You can write your own networkd units to replace or override the units created for each platform. This article covers a subset of networkd functionality. You can view the [full docs here](http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html).
 
 Drop a networkd unit in `/etc/systemd/network/` or inject a unit on boot via [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md#units) or [Ignition][ignition-network] to override an existing unit. Network units injected via the `coreos.units` node in the cloud-config will automatically trigger a networkd reload in order for changes to be applied. Files placed on the filesystem will need to reload networkd afterwards with `sudo systemctl restart systemd-networkd`. Network units injected via Ignition will be written to the system before networkd is started, so there are no work-arounds needed.
 
@@ -334,7 +334,7 @@ coreos:
       command: restart
 ```
 
-And run `coreos-cloudinit` or reboot your CoreOS host to apply the changes.
+And run `coreos-cloudinit` or reboot your Container Linux host to apply the changes.
 
 [cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 

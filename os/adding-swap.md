@@ -1,12 +1,12 @@
-# Adding swap in CoreOS
+# Adding swap in CoreOS Container Linux
 
 Swap is the process of moving pages of memory to a designated part of the hard disk, freeing up space when needed. Swap can be used to alleviate problems with low-memory environments.
 
-By default CoreOS does not include a partition for swap, however one can configure their system to have swap.
+By default Container Linux does not include a partition for swap, however one can configure their system to have swap.
 
 ## Managing swap with systemd
 
-A systemd-managed service can be used to create, enable, and disable a swapfile service on your system. Write, enable, and start the systemd unit file found in the next section to add swap to a CoreOS node.
+A systemd-managed service can be used to create, enable, and disable a swapfile service on your system. Write, enable, and start the systemd unit file found in the next section to add swap to a Container Linux node.
 
 ### Creating the systemd unit file
 

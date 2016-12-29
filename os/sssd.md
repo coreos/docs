@@ -1,6 +1,6 @@
-# Configuring SSSD on CoreOS
+# Configuring SSSD on CoreOS Container Linux
 
-CoreOS ships with the System Security Services Daemon, allowing integration between CoreOS and enterprise authentication services.
+Container Linux ships with the System Security Services Daemon, allowing integration between Container Linux and enterprise authentication services.
 
 ## Configuring SSSD
 

@@ -1,6 +1,6 @@
 # Configuring flannel for container networking
 
-*Note*: flannel is only available in [CoreOS versions 554](https://coreos.com/releases/#554.0.0) and later.
+*Note*: flannel is only available in [Container Linux versions 554](https://coreos.com/releases/#554.0.0) and later.
 
 ## Overview
 
@@ -149,7 +149,7 @@ The last step is to enable `flanneld.service` in the Ignition config:
 
 ## Under the hood
 
-To reduce the CoreOS image size, flannel daemon is stored in CoreOS Enterprise Registry as an ACI and not shipped in the CoreOS image. For those users wishing not to use flannel, it helps to keep their installation minimal. When `flanneld.service` is started, it pulls the flannel ACI from the registry.
+To reduce the Container Linux image size, flannel daemon is stored in CoreOS Enterprise Registry as an ACI and not shipped in the Container Linux image. For those users wishing not to use flannel, it helps to keep their installation minimal. When `flanneld.service` is started, it pulls the flannel ACI from the registry.
 
 Here is the sequence of events that happens when `flanneld.service` is started followed by a service that runs a Docker container (e.g. redis server):
 

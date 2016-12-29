@@ -39,7 +39,7 @@ Follow the guide to [generating self-signed certificates][self-signed-ca] to cre
 
 ### Copy key pairs to nodes
 
-Assume we have three CoreOS machines, running three etcd cluster members: server1, server2, server3; with corresponding IP addresses: 172.16.0.101, 172.16.0.102, and 172.16.0.103. We will use the following key pair file names in our example:
+Assume we have three Container Linux machines, running three etcd cluster members: server1, server2, server3; with corresponding IP addresses: 172.16.0.101, 172.16.0.102, and 172.16.0.103. We will use the following key pair file names in our example:
 
 ```
 server1.pem

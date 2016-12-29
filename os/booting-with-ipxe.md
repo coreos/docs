@@ -1,8 +1,8 @@
-# Booting CoreOS via iPXE
+# Booting CoreOS Container Linux via iPXE
 
-These instructions will walk you through booting CoreOS via iPXE on real or virtual hardware. By default, this will run CoreOS completely out of RAM. CoreOS can also be [installed to disk](installing-to-disk.md).
+These instructions will walk you through booting Container Linux via iPXE on real or virtual hardware. By default, this will run Container Linux completely out of RAM. Container Linux can also be [installed to disk](installing-to-disk.md).
 
-A mininum of 1024M of RAM is required to boot CoreOS via PXE.
+A mininum of 1024M of RAM is required to boot Container Linux via PXE.
 
 ## Configuring iPXE
 
@@ -13,7 +13,7 @@ To illustrate iPXE in action we will use qemu-kvm in this guide.
 
 ### Setting up iPXE boot script
 
-When configuring the CoreOS iPXE boot script there are a few kernel options that may be useful but all are optional.
+When configuring the Container Linux iPXE boot script there are a few kernel options that may be useful but all are optional.
 
 - **rootfstype=tmpfs**: Use tmpfs for the writable root filesystem. This is the default behavior.
 - **rootfstype=btrfs**: Use btrfs in RAM for the writable root filesystem. The filesystem will consume more RAM as it grows, up to a max of 50%. The limit isn't currently configurable.
@@ -21,13 +21,13 @@ When configuring the CoreOS iPXE boot script there are a few kernel options that
 - **sshkey**: Add the given SSH public key to the `core` user's authorized_keys file. Replace the example key below with your own (it is usually in `~/.ssh/id_rsa.pub`)
 - **console**: Enable kernel output and a login prompt on a given tty. The default, `tty0`, generally maps to VGA. Can be used multiple times, e.g. `console=tty0 console=ttyS0`
 - **coreos.autologin**: Drop directly to a shell on a given console without prompting for a password. Useful for troubleshooting but use with caution. For any console that doesn't normally get a login prompt by default be sure to combine with the `console` option, e.g. `console=tty0 console=ttyS0 coreos.autologin=tty1 coreos.autologin=ttyS0`. Without any argument it enables access on all consoles. Note that for the VGA console the login prompts are on virtual terminals (`tty1`, `tty2`, etc), not the VGA console itself (`tty0`).
-- **cloud-config-url**: CoreOS will attempt to download a cloud-config document and use it to provision your booted system. See the [coreos-cloudinit-project][cloudinit] for more information.
+- **cloud-config-url**: Container Linux will attempt to download a cloud-config document and use it to provision your booted system. See the [coreos-cloudinit-project][cloudinit] for more information.
 
 [cloudinit]: https://github.com/coreos/coreos-cloudinit
 
 ### Choose a Channel
 
-CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 ### Setting up the Boot Script
 
@@ -93,30 +93,30 @@ iPXE> dhcp
 iPXE> chain http://${YOUR_BOOT_URL}
 ```
 
-Immediately iPXE should download your boot script URL and start grabbing the images from the CoreOS storage site:
+Immediately iPXE should download your boot script URL and start grabbing the images from the Container Linux storage site:
 
 ```sh
 ${YOUR_BOOT_URL}... ok
 http://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz... 98%
 ```
 
-After a few moments of downloading CoreOS should boot normally.
+After a few moments of downloading Container Linux should boot normally.
 
 ## Update process
 
-Since CoreOS's upgrade process requires a disk, this image does not have the option to update itself. Instead, the box simply needs to be rebooted and will be running the latest version, assuming that the image served by the PXE server is regularly updated.
+Since Container Linux's upgrade process requires a disk, this image does not have the option to update itself. Instead, the box simply needs to be rebooted and will be running the latest version, assuming that the image served by the PXE server is regularly updated.
 
 ## Installation
 
-CoreOS can be completely installed on disk or run from RAM but store user data on disk. Read more in our [Installing CoreOS guide](booting-with-pxe.md#installation).
+Container Linux can be completely installed on disk or run from RAM but store user data on disk. Read more in our [Installing Container Linux guide](booting-with-pxe.md#installation).
 
 ## Adding a custom OEM
 
-Similar to the [OEM partition][oem] in CoreOS disk images, iPXE images can be customized with a [cloud config][cloud-config] bundled in the initramfs. You can view the [instructions on the PXE docs](booting-with-pxe.md#adding-a-custom-oem).
+Similar to the [OEM partition][oem] in Container Linux disk images, iPXE images can be customized with a [cloud config][cloud-config] bundled in the initramfs. You can view the [instructions on the PXE docs](booting-with-pxe.md#adding-a-custom-oem).
 
 [oem]: notes-for-distributors.md#image-customization
 [cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

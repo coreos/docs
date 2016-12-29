@@ -1,18 +1,18 @@
-# Running CoreOS on RimuHosting's LaunchtimeVPS service
+# Running CoreOS Container Linux on RimuHosting's LaunchtimeVPS service
 
-RimuHosting's LaunchtimeVPS service provides hosted virtual machines, and provides CoreOS as one of their standard images. Customers can launch these VMs via the web interface or via the RimuHosting server management API.
+RimuHosting's LaunchtimeVPS service provides hosted virtual machines, and provides Container Linux as one of their standard images. Customers can launch these VMs via the web interface or via the RimuHosting server management API.
 
-## About the RimuHosting CoreOS setup
+## About the RimuHosting CoreOS Container Linux setup
 
 RimuHosting automatically creates the systemd networking files (no need to put networking setup in the cloud init block).
 
-The provided image is from the CoreOS `stable` channel and is updated with each stable release.
+The provided image is from the Container Linux `stable` channel and is updated with each stable release.
 
-RimuHosting uses the CoreOS PXE kernel and initrd (stored on your VM at `/boot`). We boot up the VM via pv-grub (so the kernel used is provided by CoreOS, not the Xen-based VM host).
+RimuHosting uses the Container Linux PXE kernel and initrd (stored on your VM at `/boot`). We boot up the VM via pv-grub (so the kernel used is provided by Container Linux, not the Xen-based VM host).
 
 ### Public SSH keys
 
-The CoreOS default user is named `core`, and password authentication and root logins are both disabled. You'll need to add an SSH key(s) via the web interface or add keys/passwords via your cloud-config in order to log in.
+The Container Linux default user is named `core`, and password authentication and root logins are both disabled. You'll need to add an SSH key(s) via the web interface or add keys/passwords via your cloud-config in order to log in.
 
 Ensure you have set your [SSH public keys][rh-ssh-keys-page]. If you do not have a RimuHosting account, use the register link.
 
@@ -24,7 +24,7 @@ The cloud-config file is placed at `/var/lib/coreos-install/user_data`. It runs 
 
 ### Cloud-config
 
-You provide raw cloud-config data to CoreOS as part of the web interface install process or via the [RimuHosting API][rh-api-docs] command line install method.
+You provide raw cloud-config data to Container Linux as part of the web interface install process or via the [RimuHosting API][rh-api-docs] command line install method.
 
 The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on RimuHosting. In order for `$private_ipv4` to be populated, the VM must have private networking enabled.
 
@@ -34,18 +34,18 @@ The `$private_ipv4` and `$public_ipv4` substitution variables are fully supporte
 
 1. Ensure you have set your [SSH public keys][rh-ssh-keys-page]. If you do not have a RimuHosting account, use the register link.
 2. Configure a [new VM][rh-variable-plan-page] (including memory, disk size and data center. Start the order.
-2. In the Software installs section select the CoreOS image (currently only the stable channel is provided). Tab away from that field to reveal the cloud config input field. Then provide your cloud config.
+2. In the Software installs section select the Container Linux image (currently only the stable channel is provided). Tab away from that field to reveal the cloud config input field. Then provide your cloud config.
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12 co-m-screenshot">
     <a href="rimuhosting-coreos-image-select-cloud-config.png">
       <img src="img/rimuhosting-coreos-image-select-cloud-config.png" />
     </a>
-    <div class="co-m-screenshot-caption">Choosing the CoreOS image and providing a cloud config.</div>
+    <div class="co-m-screenshot-caption">Choosing the Container Linux image and providing a cloud config.</div>
   </div>
 </div>
 4. Start the install. The server will be setup and you will be notified when that is complete.
 
-A VM can be reinstalled (with a fresh/clean CoreOS image and different cloud-config) via the [reinstall interface][rh-reinstall-page].
+A VM can be reinstalled (with a fresh/clean Container Linux image and different cloud-config) via the [reinstall interface][rh-reinstall-page].
 
 ### Via the API
 
@@ -96,7 +96,7 @@ Edit the server spec at `sample-configs/unmodified/servers/server.json` e.g.
 
 Edit the cloud config data you want to use at `sample-configs/defaults/cloud-init/master.yaml`.
 
-Create the CoreOS VM:
+Create the Container Linux VM:
 
 ```sh
 $ python3 mkvm.py --server_json sample-configs/unmodified/servers/server.json \
@@ -119,9 +119,9 @@ ssh core@<ip address>
 
 Optionally, you may want to [configure your ssh-agent](https://github.com/coreos/fleet/blob/master/Documentation/using-the-client.md#remote-fleet-access) to more easily run [fleet commands](../fleet/launching-containers-fleet.md).
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a cluster bootstrapped it is time to play around. Check out the [CoreOS quickstart guide](quickstart.md) or dig into [more specific topics](https://coreos.com/docs).
+Now that you have a cluster bootstrapped it is time to play around. Check out the [Container Linux quickstart guide](quickstart.md) or dig into [more specific topics](https://coreos.com/docs).
 
 [rh-api-docs]: http://apidocs.rimuhosting.com/jaxrsdocs/index.html
 [rh-ssh-keys-page]: https://launchtimevps.com/cp/sshkeys.jsp

@@ -1,6 +1,6 @@
-# Mantle: gluing CoreOS together
+# Mantle: gluing CoreOS Container Linux together
 
-Mantle is a collection of utilities for the CoreOS SDK.
+Mantle is a collection of utilities for the Container Linux SDK.
 
 ## plume index
 
@@ -12,7 +12,7 @@ Related commands to launch instances on Google Compute Engine(gce) with the late
 
 ### plume upload
 
-Upload latest SDK image to Google Storage and then create a gce image. Assumes an image packaged with the flag `--format=gce` is present. Common usage for CoreOS devs using the default bucket and project is:
+Upload latest SDK image to Google Storage and then create a gce image. Assumes an image packaged with the flag `--format=gce` is present. Common usage for Container Linux devs using the default bucket and project is:
 
 `plume upload`
 
@@ -42,4 +42,4 @@ Destroy instances on gce based by prefix or name. Images created with `create-in
 
 ## kola
 
-Test framework for CoreOS integration testing. Launch groups of related tests using the latest SDK image on specified platforms (qemu, gce ...)
+Test framework for Container Linux integration testing. Launch groups of related tests using the latest SDK image on specified platforms (qemu, gce ...)

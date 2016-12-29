@@ -1,10 +1,10 @@
-# etcd cluster runtime reconfiguration on CoreOS
+# etcd cluster runtime reconfiguration on CoreOS Container Linux
 
-This document describes the reconfiguration or recovery of an etcd cluster running on CoreOS, using a combination of `systemd` features and `etcdctl` commands.
+This document describes the reconfiguration or recovery of an etcd cluster running on Container Linux, using a combination of `systemd` features and `etcdctl` commands.
 
 ## Change etcd cluster size
 
-When [cloud-config][cloud-config] is used to configure an etcd member on a CoreOS node, it compiles a special `/run/systemd/system/etcd2.service.d/20-cloudinit.conf` [drop-in unit file][drop-in]. That is, the cloud-config below:
+When [cloud-config][cloud-config] is used to configure an etcd member on a Container Linux node, it compiles a special `/run/systemd/system/etcd2.service.d/20-cloudinit.conf` [drop-in unit file][drop-in]. That is, the cloud-config below:
 
 ```yaml
 #cloud-config
@@ -31,7 +31,7 @@ Environment="ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380"
 
 If the etcd cluster is secured with TLS, use `https://` instead of `http://` in the command examples below.
 
-Assume that you have created a five-node CoreOS cluster, but did not specify cluster size in the [discovery][etcd-discovery] URL. Since the default discovery cluster size is 3, the remaining two nodes were configured as proxies. You would like to promote these proxies to full etcd cluster members, without bootstrapping a new etcd cluster.
+Assume that you have created a five-node Container Linux cluster, but did not specify cluster size in the [discovery][etcd-discovery] URL. Since the default discovery cluster size is 3, the remaining two nodes were configured as proxies. You would like to promote these proxies to full etcd cluster members, without bootstrapping a new etcd cluster.
 
 The existing cluster can be reconfigured. Run `etcdctl member add node4 http://10.0.1.4:2380`. Later steps will use information from the output of this command, so it's a good idea to copy and paste it somewhere convenient. The output of a successful member addition will look like this:
 
@@ -45,7 +45,7 @@ ETCD_INITIAL_CLUSTER_STATE=existing
 
 The `ETCD_DISCOVERY` environment variable defined in `20-cloudinit.conf` conflicts with the `ETCD_INITIAL_CLUSTER` setting needed for these steps, so the first step is clearing it by overriding `20-cloudinit.conf` with a new drop-in, `99-restore.conf`. `99-restore.conf` contains an empty `Environment="ETCD_DISCOVERY="` string.
 
-The complete example looks like this. On the `node4` CoreOS host, create a  temporary systemd drop-in, `/run/systemd/system/etcd2.service.d/99-restore.conf` with the contents below, filling in the information from the output of the `etcd member add` command we ran previously:
+The complete example looks like this. On the `node4` Container Linux host, create a  temporary systemd drop-in, `/run/systemd/system/etcd2.service.d/99-restore.conf` with the contents below, filling in the information from the output of the `etcd member add` command we ran previously:
 
 ```ini
 [Service]
@@ -70,7 +70,7 @@ etcdserver: start member 9bf1b35fc7761a23 in cluster 36cce781cb4f1292
 
 Once your new member node is up and running, and `etcdctl cluster-health` shows a healthy cluster, remove the temporary drop-in file and reparse the services: `sudo rm /run/systemd/system/etcd2.service.d/99-restore.conf && sudo systemctl daemon-reload`.
 
-## Replace a failed etcd member on CoreOS
+## Replace a failed etcd member on CoreOS Container Linux
 
 This section provides instructions on how to recover a failed etcd member. It is important to know that an etcd cluster cannot be restored using only a discovery URL; the discovery URL is used only once during cluster bootstrap.
 
@@ -179,14 +179,14 @@ $ etcdctl cluster-health
 
 If your cluster has healthy state, etcd successfully wrote cluster configuration into the `/var/lib/etcd2` directory. Now it is safe to remove the temporary `/run/systemd/system/etcd2.service.d/99-restore.conf` drop-in file.
 
-## etcd disaster recovery on CoreOS
+## etcd disaster recovery on CoreOS Container Linux
 
 If a cluster is totally broken and [quorum][majority] cannot be restored, all etcd members must be reconfigured from scratch. This procedure consists of two steps:
 
 * Initialize a one-member etcd cluster using the initial [data directory][data-dir]
 * Resize this etcd cluster by adding new etcd members by following the steps in the [change the etcd cluster size][change-cluster-size] section, above.
 
-This document is an adaptation for CoreOS of the official [etcd disaster recovery guide][disaster-recovery], and uses systemd [drop-ins][drop-in] for convenience.
+This document is an adaptation for Container Linux of the official [etcd disaster recovery guide][disaster-recovery], and uses systemd [drop-ins][drop-in] for convenience.
 
 Let's assume a 3-node cluster with no living members. First, stop the `etcd2` service on all the members:
 

@@ -10,7 +10,7 @@ The update service is based on an open protocol from Google. This protocol power
 
 ## Accessing the update service
 
-The update service is an optional hosted service provided by CoreOS and is not included in a standard CoreOS cluster. Head over to the [Update Service](https://coreos.com/products/coreupdate/) page for more details.
+The update service is an optional hosted service provided by CoreOS and is not included in a standard Container Linux cluster. Head over to the [Update Service](https://coreos.com/products/coreupdate/) page for more details.
 
 Authentication for `updateservicectl` is done with a username and API key combination. Additional users and API keys can be provisioned by an existing user. Substitute the server address you were given during the activation process:
 

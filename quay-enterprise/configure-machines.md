@@ -6,7 +6,7 @@ This guide we will assume you have the DNS record `registry.example.com` configu
 
 ## Credentials
 
-Each CoreOS machine needs to be configured with the username and password for a robot account in order to deploy your containers. Docker looks for configured credentials in a `.dockercfg` file located within the user's home directory. You can download this file directly from the Quay Enterprise interface. Let's assume you've created a robot account called `myapp+deployment`.
+Each Container Linux machine needs to be configured with the username and password for a robot account in order to deploy your containers. Docker looks for configured credentials in a `.dockercfg` file located within the user's home directory. You can download this file directly from the Quay Enterprise interface. Let's assume you've created a robot account called `myapp+deployment`.
 
 Writing the `.dockercfg` can be specified in [cloud-config](https://coreos.com/os/docs/latest/cloud-config.html) with the write_files parameter, or created manually on each machine.
 

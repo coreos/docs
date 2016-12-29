@@ -1,6 +1,6 @@
 # Configuring date and time zone
 
-By default, CoreOS machines keep time in the Coordinated Universal Time (UTC) zone and synchronize their clocks with the Network Time Protocol (NTP). This page contains information about customizing those defaults, explains the change in NTP client daemons in recent CoreOS versions, and offers advice on best practices for timekeeping in CoreOS clusters.
+By default, Container Linux machines keep time in the Coordinated Universal Time (UTC) zone and synchronize their clocks with the Network Time Protocol (NTP). This page contains information about customizing those defaults, explains the change in NTP client daemons in recent Container Linux versions, and offers advice on best practices for timekeeping in Container Linux clusters.
 
 ## Viewing and changing time and date
 
@@ -20,7 +20,7 @@ NTP synchronized: yes
 
 ### Recommended: UTC time
 
-To avoid time zone confusion and the complexities of adjusting clocks for daylight saving time (or not) in accordance with regional custom, we recommend that all machines in CoreOS clusters use UTC. This is the default time zone. To reset a machine to this default:
+To avoid time zone confusion and the complexities of adjusting clocks for daylight saving time (or not) in accordance with regional custom, we recommend that all machines in Container Linux clusters use UTC. This is the default time zone. To reset a machine to this default:
 
 ```
 $ sudo timedatectl set-timezone UTC
@@ -101,7 +101,7 @@ The time zone may also be set via Ignition using the following config:
 
 ## Time synchronization
 
-CoreOS clusters use NTP to synchronize the clocks of member nodes, and all machines start an NTP client at boot. CoreOS versions later than [681.0.0][681.0.0] use [`systemd-timesyncd(8)`][systemd-timesyncd] as the default NTP client. Earlier versions used [`ntpd(8)`][ntp.org]. Use `systemctl` to check which service is running:
+Container Linux clusters use NTP to synchronize the clocks of member nodes, and all machines start an NTP client at boot. Container Linux versions later than [681.0.0][681.0.0] use [`systemd-timesyncd(8)`][systemd-timesyncd] as the default NTP client. Earlier versions used [`ntpd(8)`][ntp.org]. Use `systemctl` to check which service is running:
 
 ```
 $ systemctl status systemd-timesyncd ntpd
@@ -122,7 +122,7 @@ $ systemctl status systemd-timesyncd ntpd
 
 ### Recommended NTP sources
 
-Unless you have a highly reliable and precise time server pool, use your cloud provider's NTP source, or, on bare metal, the default CoreOS NTP servers:
+Unless you have a highly reliable and precise time server pool, use your cloud provider's NTP source, or, on bare metal, the default Container Linux NTP servers:
 
 ```
 0.coreos.pool.ntp.org
@@ -184,7 +184,7 @@ Ignition can also be used to set NTP time sources:
 
 ## Switching from `timesyncd` to `ntpd`
 
-On CoreOS 681.0.0 or later, you can switch from `systemd-timesyncd` back to `ntpd` with the following commands:
+On Container Linux 681.0.0 or later, you can switch from `systemd-timesyncd` back to `ntpd` with the following commands:
 
 ```
 $ sudo systemctl stop systemd-timesyncd

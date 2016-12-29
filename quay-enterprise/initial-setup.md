@@ -14,7 +14,7 @@ A valid license is required to run Quay Enterprise. Your license can be found on
 
 ## Preparing the database
 
-A MySQL RDBMS or Postgres installation with an empty database is required, and a login with full access to said database. The schema will be created the first time the registry image is run. The database install can either be pre-existing or run on CoreOS via a [Docker container](mysql-container.md).
+A MySQL RDBMS or Postgres installation with an empty database is required, and a login with full access to said database. The schema will be created the first time the registry image is run. The database install can either be pre-existing or run on Container Linux via a [Docker container](mysql-container.md).
 
 ## Setting up redis
 
@@ -46,7 +46,7 @@ The `config.json` file will look like this:
 }
 ```
 
-`config.json` contains your credentials for the `quay.io/coreos/quay` repository. Save this file to your CoreOS machine in `/home/core/.docker/config.json` and `/root/.docker/config.json`. You should now be able to execute `docker pull quay.io/coreos/quay:v2.0.3` to download the container.
+`config.json` contains your credentials for the `quay.io/coreos/quay` repository. Save this file to your Container Linux machine in `/home/core/.docker/config.json` and `/root/.docker/config.json`. You should now be able to execute `docker pull quay.io/coreos/quay:v2.0.3` to download the container.
 
 ## Setting up the directories
 

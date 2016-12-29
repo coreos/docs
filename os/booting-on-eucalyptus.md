@@ -1,14 +1,14 @@
-# Running CoreOS on Eucalyptus 3.4
+# Running CoreOS Container Linux on Eucalyptus 3.4
 
-These instructions will walk you through downloading CoreOS, bundling the image, and running an instance from it.
+These instructions will walk you through downloading Container Linux, bundling the image, and running an instance from it.
 
 ## Import the image
 
-These steps will download the CoreOS image, uncompress it, convert it from qcow to raw, and then import it into Eucalyptus. In order to convert the image you will need to install `qemu-img` with your favorite package manager.
+These steps will download the Container Linux image, uncompress it, convert it from qcow to raw, and then import it into Eucalyptus. In order to convert the image you will need to install `qemu-img` with your favorite package manager.
 
 ### Choosing a channel
 
-CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes in each channel.
 
@@ -21,7 +21,7 @@ $ euca-bundle-image -i coreos_production_openstack_image.raw -r x86_64 -d /var/t
 Wrote manifest bundle/coreos_production_openstack_image.raw.manifest.xml
 $ euca-upload-bundle -m /var/tmp/coreos_production_openstack_image.raw.manifest.xml -b coreos-production
 Uploaded coreos-production/coreos_production_openstack_image.raw.manifest.xml
-$ euca-register coreos-production/coreos_production_openstack_image.raw.manifest.xml --virtualization-type hvm --name "CoreOS-Production"
+$ euca-register coreos-production/coreos_production_openstack_image.raw.manifest.xml --virtualization-type hvm --name "Container Linux-Production"
 emi-E4A33D45
 ```
 
@@ -35,7 +35,7 @@ $ euca-run-instances emi-E4A33D45 -k coreos -t m1.medium -g default
 ...
 ```
 
-Your first CoreOS instance should now be running. The only thing left to do is find the IP and SSH in.
+Your first Container Linux instance should now be running. The only thing left to do is find the IP and SSH in.
 
 ```sh
 $ euca-describe-instances | grep coreos
@@ -59,6 +59,6 @@ $ ssh -i core.pem core@10.0.1.61
 core@10-0-0-3 ~ $
 ```
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

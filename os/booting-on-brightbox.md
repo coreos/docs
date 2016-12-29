@@ -1,6 +1,6 @@
-# Running CoreOS {{site.brightbox-version}} on Brightbox Cloud
+# Running CoreOS Container Linux on Brightbox Cloud
 
-These instructions will walk you through running a CoreOS cluster on Brightbox. This guide uses the [Brightbox CLI](http://brightbox.com/docs/guides/cli/getting-started/) but you can also use the [Brightbox Manager](http://brightbox.com/docs/guides/manager/).
+These instructions will walk you through running a Container Linux cluster on Brightbox. This guide uses the [Brightbox CLI](http://brightbox.com/docs/guides/cli/getting-started/) but you can also use the [Brightbox Manager](http://brightbox.com/docs/guides/manager/).
 
 ## Firewall policy
 
@@ -41,7 +41,7 @@ $ brightbox firewall-rules create --source any --protocol tcp --dport 22 fwp-dw0
 -------------------------------------------------------------------------------- 
 ```
 
-And then we’ll allow the CoreOS etcd ports `7001` and `4001`, allowing access from only the other nodes in the group.
+And then we’ll allow the etcd ports `7001` and `4001`, allowing access from only the other nodes in the group.
 
 ```sh
 $ brightbox firewall-rules create --source grp-cdl6h --protocol tcp --dport 7001,4001 fwp-dw0n6
@@ -77,7 +77,7 @@ $ brightbox images list | grep CoreOS
 
 ## Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via [cloud-config][cloud-config]. We're going to provide the `cloud-config` data via the `user-data-file` flag.
+Container Linux allows you to configure machine parameters, launch systemd units on startup and more via [cloud-config][cloud-config]. We're going to provide the `cloud-config` data via the `user-data-file` flag.
 
 [cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 
@@ -147,6 +147,6 @@ core@srv-n8uak ~ $
 
 If you don’t have ipv6, you’ll need to [create and map a Cloud IP](http://brightbox.com/docs/guides/cli/cloud-ips/) first.
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a cluster bootstrapped it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+Now that you have a cluster bootstrapped it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

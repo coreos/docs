@@ -1,10 +1,10 @@
-# Running CoreOS on Packet
+# Running CoreOS Container Linux on Packet
 
-Packet is a bare metal cloud hosting provider. CoreOS is installable as one of the default operating system options. You can deploy CoreOS servers via the Packet portal or API.
+Packet is a bare metal cloud hosting provider. Container Linux is installable as one of the default operating system options. You can deploy Container Linux servers via the Packet portal or API.
 
 ## Channels
 
-Currently the Packet OEM is making it's way through the 3 CoreOS channels. As it becomes available to a new channel it will become available on Packet. There are no seperate instructions per channel that are outside of the normal CoreOS instructions.
+Currently the Packet OEM is making it's way through the three Container Linux channels. As it becomes available to a new channel it will become available on Packet. There are no seperate instructions per channel that are outside of the normal Container Linux instructions.
 
 ## Deployment instructions
 
@@ -16,7 +16,7 @@ Packet has a concept of 'projects' that represent a grouping of machines that de
 
 ### Portal instructions
 
-Once logged into the portal you will be able to click the 'Deploy' button and choose CoreOS from the menu of operating systems, and choose which project you want the server to be deployed in. If you choose to enter custom cloud-config, you can click the 'manage' link and add that as well. The SSH key that you associate with your account and any other team member's keys that are on the project will be added to your CoreOS machine once it is provisioned.
+Once logged into the portal you will be able to click the 'Deploy' button and choose Container Linux from the menu of operating systems, and choose which project you want the server to be deployed in. If you choose to enter custom cloud-config, you can click the 'manage' link and add that as well. The SSH key that you associate with your account and any other team member's keys that are on the project will be added to your Container Linux machine once it is provisioned.
 
 ### API instructions
 
@@ -37,7 +37,7 @@ Double quotes in the `<USERDATA>` value must be escaped such that the request bo
 
 ### Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a machine is created on Packet, the cloud-config cannot be modified. This example can be used to spin up a minimal cluster.
+Container Linux allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a machine is created on Packet, the cloud-config cannot be modified. This example can be used to spin up a minimal cluster.
 
 ```yaml
 #cloud-config
@@ -63,6 +63,6 @@ coreos:
 
 The `$private_ipv4`, `$public_ipv4`, and `$public_ipv6` variables are fully supported in cloud-config on Packet. Packet is fully IPv6 compliant and we encourage you to utilize IPv6 for public connectivity with your running containers. Make sure to read up on [IPv6 and Docker](https://docs.docker.com/articles/networking/#ipv6) if you choose to take advantage of this functionality.
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).

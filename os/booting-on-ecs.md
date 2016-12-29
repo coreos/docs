@@ -1,12 +1,12 @@
-# Running CoreOS with AWS EC2 Container Service
+# Running CoreOS Container Linux with AWS EC2 Container Service
 
-[Amazon EC2 Container Service (ECS)](http://aws.amazon.com/ecs/) is a container management service which provides a set of APIs for scheduling container workloads across EC2 clusters. It supports CoreOS with Docker containers.
+[Amazon EC2 Container Service (ECS)](http://aws.amazon.com/ecs/) is a container management service which provides a set of APIs for scheduling container workloads across EC2 clusters. It supports Container Linux with Docker containers.
 
-Your CoreOS machines communicate with ECS via an agent. The agent interacts with Docker to start new containers and gather information about running containers.
+Your Container Linux machines communicate with ECS via an agent. The agent interacts with Docker to start new containers and gather information about running containers.
 
 ## Set up a new cluster
 
-When booting your [CoreOS Machines on EC2](booting-on-ec2.md), specify that the ECS agent is started via [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md).
+When booting your [Container Linux Machines on EC2](booting-on-ec2.md), specify that the ECS agent is started via [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md).
 
 Be sure to change `ECS_CLUSTER` to the cluster name you've configured via the ECS CLI or leave it empty for the default. Here's a full cloud-config example:
 
@@ -54,7 +54,7 @@ coreos:
                                      amazon/amazon-ecs-agent:${ECS_VERSION}
 ```
 
-The example above pulls the latest official Amazon ECS agent container from the Docker Hub when the machine starts. If you ever need to update the agent, it’s as simple as restarting the amazon-ecs-agent service or the CoreOS machine.
+The example above pulls the latest official Amazon ECS agent container from the Docker Hub when the machine starts. If you ever need to update the agent, it’s as simple as restarting the amazon-ecs-agent service or the Container Linux machine.
 
 If you want to configure SSH keys in order to log in, mount disks or configure other options, see the [full cloud-config documentation](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md).
 

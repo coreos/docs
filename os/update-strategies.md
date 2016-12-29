@@ -1,8 +1,8 @@
 # Reboot strategies on updates
 
-The overarching goal of CoreOS is to secure the Internet's backend infrastructure. We believe that [automatically updating](https://coreos.com/using-coreos/updates/) the operating system is one of the best tools to achieve this goal.
+The overarching goal of Container Linux is to secure the Internet's backend infrastructure. We believe that [automatically updating](https://coreos.com/using-coreos/updates/) the operating system is one of the best tools to achieve this goal.
 
-We realize that each CoreOS cluster has a unique tolerance for risk and the operational needs of your applications are complex. In order to meet everyone's needs, there are four update strategies that we have developed based on feedback during our alpha period.
+We realize that each Container Linux cluster has a unique tolerance for risk and the operational needs of your applications are complex. In order to meet everyone's needs, there are four update strategies that we have developed based on feedback during our alpha period.
 
 It's important to note that updates are always downloaded to the passive partition when they become available. A reboot is the last step of the update, where the active and passive partitions are swapped ([rollback instructions][rollback]). These strategies control how that reboot occurs:
 
@@ -64,9 +64,9 @@ The `off` strategy is also straightforward. The update will be installed onto th
 
 ## Updating PXE/iPXE machines
 
-PXE/iPXE machines download a new copy of CoreOS every time they are started thus are dependent on the version of CoreOS they are served. If you don't automatically load new CoreOS images into your PXE/iPXE server, your machines will never have new features or security updates.
+PXE/iPXE machines download a new copy of Container Linux every time they are started thus are dependent on the version of Container Linux they are served. If you don't automatically load new Container Linux images into your PXE/iPXE server, your machines will never have new features or security updates.
 
-An easy solution to this problem is to use iPXE and reference images [directly from the CoreOS storage site](booting-with-ipxe.md#setting-up-ipxe-boot-script). The `alpha` URL is automatically pointed to the new version of CoreOS as it is released.
+An easy solution to this problem is to use iPXE and reference images [directly from the Container Linux storage site](booting-with-ipxe.md#setting-up-ipxe-boot-script). The `alpha` URL is automatically pointed to the new version of Container Linux as it is released.
 
 ## Disable Automatic Updates Daemon
 
@@ -86,7 +86,7 @@ coreos:
 
 ## Updating behind a proxy
 
-Public Internet access is required to contact CoreUpdate and download new versions of CoreOS. If direct access is not available the `update-engine` service may be configured to use a HTTP or SOCKS proxy using curl-compatible environment variables, such as `HTTPS_PROXY` or `ALL_PROXY`.
+Public Internet access is required to contact CoreUpdate and download new versions of Container Linux. If direct access is not available the `update-engine` service may be configured to use a HTTP or SOCKS proxy using curl-compatible environment variables, such as `HTTPS_PROXY` or `ALL_PROXY`.
 See [curl's documentation](http://curl.haxx.se/docs/manpage.html#ALLPROXY) for details.
 
 ```yaml

@@ -1,14 +1,14 @@
-# Configure CoreOS components to connect to etcd with TLS
+# Configure CoreOS Container Linux components to connect to etcd with TLS
 
-This document explains how to configure CoreOS components to use secure HTTPS connections to an etcd cluster. The target etcd cluster must already be using HTTPS for its own communications, as explained in the [etcd HTTP to HTTPS migration guide][etcd-live-http-https].
+This document explains how to configure Container Linux components to use secure HTTPS connections to an etcd cluster. The target etcd cluster must already be using HTTPS for its own communications, as explained in the [etcd HTTP to HTTPS migration guide][etcd-live-http-https].
 
-The primary CoreOS components that use etcd are:
+The primary Container Linux components that use etcd are:
 
 * [flannel][flannel]
 * [fleet][fleet]
 * [locksmith][locksmith]
 
-This document assumes three CoreOS nodes are running three etcd cluster members: Call them server1, server2, and server3, with IP addresses 172.16.0.101, 172.16.0.102, and 172.16.0.103, respectively. We further assume that the [necessary Certificate Authority (CA) and client certificate/key pairs have been created][self-signed-ca].
+This document assumes three Container Linux nodes are running three etcd cluster members: Call them server1, server2, and server3, with IP addresses 172.16.0.101, 172.16.0.102, and 172.16.0.103, respectively. We further assume that the [necessary Certificate Authority (CA) and client certificate/key pairs have been created][self-signed-ca].
 
 ## Configure flannel to Use secure etcd connection
 

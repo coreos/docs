@@ -1,6 +1,6 @@
-# Running CoreOS on libvirt
+# Running CoreOS Container Linux on libvirt
 
-This guide explains how to run CoreOS with libvirt. The libvirt configuration
+This guide explains how to run Container Linux with libvirt. The libvirt configuration
 file can be used (for example) with `virsh` or `virt-manager`. The guide assumes
 that you already have a running libvirt setup and `virt-install` tool. If you
 don’t have that, other solutions are most likely easier.
@@ -8,7 +8,7 @@ don’t have that, other solutions are most likely easier.
 You can direct questions to the [IRC channel][irc] or [mailing
 list][coreos-dev].
 
-## Download the CoreOS image
+## Download the CoreOS Container Linux image
 
 In this guide, the example virtual machine we are creating is called coreos1 and
 all files are stored in `/var/lib/libvirt/images/coreos`. This is not a requirement — feel free
@@ -16,7 +16,7 @@ to substitute that path if you use another one.
 
 ### Choosing a channel
 
-CoreOS is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 Read the [release notes](https://coreos.com/releases) for specific features and bug fixes in each channel.
 
@@ -64,7 +64,7 @@ It will create `coreos1.qcow2` snapshot image. Any changes to `coreos1.qcow2` wi
 
 ### Config drive
 
-Now create a config drive file system to configure CoreOS itself:
+Now create a config drive file system to configure Container Linux itself:
 
 ```sh
 mkdir -p /var/lib/libvirt/images/coreos/coreos1/openstack/latest
@@ -91,7 +91,7 @@ Note: The `$private_ipv4` and `$public_ipv4` cloud-config substitution variables
 
 ### Network configuration
 
-By default, CoreOS uses DHCP to get its network configuration. In this example the VM will be attached directly to the local network via a bridge on the host's virbr0 and the local network. To configure a static address add a [networkd unit][systemd-network] to `user_data`:
+By default, Container Linux uses DHCP to get its network configuration. In this example the VM will be attached directly to the local network via a bridge on the host's virbr0 and the local network. To configure a static address add a [networkd unit][systemd-network] to `user_data`:
 
 ```yaml
 #cloud-config
@@ -149,9 +149,9 @@ Now you can log in to the virtual machine with:
 ssh coreos1
 ```
 
-## Running a CoreOS cluster demo on libvirt
+## Running a CoreOS Container Linux cluster demo on libvirt
 
-This guide explains how to run three-nodes demo CoreOS cluster with libvirt.
+This guide explains how to run three-nodes demo Container Linux cluster with libvirt.
 
 ### Bash Script
 
@@ -207,11 +207,11 @@ Run the script:
 ./deploy_coreos_libvirt.sh 3
 ```
 
-Script will deploy three-nodes CoreOS cluster (`coreos{1..3}` hostnames) with
+Script will deploy three-node Container Linux cluster (`coreos{1..3}` hostnames) with
 ready-to-use etcd2, fleet and flannel.
 
 If your host configuration uses libvirt's dnsmasq as a resolver, you can
-simply log in into your new CoreOS instance:
+simply log in into your new Container Linux instance:
 
 ```sh
 ssh core@coreos1
@@ -224,9 +224,9 @@ network):
 cat /var/lib/libvirt/dnsmasq/default.leases
 ```
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
 
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
 [irc]: irc://irc.freenode.org:6667/#coreos

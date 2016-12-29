@@ -1,10 +1,10 @@
-# Running CoreOS on EC2
+# Running CoreOS Container Linux on EC2
 
-The current AMIs for all CoreOS channels and EC2 regions are listed below and updated frequently. Using CloudFormation is the easiest way to launch a cluster, but you can also follow the manual steps at the end of the article. You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
+The current AMIs for all Container Linux channels and EC2 regions are listed below and updated frequently. Using CloudFormation is the easiest way to launch a cluster, but it is also possible to follow the manual steps at the end of the article. Questions can be directed to the CoreOS [IRC channel][irc] or [user mailing list][coreos-user].
 
 ## Choosing a channel
 
-CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
+Container Linux is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
 
 <div id="ec2-images">
   <ul class="nav nav-tabs">
@@ -15,8 +15,8 @@ CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">Docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
-        <a class="btn btn-link btn-icon-left co-p-docs-rss" href="{{site.baseurl}}/dist/aws/aws-alpha.json"><span class="fa fa-rss"></span>View as json feed</a>
+        <p>The Alpha channel closely tracks master and is released frequently. The newest versions of system libraries and utilities will be available for testing. The current version is Container Linux {{site.alpha-channel}}.</p>
+        <a class="btn btn-link btn-icon-left co-p-docs-rss" href="https://coreos.com/dist/aws/aws-alpha.json"><span class="fa fa-rss"></span>View as json feed</a>
       </div>
       <table>
         <thead>
@@ -47,8 +47,8 @@ CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates
     </div>
     <div class="tab-pane" id="beta">
       <div class="channel-info">
-        <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
-        <a class="btn btn-link btn-icon-left co-p-docs-rss" href="{{site.baseurl}}/dist/aws/aws-beta.json"><span class="fa fa-rss"></span>View as json feed</a>
+        <p>The Beta channel consists of promoted Alpha releases. The current version is Container Linux {{site.beta-channel}}.</p>
+        <a class="btn btn-link btn-icon-left co-p-docs-rss" href="https://coreos.com/dist/aws/aws-beta.json"><span class="fa fa-rss"></span>View as json feed</a>
       </div>
       <table>
         <thead>
@@ -79,8 +79,8 @@ CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates
     </div>
     <div class="tab-pane active" id="stable">
       <div class="channel-info">
-        <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.stable-channel}}.</p>
-        <a class="btn btn-link btn-icon-left co-p-docs-rss" href="{{site.baseurl}}/dist/aws/aws-stable.json"><span class="fa fa-rss"></span>View as json feed</a>
+        <p>The Stable channel should be used by production clusters. Versions of Container Linux are battle-tested within the Beta and Alpha channels before being promoted. The current version is Container Linux {{site.stable-channel}}.</p>
+        <a class="btn btn-link btn-icon-left co-p-docs-rss" href="https://coreos.com/dist/aws/aws-stable.json"><span class="fa fa-rss"></span>View as json feed</a>
       </div>
       <table>
         <thead>
@@ -112,13 +112,13 @@ CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates
   </div>
 </div>
 
-CloudFormation will launch a cluster of CoreOS machines with a security and autoscaling group.
+CloudFormation will launch a cluster of Container Linux machines with a security and autoscaling group.
 
 ## Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a machine is created on EC2, the cloud-config can only be modified after it is stopped or recreated.
+Container Linux allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a machine is created on EC2, the cloud-config can only be modified after it is stopped or recreated.
 
-You can provide raw cloud-config data to CoreOS via the Amazon web console or [via the EC2 API][ec2-cloud-config]. Our CloudFormation template supports the most common cloud-config options as well.
+You can provide raw cloud-config data to Container Linux via the Amazon web console or [via the EC2 API][ec2-cloud-config]. Our CloudFormation template supports the most common cloud-config options as well.
 
 The most common cloud-config for EC2 looks like:
 
@@ -148,14 +148,14 @@ The `$private_ipv4` and `$public_ipv4` substitution variables are fully supporte
 
 <div class="row">
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 co-m-screenshot">
-    <a href="{{site.baseurl}}/assets/images/media/ec2-cloudformation-cloud-config.png">
-      <img src="{{site.baseurl}}/assets/images/media/ec2-cloudformation-cloud-config.png" />
+    <a href="img/ec2-cloudformation-cloud-config.png">
+      <img src="img/ec2-cloudformation-cloud-config.png" />
     </a>
     <div class="co-m-screenshot-caption">Providing options during CloudFormation.</div>
   </div>
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 co-m-screenshot">
-    <a href="{{site.baseurl}}/assets/images/media/ec2-instance-cloud-config.png">
-      <img src="{{site.baseurl}}/assets/images/media/ec2-instance-cloud-config.png" class="screenshot" />
+    <a href="img/ec2-instance-cloud-config.png">
+      <img src="img/ec2-instance-cloud-config.png" class="screenshot" />
     </a>
     <div class="co-m-screenshot-caption">Providing cloud-config during EC2 boot wizard.</div>
   </div>
@@ -181,14 +181,14 @@ coreos:
         Type=ext3
 ```
 
-For more information about mounting storage, Amazon's [own documentation](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html) is the best source. You can also read about [mounting storage on CoreOS](mounting-storage.md).
+For more information about mounting storage, Amazon's [own documentation](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html) is the best source. You can also read about [mounting storage on Container Linux](mounting-storage.md).
 
 ### Adding more machines
 To add more instances to the cluster, just launch more with the same cloud-config, the appropriate security group and the AMI for that region. New instances will join the cluster regardless of region if the security groups are configured correctly.
 
 ## SSH to your instances
 
-CoreOS is set up to be a little more secure than other cloud images. By default, it uses the `core` user instead of `root` and doesn't use a password for authentication. You'll need to add an SSH key(s) via the AWS console or add keys/passwords via your cloud-config in order to log in.
+Container Linux is set up to be a little more secure than other cloud images. By default, it uses the `core` user instead of `root` and doesn't use a password for authentication. You'll need to add an SSH key(s) via the AWS console or add keys/passwords via your cloud-config in order to log in.
 
 To connect to an instance after it's created, run:
 
@@ -215,12 +215,12 @@ You need open port 2379, 2380, 7001 and 4001 between servers in the `etcd` clust
 
 _This step is only needed once_
 
-First we need to create a security group to allow CoreOS instances to communicate with one another.
+First we need to create a security group to allow Container Linux instances to communicate with one another.
 
 1. Go to the [security group][sg] page in the EC2 console.
 2. Click "Create Security Group"
     * Name: coreos-testing
-    * Description: CoreOS instances
+    * Description: Container Linux instances
     * VPC: No VPC
     * Click: "Yes, Create"
 3. In the details of the security group, click the `Inbound` tab
@@ -487,12 +487,12 @@ coreos:
   </div>
 </div>
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
 
 
-[coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
+[coreos-user]: https://groups.google.com/forum/#!forum/coreos-user
 [docker-docs]: https://docs.docker.io
 [etcd-docs]: https://github.com/coreos/etcd/tree/master/Documentation
 [irc]: irc://irc.freenode.org:6667/#coreos

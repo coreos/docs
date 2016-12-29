@@ -1,4 +1,4 @@
-# Kubernetes network troubleshooting on CoreOS
+# Kubernetes network troubleshooting on CoreOS Container Linux
 
 Kubernetes networking issues can be debugged with familiar tools, once the isolated nature of the container abstraction is taken into account. This document explains some of the best places to start troubleshooting when network issues arise.
 
@@ -64,11 +64,11 @@ cluster.local.      60  IN  SOA ns.dns.cluster.local. hostmaster.skydns.local. 1
 ;; MSG SIZE  rcvd: 117
 ```
 
-## Debugging Docker bridge and other host networking issues on CoreOS
+## Debugging Docker bridge and other host networking issues on CoreOS Container Linux
 
-If you suspect the issue is actually with the host's networking, it may seem frustrating that CoreOS does not include some of the standard network utilities like `tcpdump` or `nmap`. However, CoreOS provides the [*toolbox*][toolbox], a special container that can install and run a complete userland, without needing everything installed on the base system.
+If you suspect the issue is actually with the host's networking, it may seem frustrating that Container Linux does not include some of the standard network utilities like `tcpdump` or `nmap`. However, Container Linux provides the [*toolbox*][toolbox], a special container that can install and run a complete userland, without needing everything installed on the base system.
 
-Run the command `toolbox` and CoreOS will launch a container from the "Fedora" image, downloading it first if necessary. This container is executed with all kernel capabilities, mounts local filesystems for inspection, and attaches directly to the host network. After running the `toolbox` command, you will be at a shell inside this privileged container.
+Run the command `toolbox` and Container Linux will launch a container from the "Fedora" image, downloading it first if necessary. This container is executed with all kernel capabilities, mounts local filesystems for inspection, and attaches directly to the host network. After running the `toolbox` command, you will be at a shell inside this privileged container.
 
 Once inside the toolbox container, install the desired tools:
 

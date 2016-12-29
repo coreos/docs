@@ -1,6 +1,6 @@
-# Running CoreOS on Vagrant
+# Running CoreOS Container Linux on Vagrant
 
-Running CoreOS with Vagrant is one way to bring up a single machine or virtualize an entire cluster on your laptop. Since the true power of CoreOS can be seen with a cluster, we're going to concentrate on that. Instructions for a single machine can be found [towards the end](#single-machine) of the guide.
+Running Container Linux with Vagrant is one way to bring up a single machine or virtualize an entire cluster on your laptop. Since the true power of Container Linux can be seen with a cluster, we're going to concentrate on that. Instructions for a single machine can be found [towards the end](#single-machine) of the guide.
 
 You can direct questions to the [IRC channel][irc] or [mailing list][coreos-dev].
 
@@ -14,9 +14,9 @@ Vagrant can use either the free VirtualBox provider or the commercial VMware pro
 
 ## Clone Vagrant repo
 
-Now that you have Vagrant installed you can bring up a CoreOS instance.
+Now that you have Vagrant installed you can bring up a Container Linux instance.
 
-The following commands will clone a repository that contains the CoreOS Vagrantfile. This file tells Vagrant where it can find the latest disk image of CoreOS. Vagrant will download the image the first time you attempt to start the VM.
+The following commands will clone a repository that contains the Container Linux Vagrantfile. This file tells Vagrant where it can find the latest disk image of Container Linux. Vagrant will download the image the first time you attempt to start the VM.
 
 ```sh
 git clone https://github.com/coreos/coreos-vagrant.git
@@ -29,7 +29,7 @@ To start our cluster, we need to provide some config parameters in cloud-config 
 
 ### Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on start-up and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. You can provide cloud-config data to your CoreOS Vagrant VM by editing the `user-data` file inside of the cloned directory. A sample file `user-data.sample` exists as a base and must be renamed to `user-data` for it to be processed.
+Container Linux allows you to configure machine parameters, launch systemd units on start-up and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. You can provide cloud-config data to your Container Linux Vagrant VM by editing the `user-data` file inside of the cloned directory. A sample file `user-data.sample` exists as a base and must be renamed to `user-data` for it to be processed.
 
 Our cluster will use an etcd [discovery URL](cluster-discovery.md) to bootstrap the cluster of machines and elect an initial etcd leader. Be sure to replace `<token>` with your own URL from [https://discovery.etcd.io/new](https://discovery.etcd.io/new):
 
@@ -78,11 +78,11 @@ If you need to update your cloud-config later on, run `vagrant reload --provisio
 
 [cloud-config-docs]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 
-### Start up CoreOS
+### Start up CoreOS Container Linux
 
 The `config.rb.sample` file contains a few useful settings about your Vagrant environment and most importantly, how many machines you'd like in your cluster.
 
-CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. Select the channel you'd like to use for this cluster below. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
+Container Linux is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. Select the channel you'd like to use for this cluster below. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
 
 <div id="vagrant-create">
   <ul class="nav nav-tabs">
@@ -92,7 +92,7 @@ CoreOS is designed to be [updated automatically](https://coreos.com/why/#updates
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
-      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">Docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+      <p>The Alpha channel closely tracks master and is released frequently. The newest versions of system libraries and utilities will be available for testing. The current version is Container Linux {{site.alpha-channel}}.</p>
       <p>Rename the file to <code>config.rb</code> and modify a few lines:</p>
       <h4>config.rb</h4>
       <pre># Size of the CoreOS cluster created by Vagrant
@@ -101,7 +101,7 @@ $num_instances=3</pre>
 $update_channel='alpha'</pre>
     </div>
     <div class="tab-pane" id="beta-create">
-      <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
+      <p>The Beta channel consists of promoted Alpha releases. The current version is Container Linux {{site.beta-channel}}.</p>
       <p>Rename the file to <code>config.rb</code> then uncomment and modify:</p>
       <h4>config.rb</h4>
       <pre># Size of the CoreOS cluster created by Vagrant
@@ -110,7 +110,7 @@ $num_instances=3</pre>
 $update_channel='beta'</pre>
     </div>
     <div class="tab-pane active" id="stable-create">
-      <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.stable-channel}}.</p>
+      <p>The Stable channel should be used by production clusters. Versions of Container Linux are battle-tested within the Beta and Alpha channels before being promoted. The current version is Container Linux {{site.stable-channel}}.</p>
       <p>Rename the file to <code>config.rb</code> then uncomment and modify:</p>
       <h4>config.rb</h4>
       <pre># Size of the CoreOS cluster created by Vagrant
@@ -192,9 +192,9 @@ coreos:
       command: start
 ```
 
-### Start up CoreOS
+### Start up CoreOS Container Linux
 
-The `config.rb.sample` file contains a few useful settings about your Vagrant environment. We're going to set the CoreOS channel that we'd like the machine to track.
+The `config.rb.sample` file contains a few useful settings about your Vagrant environment. We're going to set the Container Linux channel that we'd like the machine to track.
 
 <div id="vagrant-single">
   <ul class="nav nav-tabs">
@@ -204,21 +204,21 @@ The `config.rb.sample` file contains a few useful settings about your Vagrant en
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-single">
-      <p>The alpha channel closely tracks master and is released to frequently. The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">Docker</a>, <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be available for testing. Current version is CoreOS {{site.alpha-channel}}.</p>
+      <p>The Alpha channel closely tracks master and is released frequently. The newest versions of system libraries and utilities will be available for testing. The current version is Container Linux {{site.alpha-channel}}.</p>
       <p>Rename the file to <code>config.rb</code> then uncomment and modify:</p>
       <h4>config.rb</h4>
       <pre># Official CoreOS channel from which updates should be downloaded
 $update_channel='alpha'</pre>
     </div>
     <div class="tab-pane" id="beta-single">
-      <p>The beta channel consists of promoted alpha releases. Current version is CoreOS {{site.beta-channel}}.</p>
+      <p>The Beta channel consists of promoted Alpha releases. The current version is Container Linux {{site.beta-channel}}.</p>
       <p>Rename the file to <code>config.rb</code> then uncomment and modify:</p>
       <h4>config.rb</h4>
       <pre># Official CoreOS channel from which updates should be downloaded
 $update_channel='beta'</pre>
     </div>
     <div class="tab-pane active" id="stable-single">
-      <p>The Stable channel should be used by production clusters. Versions of CoreOS are battle-tested within the Beta and Alpha channels before being promoted. Current version is CoreOS {{site.stable-channel}}.</p>
+      <p>The Stable channel should be used by production clusters. Versions of Container Linux are battle-tested within the Beta and Alpha channels before being promoted. The current version is Container Linux {{site.stable-channel}}.</p>
       <p>Rename the file to <code>config.rb</code> then uncomment and modify:</p>
       <h4>config.rb</h4>
       <pre># Official CoreOS channel from which updates should be downloaded
@@ -252,7 +252,7 @@ vagrant ssh core-01 -- -A
 
 ## Shared folder setup
 
-Optionally, you can share a folder from your laptop into the virtual machine. This is useful for easily getting code and Dockerfiles into CoreOS.
+Optionally, you can share a folder from your laptop into the virtual machine. This is useful for easily getting code and Dockerfiles into Container Linux.
 
 ```ini
 config.vm.synced_folder ".", "/home/core/share", id: "core", :nfs => true,  :mount_options   => ['nolock,vers=3,udp']
@@ -262,7 +262,7 @@ After a 'vagrant reload' you will be prompted for your local machine password.
 
 ## New box versions
 
-CoreOS is a rolling release distribution and versions that are out of date will automatically update. If you want to start from the most up to date version you will need to make sure that you have the latest box file of CoreOS. You can do this using `vagrant box update` - or, simply remove the old box file and Vagrant will download the latest one the next time you `vagrant up`.
+Container Linux is a rolling release distribution and versions that are out of date will automatically update. If you want to start from the most up to date version you will need to make sure that you have the latest box file of Container Linux. You can do this using `vagrant box update` - or, simply remove the old box file and Vagrant will download the latest one the next time you `vagrant up`.
 
 ```sh
 vagrant box remove coreos-alpha vmware_fusion
@@ -275,9 +275,9 @@ If you'd like to download the box separately, you can download the URL contained
 vagrant box add coreos-alpha <path-to-box-file>
 ```
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart](quickstart.md) guide, learn about [CoreOS clustering with Vagrant](https://coreos.com/blog/coreos-clustering-with-vagrant/), or dig into [more specific topics](https://coreos.com/docs).
+Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide, learn about [Container Linux clustering with Vagrant](https://coreos.com/blog/coreos-clustering-with-vagrant/), or dig into [more specific topics](https://coreos.com/docs).
 
 
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev

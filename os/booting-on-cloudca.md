@@ -1,13 +1,13 @@
-# Running CoreOS on cloud.ca
+# Running CoreOS Container Linux on cloud.ca
 
-[cloud.ca](http://www.cloud.ca) is a regional IaaS designed to help meet regulatory or security requirements by storing data in Canada. CoreOS is a supported operating system for VMs on the cloud.ca infrastructure.
+[cloud.ca](http://www.cloud.ca) is a regional IaaS designed to help meet regulatory or security requirements by storing data in Canada. Container Linux is a supported operating system for VMs on the cloud.ca infrastructure.
 
 
 ## Choosing a channel
 
-CoreOS is designed to be [updated automatically][update-docs], with three channels of different update schedules: Stable, Beta, and Alpha. You can [disable this feature][reboot-docs], although we don't recommend it. Read the [release notes][release-notes] for specific features and bug fixes.
+Container Linux is designed to be [updated automatically][update-docs], with three channels of different update schedules: Stable, Beta, and Alpha. You can [disable this feature][reboot-docs], although we don't recommend it. Read the [release notes][release-notes] for specific features and bug fixes.
 
-The cloud.ca CoreOS image is built from the official stable release CloudStack image.
+The cloud.ca Container Linux image is built from the official stable release CloudStack image.
 
 <div id="cca-images">
   <ul class="nav nav-tabs">
@@ -18,14 +18,7 @@ The cloud.ca CoreOS image is built from the official stable release CloudStack i
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
-        <p>The Alpha channel closely tracks master and is released frequently.
-        The newest versions of <a href="{{site.baseurl}}/using-coreos/docker">Docker</a>,
-        <a href="{{site.baseurl}}/using-coreos/etcd">etcd</a> and
-        <a href="{{site.baseurl}}/using-coreos/clustering">fleet</a> will be
-        available for testing. To use the Alpha channel on cloud.ca, select the
-        "CoreOS Stable" template and update the cloud-config to
-        [change the channel to alpha][switching-channels]:
-        </p>
+        <p>The Alpha channel closely tracks master and is released frequently. The newest versions of system libraries and utilities will be available for testing. The current version is Container Linux {{site.alpha-channel}}. To use the Alpha channel on cloud.ca, select the "CoreOS Stable" template and update the cloud-config to [change the channel to alpha][switching-channels]:</p>
       </div>
 
 ```yaml
@@ -38,10 +31,7 @@ coreos:
     </div>
     <div class="tab-pane" id="beta">
       <div class="channel-info">
-        <p>The Beta channel consists of promoted alpha releases. To use the Beta
-        channel on cloud.ca, use the "CoreOS Stable" template and update the
-        cloud-config to [change the channel to beta][switching-channels]:
-        </p>
+        <p>The Beta channel consists of promoted Alpha releases. The current version is Container Linux {{site.beta-channel}}. To use the Beta channel on cloud.ca, use the "CoreOS Stable" template and update the cloud-config to [change the channel to beta][switching-channels]: </p>
       </div>
 
 ```yaml
@@ -54,10 +44,7 @@ coreos:
     </div>
     <div class="tab-pane active" id="stable">
       <div class="channel-info">
-        <p>The Stable channel should be used by production clusters. Versions of
-        CoreOS are battle-tested within the Beta and Alpha channels before being
-        promoted.
-        </p>
+        <p>The Stable channel should be used by production clusters. Versions of Container Linux are battle-tested within the Beta and Alpha channels before being promoted. The current version is Container Linux {{site.stable-channel}}.</p>
       </div>
       <table>
         <thead>
@@ -83,7 +70,7 @@ coreos:
 
 ## Cloud-config
 
-CoreOS allows you to configure machine parameters, launch systemd units on startup, and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once the machine is created, cloud-config cannot be modified.
+Container Linux allows you to configure machine parameters, launch systemd units on startup, and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once the machine is created, cloud-config cannot be modified.
 
 You can provide cloud-config data using cloud.ca management portal or through the CloudStack API. When using CloudStack API, the cloud-conf must be base64 encoded as the `userdata` parameter.
 
@@ -143,7 +130,7 @@ To add more instances to the cluster, just launch more with the same cloud-confi
 
 ## Launching instances
 
-Before deploying CoreOS on cloud.ca, you need the following:
+Before deploying Container Linux on cloud.ca, you need the following:
 
 * An account on `https://your_organization_name.cloud.ca`.
 * Access to an Environment with a running VPC. VPC and subnet creation are not
@@ -217,14 +204,14 @@ core@coreos-node01 ~ $ etcdctl member list
 7cb50ab9db389524: name=6a02cad1a70840d8a6ac2c5d3bf80aea peerURLs=http://10.151.68.222:2380 clientURLs=http://10.151.68.222:2379,http://10.151.68.222:4001
 ```
 
-## Using CoreOS
+## Using CoreOS Container Linux
 
-Now that you have a machine booted it is time to play around. Check out the [CoreOS Quickstart][quick-start] guide or dig into [more specific topics][docs].
+Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart][quick-start] guide or dig into [more specific topics][docs].
 
 
 [update-docs]: https://coreos.com/why/#updates
 [reboot-docs]: update-strategies.md
-[switching-channels]: {{site.baseurl}}/docs/cluster-management/setup/switching-channels
+[switching-channels]: switching-channels.md
 [release-notes]: https://coreos.com/releases
 [cloud-config-docs]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 [quick-start]: quickstart.md
