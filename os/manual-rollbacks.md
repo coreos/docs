@@ -5,7 +5,7 @@ As much as we all love flawless, automatic updates, there may be occasions when 
 tl;dr: The following command will set the currently passive partition to be active on the next boot:
 
 ```
-cgpt prioritize "$(cgpt find -t coreos-usr | grep --invert-match "$(findmnt --noheadings --raw --output=source --target=/usr)")"
+cgpt prioritize "$(cgpt find -t coreos-usr | grep --invert-match "$(rootdev -s /usr)")"
 ```
 
 ## How do updates work?
@@ -110,17 +110,17 @@ $ cgpt find -t coreos-usr
 /dev/sda4
 ```
 
-To figure out which partition is currently active, we can use `findmnt`.
+To figure out which partition is currently active, we can use `rootdev`.
 
 ```
-$ findmnt --noheadings --raw --output=source --target=/usr
+$ rootdev -s /usr
 /dev/sda4
 ```
 
 So now we know that `/dev/sda3` is the passive partition on our system. We can compose the previous two commands to dynamically figure out the passive partition.
 
 ```
-$ cgpt find -t coreos-usr | grep --invert-match "$(findmnt --noheadings --raw --output=source --target=/usr)"
+$ cgpt find -t coreos-usr | grep --invert-match "$(rootdev -s /usr)"
 /dev/sda3
 ```
 
@@ -148,8 +148,7 @@ If we take another look at the GPT tables, we'll see that the priorities have be
 Again, composing the previous two commands we get this handy one-liner to revert to the previous image.
 
 ```
-$ cgpt prioritize "$(cgpt find -t coreos-usr | grep --invert-match "$(findmnt --noheadings --raw --output=source --target=/usr)")"
-
+$ cgpt prioritize "$(cgpt find -t coreos-usr | grep --invert-match "$(rootdev -s /usr)")"
 ```
 
 ## Forcing a Channel Downgrade
