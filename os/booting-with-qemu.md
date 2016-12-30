@@ -162,10 +162,21 @@ Now you can log in to the virtual machine with:
 ssh coreos
 ```
 
+### Providing an Ignition config
+
+When using Container Linux, it is often desirable to configure the machine in a particular manner. [Ignition][ignition] can be used to do this provisioning. An Ignition config can be passed to the virtual machine using the QEMU Firmware Configuration Device. The wrapper script provides a method for doing so:
+
+```sh
+./coreos_production_qemu.sh -i config.ign -- -nographic
+```
+
+This will pass the contents of `config.ign` through to Ignition, which runs in the virtual machine.
+
+[ignition]: https://coreos.com/ignition/docs/latest
+
 ## Using CoreOS Container Linux
 
 Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
-
 
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
 [irc]: irc://irc.freenode.org:6667/#coreos

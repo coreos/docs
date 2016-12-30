@@ -21,9 +21,7 @@ When configuring the Container Linux iPXE boot script there are a few kernel opt
 - **sshkey**: Add the given SSH public key to the `core` user's authorized_keys file. Replace the example key below with your own (it is usually in `~/.ssh/id_rsa.pub`)
 - **console**: Enable kernel output and a login prompt on a given tty. The default, `tty0`, generally maps to VGA. Can be used multiple times, e.g. `console=tty0 console=ttyS0`
 - **coreos.autologin**: Drop directly to a shell on a given console without prompting for a password. Useful for troubleshooting but use with caution. For any console that doesn't normally get a login prompt by default be sure to combine with the `console` option, e.g. `console=tty0 console=ttyS0 coreos.autologin=tty1 coreos.autologin=ttyS0`. Without any argument it enables access on all consoles. Note that for the VGA console the login prompts are on virtual terminals (`tty1`, `tty2`, etc), not the VGA console itself (`tty0`).
-- **cloud-config-url**: Container Linux will attempt to download a cloud-config document and use it to provision your booted system. See the [coreos-cloudinit-project][cloudinit] for more information.
-
-[cloudinit]: https://github.com/coreos/coreos-cloudinit
+- **coreos.config.url**: Container Linux will attempt to download an Ignition config and use it to provision your booted system. See the [Ignition documentation][ignition] for more information.
 
 ### Choose a Channel
 
@@ -44,7 +42,7 @@ Container Linux is released into alpha, beta, and stable channels. Releases to e
 #!ipxe
 
 set base-url http://alpha.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=http://example.com/pxe-cloud-config.yml
+kernel ${base-url}/coreos_production_pxe.vmlinuz coreos.config.url=https://example.com/pxe-config.ign
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
@@ -54,7 +52,7 @@ boot</pre>
 #!ipxe
 
 set base-url http://beta.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=http://example.com/pxe-cloud-config.yml
+kernel ${base-url}/coreos_production_pxe.vmlinuz coreos.config.url=https://example.com/pxe-config.ign
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
@@ -64,7 +62,7 @@ boot</pre>
 #!ipxe
 
 set base-url http://stable.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz cloud-config-url=http://example.com/pxe-cloud-config.yml
+kernel ${base-url}/coreos_production_pxe.vmlinuz coreos.config.url=https://example.com/pxe-config.ign
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
@@ -72,8 +70,6 @@ boot</pre>
 </div>
 
 An easy place to host this boot script is on [http://pastie.org](http://pastie.org). Be sure to reference the "raw" version of script, which is accessed by clicking on the clipboard in the top right.
-
-*Note: The stock iPXE build doesn't include HTTPS support, meaning you can only use HTTP hosts for your `cloud-config-url`.*
 
 
 ### Booting iPXE
@@ -112,11 +108,12 @@ Container Linux can be completely installed on disk or run from RAM but store us
 
 ## Adding a custom OEM
 
-Similar to the [OEM partition][oem] in Container Linux disk images, iPXE images can be customized with a [cloud config][cloud-config] bundled in the initramfs. You can view the [instructions on the PXE docs](booting-with-pxe.md#adding-a-custom-oem).
+Similar to the [OEM partition][oem] in Container Linux disk images, iPXE images can be customized with an [Ignition config][ignition] bundled in the initramfs. You can view the [instructions on the PXE docs](booting-with-pxe.md#adding-a-custom-oem).
 
 [oem]: notes-for-distributors.md#image-customization
-[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 
 ## Using CoreOS Container Linux
 
 Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+
+[ignition]: https://coreos.com/ignition/docs/latest

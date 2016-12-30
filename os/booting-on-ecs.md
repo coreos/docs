@@ -6,20 +6,16 @@ Your Container Linux machines communicate with ECS via an agent. The agent inter
 
 ## Set up a new cluster
 
-When booting your [Container Linux Machines on EC2](booting-on-ec2.md), specify that the ECS agent is started via [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md).
+When booting your [Container Linux Machines on EC2](booting-on-ec2.md), configure the ECS agent to be started via [Ignition][ignition-docs].
 
-Be sure to change `ECS_CLUSTER` to the cluster name you've configured via the ECS CLI or leave it empty for the default. Here's a full cloud-config example:
+Be sure to change `ECS_CLUSTER` to the cluster name you've configured via the ECS CLI or leave it empty for the default. Here's a full config example:
 
-```yaml
-#cloud-config
-
-coreos:
+```container-linux-config
+systemd:
  units:
-   -
-     name: amazon-ecs-agent.service
-     command: start
-     runtime: true
-     content: |
+   - name: amazon-ecs-agent.service
+     enable: true
+     contents: |
        [Unit]
        Description=AWS ECS Agent
        Documentation=https://docs.aws.amazon.com/AmazonECS/latest/developerguide/
@@ -39,24 +35,30 @@ coreos:
        ExecStartPre=-/usr/bin/docker kill ecs-agent
        ExecStartPre=-/usr/bin/docker rm ecs-agent
        ExecStartPre=/usr/bin/docker pull amazon/amazon-ecs-agent:${ECS_VERSION}
-       ExecStart=/usr/bin/docker run --name ecs-agent \
-                                     --env-file=/etc/ecs/ecs.config \
-                                     --volume=/var/run/docker.sock:/var/run/docker.sock \
-                                     --volume=/var/log/ecs:/log \
-                                     --volume=/var/ecs-data:/data \
-                                     --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro \
-                                     --volume=/run/docker/execdriver/native:/var/lib/docker/execdriver/native:ro \
-                                     --publish=127.0.0.1:51678:51678 \
-                                     --env=ECS_LOGFILE=/log/ecs-agent.log \
-                                     --env=ECS_LOGLEVEL=${ECS_LOGLEVEL} \
-                                     --env=ECS_DATADIR=/data \
-                                     --env=ECS_CLUSTER=${ECS_CLUSTER} \
-                                     amazon/amazon-ecs-agent:${ECS_VERSION}
+       ExecStart=/usr/bin/docker run \
+           --name ecs-agent \
+           --env-file=/etc/ecs/ecs.config \
+           --volume=/var/run/docker.sock:/var/run/docker.sock \
+           --volume=/var/log/ecs:/log \
+           --volume=/var/ecs-data:/data \
+           --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro \
+           --volume=/run/docker/execdriver/native:/var/lib/docker/execdriver/native:ro \
+           --publish=127.0.0.1:51678:51678 \
+           --env=ECS_LOGFILE=/log/ecs-agent.log \
+           --env=ECS_LOGLEVEL=${ECS_LOGLEVEL} \
+           --env=ECS_DATADIR=/data \
+           --env=ECS_CLUSTER=${ECS_CLUSTER} \
+           amazon/amazon-ecs-agent:${ECS_VERSION}
+
+       [Install]
+       WantedBy=multi-user.target
 ```
 
 The example above pulls the latest official Amazon ECS agent container from the Docker Hub when the machine starts. If you ever need to update the agent, it’s as simple as restarting the amazon-ecs-agent service or the Container Linux machine.
 
-If you want to configure SSH keys in order to log in, mount disks or configure other options, see the [full cloud-config documentation](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md).
+If you want to configure SSH keys in order to log in, mount disks or configure other options, see the [Ignition documentation][ignition-docs].
+
+[ignition-docs]: https://coreos.com/ignition/docs/latest
 
 ## Connect ECS to an existing cluster
 
