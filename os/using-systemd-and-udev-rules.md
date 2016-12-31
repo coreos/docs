@@ -41,7 +41,7 @@ That rule means that udev will trigger `device-attach.service` systemd unit on a
 
 To use the unit and udev rule with cloud-config, modify this example as needed:
 
-```yaml
+```cloud-config
 #cloud-config
 write_files:
   - path: /etc/udev/rules.d/01-block.rules

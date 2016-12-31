@@ -6,7 +6,7 @@ You can create user accounts on a CoreOS Container Linux machine manually with `
 
 Managing users via cloud-config is preferred because it allows you to use the same configuration across many servers and the cloud-config file can be stored in a repo and versioned. In your cloud-config, you can specify many [different parameters](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md/#users) for each user. Here's an example:
 
-```yaml
+```cloud-config
 #cloud-config
 
 users:

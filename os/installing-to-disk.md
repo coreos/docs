@@ -76,7 +76,7 @@ The installation script will process your `cloud-config.yaml` file specified wit
 
 A cloud-config that specifies an SSH key for the `core` user but doesn't use any other parameters looks like:
 
-```yaml
+```cloud-config
 #cloud-config
 
 # include one or more SSH public keys
@@ -96,7 +96,7 @@ coreos-install -d /dev/sda -C stable -c ~/cloud-config.yaml
 
 This example will configure Container Linux components: etcd2, fleetd and flannel. You have to substitute `<PEER_ADDRESS>` to your host's IP or DNS address.
 
-```yaml
+```cloud-config
 #cloud-config
 
 # include one or more SSH public keys

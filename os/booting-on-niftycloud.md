@@ -12,7 +12,7 @@ You can provide cloud-config to Container Linux via [NIFTY Cloud CLI][cli-docume
 
 The most common cloud-config for NIFTY Cloud looks like:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:

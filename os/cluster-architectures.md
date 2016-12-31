@@ -30,7 +30,7 @@ $ docker ps
 
 Here's what the cloud-config looks like:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -100,7 +100,7 @@ The network unit is typically used for bare metal installations that require sta
 
 Here's the cloud-config for the etcd machine:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -134,7 +134,7 @@ This architecture allows you to boot any number of workers, as few as 1 or up to
 
 Look how simple the cloud-config becomes:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -176,7 +176,7 @@ fleet will be started with metadata indicating the role of these machines, which
 
 Here's an example cloud-config for one of the central service machines. Be sure to generate a new discovery token with the initial size of your cluster:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -224,7 +224,7 @@ Similar to the central services machines, fleet will be configured with metadata
 
 Here's an example cloud-config for a worker:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:

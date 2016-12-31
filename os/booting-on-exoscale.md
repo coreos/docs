@@ -30,7 +30,7 @@ You can provide raw cloud-config data to Container Linux via the Exoscale portal
 
 In order to leverage Container Linux unique automation attributes, a standard CoreOS cloud-config on Exoscale could be configured with:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:

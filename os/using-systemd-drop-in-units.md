@@ -56,7 +56,7 @@ systemctl restart fleet.service
 
 Here is how that could be implemented within `cloud-config`:
 
-```yaml
+```cloud-config
 #cloud-config
 coreos:
   units:
@@ -111,7 +111,7 @@ RestartSec=60s
 
 `cloud-config` example:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:

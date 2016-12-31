@@ -12,7 +12,7 @@ echo nf_conntrack > /etc/modules-load.d/nf.conf
 
 These files are processed early during the boot sequence. This means that updating `modules-load.d` via cloud-config will only take effect on the next boot unless the `systemd-modules-load` service is also restarted:
 
-```yaml
+```cloud-config
 #cloud-config
 
 write_files:
@@ -56,7 +56,7 @@ Further details can be found in the systemd man pages:
 
 This example cloud-config excerpt loads the `dummy` network interface module with an option specifying the number of interfaces the module should create when loaded (`numdummies=5`):
 
-```yaml
+```cloud-config
 #cloud-config
 
 write_files:
@@ -108,7 +108,7 @@ sysctl --system
 
 Some parameters, such as the conntrack one above, are only available after the module they control has been loaded. To ensure any modules are loaded in advance use `modules-load.d` as described above. A complete cloud-config using both would look like:
 
-```yaml
+```cloud-config
 #cloud-config
 
 write_files:
@@ -192,7 +192,7 @@ echo "This machine is dedicated to computing Pi" > /etc/motd.d/pi.conf
 
 Or via cloud-config:
 
-```yaml
+```cloud-config
 #cloud-config
 
 write_files:
@@ -225,7 +225,9 @@ echo -e '[Service]\nTTYVTDisallocate=no' > '/etc/systemd/system/getty@.service.d
 
 Or via cloud-config:
 
-```yaml
+```cloud-config
+#cloud-config
+
 coreos:
   units:
     - name: getty@.service

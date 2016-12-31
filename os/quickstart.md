@@ -44,7 +44,7 @@ If you used an example [cloud-config](https://coreos.com/os/docs/latest/cloud-co
 
 A good starting point would be something like:
 
-```yaml
+```cloud-config
 #cloud-config
 
 hostname: coreos0

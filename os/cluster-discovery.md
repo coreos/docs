@@ -15,7 +15,7 @@ The discovery URL can be provided to each Container Linux machine via [cloud-con
 
 Boot each one of the machines with identical cloud-config and they should be automatically clustered:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:

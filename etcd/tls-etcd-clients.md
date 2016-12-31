@@ -14,7 +14,9 @@ This document assumes three Container Linux nodes are running three etcd cluster
 
 The flannel systemd unit file reads the `/run/flannel/options.env` [environment][systemd-environments] file for configuration. `options.env` is created automatically by any [cloud-config][cloud-config] that contains a `flannel:` configuration section. For example, a cloud-config with the following contents:
 
-```yaml
+```cloud-config
+#cloud-config
+
 coreos:
   flannel:
     etcd_endpoints: "https://172.16.0.101:2379,https://172.16.0.102:2379,https://172.16.0.103:2379"
@@ -34,7 +36,7 @@ FLANNELD_ETCD_KEYFILE=/etc/ssl/etcd/client-key.pem
 
 If you are using etcdctl to drop in the configuration into etcd, as described in [flannel configuration](../flannel/flannel-config.md) the drop in will have to change as well.  The changes should look something similar to:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -55,7 +57,7 @@ Suppose you're using `/etc/etcd/ssl` instead, you will need to adjust the flanne
  
 A complete example would look like:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -81,7 +83,9 @@ coreos:
 
 The fleet systemd unit file reads `/run/systemd/system/fleet.service.d/20-cloudinit.conf` for configuration. `20-cloudinit.conf` is created by any [cloud-config][cloud-config] that contains a `fleet:` configuration section. For example, a cloud-config with the following contents:
 
-```yaml
+```cloud-config
+#cloud-config
+
 coreos:
   fleet:
     etcd_servers: "https://172.16.0.101:2379,https://172.16.0.102:2379,https://172.16.0.103:2379"
@@ -106,7 +110,9 @@ Environment="FLEET_PUBLIC_IP=172.16.0.101"
 
 Example cloud-config excerpt for Locksmith configuration:
 
-```yaml
+```cloud-config
+#cloud-config
+
 coreos:
   locksmith:
     endpoint: "https://172.16.0.101:2379,https://172.16.0.102:2379,https://172.16.0.103:2379"

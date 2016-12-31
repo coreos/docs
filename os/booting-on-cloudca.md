@@ -21,7 +21,7 @@ The cloud.ca Container Linux image is built from the official stable release Clo
         <p>The Alpha channel closely tracks master and is released frequently. The newest versions of system libraries and utilities will be available for testing. The current version is Container Linux {{site.alpha-channel}}. To use the Alpha channel on cloud.ca, select the "CoreOS Stable" template and update the cloud-config to [change the channel to alpha][switching-channels]:</p>
       </div>
 
-```yaml
+```cloud-config
 #cloud-config
 coreos:
   update:
@@ -34,7 +34,7 @@ coreos:
         <p>The Beta channel consists of promoted Alpha releases. The current version is Container Linux {{site.beta-channel}}. To use the Beta channel on cloud.ca, use the "CoreOS Stable" template and update the cloud-config to [change the channel to beta][switching-channels]: </p>
       </div>
 
-```yaml
+```cloud-config
 #cloud-config
 coreos:
   update:
@@ -77,7 +77,7 @@ You can provide cloud-config data using cloud.ca management portal or through th
 The current cloud-config example uses a data disk as the docker datastore (/var/lib/docker).
 
 
-```yaml
+```cloud-config
 #cloud-config
 coreos:
   etcd2:
