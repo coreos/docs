@@ -25,3 +25,5 @@ A simple [Kubernetes service][k8s service] can be configured to provide the DNS 
 [monitoring k8s + prometheus]: https://coreos.com/blog/monitoring-kubernetes-with-prometheus.html
 [prometheus.io]: https://prometheus.io/
 [skydns]: https://github.com/skynetservices/skydns
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/prometheus.md?pixel)]() <!-- END ANALYTICS -->

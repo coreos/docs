@@ -126,3 +126,5 @@ If you would like to create multiple clusters you'll need to generate and use a 
 ## Using CoreOS Container Linux
 
 Now that you have instances booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-on-vexxhost.md?pixel)]() <!-- END ANALYTICS -->

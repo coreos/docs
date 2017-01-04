@@ -73,3 +73,5 @@ git push <your remote> bump-go
 ## Tips and Tricks
 
 We've compiled a [list of tips and tricks](sdk-tips-and-tricks.md) that can make working with the SDK a bit easier.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/sdk-building-development-images.md?pixel)]() <!-- END ANALYTICS -->

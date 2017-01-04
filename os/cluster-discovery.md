@@ -156,3 +156,5 @@ If you're interested in how discovery API works behind the scenes in etcd, read 
 [etcd-reconf]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/runtime-configuration.md
 [etcd-reconf-no-disc]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/runtime-reconf-design.md#do-not-use-public-discovery-service-for-runtime-reconfiguration
 [etcd-reconf-on-coreos]: ../etcd/etcd-live-cluster-reconfiguration.md
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/cluster-discovery.md?pixel)]() <!-- END ANALYTICS -->

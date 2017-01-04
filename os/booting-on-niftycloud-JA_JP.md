@@ -81,3 +81,5 @@ ssh core@<ip address> -i <path to keyfile>
 
 起動済みのマシンを手に入れたら、遊ぶ時間です。
 [CoreOSクイックスタート](quickstart.md)を見るか、[各トピックス](https://coreos.com/docs)を掘り下げましょう。
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-on-niftycloud-JA_JP.md?pixel)]() <!-- END ANALYTICS -->

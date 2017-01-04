@@ -54,3 +54,5 @@ When the container starts, each build worker will auto-register and start buildi
 
 If your organization plans to have builds be conducted via pushes to GitHub (or GitHub Enterprise), please continue
 with the [Setting up GitHub Build](github-build.md).
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/build-support.md?pixel)]() <!-- END ANALYTICS -->

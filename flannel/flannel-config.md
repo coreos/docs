@@ -159,3 +159,5 @@ Here is the sequence of events that happens when `flanneld.service` is started f
 4. `redis.service` gets started which invokes `docker run ...`, triggering socket activation of `docker.service`.
 5. `docker.service` sources in `/run/flannel_docker_opts.env` which contains env variables with command line options and starts the Docker with them.
 6. `redis.service` runs Docker redis container.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/flannel/flannel-config.md?pixel)]() <!-- END ANALYTICS -->

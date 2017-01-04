@@ -150,3 +150,5 @@ If you don’t have ipv6, you’ll need to [create and map a Cloud IP](http://br
 ## Using CoreOS Container Linux
 
 Now that you have a cluster bootstrapped it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-on-brightbox.md?pixel)]() <!-- END ANALYTICS -->

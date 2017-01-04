@@ -237,3 +237,5 @@ The next steps are those described in the [Change etcd cluster size][change-clus
 [machine-id]: http://www.freedesktop.org/software/systemd/man/machine-id.html
 [majority]: https://github.com/coreos/etcd/blob/master/Documentation/v2/admin_guide.md#fault-tolerance-table
 [proxy-refresh]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/configuration.md#--proxy-refresh-interval
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/etcd/etcd-live-cluster-reconfiguration.md?pixel)]() <!-- END ANALYTICS -->

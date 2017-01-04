@@ -58,3 +58,5 @@ Only nss-aware applications can take advantage of the `systemd-resolved` cache. 
 [systemd-networkd]: http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html
 [resolved.conf]: http://www.freedesktop.org/software/systemd/man/resolved.conf.html
 [nsswitch.conf]: http://man7.org/linux/man-pages/man5/nsswitch.conf.5.html
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/configuring-dns.md?pixel)]() <!-- END ANALYTICS -->

@@ -369,3 +369,5 @@ A json file `.dockercfg` can be created in your home directory that holds authen
 [mounting-storage]: mounting-storage.md
 [self-signed-certs]: generate-self-signed-certificates.md
 [systemd-socket]: https://www.freedesktop.org/software/systemd/man/systemd.socket.html
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/customizing-docker.md?pixel)]() <!-- END ANALYTICS -->

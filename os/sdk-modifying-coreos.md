@@ -206,3 +206,5 @@ We've compiled a [list of tips and tricks][sdktips] that can make working with t
 [prodimages]: sdk-building-production-images.md
 [repo-blog]: http://google-opensource.blogspot.com/2008/11/gerrit-and-repo-android-source.html
 [sdktips]: sdk-tips-and-tricks.md
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/sdk-modifying-coreos.md?pixel)]() <!-- END ANALYTICS -->

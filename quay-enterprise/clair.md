@@ -284,3 +284,5 @@ Content-Type: text/plain; charset=utf-8
 Once Clair setup is complete, continue with [Quay Security Scanner Setup](security-scanning.md).
 
 [registry-self-signed]: quay-ssl.md#configuring-docker-to-trust-a-certificate-authority
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/clair.md?pixel)]() <!-- END ANALYTICS -->

@@ -93,3 +93,5 @@ The following Ignition config sets up a 1GiB swapfile located at `/var/vm/swapfi
   }
 }
 ```
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/adding-swap.md?pixel)]() <!-- END ANALYTICS -->

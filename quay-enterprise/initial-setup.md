@@ -90,3 +90,5 @@ Once Quay Enterprise is running, new users can be created by clicking the `Sign 
 ### If using LDAP authentication:
 
 Users should be able to login to the Quay Enterprise directly with their LDAP username and password.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/initial-setup.md?pixel)]() <!-- END ANALYTICS -->

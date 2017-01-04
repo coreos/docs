@@ -166,3 +166,5 @@ write_files:
       DvHKTdD9MDAunZlQIgO2zotmgVh2LBerGMbsdsTQ268sARY02MLV/Q5erASYdCxk
       -----END RSA PRIVATE KEY-----
 ```
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/customize-etcd-unit.md?pixel)]() <!-- END ANALYTICS -->

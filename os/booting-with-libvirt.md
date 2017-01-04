@@ -230,3 +230,5 @@ Now that you have a machine booted it is time to play around. Check out the [Con
 
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
 [irc]: irc://irc.freenode.org:6667/#coreos
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-with-libvirt.md?pixel)]() <!-- END ANALYTICS -->

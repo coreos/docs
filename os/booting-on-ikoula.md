@@ -232,3 +232,5 @@ Now that you have successfully deployed a Container Linux instance, you should c
 
 [quickstart]: quickstart.md
 [cluster-configure]: cluster-discovery.md
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-on-ikoula.md?pixel)]() <!-- END ANALYTICS -->

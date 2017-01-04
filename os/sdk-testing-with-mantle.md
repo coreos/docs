@@ -43,3 +43,5 @@ Destroy instances on gce based by prefix or name. Images created with `create-in
 ## kola
 
 Test framework for Container Linux integration testing. Launch groups of related tests using the latest SDK image on specified platforms (qemu, gce ...)
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/sdk-testing-with-mantle.md?pixel)]() <!-- END ANALYTICS -->

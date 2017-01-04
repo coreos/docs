@@ -61,3 +61,5 @@ If the upgraded container is healthy, repeat this process for all remaining Quay
 
 
 [qe-releases]: https://tectonic.com/quay-enterprise/releases/
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/upgrade-quay-enterprise.md?pixel)]() <!-- END ANALYTICS -->

@@ -77,3 +77,5 @@ ExecStart=/usr/bin/bash -c 'echo "CUSTOM_EC2_IPV4_PUBLIC=$(curl\
   --url http://169.254.169.254/2009-04-04/meta-data/local-ipv4\
   --retry 10)" > ${OUTPUT}'
 ```
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/ignition/metadata.md?pixel)]() <!-- END ANALYTICS -->

@@ -216,3 +216,5 @@ Now that you have a machine booted it is time to play around. Check out the [Con
 [cloud-config-docs]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 [quick-start]: quickstart.md
 [docs]: https://coreos.com/docs
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-on-cloudca.md?pixel)]() <!-- END ANALYTICS -->

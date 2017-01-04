@@ -23,3 +23,5 @@ In the "Announce URL" field, enter the HTTP endpoint of a JWT-capable BitTorrent
 
 - Click "Save Configuration Changes"
 - Restart the container (you will be prompted)
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/bittorrent.md?pixel)]() <!-- END ANALYTICS -->

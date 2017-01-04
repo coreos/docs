@@ -366,3 +366,5 @@ If you're interested in more general networkd features, check out the [full docu
 
 [drop-ins]: using-systemd-drop-in-units.md
 [ignition-network]: ../ignition/network-configuration.md
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/network-config-with-networkd.md?pixel)]() <!-- END ANALYTICS -->

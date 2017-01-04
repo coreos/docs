@@ -223,3 +223,5 @@ Once again, after verifying status, repeat this step on each etcd cluster member
 [etcd proxy]: https://github.com/coreos/etcd/blob/master/Documentation/v2/proxy.md
 [etcdctl]: https://github.com/coreos/etcd/blob/master/etcdctl/README.md
 [proxy-refresh]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/configuration.md#--proxy-refresh-interval
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/etcd/etcd-live-http-to-https-migration.md?pixel)]() <!-- END ANALYTICS -->

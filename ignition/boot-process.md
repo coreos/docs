@@ -35,3 +35,5 @@ After all of the tasks in the initramfs complete, the machine pivots into user s
 [grub config]: https://github.com/coreos/scripts/blob/069ae5644ff03d6f78d2268c5f3eae5012b35bc1/build_library/grub.cfg
 [linux startup]: https://en.wikipedia.org/wiki/Linux_startup_process
 [search]: https://github.com/coreos/scripts/blob/069ae5644ff03d6f78d2268c5f3eae5012b35bc1/build_library/grub.cfg#L68
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/ignition/boot-process.md?pixel)]() <!-- END ANALYTICS -->

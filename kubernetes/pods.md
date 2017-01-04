@@ -78,3 +78,4 @@ Replication controllers and services use the *pod labels* to select a group of p
 
 [controller-overview]: replication-controller.md
 [service-overview]: services.md
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/kubernetes/pods.md?pixel)]() <!-- END ANALYTICS -->

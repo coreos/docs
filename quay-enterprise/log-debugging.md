@@ -24,3 +24,5 @@ To download logs, click the "<i class="fa fa-download"></i> Download All Local L
 ## Shell script to download logs
 
 The aforementioned operations are also available in script form on [GitHub](https://github.com/coreos/docs/blob/master/quay-enterprise/gzip-registry-logs.sh).
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/log-debugging.md?pixel)]() <!-- END ANALYTICS -->

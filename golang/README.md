@@ -77,3 +77,5 @@ In anything other than the most basic CLI cases (i.e. where the [stdlib flag pac
 ## Development Tools
 
 - Use `gvm` to manage multiple versions of golang and multiple GOPATHs
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/golang/README.md?pixel)]() <!-- END ANALYTICS -->

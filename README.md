@@ -12,3 +12,5 @@ Container Linux documentation is released under the [Apache 2.0 License][asl], a
 [coreos-docs]: https://coreos.com/docs/
 [help-wanted]: https://github.com/coreos/docs/issues?q=is%3Aopen+label%3Ahelp-wanted
 [style]: STYLE.md "Container Linux Documentation Style and Formatting"
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/README.md?pixel)]() <!-- END ANALYTICS -->

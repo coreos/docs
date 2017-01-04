@@ -80,3 +80,5 @@ ssh core@<ip address> -i <path to keyfile>
 ## Using CoreOS Container Linux
 
 Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-on-niftycloud.md?pixel)]() <!-- END ANALYTICS -->

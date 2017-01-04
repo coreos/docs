@@ -29,3 +29,5 @@ This example configuration is valid for all `/user_data*` URIs (e.g., `/user_dat
 
 [nginx]: http://nginx.org/en/
 [http_sub_module]: http://nginx.org/en/docs/http/ngx_http_sub_module.html
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/nginx-host-cloud-config.md?pixel)]() <!-- END ANALYTICS -->

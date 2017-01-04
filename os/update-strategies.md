@@ -130,3 +130,5 @@ For more information about the supported syntax, refer to the [Locksmith documen
 
 [rollback]: manual-rollbacks.md
 [reboot-windows]: https://github.com/coreos/locksmith#reboot-windows
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/update-strategies.md?pixel)]() <!-- END ANALYTICS -->

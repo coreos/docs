@@ -24,3 +24,5 @@ docker logs -f {containerId}
 ```
 
 5. Update all other nodes to refer to the new tag and bring them back into service.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/upgrade-quay.md?pixel)]() <!-- END ANALYTICS -->

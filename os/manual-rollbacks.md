@@ -184,3 +184,5 @@ $ update_engine_client -update
 
 
 [relchans]: switching-channels.md
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/manual-rollbacks.md?pixel)]() <!-- END ANALYTICS -->

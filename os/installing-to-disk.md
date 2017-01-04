@@ -146,3 +146,5 @@ Now that you have a machine booted it is time to play around. Check out the [Con
 [cloud-config-section]: #cloud-config
 [cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 [coreos-install]: https://raw.github.com/coreos/init/master/bin/coreos-install
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/installing-to-disk.md?pixel)]() <!-- END ANALYTICS -->

@@ -129,3 +129,5 @@ Now that you have a cluster bootstrapped it is time to play around. Check out th
 [rh-reinstall-page]: https://rimuhosting.com/cp/vps/disk/install.jsp
 [rh-api-keys-page]: https://rimuhosting.com/cp/apikeys.jsp
 [rh-python-driver-api]: https://github.com/pbkwee/RimuHostingAPI
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-on-launchtimevps.md?pixel)]() <!-- END ANALYTICS -->

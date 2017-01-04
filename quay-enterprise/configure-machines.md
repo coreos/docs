@@ -136,3 +136,5 @@ ExecStop=-/usr/bin/docker stop hello-world
 ```
 
 If the working directory is not set, docker will not be able to discover the .dockercfg file and will not have the credentials to pull private images.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/configure-machines.md?pixel)]() <!-- END ANALYTICS -->

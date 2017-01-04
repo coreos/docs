@@ -65,3 +65,5 @@ Update all remaining Quay Enterprise instances to refer to the new image (`quay.
 Verify that your cluster and its license are valid by performing a push or pull. If you receive an HTTP `402`, please make sure your license is properly installed and valid by checking in the management panel (see above for instructions).
 
 If you encounter unusual problems, please contact support.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/quay-enterprise-2.md?pixel)]() <!-- END ANALYTICS -->

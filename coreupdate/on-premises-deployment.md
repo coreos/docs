@@ -235,3 +235,5 @@ updateservicectl package create bulk
 ```
 
 This runs against the downstream instance (your CoreUpdate server). It takes a directory of package binaries, extracts all the necessary metadata, and saves that information to your CoreUpdate service. Since the actual package binaries are served from another location you must provide a base path of that location (see `updateservicectl package create bulk --help` for more info).
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/coreupdate/on-premises-deployment.md?pixel)]() <!-- END ANALYTICS -->

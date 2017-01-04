@@ -92,3 +92,5 @@ Panic#2 Part3
 ```
 
 It is important to note that the pstore typically has very limited storage space (on the order of kilobytes) and will not overwrite entries when out of space. The files in `/sys/fs/pstore` must be removed to free up space. The typical approach is to move the files from the pstore to a more permanent storage location on boot, but Container Linux will not do this automatically for you.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/collecting-crash-logs.md?pixel)]() <!-- END ANALYTICS -->

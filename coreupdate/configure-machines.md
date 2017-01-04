@@ -131,3 +131,5 @@ NEW_SIZE=0
 ```
 
 Be aware that the "failed update" means that there isn't a newer version to install.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/coreupdate/configure-machines.md?pixel)]() <!-- END ANALYTICS -->

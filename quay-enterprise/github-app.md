@@ -24,3 +24,5 @@ Note: If using public GitHub, the Homepage URL entered must be accessible by *yo
 <img src="img/view-app.png" class="image-center"/>
 
 * Record the `Client ID` and `Client Secret` shown for the new application.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/github-app.md?pixel)]() <!-- END ANALYTICS -->

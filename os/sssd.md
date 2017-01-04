@@ -30,3 +30,5 @@ sudo systemctl start sssd
 ```sh
 sudo systemctl enable sssd
 ```
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/sssd.md?pixel)]() <!-- END ANALYTICS -->

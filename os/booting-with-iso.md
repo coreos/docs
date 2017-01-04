@@ -59,3 +59,5 @@ console=tty0 console=ttyS0 coreos.autologin=tty1 coreos.autologin=ttyS0
 ```
 
 Without any argument it enables access on all consoles. Note that for the VGA console the login prompts are on virtual terminals (`tty1`, `tty2`, etc), not the VGA console itself (`tty0`).
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-with-iso.md?pixel)]() <!-- END ANALYTICS -->
