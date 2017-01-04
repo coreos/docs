@@ -1,0 +1,13 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1alpha1
+metadata:
+  name: quay-enterprise-secret-writer
+  namespace: quay-enterprise
+subjects:
+  - kind: ServiceAccount 
+    name: default
+roleRef:
+  kind: Role
+  namespace: quay-enterprise
+  name: quay-enterprise-serviceaccount
+  apiVersion: rbac.authorization.k8s.io/v1alpha1
