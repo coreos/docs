@@ -112,13 +112,6 @@ Download and enter the SDK chroot which contains all of the compilers and toolin
 
 **WARNING:** To delete the SDK chroot, use `./chromite/bin/cros_sdk --delete`. Otherwise, you will delete `/dev` entries that are `bind`-mounted into the chroot.
 
-Set up user `core`'s password:
-
-```sh
-./set_shared_user_password.sh
-```
-
-
 ### Using QEMU for cross-compiling
 
 The Container Linux initramfs is generated with the `dracut` tool. `Dracut` assumes it is running on the target system, and produces output only for that CPU architecture. In order to create initramfs files for other architectures, `dracut` is executed under QEMU's user mode emulation of the target CPU.
@@ -152,6 +145,14 @@ systemctl restart systemd-binfmt.service
 ```
 
 ### Building an image
+
+After entering the chroot via `cork` or `cros_sdk` for the first time, you should set user `core`'s password:
+
+```sh
+./set_shared_user_password.sh
+```
+
+This is the password you will use to log into the console of images built and launched with the SDK.
 
 #### Selecting the architecture to build
 
