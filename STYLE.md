@@ -132,6 +132,7 @@ which link will likewise have its label defined at the document's foot.
 [mdlinks]: http://daringfireball.net/projects/markdown/syntax#link "Markdown link syntax"
 [readme]: README.md
 ```
+
 #### Relative URLs preferred
 
 Using relative URLs where possible helps portability among multiple presentation targets, as they remain valid even as the site root moves. Absolute linking is obviously necessary for resources external to the document's repository and/or the coreos.com domain.
