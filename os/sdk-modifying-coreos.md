@@ -17,7 +17,6 @@ System requirements to get started:
 * curl
 * git
 * python2
-* repo
 
 You also need a proper git setup:
 
@@ -28,7 +27,43 @@ git config --global user.name "Your Name"
 
 **NOTE**: Do the git configuration as a normal user and not with sudo.
 
-### Install repo
+### Option 1: Using Cork
+
+The `cork` utility, included in the CoreOS [mantle](https://github.com/coreos/mantle) project, can be used to create and work with an SDK chroot.
+
+In order to use this utility, you must additionally have the [golang](https://golang.org/) toolchain installed and configured correctly.
+
+First, install the cork utility:
+
+```sh
+git clone https://github.com/coreos/mantle
+cd mantle
+./build cork
+mkdir ~/bin
+mv ./bin/cork ~/bin
+export PATH=$PATH:$HOME/bin
+```
+
+You may want to add the `PATH` export to your shell profile (e.g. `.bashrc`).
+
+
+Next, the cork utility can be used to create an SDK chroot:
+
+```sh
+mkdir coreos-sdk
+cd coreos-sdk
+cork create
+cork enter
+```
+
+**Note**: The `create` and `enter` commands will request root permissions via sudo.
+
+
+To use the SDK chroot in the future, run `cork enter` from the above directory.
+
+### Option 2: using repo and cros\_sdk
+
+#### Install Repo
 
 The `repo` utility helps to manage the collection of git repositories that makes up Container Linux. 
 
@@ -45,9 +80,9 @@ curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
 chmod a+x ~/bin/repo
 ```
 
-You may want to add this to `.bashrc` or `/etc/profile.d/` so that you don’t need to reset `$PATH` in every new shell.
+You may want to add the `PATH` export to `.bashrc` or `/etc/profile.d/` so that you don’t need to set `$PATH` in every new shell.
 
-### Bootstrap the SDK chroot
+#### Bootstrap the SDK chroot
 
 Create a project directory. This will hold all of your git repos and the SDK chroot. A few gigabytes of space will be necessary.
 
@@ -66,6 +101,16 @@ Synchronize all of the required git repos from the manifest.
 ```sh
 repo sync
 ```
+
+#### Use cros\_sdk to setup the chroot
+
+Download and enter the SDK chroot which contains all of the compilers and tooling.
+
+```sh
+./chromite/bin/cros_sdk
+```
+
+**WARNING:** To delete the SDK chroot, use `./chromite/bin/cros_sdk --delete`. Otherwise, you will delete `/dev` entries that are `bind`-mounted into the chroot.
 
 ### Using QEMU for cross-compiling
 
@@ -101,19 +146,13 @@ systemctl restart systemd-binfmt.service
 
 ### Building an image
 
-Download and enter the SDK chroot which contains all of the compilers and tooling.
-
-```sh
-./chromite/bin/cros_sdk
-```
-
-**WARNING:** To delete the SDK chroot, use `./chromite/bin/cros_sdk --delete`. Otherwise, you will delete `/dev` entries that are `bind`-mounted into the chroot.
-
-Set up user `core`'s password:
+After entering the chroot via `cork` or `cros_sdk` for the first time, you should set user `core`'s password:
 
 ```sh
 ./set_shared_user_password.sh
 ```
+
+This is the password you will use to log into the console of images built and launched with the SDK.
 
 #### Selecting the architecture to build
 
