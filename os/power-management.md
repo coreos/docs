@@ -41,3 +41,5 @@ coreos:
 ```
 
 More information on further tuning each governor is available in the [Kernel Documentation](https://www.kernel.org/doc/Documentation/cpu-freq/governors.txt)
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/power-management.md?pixel)]() <!-- END ANALYTICS -->

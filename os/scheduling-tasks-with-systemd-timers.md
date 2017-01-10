@@ -92,3 +92,5 @@ Here you'll find an example Ignition config demonstrating how to install systemd
 ## Further reading
 
 If you're interested in more general systemd timers feature, check out the [full documentation](http://www.freedesktop.org/software/systemd/man/systemd.timer.html).
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/scheduling-tasks-with-systemd-timers.md?pixel)]() <!-- END ANALYTICS -->

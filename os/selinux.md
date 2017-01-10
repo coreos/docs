@@ -40,3 +40,5 @@ Now, edit `/etc/selinux/config` to replace `SELINUX=permissive` with `SELINUX=en
 ## Limitations
 
 SELinux enforcement is currently incompatible with Btrfs volumes and volumes that are shared between multiple containers.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/selinux.md?pixel)]() <!-- END ANALYTICS -->

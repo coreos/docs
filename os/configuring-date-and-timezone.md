@@ -287,3 +287,5 @@ Or, in an Ignition config:
 [systemd-timesyncd]: http://www.freedesktop.org/software/systemd/man/systemd-timesyncd.service.html
 [systemd.network]: http://www.freedesktop.org/software/systemd/man/systemd.network.html
 [timesyncd.conf]: http://www.freedesktop.org/software/systemd/man/timesyncd.conf.html
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/configuring-date-and-timezone.md?pixel)]() <!-- END ANALYTICS -->

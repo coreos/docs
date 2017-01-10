@@ -144,3 +144,5 @@ Now that you have a machine booted it is time to play around. Check out the [Con
 [update-docs]: https://coreos.com/why/#updates
 [xplat-cli]: http://azure.microsoft.com/en-us/documentation/articles/xplat-cli/
 [ignition-docs]: https://coreos.com/ignition/docs/latest
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-on-azure.md?pixel)]() <!-- END ANALYTICS -->

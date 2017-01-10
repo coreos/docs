@@ -496,3 +496,5 @@ Now that you have a machine booted it is time to play around. Check out the [Con
 [docker-docs]: https://docs.docker.io
 [etcd-docs]: https://github.com/coreos/etcd/tree/master/Documentation
 [irc]: irc://irc.freenode.org:6667/#coreos
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-on-ec2.md?pixel)]() <!-- END ANALYTICS -->

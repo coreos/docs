@@ -129,3 +129,5 @@ docker run -d -p 80:80 registry.example.com:5000/apache /usr/sbin/apache2ctl -D 
 <a class="btn btn-default" href="https://coreos.com/why/#containers">Docker Overview</a>
 <a class="btn btn-default" href="http://www.docker.com/">Docker Website</a>
 <a class="btn btn-default" href="https://docs.docker.com/mac/started/">docker's Getting Started Guide</a>
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/getting-started-with-docker.md?pixel)]() <!-- END ANALYTICS -->

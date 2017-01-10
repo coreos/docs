@@ -38,3 +38,5 @@ If you have have no other options you can try converting the VMDK disk image to 
 VBoxManage clonehd old.vmdk new.vdi --format VDI
 VBoxManage modifyhd new.vdi --resize 20480
 ```
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/adding-disk-space.md?pixel)]() <!-- END ANALYTICS -->

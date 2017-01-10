@@ -39,3 +39,5 @@ cat /etc/os-release
 ## Release information
 
 You can read more about the current releases and channels on the [releases page](https://coreos.com/releases).
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/switching-channels.md?pixel)]() <!-- END ANALYTICS -->

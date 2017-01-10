@@ -126,3 +126,5 @@ Setting the file attributes can be done via a systemd unit using two `ExecStartP
 ExecStartPre=/usr/bin/mkdir -p /var/lib/mysql
 ExecStartPre=/usr/bin/chattr -R +C /var/lib/mysql
 ```
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/btrfs-troubleshooting.md?pixel)]() <!-- END ANALYTICS -->

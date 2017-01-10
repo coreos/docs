@@ -32,3 +32,5 @@ Enter the key generated above into the `Temp URL Key` field under the Swift stor
 ## Save configuration
 
 Hit `Save Configuration` to save and validate your configuration. The Swift storage engine system will automatically test that the direct download feature is enabled and working.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/swift-temp-url.md?pixel)]() <!-- END ANALYTICS -->

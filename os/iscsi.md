@@ -150,3 +150,5 @@ See the [mounting storage docs][mounting-storage] for an example.
 
 [iscsi-wiki]: https://en.wikipedia.org/wiki/ISCSI
 [mounting-storage]: mounting-storage.md
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/iscsi.md?pixel)]() <!-- END ANALYTICS -->

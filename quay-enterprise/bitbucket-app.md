@@ -31,3 +31,5 @@ Next, configure BitBucket to redirect you back to your Quay Enterprise upon a su
 Return to the Quay Enterprise setup tool to enter the Key and Secret recorded above, and complete the setup procedure.
 
 [bitbucket]:https://bitbucket.org
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/bitbucket-app.md?pixel)]() <!-- END ANALYTICS -->

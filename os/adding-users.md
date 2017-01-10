@@ -94,3 +94,5 @@ user1 ALL=(ALL) NOPASSWD: ALL
 ## Further reading
 
 Read the [full cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md/) guide to install users and more.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/adding-users.md?pixel)]() <!-- END ANALYTICS -->

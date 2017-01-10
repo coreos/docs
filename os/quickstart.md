@@ -199,3 +199,5 @@ Fleet has many more features that you can explore in the guides below.
 [ipxe-docs]: booting-with-ipxe.md
 [iso-docs]: booting-with-iso.md
 [install-docs]: installing-to-disk.md
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/quickstart.md?pixel)]() <!-- END ANALYTICS -->

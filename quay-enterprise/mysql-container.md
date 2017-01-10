@@ -52,3 +52,5 @@ chmod -c +x /tmp/provision_mysql.sh
 ```
 
 Note: Using Percona v5.6 for the MySQL container is known to not work at this point in time.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/mysql-container.md?pixel)]() <!-- END ANALYTICS -->

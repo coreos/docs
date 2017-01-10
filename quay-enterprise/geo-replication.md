@@ -38,3 +38,5 @@ Sign in to a super user account and visit `http://yourregister/superuser` to vie
     *NOTE: The value of the environment variable specified must match the name of a storage engine as defined in the config panel*
 
 3. Restart all Quay Enterprise containers
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/geo-replication.md?pixel)]() <!-- END ANALYTICS -->

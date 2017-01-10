@@ -46,3 +46,5 @@ You can find the [code for this process on GitHub][rackspace-github]. End-user i
 
 [rackspace-github]: https://github.com/coreos/coreos-overlay/tree/master/coreos-base/oem-rackspace
 [rackspace-cloud-config]: booting-on-rackspace.md#cloud-config
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/notes-for-distributors.md?pixel)]() <!-- END ANALYTICS -->

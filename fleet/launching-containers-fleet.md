@@ -296,3 +296,5 @@ MachineMetadata=region=east
 <a class="btn btn-default" href="https://github.com/coreos/fleet/blob/master/Documentation/examples/example-deployment.md">Example Deployment with fleet</a>
 <a class="btn btn-default" href="https://github.com/coreos/fleet/blob/master/Documentation/unit-files-and-scheduling.md">fleet Unit Specifications</a>
 <a class="btn btn-default" href="https://github.com/coreos/fleet/blob/master/Documentation/deployment-and-configuration.md">fleet Configuration</a>
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/fleet/launching-containers-fleet.md?pixel)]() <!-- END ANALYTICS -->

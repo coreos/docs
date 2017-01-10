@@ -148,3 +148,5 @@ Define a [Drop-In][drop-ins] in an Ignition config:
 
 <a class="btn btn-default" href="getting-started-with-systemd.md">Getting Started with systemd</a>
 <a class="btn btn-default" href="network-config-with-networkd.md">Network Configuration with networkd</a>
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/reading-the-system-log.md?pixel)]() <!-- END ANALYTICS -->

@@ -74,3 +74,5 @@ In this example, all of the network interfaces whose names begin with "eth" will
 ```
 
 [network]: http://www.freedesktop.org/software/systemd/man/systemd.network.html
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/ignition/network-configuration.md?pixel)]() <!-- END ANALYTICS -->

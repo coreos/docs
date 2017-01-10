@@ -54,3 +54,5 @@ It is recommended to place the tracker behind an SSL-terminating proxy or load b
 ## High Availability
 
 High Availability of the tracker can be handled by running 2 or more instances of the tracker, with one setup as primary and another as secondary, configured with automatic failover. A simple HTTP check can be used to ensure the health of each instance.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/running-chihaya.md?pixel)]() <!-- END ANALYTICS -->

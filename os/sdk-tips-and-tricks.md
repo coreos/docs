@@ -187,3 +187,5 @@ e96281a6-d1af-4bde-9a0a-97b76e56dc57
 
 - CoreOS Root: 5dfbf5f4-2848-4bac-aa5e-0d9a20b745a6
 - CoreOS Reserved: c95dc21a-df0e-4340-8d7b-26cbfa9a03e0
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/sdk-tips-and-tricks.md?pixel)]() <!-- END ANALYTICS -->

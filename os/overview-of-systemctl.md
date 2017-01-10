@@ -75,3 +75,5 @@ sudo systemctl daemon-reload
 <a class="btn btn-default" href="getting-started-with-systemd.md">Getting Started with systemd</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">systemd.service Docs</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html">systemd.unit Docs</a>
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/overview-of-systemctl.md?pixel)]() <!-- END ANALYTICS -->

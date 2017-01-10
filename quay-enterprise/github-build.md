@@ -28,3 +28,5 @@ Sign in to a super user account and visit `http://yourregister/superuser` to vie
 - Fill in the credentials from the application created above
 - Click "Save Configuration Changes"
 - Restart the container (you will be prompted)
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/github-build.md?pixel)]() <!-- END ANALYTICS -->

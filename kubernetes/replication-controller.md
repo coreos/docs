@@ -105,3 +105,5 @@ For more information on replication controllers, the [Kubernetes documentation][
 [upstream-rc]: http://kubernetes.io/docs/user-guide/replication-controller/
 [pod-overview]: pods.md
 [service-overview]: services.md
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/kubernetes/replication-controller.md?pixel)]() <!-- END ANALYTICS -->

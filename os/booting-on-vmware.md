@@ -227,3 +227,5 @@ Now that you have a machine booted, it's time to explore. Check out the [Contain
 [vmware-use-guestinfo]: http://blog-lrivallain.rhcloud.com/2014/08/15/vmware-use-guestinfo-variables-to-customize-guest-os/
 [labrie-guestinfo]: https://robertlabrie.wordpress.com/2015/09/27/coreos-on-vmware-using-vmware-guestinfo-api/
 [guestinfo]: #guestinfo-example
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-on-vmware.md?pixel)]() <!-- END ANALYTICS -->

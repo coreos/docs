@@ -81,3 +81,5 @@ ssh bob@hostname.example.com
 [root@srv-3qy0p ~]# yum install emacs
 [root@srv-3qy0p ~]# emacs /media/root/etc/systemd/system/docker.service
 ```
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/install-debugging-tools.md?pixel)]() <!-- END ANALYTICS -->

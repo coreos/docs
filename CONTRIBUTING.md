@@ -52,3 +52,5 @@ We happily accept accurate translations. Please send the documents as a pull req
 [help-wanted]: https://github.com/coreos/docs/issues?q=is%3Aopen+label%3Ahelp-wanted
 [pull-requests]: https://help.github.com/articles/using-pull-requests/
 [style]: STYLE.md "CoreOS Documentation Style and Formatting"
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/CONTRIBUTING.md?pixel)]() <!-- END ANALYTICS -->

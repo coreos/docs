@@ -25,3 +25,5 @@ Note that `<RULES>` has to be replaced by actual rules, see examples below.
 -  `BLACKLIST_V2_SPEC = "!=1.9.1"`
   - No version except 1.9.1 can use v2.
 
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/backwards-compatibility.md?pixel)]() <!-- END ANALYTICS -->

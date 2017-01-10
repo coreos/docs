@@ -49,3 +49,5 @@ All stateful data, including container images, is stored within the read/write f
 The data stored on the root partition isn't manipulated by the update process. In return, we do our best to prevent you from modifying the data in /usr.
 
 Due to the unique disk layout of Container Linux, an `rm -rf /` is an un-supported but valid operation to do a "factory reset". The machine should boot and operate normally afterwards.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/sdk-disk-partitions.md?pixel)]() <!-- END ANALYTICS -->

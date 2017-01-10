@@ -83,3 +83,5 @@ In case the installation step didn't update the module dependency files automati
 ```sh
 sudo depmod
 ```
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/kernel-modules.md?pixel)]() <!-- END ANALYTICS -->

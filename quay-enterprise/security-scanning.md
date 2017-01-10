@@ -56,3 +56,5 @@ When the security scanning engine connects, the key will be automatically approv
 
 - Click "Save Configuration Changes"
 - Restart the container (you will be prompted)
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/security-scanning.md?pixel)]() <!-- END ANALYTICS -->

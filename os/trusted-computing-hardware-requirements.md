@@ -52,3 +52,5 @@ nor *max*:
 ## Trusted
 
 A system that passes each of the above tests supports Container Linux Trusted Computing and is actively measuring the boot process over the secure TPM channel.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/trusted-computing-hardware-requirements.md?pixel)]() <!-- END ANALYTICS -->

@@ -204,3 +204,5 @@ Now that you have a machine booted it is time to play around. Check out the [Con
 [irc]: irc://irc.freenode.org:6667/#coreos
 [oem]: notes-for-distributors.md#image-customization
 [qs]: quickstart.md
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-with-pxe.md?pixel)]() <!-- END ANALYTICS -->

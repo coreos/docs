@@ -47,3 +47,5 @@ Ignition is under active development. Expect to see support for more images in t
 [supported platforms]: https://github.com/coreos/ignition/blob/master/doc/supported-platforms.md
 [systemd-generator]: http://www.freedesktop.org/software/systemd/man/systemd.generator.html
 [initramfs]: https://www.kernel.org/doc/Documentation/filesystems/ramfs-rootfs-initramfs.txt
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/ignition/what-is-ignition.md?pixel)]() <!-- END ANALYTICS -->

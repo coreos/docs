@@ -54,3 +54,5 @@ To ensure the cluster as a whole is healthy, Quay Enterprise also exports a clus
 ## Autoscaling
 
 The final step in ensuring high availability for a Quay Enterprise cluster is ensuring it can scale to meet incoming demand. Scaling is typically accomplished by monitoring metrics such as CPU and memory, and adding (or removing) machines based on thresholds. On Amazon, CloudWatch alarms and Autoscaling Groups can be used to accomplish this task.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/high-availability.md?pixel)]() <!-- END ANALYTICS -->

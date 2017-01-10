@@ -254,3 +254,5 @@ Or via Ignition:
 ```
 
 When the `TTYVTDisallocate` setting is disabled, the console scrollback is not cleared on logout, not even by the `clear` command in the default `.bash_logout` file. Scrollback must be cleared explicitly, e.g. by running `echo -en '\033[3J' > /dev/console` as the root user.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/other-settings.md?pixel)]() <!-- END ANALYTICS -->

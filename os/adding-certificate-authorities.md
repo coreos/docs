@@ -16,3 +16,5 @@ The setup process for any of these use-cases is the same:
 [Generate Self-Signed Certificates](generate-self-signed-certificates.md)
 
 [etcd Security Model](https://github.com/coreos/etcd/blob/master/Documentation/op-guide/security.md)
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/adding-certificate-authorities.md?pixel)]() <!-- END ANALYTICS -->

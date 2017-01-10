@@ -97,3 +97,5 @@ Triggered global unit amazon-ecs-agent.service start
 You should see all of your machines show up in the ECS CLI output.
 
 For more information on using ECS, check out the [official Amazon documentation](http://aws.amazon.com/documentation/ecs/).
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-on-ecs.md?pixel)]() <!-- END ANALYTICS -->

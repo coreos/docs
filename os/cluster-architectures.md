@@ -252,3 +252,5 @@ coreos:
     group: f118a298-2a8a-460b-9edd-3a9b49df504e
     server: https://customer.update.core-os.net/v1/update/
 ```
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/cluster-architectures.md?pixel)]() <!-- END ANALYTICS -->

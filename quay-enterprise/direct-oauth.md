@@ -37,3 +37,5 @@ Response:
 Location: https://my/internal/application/token_created#access_token=some_access_token_here&token_type=Bearer&expires_in=315576000
 ```
 
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/direct-oauth.md?pixel)]() <!-- END ANALYTICS -->

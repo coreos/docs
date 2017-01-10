@@ -50,3 +50,5 @@ $ docker exec -it 5a3e82c4a75f cat /etc/ssl/certs/storage.pem
 -----BEGIN CERTIFICATE-----
 MIIDTTCCAjWgAwIBAgIJAMVr9ngjJhzbMA0GCSqGSIb3DQEBCwUAMD0xCzAJBgNV
 ```
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/insert-custom-cert.md?pixel)]() <!-- END ANALYTICS -->

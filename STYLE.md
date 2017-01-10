@@ -200,3 +200,5 @@ Some file types are commonly identified with more than one file name extension. 
 [mdhome]: https://daringfireball.net/projects/markdown/syntax
 [quickstart]: os/quickstart.md "Relative link from here to CoreOS Quick Start"
 [style]: STYLE.md "CoreOS Documentation Style"
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/STYLE.md?pixel)]() <!-- END ANALYTICS -->

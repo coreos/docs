@@ -293,3 +293,5 @@ For another examples, check out these documents:
 
 [cfssl]: https://github.com/cloudflare/cfssl
 [cfssl-bin]: https://pkg.cfssl.org
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/generate-self-signed-certificates.md?pixel)]() <!-- END ANALYTICS -->

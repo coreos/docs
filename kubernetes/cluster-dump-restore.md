@@ -91,3 +91,5 @@ Restore the resource state:
 kubectl create -f cluster-dump/cluster-dump.json
 ```
 
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/kubernetes/cluster-dump-restore.md?pixel)]() <!-- END ANALYTICS -->

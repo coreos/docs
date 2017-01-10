@@ -43,3 +43,5 @@ Take note of the private key's name (example from above: `CBFB447F`)
 ## Enter config in superuser panel
 
 Visit the Quay superuser panel. Upload the pair of key files, and enter the generated private key name. Save the configuration and restart Quay Enterprise to enable signing of converted ACIs.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/quay-enterprise/aci-signing-keys.md?pixel)]() <!-- END ANALYTICS -->

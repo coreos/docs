@@ -40,3 +40,5 @@ gpg: Good signature from "CoreOS Buildbot (Offical Builds) <buildbot@coreos.com>
 ```
 
 The `Good signature` message indicates that the file signature is valid. Go launch some machines now that we've successfully verified that this Container Linux image isn't corrupt, that it was authored by CoreOS, and wasn't tampered with in transit.
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/verify-images.md?pixel)]() <!-- END ANALYTICS -->

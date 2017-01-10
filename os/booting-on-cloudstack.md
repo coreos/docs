@@ -54,3 +54,5 @@ Check out the [Container Linux Quickstart][coreos-quickstart] guide or dig into 
 [coreos-templates]: http://dl.openvm.eu/cloudstack/coreos/x86_64/
 [coreos-quickstart]: quickstart.md
 [coreos-docs]: https://coreos.com/docs
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-on-cloudstack.md?pixel)]() <!-- END ANALYTICS -->

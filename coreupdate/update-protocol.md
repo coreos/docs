@@ -110,3 +110,5 @@ The protocol dictates that each event should be acknowledged even if no data nee
 ## Further reading
 
 You can read more about the [Omaha tech specs](https://code.google.com/p/omaha/wiki/ServerProtocol) or visit the [project homepage](https://code.google.com/p/omaha/).
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/coreupdate/update-protocol.md?pixel)]() <!-- END ANALYTICS -->

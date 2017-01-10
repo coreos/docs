@@ -242,3 +242,5 @@ Synchronizes data of all upstreams and blocks until complete.
 ```
 updateservicectl upstream sync
 ```
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/coreupdate/updatectl-client.md?pixel)]() <!-- END ANALYTICS -->

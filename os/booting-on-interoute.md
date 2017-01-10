@@ -253,3 +253,5 @@ core@Container-Linux-VM-01 ~ $ wget www.coreos.com
 ## Using CoreOS Container Linux in VDC
 
 See the [Interoute VDC documentation](https://cloudstore.interoute.com/knowledge-centre/library/vdc-v2).
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/booting-on-interoute.md?pixel)]() <!-- END ANALYTICS -->

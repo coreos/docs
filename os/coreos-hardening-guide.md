@@ -58,3 +58,5 @@ SocketGroup=root
 EOM
 systemctl daemon-reload
 ```
+
+<!-- BEGIN ANALYTICS --> [![Analytics](http://ga-beacon.prod.coreos.systems/UA-42684979-9/github.com/coreos/docs/os/coreos-hardening-guide.md?pixel)]() <!-- END ANALYTICS -->
