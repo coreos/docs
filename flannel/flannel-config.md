@@ -155,7 +155,7 @@ Here is the sequence of events that happens when `flanneld.service` is started f
 
 1. `flanneld.service` gets started and executes `/usr/bin/rkt run --net=host quay.io/coreos/flannel:$FLANNEL_VER` (the actual invocation is slightly more complex; the full version can be seen [here](https://github.com/coreos/coreos-overlay/blob/master/app-admin/flannel/files/flanneld.service) or by running `systemctl cat flanneld.service`, which also includes any drop in units).
 2. flanneld starts and writes out `/run/flannel/subnet.env` with the acquired IP subnet information.
-3. `ExecStartPost` in `flanneld.service` converts information in `/run/flannel/subnet.env` into Docker daemon command line args (such as `--bip` and `--mtu`), storing them in `/run/flannel_docker_opts.env`.
+3. `ExecStartPost` in `flanneld.service` converts information in `/run/flannel/subnet.env` into Docker daemon command line args (such as `--bip` and `--mtu`), storing them in `/run/flannel/flannel_docker_opts.env`.
 4. `redis.service` gets started which invokes `docker run ...`, triggering socket activation of `docker.service`.
 5. `docker.service` sources in `/run/flannel/flannel_docker_opts.env` which contains env variables with command line options and starts the Docker with them.
 6. `redis.service` runs Docker redis container.
