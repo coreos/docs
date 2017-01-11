@@ -107,7 +107,7 @@ dmesg | grep systemd-journald
 
 Define a [Drop-In][drop-ins] in a [Cloud-Config][cloud-config]:
 
-```yaml
+```cloud-config
 #cloud-config
 coreos:
   units:

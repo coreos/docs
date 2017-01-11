@@ -46,7 +46,7 @@ You can provide cloud-config data via both Heat and Nova APIs. You **cannot** pr
 
 The most common Rackspace cloud-config looks like:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -76,7 +76,7 @@ The `$private_ipv4` and `$public_ipv4` substitution variables are fully supporte
 
 Certain server flavors have separate system and data disks. To utilize the data disks, they must be mounted with a `.mount` unit. Check to make sure the `Where=` parameter accurately reflects the location of the block device:
 
-```yaml
+```cloud-config
 #cloud-config
 coreos:
   units:

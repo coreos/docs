@@ -43,7 +43,7 @@ Unit=date.service
 
 Here you'll find an example cloud-config demonstrating how to install systemd timers:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:

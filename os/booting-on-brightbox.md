@@ -83,7 +83,7 @@ Container Linux allows you to configure machine parameters, launch systemd units
 
 A sample common `cloud-config` file will look something like the following:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:

@@ -80,7 +80,7 @@ restorecon -R "/var/lib/libvirt/images/coreos0/configdrive"
 
 The `user_data` file declares machine configuration in the [cloud config](https://coreos.com/os/docs/latest/cloud-config.html) format. We recommend using ssh keys to log into the VM, and since those keys are stored in `user_data,` at minimum that file should contain something like this:
 
-```yaml
+```cloud-config
 #cloud-config
 
 ssh_authorized_keys:
@@ -93,7 +93,7 @@ Note: The `$private_ipv4` and `$public_ipv4` cloud-config substitution variables
 
 By default, Container Linux uses DHCP to get its network configuration. In this example the VM will be attached directly to the local network via a bridge on the host's virbr0 and the local network. To configure a static address add a [networkd unit][systemd-network] to `user_data`:
 
-```yaml
+```cloud-config
 #cloud-config
 
 ssh_authorized_keys:
@@ -169,7 +169,7 @@ You can change these parameters to meet your needs.
 
 Save the following template into `/var/lib/libvirt/images/coreos/user_data`:
 
-```yaml
+```cloud-config
 #cloud-config
 ssh_authorized_keys:
  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......

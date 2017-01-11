@@ -66,7 +66,7 @@ NTP synchronized: yes
 
 Time zone may instead be set in cloud-config, with something like the following excerpt:
 
-```yaml
+```cloud-config
 #cloud-config
 coreos:
   units:
@@ -156,7 +156,7 @@ $ sudo systemctl restart systemd-networkd
 
 NTP time sources can be set in `timesyncd.conf` with a cloud-config snippet like:
 
-```yaml
+```cloud-config
 #cloud-config
 write_files:
   - path: /etc/systemd/timesyncd.conf
@@ -195,7 +195,7 @@ $ sudo systemctl start ntpd
 
 or with this cloud-config snippet:
 
-```yaml
+```cloud-config
 #cloud-config
 coreos:
   units:
@@ -250,7 +250,7 @@ $ sudo systemctl reload ntpd
 
 Or, in cloud-config:
 
-```yaml
+```cloud-config
 #cloud-config
 write_files:
   - path: /etc/ntp.conf

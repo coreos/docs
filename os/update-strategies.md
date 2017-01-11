@@ -16,7 +16,7 @@ It's important to note that updates are always downloaded to the passive partiti
 
 The reboot strategy is defined in [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md#update):
 
-```yaml
+```cloud-config
 #cloud-config
 coreos:
   update:
@@ -74,7 +74,7 @@ In case when you don't want to install updates onto the passive partition and av
 
 If you wish to disable automatic updates permanently, use can configure this with Cloud-Config. This example will stop `update-engine`, which executes the updates, and `locksmithd`, which coordinates reboots across the cluster:
 
-```yaml
+```cloud-config
 #cloud-config
 coreos:
   units:
@@ -89,7 +89,7 @@ coreos:
 Public Internet access is required to contact CoreUpdate and download new versions of Container Linux. If direct access is not available the `update-engine` service may be configured to use a HTTP or SOCKS proxy using curl-compatible environment variables, such as `HTTPS_PROXY` or `ALL_PROXY`.
 See [curl's documentation](http://curl.haxx.se/docs/manpage.html#ALLPROXY) for details.
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -118,7 +118,7 @@ Locksmith supports maintenance windows in addition to the reboot strategies ment
 
 Windows are defined by a start time and a length. In this example, the window is defined to be every Thursday between 04:00 and 05:00:
 
-```yaml
+```cloud-config
 #cloud-config
 coreos:
   locksmith:

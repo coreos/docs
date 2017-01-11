@@ -38,7 +38,7 @@ docker -H tcp://127.0.0.1:2375 ps
 
 To enable the remote API on every Container Linux machine in a cluster, use [cloud-config][cloud-config]. We need to provide the new socket file and Docker's socket activation support will automatically start using the socket:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -167,7 +167,7 @@ docker images
 
 Cloud-config for Docker TLS authentication will look like:
 
-```yaml
+```cloud-config
 #cloud-config
 
 write_files:
@@ -255,7 +255,7 @@ journalctl -u docker
 
 If you need to modify a flag across many machines, you can provide the new unit with cloud-config:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -303,7 +303,7 @@ systemctl restart docker
 
 The easiest way to use this proxy on all of your machines is via cloud-config:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -343,7 +343,7 @@ systemctl restart docker
 
 The easiest way to use these new ulimits on all of your machines is via cloud-config:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:

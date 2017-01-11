@@ -12,7 +12,7 @@ CoreOSはcloud-configにより、マシンのパラメータを設定したり�
 
 最も一般的なcloud-configは下記のようなものです。
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:

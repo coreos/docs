@@ -23,7 +23,9 @@ echo "conservative" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor 
 
 This can be configured with [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md/#coreos) as well:
 
-```yaml
+```cloud-config
+#cloud-config
+
 coreos:
   units:
     - name: cpu-governor.service

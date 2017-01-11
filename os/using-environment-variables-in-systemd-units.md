@@ -89,7 +89,7 @@ This unit file will run nginx Docker container and bind it to specific IP addres
 
 You can define system wide environment variables using [cloud-config] as explained below:
 
-```yaml
+```cloud-config
 #cloud-config
 
 write_files:

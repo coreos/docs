@@ -8,7 +8,7 @@ By default, DNS resolution on Container Linux is handled through `/etc/resolv.co
 
 Here is an example cloud-config snippet to do that:
 
-```yaml
+```cloud-config
 #cloud-config
 write_files:
   - path: /etc/nsswitch.conf

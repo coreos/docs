@@ -23,7 +23,7 @@ You are able to supply the `user-data` using the AURO control panel when launchi
 
 A sample common `cloud-config` file will look something like the following:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:

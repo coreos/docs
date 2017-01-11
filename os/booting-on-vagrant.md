@@ -33,7 +33,7 @@ Container Linux allows you to configure machine parameters, launch systemd units
 
 Our cluster will use an etcd [discovery URL](cluster-discovery.md) to bootstrap the cluster of machines and elect an initial etcd leader. Be sure to replace `<token>` with your own URL from [https://discovery.etcd.io/new](https://discovery.etcd.io/new):
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -167,7 +167,7 @@ To start a single machine, we need to provide some config parameters in cloud-co
 
 This cloud-config starts etcd and fleet when the machine is booted:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:

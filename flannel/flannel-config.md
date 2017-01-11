@@ -28,7 +28,7 @@ $ etcdctl set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
 
 You can put this into a drop-in for flanneld.service via cloud-config:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -79,7 +79,7 @@ flannel uses UDP port 8285 for sending encapsulated IP packets. Make sure to ena
 
 The last step is to enable `flanneld.service` in the cloud-config by adding `command: start` directive:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -109,7 +109,7 @@ coreos:
 
 *Important*: If you are starting flannel on Vagrant, it should be instructed to use the correct network interface:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:

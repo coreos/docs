@@ -102,7 +102,7 @@ The config-drive standard was originally an OpenStack feature, which is why you'
 
 This example will configure Container Linux components: etcd2 and fleetd. `$private_ipv4` and `$public_ipv4` are supported on VMware in Container Linux releases 801.0.0 and greater, and **only** when you explicitly configure interfaces' roles to `private` or `public` in [Guestinfo][guestinfo] for each VMware instance.
 
-```yaml
+```cloud-config
 #cloud-config
 
 # include one or more SSH public keys
@@ -238,7 +238,7 @@ guestinfo.coreos.config.data.encoding = "gzip+base64"
 
 This example will be decoded into:
 
-```yaml
+```cloud-config
 #cloud-config
 ssh_authorized_keys:
  - ssh-rsa mypubkey

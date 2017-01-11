@@ -29,7 +29,7 @@ sudo systemctl restart systemd-networkd
 
 Setting up static networking in your cloud-config can be done by writing out the network unit. Be sure to modify the `[Match]` section with the name of your desired interface, and replace the IPs:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -74,7 +74,7 @@ You have three options:
 
 To defer creating `bond0`, add to your cloud-config before any other network configuration:
 
-```yaml
+```cloud-config
 #cloud-config
 
 write_files:
@@ -131,7 +131,7 @@ coreos:
 
 By default, even if you've already set a static IP address and you have a working DHCP server in your network, systemd-networkd will nevertheless assign IP address using DHCP. If you would like to remove this address, you have to use the following cloud-config example:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
@@ -218,7 +218,9 @@ Destination=172.16.0.0/24
 
 To specify the same route in a cloud-config, create the systemd network unit there instead:
 
-```yaml
+```cloud-config
+#cloud-config
+
 coreos:
   units:
     - name: 10-static.network
@@ -262,7 +264,9 @@ Gateway=10.0.1.1
 
 To do the same thing through the cloud-config mechanism:
 
-```yaml
+```cloud-config
+#cloud-config
+
 coreos:
   units:
     - name: 20-multi_ip.network
@@ -321,7 +325,7 @@ journalctl -b -u systemd-networkd
 
 Define a [Drop-In][drop-ins] in a [Cloud-Config][cloud-config]:
 
-```yaml
+```cloud-config
 #cloud-config
 coreos:
   units:

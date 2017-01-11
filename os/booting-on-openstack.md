@@ -80,7 +80,7 @@ Container Linux allows you to configure machine parameters, launch systemd units
 
 The most common cloud-config for OpenStack looks like:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:

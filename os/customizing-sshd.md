@@ -10,7 +10,7 @@ In this example we will disable logins for the `root` user, only allow login for
 
 [openssh-manual]: http://www.openssh.com/cgi-bin/man.cgi?query=sshd_config
 
-```yaml
+```cloud-config
 #cloud-config
 
 write_files:
@@ -32,7 +32,7 @@ write_files:
 
 Container Linux ships with socket-activated SSH by default. The configuration for this can be found at `/usr/lib/systemd/system/sshd.socket`. We're going to override some of the default settings for this in the cloud-config provided at boot:
 
-```yaml
+```cloud-config
 #cloud-config
 
 coreos:
