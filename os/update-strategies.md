@@ -103,6 +103,8 @@ coreos:
       command: restart
 ```
 
+Proxy environment variables can also be set [system-wide][systemd-env-vars].
+
 ## Manually triggering an update
 
 Each machine should check in about 10 minutes after boot and roughly every hour after that. If you'd like to see it sooner, you can force an update check, which will skip any rate-limiting settings that are configured in CoreUpdate.
@@ -130,3 +132,4 @@ For more information about the supported syntax, refer to the [Locksmith documen
 
 [rollback]: manual-rollbacks.md
 [reboot-windows]: https://github.com/coreos/locksmith#reboot-windows
+[systemd-env-vars]: https://coreos.com/os/docs/latest/using-environment-variables-in-systemd-units.html#system-wide-environment-variables
