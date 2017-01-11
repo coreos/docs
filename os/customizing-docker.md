@@ -299,6 +299,8 @@ systemctl daemon-reload
 systemctl restart docker
 ```
 
+Proxy environment variables can also be set [system-wide][systemd-env-vars].
+
 ### Cloud-config
 
 The easiest way to use this proxy on all of your machines is via cloud-config:
@@ -369,3 +371,4 @@ A json file `.dockercfg` can be created in your home directory that holds authen
 [mounting-storage]: mounting-storage.md
 [self-signed-certs]: generate-self-signed-certificates.md
 [systemd-socket]: https://www.freedesktop.org/software/systemd/man/systemd.socket.html
+[systemd-env-vars]: https://coreos.com/os/docs/latest/using-environment-variables-in-systemd-units.html#system-wide-environment-variables
