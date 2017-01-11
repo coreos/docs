@@ -24,7 +24,7 @@ The following command will create a single droplet. For more details, check out 
      --data '{"region":"'"${REGION}"'",
         "image":"{{site.data.alpha-channel.do-image-path}}",
         "size":"'"$SIZE"'",
-        "user_data": "'"$(cat ~/cloud-config.yaml)"'",
+        "user_data": "'"$(cat ~/config.ign)"'",
         "ssh_keys":["'"$SSH_KEY_ID"'"],
         "name":"core-1"}'</pre>
       </div>
@@ -40,7 +40,7 @@ The following command will create a single droplet. For more details, check out 
      --data '{"region":"'"${REGION}"'",
         "image":"{{site.data.beta-channel.do-image-path}}",
         "size":"'"$SIZE"'",
-        "user_data": "'"$(cat ~/cloud-config.yaml)"'",
+        "user_data": "'"$(cat ~/config.ign)"'",
         "ssh_keys":["'"$SSH_KEY_ID"'"],
         "name":"core-1"}'</pre>
       </div>
@@ -57,7 +57,7 @@ The following command will create a single droplet. For more details, check out 
      --data '{"region":"'"${REGION}"'",
         "image":"{{site.data.stable-channel.do-image-path}}",
         "size":"'"$SIZE"'",
-        "user_data": "'"$(cat ~/cloud-config.yaml)"'",
+        "user_data": "'"$(cat ~/config.ign)"'",
         "ssh_keys":["'"$SSH_KEY_ID"'"],
         "name":"core-1"}'</pre>
       </div>
@@ -70,48 +70,46 @@ The following command will create a single droplet. For more details, check out 
 [reboot-docs]: update-strategies.md
 [release-notes]: https://coreos.com/releases
 
-## Cloud-config
+## Ignition config
 
-Container Linux allows you to configure machine parameters, launch systemd units on startup, and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a droplet is created on DigitalOcean, the cloud-config cannot be modified.
+Container Linux allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Ignition. Head over to the [docs to learn about the supported features][ignition-docs]. Note that DigitalOcean doesn't allow an instance's userdata to be modified after the instance has been launched. This isn't a problem since Ignition only runs on the first boot.
 
-You can provide raw cloud-config data to Container Linux via the DigitalOcean web console or [via the DigitalOcean API](#via-the-api).
+You can provide a raw Ignition config to Container Linux via the DigitalOcean web console or [via the DigitalOcean API](#via-the-api).
 
-The most common cloud-config for DigitalOcean looks like:
+As an example, this config will configure and start etcd:
 
-```yaml
-#cloud-config
-
-coreos:
-  etcd2:
-    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-    # specify the initial size of your cluster with ?size=X
-    discovery: https://discovery.etcd.io/<token>
-    # multi-region and multi-cloud deployments need to use $public_ipv4
-    advertise-client-urls: http://$private_ipv4:2379,http://$private_ipv4:4001
-    initial-advertise-peer-urls: http://$private_ipv4:2380
-    # listen on both the official ports and the legacy ports
-    # legacy ports can be omitted if your application doesn't depend on them
-    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    listen-peer-urls: http://$private_ipv4:2380
+```container-linux-config
+systemd:
   units:
     - name: etcd2.service
-      command: start
-    - name: fleet.service
-      command: start
+      enable: true
+      dropins:
+        - name: metadata.conf
+          contents: |
+            [Unit]
+            Requires=coreos-metadata.service
+            After=coreos-metadata.service
+
+            [Service]
+            EnvironmentFile=/run/metadata/coreos
+            ExecStart=
+            ExecStart=/usr/bin/etcd2 \
+                --advertise-client-urls=http://${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0}:2379 \
+                --initial-advertise-peer-urls=http://${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0}:2380 \
+                --listen-client-urls=http://0.0.0.0:2379 \
+                --listen-peer-urls=http://${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0}:2380 \
+                --discovery=https://discovery.etcd.io/<token>
 ```
 
-The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on DigitalOcean. In order for `$private_ipv4` to be populated, the droplet must have "private networking" enabled. Digital Ocean private networking isn't available in all regions, and isn't actually private from others; instead, you can think of it as high-speed, free bandwidth between your droplets. etcd should be [configured with TLS][etcd-tls] when using this network to prevent others from gaining admission to, or even control of, your cluster.
-
-[do-cloud-config]: https://developers.digitalocean.com/#droplets
-[cloud-config-docs]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
-[etcd-tls]: https://coreos.com/etcd/docs/latest/security.html#example-3-transport-security-&-client-certificates-in-a-cluster
+[ignition-docs]: https://coreos.com/ignition/docs/latest
 
 ### Adding more machines
-To add more instances to the cluster, just launch more with the same cloud-config. New instances will join the cluster regardless of region.
+
+To add more instances to the cluster, just launch more with the same Ignition config. New instances will join the cluster regardless of region.
 
 ## SSH to your droplets
 
-Container Linux is set up to be a little more secure than other DigitalOcean images. By default, it uses the core user instead of root and doesn't use a password for authentication. You'll need to add an SSH key(s) via the web console or add keys/passwords via your cloud-config in order to log in.
+Container Linux is set up to be a little more secure than other DigitalOcean images. By default, it uses the core user instead of root and doesn't use a password for authentication. You'll need to add an SSH key(s) via the web console or add keys/passwords via your Ignition config in order to log in.
 
 To connect to a droplet after it's created, run:
 
@@ -159,7 +157,7 @@ curl --request POST "https://api.digitalocean.com/v2/droplets" \
       "name":"core-1",
       "private_networking":true,
       "ssh_keys":['$SSH_KEY_ID'],
-      "user_data": "'"$(cat cloud-config.yaml | sed 's/"/\\"/g')"'"
+      "user_data": "'"$(cat config.ign | sed 's/"/\\"/g')"'"
 }'
 
 ```
@@ -181,7 +179,7 @@ For more details, check out [DigitalOcean's API documentation][do-api-docs].
     <div class="co-m-screenshot-caption">Choosing a size and hostname</div>
   </div>
 </div>
-3. Enable User Data and add your cloud-config in the text box.
+3. Enable User Data and add your Ignition config in the text box.
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12 co-m-screenshot">
     <img src="img/settings.png" />
@@ -197,7 +195,7 @@ For more details, check out [DigitalOcean's API documentation][do-api-docs].
 </div>
 5. Select your SSH keys.
 
-Note that DigitalOcean is not able to inject a root password into Container Linux images like it does with other images. You'll need to add your keys via the web console or add keys or passwords via your cloud-config in order to log in.
+Note that DigitalOcean is not able to inject a root password into Container Linux images like it does with other images. You'll need to add your keys via the web console or add keys or passwords via your Ignition config in order to log in.
 
 ## Using CoreOS Container Linux
 

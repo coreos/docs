@@ -70,6 +70,30 @@ Run VMware Workstation GUI:
 
 *NB: These instructions were tested with a Fusion 8.1 host.*
 
+## Ignition config
+
+Container Linux allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Ignition. Head over to the [docs to learn about the supported features][ignition-docs].
+
+You can provide a raw Ignition config to Container Linux via VMware's [Guestinfo interface](#vmware-guestinfo-interface).
+
+As an example, this config will start etcd and add the provided password and SSH key to the user "core":
+
+```container-linux-config
+systemd:
+  units:
+    - name: etcd2.service
+      enable: true
+
+passwd:
+  users:
+    - name: core
+      passwordHash: $6$5s2u6/jR$un0AvWnqilcgaNB3Mkxd5yYv6mTlWfOoCYHZmfi3LDKVltj.E8XNKEcwWm...
+      sshAuthorizedKeys:
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq...
+```
+
+[ignition-docs]: https://coreos.com/ignition/docs/latest
+
 ## Cloud-config
 
 Cloud-config data can be passed into a VM by attaching a [config-drive][config-drive] with the filesystem label `config-2`. This is done in the same way as attaching CD-ROMs or other new drives.
@@ -130,7 +154,33 @@ Guestinfo configuration set via the VMware API or with `vmtoolsd` from within th
 
 [This blog post][vmware-use-guestinfo] has some useful details about the guestinfo interface, while Robert Labrie's blog provides a practicum specific to [using VMware guestinfo to configure Container Linux VMs][labrie-guestinfo].
 
-### Guestinfo example
+### Defining the Ignition config in Guestinfo
+
+If the `guestinfo.coreos.config.data` property is set, Ignition will apply the referenced config on first boot.
+
+The Ignition config is prepared for the guestinfo facility in one of two encoding types, specified in the `guestinfo.coreos.config.data.encoding` variable:
+
+|    Encoding    |                        Command                        |
+|:---------------|:------------------------------------------------------|
+| &lt;elided&gt; | `sed -e 's/%/%%/g' -e 's/"/%22/g' /path/to/user_data` |
+| base64         | `base64 -w0 /path/to/user_data && echo`               |
+
+#### Example
+
+```
+guestinfo.coreos.config.data = "ewogICJpZ25pdGlvbiI6IHsgInZlcnNpb24iOiAiMi4wLjAiIH0KfQo="
+guestinfo.coreos.config.data.encoding = "base64"
+```
+
+This example will be decoded into:
+
+```json
+{
+  "ignition": { "version": "2.0.0" }
+}
+```
+
+### Guestinfo example for cloud-config
 
 This example sets the hostname, interface role, static IP address, and several other network interface parameters to the VM ethernet interface matching the `.mac` and `.name` values given in the following VMX snippet:
 

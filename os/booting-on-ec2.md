@@ -114,81 +114,75 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
 
 CloudFormation will launch a cluster of Container Linux machines with a security and autoscaling group.
 
-## Cloud-config
+## Ignition config
 
-Container Linux allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config-docs]. Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a machine is created on EC2, the cloud-config can only be modified after it is stopped or recreated.
+Container Linux allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Ignition. Head over to the [docs to learn about the supported features][ignition-docs].
 
-You can provide raw cloud-config data to Container Linux via the Amazon web console or [via the EC2 API][ec2-cloud-config]. Our CloudFormation template supports the most common cloud-config options as well.
+You can provide a raw Ignition config to Container Linux via the Amazon web console or [via the EC2 API][ec2-user-data].
 
-The most common cloud-config for EC2 looks like:
+As an example, this config will configure and start etcd:
 
-```yaml
-#cloud-config
-
-coreos:
-  etcd2:
-    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-    # specify the initial size of your cluster with ?size=X
-    discovery: https://discovery.etcd.io/<token>
-    # multi-region and multi-cloud deployments need to use $public_ipv4
-    advertise-client-urls: http://$private_ipv4:2379,http://$private_ipv4:4001
-    initial-advertise-peer-urls: http://$private_ipv4:2380
-    # listen on both the official ports and the legacy ports
-    # legacy ports can be omitted if your application doesn't depend on them
-    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    listen-peer-urls: http://$private_ipv4:2380,http://$private_ipv4:7001
+```container-linux-config
+systemd:
   units:
     - name: etcd2.service
-      command: start
-    - name: fleet.service
-      command: start
+      enable: true
+      dropins:
+        - name: metadata.conf
+          contents: |
+            [Unit]
+            Requires=coreos-metadata.service
+            After=coreos-metadata.service
+
+            [Service]
+            EnvironmentFile=/run/metadata/coreos
+            ExecStart=
+            ExecStart=/usr/bin/etcd2 \
+                --advertise-client-urls=http://${COREOS_EC2_IPV4_LOCAL}:2379 \
+                --initial-advertise-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
+                --listen-client-urls=http://0.0.0.0:2379 \
+                --listen-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
+                --discovery=https://discovery.etcd.io/<token>
 ```
 
-The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on EC2.
-
-<div class="row">
-  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 co-m-screenshot">
-    <a href="img/ec2-cloudformation-cloud-config.png">
-      <img src="img/ec2-cloudformation-cloud-config.png" />
-    </a>
-    <div class="co-m-screenshot-caption">Providing options during CloudFormation.</div>
-  </div>
-  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 co-m-screenshot">
-    <a href="img/ec2-instance-cloud-config.png">
-      <img src="img/ec2-instance-cloud-config.png" class="screenshot" />
-    </a>
-    <div class="co-m-screenshot-caption">Providing cloud-config during EC2 boot wizard.</div>
-  </div>
-</div>
-
-[ec2-cloud-config]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
-[cloud-config-docs]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
+[ec2-user-data]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
+[ignition-docs]: https://coreos.com/ignition/docs/latest
 
 ### Instance storage
 
-Ephemeral disks and additional EBS volumes attached to instances can be mounted with a `.mount` unit. Amazon's block storage devices are attached differently [depending on the instance type](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#InstanceStoreDeviceNames). Here's the cloud-config to mount the first ephemeral disk, `xvdb` on most instance types:
+Ephemeral disks and additional EBS volumes attached to instances can be mounted with a `.mount` unit. Amazon's block storage devices are attached differently [depending on the instance type](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#InstanceStoreDeviceNames). Here's the Ignition config to format and mount the first ephemeral disk, `xvdb`, on most instance types:
 
-```yaml
-#cloud-config
-coreos:
+```container-linux-config
+storage:
+  filesystems:
+    - mount:
+        device: /dev/xvdb
+        format: ext4
+        create:
+
+systemd:
   units:
     - name: media-ephemeral.mount
-      command: start
-      content: |
+      enable: true
+      contents: |
         [Mount]
         What=/dev/xvdb
         Where=/media/ephemeral
-        Type=ext3
+        Type=ext4
+
+        [Install]
+        RequiredBy=local-fs.target
 ```
 
 For more information about mounting storage, Amazon's [own documentation](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html) is the best source. You can also read about [mounting storage on Container Linux](mounting-storage.md).
 
 ### Adding more machines
-To add more instances to the cluster, just launch more with the same cloud-config, the appropriate security group and the AMI for that region. New instances will join the cluster regardless of region if the security groups are configured correctly.
+
+To add more instances to the cluster, just launch more with the same Ignition config, the appropriate security group and the AMI for that region. New instances will join the cluster regardless of region if the security groups are configured correctly.
 
 ## SSH to your instances
 
-Container Linux is set up to be a little more secure than other cloud images. By default, it uses the `core` user instead of `root` and doesn't use a password for authentication. You'll need to add an SSH key(s) via the AWS console or add keys/passwords via your cloud-config in order to log in.
+Container Linux is set up to be a little more secure than other cloud images. By default, it uses the `core` user instead of `root` and doesn't use a password for authentication. You'll need to add an SSH key(s) via the AWS console or add keys/passwords via your Ignition config in order to log in.
 
 To connect to an instance after it's created, run:
 
@@ -268,27 +262,32 @@ First we need to create a security group to allow Container Linux instances to c
           Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
         <li>
-          <pre>
-#cloud-config
+          ```container-linux-config
+          systemd:
+            units:
+              - name: etcd2.service
+                enable: true
+                dropins:
+                  - name: cluster.conf
+                    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+                    # specify the initial size of your cluster with ?size=X
+                    contents: |
+                      [Unit]
+                      Requires=coreos-metadata.service
+                      After=coreos-metadata.service
 
-coreos:
-  etcd2:
-    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-    # specify the initial size of your cluster with ?size=X
-    discovery: https://discovery.etcd.io/&lt;token&gt;
-    # multi-region and multi-cloud deployments need to use $public_ipv4
-    advertise-client-urls: http://$private_ipv4:2379,http://$private_ipv4:4001
-    initial-advertise-peer-urls: http://$private_ipv4:2380
-    # listen on both the official ports and the legacy ports
-    # legacy ports can be omitted if your application doesn't depend on them
-    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    listen-peer-urls: http://$private_ipv4:2380,http://$private_ipv4:7001
-  units:
-    - name: etcd2.service
-      command: start
-    - name: fleet.service
-      command: start
-          </pre>
+                      [Service]
+                      EnvironmentFile=/run/metadata/coreos
+                      ExecStart=
+                      ExecStart=/usr/bin/etcd2 \
+                          --advertise-client-urls=http://${COREOS_EC2_IPV4_PUBLIC}:2379 \
+                          --initial-advertise-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
+                          --listen-client-urls=http://0.0.0.0:2379 \
+                          --listen-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
+                          --discovery=https://discovery.etcd.io/<token>
+              - name: fleet.service
+                enable: true
+          ```
           Back in the EC2 dashboard, paste this information verbatim into the "User Data" field.
           <ul>
             <li>Paste link into "User Data"</li>
@@ -347,27 +346,32 @@ coreos:
           Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
         <li>
-          <pre>
-#cloud-config
+          ```container-linux-config
+          systemd:
+            units:
+              - name: etcd2.service
+                enable: true
+                dropins:
+                  - name: cluster.conf
+                    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+                    # specify the initial size of your cluster with ?size=X
+                    contents: |
+                      [Unit]
+                      Requires=coreos-metadata.service
+                      After=coreos-metadata.service
 
-coreos:
-  etcd2:
-    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-    # specify the initial size of your cluster with ?size=X
-    discovery: https://discovery.etcd.io/&lt;token&gt;
-    # multi-region and multi-cloud deployments need to use $public_ipv4
-    advertise-client-urls: http://$private_ipv4:2379,http://$private_ipv4:4001
-    initial-advertise-peer-urls: http://$private_ipv4:2380
-    # listen on both the official ports and the legacy ports
-    # legacy ports can be omitted if your application doesn't depend on them
-    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    listen-peer-urls: http://$private_ipv4:2380,http://$private_ipv4:7001
-  units:
-    - name: etcd2.service
-      command: start
-    - name: fleet.service
-      command: start
-          </pre>
+                      [Service]
+                      EnvironmentFile=/run/metadata/coreos
+                      ExecStart=
+                      ExecStart=/usr/bin/etcd2 \
+                          --advertise-client-urls=http://${COREOS_EC2_IPV4_PUBLIC}:2379 \
+                          --initial-advertise-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
+                          --listen-client-urls=http://0.0.0.0:2379 \
+                          --listen-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
+                          --discovery=https://discovery.etcd.io/<token>
+              - name: fleet.service
+                enable: true
+          ```
           Back in the EC2 dashboard, paste this information verbatim into the "User Data" field.
           <ul>
             <li>Paste link into "User Data"</li>
@@ -426,27 +430,32 @@ coreos:
           Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
         <li>
-          <pre>
-#cloud-config
+          ```container-linux-config
+          systemd:
+            units:
+              - name: etcd2.service
+                enable: true
+                dropins:
+                  - name: cluster.conf
+                    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+                    # specify the initial size of your cluster with ?size=X
+                    contents: |
+                      [Unit]
+                      Requires=coreos-metadata.service
+                      After=coreos-metadata.service
 
-coreos:
-  etcd2:
-    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-    # specify the initial size of your cluster with ?size=X
-    discovery: https://discovery.etcd.io/&lt;token&gt;
-    # multi-region and multi-cloud deployments need to use $public_ipv4
-    advertise-client-urls: http://$private_ipv4:2379,http://$private_ipv4:4001
-    initial-advertise-peer-urls: http://$private_ipv4:2380
-    # listen on both the official ports and the legacy ports
-    # legacy ports can be omitted if your application doesn't depend on them
-    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    listen-peer-urls: http://$private_ipv4:2380,http://$private_ipv4:7001
-  units:
-    - name: etcd2.service
-      command: start
-    - name: fleet.service
-      command: start
-          </pre>
+                      [Service]
+                      EnvironmentFile=/run/metadata/coreos
+                      ExecStart=
+                      ExecStart=/usr/bin/etcd2 \
+                          --advertise-client-urls=http://${COREOS_EC2_IPV4_PUBLIC}:2379 \
+                          --initial-advertise-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
+                          --listen-client-urls=http://0.0.0.0:2379 \
+                          --listen-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
+                          --discovery=https://discovery.etcd.io/<token>
+              - name: fleet.service
+                enable: true
+          ```
           Back in the EC2 dashboard, paste this information verbatim into the "User Data" field.
           <ul>
             <li>Paste link into "User Data"</li>

@@ -35,33 +35,37 @@ https://api.packet.net/projects/<PROJECT_ID>/devices
 
 Double quotes in the `<USERDATA>` value must be escaped such that the request body is valid JSON. See the Cloud-Config section below for more information about accepted forms of userdata.
 
-### Cloud-config
+## Ignition config
 
-Container Linux allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md). Cloud-config is intended to bring up a cluster of machines into a minimal useful state and ideally shouldn't be used to configure anything that isn't standard across many hosts. Once a machine is created on Packet, the cloud-config cannot be modified. This example can be used to spin up a minimal cluster.
+Container Linux allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Ignition. Head over to the [docs to learn about the supported features][ignition-docs]. Note that Packet doesn't allow an instance's userdata to be modified after the instance has been launched. This isn't a problem since Ignition only runs on the first boot.
 
-```yaml
-#cloud-config
+You can provide a raw Ignition config to Container Linux via Packet's userdata field.
 
-coreos:
-  etcd2:
-    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-    # specify the initial size of your cluster with ?size=X
-    discovery: https://discovery.etcd.io/<token>
-    # multi-region and multi-cloud deployments need to use $public_ipv4
-    advertise-client-urls: http://$private_ipv4:2379
-    initial-advertise-peer-urls: http://$private_ipv4:2380
-    listen-client-urls: http://0.0.0.0:2379
-    listen-peer-urls: http://$private_ipv4:2380
+As an example, this config will configure and start etcd:
+
+```container-linux-config
+systemd:
   units:
     - name: etcd2.service
-      command: start
-    - name: fleet.service
-      command: start
+      enable: true
+      dropins:
+        - name: metadata.conf
+          contents: |
+            [Unit]
+            Requires=coreos-metadata.service
+            After=coreos-metadata.service
+
+            [Service]
+            EnvironmentFile=/run/metadata/coreos
+            ExecStart=\nExecStart=/usr/bin/etcd2 \
+                --advertise-client-urls=http://${COREOS_PACKET_IPV4_PRIVATE_0}:2379 \
+                --initial-advertise-peer-urls=http://${COREOS_PACKET_IPV4_PRIVATE_0}:2380 \
+                --listen-client-urls=http://0.0.0.0:2379 \
+                --listen-peer-urls=http://${COREOS_PACKET_IPV4_PRIVATE_0}:2380 \
+                --discovery=https://discovery.etcd.io/<token>
 ```
 
-#### IP addresses
-
-The `$private_ipv4`, `$public_ipv4`, and `$public_ipv6` variables are fully supported in cloud-config on Packet. Packet is fully IPv6 compliant and we encourage you to utilize IPv6 for public connectivity with your running containers. Make sure to read up on [IPv6 and Docker](https://docs.docker.com/articles/networking/#ipv6) if you choose to take advantage of this functionality.
+[ignition-docs]: https://coreos.com/ignition/docs/latest
 
 ## Using CoreOS Container Linux
 
