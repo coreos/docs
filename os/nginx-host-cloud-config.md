@@ -1,6 +1,6 @@
 # Hosting cloud-config using nginx
 
-The nginx HTTP server can be used to serve `could-config` files to booting Container Linux machines. With the addition of the [http_sub_module][http_sub_module], nginx can perform appropriate substitution of the `cloud-config` `$private_ipv4` and `$public_ipv4` variables used to simplify network configuration. The `http_sub_module` is enabled in the official nginx binaries, and in most Linux distributions' nginx packages.
+The nginx HTTP server can be used to serve `cloud-config` files to booting Container Linux machines. With the addition of the [http_sub_module][http_sub_module], nginx can perform appropriate substitution of the `cloud-config` `$private_ipv4` and `$public_ipv4` variables used to simplify network configuration. The `http_sub_module` is enabled in the official nginx binaries, and in most Linux distributions' nginx packages.
 
 ## Example
 
