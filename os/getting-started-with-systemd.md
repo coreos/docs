@@ -8,7 +8,7 @@ systemd consists of two main concepts: a unit and a target. A unit is a configur
 
 systemd is the first process started on Container Linux and it reads different targets and starts the processes specified which allows the operating system to start. The target that you'll interact with is the `multi-user.target` which holds all of the general use unit files for our containers.
 
-Each target is actually a collection of symlinks to our unit files. This is specified in the unit file by `WantedBy=multi-user.target`. Running `systemctl enable foo.service` creates symlinks to the unit inside `multi-user.target.wants`.
+Each target is actually a collection of symlinks to our unit files. This is specified in the unit file by `WantedBy=multi-user.target`. Running `systemctl enable foo.service` creates symlinks to the unit inside `multi-user.target.wants`. Please note that `systemctl enable foo.service` may affect the boot process by race condition exception in network configuration when [Cloud-Config] configures network according to cloud provider's `meta_data` and `user_data`. For the common usage you have to put your unit files inside Cloud-Config's [units][cloud-config-units] section.
 
 ## Unit file
 
@@ -151,3 +151,6 @@ This gives us the flexibility to use a single unit file to announce multiple cop
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">systemd.service Docs</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html">systemd.unit Docs</a>
 <a class="btn btn-default" href="http://www.freedesktop.org/software/systemd/man/systemd.target.html">systemd.target Docs</a>
+
+[Cloud-Config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
+[cloud-config-units]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md#units
