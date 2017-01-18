@@ -18,7 +18,7 @@ gpg --verify coreos_production_openstack_image.img.bz2.sig
 
 ## Image customization
 
-Customizing a Container Linux image for a specific operating environment is easily done through [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md/), a YAML-based configuration standard that is widely supported. As a provider, you must ensure that your platform makes this data available to Container Linux, where it will be parsed during the boot process.
+Customizing a Container Linux image for a specific operating environment is easily done through [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md), a YAML-based configuration standard that is widely supported. As a provider, you must ensure that your platform makes this data available to Container Linux, where it will be parsed during the boot process.
 
 Use cloud-config to handle platform specific configuration such as custom networking, running an agent on the machine or injecting files onto disk. Container Linux will automatically parse and execute `/usr/share/oem/cloud-config.yml` if it exists. Your cloud-config should create additional units that process user-provided metadata, as described below.
 

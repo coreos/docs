@@ -21,7 +21,7 @@ modprobe cpufreq_conservative
 echo "conservative" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor > /dev/null
 ```
 
-This can be configured with [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md/#coreos) as well:
+This can be configured with [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md#coreos) as well:
 
 ```cloud-config
 #cloud-config
