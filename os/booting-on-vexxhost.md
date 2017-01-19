@@ -8,7 +8,7 @@ The following instructions will walk you through setting up the `nova` tool with
 
 ## Choosing a channel
 
-Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 Container Linux releases are automatically built and deployed on the VEXXHOST cloud, therefore it is best to launch your clusters with the following naming pattern: CoreOS _Channel_ _Version_. For example, the image name of the latest alpha release will be "CoreOS Alpha {{site.alpha-channel}}".
 

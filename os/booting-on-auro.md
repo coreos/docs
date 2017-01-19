@@ -8,7 +8,7 @@ The following instructions will walk you through setting up the `nova` tool with
 
 ## Choosing a Channel
 
-Container Linux is released into stable, alpha, and beta channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+Container Linux is released into stable, alpha, and beta channels. Releases to each channel serve as a release candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 Container Linux releases are automatically built and deployed on the AURO cloud, therefore it is best to launch your clusters with the following naming pattern: Container Linux _Channel_ _Version_. For example, the image name of the latest alpha release will be "Container Linux Alpha {{site.alpha-channel}}".
 

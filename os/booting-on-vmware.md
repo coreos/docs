@@ -6,7 +6,7 @@ These instructions walk through running Container Linux on VMware Fusion or ESXi
 
 ### Choosing a channel
 
-Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel. Read the [release notes][release notes] for specific features and bug fixes in each channel.
+Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel. Read the [release notes][release notes] for specific features and bug fixes in each channel.
 
 <div id="vmware-images">
   <ul class="nav nav-tabs">

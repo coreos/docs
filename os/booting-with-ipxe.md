@@ -25,7 +25,7 @@ When configuring the Container Linux iPXE boot script there are a few kernel opt
 
 ### Choose a Channel
 
-Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 ### Setting up the Boot Script
 

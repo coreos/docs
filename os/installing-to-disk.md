@@ -27,7 +27,7 @@ coreos-install -d /dev/sda -c cloud-config.yaml
 
 ## Choose a channel
 
-Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 <div id="install">
   <ul class="nav nav-tabs">
