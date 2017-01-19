@@ -178,11 +178,13 @@ usr/share/oem
 usr/share/oem/example.ign
 ```
 
-Add the `oem.cpio.gz` to your PXE boot directory and [append it][append-initrd] to the `initrd` line in your `pxelinux.cfg` and specify the path to the config:
+Add the `oem.cpio.gz` file to your PXE boot directory, then [append it][append-initrd] to the `initrd` line in your `pxelinux.cfg`. Finally, specify the URL of the config in the `kernel` line:
 
 ```
+...
 initrd coreos_production_pxe_image.cpio.gz,oem.cpio.gz
 kernel coreos_production_pxe.vmlinuz coreos.config.url=oem:///example.ign
+...
 ```
 
 ## Using CoreOS Container Linux
