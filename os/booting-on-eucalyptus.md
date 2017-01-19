@@ -8,7 +8,7 @@ These steps will download the Container Linux image, uncompress it, convert it f
 
 ### Choosing a channel
 
-Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes in each channel.
 

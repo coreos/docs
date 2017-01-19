@@ -57,7 +57,7 @@ passwd:
 
 ### Choose a channel
 
-Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 PXE booted machines cannot currently update themselves when new versions are released to a channel. To update to the latest version of Container Linux download/verify these files again and reboot.
 

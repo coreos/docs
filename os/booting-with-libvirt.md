@@ -16,7 +16,7 @@ to substitute that path if you use another one.
 
 ### Choosing a channel
 
-Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release-candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
 
 Read the [release notes](https://coreos.com/releases) for specific features and bug fixes in each channel.
 
