@@ -110,6 +110,9 @@ Most documents have a single `h1` (`#`) heading matching the title, two to five 
 
 If a document proves a great deal longer or more structurally complex than those simplistic rules of thumb, there should be a good reason.
 
+
+![headings styles] (Styles.png)
+
 ## Hyperlink considerations
 
 ### Naming
