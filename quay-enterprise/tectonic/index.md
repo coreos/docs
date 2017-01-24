@@ -35,7 +35,7 @@ Kubernetes API has minor changes between versions 1.4 and 1.5, Download appropia
 
 ### Tectonic v1.5.x RBAC Policies
 
-- [quay-enterprise-service-nodeport.yml](files/quay-enterprise-service-nodeport.yml)
+- [quay-servicetoken-role.yaml](files/quay-servicetoken-role.yaml)
 - [quay-servicetoken-role-binding.yaml](files/quay-servicetoken-role-binding.yaml)
 
 ### Tectonic v1.4.x RBAC Policies
