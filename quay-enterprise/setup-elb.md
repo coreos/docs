@@ -1,4 +1,4 @@
-#Running Quay Enterprise behind an Elastic Load Balancer
+# Running Quay Enterprise behind an Elastic Load Balancer
 
 Running Quay Enterprise behind a load balancer is often desired for large installations. However, simply putting a load balancer in front of the Quay Enterprise has some unintended consequences:
 
