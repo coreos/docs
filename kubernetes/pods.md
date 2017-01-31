@@ -34,7 +34,7 @@ metadata:
   labels:
     app: example-app
     version: v1
-    role=backend
+    role: backend
 spec:
   containers:
   - name: java
