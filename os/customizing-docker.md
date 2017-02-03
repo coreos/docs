@@ -95,8 +95,6 @@ cp -p ~/cfssl/client-key.pem key.pem
 
 ### Enable the secure remote API on a new socket
 
-**NOTE:** For Container Linux releases older than 949.0.0 you must follow [this][old-guide] guide.
-
 Create a file called `/etc/systemd/system/docker-tls-tcp.socket` to make Docker available on a secured TCP socket on port 2376.
 
 ```ini
@@ -367,7 +365,6 @@ A json file `.dockercfg` can be created in your home directory that holds authen
 [cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 [docker-socket-systemd]: https://github.com/docker/docker/pull/17211
 [drop-in]: using-systemd-drop-in-units.md
-[old-guide]: https://coreos.com/os/docs/942.0.0/customizing-docker.html#enable-the-remote-api-with-tls-authentication
 [mounting-storage]: mounting-storage.md
 [self-signed-certs]: generate-self-signed-certificates.md
 [systemd-socket]: https://www.freedesktop.org/software/systemd/man/systemd.socket.html
