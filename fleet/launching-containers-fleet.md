@@ -1,5 +1,7 @@
 # Launching containers with fleet
 
+**Fleet is no longer under active development, and receives only critical security fixes. After 2/1/2018, fleet will no longer be included in CoreOS Container Linux. New clusters should use [Kubernetes](CoreOS.com/kubernetes/docs/latest). Legacy fleet clusters should [run fleet in a container](CoreOS.com/fleet/docs/latest/launching-containers-fleet.html#running-fleet-with-ignition).**
+
 `fleet` is a cluster manager that controls `systemd` at the cluster level. To run your services in the cluster, you must submit regular systemd units combined with a few [fleet-specific properties](https://github.com/coreos/fleet/blob/master/Documentation/unit-files-and-scheduling.md).
 
 If you're not familiar with systemd units, check out our [Getting Started with systemd](../os/getting-started-with-systemd.md) guide.
