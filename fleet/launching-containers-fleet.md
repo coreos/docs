@@ -1,5 +1,7 @@
 # Launching containers with fleet
 
+**[fleet is no longer actively developed or maintained by CoreOS](https://coreos.com/blog/migrating-from-fleet-to-kubernetes.html). CoreOS instead recommends [Kubernetes](https://coreos.com/kubernetes/docs/latest/) for cluster orchestration.**
+
 `fleet` is a cluster manager that controls `systemd` at the cluster level. To run your services in the cluster, you must submit regular systemd units combined with a few [fleet-specific properties](https://github.com/coreos/fleet/blob/master/Documentation/unit-files-and-scheduling.md).
 
 If you're not familiar with systemd units, check out our [Getting Started with systemd](../os/getting-started-with-systemd.md) guide.
