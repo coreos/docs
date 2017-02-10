@@ -1,6 +1,6 @@
-# Kubernets Daemon Sets vs fleet Global units
+# Kubernetes DaemonSets vs fleet Global units
 
-Running a container on all nodes is a common task. Aggregating service logs, collecting node metrics, or running a networked storage cluster all require a container to be replicated across all nodes. In the world of fleet this is done with a [Global unit][global-units] and in the world of Kubernetes this is done with a [Daemon Set][daemon-sets].
+Running a container on all nodes is a common task. Aggregating service logs, collecting node metrics, or running a networked storage cluster all require a container to be replicated across all nodes. In fleet this is done with a [Global unit][global-units]. In Kubernetes, this is done with a [DaemonSet][daemon-sets].
 
 ## Global units
 
@@ -24,7 +24,7 @@ ExecStop=/usr/bin/docker stop busybox1
 Global=true
 ```
 
-Can be run a verified with the following commands:
+Can be run and verified with the following commands:
 
 ```
 $ fleetctl start hello.service 
@@ -37,11 +37,11 @@ hello.service   c46a8ace.../node2    			active  running
 hello.service   d77c07da.../node3    			active  running
 ```
 
-## Kubernetes DaemonSet
+## Kubernetes DaemonSets
 
-[Kubernetes DaemonSets][k8s-daemonset] offer a similar set of functionality to fleet global units in that they are a Kubernetes service which is run on all (or most) nodes in a cluster.
+[Kubernetes DaemonSets][k8s-daemonset] are a Kubernetes service which is run on all (or most) nodes in a cluster.
 
-DaemonSets can be executed in a few ways. The DaemonSet can monitor for a specific label, but not create any pods, **or** it can include a container definition in it's `spec` section.
+The DaemonSet can monitor for a specific label, but not create any pods, or it can include a container definition in its `spec` section.
 
 ### DaemonSet with Pod declaration
 
@@ -68,7 +68,7 @@ spec:
           name: serverport
 ```
 
-When run the above would produce an output like so:
+When applied, the DaemonSet creates work on the cluster:
 
 ```
 $ kubectl get nodes  # Take a look at our nodes
@@ -78,7 +78,7 @@ worker1.infra.backend          Ready                      44m
 worker2.infra.backend       Ready                      44m
 $ kubectl create -f app-a.yaml     # Deploy the DaemonSet
 daemonset "app-a" created
-$ kubectl get pods -o wide   # Inspect where they are running
+$ kubectl get pods -o wide   # Inspect where DaemonSet pods are running
 NAME          READY     STATUS    RESTARTS   AGE       IP          NODE
 app-a-8bh7j   1/1       Running   0          2m        10.2.56.5   worker2.infra.backend
 app-a-k8s6p   1/1       Running   0          2m        10.2.19.5   worker1.infra.backend
@@ -90,7 +90,7 @@ app-a     3         3         0         <none>          2m
 
 # DaemonSets on a subset of hosts
 
-Sometimes a DaemonSet should only be run on a subset of nodes. This may be because of resource limitations, beta feature roll-out, restricted monitoring needs, who knows. By adding a `NodeSelector` to the `.spec.template.spec` we can achieve this limited-DaemonSet functionality.
+Sometimes a DaemonSet should only run on a subset of nodes. This may be because of resource limitations, beta feature roll-out, restricted monitoring needs, etc. Adding a `NodeSelector` to the `.spec.template.spec` restricts where the DaemonSet pods are scheduled.
 
 ```yaml
 apiVersion: extensions/v1beta1
@@ -116,7 +116,7 @@ spec:
           name: serverport
 ```
 
-If we run this **without** changing the labels on our nodes we will notice that the DaemonSet does not get run.
+When applying this DaemonSet before adding the chosen `app=app-b-node` label to any nodes, the DaemonSet does not get scheduled:
 
 ```
 $ kubectl create -f app-b.yaml
@@ -126,7 +126,7 @@ NAME      DESIRED   CURRENT   READY     NODE-SELECTOR    AGE
 app-b     0         0         0         app=app-b-node   1m
 ```
 
-Once we add the label to one or more of our nodes the container starts to run on that pod.
+Once we add the label to one or more nodes, the pods are scheduled there:
 
 ```
 $ kubectl label node worker1.infra.backend app=app-b-node
@@ -139,7 +139,7 @@ NAME      DESIRED   CURRENT   READY     NODE-SELECTOR    AGE
 app-b     1         1         0         app=app-b-node   2m
 ```
 
-And if we remove the label from our node the container stops running on that host:
+Removing the label from the node unschedules the pod running there:
 
 ```
 $ kubectl label node worker1.infra.backend app-
@@ -149,7 +149,7 @@ NAME      DESIRED   CURRENT   READY     NODE-SELECTOR    AGE
 app-b     0         0         0         app=app-b-node   4m
 ```
 
-For more information read the [Kubernetes DaemonSets admin guide][k8s-daemonset] and the [DaemonSets design document][k8s-daemonset-design].
+For more information, check the [Kubernetes DaemonSets admin guide][k8s-daemonset] and the [DaemonSets design document][k8s-daemonset-design].
 
 [daemon-sets]: http://kubernetes.io/docs/admin/daemons/
 [global-units]: https://coreos.com/fleet/docs/latest/unit-files-and-scheduling.html#systemd-specifiers
