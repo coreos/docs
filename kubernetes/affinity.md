@@ -8,7 +8,7 @@ In fleet dictating where a container gets run is called [Affinity and Anti-Affin
 
 ## Affinity in fleet
 
-In the world of fleet, affinity and anti-affinity are achieved through [fleet-specific options in systemd unit-files][fleet-affinity]. These options include:
+Affinity and anti-affinity are achieved through [fleet-specific options in systemd unit-files][fleet-affinity]. These options include:
 
 * `MachineID`: Run a unit on a specific host.
 * `MachineOf`: Run a unit on the same host as another unit.
@@ -17,7 +17,7 @@ In the world of fleet, affinity and anti-affinity are achieved through [fleet-sp
 * `Global`: Runs a unit on every node.
 * `Replaces`: Run a unit in place of another unit.
 
-These are described [in greater depth at the fleet documentation][fleet-specific-options].
+These are described [in detail in the fleet documentation][fleet-specific-options].
 
 These options allow one to specify with arbitrary granularly how, where, and when to schedule a unit on a fleet cluster.
 
@@ -67,7 +67,7 @@ spec:
 
 #### `nodeSelector` Example
 
-Let's say we're running a Kubernetes cluster on AWS and we want to run an Nginx pod on `m3.medium` instance. We also want a different `httpd` pod to only run in the `us-west-2` region and only on nodes with the `hello` key set to `world`. Here's how that `mypods.yaml` would look:
+Let's say we're running a Kubernetes cluster on AWS and we want to run an Nginx pod on `m3.medium` instance. We also want a different `httpd` pod to only run in the `us-west-2` region and only on nodes with the `example.com/load-balancer` key set to `true`. Here's how that `mypods.yaml` would look:
 
 ```yaml
 apiVersion: v1
@@ -82,7 +82,7 @@ spec:
     image: nginx
   nodeSelector:
     beta.kubernetes.io/instance-type: m3.medium
-    hello: world
+    example.com/load-balancer: true
 ---
 apiVersion: v1
 kind: Pod
@@ -115,7 +115,7 @@ httpd     1/1       Running   0          1m
 nginx     0/1       Pending   0          1m
 ```
 
-This is because our worker nodes don't meet one of the `nginx` pod requirements; neither have the `hello` key set to `world`!
+This is because our worker nodes don't meet one of the `nginx` pod requirements; neither have the `example.com/load-balancer` key set to `true`:
 
 ```
 $ kubectl get nodes --show-labels
@@ -125,8 +125,8 @@ ip-10-0-0-188.us-west-2.compute.internal   Ready                      47m       
 ip-10-0-0-50.us-west-2.compute.internal    Ready,SchedulingDisabled   47m       beta.kubernetes.io/arch=amd64,beta.kubernetes.io/instance-type=m3.medium,beta.kubernetes.io/os=linux,failure-domain.beta.kubernetes.io/region=us-west-2,failure-domain.beta.kubernetes.io/zone=us-west-2c,kubernetes.io/hostname=ip-10-0-0-50.us-west-2.compute.internal
 ```
 
-If we add the `hello=world` key to one of our nodes, the `nginx` pod will get scheduled to that node.
-Once we have the `hello` key set to `world`, the `nginx` pod will have a node to be assigned to and it will automatically start running.
+If we add the `example.com/load-balancer=true` key to one of our nodes, the `nginx` pod will get scheduled to that node.
+Once we have the `example.com/load-balancer` key set to `true`, the `nginx` pod will be scheduled.
 
 ```
 $ kubectl get pods
@@ -135,7 +135,7 @@ httpd     1/1       Running   0          1m
 nginx     0/1       Pending   0          1m
 $ kubectl label node \
     ip-10-0-0-187.us-west-2.compute.internal \
-    hello=world
+    example.com/load-balancer=true
 node "ip-10-0-0-187.us-west-2.compute.internal" labeled
 $ kubectl get pods -o wide
 NAME      READY     STATUS    RESTARTS   AGE       IP          NODE
@@ -143,26 +143,26 @@ httpd     1/1       Running   0          9m        10.2.26.5   ip-10-0-0-187.us-
 nginx     1/1       Running   0          9m        10.2.26.6   ip-10-0-0-187.us-west-2.compute.internal
 ```
 
-Keep in mind: **when a node label changes, pods are not moved**. We can demonstrate this by changing the `hello` key on `ip-10-0-0-187.us-west-2.compute.internal` to `not-world`, and then add the `hello:world` lable to our other worker node to see what happens:
+**When a node label changes, pods are not moved**. We can demonstrate this by changing the `example.com/load-balancer` key on `ip-10-0-0-187.us-west-2.compute.internal` to `false`, then adding the `example.com/load-balancer=true` label to our other worker node to see what happens:
 
 ```
-$ kubectl label nodes --overwrite ip-10-0-0-187.us-west-2.compute.internal hello=not-world
+$ kubectl label nodes --overwrite ip-10-0-0-187.us-west-2.compute.internal example.com/load-balancer=false
 node "ip-10-0-0-187.us-west-2.compute.internal" labeled
-$ kubectl label nodes ip-10-0-0-188.us-west-2.compute.internal hello=world
+$ kubectl label nodes ip-10-0-0-188.us-west-2.compute.internal example.com/load-balancer=true
 node "ip-10-0-0-188.us-west-2.compute.internal" labeled
 $ kubectl get nodes --show-labels
 NAME                                       STATUS                     AGE       LABELS
-ip-10-0-0-187.us-west-2.compute.internal   Ready                      1h        [...],hello=not-world,[...]
-ip-10-0-0-188.us-west-2.compute.internal   Ready                      1h        [...],hello=world,[...]
+ip-10-0-0-187.us-west-2.compute.internal   Ready                      1h        [...],example.com/load-balancer=false,[...]
+ip-10-0-0-188.us-west-2.compute.internal   Ready                      1h        [...],example.com/load-balancer=true,[...]
 $ kubectl get pods -o wide
 NAME      READY     STATUS    RESTARTS   AGE       IP          NODE
 httpd     1/1       Running   0          15m       10.2.26.5   ip-10-0-0-187.us-west-2.compute.internal
 nginx     1/1       Running   0          15m       10.2.26.6   ip-10-0-0-187.us-west-2.compute.internal
 ```
 
-As you can see, the both pods keep running on the same host, even though the `httpd` pod should have moved. Further httpd pods will be assigned to the second node.
+As you can see, both pods keep running on the same host, because the initial `httpd` pod isn't moved or unscheduled. Later httpd pods will be assigned to the second node, according to the new `example.com/load-balancer=true` label.
 
-### `affinity`
+### Affinity
 
 Kubernetes also has a more nuanced way of setting affinity called [`nodeAffinity` and `podAffinity`][k8s-node-affinity]. These are fields in under `Pod` metadata and take automatic or user-defined metadata to dictate where to schedule pods. `affinity` differs from `nodeSelector` in the following ways:
 
@@ -265,7 +265,6 @@ spec:
     image: httpd
 ```
 
-`nodeAffinity` and `podAffinity` will *eventually* replace `nodeSelector`. For now `nodeAffinty` does everything `nodeSelector` does **and more**.
 
 [k8s-node-affinity]: http://kubernetes.io/docs/user-guide/node-selection/#alpha-features-affinity-and-anti-affinity
 [k8s-node-selector]: http://kubernetes.io/docs/user-guide/node-selection/
