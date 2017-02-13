@@ -31,12 +31,12 @@ Using management server profile: local
 
 If you see the '>' prompt as above then Cloudmonkey has started successfully and it is ready to accept API calls. All of the VDC API commands that can be accepted by Cloudmonkey can be found in the [VDC API Command Reference](http://cloudstore.interoute.com/knowledge-centre/library/api-command-reference).
 
-Type the three following commands to set the configuration as it is used in the rest of this demonstration:
+Type the four following commands to set the configuration as it is used in the rest of this demonstration:
 
 ```sh
 (local) > set display table
 (local) > set asyncblock true
-(local( > set region europe
+(local) > set region europe
 (local) > sync
 283 APIs discovered and cached
 ```
@@ -70,7 +70,7 @@ For security reasons you can't extract the value of the public key from VDC, onl
 
 ## Finding the CoreOS Container Linux virtual machine template
 
-Interoute VDC has the 'CoreOS Stable' template ready-to-use, look for the template name IRT-COREOS.
+Interoute VDC has the 'Container Linux Stable' template ready-to-use, look for the template name IRT-COREOS.
 
 You need to look up the template UUID for the zone (physical data centre location) where you want to deploy the virtual machine. This command displays the zones with their UUIDs:
 
@@ -115,6 +115,7 @@ The following API call is used to deploy a new virtual machine running Container
 
 ```sh
 > deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d zoneid=a5d3e015-0797-4283-b562-84feea6f66af templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 networkids=c5841e7c-e69e-432b-878b-c108b07a160f keypair=CoreOS-Key01 name=CoreOS-VM-01
+```
 
 Six parameter values are required. 'keypair', 'templateid' and 'zoneid' you have already seen above. 'name' can be any string of your choice.
 
@@ -234,7 +235,11 @@ Check that the Internet egress is working by trying to connect to a remote locat
 
 ```sh
 core@CoreOS-VM-01 ~ $ ping 8.8.8.8
+```
 
+or
+
+```sh
 core@CoreOS-VM-01 ~ $ docker search wordpress
 ```
 
