@@ -22,35 +22,33 @@ Open a new terminal or command prompt window and start Cloudmonkey by typing:
 
 ```sh
 $ cloudmonkey
-Apache CloudStack cloudmonkey 5.3.2. Type help or ? to list commands.
+Apache CloudStack cloudmonkey 5.3.3 [MODIFIED FOR INTEROUTE VDC 2016-11-24]. Type help or ? to list commands.
 
 Using management server profile: local
 
 (local) >
 ```
 
-If you see the '>' prompt as above then Cloudmonkey has started successfully and it's ready to accept API calls. All of the VDC API commands that can be accepted by Cloudmonkey can be found in the [VDC API Command Reference](http://cloudstore.interoute.com/knowledge-centre/library/api-command-reference).
+If you see the '>' prompt as above then Cloudmonkey has started successfully and it is ready to accept API calls. All of the VDC API commands that can be accepted by Cloudmonkey can be found in the [VDC API Command Reference](http://cloudstore.interoute.com/knowledge-centre/library/api-command-reference).
 
-Type the three following commands to set the configuration as it is used in the rest of this demonstration:
+Type the four following commands to set the configuration as it is used in the rest of this demonstration:
 
 ```sh
 (local) > set display table
 (local) > set asyncblock true
+(local) > set region europe
 (local) > sync
-252 APIs discovered and cached
+283 APIs discovered and cached
 ```
 
 ## Create a new SSH keypair and store it in VDC
 
-The Container Linux virtual machine template does not allow any logins (root user or otherwise) using passwords. So you must have a SSH keypair ready for use before you deploy the virtual machine.
+The CoreOS Container Linux virtual machine template does not allow any logins (root user or otherwise) using passwords. So you must have a SSH keypair ready for use before you deploy the virtual machine.
 
 A new keypair is generated using the OpenSSH command line tool, 'ssh-keygen':
 
 ```sh
-# for Linux
 $ cd ~/.ssh && ssh-keygen -t rsa -f id_rsa_coreos
-# for Windows
-cd C:/ && ssh-keygen -t rsa -f id_rsa_coreos    
 ```
 
 The keypair consists of two files, the private key which will be in a file named 'id_rsa_coreos', and the public key in the file 'id_rsa_coreos.pub'. The private key should always be held securely on your own computer.
@@ -58,9 +56,9 @@ The keypair consists of two files, the private key which will be in a file named
 The next step is to 'register' your keypair by uploading your public key to VDC, so that virtual machines can boot up with that information:
 
 ```sh
-> registerSSHKeyPair name=Container-Linux-Key01 publickey="ssh-rsa AAAAB3NzaC1y...........fyskMb4oBw== demo.user@interoute.com"
+> registerSSHKeyPair name=CoreOS-Key01 publickey="ssh-rsa AAAAB3NzaC1y...........fyskMb4oBw== demo.user@interoute.com"
 keypair:
-name = Container-Linux-Key01
+name = CoreOS-Key01
 fingerprint = 55:33:b4:d3:b6:52:fb:79:97:fc:e8:16:58:6e:42:ce
 ```
 
@@ -70,45 +68,15 @@ The keypair 'name' parameter is arbitrary and is used to identify this public ke
 
 For security reasons you can't extract the value of the public key from VDC, only its 'fingerprint' value which you can compare against the fingerprint generated from the keypair on your own computer.
 
-## Choosing a CoreOS Container Linux virtual machine template
+## Finding the CoreOS Container Linux virtual machine template
 
-Interoute VDC has 'CoreOS Stable' and 'CoreOS Alpha' templates ready-to-use, look for the template names IRT-COREOS and IRT-COREOS-ALPHA, respectively.
+Interoute VDC has the 'Container Linux Stable' template ready-to-use, look for the template name IRT-COREOS.
 
-This command shows the templates available in the 'Zurich' zone, which has a zoneid as shown:
-
-```sh
-> listTemplates templatefilter=executable zoneid=a5d3e015-0797-4283-b562-84feea6f66af filter=id,name
-count = 109
-template:
-+--------------------------------------+----------------------------------------+
-|                  id                  |                  name                  |
-+--------------------------------------+----------------------------------------+
-| 73bc5066-b536-4325-8e27-ec873cea6ce7 |               IRT-COREOS               |
-| 38192dd8-a81f-4c75-9e5f-9bc935d37eae |            IRT-COREOS-ALPHA            |
-+--------------------------------------+----------------------------------------+
-```
-
-There are 109 templates in the list, only the relevant COREOS ones are shown here. You can filter the output using grep:
-
-```sh
-> listTemplates templatefilter=executable zoneid=a5d3e015-0797-4283-b562-84feea6f66af filter=id,name | grep COREOS
-```
-
-## Deploy a CoreOS Container Linux virtual machine
-
-The following API call is used to deploy a new virtual machine running Container Linux in VDC:
-
-```sh
-> deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d zoneid=a5d3e015-0797-4283-b562-84feea6f66af templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 networkids=c5841e7c-e69e-432b-878b-c108b07a160f keypair=Container-Linux-Key01 name=Container-Linux-VM-01
-```
-
-Six parameter values are required. 'keypair' and 'templateid' you have already seen above. 'name' can be any string of your choice.
-
-VDC's zones correspond to physical data centres in different locations. Use 'listZones' to get a full list for the Europe region:
+You need to look up the template UUID for the zone (physical data centre location) where you want to deploy the virtual machine. This command displays the zones with their UUIDs:
 
 ```sh
 > listZones filter=id,name
-count = 10
+count = 12
 zone:
 +-------------------+--------------------------------------+
 |        name       |                  id                  |
@@ -123,10 +91,35 @@ zone:
 |    Madrid (ESX)   | ddf450f2-51b2-433d-8dea-c871be6de38d |
 |  Frankfurt (ESX)  | 7144b207-e97e-4e4a-b15d-64a30711e0e7 |
 |    Zurich (ESX)   | a5d3e015-0797-4283-b562-84feea6f66af |
+|   Istanbul (ESX)  | 1ce2fa41-bc99-484c-99b9-b1b6a28487ba |
+|  Stockholm (ESX)  | e564f8cf-efda-4119-b404-b6d00cf434b3 |
 +-------------------+--------------------------------------+
 ```
 
-The 'serviceofferingid' represents the amount of RAM memory and number of CPUs that you want to allocate to the virtual machine. In this example, 2 CPUs and 4 GBytes of RAM have been chosen. The following command can be used to obtain the corresponding value for the id:
+Then with the appropriate 'zoneid', the 'listTemplates' command shows the template ID for the VDC Zurich zone:</para>
+
+```sh
+> listTemplates templatefilter=executable zoneid=a5d3e015-0797-4283-b562-84feea6f66af name=irt-coreos filter=id,name
+count = 1
+template:
++--------------------------------------+------------+
+|                  id                  |    name    |
++--------------------------------------+------------+
+| 73bc5066-b536-4325-8e27-ec873cea6ce7 | IRT-COREOS |
++--------------------------------------+------------+
+```
+
+## Deploy a CoreOS Container Linux virtual machine
+
+The following API call is used to deploy a new virtual machine running Container Linux in VDC:
+
+```sh
+> deployVirtualMachine serviceofferingid=85228261-fc66-4092-8e54-917d1702979d zoneid=a5d3e015-0797-4283-b562-84feea6f66af templateid=73bc5066-b536-4325-8e27-ec873cea6ce7 networkids=c5841e7c-e69e-432b-878b-c108b07a160f keypair=CoreOS-Key01 name=CoreOS-VM-01
+```
+
+Six parameter values are required. 'keypair', 'templateid' and 'zoneid' you have already seen above. 'name' can be any string of your choice.
+
+The 'serviceofferingid' represents the amount of RAM memory and number of CPUs that you want to allocate to the virtual machine. In this example, 2 CPUs and 4 GBytes of RAM have been chosen. The following command can be used to obtain the corresponding value for the id
 
 ```sh
 > listServiceOfferings name=4096-2 filter=id
@@ -139,7 +132,7 @@ The 'serviceofferingid' represents the amount of RAM memory and number of CPUs t
 
 Finally, the 'networkids' parameter specifies the network(s) to which the virtual machine will be attached. You need to specify at least one network.
 
-You can use the listNetworks command to get information about the available networks.
+You can use the 'listNetworks' command to get information about the available networks, in the zone of deployment (i.e. Zurich):
 
 ```sh
 > listNetworks zoneid=a5d3e015-0797-4283-b562-84feea6f66af filter=id,name
@@ -158,51 +151,47 @@ This is the output for the demonstration VDC account. The networks in your accou
 
 The appropriate choice here is the 'Local' network which has Internet access. The other networks are only used for private inter-connection between VDC zones.
 
-When you run the deployVirtualMachine command you will get a long output such as following (which has been abbreviated):
+When you run the 'deployVirtualMachine' command you will get a long output such as following (which has been abbreviated):
 
 ```sh
 cmd = org.apache.cloudstack.api.command.user.vm.DeployVMCmd
-created = 2015-12-22T19:51:27+0000
-jobid = 353896d4-3160-465e-a746-a417ab40eec4
-jobprocstatus = 0
+jobid = 0d80741f-b92a-4fa0-9937-ba0ad31dd773
 jobresult:
 virtualmachine:
-id = e08a3199-9d16-4244-aa89-23395d9627d7
-name = Container-Linux-VM-01
-account = Interoute Demo
-affinitygroup:
+id = 60dbe449-c0ca-407a-a3bc-19c461136bb9
+name = CoreOS-VM-01
 cpunumber = 2
 cpuspeed = 2000
-created = 2015-12-22T19:51:26+0000
-displayname = Container-Linux-VM-01
-domain = Interoute Demo
+created = 2016-12-13T12:58:59+0000
+displayname = CoreOS-VM-01
+guestosid = d0ea999e-8510-11e3-8895-005056ac0d46
 haenable = True
 hypervisor = VMware
 isdynamicallyscalable = True
-jobid = 353896d4-3160-465e-a746-a417ab40eec4
-keypair = Container-Linux-Key01
+jobstatus = 0
+keypair = CoreOS-Key01
 memory = 4096
 passwordenabled = False
 serviceofferingid = 85228261-fc66-4092-8e54-917d1702979d
 serviceofferingname = 4096-2
 state = Running
-templatedisplaytext = Container Linux (Must be deployed with CLI e.g. CloudMonkey)
+templatedisplaytext = CoreOS (Must be deployed with CLI e.g. CloudMonkey)
 templateid = 73bc5066-b536-4325-8e27-ec873cea6ce7
 templatename = IRT-COREOS
-zoneid = a5d3e015-0797-4283-b562-84feea6f66af
 zonename = Zurich (ESX)
 ```
 
 Note that no root password is output because password access is not enabled for this virtual machine. You can only access by presenting the private key which matches the public key that you uploaded.
 
-## Connecting to the new CoreOS Container Linux virtual machine
+## Connecting to the new Container Linux virtual machine
 
 To be able to make an SSH connection from the Internet to the virtual machine a port forwarding rule for the network must be created.
 
 ```sh
-> createPortForwardingRule protocol=TCP publicport=22 ipaddressid=b2b68408-76a9-4dc7-9a2f-f3cf10616aca virtualmachineid=e08a3199-9d16-4244-aa89-23395d9627d7 privateport=22 openfirewall=true
+> createPortForwardingRule protocol=TCP publicport=22 ipaddressid=6b8ba421-8bba-4a25-8053-8cbcb54d76b4 virtualmachineid=60dbe449-c0ca-407a-a3bc-19c461136bb9 privateport=22 openfirewall=true
 ```
-The 'virtualmachineid' can be read from the deploy output above. 'ipaddressid' can be found with the API command listPublicIpAddresses, and (if there is more than one public IP address) you look for the 'associatednetworkid' matching the id of the network that the virtual machine is attached to:
+
+The 'virtualmachineid' can be read from the deploy output above. 'ipaddressid' can be found with the API command 'listPublicIpAddresses', and (if there is more than one public IP address) you look for the 'associatednetworkid' which matched the id of the network that the virtual machine is attached to:
 
 ```sh
 > listPublicIpAddresses zoneid=a5d3e015-0797-4283-b562-84feea6f66af filter=id,ipaddress,associatednetworkid
@@ -217,15 +206,15 @@ publicipaddress:
 
 (The full IP address has been Xed out for privacy reasons.)
 
-The last configuration step is to create an egress firewall rule for the network so that the Container Linux virtual machine will be able to get outward access to the Internet. This is needed to allow Container Linux to access update servers to do automatic updating, and for Docker to access repositories for container images:
+The last configuration step is to create an egress firewall rule for the network so that the virtual machine will be able to get outward access to the Internet. This is needed for Container Linux to access update servers to do automatic updating, and for Docker to access repositories for container images:
 
 ```sh
 > createEgressFirewallRule networkid=c5841e7c-e69e-432b-878b-c108b07a160f protocol=all cidr=0.0.0.0/0
 ```
 
-(Note that these network rules are simple and permissive, while rules for production virtual machines should always be more strictly defined.)
+Note: these network rules are simple and permissive, while rules for production virtual machines should always be more strictly defined.
 
-The virtual machine is now set up for connection, using the 'ipaddress' found above and specifying the private SSH key file to match the public key which was registered in VDC. Note that there is no root user in Container Linux, the default user is 'core':
+The virtual machine is now set up for connection, using the 'ipaddress' found above and specifying the private SSH key file to match the public key which was registered in VDC. Note that there is no user 'root' in Container Linux, the default user is 'core':
 
 ```sh
 $ ssh -i ~/.ssh/id_rsa_coreos core@213.XXX.XXX.185
@@ -238,17 +227,23 @@ The authenticity of host '213.XXX.XXX.185 (213.XXX.XXX.185)' can't be establishe
 ED25519 key fingerprint is e8:6a:a9:02:09:93:4a:2c:20:97:e4:56:da:c1:b7:a0.
 Are you sure you want to continue connecting (yes/no)? yes
 Warning: Permanently added '213.XXX.XXX.185' (ED25519) to the list of known hosts.
-CoreOS stable (835.9.0)
-core@Container-Linux-VM-01 ~ $
+CoreOS (stable)
+core@CoreOS-VM-01 ~ $
 ```
 
 Check that the Internet egress is working by trying to connect to a remote location, for example:
 
 ```sh
-core@Container-Linux-VM-01 ~ $ ping 8.8.8.8
-
-core@Container-Linux-VM-01 ~ $ wget www.coreos.com
+core@CoreOS-VM-01 ~ $ ping 8.8.8.8
 ```
+
+or
+
+```sh
+core@CoreOS-VM-01 ~ $ docker search wordpress
+```
+
+The Container Linux template is configured for automatic updating: it will take a few hours for the update engine to run and download the latest version of Container Linux into the virtual machine.
 
 ## Using CoreOS Container Linux in VDC
 
