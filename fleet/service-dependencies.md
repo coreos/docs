@@ -37,7 +37,7 @@ The feature is currently a beta feature of Kubernetes v1.5.x, and must be specif
 
 ### Example: init container fetching data
 
-This example uses an init container to download some data for use in a container. The init container fetches the Kubernetes home page so that the nginx container can serve it:
+This example uses an init container to download some data. The init container fetches the Kubernetes home page so that the nginx container can serve it:
 
 ```yaml
 apiVersion: v1
@@ -119,9 +119,9 @@ spec:
       name: redis-pod-port
 ```
 
-The above application container specifies an init container which continuously pings the `redis-service`. Once it successfully reaches that service, the init-container exists and the pod that depends on redis can continue.
+This manifest specifies an init container which continuously pings the `redis-service`. Once it successfully reaches that service, the init-container exits and the pod that depends on redis can continue.
 
-You can test this by writing the above into a file `app.yaml` and monitoring the startup process of the pod.
+You can test this by writing the above into a file `app.yaml` and monitoring the startup process of the pod:
 
 ```
 $ kubectl create -f app.yaml
@@ -162,7 +162,7 @@ spec:
       containerPort: 6379
 ```
 
-We can complete the exercise by copying the above into a file `redis.yaml` and create that service and pod:
+We can complete the exercise by copying the above into a file `redis.yaml` to create the pod and service:
 
 ```
 $ kubectl create -f redis.yaml
@@ -178,7 +178,7 @@ app-pod     1/1       Running   0          8m
 redis-pod   1/1       Running   0          2m
 ```
 
-Once the `redis-service` was created, the `app-pod` successfully completed initialization and the pod was created.
+Once the `redis-service` was created, the `app-pod` successfully completed initialization.
 
 
 [fleet-exec-pre]: https://coreos.com/fleet/docs/latest/launching-containers-fleet.html#run-a-container-in-the-cluster
