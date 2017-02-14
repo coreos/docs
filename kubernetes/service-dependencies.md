@@ -1,13 +1,12 @@
 # Service startup dependencies
 
-Service startup often demands an order of operations for functional dependencies. For instance your application depends on a caching system, without the caching container the entire service will fall on it's face. The simplest solution to this problem is to create a service dependency in which one container only starts after another has successfully begun running.
-
+Services often depend on other services, and must start in a certain order. For example, an application that depends on a caching system should start after the cache. fleet and Kubernetes express such dependencies in different ways, but achive the same effect of controlling the order in which applications are executed.
 
 ## fleet: ExecStartPre
 
 Fleet uses the systemd `ExecStartPre` `[Service]` directive [to ensure a command is run before a service starts][fleet-exec-pre], and the `Requires` `[Unit]` directive to ensure a dependency unit is running before a unit starts.
 
-For instance one might create a file `myapp.service` which looks like this:
+For instance, one might create a unit file `myapp.service`:
 
 ```
 [Unit]
@@ -24,8 +23,7 @@ ExecStart=/usr/bin/docker run --name busybox1 busybox /bin/sh -c "trap 'exit 0' 
 ExecStop=/usr/bin/docker stop busybox1
 ```
 
-This depends on `docker.sevice` and before beggining the application does some cleanup work with the three `ExecStartPre` commands which kill, remove, and pull the application's container.
-
+This unit depends on `docker.sevice`, and before starting, the application does some housekeeping work with the three `ExecStartPre` commands which kill, remove, and pull the application's container.
 
 ## Kubernetes: init containers
 
@@ -35,11 +33,11 @@ This depends on `docker.sevice` and before beggining the application does some c
 * Run to completion before the next init container.
 * All run to completion before the specified Pod.
 
-The feature is currently a beta feature of Kubernetes and so can only be invoked with raw JSON in the `.metadata.annotations` section of a Kubernetes specification file.
+The feature is currently a beta feature of Kubernetes v1.5.x, and must be specified in the `.metadata.annotations` of a Kubernetes manifest file.
 
 ### Example: init container fetching data
 
-An example of using an init container to download some local data for use in a container later looks like this:
+This example uses an init container to download some data for use in a container. The init container fetches the Kubernetes home page so that the nginx container can serve it:
 
 ```yaml
 apiVersion: v1
@@ -77,7 +75,8 @@ spec:
 
 ### Example: Delaying pod startup
 
-One way we can solve the first example (waiting for a a caching service before starting our the application) is by creating an init container which runs and monitors for the caching Pod. Once the application's caching Pod is up and running the monitoring container exits and the main service begins running.
+
+One way to wait for a caching service before starting a primary application is by creating an init container to ping the caching Pod. Once the caching Pod is up and running, the cache checking container exits and the main Pod starts.
 
 Application `yaml` file:
 
@@ -120,9 +119,9 @@ spec:
       name: redis-pod-port
 ```
 
-The above application container specifies an init container which continuously pings the `redis-service`; once it successfully reaches that service the init-container exists and the pod which depends on redis continues to be spun up.
+The above application container specifies an init container which continuously pings the `redis-service`. Once it successfully reaches that service, the init-container exists and the pod that depends on redis can continue.
 
-You can test this by creating the writing the above into a file `app.yaml` and monitoring the startup process of the pod.
+You can test this by writing the above into a file `app.yaml` and monitoring the startup process of the pod.
 
 ```
 $ kubectl create -f app.yaml
@@ -163,7 +162,7 @@ spec:
       containerPort: 6379
 ```
 
-We can complete the exercise by copying the above into a file `redis.yaml` and begin create that service and pod.
+We can complete the exercise by copying the above into a file `redis.yaml` and create that service and pod:
 
 ```
 $ kubectl create -f redis.yaml
@@ -179,8 +178,8 @@ app-pod     1/1       Running   0          8m
 redis-pod   1/1       Running   0          2m
 ```
 
-As we can see once the `redis-service` was created the `app-pod` successfully completed the initialization and the pod was created.
+Once the `redis-service` was created, the `app-pod` successfully completed initialization and the pod was created.
+
 
 [fleet-exec-pre]: https://coreos.com/fleet/docs/latest/launching-containers-fleet.html#run-a-container-in-the-cluster
-[k8s-init-containers]: http://kubernetes.io/docs/user-guide/production-pods/#handling-initialization
-[k8s-nit-containers-design]: https://github.com/kubernetes/community/blob/master/contributors/design-proposals/container-init.md
+[k8s-init-containers]: https://kubernetes.io/docs/concepts/abstractions/init-containers/
