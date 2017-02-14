@@ -1,6 +1,6 @@
 # Service startup dependencies
 
-Services often depend on other services, and must start in a certain order. For example, an application that depends on a caching system should start after the cache. fleet and Kubernetes express such dependencies in different ways, but achive the same effect of controlling the order in which applications are executed.
+Services often depend on other services, and must start in a certain order. For example, an application that depends on a caching system should start after the cache. fleet and Kubernetes express such dependencies in different ways.
 
 ## fleet: ExecStartPre
 
