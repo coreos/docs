@@ -24,48 +24,59 @@ Then run `sudo systemctl daemon-reload` and `sudo systemctl restart etcd2.servic
 
 EnvironmentFile similar to Environment directive but reads the environment variables from a text file. The text file should contain new-line-separated variable assignments.
 
-It is impossible to use scripts in Environment directive. So you can not dynamically define Environment, i.e. this doesn't work `Environment=/usr/bin/curl http://example.com/something`. When you need to update your environment values dynamically you can combine systemd service unit and EnvironmentFile directive.
+For example in Container Linux, `flanneld.service` unit file creates `/run/flannel_docker_opts.env` environment file which is used by `docker.service` unit to configure Docker use flannel interface. Here's what the environment file looks like:
 
-For example in Container Linux, `flanneld.service` unit file creates `/run/flannel_docker_opts.env` environment file which is used by `docker.service` unit to configure Docker use flannel interface.
-
-```
+```sh
 $ cat fleet_machines.service
 DOCKER_OPT_BIP="--bip=10.2.25.1/24"
 DOCKER_OPT_IPMASQ="--ip-masq=false"
 DOCKER_OPT_MTU="--mtu=8951"
 ```
 
-You can use similar example in your containers' unit files:
+The docker unit references this file:
 
-```
+```yaml
 [Unit]
-Description=Generates /etc/fleet_machines.env file
-After=etcd2.service
-Requires=etcd2.service
-After=fleet.service
-Requires=fleet.service
+Description=Docker Application Container Engine
+Documentation=http://docs.docker.com
+After=containerd.service docker.socket network.target
+Requires=containerd.service docker.socket
+
+[Service]
+Type=notify
+EnvironmentFile=-/run/flannel/flannel_docker_opts.env
+<snip>
+```
+
+Since you can't populate an Environment directive with a script, dynamically setting an environment variable isn't possible.
+
+To accomplish this, you can use the EnvironmentFile directive. Here's a really simple example that downloads some config as environment variables, and then passes it to a container:
+
+```sh
+$ cat download.service
+[Unit]
+Description=Download config
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/sh -c "/usr/bin/echo -n FLEET_MACHINES= > /etc/fleet_machines.env"
-ExecStart=/usr/bin/sh -c "/usr/bin/fleetctl list-machines -fields='ip,machine' -no-legend=true -full=true | tr '\t' '=' | tr '\n' ',' >> /etc/fleet_machines.env"
+ExecStart=/usr/bin/`Environment=/usr/bin/curl http://example.com/something >> /etc/remote-config.env`
 ```
 
-```
-cat container.service
+Let's use the `ADDRESS` variable from our downloaded file:
+
+```sh
+$ cat container.service
 [Unit]
 Description=My test Docker container
-After=docker.service
-Requires=docker.service
-After=fleet_machines.service
-Requires=fleet_machines.service
+After=download.service
+Requires=download.service
 
 [Service]
-EnvironmentFile=/etc/fleet_machines.env
+EnvironmentFile=/etc/remote-config.env
 ExecStartPre=-/usr/bin/docker kill %p
 ExecStartPre=-/usr/bin/docker rm %p
 ExecStartPre=/usr/bin/docker pull ubuntu:latest
-ExecStart=/usr/bin/docker run --rm --name %p -e FLEET_MACHINES ubuntu:latest /bin/bash -c "trap 'exit 0' INT TERM; while true; do echo "$FLEET_MACHINES"; sleep 1; done"
+ExecStart=/usr/bin/docker run --rm --name %p -e ADDRESS ubuntu:latest /bin/echo $ADDRESS
 ```
 
 ## Other examples
