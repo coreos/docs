@@ -26,10 +26,18 @@ EnvironmentFile similar to Environment directive but reads the environment varia
 
 It is impossible to use scripts in Environment directive. So you can not dynamically define Environment, i.e. this doesn't work `Environment=/usr/bin/curl http://example.com/something`. When you need to update your environment values dynamically you can combine systemd service unit and EnvironmentFile directive.
 
-For example in Container Linux, `flanneld.service` unit file creates `/run/flannel_docker_opts.env` environment file which is used by `docker.service` unit to configure Docker use flannel interface. You can use similar example in your containers' unit files:
+For example in Container Linux, `flanneld.service` unit file creates `/run/flannel_docker_opts.env` environment file which is used by `docker.service` unit to configure Docker use flannel interface.
 
 ```
-cat fleet_machines.service
+$ cat fleet_machines.service
+DOCKER_OPT_BIP="--bip=10.2.25.1/24"
+DOCKER_OPT_IPMASQ="--ip-masq=false"
+DOCKER_OPT_MTU="--mtu=8951"
+```
+
+You can use similar example in your containers' unit files:
+
+```
 [Unit]
 Description=Generates /etc/fleet_machines.env file
 After=etcd2.service
