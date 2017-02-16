@@ -6,7 +6,7 @@ systemd has an Environment directive which sets environment variables for execut
 
 With the example below, you can configure your etcd2 daemon to use encryption. Just create `/etc/systemd/system/etcd2.service.d/30-certificates.conf` [drop-in] for etcd2.service:
 
-```
+```ini
 [Service]
 # Client Env Vars
 Environment=ETCD_CA_FILE=/path/to/CA.pem
@@ -26,7 +26,7 @@ EnvironmentFile similar to Environment directive but reads the environment varia
 
 For example in Container Linux, `flanneld.service` unit file creates `/run/flannel_docker_opts.env` environment file which is used by `docker.service` unit to configure Docker use flannel interface. Here's what the environment file looks like:
 
-```sh
+```
 $ cat fleet_machines.service
 DOCKER_OPT_BIP="--bip=10.2.25.1/24"
 DOCKER_OPT_IPMASQ="--ip-masq=false"
@@ -35,7 +35,7 @@ DOCKER_OPT_MTU="--mtu=8951"
 
 The docker unit references this file:
 
-```yaml
+```ini
 [Unit]
 Description=Docker Application Container Engine
 Documentation=http://docs.docker.com
@@ -52,7 +52,7 @@ Since you can't populate an Environment directive with a script, dynamically set
 
 To accomplish this, you can use the EnvironmentFile directive. Here's a really simple example that downloads some config as environment variables, and then passes it to a container:
 
-```sh
+```
 $ cat download.service
 [Unit]
 Description=Download config
@@ -64,7 +64,7 @@ ExecStart=/usr/bin/`Environment=/usr/bin/curl http://example.com/something >> /e
 
 Let's use the `ADDRESS` variable from our downloaded file:
 
-```sh
+```
 $ cat container.service
 [Unit]
 Description=My test Docker container
@@ -85,7 +85,7 @@ ExecStart=/usr/bin/docker run --rm --name %p -e ADDRESS ubuntu:latest /bin/echo 
 
 You can also write your host IP addresses into `/etc/network-environment` file using [this](https://github.com/kelseyhightower/setup-network-environment) utility. Then you can run your Docker containers following way:
 
-```
+```ini
 [Unit]
 Description=Nginx service
 Requires=etcd2.service
