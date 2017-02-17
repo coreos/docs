@@ -48,14 +48,6 @@ The latest Container Linux ISOs can be downloaded from the image storage site:
 
 The most common use-case for this ISO is to install Container Linux to disk. You can [find those instructions here](installing-to-disk.md).
 
-## Bypass authentication
+## No authentication on console
 
-If you need to bypass authentication in order to install, the kernel option `coreos.autologin` allows you to drop directly to a shell on a given console without prompting for a password. Useful for troubleshooting but use with caution.
-
-For any console that doesn't normally get a login prompt by default be sure to combine with the `console` option:
-
-```
-console=tty0 console=ttyS0 coreos.autologin=tty1 coreos.autologin=ttyS0
-```
-
-Without any argument it enables access on all consoles. Note that for the VGA console the login prompts are on virtual terminals (`tty1`, `tty2`, etc), not the VGA console itself (`tty0`).
+The ISO is configured to start a shell on the console without prompting for a password. This is convenient for installation and troubleshooting, but use caution.
