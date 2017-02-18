@@ -6,6 +6,36 @@ Application containers running on your cluster can read and write data into etcd
 
 <a class="btn btn-default" href="../latest/api.html">Complete etcd API Docs</a>
 
+## Setting up etcd
+
+Container Linux comes pre-installed with an `etcd-wrapper` script which can be configured to **run etcd from inside of a container**. Container Linux also comes pre-installed with an `etcd-member.service` systemd unit which by default uses the etcd3 image. This means you to use etcd3 without needing to install the etcd3 binary.
+
+To enable the `etcd-member.service` unit you need to manually disable the `etcd2.service` unit and enable the `etcd-member.service`.
+
+```
+$ systemctl disable etcd2.service
+$ systemctl enable etcd-member.service
+$ systemctl start etcd-member.service
+```
+
+This can be automated at first-boot using [ignition][ignition-docs]. The following is an example of the ignition files you might use for this task:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "systemd": {
+    "units": [{
+      "name": "etcd-member.service",
+      "enable": true,
+    },
+    {
+      "name": "etcd2.service",
+      "enable": false,
+    }]
+  }
+}
+```
+
 ## Reading and writing to etcd
 
 The HTTP-based API is easy to use. This guide will show both `etcdctl` and `curl` examples.
@@ -204,3 +234,6 @@ $ curl http://127.0.0.1:2379/v2/keys/foo
 <a class="btn btn-default" href="https://coreos.com/etcd">etcd Overview</a>
 <a class="btn btn-default" href="https://github.com/coreos/etcd">Full etcd API Docs</a>
 <a class="btn btn-default" href="https://github.com/coreos/etcd/blob/master/Documentation/libraries-and-tools.md">Projects using etcd</a>
+
+[ssss-repo]: https://quay.io/repository/coreos/etcd?tab=tags
+[ignition-docs]: https://coreos.com/ignition/docs/latest/getting-started.html
