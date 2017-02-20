@@ -8,17 +8,25 @@ Application containers running on your cluster can read and write data into etcd
 
 ## Setting up etcd
 
-Container Linux comes pre-installed with an `etcd-wrapper` script which can be configured to **run etcd from inside of a container**. Container Linux also comes pre-installed with an `etcd-member.service` systemd unit which by default uses the etcd3 image. This means you to use etcd3 without needing to install the etcd3 binary.
+Container Linux's `etcd-member.service` systemd unit knows how to fetch and run the current etcd v3.x container image, providing etcd v3 without requiring the binary to be present in every default OS installation.
 
-To enable the `etcd-member.service` unit you need to manually disable the `etcd2.service` unit and enable the `etcd-member.service`.
+To enable the etcd v3 service, first ensure that `etcd2.service` is disabled.
 
 ```
 $ systemctl disable etcd2.service
-$ systemctl enable etcd-member.service
-$ systemctl start etcd-member.service
+$ systemctl stop etcd2.service
 ```
 
-This can be automated at first-boot using [ignition][ignition-docs]. The following is an example of the ignition files you might use for this task:
+Then, enable and start the `etcd-member.service`:
+
+```
+$ systemctl enable etcd-member.service
+Created symlink /etc/systemd/system/multi-user.target.wants/etcd-member.service → /usr/lib/systemd/system/etcd-member.service.
+$ systemctl start etcd-member.service
+$ systemctl status etcd-member.service
+```
+
+This can be automated at first boot using [Ignition][ignition-docs]. The following is an example of the Ignition config you might use for this task:
 
 ```json
 {
@@ -235,5 +243,4 @@ $ curl http://127.0.0.1:2379/v2/keys/foo
 <a class="btn btn-default" href="https://github.com/coreos/etcd">Full etcd API Docs</a>
 <a class="btn btn-default" href="https://github.com/coreos/etcd/blob/master/Documentation/libraries-and-tools.md">Projects using etcd</a>
 
-[ssss-repo]: https://quay.io/repository/coreos/etcd?tab=tags
 [ignition-docs]: https://coreos.com/ignition/docs/latest/getting-started.html
