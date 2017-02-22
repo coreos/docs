@@ -10,7 +10,7 @@ Application containers running on your cluster can read and write data into etcd
 
 Container Linux's `etcd-member.service` systemd unit knows how to fetch and run the current etcd v3.x container image, providing etcd v3 without requiring the binary to be present in every default OS installation.
 
-To enable the etcd v3 service, first ensure that `etcd2.service` is disabled.
+To enable the etcd v3 service, first ensure that `etcd2.service` is disabled. To upgrade an existing etcd v2 cluster rather than deploy a new one, start with the [etcd v2 to v3 upgrade doc][etcd-v3-upgrade].
 
 ```
 $ systemctl disable etcd2.service
@@ -26,7 +26,7 @@ $ systemctl start etcd-member.service
 $ systemctl status etcd-member.service
 ```
 
-This can be automated at first boot using [Ignition][ignition-docs]. The following is an example of the Ignition config you might use for this task:
+etcd v3 startup can be configured at a new node's first boot with [Ignition][ignition-docs] provisioning. The following Ignition config enables the `etcd-member` etcd v3 service:
 
 ```json
 {
@@ -243,4 +243,6 @@ $ curl http://127.0.0.1:2379/v2/keys/foo
 <a class="btn btn-default" href="https://github.com/coreos/etcd">Full etcd API Docs</a>
 <a class="btn btn-default" href="https://github.com/coreos/etcd/blob/master/Documentation/libraries-and-tools.md">Projects using etcd</a>
 
-[ignition-docs]: https://coreos.com/ignition/docs/latest/getting-started.html
+
+[etcd-v3-upgrade]: https://github.com/coreos/etcd/blob/master/Documentation/upgrades/upgrade_3_0.md
+[ignition-docs]: https://github.com/coreos/ignition/blob/master/doc/getting-started.md
