@@ -6,6 +6,44 @@ Application containers running on your cluster can read and write data into etcd
 
 <a class="btn btn-default" href="../latest/api.html">Complete etcd API Docs</a>
 
+## Setting up etcd
+
+Container Linux's `etcd-member.service` systemd unit knows how to fetch and run the current etcd v3.x container image, providing etcd v3 without requiring the binary to be present in every default OS installation.
+
+To enable the etcd v3 service, first ensure that `etcd2.service` is disabled. To upgrade an existing etcd v2 cluster rather than deploy a new one, start with the [etcd v2 to v3 upgrade doc][etcd-v3-upgrade].
+
+```
+$ systemctl disable etcd2.service
+$ systemctl stop etcd2.service
+```
+
+Then, enable and start the `etcd-member.service`:
+
+```
+$ systemctl enable etcd-member.service
+Created symlink /etc/systemd/system/multi-user.target.wants/etcd-member.service → /usr/lib/systemd/system/etcd-member.service.
+$ systemctl start etcd-member.service
+$ systemctl status etcd-member.service
+```
+
+etcd v3 startup can be configured at a new node's first boot with [Ignition][ignition-docs] provisioning. The following Ignition config enables the `etcd-member` etcd v3 service:
+
+```json
+{
+  "ignition": { "version": "2.0.0" },
+  "systemd": {
+    "units": [{
+      "name": "etcd-member.service",
+      "enable": true,
+    },
+    {
+      "name": "etcd2.service",
+      "enable": false,
+    }]
+  }
+}
+```
+
 ## Reading and writing to etcd
 
 The HTTP-based API is easy to use. This guide will show both `etcdctl` and `curl` examples.
@@ -204,3 +242,7 @@ $ curl http://127.0.0.1:2379/v2/keys/foo
 <a class="btn btn-default" href="https://coreos.com/etcd">etcd Overview</a>
 <a class="btn btn-default" href="https://github.com/coreos/etcd">Full etcd API Docs</a>
 <a class="btn btn-default" href="https://github.com/coreos/etcd/blob/master/Documentation/libraries-and-tools.md">Projects using etcd</a>
+
+
+[etcd-v3-upgrade]: https://github.com/coreos/etcd/blob/master/Documentation/upgrades/upgrade_3_0.md
+[ignition-docs]: https://github.com/coreos/ignition/blob/master/doc/getting-started.md
