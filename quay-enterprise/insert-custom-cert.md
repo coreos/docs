@@ -4,7 +4,7 @@ To add custom TLS certificates to Quay Enterprise, create a new directory named 
 
 ## Example
 
-### View certificate to be added to the container: 
+### View certificate to be added to the container:
 
 ```
 $ cat storage.crt  
@@ -33,8 +33,8 @@ Obtain the quay container's `CONTAINER ID` with `docker ps`:
 
 ```
 $ docker ps      
-CONTAINER ID        IMAGE                                COMMAND                  CREATED             STATUS              PORTS 
-5a3e82c4a75f        quay.io/coreos/quay:v2.0.2           "/sbin/my_init"          24 hours ago        Up 18 hours         0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp, 8443/tcp   grave_keller
+CONTAINER ID        IMAGE                                COMMAND                  CREATED             STATUS              PORTS
+5a3e82c4a75f        quay.io/coreos/quay:v2.1.0           "/sbin/my_init"          24 hours ago        Up 18 hours         0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp, 8443/tcp   grave_keller
 ```
 
 Restart the container with that ID:
