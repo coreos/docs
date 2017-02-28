@@ -24,59 +24,32 @@ Then run `sudo systemctl daemon-reload` and `sudo systemctl restart etcd2.servic
 
 EnvironmentFile similar to Environment directive but reads the environment variables from a text file. The text file should contain new-line-separated variable assignments.
 
-For example in Container Linux, `flanneld.service` unit file creates `/run/flannel_docker_opts.env` environment file which is used by `docker.service` unit to configure Docker use flannel interface. Here's what the environment file looks like:
+For example, in Container Linux, the `coreos-metadata.service` service creates `/run/metadata/coreos`. This environment file can be included by other services in order to inject dynamic configuration. Here's an example of the environment file when run on DigitalOcean (the IP addresses have been removed):
 
 ```
-$ cat fleet_machines.service
-DOCKER_OPT_BIP="--bip=10.2.25.1/24"
-DOCKER_OPT_IPMASQ="--ip-masq=false"
-DOCKER_OPT_MTU="--mtu=8951"
+COREOS_DIGITALOCEAN_IPV4_ANCHOR_0=X.X.X.X
+COREOS_DIGITALOCEAN_IPV4_PRIVATE_0=X.X.X.X
+COREOS_DIGITALOCEAN_HOSTNAME=test.example.com
+COREOS_DIGITALOCEAN_IPV4_PUBLIC_0=X.X.X.X
+COREOS_DIGITALOCEAN_IPV6_PUBLIC_0=X:X:X:X:X:X:X:X
 ```
 
-The docker unit references this file:
+This environment file can then be sourced and its variables used. Here is an example drop-in for `etcd-member.service` which starts `coreos-metadata.service` and then uses the generated results:
 
 ```ini
 [Unit]
-Description=Docker Application Container Engine
-Documentation=http://docs.docker.com
-After=containerd.service docker.socket network.target
-Requires=containerd.service docker.socket
+Requires=coreos-metadata.service
+After=coreos-metadata.service
 
 [Service]
-Type=notify
-EnvironmentFile=-/run/flannel/flannel_docker_opts.env
-<snip>
-```
-
-Since you can't populate an Environment directive with a script, dynamically setting an environment variable isn't possible.
-
-To accomplish this, you can use the EnvironmentFile directive. Here's a really simple example that downloads some config as environment variables, and then passes it to a container:
-
-```
-$ cat download.service
-[Unit]
-Description=Download config
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/`Environment=/usr/bin/curl http://example.com/something >> /etc/remote-config.env`
-```
-
-Let's use the `ADDRESS` variable from our downloaded file:
-
-```
-$ cat container.service
-[Unit]
-Description=My test Docker container
-After=download.service
-Requires=download.service
-
-[Service]
-EnvironmentFile=/etc/remote-config.env
-ExecStartPre=-/usr/bin/docker kill %p
-ExecStartPre=-/usr/bin/docker rm %p
-ExecStartPre=/usr/bin/docker pull ubuntu:latest
-ExecStart=/usr/bin/docker run --rm --name %p -e ADDRESS ubuntu:latest /bin/echo $ADDRESS
+EnvironmentFile=/run/metadata/coreos
+ExecStart=
+ExecStart=/usr/bin/etcd2 \
+  --advertise-client-urls=http://${COREOS_DIGITALOCEAN_IPV4_PUBLIC_0}:2379 \
+  --initial-advertise-peer-urls=http://${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0}:2380 \
+  --listen-client-urls=http://0.0.0.0:2379 \
+  --listen-peer-urls=http://${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0}:2380 \
+  --initial-cluster=%m=http://${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0}:2380
 ```
 
 ## Other examples
