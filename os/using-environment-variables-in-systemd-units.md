@@ -6,7 +6,7 @@ systemd has an Environment directive which sets environment variables for execut
 
 With the example below, you can configure your etcd2 daemon to use encryption. Just create `/etc/systemd/system/etcd2.service.d/30-certificates.conf` [drop-in] for etcd2.service:
 
-```
+```ini
 [Service]
 # Client Env Vars
 Environment=ETCD_CA_FILE=/path/to/CA.pem
@@ -24,40 +24,32 @@ Then run `sudo systemctl daemon-reload` and `sudo systemctl restart etcd2.servic
 
 EnvironmentFile similar to Environment directive but reads the environment variables from a text file. The text file should contain new-line-separated variable assignments.
 
-It is impossible to use scripts in Environment directive. So you can not dynamically define Environment, i.e. this doesn't work `Environment=/usr/bin/curl http://example.com/something`. When you need to update your environment values dynamically you can combine systemd service unit and EnvironmentFile directive.
-
-For example in Container Linux, `flanneld.service` unit file creates `/run/flannel_docker_opts.env` environment file which is used by `docker.service` unit to configure Docker use flannel interface. You can use similar example in your containers' unit files:
+For example, in Container Linux, the `coreos-metadata.service` service creates `/run/metadata/coreos`. This environment file can be included by other services in order to inject dynamic configuration. Here's an example of the environment file when run on DigitalOcean (the IP addresses have been removed):
 
 ```
-cat fleet_machines.service
+COREOS_DIGITALOCEAN_IPV4_ANCHOR_0=X.X.X.X
+COREOS_DIGITALOCEAN_IPV4_PRIVATE_0=X.X.X.X
+COREOS_DIGITALOCEAN_HOSTNAME=test.example.com
+COREOS_DIGITALOCEAN_IPV4_PUBLIC_0=X.X.X.X
+COREOS_DIGITALOCEAN_IPV6_PUBLIC_0=X:X:X:X:X:X:X:X
+```
+
+This environment file can then be sourced and its variables used. Here is an example drop-in for `etcd-member.service` which starts `coreos-metadata.service` and then uses the generated results:
+
+```ini
 [Unit]
-Description=Generates /etc/fleet_machines.env file
-After=etcd2.service
-Requires=etcd2.service
-After=fleet.service
-Requires=fleet.service
+Requires=coreos-metadata.service
+After=coreos-metadata.service
 
 [Service]
-Type=oneshot
-ExecStart=/usr/bin/sh -c "/usr/bin/echo -n FLEET_MACHINES= > /etc/fleet_machines.env"
-ExecStart=/usr/bin/sh -c "/usr/bin/fleetctl list-machines -fields='ip,machine' -no-legend=true -full=true | tr '\t' '=' | tr '\n' ',' >> /etc/fleet_machines.env"
-```
-
-```
-cat container.service
-[Unit]
-Description=My test Docker container
-After=docker.service
-Requires=docker.service
-After=fleet_machines.service
-Requires=fleet_machines.service
-
-[Service]
-EnvironmentFile=/etc/fleet_machines.env
-ExecStartPre=-/usr/bin/docker kill %p
-ExecStartPre=-/usr/bin/docker rm %p
-ExecStartPre=/usr/bin/docker pull ubuntu:latest
-ExecStart=/usr/bin/docker run --rm --name %p -e FLEET_MACHINES ubuntu:latest /bin/bash -c "trap 'exit 0' INT TERM; while true; do echo "$FLEET_MACHINES"; sleep 1; done"
+EnvironmentFile=/run/metadata/coreos
+ExecStart=
+ExecStart=/usr/bin/etcd2 \
+  --advertise-client-urls=http://${COREOS_DIGITALOCEAN_IPV4_PUBLIC_0}:2379 \
+  --initial-advertise-peer-urls=http://${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0}:2380 \
+  --listen-client-urls=http://0.0.0.0:2379 \
+  --listen-peer-urls=http://${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0}:2380 \
+  --initial-cluster=%m=http://${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0}:2380
 ```
 
 ## Other examples
@@ -66,7 +58,7 @@ ExecStart=/usr/bin/docker run --rm --name %p -e FLEET_MACHINES ubuntu:latest /bi
 
 You can also write your host IP addresses into `/etc/network-environment` file using [this](https://github.com/kelseyhightower/setup-network-environment) utility. Then you can run your Docker containers following way:
 
-```
+```ini
 [Unit]
 Description=Nginx service
 Requires=etcd2.service
