@@ -39,7 +39,7 @@ Don't wrap long lines of text with manual newlines. Line wrapping churns prose d
 
 ### One sentence per line deprecated
 
-Do not add a line break between sentences. Write natural English paragraphs, separated by a single blank line. Writing Markdown source with a newline between every sentence is acceptable to most compilers and can ease change review. However, this format makes the document less readable in source form. 
+Do not add a line break between sentences. Write natural English paragraphs, separated by a single blank line. Writing Markdown source with a newline between every sentence is acceptable to most compilers and can ease change review. However, this format makes the document less readable in source form.
 
 ### Preferred markdown symbols
 
@@ -172,7 +172,7 @@ $ rkt run --debug example.aci
 
 In this case the argument to `rkt`, `run`, is a subcommand. `run` in turn accepts the `--debug` option to modify how it executes the ACI image specified by its own argument, `example.aci`
 
-### Example: Long command lines
+### Example: Documenting Long command lines
 
 Some commands pack many subcommands, arguments, and options on a single line. It is good practice to break such long command lines with newlines, escaped with backslash (`\`), because lines inside code blocks are not soft-wrapped in most presentations. For very long command lines, choose points that break the parameters into logical groups. Lines so wrapped are not indented for vertical alignment.
 
@@ -184,6 +184,30 @@ $ docker run --name docsbuilder \
 -v /etc/ssl/certs:/etc/ssl/certs:ro \
 quay.io/coreosinc/coreos-pages-builder scripts/deploy stage
 ```
+
+### Example: Documenting Code Blocks
+
+Code blocks are similar to long command lines, but with a fenced look. To format a code block in a document, insert triple backticks ` ``` ``` `before and after the code block. Use language identifier to enable language detection and syntax highlighting in the code block. Do not add a newline after the code block, Markdown automatically does for you.
+
+```
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: etcd-client
+spec:
+  ports:
+  - name: etcd-client-port
+    port: 2379
+    protocol: TCP
+    targetPort: 2379
+  selector:
+    app: etcd
+ ```
+
+
+In this example, `yaml` is the language identifier that gives a distinct syntax formatting according to the language specified.
+
 
 ## File name extension conventions
 
