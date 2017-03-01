@@ -205,8 +205,7 @@ spec:
     app: etcd
  ```
 
-
-In this example, `yaml` is the language identifier that gives a distinct syntax formatting according to the language specified.
+ In this example, `yaml` is the language identifier that gives a distinct syntax formatting according to the language specified.
 
 
 ## File name extension conventions
