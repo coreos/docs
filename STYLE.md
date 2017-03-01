@@ -185,7 +185,7 @@ $ docker run --name docsbuilder \
 quay.io/coreosinc/coreos-pages-builder scripts/deploy stage
 ```
 
-### Example: Documenting code blocks
+## Example: Documenting code blocks
 
 Insert triple backtick (grave accent) characters on a new line before and after a block of code. A tag, such as `yaml`, `sh`, `json`, or `ini`, can be placed after the opening backticks to declare the language in the block. Markdown syntax is not interpreted within the gated code block, but special characters are replaced with HTML entities.
 
@@ -205,7 +205,6 @@ spec:
 ```
 
 View this document's source to see the Markdown that generates the code block above.
-
 
 ## File name extension conventions
 
