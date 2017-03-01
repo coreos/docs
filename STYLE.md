@@ -172,7 +172,7 @@ $ rkt run --debug example.aci
 
 In this case the argument to `rkt`, `run`, is a subcommand. `run` in turn accepts the `--debug` option to modify how it executes the ACI image specified by its own argument, `example.aci`
 
-### Example: Documenting Long command lines
+### Example: Documenting long command lines
 
 Some commands pack many subcommands, arguments, and options on a single line. It is good practice to break such long command lines with newlines, escaped with backslash (`\`), because lines inside code blocks are not soft-wrapped in most presentations. For very long command lines, choose points that break the parameters into logical groups. Lines so wrapped are not indented for vertical alignment.
 
@@ -185,28 +185,26 @@ $ docker run --name docsbuilder \
 quay.io/coreosinc/coreos-pages-builder scripts/deploy stage
 ```
 
-### Example: Documenting Code Blocks
+### Example: Documenting code blocks
 
-Code blocks are similar to long command lines, but with a fenced look. To format a code block in a document, insert triple backticks ` ``` ``` `before and after the code block. Use language identifier to enable language detection and syntax highlighting in the code block. Do not add a newline after the code block, Markdown automatically does for you.
+To format a code block in a document, insert triple backticks ` ``` ` ` ``` ` on a new line before and after the code block. A tag, such as `yaml`, `sh`, `json`, or `ini`, can be placed after the opening backticks to declare the language in the block. Check the escaping of the literal ` ``` ` chars with the preview.
 
 ```
 ```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: etcd-client
-spec:
-  ports:
-  - name: etcd-client-port
-    port: 2379
-    protocol: TCP
-    targetPort: 2379
-  selector:
-    app: etcd
+#cloud-config
+coreos:
+  units:
+    - name: etcd2.service
+      command: start
+    - name: fleet.service
+      command: start
+write_files:
+  - path: "/home/core/welcome"
+    owner: "core"
+    permissions: "0644"
+    content: |
+      {{.greeting}}
  ```
-
- In this example, `yaml` is the language identifier that gives a distinct syntax formatting according to the language specified.
-
 
 ## File name extension conventions
 
