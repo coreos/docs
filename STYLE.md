@@ -187,23 +187,21 @@ quay.io/coreosinc/coreos-pages-builder scripts/deploy stage
 
 ### Example: Documenting code blocks
 
-To format a code block in a document, insert triple backticks ` ``` ` ` ``` ` on a new line before and after the code block. A tag, such as `yaml`, `sh`, `json`, or `ini`, can be placed after the opening backticks to declare the language in the block. Check the escaping of the literal ` ``` ` chars with the preview.
+To format a code block in a document, insert triple backticks ` ``` ` ` ``` ` on a new line before and after the code block. A tag, such as `yaml`, `sh`, `json`, or `ini`, can be placed after the opening backticks to declare the language in the block.
 
-```
 ```yaml
-#cloud-config
-coreos:
-  units:
-    - name: etcd2.service
-      command: start
-    - name: fleet.service
-      command: start
-write_files:
-  - path: "/home/core/welcome"
-    owner: "core"
-    permissions: "0644"
-    content: |
-      {{.greeting}}
+apiVersion: v1
+kind: Service
+metadata:
+ name: etcd-client
+spec:
+ ports:
+ - name: etcd-client-port
+   port: 2379
+   protocol: TCP
+   targetPort: 2379
+ selector:
+   app: etcd
  ```
 
 ## File name extension conventions
