@@ -187,7 +187,7 @@ quay.io/coreosinc/coreos-pages-builder scripts/deploy stage
 
 ### Example: Documenting code blocks
 
-To format a code block in a document, insert triple backticks ` ``` ` ` ``` ` on a new line before and after the code block. A tag, such as `yaml`, `sh`, `json`, or `ini`, can be placed after the opening backticks to declare the language in the block.
+Insert triple backtick (grave accent) characters on a new line before and after a block of code. A tag, such as `yaml`, `sh`, `json`, or `ini`, can be placed after the opening backticks to declare the language in the block. Markdown syntax is not interpreted within the gated code block, but special characters are replaced with HTML entities.
 
 ```yaml
 apiVersion: v1
@@ -202,7 +202,10 @@ spec:
    targetPort: 2379
  selector:
    app: etcd
- ```
+```
+
+View this document's source to see the Markdown that generates the code block above.
+
 
 ## File name extension conventions
 
