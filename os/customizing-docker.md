@@ -170,7 +170,7 @@ Cloud-config for Docker TLS authentication will look like:
 
 write_files:
     - path: /etc/docker/ca.pem
-      permissions: 0644
+      permissions: '0644'
       content: |
         -----BEGIN CERTIFICATE-----
         MIIFNDCCAx6gAwIBAgIBATALBgkqhkiG9w0BAQswLTEMMAoGA1UEBhMDVVNBMRAw
@@ -178,7 +178,7 @@ write_files:
         NTA5MDIxMDExMThaMC0xDDAKBgNVBAYTA1VTQTEQMA4GA1UEChMHZXRjZC1jYTEL
         ... ... ...
     - path: /etc/docker/server.pem
-      permissions: 0644
+      permissions: '0644'
       content: |
         -----BEGIN CERTIFICATE-----
         MIIFajCCA1SgAwIBAgIBBTALBgkqhkiG9w0BAQswLTEMMAoGA1UEBhMDVVNBMRAw
@@ -186,7 +186,7 @@ write_files:
         NTA5MDIxMDM3MDNaMEQxDDAKBgNVBAYTA1VTQTEQMA4GA1UEChMHZXRjZC1jYTEQ
         ... ... ...
     - path: /etc/docker/server-key.pem
-      permissions: 0600
+      permissions: '0600'
       content: |
         -----BEGIN RSA PRIVATE KEY-----
         MIIJKAIBAAKCAgEA23Q4yELhNEywScrHl6+MUtbonCu59LIjpxDMAGxAHvWhWpEY
