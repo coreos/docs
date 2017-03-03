@@ -2,10 +2,6 @@
 
 Packet is a bare metal cloud hosting provider. Container Linux is installable as one of the default operating system options. You can deploy Container Linux servers via the Packet portal or API.
 
-## Channels
-
-Currently the Packet OEM is making it's way through the three Container Linux channels. As it becomes available to a new channel it will become available on Packet. There are no seperate instructions per channel that are outside of the normal Container Linux instructions.
-
 ## Deployment instructions
 
 The first step in deploying any devices on Packet is to first create an account and decide if you'd like to deploy via our portal or API. The portal is appropriate for small clusters of machines that won't change frequently. If you'll be deploying a lot of machines, or expect your workload to change frequently it is much more efficient to use the API. You can generate an API token through the portal once you've set up an account and payment method. Create an account here: [Packet Account Registration](https://www.packet.net/promo/coreos/).
