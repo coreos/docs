@@ -10,10 +10,10 @@ By default, Toolbox uses the stock Fedora Docker container. To start using it, s
 /usr/bin/toolbox
 ```
 
-You're now in the namespace of Fedora and can install any software you'd like via `yum`. For example, if you'd like to use `tcpdump`:
+You're now in the namespace of Fedora and can install any software you'd like via `dnf`. For example, if you'd like to use `tcpdump`:
 
 ```sh
-[root@srv-3qy0p ~]# yum install tcpdump
+[root@srv-3qy0p ~]# dnf -y install tcpdump
 [root@srv-3qy0p ~]# tcpdump -i ens3
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on ens3, link-type EN10MB (Ethernet), capture size 65535 bytes
@@ -65,7 +65,7 @@ for the default `fedora` container)
 Advanced users can SSH directly into a toolbox by setting up an `/etc/passwd` entry:
 
 ```sh
-useradd bob -m -p '*' -s /usr/bin/toolbox -U -G sudo,docker
+useradd bob -m -p '*' -s /usr/bin/toolbox -U -G sudo,docker,rkt
 ```
 
 To test, SSH as bob:
@@ -78,6 +78,6 @@ ssh bob@hostname.example.com
  / /   / __ \/ ___/ _ \/ / / /\__ \
 / /___/ /_/ / /  /  __/ /_/ /___/ /
 \____/\____/_/   \___/\____//____/
-[root@srv-3qy0p ~]# yum install emacs
-[root@srv-3qy0p ~]# emacs /media/root/etc/systemd/system/docker.service
+[root@srv-3qy0p ~]# dnf -y install emacs-nox
+[root@srv-3qy0p ~]# emacs /media/root/etc/systemd/system/newapp.service
 ```
