@@ -223,19 +223,14 @@ Docker containers can be very large and debugging a build process makes it easy 
 
 ## Enabling the Docker debug flag
 
-First, copy the existing unit from the read-only file system into the read/write file system, so we can edit it:
-
-```sh
-cp /usr/lib/systemd/system/docker.service /etc/systemd/system/
-```
-
-Edit the `ExecStart` line to add the -D flag:
+Set the `--debug` (`-D`) flag in the `DOCKER_OPTS` environment variable by using a drop-in file. For example, the following could be written to `/etc/systemd/system/docker.service.d/10-debug.conf`:
 
 ```ini
-ExecStart=/usr/bin/docker -d -s=btrfs -r=false -H fd:// -D
+[Service]
+Environment=DOCKER_OPTS=--debug
 ```
 
-Now lets tell systemd about the new unit and restart Docker:
+Now tell systemd about the new configuration and restart Docker:
 
 ```sh
 systemctl daemon-reload
@@ -251,7 +246,7 @@ journalctl -u docker
 
 ### Cloud-config
 
-If you need to modify a flag across many machines, you can provide the new unit with cloud-config:
+If you need to modify a flag across many machines, you can provide the drop-in file with cloud-config:
 
 ```cloud-config
 #cloud-config
@@ -259,20 +254,12 @@ If you need to modify a flag across many machines, you can provide the new unit 
 coreos:
   units:
     - name: docker.service
+      drop-ins:
+        - name: 10-debug.conf
+          content: |
+            [Service]
+            Environment=DOCKER_OPTS=--debug
       command: restart
-      content: |
-        [Unit]
-        Description=Docker Application Container Engine
-        Documentation=http://docs.docker.io
-        After=network.target
-        [Service]
-        ExecStartPre=/bin/mount --make-rprivate /
-        # Run docker but don't have docker automatically restart
-        # containers. This is a job for systemd and unit files.
-        ExecStart=/usr/bin/docker -d -s=btrfs -r=false -H fd:// -D
-
-        [Install]
-        WantedBy=multi-user.target
 ```
 
 ## Use an HTTP proxy
