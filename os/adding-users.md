@@ -1,25 +1,6 @@
 # Adding users
 
-You can create user accounts on a CoreOS Container Linux machine manually with `useradd` or via Ignition or cloud-config when the machine is created.
-
-## Add users via cloud-config
-
-Managing users via cloud-config is preferred because it allows you to use the same configuration across many servers and the cloud-config file can be stored in a repo and versioned. In your cloud-config, you can specify many [different parameters](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md#users) for each user. Here's an example:
-
-```cloud-config
-#cloud-config
-
-users:
-  - name: elroy
-    passwd: $6$5s2u6/jR$un0AvWnqilcgaNB3Mkxd5yYv6mTlWfOoCYHZmfi3LDKVltj.E8XNKEcwWm...
-    groups:
-      - sudo
-      - docker
-    ssh-authorized-keys:
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
-```
-
-Check out the entire [Customize with Cloud-Config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md) guide for the full details.
+You can create user accounts on a CoreOS Container Linux machine manually with `useradd` or via Ignition when the machine is created.
 
 ## Add Users via Ignition
 
@@ -88,9 +69,3 @@ cat: /etc/sudoers.d/user1: Permission denied
 $ sudo cat /etc/sudoers.d/user1
 user1 ALL=(ALL) NOPASSWD: ALL
 ```
-
-#
-
-## Further reading
-
-Read the [full cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md) guide to install users and more.
