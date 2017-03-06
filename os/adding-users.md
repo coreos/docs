@@ -6,20 +6,18 @@ You can create user accounts on a CoreOS Container Linux machine manually with `
 
 Managing users via Ignition is preferred because it allows you to use the same configuration across many servers and the Ignition config can be stored in a repo and versioned. In your Ignition config, you can specify many [different parameters](https://github.com/coreos/ignition/blob/master/doc/configuration.md) for each user. Here's an example:
 
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "passwd": {
-    "users": [{
-      "name": "elroy",
-      "passwordHash": "$6$5s2u6/jR$un0AvWnqilcgaNB3Mkxd5yYv6mTlWfOoCYHZmfi3LDKVltj.E8XNKEcwWm...",
-      "sshAuthorizedKeys": [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq......." ],
-      "create": {
-        "groups": ["sudo", "docker"]
-      }
-    }]
-  }
-}
+```container-linux-config
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq......."
+    - name: elroy
+      password_hash: "$6$5s2u6/jR$un0AvWnqilcgaNB3Mkxd5yYv6mTlWfOoCYHZmfi3LDKVltj.E8XNKEcwWm..."
+      ssh_authorized_keys:
+        - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq......."
+      create:
+        groups: [ sudo, docker ]
 ```
 
 ## Add user manually
