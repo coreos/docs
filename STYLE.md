@@ -23,7 +23,24 @@ There are a few prescribed ways of writing frequently questioned words and phras
 
 * The singular possessive form of CoreOS is *CoreOS's*. *CoreOS's mission is to secure the infrastructure that powers the Internet.*
 * Deployments may occur *on-premises*, sometimes "on-prem," but never on-premise. A *premises* is a place. A *premise* is a proposition.
-* *GIFEE* is (currently) *Google's Infrastructure for Everyone Else*.
+* *GIFEE* was formerly *Google's Infrastructure for Everyone Else*, but now it is *Google's Infrastructure for EveryonE*.
+
+#### Project names are (mostly) proper nouns
+
+These project names are not capitalized, except when appearing as the first word of a sentence:
+
+* etcd
+* flannel
+* fleet
+* rkt
+
+The first word of a sentence is always capitalized.
+
+Other project names are proper nouns written with an initial capital letter. Examples include Ignition, Dex, and Matchbox.
+
+CoreOS is written in CamelCase. The Linux distribution is called CoreOS Container Linux.
+
+These capitalization rules are traditional and arcane. They should eventually give way to all project and product names being capitalized as proper nouns, except when given literally, e.g., `rkt run docker://nginx` or `/var/lib/rkt`.
 
 ## Source formatting
 
