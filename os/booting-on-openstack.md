@@ -47,8 +47,7 @@ Once the download completes, add the Container Linux image into Glance:
 $ glance image-create --name Container-Linux \
   --container-format bare \
   --disk-format qcow2 \
-  --file coreos_production_openstack_image.img \
-  --visibility public
+  --file coreos_production_openstack_image.img
 +------------------+--------------------------------------+
 | Property         | Value                                |
 +------------------+--------------------------------------+
@@ -59,7 +58,7 @@ $ glance image-create --name Container-Linux \
 | deleted_at       | None                                 |
 | disk_format      | qcow2                                |
 | id               | cdf3874c-c27f-4816-bc8c-046b240e0edd |
-| is_public        | True                                 |
+| is_public        | False                                |
 | min_disk         | 0                                    |
 | min_ram          | 0                                    |
 | name             | coreos                               |
@@ -70,6 +69,8 @@ $ glance image-create --name Container-Linux \
 | updated_at       | 2013-08-29T22:22:04                  |
 +------------------+--------------------------------------+
 ```
+
+Optionally add the `--visibility public` flag to make this image available outside of the configured OpenStack account tenant.
 
 ## Cloud-config
 
