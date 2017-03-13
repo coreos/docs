@@ -82,9 +82,15 @@ coreos:
       command: stop
     - name: locksmithd.service
       command: stop
+    - name: update-engine.service
+      command: mask
+    - name: locksmithd.service
+      command: mask
 ```
 
-## Updating behind a proxy
+Alternatively, to manually mask update-engine run `systemctl mask update-engine.service`. To reverse this remove the stanza from the cloud-config and run `systemctl unmask update-engine.service`
+
+## Updating Behind a Proxy
 
 Public Internet access is required to contact CoreUpdate and download new versions of Container Linux. If direct access is not available the `update-engine` service may be configured to use a HTTP or SOCKS proxy using curl-compatible environment variables, such as `HTTPS_PROXY` or `ALL_PROXY`.
 See [curl's documentation](http://curl.haxx.se/docs/manpage.html#ALLPROXY) for details.
