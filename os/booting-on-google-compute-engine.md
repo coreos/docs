@@ -32,10 +32,10 @@ systemd:
             EnvironmentFile=/run/metadata/coreos
             ExecStart=
             ExecStart=/usr/bin/etcd2 \
-                --advertise-client-urls=http://${COREOS_GCE_IPV4_LOCAL_0}:2379 \
-                --initial-advertise-peer-urls=http://${COREOS_GCE_IPV4_LOCAL_0}:2380 \
+                --advertise-client-urls=http://${COREOS_GCE_IP_LOCAL_0}:2379 \
+                --initial-advertise-peer-urls=http://${COREOS_GCE_IP_LOCAL_0}:2380 \
                 --listen-client-urls=http://0.0.0.0:2379 \
-                --listen-peer-urls=http://${COREOS_GCE_IPV4_LOCAL_0}:2380 \
+                --listen-peer-urls=http://${COREOS_GCE_IP_LOCAL_0}:2380 \
                 --discovery=https://discovery.etcd.io/<token>
 ```
 
