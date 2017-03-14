@@ -1,7 +1,9 @@
 # Integrations
+
 This document tracks projects that integrate with Container Linux. [Join the community](https://github.com/coreos/docs/), and help us keep the list current.
 
 ## Projects 
+
 [Deis Workflow](https://deis.com/workflow/): an open source PaaS for Kubernetes that runs on Container Linux.
 
 [Amazon Web Services](https://aws.amazon.com/marketplace/pp/B01H62FDJM): Amazon's cloud computing solution. Offers Container Linux.
