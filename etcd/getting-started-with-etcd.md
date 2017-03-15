@@ -44,6 +44,50 @@ etcd v3 startup can be configured at a new node's first boot with [Ignition][ign
 }
 ```
 
+`etcd-member.service` has some default settings
+
+```bash
+$ systemctl cat etcd-member.service
+
+<<COMMENT
+...
+Environment="ETCD_IMAGE_TAG=v3.0.10"
+Environment="ETCD_NAME=%m"
+Environment="ETCD_USER=etcd"
+...
+COMMENT
+```
+
+Default configurations can be overwritten with `1-override.conf` file, as below:
+
+```bash
+# to update etcd-member service file
+$ cat > /tmp/override-my-etcd.conf <<EOF
+[Service]
+Environment="ETCD_IMAGE_TAG=v3.1.2"
+Environment="ETCD_DATA_DIR=/var/lib/etcd"
+Environment="ETCD_SSL_DIR=/etc/ssl/certs"
+Environment="ETCD_OPTS=--name my-etcd-1 \
+    --listen-client-urls https://10.240.0.1:2379 \
+    --advertise-client-urls https://10.240.0.1:2379 \
+    --listen-peer-urls https://10.240.0.1:2380 \
+    --initial-advertise-peer-urls https://10.240.0.1:2380 \
+    --initial-cluster my-etcd-1=https://10.240.0.1:2380,my-etcd-2=https://10.240.0.2:2380,my-etcd-3=https://10.240.0.3:2380 \
+    --initial-cluster-token my-etcd-token \
+    --initial-cluster-state new \
+    ...
+EOF
+$ mkdir -p /etc/systemd/system/etcd-member.service.d
+$ mv /tmp/override-my-etcd.conf /etc/systemd/system/etcd-member.service.d/1-override.conf
+
+# to check service-file-override status
+$ systemd-delta --type=extended
+
+# to start service
+$ systemctl daemon-reload
+$ systemctl enable etcd-member.service
+```
+
 ## Reading and writing to etcd
 
 The HTTP-based API is easy to use. This guide will show both `etcdctl` and `curl` examples.
