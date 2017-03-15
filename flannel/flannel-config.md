@@ -147,9 +147,23 @@ The last step is to enable `flanneld.service` in the Ignition config:
 
 *Important*: Other units that will run in containers, including those scheduled via fleet, should include `Requires=flanneld.service`, `After=flanneld.service`, and `Restart=always|on-failure` directives. These directive are necessary because flanneld.service may fail due to etcd not being available yet. It will keep restarting and it is important for Docker based services to also keep trying until flannel is up.
 
-### Setting the environment variables
+### Specifying SSL certificates
 
-If etcd requires SSL certificates, flannel will need those to communicate with etcd. This is achieved by passing the directory in which the certificates are stored to the flannel wrapper. To do so, set the environment variable, `ETCD_SSL_DIR` to `/etc/ssl` in `/etc/flannel/options.env`. 
+Flannel requires SSL certificates to communicate with a secure etcd cluster. By default, flannel looks for these certificates in `/etc/ssl/etcd`. To use different certificates, add `Environment=ETCD_SSL_DIR` to a drop-in file for `flanneld.service`.
+
+For example:
+
+``` yaml
+systemd:
+  units:
+    - name: flanneld.service
+      dropins:
+        - name: 50-ssl.conf
+          contents: |
+            [Service]
+            Environment=ETCD_SSL_DIR=/etd/ssl
+
+```
 
 ## Under the hood
 
