@@ -161,7 +161,7 @@ systemd:
         - name: 50-ssl.conf
           contents: |
             [Service]
-            Environment=ETCD_SSL_DIR=/etd/ssl
+            Environment=ETCD_SSL_DIR=/etcd/ssl
 
 ```
 
