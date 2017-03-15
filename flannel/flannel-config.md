@@ -147,6 +147,10 @@ The last step is to enable `flanneld.service` in the Ignition config:
 
 *Important*: Other units that will run in containers, including those scheduled via fleet, should include `Requires=flanneld.service`, `After=flanneld.service`, and `Restart=always|on-failure` directives. These directive are necessary because flanneld.service may fail due to etcd not being available yet. It will keep restarting and it is important for Docker based services to also keep trying until flannel is up.
 
+### Setting the environment variables
+
+If etcd requires SSL certificates, flannel will need those to communicate with etcd. This is achieved by passing the directory in which the certificates are stored to the flannel wrapper. To do so, set the environment variable, `ETCD_SSL_DIR` to `/etc/ssl` in `/etc/flannel/options.env`. 
+
 ## Under the hood
 
 To reduce the Container Linux image size, flannel daemon is stored in CoreOS Enterprise Registry as an ACI and not shipped in the Container Linux image. For those users wishing not to use flannel, it helps to keep their installation minimal. When `flanneld.service` is started, it pulls the flannel ACI from the registry.
