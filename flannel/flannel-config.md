@@ -153,13 +153,13 @@ Flannel requires SSL certificates to communicate with a secure etcd cluster. By 
 
 For example:
 
-``` yaml
-coreos:
+``` container-linux-config
+systemd:
   units:
     - name: flanneld.service
-      drop-ins:
+      dropins:
         - name: 50-ssl.conf
-          content: |
+          contents: |
             [Service]
             Environment=ETCD_SSL_DIR=/etcd/ssl
 
