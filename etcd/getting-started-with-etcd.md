@@ -34,11 +34,11 @@ etcd v3 startup can be configured at a new node's first boot with [Ignition][ign
   "systemd": {
     "units": [{
       "name": "etcd-member.service",
-      "enable": true,
+      "enable": true
     },
     {
       "name": "etcd2.service",
-      "enable": false,
+      "enable": false
     }]
   }
 }
