@@ -42,7 +42,7 @@ CoreOS is written in CamelCase. The Linux distribution is called CoreOS Containe
 
 These capitalization rules are traditional and arcane. They should eventually give way to all project and product names being capitalized as proper nouns, except when given literally, e.g., `rkt run docker://nginx` or `/var/lib/rkt`.
 
-## Source formatting
+## Source formatting guidelines
 
 CoreOS documentation is written in [Markdown][mdhome], a simple way to annotate text to indicate presentation typesetting. Markdown source is intended to be a plain text human-readable version of the document, even before conversion to HTML for the browser or other display.
 
