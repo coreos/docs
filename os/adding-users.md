@@ -1,10 +1,10 @@
 # Adding users
 
-You can create user accounts on a CoreOS Container Linux machine manually with `useradd` or via Ignition when the machine is created.
+You can create user accounts on a CoreOS Container Linux machine manually with `useradd` or via a Container Linux Config when the machine is created.
 
-## Add Users via Ignition
+## Add Users via Container Linux Configs
 
-Managing users via Ignition is preferred because it allows you to use the same configuration across many servers and the Ignition config can be stored in a repo and versioned. In your Ignition config, you can specify many [different parameters](https://github.com/coreos/ignition/blob/master/doc/configuration.md) for each user. Here's an example:
+In your Container Linux Config, you can specify many [different parameters](https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/configuration.md) for each user. Here's an example:
 
 ```container-linux-config
 passwd:

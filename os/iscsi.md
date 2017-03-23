@@ -5,7 +5,7 @@ This allows applications to treat remote storage devices as if they were local d
 iSCSI handles taking requests from clients and carrying them out on the remote SCSI devices.
 
 Container Linux has integrated support for mounting devices.
-This guide covers iSCSI configuration manually or automatically with either cloud-config or Ignition.
+This guide covers iSCSI configuration manually or automatically with [Container Linux Configs][cl-configs].
 
 ## Manual iSCSI configuration
 
@@ -82,7 +82,7 @@ $ systemctl enable iscsid
 
 To configure and start iSCSI automatically after a machine is provisioned, credentials need to be written to disk and the iSCSI service started.
 
-Both cloud-config and Ignition will write the file `/etc/iscsi/iscsid.conf` to disk:
+A Container Linux Config will be used to write the file `/etc/iscsi/iscsid.conf` to disk:
 
 #### /etc/iscsi/iscsid.conf
 <!-- TODO: It's inclear based on documentation what the actual first line of this doc snippet should be.
@@ -98,50 +98,26 @@ discovery.sendtargets.auth.username = my_username
 discovery.sendtargets.auth.password = my_secret_password
 ```
 
-Below are two complete configs.
+### The Container Linux Config
 
-### Using cloud-config
-
-```
-#cloud-config
-coreos:
-    units:
-        - name: "iscsid.service"
-          command: "start"
-write_files:
-  - path: "/etc/iscsi/iscsid.conf"
-    permissions: "0644"
-    owner: "root"
-    content: |
-      isns.address = host_ip
-      isns.port = host_port
-      node.session.auth.username = my_username
-      node.session.auth.password = my_secret_password
-      discovery.sendtargets.auth.username = my_username
-      discovery.sendtargets.auth.password = my_secret_password
-```
-
-### Using Ignition
-
-Ignition uses the data URI scheme to [write out file contents](https://coreos.com/ignition/docs/latest/examples.html#create-files-on-the-root-filesystem). The generated string is the same as the config in the cloud-config above.
-
-```
-{
-  "ignition": { "version": "2.0.0" },
-  "systemd": {
-    "units": [{
-      "name": "iscsid.service",
-      "enable": true
-    }]
-  },
-  "storage": {
-    "files": [{
-      "filesystem": "root",
-      "path": "/etc/iscsi/iscsid.conf",
-      "contents": { "source": "data:text/plain;charset=utf-8;base64,aXNucy5hZGRyZXNzID0gaG9zdF9pcA0KaXNucy5wb3J0ID0gaG9zdF9wb3J0DQpub2RlLnNlc3Npb24uYXV0aC51c2VybmFtZSA9IG15X3VzZXJuYW1lDQpub2RlLnNlc3Npb24uYXV0aC5wYXNzd29yZCA9IG15X3NlY3JldF9wYXNzd29yZA0KZGlzY292ZXJ5LnNlbmR0YXJnZXRzLmF1dGgudXNlcm5hbWUgPSBteV91c2VybmFtZQ0KZGlzY292ZXJ5LnNlbmR0YXJnZXRzLmF1dGgucGFzc3dvcmQgPSBteV9zZWNyZXRfcGFzc3dvcmQ=" }
-    }]
-  }
-}
+```container-linux-config
+systemd:
+  units:
+    - name: iscsid.service
+      enable: true
+storage:
+  files:
+    - path: /etc/iscsi/iscsid.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          isns.address = host_ip
+          isns.port = host_port
+          node.session.auth.username = my_username
+          node.session.auth.password = my_secret_password
+          discovery.sendtargets.auth.username = my_username
+          discovery.sendtargets.auth.password = my_secret_password
 ```
 
 ## Mounting iSCSI targets
@@ -150,3 +126,4 @@ See the [mounting storage docs][mounting-storage] for an example.
 
 [iscsi-wiki]: https://en.wikipedia.org/wiki/ISCSI
 [mounting-storage]: mounting-storage.md
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md

@@ -34,35 +34,29 @@ The following command will create a single instance. For more details, check out
   </div>
 </div>
 
-## Ignition config
+## Container Linux Config
 
-Container Linux allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Ignition. Head over to the [docs to learn about the supported features][ignition-docs]. Note that Microsoft Azure doesn't allow an instance's userdata to be modified after the instance has been launched. This isn't a problem since Ignition only runs on the first boot.
+Container Linux allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via a Container Linux Config. Head over to the [docs to learn how to use Container Linux Configs][cl-configs]. Note that Microsoft Azure doesn't allow an instance's userdata to be modified after the instance has been launched. This isn't a problem since Ignition, the tool that consumes the userdata, only runs on the first boot.
 
-You can provide a raw Ignition config to Container Linux [via the Microsoft Azure Cross-Platform CLI][azurecli-heading].
+You can provide a raw Ignition config (produced from a Container Linux Config) to Container Linux [via the Microsoft Azure Cross-Platform CLI][azurecli-heading].
 
 As an example, this config will configure and start etcd:
 
-```container-linux-config
-systemd:
-  units:
-    - name: etcd2.service
-      enable: true
-      dropins:
-        - name: metadata.conf
-          contents: |
-            [Unit]
-            Requires=coreos-metadata.service
-            After=coreos-metadata.service
+```container-linux-config:azure
+etcd:
+  # All options get passed as command line flags to etcd.
+  # Any information inside curly braces comes from the machine at boot time.
 
-            [Service]
-            EnvironmentFile=/run/metadata/coreos
-            ExecStart=
-            ExecStart=/usr/bin/etcd2 \
-                --advertise-client-urls=http://${COREOS_AZURE_IPV4_DYNAMIC}:2379 \
-                --initial-advertise-peer-urls=http://${COREOS_AZURE_IPV4_DYNAMIC}:2380 \
-                --listen-client-urls=http://0.0.0.0:2379 \
-                --listen-peer-urls=http://${COREOS_AZURE_IPV4_DYNAMIC}:2380 \
-                --discovery=https://discovery.etcd.io/<token>
+  # multi_region and multi_cloud deployments need to use {PUBLIC_IPV4}
+  advertise_client_urls:       "http://{PRIVATE_IPV4}:2379"
+  initial_advertise_peer_urls: "http://{PRIVATE_IPV4}:2380"
+  # listen on both the official ports and the legacy ports
+  # legacy ports can be omitted if your application doesn't depend on them
+  listen_client_urls:          "http://0.0.0.0:2379"
+  listen_peer_urls:            "http://{PRIVATE_IPV4}:2380"
+  # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+  # specify the initial size of your cluster with ?size=X
+  discovery:                   "https://discovery.etcd.io/<token>"
 ```
 
 ### Adding more machines
@@ -116,4 +110,4 @@ Now that you have a machine booted it is time to play around. Check out the [Con
 [ssh]: http://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-use-ssh-key/
 [update-docs]: https://coreos.com/why/#updates
 [xplat-cli]: http://azure.microsoft.com/en-us/documentation/articles/xplat-cli/
-[ignition-docs]: https://coreos.com/ignition/docs/latest
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md

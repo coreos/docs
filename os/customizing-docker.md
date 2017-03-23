@@ -34,19 +34,16 @@ Test that it's working:
 docker -H tcp://127.0.0.1:2375 ps
 ```
 
-### Cloud-config
+### Container Linux Config
 
-To enable the remote API on every Container Linux machine in a cluster, use [cloud-config][cloud-config]. We need to provide the new socket file and Docker's socket activation support will automatically start using the socket:
+To enable the remote API on every Container Linux machine in a cluster, use a [Container Linux Config][cl-configs]. We need to provide the new socket file and Docker's socket activation support will automatically start using the socket:
 
-```cloud-config
-#cloud-config
-
-coreos:
+```container-linux-config
+systemd:
   units:
     - name: docker-tcp.socket
-      command: start
       enable: true
-      content: |
+      contents: |
         [Unit]
         Description=Docker Socket for the API
 
@@ -161,44 +158,48 @@ export DOCKER_HOST=tcp://server.example.com:2376 DOCKER_TLS_VERIFY=1
 docker images
 ```
 
-### Cloud-config
+### Container Linux Config
 
-Cloud-config for Docker TLS authentication will look like:
+A Container Linux Config for Docker TLS authentication will look like:
 
-```cloud-config
-#cloud-config
-
-write_files:
+```container-linux-config
+storage:
+  files:
     - path: /etc/docker/ca.pem
-      permissions: 0644
-      content: |
-        -----BEGIN CERTIFICATE-----
-        MIIFNDCCAx6gAwIBAgIBATALBgkqhkiG9w0BAQswLTEMMAoGA1UEBhMDVVNBMRAw
-        DgYDVQQKEwdldGNkLWNhMQswCQYDVQQLEwJDQTAeFw0xNTA5MDIxMDExMDhaFw0y
-        NTA5MDIxMDExMThaMC0xDDAKBgNVBAYTA1VTQTEQMA4GA1UEChMHZXRjZC1jYTEL
-        ... ... ...
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          -----BEGIN CERTIFICATE-----
+          MIIFNDCCAx6gAwIBAgIBATALBgkqhkiG9w0BAQswLTEMMAoGA1UEBhMDVVNBMRAw
+          DgYDVQQKEwdldGNkLWNhMQswCQYDVQQLEwJDQTAeFw0xNTA5MDIxMDExMDhaFw0y
+          NTA5MDIxMDExMThaMC0xDDAKBgNVBAYTA1VTQTEQMA4GA1UEChMHZXRjZC1jYTEL
+          ... ... ...
     - path: /etc/docker/server.pem
-      permissions: 0644
-      content: |
-        -----BEGIN CERTIFICATE-----
-        MIIFajCCA1SgAwIBAgIBBTALBgkqhkiG9w0BAQswLTEMMAoGA1UEBhMDVVNBMRAw
-        DgYDVQQKEwdldGNkLWNhMQswCQYDVQQLEwJDQTAeFw0xNTA5MDIxMDM3MDFaFw0y
-        NTA5MDIxMDM3MDNaMEQxDDAKBgNVBAYTA1VTQTEQMA4GA1UEChMHZXRjZC1jYTEQ
-        ... ... ...
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          -----BEGIN CERTIFICATE-----
+          MIIFajCCA1SgAwIBAgIBBTALBgkqhkiG9w0BAQswLTEMMAoGA1UEBhMDVVNBMRAw
+          DgYDVQQKEwdldGNkLWNhMQswCQYDVQQLEwJDQTAeFw0xNTA5MDIxMDM3MDFaFw0y
+          NTA5MDIxMDM3MDNaMEQxDDAKBgNVBAYTA1VTQTEQMA4GA1UEChMHZXRjZC1jYTEQ
+          ... ... ...
     - path: /etc/docker/server-key.pem
-      permissions: 0600
-      content: |
-        -----BEGIN RSA PRIVATE KEY-----
-        MIIJKAIBAAKCAgEA23Q4yELhNEywScrHl6+MUtbonCu59LIjpxDMAGxAHvWhWpEY
-        P5vfas8KgxxNyR+U8VpIjEXvwnhwCx/CSCJc3/VtU9v011Ir0WtTrNDocb90fIr3
-        YeRWq744UJpBeDHPV9opf8xFE7F74zWeTVMwtiMPKcQDzZ7XoNyJMxg1wmiMbdCj
-        ... ... ...
-coreos:
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          -----BEGIN RSA PRIVATE KEY-----
+          MIIJKAIBAAKCAgEA23Q4yELhNEywScrHl6+MUtbonCu59LIjpxDMAGxAHvWhWpEY
+          P5vfas8KgxxNyR+U8VpIjEXvwnhwCx/CSCJc3/VtU9v011Ir0WtTrNDocb90fIr3
+          YeRWq744UJpBeDHPV9opf8xFE7F74zWeTVMwtiMPKcQDzZ7XoNyJMxg1wmiMbdCj
+          ... ... ...
+systemd:
   units:
     - name: docker-tls-tcp.socket
-      command: start
       enable: true
-      content: |
+      contents: |
         [Unit]
         Description=Docker Secured Socket for the API
 
@@ -209,12 +210,12 @@ coreos:
 
         [Install]
         WantedBy=sockets.target
-    - name: docker.service
-      drop-ins:
-        - name: 10-tls-verify.conf
-          content: |
-            [Service]
-            Environment="DOCKER_OPTS=--tlsverify --tlscacert=/etc/docker/ca.pem --tlscert=/etc/docker/server.pem --tlskey=/etc/docker/server-key.pem"
+docker:
+  flags:
+    - --tlsverify
+    - --tlscacert=/etc/docker/ca.pem
+    - --tlscert=/etc/docker/server.pem
+    - --tlskey=/etc/docker/server-key.pem
 ```
 
 ## Use attached storage for Docker images
@@ -244,22 +245,14 @@ docker ps
 journalctl -u docker
 ```
 
-### Cloud-config
+### Container Linux Config
 
-If you need to modify a flag across many machines, you can provide the drop-in file with cloud-config:
+If you need to modify a flag across many machines, you can add the flag with a Container Linux Config:
 
-```cloud-config
-#cloud-config
-
-coreos:
-  units:
-    - name: docker.service
-      drop-ins:
-        - name: 10-debug.conf
-          content: |
-            [Service]
-            Environment=DOCKER_OPTS=--debug
-      command: restart
+```container-linux-config
+docker:
+  flags:
+    - --debug
 ```
 
 ## Use an HTTP proxy
@@ -286,22 +279,20 @@ systemctl restart docker
 
 Proxy environment variables can also be set [system-wide][systemd-env-vars].
 
-### Cloud-config
+### Container Linux Config
 
-The easiest way to use this proxy on all of your machines is via cloud-config:
+The easiest way to use this proxy on all of your machines is via a Container Linux Config:
 
-```cloud-config
-#cloud-config
-
-coreos:
+```container-linux-config
+systemd:
   units:
     - name: docker.service
-      drop-ins:
+      enable: true
+      dropins:
         - name: 20-http-proxy.conf
-          content: |
+          contents: |
             [Service]
             Environment="HTTP_PROXY=http://proxy.example.com:8080"
-      command: restart
 ```
 
 ## Increase ulimits
@@ -326,22 +317,20 @@ systemctl daemon-reload
 systemctl restart docker
 ```
 
-### Cloud-config
+### Container Linux Config
 
-The easiest way to use these new ulimits on all of your machines is via cloud-config:
+The easiest way to use these new ulimits on all of your machines is via a Container Linux Config:
 
-```cloud-config
-#cloud-config
-
-coreos:
+```container-linux-configs
+systemd:
   units:
     - name: docker.service
-      drop-ins:
+      enable: true
+      dropins:
         - name: 30-increase-ulimit.conf
-          content: |
+          contents: |
             [Service]
             LimitMEMLOCK=infinity
-      command: restart
 ```
 
 
@@ -349,10 +338,10 @@ coreos:
 
 A json file `.dockercfg` can be created in your home directory that holds authentication information for a public or private Docker registry.
 
-[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 [docker-socket-systemd]: https://github.com/docker/docker/pull/17211
 [drop-in]: using-systemd-drop-in-units.md
 [mounting-storage]: mounting-storage.md
 [self-signed-certs]: generate-self-signed-certificates.md
 [systemd-socket]: https://www.freedesktop.org/software/systemd/man/systemd.socket.html
 [systemd-env-vars]: https://coreos.com/os/docs/latest/using-environment-variables-in-systemd-units.html#system-wide-environment-variables
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md

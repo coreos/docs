@@ -70,63 +70,32 @@ Run VMware Workstation GUI:
 
 *NB: These instructions were tested with a Fusion 8.1 host.*
 
-## Ignition config
+## Container Linux Configs
 
-Container Linux allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Ignition. Head over to the [docs to learn about the supported features][ignition-docs].
+Container Linux allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Container Linux Configs. These configs are then transpiled into Ignition configs and given to booting machines. Head over to the [docs to learn about the supported features][cl-configs].
 
 You can provide a raw Ignition config to Container Linux via VMware's [Guestinfo interface](#vmware-guestinfo-interface).
 
-As an example, this config will start etcd and add the provided password and SSH key to the user "core":
+As an example, this config will start etcd:
 
 ```container-linux-config
-systemd:
-  units:
-    - name: etcd2.service
-      enable: true
+etcd:
+  # All options get passed as command line flags to etcd.
+  # Any information inside curly braces comes from the machine at boot time.
 
-passwd:
-  users:
-    - name: core
-      password_hash: $6$5s2u6/jR$un0AvWnqilcgaNB3Mkxd5yYv6mTlWfOoCYHZmfi3LDKVltj.E8XNKEcwWm...
-      ssh_authorized_keys:
-        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq...
+  # vmware isn't currently supported for dynamic data, so we can't use {PRIVATE_IPV4}
+  advertise_client_urls:       "http://10.0.0.10:2379"
+  initial_advertise_peer_urls: "http://10.0.0.10:2380"
+  # listen on both the official ports and the legacy ports
+  # legacy ports can be omitted if your application doesn't depend on them
+  listen_client_urls:          "http://0.0.0.0:2379"
+  listen_peer_urls:            "http://10.0.0.10:2380"
+  # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+  # specify the initial size of your cluster with ?size=X
+  discovery:                   "https://discovery.etcd.io/<token>"
 ```
 
-[ignition-docs]: https://coreos.com/ignition/docs/latest
-
-## Cloud-config
-
-Cloud-config data can be passed into a VM by attaching a [config-drive][config-drive] with the filesystem label `config-2`. This is done in the same way as attaching CD-ROMs or other new drives.
-
-The config-drive standard was originally an OpenStack feature, which is why you'll see the string `openstack` in a few bits of configuration. This naming convention is retained, although Container Linux supports config-drive on all platforms.
-
-This example will configure Container Linux components: etcd2 and fleetd. `$private_ipv4` and `$public_ipv4` are supported on VMware in Container Linux releases 801.0.0 and greater, and **only** when you explicitly configure interfaces' roles to `private` or `public` in [Guestinfo][guestinfo] for each VMware instance.
-
-```cloud-config
-#cloud-config
-
-# include one or more SSH public keys
-ssh_authorized_keys:
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
-coreos:
-  etcd2:
-    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-    # specify the initial size of your cluster with ?size=X
-    discovery: https://discovery.etcd.io/<token>
-    advertise-client-urls: http://$private_ipv4:2379,http://$private_ipv4:4001
-    initial-advertise-peer-urls: http://$private_ipv4:2380
-    # listen on both the official ports and the legacy ports
-    # legacy ports can be omitted if your application doesn't depend on them
-    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    listen-peer-urls: http://$private_ipv4:2380
-  units:
-    - name: etcd2.service
-      command: start
-    - name: fleet.service
-      command: start
-```
-
-For details on the options available with cloud-config, see the [cloud-config guide][cloud-config guide].
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
 
 ## VMware Guestinfo interface
 
@@ -179,72 +148,6 @@ This example will be decoded into:
   "ignition": { "version": "2.0.0" }
 }
 ```
-
-### Guestinfo example for cloud-config
-
-This example sets the hostname, interface role, static IP address, and several other network interface parameters to the VM ethernet interface matching the `.mac` and `.name` values given in the following VMX snippet:
-
-```
-guestinfo.hostname = "coreos"
-guestinfo.interface.0.role = "private"
-guestinfo.dns.server.0 = "8.8.8.8"
-guestinfo.interface.0.route.0.gateway = "192.168.178.1"
-guestinfo.interface.0.route.0.destination = "0.0.0.0/0"
-guestinfo.interface.0.mac = "00:0c:29:63:92:5c"
-guestinfo.interface.0.name = "eno1*"
-guestinfo.interface.0.dhcp = "no"
-guestinfo.interface.0.ip.0.address = "192.168.178.97/24"
-```
-
-The Container Linux OVA image contains the VMware tools, and a OEM cloud-config which executes `coreos-cloudinit` with the `--oem=vmware` option. This option automatically sets the additional `--from-vmware-guestinfo` and `--convert-netconf=vmware` flags. Given the `guestinfo.*` values above and these option flags, `coreos-cloudinit` will generate the following systemd network unit:
-
-```
-[Match]
-Name=eno1*
-MACAddress=00:0c:29:63:92:5c
-
-[Network]
-DNS=8.8.8.8
-
-[Address]
-Address=192.168.178.97/24
-
-[Route]
-Destination=0.0.0.0/0
-Gateway=192.168.178.1
-```
-
-This unit file will subsequently configure the matching network interface.
-
-### Defining cloud-config in Guestinfo
-
-If either the `guestinfo.coreos.config.data` or `guestinfo.coreos.config.url` property is set, `coreos-cloudinit` will apply the referenced cloud-config. Cloudinit will substitute the `$private_ipv4` and `$public_ipv4` variables if you've configured network interface roles using the `guestinfo.interface.<n>.role` property.
-
-Cloud-config data is prepared for the guestinfo facility in one of two encoding types, specified in the `guestinfo.coreos.config.data.encoding` variable:
-
-|  Encoding   |                      Command                      |
-|:------------|:--------------------------------------------------|
-| base64      | `base64 -w0 /path/to/user_data && echo`           |
-| gzip+base64 | `gzip -c /path/to/user_data | base64 -w0 && echo` |
-
-To avoid having to `base64` or otherwise encode raw data into your VMX, you can retrieve your cloud-config from a URL specified in the `guestinfo.coreos.config.url` variable instead.
-
-#### Example
-
-```
-guestinfo.coreos.config.data = "H4sICP9nAVYAA3VzZXJfZGF0YQBTTs7JL03RTc7PS8tM5youzohPLC3JyC/KrEpNic9OrSy24lLQVQCK6xYVJyrkVhaUJgFFuQCe+rhmNwAAAA=="
-guestinfo.coreos.config.data.encoding = "gzip+base64"
-```
-
-This example will be decoded into:
-
-```cloud-config
-#cloud-config
-ssh_authorized_keys:
- - ssh-rsa mypubkey
-```
-
-Refer to the [VMware guestinfo variables documentation][VMware guestinfo] for a full list of supported properties.
 
 ## Logging in
 

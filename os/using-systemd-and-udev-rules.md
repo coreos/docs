@@ -37,50 +37,29 @@ ACTION=="add", SUBSYSTEM=="block", TAG+="systemd", ENV{SYSTEMD_WANTS}="device-at
 
 That rule means that udev will trigger `device-attach.service` systemd unit on any block device attachment. Now when we use this command `virsh attach-disk coreos /dev/VG/test vdc` on host machine, we should see `device has been attached` message in Container Linux node's journal. This example should be similar to USB/SAS/SATA device attach.
 
-## Cloud-config example
+## Container Linux Config example
 
-To use the unit and udev rule with cloud-config, modify this example as needed:
+To use the unit and udev rule with a Container Linux Config, modify this example as needed:
 
-```cloud-config
-#cloud-config
-write_files:
-  - path: /etc/udev/rules.d/01-block.rules
-    permissions: 0644
-    owner: root
-    content: |
-      ACTION=="add", SUBSYSTEM=="block", TAG+="systemd", ENV{SYSTEMD_WANTS}="device-attach.service"
-coreos:
+```container-linux-config
+storage:
+  files:
+    - path: /etc/udev/rules.d/01-block.rules 
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          ACTION=="add", SUBSYSTEM=="block", TAG+="systemd", ENV{SYSTEMD_WANTS}="device-attach.service"
+systemd:
   units:
-    - name: device-attach.service
-      content: |
+    - name: detach-attach.service
+      contents: |
         [Unit]
         Description=Notify about attached device
 
         [Service]
         Type=oneshot
         ExecStart=/usr/bin/echo 'device has been attached'
-```
-
-## Ignition example
-
-To use the unit and udev rule with Ignition, modify this example as needed:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "files": [{
-    "filesystem": "root",
-    "path": "/etc/udev/rules.d/01-block.rules",
-    "mode": 420,
-    "contents": { "source": "data:,ACTION==%22add%22,%20SUBSYSTEM==%22block%22,%20TAG+=%22systemd%22,%20ENV%7BSYSTEMD_WANTS%7D=%22device-attach.service%22%0A" }
-  }],
-  "systemd": {
-    "units": [{
-      "name": "device-attach.service",
-      "contents": "[Unit]\nDescription=Notify about attached device\n\n[Service]\nType=oneshot\nExecStart=/usr/bin/echo 'device has been attached'"
-    }]
-  }
-}
 ```
 
 ## More systemd examples

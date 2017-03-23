@@ -10,7 +10,7 @@ When booting your [Container Linux Machines on EC2](booting-on-ec2.md), configur
 
 Be sure to change `ECS_CLUSTER` to the cluster name you've configured via the ECS CLI or leave it empty for the default. Here's a full config example:
 
-```container-linux-config
+```container-linux-config:ec2
 systemd:
  units:
    - name: amazon-ecs-agent.service
@@ -56,9 +56,9 @@ systemd:
 
 The example above pulls the latest official Amazon ECS agent container from the Docker Hub when the machine starts. If you ever need to update the agent, it’s as simple as restarting the amazon-ecs-agent service or the Container Linux machine.
 
-If you want to configure SSH keys in order to log in, mount disks or configure other options, see the [Ignition documentation][ignition-docs].
+If you want to configure SSH keys in order to log in, mount disks or configure other options, see the [Container Linux Configs documentation][cl-configs].
 
-[ignition-docs]: https://coreos.com/ignition/docs/latest
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
 
 ## Connect ECS to an existing cluster
 

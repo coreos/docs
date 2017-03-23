@@ -1,57 +1,58 @@
 # Customizing the SSH daemon
 
-Container Linux defaults to running an OpenSSH daemon using `systemd` socket activation -- when a client connects to the port configured for SSH, `sshd` is started on the fly for that client using a `systemd` unit derived automatically from a template. In some cases you may want to customize this daemon's authentication methods or other configuration. This guide will show you how to do that at build time using `cloud-config`, and after building by modifying the `systemd` unit file.
+Container Linux defaults to running an OpenSSH daemon using `systemd` socket activation -- when a client connects to the port configured for SSH, `sshd` is started on the fly for that client using a `systemd` unit derived automatically from a template. In some cases you may want to customize this daemon's authentication methods or other configuration. This guide will show you how to do that at boot time using a [Container Linux Config][cl-configs], and after building by modifying the `systemd` unit file.
 
 As a practical example, when a client fails to connect by not completing the TCP connection (e.g. because the "client" is actually a TCP port scanner), the MOTD may report failures of `systemd` units (which will be named by the source IP that failed to connect) next time you log in to the Container Linux host. These failures are not themselves harmful, but it is a good general practice to change how SSH listens, either by changing the IP address `sshd` listens to from the default setting (which listens on all configured interfaces), changing the default port, or both.
 
-## Customizing sshd with cloud-config
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+
+## Customizing sshd with a Container Linux Config
 
 In this example we will disable logins for the `root` user, only allow login for the `core` user and disable password based authentication. For more details on what sections can be added to `/etc/ssh/sshd_config` see the [OpenSSH manual][openssh-manual].
 
 [openssh-manual]: http://www.openssh.com/cgi-bin/man.cgi?query=sshd_config
 
-```cloud-config
-#cloud-config
+```container-linux-config
+storage:
+  files:
+    - path: /etc/ssh/sshd_config
+      filesystem: root
+      mode: 0600
+      contents:
+        inline: |
+          # Use most defaults for sshd configuration.
+          UsePrivilegeSeparation sandbox
+          Subsystem sftp internal-sftp
 
-write_files:
-  - path: /etc/ssh/sshd_config
-    permissions: 0600
-    owner: root:root
-    content: |
-      # Use most defaults for sshd configuration.
-      UsePrivilegeSeparation sandbox
-      Subsystem sftp internal-sftp
-
-      PermitRootLogin no
-      AllowUsers core
-      PasswordAuthentication no
-      ChallengeResponseAuthentication no
+          PermitRootLogin no
+          AllowUsers core
+          PasswordAuthentication no
+          ChallengeResponseAuthentication no
 ```
 
 ### Changing the sshd port
 
-Container Linux ships with socket-activated SSH by default. The configuration for this can be found at `/usr/lib/systemd/system/sshd.socket`. We're going to override some of the default settings for this in the cloud-config provided at boot:
+Container Linux ships with socket-activated SSH by default. The configuration for this can be found at `/usr/lib/systemd/system/sshd.socket`. We're going to override some of the default settings for this in the Container Linux Config provided at boot:
 
-```cloud-config
-#cloud-config
-
-coreos:
+```container-linux-config
+systemd:
   units:
-  - name: sshd.socket
-    command: restart
-    runtime: true
-    content: |
-      [Socket]
-      ListenStream=2222
-      FreeBind=true
-      Accept=yes
+    - name: sshd.socket
+      enable: true
+      contents: |
+        [Socket]
+        ListenStream=2222
+        FreeBind=true
+        Accept=yes
+        [Install]
+        WantedBy=multi-user.target
 ```
 
 `sshd` will now listen only on port 2222 on all interfaces when the system is built.
 
 ### Further reading
 
-Read the [full cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md) guide to install users and more.
+Read the [full Container Linux Config][cl-configs] guide to install users and more.
 
 ## Customizing sshd after build
 
@@ -182,62 +183,33 @@ Finally, execute a daemon-reload, stop the sshd.socket service, and start the ss
 # systemctl restart sshd.service
 ```
 
-The same configuration can be achieved and an actively listening sshd started by providing user-data like:
+The same configuration can be achieved and an actively listening sshd started with a Container Linux Config like:
 
-cloud-config:
-
-```
-#cloud-config
-
-coreos:
+```container-linux-config
+systemd:
   units:
-  - name: sshd.socket
-    command: stop
-    mask: true
+    - name: sshd.socket
+      mask: true
+    - name: sshd.service
+      enable: true
+      contents: |
+          [Unit]
+          Description=OpenSSH server daemon
 
-  - name: sshd.service
-    command: start
-    content: |
-      [Unit]
-      Description=OpenSSH server daemon
+          [Service]
+          Type=forking
+          PIDFile=/var/run/sshd.pid
+          ExecStart=/usr/sbin/sshd
+          ExecReload=/bin/kill -HUP $MAINPID
+          KillMode=process
+          Restart=on-failure
+          RestartSec=30s
 
-      [Service]
-      Type=forking
-      PIDFile=/var/run/sshd.pid
-      ExecStart=/usr/sbin/sshd
-      ExecReload=/bin/kill -HUP $MAINPID
-      KillMode=process
-      Restart=on-failure
-      RestartSec=30s
-
-      [Install]
-      WantedBy=multi-user.target
-
-write_files:
-  - path: "/var/run/sshd.pid"
-    permissions: "0644"
-    owner: "root"
-```
-
-Ignition:
-
-```
-{
-  "ignition": {
-    "version": "2.0.0"
-  },
-  "systemd": {
-    "units": [
-      {
-        "name": "sshd.socket",
-        "mask": true
-      },
-      {
-        "name": "sshd.service",
-        "enable": true,
-        "contents": "[Unit]\nDescription=OpenSSH server daemon\n[Service]\nType=forking\nPIDFile=/var/run/sshd.pid\nExecStart=/usr/sbin/sshd\nExecReload=/bin/kill -HUP $MAINPID\nKillMode=process\nRestart=on-failure\nRestartSec=30s\n[Install]\nWantedBy=multi-user.target\n"
-      }
-    ]
-  }
-}
+          [Install]
+          WantedBy=multi-user.target
+storage:
+  files:
+    - path: /var/run/sshd.pid
+      filesystem: root
+      mode: 0644
 ```

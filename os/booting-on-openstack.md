@@ -72,49 +72,41 @@ $ glance image-create --name Container-Linux \
 
 Optionally add the `--visibility public` flag to make this image available outside of the configured OpenStack account tenant.
 
-## Cloud-config
+## Container Linux Configs
 
-Container Linux allows you to configure machine parameters, launch systemd units on startup and more via cloud-config. Jump over to the [docs to learn about the supported features][cloud-config]. We're going to provide our cloud-config to OpenStack via the user-data flag. Our cloud-config will also contain SSH keys that will be used to connect to the instance. In order for this to work your OpenStack cloud provider must support [config drive][config-drive] or the OpenStack metadata service.
+Container Linux allows you to configure machine parameters, launch systemd units on startup and more via Container Linux Configs. These configs are then transpiled into Ignition configs and given to booting machines. Jump over to the [docs to learn about the supported features][cl-configs]. We're going to provide our Container Linux Config to OpenStack via the user-data flag. Our Container Linux Config will also contain SSH keys that will be used to connect to the instance. In order for this to work your OpenStack cloud provider must support [config drive][config-drive] or the OpenStack metadata service.
 
-[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
 [config-drive]: http://docs.openstack.org/user-guide/cli_config_drive.html
 
-The most common cloud-config for OpenStack looks like:
+A common Container Linux Config for OpenStack looks like:
 
-```cloud-config
-#cloud-config
+```container-linux-config:openstack-metadata
+etcd:
+  # All options get passed as command line flags to etcd.
+  # Any information inside curly braces comes from the machine at boot time.
 
-coreos:
-  etcd2:
-    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-    # specify the initial size of your cluster with ?size=X
-    discovery: https://discovery.etcd.io/<token>
-    # multi-region and multi-cloud deployments need to use $public_ipv4
-    advertise-client-urls: http://$private_ipv4:2379,http://$private_ipv4:4001
-    initial-advertise-peer-urls: http://$private_ipv4:2380
-    # listen on both the official ports and the legacy ports
-    # legacy ports can be omitted if your application doesn't depend on them
-    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    listen-peer-urls: http://$private_ipv4:2380
-  units:
-    - name: etcd2.service
-      command: start
-    - name: fleet.service
-      command: start
-ssh_authorized_keys:
-  # include one or more SSH public keys
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
+  # multi_region and multi_cloud deployments need to use {PUBLIC_IPV4}
+  advertise_client_urls:       "http://{PRIVATE_IPV4}:2379"
+  initial_advertise_peer_urls: "http://{PRIVATE_IPV4}:2380"
+  # listen on both the official ports and the legacy ports
+  # legacy ports can be omitted if your application doesn't depend on them
+  listen_client_urls:          "http://0.0.0.0:2379"
+  listen_peer_urls:            "http://{PRIVATE_IPV4}:2380"
+  # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+  # specify the initial size of your cluster with ?size=X
+  discovery:                   "https://discovery.etcd.io/<token>"
 ```
 
-The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on most OpenStack deployments. Unfortunately some systems relying on config drive may leave these values undefined.
+The `{PRIVATE_IPV4}` and `{PUBLIC_IPV4}` substitution variables are fully supported in Container Linux Configs on OpenStack deployments using the metadata service. Unfortunately systems relying on config drive are currently unsupported.
 
 ## Launch cluster
 
-Boot the machines with the `nova` CLI, referencing the image ID from the import step above and your `cloud-config.yaml`:
+Boot the machines with the `nova` CLI, referencing the image ID from the import step above and your [JSON file from ct](cl-configs):
 
 ```sh
 nova boot \
---user-data ./cloud-config.yaml \
+--user-data ./config.ign \
 --image cdf3874c-c27f-4816-bc8c-046b240e0edd \
 --key-name coreos \
 --flavor m1.medium \
@@ -171,13 +163,13 @@ core@10-0-0-3 ~ $
 
 ## Adding more machines
 
-Adding new instances to the cluster is as easy as launching more with the same cloud-config. New instances will join the cluster assuming they can communicate with the others.
+Adding new instances to the cluster is as easy as launching more with the same Container Linux Config. New instances will join the cluster assuming they can communicate with the others.
 
 Example:
 
 ```sh
 nova boot \
---user-data ./cloud-config.yaml \
+--user-data ./config.ign \
 --image cdf3874c-c27f-4816-bc8c-046b240e0edd \
 --key-name coreos \
 --flavor m1.medium \
@@ -186,7 +178,7 @@ nova boot \
 
 ## Multiple clusters
 
-If you would like to create multiple clusters you'll need to generate and use a new discovery token. Change the token value on the etcd discovery parameter in the cloud-config, and boot new instances.
+If you would like to create multiple clusters you'll need to generate and use a new discovery token. Change the token value on the etcd discovery parameter in the Container Linux Config, and boot new instances.
 
 ## Using CoreOS Container Linux
 

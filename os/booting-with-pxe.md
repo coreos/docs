@@ -23,7 +23,7 @@ When configuring the Container Linux pxelinux.cfg there are a few kernel options
 - **sshkey**: Add the given SSH public key to the `core` user's authorized_keys file. Replace the example key below with your own (it is usually in `~/.ssh/id_rsa.pub`)
 - **console**: Enable kernel output and a login prompt on a given tty. The default, `tty0`, generally maps to VGA. Can be used multiple times, e.g. `console=tty0 console=ttyS0`
 - **coreos.autologin**: Drop directly to a shell on a given console without prompting for a password. Useful for troubleshooting but use with caution. For any console that doesn't normally get a login prompt by default be sure to combine with the `console` option, e.g. `console=tty0 console=ttyS0 coreos.autologin=tty1 coreos.autologin=ttyS0`. Without any argument it enables access on all consoles. Note that for the VGA console the login prompts are on virtual terminals (`tty1`, `tty2`, etc), not the VGA console itself (`tty0`).
-- **coreos.config.url**: Container Linux will attempt to download an Ignition config and use it to provision your booted system. See the [Ignition documentation][ignition] for more information.
+- **coreos.config.url**: Container Linux will attempt to download an Ignition config and use it to provision your booted system. Ignition configs are generated from Container Linux Configs. See the [config transpiler documentation][cl-configs] for more information.
 
 This is an example pxelinux.cfg file that assumes Container Linux is the only option. You should be able to copy this verbatim into `/var/lib/tftpboot/pxelinux.cfg/default` after providing an Ignition config URL:
 
@@ -197,7 +197,7 @@ Now that you have a machine booted it is time to play around. Check out the [Con
 [coreos-user]: https://groups.google.com/forum/#!forum/coreos-user
 [docs]: https://coreos.com/docs
 [install-to-disk]: installing-to-disk.md
-[ignition]: https://coreos.com/ignition/docs/latest
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
 [irc]: irc://irc.freenode.org:6667/#coreos
 [oem]: notes-for-distributors.md#image-customization
 [qs]: quickstart.md

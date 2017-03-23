@@ -4,29 +4,29 @@ This document describes the reconfiguration or recovery of an etcd cluster runni
 
 ## Change etcd cluster size
 
-When [cloud-config][cloud-config] is used to configure an etcd member on a Container Linux node, it compiles a special `/run/systemd/system/etcd2.service.d/20-cloudinit.conf` [drop-in unit file][drop-in]. That is, the cloud-config below:
+When [a Container Linux Config][cl-configs] is used to configure an etcd member on a Container Linux node, it compiles a special `/etc/systemd/system/etcd-member.service.d/20-clct-etcd-member.conf` [drop-in unit file][drop-in]. That is, the Container Linux Config below:
 
-```cloud-config
-#cloud-config
-
-coreos:
-  etcd2:
-    advertise-client-urls: http://<PEER_ADDRESS>:2379
-    initial-advertise-peer-urls: http://<PEER_ADDRESS>:2380
-    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    listen-peer-urls: http://0.0.0.0:2380
-    discovery: https://discovery.etcd.io/<token>
+```container-linux-config
+etcd:
+  advertise_client_urls: http://<PEER_ADDRESS>:2379
+  initial_advertise_peer_urls: http://<PEER_ADDRESS>:2380
+  listen_client_urls: http://0.0.0.0:2379,http://0.0.0.0:4001
+  listen_peer_urls: http://0.0.0.0:2380
+  discovery: https://discovery.etcd.io/<token>
 ```
 
 will generate the following [drop-in][drop-in]:
 
 ```ini
 [Service]
-Environment="ETCD_ADVERTISE_CLIENT_URLS=http://<PEER_ADDRESS>:2379"
-Environment="ETCD_DISCOVERY=https://discovery.etcd.io/<token>"
-Environment="ETCD_INITIAL_ADVERTISE_PEER_URLS=http://<PEER_ADDRESS>:2380"
-Environment="ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379,http://0.0.0.0:4001"
-Environment="ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380"
+Environment="ETCD_IMAGE_TAG=v3.1.4"
+ExecStart=
+ExecStart=/usr/lib/coreos/etcd-wrapper $ETCD_OPTS \
+  --advertise-client-urls: http://<PEER_ADDRESS>:2379 \
+  --initial-advertise-peer-urls: http://<PEER_ADDRESS>:2380 \
+  --listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001 \
+  --listen-peer-urls: http://0.0.0.0:2380 \
+  --discovery: https://discovery.etcd.io/<token>
 ```
 
 If the etcd cluster is secured with TLS, use `https://` instead of `http://` in the command examples below.
@@ -74,18 +74,15 @@ Once your new member node is up and running, and `etcdctl cluster-health` shows 
 
 This section provides instructions on how to recover a failed etcd member. It is important to know that an etcd cluster cannot be restored using only a discovery URL; the discovery URL is used only once during cluster bootstrap.
 
-In this example, we use a 3-member etcd cluster with one failed node, that is still running and has maintained [quorum][majority]. An etcd member node might fail for several reasons: out of disk space, an incorrect reboot, or issues on the underlying system. Note that this example assumes you used [cloud-config][cloud-config] with an etcd [discovery URL][etcd-discovery] to bootstrap your cluster, with the following default options:
+In this example, we use a 3-member etcd cluster with one failed node, that is still running and has maintained [quorum][majority]. An etcd member node might fail for several reasons: out of disk space, an incorrect reboot, or issues on the underlying system. Note that this example assumes you used [a Container Linux Config][cl-configs] with an etcd [discovery URL][etcd-discovery] to bootstrap your cluster, with the following default options:
 
-```cloud-config
-#cloud-config
-
-coreos:
-  etcd2:
-    advertise-client-urls: http://<PEER_ADDRESS>:2379
-    initial-advertise-peer-urls: http://<PEER_ADDRESS>:2380
-    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    listen-peer-urls: http://0.0.0.0:2380
-    discovery: https://discovery.etcd.io/<token>
+```container-linux-config
+etcd:
+  advertise_client_urls: http://<PEER_ADDRESS>:2379
+  initial_advertise_peer_urls: http://<PEER_ADDRESS>:2380
+  listen_client_urls: http://0.0.0.0:2379,http://0.0.0.0:4001
+  listen_peer_urls: http://0.0.0.0:2380
+  discovery: https://discovery.etcd.io/<token>
 ```
 
 If the etcd cluster is protected with TLS, use `https://` instead of `http://` in the examples below.
@@ -227,7 +224,7 @@ The next steps are those described in the [Change etcd cluster size][change-clus
 
 
 [change-cluster-size]: #change-etcd-cluster-size
-[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
 [data-dir]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/configuration.md#-data-dir
 [disaster-recovery]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/recovery.md#disaster-recovery
 [drop-in]: ../os/using-systemd-drop-in-units.md

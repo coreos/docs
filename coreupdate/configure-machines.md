@@ -4,13 +4,15 @@ Configuring new or existing Container Linux machines to communicate with a [Core
 
 ## New machines
 
-New servers can be configured to communicate with your CoreUpdate installation by using [cloud-config](https://coreos.com/docs/cluster-management/setup/cloudinit-cloud-config).
+New servers can be configured to communicate with your CoreUpdate installation by using [Container Linux Configs][cl-configs]
 
-By default, your installation has a single application, Container Linux, with the identifier `e96281a6-d1af-4bde-9a0a-97b76e56dc57`. This ID is universal and all Container Linux machines are configured to use it. Within the Container Linux application, there are several application groups which have been created to match Container Linux channels with the indentifiers `alpha`, `beta`, and `stable`.
+By default, your installation has a single application, Container Linux, with the identifier `e96281a6-d1af-4bde-9a0a-97b76e56dc57`. This ID is universal and all Container Linux machines are configured to use it. Within the Container Linux application, there are several application groups which have been created to match Container Linux channels with the identifiers `alpha`, `beta`, and `stable`.
 
 In addition to the default groups, you may choose to create your own group that is configured to use a specific channel, rate-limit and other settings. Groups that you create will have a unique identifier that is a generated UUID or you may provide a custom string.
 
-To place a Container Linux machine in one of these groups, you must configure the update settings via cloud-config or a file on disk.
+To place a Container Linux machine in one of these groups, you must configure the update settings via a Container Linux Config or a file on disk.
+
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
 
 ### Join preconfigured group
 
@@ -20,29 +22,12 @@ For example, here is what the Alpha group looks like in CoreUpdate:
 
 ![CoreUpdate Group](img/coreupdate-group-default.png)
 
-Here's the cloud-config to use:
+Here's the Container Linux Config to use:
 
-```cloud-config
-#cloud-config
-
-coreos:
-  update:
-    group: alpha
-    server: https://customer.update.core-os.net/v1/update/
-```
-
-Or the Ignition config:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "files": [{
-    "filesystem": "root",
-    "path": "/etc/coreos/update.conf",
-    "mode": 420,
-    "contents": { "source": "data:,GROUP%3Dalpha%0ASERVER%3Dhttps%3A%2F%2Fcustomer.update.core-os.net%2Fv1%2Fupdate%2F" }
-  }]
-}
+```container-linux-config
+update:
+  group:  alpha
+  server: https://customer.update.core-os.net/v1/update/
 ```
 
 ### Join custom group
@@ -53,31 +38,12 @@ For example, here is what "NYC Production" looks like in CoreUpdate:
 
 ![CoreUpdate Group](img/coreupdate-group.png)
 
-Here's the cloud-config to use:
+Here's the Container Linux Config to use:
 
-```cloud-config
-#cloud-config
-
-coreos:
-  update:
-    group: 0a809ab1-c01c-4a6b-8ac8-6b17cb9bae09
-    server: https://customer.update.core-os.net/v1/update/
-```
-
-More information can be found in the [cloud-config guide](http://coreos.com/docs/cluster-management/setup/cloudinit-cloud-config/#coreos).
-
-Or the Ignition config:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "files": [{
-    "filesystem": "root",
-    "path": "/etc/coreos/update.conf",
-    "mode": 420,
-    "contents": { "source": "data:,GROUP%3D0a809ab1-c01c-4a6b-8ac8-6b17cb9bae09%0ASERVER%3Dhttps%3A%2F%2Fcustomer.update.core-os.net%2Fv1%2Fupdate%2F" }
-  }]
-}
+```container-linux-config
+update:
+  group:  0a809ab1-c01c-4a6b-8ac8-6b17cb9bae09
+  server: https://customer.update.core-os.net/v1/update/
 ```
 
 ## Existing machines

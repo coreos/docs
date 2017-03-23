@@ -70,42 +70,36 @@ The following command will create a single droplet. For more details, check out 
 [reboot-docs]: update-strategies.md
 [release-notes]: https://coreos.com/releases
 
-## Ignition config
+## Container Linux Configs
 
-Container Linux allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Ignition. Head over to the [docs to learn about the supported features][ignition-docs]. Note that DigitalOcean doesn't allow an instance's userdata to be modified after the instance has been launched. This isn't a problem since Ignition only runs on the first boot.
+Container Linux allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Container Linux Configs. These configs are then transpiled into Ignition configs and given to booting machines. Head over to the [docs to learn about the supported features][cl-configs]. Note that DigitalOcean doesn't allow an instance's userdata to be modified after the instance has been launched. This isn't a problem since Ignition only runs on the first boot.
 
 You can provide a raw Ignition config to Container Linux via the DigitalOcean web console or [via the DigitalOcean API](#via-the-api).
 
 As an example, this config will configure and start etcd:
 
-```container-linux-config
-systemd:
-  units:
-    - name: etcd2.service
-      enable: true
-      dropins:
-        - name: metadata.conf
-          contents: |
-            [Unit]
-            Requires=coreos-metadata.service
-            After=coreos-metadata.service
+```container-linux-config:digitalocean
+etcd:
+  # All options get passed as command line flags to etcd.
+  # Any information inside curly braces comes from the machine at boot time.
 
-            [Service]
-            EnvironmentFile=/run/metadata/coreos
-            ExecStart=
-            ExecStart=/usr/bin/etcd2 \
-                --advertise-client-urls=http://${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0}:2379 \
-                --initial-advertise-peer-urls=http://${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0}:2380 \
-                --listen-client-urls=http://0.0.0.0:2379 \
-                --listen-peer-urls=http://${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0}:2380 \
-                --discovery=https://discovery.etcd.io/<token>
+  # multi_region and multi_cloud deployments need to use {PUBLIC_IPV4}
+  advertise_client_urls:       "http://{PRIVATE_IPV4}:2379"
+  initial_advertise_peer_urls: "http://{PRIVATE_IPV4}:2380"
+  # listen on both the official ports and the legacy ports
+  # legacy ports can be omitted if your application doesn't depend on them
+  listen_client_urls:          "http://0.0.0.0:2379"
+  listen_peer_urls:            "http://{PRIVATE_IPV4}:2380"
+  # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+  # specify the initial size of your cluster with ?size=X
+  discovery:                   "https://discovery.etcd.io/<token>"
 ```
 
-[ignition-docs]: https://coreos.com/ignition/docs/latest
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
 
 ### Adding more machines
 
-To add more instances to the cluster, just launch more with the same Ignition config. New instances will join the cluster regardless of region.
+To add more instances to the cluster, just launch more with the same Container Linux Config. New instances will join the cluster regardless of region.
 
 ## SSH to your droplets
 
@@ -183,7 +177,7 @@ For more details, check out [DigitalOcean's API documentation][do-api-docs].
 <div class="row">
   <div class="col-lg-8 col-md-10 col-sm-8 col-xs-12 co-m-screenshot">
     <img src="img/settings.png" />
-    <div class="co-m-screenshot-caption">Droplet settings for networking and cloud-config</div>
+    <div class="co-m-screenshot-caption">Droplet settings for networking and Ignition</div>
   </div>
 </div>
 4. Choose your [preferred channel](#choosing-a-channel) of Container Linux.
@@ -195,7 +189,7 @@ For more details, check out [DigitalOcean's API documentation][do-api-docs].
 </div>
 5. Select your SSH keys.
 
-Note that DigitalOcean is not able to inject a root password into Container Linux images like it does with other images. You'll need to add your keys via the web console or add keys or passwords via your Ignition config in order to log in.
+Note that DigitalOcean is not able to inject a root password into Container Linux images like it does with other images. You'll need to add your keys via the web console or add keys or passwords via your Container Linux Config in order to log in.
 
 ## Using CoreOS Container Linux
 

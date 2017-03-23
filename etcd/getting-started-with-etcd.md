@@ -10,82 +10,18 @@ Application containers running on your cluster can read and write data into etcd
 
 Container Linux's `etcd-member.service` systemd unit knows how to fetch and run the current etcd v3.x container image, providing etcd v3 without requiring the binary to be present in every default OS installation.
 
-To enable the etcd v3 service, first ensure that `etcd2.service` is disabled. To upgrade an existing etcd v2 cluster rather than deploy a new one, start with the [etcd v2 to v3 upgrade doc][etcd-v3-upgrade].
+etcd v3 startup can be configured at a new node's first boot with a [Container Linux Config][cl-configs]. To upgrade an existing etcd v2 cluster rather than deploy a new one, start with the [etcd v2 to v3 upgrade doc][etcd-v3-upgrade]. A Container Linux Config can be used to set any etcd option, like in this example:
 
-```
-$ systemctl disable etcd2.service
-$ systemctl stop etcd2.service
-```
-
-Then, enable and start the `etcd-member.service`:
-
-```
-$ systemctl enable etcd-member.service
-Created symlink /etc/systemd/system/multi-user.target.wants/etcd-member.service → /usr/lib/systemd/system/etcd-member.service.
-$ systemctl start etcd-member.service
-$ systemctl status etcd-member.service
-```
-
-etcd v3 startup can be configured at a new node's first boot with [Ignition][ignition-docs] provisioning. The following Ignition config enables the `etcd-member` etcd v3 service:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "systemd": {
-    "units": [{
-      "name": "etcd-member.service",
-      "enable": true
-    },
-    {
-      "name": "etcd2.service",
-      "enable": false
-    }]
-  }
-}
-```
-
-`etcd-member.service` has some default settings
-
-```bash
-$ systemctl cat etcd-member.service
-
-<<COMMENT
-...
-Environment="ETCD_IMAGE_TAG=v3.0.10"
-Environment="ETCD_NAME=%m"
-Environment="ETCD_USER=etcd"
-...
-COMMENT
-```
-
-Default configurations can be overwritten with `1-override.conf` file, as below:
-
-```bash
-# to update etcd-member service file
-$ cat > /tmp/override-my-etcd.conf <<EOF
-[Service]
-Environment="ETCD_IMAGE_TAG=v3.1.2"
-Environment="ETCD_DATA_DIR=/var/lib/etcd"
-Environment="ETCD_SSL_DIR=/etc/ssl/certs"
-Environment="ETCD_OPTS=--name my-etcd-1 \
-    --listen-client-urls https://10.240.0.1:2379 \
-    --advertise-client-urls https://10.240.0.1:2379 \
-    --listen-peer-urls https://10.240.0.1:2380 \
-    --initial-advertise-peer-urls https://10.240.0.1:2380 \
-    --initial-cluster my-etcd-1=https://10.240.0.1:2380,my-etcd-2=https://10.240.0.2:2380,my-etcd-3=https://10.240.0.3:2380 \
-    --initial-cluster-token my-etcd-token \
-    --initial-cluster-state new \
-    ...
-EOF
-$ mkdir -p /etc/systemd/system/etcd-member.service.d
-$ mv /tmp/override-my-etcd.conf /etc/systemd/system/etcd-member.service.d/1-override.conf
-
-# to check service-file-override status
-$ systemd-delta --type=extended
-
-# to start service
-$ systemctl daemon-reload
-$ systemctl enable etcd-member.service
+```container-linux-config
+etcd:
+  name:                        my-etcd-1
+  listen_client_urls:          https://10.240.0.1:2379
+  advertise_client_urls:       https://10.240.0.1:2379
+  listen_peer_urls:            https://10.240.0.1:2380
+  initial_advertise_peer_urls: https://10.240.0.1:2380
+  initial_cluster:             my-etcd-1=https://10.240.0.1:2380,my-etcd-2=https://10.240.0.2:2380,my-etcd-3=https://10.240.0.3:2380
+  initial_cluster_token:       my-etcd-token
+  initial_cluster_state:       new
 ```
 
 ## Reading and writing to etcd
@@ -289,4 +225,4 @@ $ curl http://127.0.0.1:2379/v2/keys/foo
 
 
 [etcd-v3-upgrade]: https://github.com/coreos/etcd/blob/master/Documentation/upgrades/upgrade_3_0.md
-[ignition-docs]: https://github.com/coreos/ignition/blob/master/doc/getting-started.md
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
