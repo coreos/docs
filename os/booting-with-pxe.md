@@ -52,7 +52,8 @@ systemd:
 passwd:
   users:
     - name: core
-      sshAuthorizedKeys: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq...
+      ssh_authorized_keys:
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq...
 ```
 
 ### Choose a channel
