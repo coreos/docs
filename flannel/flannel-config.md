@@ -149,7 +149,7 @@ The last step is to enable `flanneld.service` in the Ignition config:
 
 Flannel requires SSL certificates to communicate with a secure etcd cluster. By default, flannel looks for these certificates in `/etc/ssl/etcd`. To use different certificates, add `Environment=ETCD_SSL_DIR` to a drop-in file for `flanneld.service`. Use the following configuration snippet to achieve this:
 
-``` container-linux-config
+```container-linux-config
 systemd:
   units:
     - name: flanneld.service
