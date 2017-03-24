@@ -262,6 +262,11 @@ First we need to create a security group to allow Container Linux instances to c
           Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
         <li>
+          Back in the EC2 dashboard, paste this Ignition configuration into the "User Data" field.
+          <ul>
+            <li>Paste configuration into "User Data"</li>
+            <li>"Continue"</li>
+          </ul>
 ```container-linux-config
 systemd:
   units:
@@ -288,11 +293,6 @@ systemd:
     - name: fleet.service
       enable: true
 ```
-          Back in the EC2 dashboard, paste this information verbatim into the "User Data" field.
-          <ul>
-            <li>Paste link into "User Data"</li>
-            <li>"Continue"</li>
-          </ul>
         </li>
         <li>
           Storage Configuration
@@ -346,6 +346,11 @@ systemd:
           Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
         <li>
+          Back in the EC2 dashboard, paste this Ignition configuration into the "User Data" field.
+          <ul>
+            <li>Paste configuration into "User Data"</li>
+            <li>"Continue"</li>
+          </ul>
 ```container-linux-config
 systemd:
   units:
@@ -372,11 +377,6 @@ systemd:
     - name: fleet.service
       enable: true
 ```
-          Back in the EC2 dashboard, paste this information verbatim into the "User Data" field.
-          <ul>
-            <li>Paste link into "User Data"</li>
-            <li>"Continue"</li>
-          </ul>
         </li>
         <li>
           Storage Configuration
@@ -430,6 +430,11 @@ systemd:
           Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
         <li>
+          Back in the EC2 dashboard, paste this Ignition configuration into the "User Data" field.
+          <ul>
+            <li>Paste configuration into "User Data"</li>
+            <li>"Continue"</li>
+          </ul>
 ```container-linux-config
 systemd:
   units:
@@ -456,11 +461,6 @@ systemd:
     - name: fleet.service
       enable: true
 ```
-          Back in the EC2 dashboard, paste this information verbatim into the "User Data" field.
-          <ul>
-            <li>Paste link into "User Data"</li>
-            <li>"Continue"</li>
-          </ul>
         </li>
         <li>
           Storage Configuration
