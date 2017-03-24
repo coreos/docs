@@ -1,7 +1,5 @@
 # Configuring flannel for container networking
 
-*Note*: flannel is only available in [Container Linux versions 554](https://coreos.com/releases/#554.0.0) and later.
-
 ## Overview
 
 With Docker, each container is assigned an IP address that can be used to communicate with other containers on the _same_ host. For communicating over a network, containers are tied to the IP addresses of the host machines and must rely on port-mapping to reach the desired container. This makes it difficult for applications running inside containers to advertise their external IP and port as that information is not available to them.
