@@ -262,32 +262,32 @@ First we need to create a security group to allow Container Linux instances to c
           Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
         <li>
-          ```container-linux-config
-          systemd:
-            units:
-              - name: etcd2.service
-                enable: true
-                dropins:
-                  - name: cluster.conf
-                    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-                    # specify the initial size of your cluster with ?size=X
-                    contents: |
-                      [Unit]
-                      Requires=coreos-metadata.service
-                      After=coreos-metadata.service
+```container-linux-config
+systemd:
+  units:
+    - name: etcd2.service
+      enable: true
+      dropins:
+        - name: cluster.conf
+          # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+          # specify the initial size of your cluster with ?size=X
+          contents: |
+            [Unit]
+            Requires=coreos-metadata.service
+            After=coreos-metadata.service
 
-                      [Service]
-                      EnvironmentFile=/run/metadata/coreos
-                      ExecStart=
-                      ExecStart=/usr/bin/etcd2 \
-                          --advertise-client-urls=http://${COREOS_EC2_IPV4_PUBLIC}:2379 \
-                          --initial-advertise-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
-                          --listen-client-urls=http://0.0.0.0:2379 \
-                          --listen-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
-                          --discovery=https://discovery.etcd.io/<token>
-              - name: fleet.service
-                enable: true
-          ```
+            [Service]
+            EnvironmentFile=/run/metadata/coreos
+            ExecStart=
+            ExecStart=/usr/bin/etcd2 \
+                --advertise-client-urls=http://${COREOS_EC2_IPV4_PUBLIC}:2379 \
+                --initial-advertise-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
+                --listen-client-urls=http://0.0.0.0:2379 \
+                --listen-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
+                --discovery=https://discovery.etcd.io/<token>
+    - name: fleet.service
+      enable: true
+```
           Back in the EC2 dashboard, paste this information verbatim into the "User Data" field.
           <ul>
             <li>Paste link into "User Data"</li>
@@ -346,32 +346,32 @@ First we need to create a security group to allow Container Linux instances to c
           Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
         <li>
-          ```container-linux-config
-          systemd:
-            units:
-              - name: etcd2.service
-                enable: true
-                dropins:
-                  - name: cluster.conf
-                    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-                    # specify the initial size of your cluster with ?size=X
-                    contents: |
-                      [Unit]
-                      Requires=coreos-metadata.service
-                      After=coreos-metadata.service
+```container-linux-config
+systemd:
+  units:
+    - name: etcd2.service
+      enable: true
+      dropins:
+        - name: cluster.conf
+          # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+          # specify the initial size of your cluster with ?size=X
+          contents: |
+            [Unit]
+            Requires=coreos-metadata.service
+            After=coreos-metadata.service
 
-                      [Service]
-                      EnvironmentFile=/run/metadata/coreos
-                      ExecStart=
-                      ExecStart=/usr/bin/etcd2 \
-                          --advertise-client-urls=http://${COREOS_EC2_IPV4_PUBLIC}:2379 \
-                          --initial-advertise-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
-                          --listen-client-urls=http://0.0.0.0:2379 \
-                          --listen-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
-                          --discovery=https://discovery.etcd.io/<token>
-              - name: fleet.service
-                enable: true
-          ```
+            [Service]
+            EnvironmentFile=/run/metadata/coreos
+            ExecStart=
+            ExecStart=/usr/bin/etcd2 \
+                --advertise-client-urls=http://${COREOS_EC2_IPV4_PUBLIC}:2379 \
+                --initial-advertise-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
+                --listen-client-urls=http://0.0.0.0:2379 \
+                --listen-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
+                --discovery=https://discovery.etcd.io/<token>
+    - name: fleet.service
+      enable: true
+```
           Back in the EC2 dashboard, paste this information verbatim into the "User Data" field.
           <ul>
             <li>Paste link into "User Data"</li>
@@ -430,32 +430,32 @@ First we need to create a security group to allow Container Linux instances to c
           Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
         <li>
-          ```container-linux-config
-          systemd:
-            units:
-              - name: etcd2.service
-                enable: true
-                dropins:
-                  - name: cluster.conf
-                    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-                    # specify the initial size of your cluster with ?size=X
-                    contents: |
-                      [Unit]
-                      Requires=coreos-metadata.service
-                      After=coreos-metadata.service
+```container-linux-config
+systemd:
+  units:
+    - name: etcd2.service
+      enable: true
+      dropins:
+        - name: cluster.conf
+          # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+          # specify the initial size of your cluster with ?size=X
+          contents: |
+            [Unit]
+            Requires=coreos-metadata.service
+            After=coreos-metadata.service
 
-                      [Service]
-                      EnvironmentFile=/run/metadata/coreos
-                      ExecStart=
-                      ExecStart=/usr/bin/etcd2 \
-                          --advertise-client-urls=http://${COREOS_EC2_IPV4_PUBLIC}:2379 \
-                          --initial-advertise-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
-                          --listen-client-urls=http://0.0.0.0:2379 \
-                          --listen-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
-                          --discovery=https://discovery.etcd.io/<token>
-              - name: fleet.service
-                enable: true
-          ```
+            [Service]
+            EnvironmentFile=/run/metadata/coreos
+            ExecStart=
+            ExecStart=/usr/bin/etcd2 \
+                --advertise-client-urls=http://${COREOS_EC2_IPV4_PUBLIC}:2379 \
+                --initial-advertise-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
+                --listen-client-urls=http://0.0.0.0:2379 \
+                --listen-peer-urls=http://${COREOS_EC2_IPV4_LOCAL}:2380 \
+                --discovery=https://discovery.etcd.io/<token>
+    - name: fleet.service
+      enable: true
+```
           Back in the EC2 dashboard, paste this information verbatim into the "User Data" field.
           <ul>
             <li>Paste link into "User Data"</li>
