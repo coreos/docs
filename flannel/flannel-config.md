@@ -1,7 +1,5 @@
 # Configuring flannel for container networking
 
-*Note*: flannel is only available in [Container Linux versions 554](https://coreos.com/releases/#554.0.0) and later.
-
 ## Overview
 
 With Docker, each container is assigned an IP address that can be used to communicate with other containers on the _same_ host. For communicating over a network, containers are tied to the IP addresses of the host machines and must rely on port-mapping to reach the desired container. This makes it difficult for applications running inside containers to advertise their external IP and port as that information is not available to them.
@@ -151,7 +149,7 @@ The last step is to enable `flanneld.service` in the Ignition config:
 
 Flannel requires SSL certificates to communicate with a secure etcd cluster. By default, flannel looks for these certificates in `/etc/ssl/etcd`. To use different certificates, add `Environment=ETCD_SSL_DIR` to a drop-in file for `flanneld.service`. Use the following configuration snippet to achieve this:
 
-``` container-linux-config
+```container-linux-config
 systemd:
   units:
     - name: flanneld.service
