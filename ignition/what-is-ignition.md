@@ -26,9 +26,9 @@ The lack of variable substitution in Ignition has an added benefit of leveling t
 
 ### When is Ignition executed
 
-On boot, GRUB checks the disks for the dummy disk UUID (`00000000-0000-0000-0000-000000000001`) and sets `coreos.first_boot=1` if it is found. This parameter is then processed by a [systemd-generator] in the [initramfs] and if the parameter is set to non-zero, `ignition.target` is set as a dependency of `initrd.target`, causing Ignition to run.
+On boot, GRUB checks the EFI System Partition for a file at `coreos/first_boot` and sets `coreos.first_boot=detected` if found. The `coreos.first_boot` parameter is processed by a [systemd-generator] in the [initramfs] and if the parameter value is non-zero, the Ignition units are set as dependencies of `initrd.target`, causing Ignition to run. If the parameter is set to the special value `detected`, the `coreos/first_boot` file is deleted after Ignition runs successfully.
 
-Note that [PXE][supported platforms] deployments don't use GRUB to boot, so the `coreos.first_boot=1` parameter will need to be added to the boot arguments in order for Ignition to run.
+Note that [PXE][supported platforms] deployments don't use GRUB to boot, so `coreos.first_boot=1` will need to be added to the boot arguments in order for Ignition to run. `detected` should not be specified so Ignition will not attempt to delete `coreos/first_boot`.
 
 ## Providing Ignition a config
 
