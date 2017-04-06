@@ -2,6 +2,8 @@
 
 As much as we all love flawless, automatic updates, there may be occasions when an update must be rolled back. This is fairly straightforward on Container Linux, once you know the right commands.
 
+**Note**: Container Linux allows you to rollback to a previously active partition, or change to an older release channel (to downgrade to a stable version). There is no method to rollback to an arbitrary previous version number.
+
 tl;dr: The following command will set the currently passive partition to be active on the next boot:
 
 ```
