@@ -1,6 +1,6 @@
 # Performing manual CoreOS Container Linux rollbacks
 
-In the event of an upgrade failure, Container Linux will automatically boot with the version on the rollback partition. Immediately after an upgrade reboot, the active version of Container Linux can be rolled back to the version installed on the rollback partition, or downgraded to the version current on any lower release channel. 
+In the event of an upgrade failure, Container Linux will automatically boot with the version on the rollback partition. Immediately after an upgrade reboot, the active version of Container Linux can be rolled back to the version installed on the rollback partition, or downgraded to the version current on any lower release channel. There is no method to downgrade to an arbitrary version number. 
 
 This section describes the automated upgrade process, performing a manual rollback, and forcing a channel downgrade.
 
