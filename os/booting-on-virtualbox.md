@@ -82,7 +82,7 @@ Will be created an ISO file named `my_vm01.iso` that will configure a virtual ma
 
 ## Deploying a new virtual machine on VirtualBox
 
-I recommend to use the built image as base image. Therefore you should clone the image for each new virtual machine and set it to desired size.
+I recommend using the built image as base image. Therefore you should clone the image for each new virtual machine and set it to desired size.
 
 ```sh
 VBoxManage clonehd coreos_production_stable.vdi my_vm01.vdi
