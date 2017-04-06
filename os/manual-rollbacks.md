@@ -1,12 +1,10 @@
 # Performing manual CoreOS Container Linux rollbacks
 
-As much as we all love flawless, automatic updates, there may be occasions when an update must be rolled back. This is fairly straightforward on Container Linux, once you know the right commands.
+In the event of an upgrade failure, Container Linux will automatically boot with the version on the rollback partition. Immediately after an upgrade reboot, the active version of Container Linux can be rolled back to the version installed on the rollback partition, or downgraded to the version current on any lower release channel. There is no method to downgrade to an arbitrary version number. 
 
-tl;dr: The following command will set the currently passive partition to be active on the next boot:
+This section describes the automated upgrade process, performing a manual rollback, and forcing a channel downgrade.
 
-```
-cgpt prioritize "$(cgpt find -t coreos-usr | grep --invert-match "$(rootdev -s /usr)")"
-```
+**Note:** Neither performing a manual rollback nor forcing a channel downgrade are recommended.
 
 ## How do updates work?
 
@@ -145,7 +143,7 @@ If we take another look at the GPT tables, we'll see that the priorities have be
 
 ```
 
-Again, composing the previous two commands we get this handy one-liner to revert to the previous image.
+Composing the previous two commands produces the following command to set the currently passive partition to be active on the next boot:
 
 ```
 $ cgpt prioritize "$(cgpt find -t coreos-usr | grep --invert-match "$(rootdev -s /usr)")"
