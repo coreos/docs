@@ -76,7 +76,6 @@ Optionally add the `--visibility public` flag to make this image available outsi
 
 Container Linux allows you to configure machine parameters, launch systemd units on startup and more via Container Linux Configs. These configs are then transpiled into Ignition configs and given to booting machines. Jump over to the [docs to learn about the supported features][cl-configs]. We're going to provide our Container Linux Config to OpenStack via the user-data flag. Our Container Linux Config will also contain SSH keys that will be used to connect to the instance. In order for this to work your OpenStack cloud provider must support [config drive][config-drive] or the OpenStack metadata service.
 
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
 [config-drive]: http://docs.openstack.org/user-guide/cli_config_drive.html
 
 A common Container Linux Config for OpenStack looks like:
@@ -102,7 +101,7 @@ The `{PRIVATE_IPV4}` and `{PUBLIC_IPV4}` substitution variables are fully suppor
 
 ## Launch cluster
 
-Boot the machines with the `nova` CLI, referencing the image ID from the import step above and your [JSON file from ct](cl-configs):
+Boot the machines with the `nova` CLI, referencing the image ID from the import step above and your [JSON file from ct][cl-configs]:
 
 ```sh
 nova boot \
@@ -183,3 +182,5 @@ If you would like to create multiple clusters you'll need to generate and use a 
 ## Using CoreOS Container Linux
 
 Now that you have instances booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
+
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md

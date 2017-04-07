@@ -16,13 +16,11 @@ If you wish to make further customizations see our [customize sshd guide](custom
 
 ## Remote non-listening services
 
-### etcd, fleet, and Locksmith
+### etcd and Locksmith
 
-etcd, fleet, and Locksmith all should be secured and authenticated using TLS if you are using these services. Please see the relevant guides for details.
+etcd and Locksmith should be secured and authenticated using TLS if you are using these services. Please see the relevant guides for details.
 
 * [etcd security guide](https://github.com/coreos/etcd/blob/v3.1.0/Documentation/op-guide/security.md)
-* [fleet TLS configuration](cloud-config.md#fleet)
-* [Locksmith TLS configuration](cloud-config.md#locksmith)
 
 ## Local services
 
