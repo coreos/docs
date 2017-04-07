@@ -43,7 +43,6 @@ After=coreos-metadata.service
 
 [Service]
 EnvironmentFile=/run/metadata/coreos
-ExecStart=
 ExecStart=/usr/bin/etcd2 \
   --advertise-client-urls=http://${COREOS_DIGITALOCEAN_IPV4_PUBLIC_0}:2379 \
   --initial-advertise-peer-urls=http://${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0}:2380 \
