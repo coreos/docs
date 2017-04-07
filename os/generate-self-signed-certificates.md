@@ -279,7 +279,7 @@ openssl x509 -in client.pem -text -noout
 
 ### Things to know
 
-* Don't put your `ca-key.pem` into cloud-config, it is recommended to store it in safe place. This key allows to generate as much certificates as possible.
+* Don't put your `ca-key.pem` into a Container Linux Config, it is recommended to store it in safe place. This key allows to generate as much certificates as possible.
 * Keep **key** files in safe. Don't forget to set proper file permissions, i.e. `chmod 0600 server-key.pem`.
 * Certificates in this **TLDR** example have both `server auth` and `client auth` X509 V3 extensions and you can use them with servers and clients' authentication.
 * You are free to generate keys and certificates for wildcard `*` address as well. They will work on any machine. It will simplify certificates routine but increase security risks.

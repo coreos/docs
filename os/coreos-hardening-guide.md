@@ -28,7 +28,7 @@ etcd, fleet, and Locksmith all should be secured and authenticated using TLS if 
 
 ### Local users
 
-Container Linux has a single default user account called "core". Generally this user is the one that gets ssh keys added to it via cloud-config for administrators to login. The core users, by default, has access to the wheel group which grants sudo access. You can change this by removing the core user from wheel by running this command: `gpasswd -d core wheel`.
+Container Linux has a single default user account called "core". Generally this user is the one that gets ssh keys added to it via a Container Linux Config for administrators to login. The core users, by default, has access to the wheel group which grants sudo access. You can change this by removing the core user from wheel by running this command: `gpasswd -d core wheel`.
 
 ### Docker daemon
 

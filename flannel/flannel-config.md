@@ -24,47 +24,17 @@ Use `etcdctl` utility to publish the config:
 $ etcdctl set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
 ```
 
-You can put this into a drop-in for flanneld.service via cloud-config:
+You can put this into a drop-in for flanneld.service via a Container Linux Config:
 
-```cloud-config
-#cloud-config
-
-coreos:
+```container-linux-config
+systemd:
   units:
     - name: flanneld.service
-      drop-ins:
+      dropins:
         - name: 50-network-config.conf
-          content: |
+          contents: |
             [Service]
             ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
-```
-
-or using Ignition with the following config:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "systemd": {
-    "units": [{
-      "name": "flanneld.service",
-      "dropins": [{
-        "name": "50-network-config.conf",
-        "contents": "[Service]\nExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ \"Network\": \"10.1.0.0/16\" }'"
-      }]
-    }]
-  }
-}
-```
-
-This will assign the specified /16 for the entire overlay network. By default, flannel will allocate a /24 to each host. This default, along with the minimum and maximum subnet IP addresses is overridable in config:
-
-```json
-{
-	"Network": "10.1.0.0/16",
-	"SubnetLen": 28,
-	"SubnetMin": "10.1.10.0",
-	"SubnetMax": "10.1.50.0"
-}
 ```
 
 This config instructs flannel to allocate /28 subnets to individual hosts and make sure not to issue subnets outside of 10.1.10.0 - 10.1.50.0 range.
@@ -73,74 +43,12 @@ This config instructs flannel to allocate /28 subnets to individual hosts and ma
 
 flannel uses UDP port 8285 for sending encapsulated IP packets. Make sure to enable this traffic to pass between the hosts. If you find that you can't ping containers across hosts, this port is probably not open.
 
-### Enabling flannel via cloud-config
+### Enabling flannel via a Container Linux Config
 
-The last step is to enable `flanneld.service` in the cloud-config by adding `command: start` directive:
+The last step is to enable `flanneld.service` by creating the `flannel` section in our Container Linux Config. Options for flannel can be specified in this section.
 
-```cloud-config
-#cloud-config
-
-coreos:
-  units:
-    - name: flanneld.service
-      drop-ins:
-        - name: 50-network-config.conf
-          content: |
-            [Service]
-            ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
-      command: start
-
-    # Example service running in a Docker container
-    - name: redis.service
-      content: |
-        [Unit]
-        Requires=flanneld.service
-        After=flanneld.service
-
-        [Service]
-        ExecStart=/usr/bin/docker run redis
-        Restart=always
-      command: start
-```
-
-*Important*: If you are starting other units via cloud-config, `flanneld.service` needs to be listed _before_ any services that run Docker containers. In addition, other units that will run in containers, including those scheduled via fleet, should include `Requires=flanneld.service`, `After=flanneld.service`, and `Restart=always|on-failure` directives. These directive are necessary because flanneld.service may fail due to etcd not being available yet. It will keep restarting and it is important for Docker based services to also keep trying until flannel is up.
-
-*Important*: If you are starting flannel on Vagrant, it should be instructed to use the correct network interface:
-
-```cloud-config
-#cloud-config
-
-coreos:
-  flannel:
-    interface: $public_ipv4
-```
-
-### Enabling flannel via Ignition
-
-The last step is to enable `flanneld.service` in the Ignition config:
-
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "systemd": {
-    "units": [
-      {
-        "name": "flanneld.service",
-        "enable": true,
-        "dropins": [{
-          "name": "50-network-config.conf",
-          "contents": "[Service]\nExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ \"Network\": \"10.1.0.0/16\" }'"
-        }]
-      },
-      {
-        "name": "redis.service",
-        "enable": true,
-        "contents": "[Unit]\nRequires=flanneld.service\nAfter=flanneld.service\n\n[Service]\nExecStart=/usr/bin/docker run redis\nRestart=always"
-      }
-    ]
-  }
-}
+```container-linux-config
+flannel:
 ```
 
 *Important*: Other units that will run in containers, including those scheduled via fleet, should include `Requires=flanneld.service`, `After=flanneld.service`, and `Restart=always|on-failure` directives. These directive are necessary because flanneld.service may fail due to etcd not being available yet. It will keep restarting and it is important for Docker based services to also keep trying until flannel is up.

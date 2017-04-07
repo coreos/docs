@@ -12,7 +12,7 @@ Packet has a concept of 'projects' that represent a grouping of machines that de
 
 ### Portal instructions
 
-Once logged into the portal you will be able to click the 'Deploy' button and choose Container Linux from the menu of operating systems, and choose which project you want the server to be deployed in. If you choose to enter custom cloud-config, you can click the 'manage' link and add that as well. The SSH key that you associate with your account and any other team member's keys that are on the project will be added to your Container Linux machine once it is provisioned.
+Once logged into the portal you will be able to click the 'Deploy' button and choose Container Linux from the menu of operating systems, and choose which project you want the server to be deployed in. If you choose to enter a custom Ignition config, you can click the 'manage' link and add that as well. The SSH key that you associate with your account and any other team member's keys that are on the project will be added to your Container Linux machine once it is provisioned.
 
 ### API instructions
 
@@ -29,39 +29,34 @@ curl -X POST \
 https://api.packet.net/projects/<PROJECT_ID>/devices
 ```
 
-Double quotes in the `<USERDATA>` value must be escaped such that the request body is valid JSON. See the Cloud-Config section below for more information about accepted forms of userdata.
+Double quotes in the `<USERDATA>` value must be escaped such that the request body is valid JSON. See the Container Linux Config section below for more information about accepted forms of userdata.
 
-## Ignition config
+## Container Linux Configs
 
-Container Linux allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Ignition. Head over to the [docs to learn about the supported features][ignition-docs]. Note that Packet doesn't allow an instance's userdata to be modified after the instance has been launched. This isn't a problem since Ignition only runs on the first boot.
+Container Linux allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Container Linux Configs. These configs are then transpiled into Ignition configs and given to booting machines. Head over to the [docs to learn about the supported features][cl-configs]. Note that Packet doesn't allow an instance's userdata to be modified after the instance has been launched. This isn't a problem since Ignition only runs on the first boot.
 
 You can provide a raw Ignition config to Container Linux via Packet's userdata field.
 
 As an example, this config will configure and start etcd:
 
-```container-linux-config
-systemd:
-  units:
-    - name: etcd2.service
-      enable: true
-      dropins:
-        - name: metadata.conf
-          contents: |
-            [Unit]
-            Requires=coreos-metadata.service
-            After=coreos-metadata.service
+```container-linux-config:packet
+etcd:
+  # All options get passed as command line flags to etcd.
+  # Any information inside curly braces comes from the machine at boot time.
 
-            [Service]
-            EnvironmentFile=/run/metadata/coreos
-            ExecStart=\nExecStart=/usr/bin/etcd2 \
-                --advertise-client-urls=http://${COREOS_PACKET_IPV4_PRIVATE_0}:2379 \
-                --initial-advertise-peer-urls=http://${COREOS_PACKET_IPV4_PRIVATE_0}:2380 \
-                --listen-client-urls=http://0.0.0.0:2379 \
-                --listen-peer-urls=http://${COREOS_PACKET_IPV4_PRIVATE_0}:2380 \
-                --discovery=https://discovery.etcd.io/<token>
+  # multi_region and multi_cloud deployments need to use {PUBLIC_IPV4}
+  advertise_client_urls:       "http://{PRIVATE_IPV4}:2379"
+  initial_advertise_peer_urls: "http://{PRIVATE_IPV4}:2380"
+  # listen on both the official ports and the legacy ports
+  # legacy ports can be omitted if your application doesn't depend on them
+  listen_client_urls:          "http://0.0.0.0:2379"
+  listen_peer_urls:            "http://{PRIVATE_IPV4}:2380"
+  # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+  # specify the initial size of your cluster with ?size=X
+  discovery:                   "https://discovery.etcd.io/<token>"
 ```
 
-[ignition-docs]: https://coreos.com/ignition/docs/latest
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
 
 ## Using CoreOS Container Linux
 

@@ -39,17 +39,15 @@ You can also create timer with different name, i.e. `task.timer`. In this case y
 Unit=date.service
 ```
 
-## Cloud-config
+## Container Linux Config
 
-Here you'll find an example cloud-config demonstrating how to install systemd timers:
+Here you'll find an example Container Linux Config demonstrating how to install systemd timers:
 
-```cloud-config
-#cloud-config
-
-coreos:
+```container-linux-config
+systemd:
   units:
     - name: date.service
-      content: |
+      contents: |
         [Unit]
         Description=Prints date into /tmp/date file
 
@@ -57,36 +55,16 @@ coreos:
         Type=oneshot
         ExecStart=/usr/bin/sh -c '/usr/bin/date >> /tmp/date'
     - name: date.timer
-      command: start
-      content: |
+      enable: true
+      contents: |
         [Unit]
         Description=Run date.service every 10 minutes
 
         [Timer]
         OnCalendar=*:0/10
-```
 
-## Ignition
-
-Here you'll find an example Ignition config demonstrating how to install systemd timers:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "systemd": {
-    "units": [
-      {
-        "name": "date.service",
-        "contents": "[Unit]\nDescription=Prints date into /tmp/date file\n\n[Service]\nType=oneshot\nExecStart=/usr/bin/sh -c '/usr/bin/date >> /tmp/date'"
-      },
-      {
-        "name": "date.timer",
-        "enable": true,
-        "contents": "[Unit]\nDescription=Run date.service every 10 minutes\n\n[Timer]\nOnCalendar=*:0/10\n\n[Install]\nWantedBy=multi-user.target"
-      }
-    ]
-  }
-}
+        [Install]
+        WantedBy=multi-user.target
 ```
 
 ## Further reading

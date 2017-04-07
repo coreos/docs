@@ -11,39 +11,31 @@ $ curl -w "\n" 'https://discovery.etcd.io/new?size=3'
 https://discovery.etcd.io/6a28e078895c5ec737174db2419bb2f3
 ```
 
-The discovery URL can be provided to each Container Linux machine via [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md), a minimal config tool that's designed to get a machine connected to the network and join the cluster. The rest of this guide will explain what's happening behind the scenes, but if you're trying to get clustered as quickly as possible, all you need to do is provide a _fresh, unique_ discovery token in your cloud-config.
+The discovery URL can be provided to each Container Linux machine via [Container Linux Configs](https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md). The rest of this guide will explain what's happening behind the scenes, but if you're trying to get clustered as quickly as possible, all you need to do is provide a _fresh, unique_ discovery token in your config.
 
-Boot each one of the machines with identical cloud-config and they should be automatically clustered:
+Boot each one of the machines with identical Container Linux Config and they should be automatically clustered:
 
-```cloud-config
-#cloud-config
-
-coreos:
-  etcd2:
-    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-    # specify the initial size of your cluster with ?size=X
-    discovery: https://discovery.etcd.io/<token>
-    # multi-region and multi-cloud deployments need to use $public_ipv4
-    advertise-client-urls: http://$private_ipv4:2379,http://$private_ipv4:4001
-    initial-advertise-peer-urls: http://$private_ipv4:2380
-    # listen on both the official ports and the legacy ports
-    # legacy ports can be omitted if your application doesn't depend on them
-    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    listen-peer-urls: http://$private_ipv4:2380
-  units:
-    - name: etcd2.service
-      command: start
-    - name: fleet.service
-      command: start
+```container-linux-config:ec2
+etcd:
+  # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+  # specify the initial size of your cluster with ?size=X
+  discovery: https://discovery.etcd.io/<token>
+  # multi_region and multi_cloud deployments need to use {PUBLIC_IPV4}
+  advertise_client_urls: http://{PRIVATE_IPV4}:2379,http://{PRIVATE_IPV4}:4001
+  initial_advertise_peer_urls: http://{PRIVATE_IPV4}:2380
+  # listen on both the official ports and the legacy ports
+  # legacy ports can be omitted if your application doesn't depend on them
+  listen_client_urls: http://0.0.0.0:2379,http://0.0.0.0:4001
+  listen_peer_urls: http://{PRIVATE_IPV4}:2380
 ```
 
-Specific documentation are provided for each platform's guide. Not all providers support the $private_ipv4 variable substitution.
+Specific documentation are provided for each platform's guide. Not all providers support the `{PRIVATE_IPV4}` variable substitution.
 
 ## New clusters
 
 Starting a Container Linux cluster requires one of the new machines to become the first leader of the cluster. The initial leader is stored as metadata with the discovery URL in order to inform the other members of the new cluster. Let's walk through a timeline a new three-machine Container Linux cluster discovering each other:
 
-1. All three machines are booted via a cloud-provider with the same cloud-config in the user-data.
+1. All three machines are booted via a cloud-provider with the same config in the user-data.
 2. Machine 1 starts up first. It requests information about the cluster from the discovery token and submits its `-initial-advertise-peer-urls` address `10.10.10.1`.
 3. No state is recorded into the discovery URL metadata, so machine 1 becomes the leader and records the state as `started`.
 4. Machine 2 boots and submits its `-initial-advertise-peer-urls` address `10.10.10.2`. It also reads back the list of existing peers (only `10.10.10.1`) and attempts to connect to the address listed.
@@ -53,7 +45,7 @@ Starting a Container Linux cluster requires one of the new machines to become th
 
 There are a few interesting things happening during this process.
 
-First, each machine is configured with the same discovery URL and etcd figured out what to do. This allows you to load the same cloud-config into an auto-scaling group and it will work whether it is the first or 30th machine in the group.
+First, each machine is configured with the same discovery URL and etcd figured out what to do. This allows you to load the same Container Linux Config into an auto-scaling group and it will work whether it is the first or 30th machine in the group.
 
 Second, machine 3 only needed to use one of the addresses stored in the discovery URL to connect to the cluster. Since etcd uses the Raft consensus algorithm, existing machines in the cluster already maintain a list of healthy members in order for the algorithm to function properly. This list is given to the new machine and it starts normal operations with each of the other cluster members.
 
@@ -67,21 +59,9 @@ Third, if you specified `?size=3` upon discovery URL creation, any other machine
 
 To promote proxy members or join new members into an existing etcd cluster, configure static discovery and add members. The [etcd cluster reconfiguration guide][etcd-reconf-on-coreos] details the steps for performing this reconfiguration on Container Linux systems that were originally deployed with public discovery. The more general [etcd cluster reconfiguration document][etcd-reconf] explains the operations for removing and adding cluster members in a cluster already configured with static discovery.
 
-### Invalid cloud-config
-
-The most common problem with cluster discovery is using invalid cloud-config, which will prevent the cloud-config from being applied to the machine. The YAML format uses indention to represent data hierarchy, which makes it easy to create an invalid cloud-config. You should always run newly written cloud-config through the [cloud-config validator](https://coreos.com/validate).
-
-Unfortunately, if you are providing an SSH-key via cloud-config, it can be hard to read the `coreos-cloudinit` log to find out what's wrong. If you're using a cloud provider, you can normally provide an SSH-key via another method which will allow you to log in. If you're running on bare metal, the [coreos.autologin](booting-with-pxe.md#setting-up-pxelinux.cfg) kernel option will bypass authentication, letting you read the journal.
-
-Reading the `coreos-cloudinit` log will indicate which line is invalid:
-
-```
-journalctl --identifier=coreos-cloudinit
-```
-
 ### Stale tokens
 
-Another common problem with cluster discovery is attempting to boot a new cluster with a stale discovery URL. As explained above, the initial leader election is recorded into the URL, which indicates that the new etcd instance should be joining an existing cluster.
+A common problem with cluster discovery is attempting to boot a new cluster with a stale discovery URL. As explained above, the initial leader election is recorded into the URL, which indicates that the new etcd instance should be joining an existing cluster.
 
 If you provide a stale discovery URL, the new machines will attempt to connect to each of the old peer addresses, which will fail since they don't exist, and the bootstrapping process will fail.
 
@@ -132,7 +112,7 @@ To rule out firewall settings as a source of your issue, ensure that you can cur
 If all of the IPs can be reached, the etcd log can provide more clues:
 
 ```
-journalctl -u etcd2
+journalctl -u etcd-member
 ```
 
 ### Communicating with discovery.etcd.io

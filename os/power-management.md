@@ -21,17 +21,14 @@ modprobe cpufreq_conservative
 echo "conservative" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor > /dev/null
 ```
 
-This can be configured with [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md#coreos) as well:
+This can be configured with a [Container Linux Config][cl-configs] as well:
 
-```cloud-config
-#cloud-config
-
-coreos:
+```container-linux-config
+systemd:
   units:
     - name: cpu-governor.service
-      command: start
-      runtime: true
-      content: |
+      enable: true
+      contents: |
         [Unit]
         Description=Enable CPU power saving
 
@@ -40,6 +37,11 @@ coreos:
         RemainAfterExit=yes
         ExecStart=/usr/sbin/modprobe cpufreq_conservative
         ExecStart=/usr/bin/sh -c '/usr/bin/echo "conservative" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor'
+
+        [Install]
+        WantedBy=multi-user.target
 ```
 
 More information on further tuning each governor is available in the [Kernel Documentation](https://www.kernel.org/doc/Documentation/cpu-freq/governors.txt)
+
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md

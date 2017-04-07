@@ -2,7 +2,7 @@
 
 Container Linux machines are preconfigured with [networking customized](notes-for-distributors.md) for each platform. You can write your own networkd units to replace or override the units created for each platform. This article covers a subset of networkd functionality. You can view the [full docs here](http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html).
 
-Drop a networkd unit in `/etc/systemd/network/` or inject a unit on boot via [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md#units) or [Ignition][ignition-network] to override an existing unit. Network units injected via the `coreos.units` node in the cloud-config will automatically trigger a networkd reload in order for changes to be applied. Files placed on the filesystem will need to reload networkd afterwards with `sudo systemctl restart systemd-networkd`. Network units injected via Ignition will be written to the system before networkd is started, so there are no work-arounds needed.
+Drop a networkd unit in `/etc/systemd/network/` or inject a unit on boot via a Container Linux Config. Files placed manually on the filesystem will need to reload networkd afterwards with `sudo systemctl restart systemd-networkd`. Network units injected via a Container Linux Config will be written to the system before networkd is started, so there are no work-arounds needed.
 
 Let's take a look at two common situations: using a static IP and turning off DHCP.
 
@@ -25,18 +25,15 @@ Place the file in `/etc/systemd/network/`. To apply the configuration, run:
 sudo systemctl restart systemd-networkd
 ```
 
-### Cloud-config
+### Container Linux Config
 
-Setting up static networking in your cloud-config can be done by writing out the network unit. Be sure to modify the `[Match]` section with the name of your desired interface, and replace the IPs:
+Setting up static networking in your Container Linux Config can be done by writing out the network unit. Be sure to modify the `[Match]` section with the name of your desired interface, and replace the IPs:
 
-```cloud-config
-#cloud-config
-
-coreos:
+```container-linux-config
+networkd:
   units:
     - name: 00-eth0.network
-      runtime: true
-      content: |
+      contents: |
         [Match]
         Name=eth0
 
@@ -45,121 +42,6 @@ coreos:
         Address=10.0.0.101/24
         Gateway=10.0.0.1
 ```
-
-### Ignition Config
-
-Setting up static networking in your Ignition config can also be done by writing out the network unit. Be sure to modify the `[Match]` section with the name of your desired interface, and replace the IPs:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "networkd": {
-    "units": [{
-      "name": "00-eth0.network",
-      "contents": "[Match]\nName=eth0\n\n[Network]\nDNS=1.2.3.4\nAddress=10.0.0.101/24\nGateway=10.0.0.1"
-    }]
-  }
-}
-```
-
-### networkd and bond0 with cloud-init
-
-By default, the kernel creates a `bond0` network device as soon as the `bonding` module is loaded by coreos-cloudinit. The device is created with default bonding options, such as "round-robin" mode. This leads to confusing behavior with `systemd-networkd` since networkd does not alter options of an existing network device.
-
-You have three options:
-
-* Use Ignition to [configure your network][ignition-network]
-* Name your bond something other than `bond0`, or
-* Prevent the kernel from automatically creating `bond0`.
-
-To defer creating `bond0`, add to your cloud-config before any other network configuration:
-
-```cloud-config
-#cloud-config
-
-write_files:
-  - path: /etc/modprobe.d/bonding.conf
-    content: |
-      # Prevent kernel from automatically creating bond0 when the module is loaded.
-      # This allows systemd-networkd to create and apply options to bond0.
-      options bonding max_bonds=0
-  - path: /etc/systemd/network/10-eth.network
-    permissions: 0644
-    owner: root
-    content: |
-      [Match]
-      Name=eth*
-
-      [Network]
-      Bond=bond0
-  - path: /etc/systemd/network/20-bond.netdev
-    permissions: 0644
-    owner: root
-    content: |
-      [NetDev]
-      Name=bond0
-      Kind=bond
-
-      [Bond]
-      Mode=0 # defaults to balance-rr
-      MIIMonitorSec=1
-  - path: /etc/systemd/network/30-bond-dhcp.network
-    permissions: 0644
-    owner: root
-    content: |
-      [Match]
-      Name=bond0
-
-      [Network]
-      DHCP=ipv4
-coreos:
-  units:
-    - name: down-interfaces.service
-      command: start
-      content: |
-        [Service]
-        Type=oneshot
-        ExecStart=/usr/bin/ip link set eth0 down
-        ExecStart=/usr/bin/ip addr flush dev eth0
-        ExecStart=/usr/bin/ip link set eth1 down
-        ExecStart=/usr/bin/ip addr flush dev eth1
-    - name: systemd-networkd.service
-      command: restart
-```
-
-### networkd and DHCP behavior with cloud-init
-
-By default, even if you've already set a static IP address and you have a working DHCP server in your network, systemd-networkd will nevertheless assign IP address using DHCP. If you would like to remove this address, you have to use the following cloud-config example:
-
-```cloud-config
-#cloud-config
-
-coreos:
-  units:
-    - name: systemd-networkd.service
-      command: stop
-    - name: 00-eth0.network
-      runtime: true
-      content: |
-        [Match]
-        Name=eth0
-
-        [Network]
-        DNS=1.2.3.4
-        Address=10.0.0.101/24
-        Gateway=10.0.0.1
-    - name: down-interfaces.service
-      command: start
-      content: |
-        [Service]
-        Type=oneshot
-        ExecStart=/usr/bin/ip link set eth0 down
-        ExecStart=/usr/bin/ip addr flush dev eth0
-    - name: systemd-networkd.service
-      command: restart
-```
-
-Again, when using Ignition, nothing special needs to be done.
 
 ## Turn off DHCP on specific interface
 
@@ -216,32 +98,16 @@ Gateway=192.168.122.1
 Destination=172.16.0.0/24
 ```
 
-To specify the same route in a cloud-config, create the systemd network unit there instead:
+To specify the same route in a Container Linux Config, create the systemd network unit there instead:
 
-```cloud-config
-#cloud-config
-
-coreos:
+```container-linux-config
+networkd:
   units:
     - name: 10-static.network
-      content: |
+      contents: |
         [Route]
         Gateway=192.168.122.1
         Destination=172.16.0.0/24
-```
-
-And via an Ignition config:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "networkd": {
-    "units": [{
-      "name": "10-static.network",
-      "contents": "[Route]\nGateway=192.168.122.1\nDestination=172.16.0.0/24"
-    }]
-  }
-}
 ```
 
 ## Configure multiple IP addresses
@@ -262,15 +128,13 @@ Address=10.0.1.101/24
 Gateway=10.0.1.1
 ```
 
-To do the same thing through the cloud-config mechanism:
+To do the same thing through a Container Linux Config:
 
-```cloud-config
-#cloud-config
-
-coreos:
+```container-linux-config
+networkd:
   units:
     - name: 20-multi_ip.network
-      content: |
+      contents: |
         [Match]
         Name=eth0
 
@@ -280,20 +144,6 @@ coreos:
         Gateway=10.0.0.1
         Address=10.0.1.101/24
         Gateway=10.0.1.1
-```
-
-And via Ignition:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "networkd": {
-    "units": [{
-      "name": "20-multi_ip.network",
-      "contents": "[Match]\nName=eth0\n\n[Network]\nDNS=8.8.8.8\nAddress=10.0.0.101/24\nGateway=10.0.0.1\nAddress=10.0.1.101/24\nGateway=10.0.1.1"
-    }]
-  }
-}
 ```
 
 ## Debugging networkd
@@ -321,45 +171,22 @@ systemctl restart systemd-networkd
 journalctl -b -u systemd-networkd
 ```
 
-### Enable debugging through cloud-config
+### Enable debugging through a Container Linux Config
 
-Define a [Drop-In][drop-ins] in a [Cloud-Config][cloud-config]:
+Define a [Drop-In][drop-ins] in a [Container Linux Config][cl-configs]:
 
-```cloud-config
-#cloud-config
-coreos:
+```container-linux-config
+systemd:
   units:
     - name: systemd-networkd.service
-      drop-ins:
+      dropins:
         - name: 10-debug.conf
-          content: |
+          contents: |
             [Service]
             Environment=SYSTEMD_LOG_LEVEL=debug
-      command: restart
 ```
 
-And run `coreos-cloudinit` or reboot your Container Linux host to apply the changes.
-
-[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
-
-### Enable debugging through Ignition
-
-Define a [Drop-In][drop-ins] in an Ignition config:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "systemd": {
-    "units": [{
-      "name": "systemd-networkd.service",
-      "dropins": [{
-        "name": "10-debug.conf",
-        "contents": "[Service]\nEnvironment=SYSTEMD_LOG_LEVEL=debug"
-      }]
-    }]
-  }
-}
-```
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
 
 ## Further reading
 
@@ -369,4 +196,3 @@ If you're interested in more general networkd features, check out the [full docu
 <a class="btn btn-default" href="reading-the-system-log.md">Reading the System Log</a>
 
 [drop-ins]: using-systemd-drop-in-units.md
-[ignition-network]: ../ignition/network-configuration.md

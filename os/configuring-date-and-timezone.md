@@ -64,38 +64,16 @@ NTP synchronized: yes
                   Sun 2015-11-01 01:00:00 EST
 ```
 
-Time zone may instead be set in cloud-config, with something like the following excerpt:
+Time zone may instead be set in a [Container Linux Config][cl-configs], with something like the following excerpt:
 
-```cloud-config
-#cloud-config
-coreos:
-  units:
-    - name: settimezone.service
-      command: start
-      content: |
-        [Unit]
-        Description=Set the time zone
-
-        [Service]
-        ExecStart=/usr/bin/timedatectl set-timezone America/New_York
-        RemainAfterExit=yes
-        Type=oneshot
-```
-
-The time zone may also be set via Ignition using the following config:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "storage": {
-    "files": [{
-      "filesystem": "root",
-      "path": "/etc/timezone",
-      "mode": 420,
-      "contents": { "source": "data:,America/New_York" }
-    }]
-  }
-}
+```container-linux-config
+storage:
+  files:
+    - path: /etc/timezone
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: America/New_York
 ```
 
 
@@ -154,31 +132,18 @@ Then restart the network daemon:
 $ sudo systemctl restart systemd-networkd
 ```
 
-NTP time sources can be set in `timesyncd.conf` with a cloud-config snippet like:
+NTP time sources can be set in `timesyncd.conf` with a [Container Linux Config][cl-configs] snippet like:
 
-```cloud-config
-#cloud-config
-write_files:
-  - path: /etc/systemd/timesyncd.conf
-    content: |
-      [Time]
-      NTP=0.pool.example.com 1.pool.example.com
-```
-
-Ignition can also be used to set NTP time sources:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "storage": {
-    "files": [{
-      "filesystem": "root",
-      "path": "/etc/systemd/timesyncd.conf",
-      "mode": 420,
-      "contents": { "source": "data:,%5BTime%5D%0ANTP=0.pool.example.com%201.pool.example.com%0A" }
-    }]
-  }
-}
+```container-linux-config
+storage:
+  files:
+    - path: /etc/systemd/timesyncd.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          [Time]
+          NTP=0.pool.example.com 1.pool.example.com
 ```
 
 
@@ -193,41 +158,18 @@ $ sudo systemctl enable ntpd
 $ sudo systemctl start ntpd
 ```
 
-or with this cloud-config snippet:
+or with this Container Linux Config snippet:
 
-```cloud-config
-#cloud-config
-coreos:
+```container-linux-config
+systemd:
   units:
     - name: systemd-timesyncd.service
-      command: stop
       mask: true
     - name: ntpd.service
-      command: start
       enable: true
 ```
 
-or with this Ignition snippet:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "systemd": {
-    "units": [
-      {
-        "name": "systemd-timesyncd.service",
-        "mask": true
-      },
-      {
-        "name": "ntpd.service",
-        "enable": true
-      },
-    ]
-  }
-}
-```
-
-Because `timesyncd` and `ntpd` are mutually exclusive, it's important to `mask` the `stop`ped service. `Systemctl disable` or `stop` alone will not prevent a default service from starting again.
+Because `timesyncd` and `ntpd` are mutually exclusive, it's important to `mask` the `systemd-tinesyncd` service. `Systemctl disable` or `stop` alone will not prevent a default service from starting again.
 
 ### Configuring `ntpd`
 
@@ -248,37 +190,24 @@ Then ask `ntpd` to reload its configuration:
 $ sudo systemctl reload ntpd
 ```
 
-Or, in cloud-config:
+Or, in a [Container Linux Config][cl-configs]:
 
-```cloud-config
-#cloud-config
-write_files:
-  - path: /etc/ntp.conf
-    content: |
-      server 0.pool.example.com
-      server 1.pool.example.com
+```container-linux-config
+storage:
+  files:
+    - path: /etc/ntp.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          server 0.pool.example.com
+          server 1.pool.example.com
 
-      # - Allow only time queries, at a limited rate.
-      # - Allow all local queries (IPv4, IPv6)
-      restrict default nomodify nopeer noquery limited kod
-      restrict 127.0.0.1
-      restrict [::1]
-```
-
-Or, in an Ignition config:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "storage": {
-    "files": [{
-      "filesystem": "root",
-      "path": "/etc/ntp.conf",
-      "mode": 420,
-      "contents": { "source": "data:,server%200.pool.example.com%0Aserver%201.pool.example.com%0A%0A#%20-%20Allow%20only%20time%20queries,%20at%20a%20limited%20rate.%0A%23%20-%20Allow%20all%20local%20queries%20%28IPv4,%20IPv6%29%0Arestrict%20default%20nomodify%20nopeer%20noquery%20limited%20kod%0Arestrict%20127.0.0.1%0Arestrict%20%5B::1%5D%0A" }
-    }]
-  }
-}
+          # - Allow only time queries, at a limited rate.
+          # - Allow all local queries (IPv4, IPv6)
+          restrict default nomodify nopeer noquery limited kod
+          restrict 127.0.0.1
+          restrict [::1]
 ```
 
 [timedatectl]: http://www.freedesktop.org/software/systemd/man/timedatectl.html
@@ -287,3 +216,4 @@ Or, in an Ignition config:
 [systemd-timesyncd]: http://www.freedesktop.org/software/systemd/man/systemd-timesyncd.service.html
 [systemd.network]: http://www.freedesktop.org/software/systemd/man/systemd.network.html
 [timesyncd.conf]: http://www.freedesktop.org/software/systemd/man/timesyncd.conf.html
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md

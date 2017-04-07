@@ -54,37 +54,18 @@ And restart modified service if necessary (in our example we have changed only `
 systemctl restart fleet.service
 ```
 
-Here is how that could be implemented within `cloud-config`:
+Here is how that could be implemented within a Container Linux Config:
 
-```cloud-config
-#cloud-config
-coreos:
+```containter-linux-config
+systemd:
   units:
     - name: fleet.service
-      drop-ins:
+      enable: true
+      dropins:
         - name: 10-restart_60s.conf
-          content: |
+          contents: |
             [Service]
             RestartSec=60s
-      command: start
-```
-
-Here is how that could be implemented via Ignition:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "systemd": {
-    "units": [{
-      "name": "fleet.service",
-      "enable": true,
-      "dropins": [{
-        "name": "10-restart_60s.conf",
-        "contents": "[Service]\nRestartSec=60s"
-      }]
-    }]
-  }
-}
 ```
 
 This change is small and targeted. It is the easiest way to tweak unit's parameters.
@@ -109,16 +90,14 @@ Restart=always
 RestartSec=60s
 ```
 
-`cloud-config` example:
+Container Linux Config example:
 
-```cloud-config
-#cloud-config
-
-coreos:
+```container-linux-config
+systemd:
   units:
     - name: fleet.service
-      command: start
-      content: |
+      enable: true
+      contents: |
         [Unit]
         Description=fleet daemon
 
@@ -132,21 +111,6 @@ coreos:
         ExecStart=/usr/bin/fleetd
         Restart=always
         RestartSec=60s
-```
-
-Ignition example:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "systemd": {
-    "units": [{
-      "name": "fleet.service",
-      "enable": true,
-      "contents": "[Unit]\nDescription=fleet daemon\n\nAfter=etcd.service\nAfter=etcd2.service\n\nWants=fleet.socket\nAfter=fleet.socket\n\n[Service]\nExecStart=/usr/bin/fleetd\nRestart=always\nRestartSec=60s"
-    }]
-  }
-}
 ```
 
 ### List drop-ins

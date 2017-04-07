@@ -2,7 +2,7 @@
 
 The overarching goal of Container Linux is to secure the Internet's backend infrastructure. We believe that [automatically updating](https://coreos.com/using-coreos/updates/) the operating system is one of the best tools to achieve this goal.
 
-We realize that each Container Linux cluster has a unique tolerance for risk and the operational needs of your applications are complex. In order to meet everyone's needs, there are four update strategies that we have developed based on feedback during our alpha period.
+We realize that each Container Linux cluster has a unique tolerance for risk and the operational needs of your applications are complex. In order to meet everyone's needs, there are three update strategies that we have developed based on feedback during our alpha period.
 
 It's important to note that updates are always downloaded to the passive partition when they become available. A reboot is the last step of the update, where the active and passive partitions are swapped ([rollback instructions][rollback]). These strategies control how that reboot occurs:
 
@@ -14,13 +14,11 @@ It's important to note that updates are always downloaded to the passive partiti
 
 ## Reboot strategy options
 
-The reboot strategy is defined in [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md#update):
+The reboot strategy can be set with a Container Linux Config:
 
-```cloud-config
-#cloud-config
-coreos:
-  update:
-    reboot-strategy: etcd-lock
+```container-linux-config
+locksmith:
+  reboot_strategy: "etcd-lock"
 ```
 
 ### etcd-lock
@@ -72,16 +70,15 @@ An easy solution to this problem is to use iPXE and reference images [directly f
 
 In case when you don't want to install updates onto the passive partition and avoid update process on failure reboot, you can disable `update-engine` service manually with `sudo systemctl stop update-engine` command (it will be enabled automatically next reboot).
 
-If you wish to disable automatic updates permanently, use can configure this with Cloud-Config. This example will stop `update-engine`, which executes the updates, and `locksmithd`, which coordinates reboots across the cluster:
+If you wish to disable automatic updates permanently, use can configure this with a Container Linux Config. This example will stop `update-engine`, which executes the updates, and `locksmithd`, which coordinates reboots across the cluster:
 
-```cloud-config
-#cloud-config
-coreos:
+```container-linux-config
+systemd:
   units:
     - name: update-engine.service
-      command: stop
+      mask: true
     - name: locksmithd.service
-      command: stop
+      mask: true
 ```
 
 ## Updating behind a proxy
@@ -89,18 +86,15 @@ coreos:
 Public Internet access is required to contact CoreUpdate and download new versions of Container Linux. If direct access is not available the `update-engine` service may be configured to use a HTTP or SOCKS proxy using curl-compatible environment variables, such as `HTTPS_PROXY` or `ALL_PROXY`.
 See [curl's documentation](http://curl.haxx.se/docs/manpage.html#ALLPROXY) for details.
 
-```cloud-config
-#cloud-config
-
-coreos:
+```container-linux-config
+systemd:
   units:
     - name: update-engine.service
-      drop-ins:
+      dropins:
         - name: 50-proxy.conf
-          content: |
+          contents: |
             [Service]
             Environment=ALL_PROXY=http://proxy.example.com:3128
-      command: restart
 ```
 
 Proxy environment variables can also be set [system-wide][systemd-env-vars].
@@ -119,6 +113,8 @@ $ update_engine_client -check_for_update
 Locksmith supports maintenance windows in addition to the reboot strategies mentioned earlier. Maintenance windows define a window of time during which a reboot can occur. These operate in addition to reboot strategies, so if the machine has a maintenance window and requires a reboot lock, the machine will only reboot when it has the lock during that window.
 
 Windows are defined by a start time and a length. In this example, the window is defined to be every Thursday between 04:00 and 05:00:
+
+Container Linux Configs don't yet support maintenance windows, but will very soon.
 
 ```cloud-config
 #cloud-config

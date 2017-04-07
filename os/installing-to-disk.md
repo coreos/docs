@@ -18,11 +18,11 @@ If you are using the ISO with VMware, first sudo to root:
 sudo su - root
 ```
 
-Then install as you would with the PXE booted system, but be sure to include user information, especially an SSH key, in a [cloud-config][cloud-config-section] file, or else you will not be able to log into your Container Linux instance.
+Then install as you would with the PXE booted system, but be sure to include user information, especially an SSH key, in a [Container Linux Config][clc-section], or else you will not be able to log into your Container Linux instance.
 
 
 ```sh
-coreos-install -d /dev/sda -c cloud-config.yaml
+coreos-install -d /dev/sda -c ignition.json
 ```
 
 ## Choose a channel
@@ -68,81 +68,70 @@ For reference here are the rest of the `coreos-install` options:
 -b BASEURL  URL to the image mirror
 ```
 
-## Cloud-config
+## Container Linux Configs
 
-By default there isn't a password or any other way to log into a fresh Container Linux system. The easiest way to configure accounts, add systemd units, and more is via cloud config. Jump over to the [docs to learn about the supported features][cloud-config].
+By default there isn't a password or any other way to log into a fresh Container Linux system. The easiest way to configure accounts, add systemd units, and more is via Container Linux Configs. Jump over to the [docs to learn about the supported features][cl-configs].
 
-The installation script will process your `cloud-config.yaml` file specified with the `-c` flag and place it onto disk. It will be installed to `/var/lib/coreos-install/user_data` and evaluated on every boot. Cloud-config is not the only supported format for this file &mdash; running a script is also available.
+After using the [Container Linux Config Transpiler][ct-docs] to produce an Ignition config, the installation script will process your `ignition.json` file specified with the `-c` flag and use it when the installation is booted.
 
-A cloud-config that specifies an SSH key for the `core` user but doesn't use any other parameters looks like:
+A Container Linux Config that specifies an SSH key for the `core` user but doesn't use any other parameters looks like:
 
-```cloud-config
-#cloud-config
-
-# include one or more SSH public keys
-ssh_authorized_keys:
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
+```container-linux-config
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
 ```
 
-Note: The `$private_ipv4` and `$public_ipv4` substitution variables referenced in other documents are not supported on libvirt. The convenience of these automatic variables can be emulated by [using nginx to host your cloud-config][nginx].
 
-To start the installation script with a reference to our cloud-config file, run:
+Note: The `{PRIVATE_IPV4}` and `{PUBLIC_IPV4}` substitution variables referenced in other documents are not supported on libvirt.
+
+To start the installation script with a reference to our Ignition config, run:
 
 ```
-coreos-install -d /dev/sda -C stable -c ~/cloud-config.yaml
+coreos-install -d /dev/sda -C stable -i ~/ignition.json
 ```
 
-### Advanced cloud-config example
+### Advanced Container Linux Config example
 
-This example will configure Container Linux components: etcd2, fleetd and flannel. You have to substitute `<PEER_ADDRESS>` to your host's IP or DNS address.
+This example will configure Container Linux components: etcd and flannel. You have to substitute `<PEER_ADDRESS>` to your host's IP or DNS address.
 
-```cloud-config
-#cloud-config
-
-# include one or more SSH public keys
-ssh_authorized_keys:
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
-coreos:
-  etcd2:
-    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-    # specify the initial size of your cluster with ?size=X
-    discovery: https://discovery.etcd.io/<token>
-    advertise-client-urls: http://<PEER_ADDRESS>:2379,http://<PEER_ADDRESS>:4001
-    initial-advertise-peer-urls: http://<PEER_ADDRESS>:2380
-    # listen on both the official ports and the legacy ports
-    # legacy ports can be omitted if your application doesn't depend on them
-    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    listen-peer-urls: http://<PEER_ADDRESS>:2380
+```container-linux-config
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGdByTgSVHq.......
+etcd:
+  # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+  # specify the initial size of your cluster with ?size=X
+  discovery: https://discovery.etcd.io/<token>
+  advertise_client_urls: http://<PEER_ADDRESS>:2379,http://<PEER_ADDRESS>:4001
+  initial_advertise_peer_urls: http://<PEER_ADDRESS>:2380
+  # listen on both the official ports and the legacy ports
+  # legacy ports can be omitted if your application doesn't depend on them
+  listen_client_urls: http://0.0.0.0:2379,http://0.0.0.0:4001
+  listen_peer_urls: http://<PEER_ADDRESS>:2380
+systemd:
   units:
-    - name: etcd2.service
-      command: start
-    - name: fleet.service
-      command: start
     - name: flanneld.service
-      command: start
-      drop-ins:
+      enable: true
+      dropins:
       - name: 50-network-config.conf
-        content: |
+        contents: |
           [Service]
           ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{"Network":"10.1.0.0/16", "Backend": {"Type": "vxlan"}}'
-```
-
-## Manual tweaks
-
-If cloud config doesn't handle something you need to do or you just want to take a look at the root filesystem before booting your new install just mount the ninth partition. For example, with an ext4 root filesystem:
-
-```sh
-mount /dev/sda9 /mnt/
 ```
 
 ## Using CoreOS Container Linux
 
 Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart][quickstart] guide or dig into [more specific topics][docs-root].
 
-[nginx]: nginx-host-cloud-config.md
 [quickstart]: quickstart.md
 [docs-root]: https://github.com/coreos/docs
 [coreos-iso]: booting-with-iso.md
-[cloud-config-section]: #cloud-config
-[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
+[clc-section]: #container-linux-configs
 [coreos-install]: https://raw.github.com/coreos/init/master/bin/coreos-install
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[ct-docs]: https://github.com/coreos/container-linux-config-transpiler/tree/master/doc

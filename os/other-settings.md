@@ -8,93 +8,42 @@ Most Linux kernel modules get automatically loaded as-needed but there are a som
 echo nf_conntrack > /etc/modules-load.d/nf.conf
 ```
 
-### Via cloud-init
+Or, using a Container Linux Config:
 
-These files are processed early during the boot sequence. This means that updating `modules-load.d` via cloud-config will only take effect on the next boot unless the `systemd-modules-load` service is also restarted:
-
-```cloud-config
-#cloud-config
-
-write_files:
-  - path: /etc/modules-load.d/nf.conf
-    content: nf_conntrack
-
-coreos:
-  units:
-    - name: systemd-modules-load.service
-      command: restart
-```
-
-### Via Ignition
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "storage": {
-    "files": [{
-      "filesystem": "root",
-      "path": "/etc/modules-load.d/nf.conf",
-      "mode": 420,
-      "contents": { "source": "data:,nf_conntrack" }
-    }]
-  }
-}
+```container-linux-config
+storage:
+  files:
+    - path: /etc/modules-load.d/nf.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: nf_conntrack
 ```
 
 ### Loading kernel modules with options
 
-The following section demonstrate how to provide module options when
-loading. After these configs are processed, the dummy module is loaded
-into the kernel, and five dummy interfaces are added to the network stack.
+The following section demonstrates how to provide module options when loading. After these configs are processed, the dummy module is loaded into the kernel, and five dummy interfaces are added to the network stack.
 
 Further details can be found in the systemd man pages:
 [modules-load.d(5)](http://www.freedesktop.org/software/systemd/man/modules-load.d.html)
 [systemd-modules-load.service(8)](http://www.freedesktop.org/software/systemd/man/systemd-modules-load.service.html)
 [modprobe.d(5)](http://linux.die.net/man/5/modprobe.d)
 
-#### Via cloud-init
+This example Container Linux Config loads the `dummy` network interface module with an option specifying the number of interfaces the module should create when loaded (`numdummies=5`):
 
-This example cloud-config excerpt loads the `dummy` network interface module with an option specifying the number of interfaces the module should create when loaded (`numdummies=5`):
-
-```cloud-config
-#cloud-config
-
-write_files:
-  - path: /etc/modprobe.d/dummy.conf
-    content: options dummy numdummies=5
-  - path: /etc/modules-load.d/dummy.conf
-    content: dummy
-
-coreos:
-  units:
-    - name: systemd-modules-load.service
-      command: restart
-```
-
-#### Via Ignition
-
-This example Ignition config loads the `dummy` network interface module with
-an option specifying the number of interfaces the module should create when
-loaded (`numdummies=5`):
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "files": [
-    {
-      "filesystem": "root",
-      "path": "/etc/modules-load.d/nf.conf",
-      "mode": 420,
-      "contents": { "source": "data:,dummy" }
-    },
-    {
-      "filesystem": "root",
-      "path": "/etc/modprobe.d/dummy.conf",
-      "mode": 420,
-      "contents": { "source": "data:,options%20dummy%20numdummies=5" }
-    }
-  ]
-}
+```container-linux-config
+storage:
+  files:
+    - path: /etc/modprobe.d/dummy.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: options dummy numdummies=5
+    - path: /etc/modules-load.d/dummy.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: dummy
 ```
 
 ## Tuning sysctl parameters
@@ -106,47 +55,23 @@ echo net.netfilter.nf_conntrack_max=131072 > /etc/sysctl.d/nf.conf
 sysctl --system
 ```
 
-Some parameters, such as the conntrack one above, are only available after the module they control has been loaded. To ensure any modules are loaded in advance use `modules-load.d` as described above. A complete cloud-config using both would look like:
+Some parameters, such as the conntrack one above, are only available after the module they control has been loaded. To ensure any modules are loaded in advance use `modules-load.d` as described above. A complete Container Linux Config using both would look like:
 
-```cloud-config
-#cloud-config
-
-write_files:
-  - path: /etc/modules-load.d/nf.conf
-    content: |
-      nf_conntrack
-  - path: /etc/sysctl.d/nf.conf
-    content: |
-      net.netfilter.nf_conntrack_max=131072
-
-coreos:
-  units:
-    - name: systemd-modules-load.service
-      command: restart
-    - name: systemd-sysctl.service
-      command: restart
-```
-
-A complete Ignition config using both would look like:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "files": [
-    {
-      "filesystem": "root",
-      "path": "/etc/modules-load.d/nf.conf",
-      "mode": 420,
-      "contents": { "source": "data:,nf_conntrack" }
-    },
-    {
-      "filesystem": "root",
-      "path": "/etc/sysctl.d/nf.conf",
-      "mode": 420,
-      "contents": { "source": "data:,net.netfilter.nf_conntrack_max=131072" }
-    }
-  ]
-}
+```container-linux-config
+storage:
+  files:
+    - path: /etc/modules-load.d/nf.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          nf_conntrack
+    - path: /etc/sysctl.d/nf.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          net.netfilter.nf_conntrack_max=131072
 ```
 
 Further details can be found in the systemd man pages:
@@ -190,28 +115,16 @@ mkdir -p /etc/motd.d
 echo "This machine is dedicated to computing Pi" > /etc/motd.d/pi.conf
 ```
 
-Or via cloud-config:
+Or via a Container Linux Config:
 
-```cloud-config
-#cloud-config
-
-write_files:
-  - path: /etc/motd.d/pi.conf
-    content: This machine is dedicated to computing Pi
-```
-
-Or via Ignition:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "files": [{
-    "filesystem": "root",
-    "path": "/etc/motd.d/pi.conf",
-    "mode": 420,
-    "contents": { "source": "data:,This%20machine%20is%20dedicated%20to%20computing%20Pi" }
-  }]
-}
+```container-linux-config
+storage:
+  files:
+    - path: /etc/motd.d/pi.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: This machine is dedicated to computing Pi
 ```
 
 ## Prevent login prompts from clearing the console
@@ -223,36 +136,17 @@ mkdir -p '/etc/systemd/system/getty@.service.d'
 echo -e '[Service]\nTTYVTDisallocate=no' > '/etc/systemd/system/getty@.service.d/no-disallocate.conf'
 ```
 
-Or via cloud-config:
+Or via a Container Linux Config:
 
-```cloud-config
-#cloud-config
-
-coreos:
+```container-linux-config
+systemd:
   units:
     - name: getty@.service
-      drop-ins:
+      dropins:
         - name: no-disallocate.conf
-          content: |
+          contents: |
             [Service]
             TTYVTDisallocate=no
-```
-
-Or via Ignition:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "systemd": {
-    "units": [{
-      "name": "getty@.service",
-      "dropins": [{
-        "name": "no-disallocate.conf",
-        "contents": "[Service]\nTTYVTDisallocate=no"
-      }]
-    }]
-  }
-}
 ```
 
 When the `TTYVTDisallocate` setting is disabled, the console scrollback is not cleared on logout, not even by the `clear` command in the default `.bash_logout` file. Scrollback must be cleared explicitly, e.g. by running `echo -en '\033[3J' > /dev/console` as the root user.

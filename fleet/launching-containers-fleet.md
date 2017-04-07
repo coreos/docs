@@ -241,7 +241,7 @@ Global units can deployed to a subset of matching machines with the `MachineMeta
 
 Applications with complex and specific requirements can target a subset of the cluster for scheduling via machine metadata. Powerful deployment topologies can be achieved &mdash; schedule units based on the machine's region, rack location, disk speed or anything else you can think of.
 
-Metadata can be provided via [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md#coreos) or a [config file](https://github.com/coreos/fleet/blob/master/Documentation/deployment-and-configuration.md). Here's an example config file:
+Metadata can be provided via [a Container Linux Config](https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md) or a [config file](https://github.com/coreos/fleet/blob/master/Documentation/deployment-and-configuration.md). Here's an example config file:
 
 ```ini
 # Comma-delimited key/value pairs that are published to the fleet registry.
@@ -293,38 +293,41 @@ MachineMetadata=platform=cloud
 MachineMetadata=region=east
 ```
 
-## Running fleet via Ignition
+## Running fleet via a Container Linux Config
 
-On Container Linux, only fleet 0.11.x is available under /usr/bin. That one might be obsolete for users who want to try out more recent versions. In that case, users should define their own custom Ignition configuration to be able to run any version of fleet as they want. For example:
+On Container Linux, only fleet 0.11.x is available under /usr/bin. That one might be obsolete for users who want to try out more recent versions. In that case, users should define their own custom Container Linux Config to be able to run any version of fleet as they want. For example:
 
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "storage": {
-    "files": [{
-      "filesystem": "root",
-      "path": "/opt/bin/fleet-wrapper",
-      "mode": 493,
-      "contents": {
-        "source": "https://raw.githubusercontent.com/coreos/fleet/master/scripts/fleet-wrapper"
-      }
-    }]
-  },
-  "systemd": {
-    "units": [
-      {
-        "name": "fleet.service",
-        "enable": true,
-        "contents": "[Unit]\nAfter=etcd.service etcd2.service etcd-member.service\nWants=network.target fleet.socket\nRequires=etcd2.service\n\n[Service]\nType=notify\nRestart=always\nRestartSec=10s\nLimitNOFILE=40000\nTimeoutStartSec=0\nExecStartPre=/usr/bin/mkdir --parents /etc/fleet /run/dbus /run/fleet/units\nExecStartPre=/usr/bin/rkt trust --prefix \"quay.io/coreos/fleet\" --skip-fingerprint-review\nExecStart=/opt/bin/fleet-wrapper\n\n[Install]\nWantedBy=multi-user.target"
-      },
-      {
-        "name": "fleet.socket",
-        "enable": true,
-        "contents": "[Unit]\nDescription=Fleet API Socket\nPartOf=fleet.service\n\n[Socket]\nListenStream=/var/run/fleet.sock\nSocketMode=0660\nSocketUser=fleet\nSocketGroup=fleet"
-      }
-    ]
-  }
-}
+```container-linux-config
+storage:
+  files:
+    - path: /opt/bin/fleet-wrapper
+      filesystem: root
+      mode: 0755
+      contents:
+        remote:
+          url: https://raw.githubusercontent.com/coreos/fleet/master/scripts/fleet-wrapper
+systemd:
+  units:
+    - name: fleet.service
+      enable: true
+      contents: |
+        [Unit]
+        After=etcd2.service etcd-member.service
+        Wants=network.target fleet.socket
+        Requires=etcd2.service
+        
+        [Service]
+        Type=notify
+        Restart=always
+        RestartSec=10s
+        LimitNOFILE=40000
+        TimeoutStartSec=0
+        ExecStartPre=/usr/bin/mkdir --parents /etc/fleet /run/dbus /run/fleet/units
+        ExecStartPre=/usr/bin/rkt trust --prefix "quay.io/coreos/fleet" --skip-fingerprint-review
+        ExecStart=/opt/bin/fleet-wrapper
+        
+        [Install]
+        WantedBy=multi-user.target
 ```
 
 #### More information

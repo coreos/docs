@@ -18,31 +18,31 @@ gpg --verify coreos_production_openstack_image.img.bz2.sig
 
 ## Image customization
 
-Customizing a Container Linux image for a specific operating environment is easily done through [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md), a YAML-based configuration standard that is widely supported. As a provider, you must ensure that your platform makes this data available to Container Linux, where it will be parsed during the boot process.
+There are two predominant ways that a Container Linux image can be easily customized for a specific operating environment: through Ignition, a first-boot provisioning tool that runs during a machine's boot process, and through [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md), an older tool that runs every time a machine boots.
 
-Use cloud-config to handle platform specific configuration such as custom networking, running an agent on the machine or injecting files onto disk. Container Linux will automatically parse and execute `/usr/share/oem/cloud-config.yml` if it exists. Your cloud-config should create additional units that process user-provided metadata, as described below.
+### Ignition
 
-## Handling end-user cloud-config files
+[Ignition][ignition] is a tool that acquires a JSON config file when a machine first boots, and uses this config to perform tasks such as formatting disks, creating files, modifying and creating users, and adding systemd units. How Ignition acquires this config file varies per-platform, and it is highly recommended that providers ensure Ignition has [support for their platform][ign-platforms].
 
-End-users should be able to provide a cloud-config file to your platform while specifying their VM's parameters. This file should be made available to Container Linux at a known network address, injected directly onto disk or contained within a [config-drive][config-drive-docs]. Below are a few examples of how this process works on a few different providers.
+Use Ignition to handle platform specific configuration such as custom networking, running an agent on the machine, or injecting files onto disk.
 
-[config-drive-docs]: http://docs.openstack.org/user-guide/cli_config_drive.html
+Additionally, it is recommended that providers ensure that [coreos-metadata][coreos-metadata] and [ct][ct] have support for their platform. This will allow a nicer user experience, as coreos-metadata will be able to install users ssh keys and users will be able to reference dynamic data in their Container Linux Configs.
 
-### Amazon EC2 example
+[ignition]: https://coreos.com/blog/introducing-ignition.html
+[ign-platforms]: https://github.com/coreos/ignition/blob/master/doc/supported-platforms.md
+[coreos-metadata]: https://github.com/coreos/coreos-metadata/
+[ct]: https://github.com/coreos/container-linux-config-transpiler
 
-Container Linux machines running on Amazon EC2 utilize a two-step cloud-config process. First, a cloud-config file baked into the image runs systemd units that execute scripts to fetch the user-provided SSH key and fetch the [user-provided cloud-config][amazon-cloud-config] from the instance [user-data service][amazon-user-data-doc] on Amazon's internal network. Afterwards, the user-provided cloud-config, specified from either the web console or API, is parsed.
+### Cloud config
 
-You can find the [code for this process on GitHub][amazon-github]. End-user instructions for this process can be found on our [Amazon EC2 docs][amazon-cloud-config].
+A Container Linux image can also be customized using [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md). Users are recommended to instead use Container Linux Configs (that are converted into Ignition configs with [ct][ct]), for reasons [outlined in the blog post that introduced Ignition][ignition].
 
-[amazon-github]: https://github.com/coreos/coreos-overlay/tree/master/coreos-base/oem-ec2-compat
-[amazon-user-data-doc]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html#instancedata-user-data-retrieval
-[amazon-cloud-config]: booting-on-ec2.md#cloud-config
+Providers should still ensure that their platform is supported in cloud-config however, as not all users have switched over to Container Linux Configs.
 
-### Rackspace Cloud example
+Container Linux will automatically parse and execute `/usr/share/oem/cloud-config.yml` if it exists.
 
-Rackspace passes configuration data to a VM by mounting [config-drive][config-drive-docs], a special configuration drive containing machine-specific data, to the machine. Like, Amazon EC2, Container Linux images for Rackspace contain a cloud-config file baked into the image that runs units to read from the config-drive. If a user-provided cloud-config file is found, it is parsed.
+## Handling end-user Ignition files
 
-You can find the [code for this process on GitHub][rackspace-github]. End-user instructions for this process can be found on our [Rackspace docs][rackspace-cloud-config].
+End-users should be able to provide an Ignition file to your platform while specifying their VM's parameters. This file should be made available to Container Linux at the time of boot (e.g. at known network address, injected directly onto disk). Examples of these data sources can be found in the [Ignition documentation][providers].
 
-[rackspace-github]: https://github.com/coreos/coreos-overlay/tree/master/coreos-base/oem-rackspace
-[rackspace-cloud-config]: booting-on-rackspace.md#cloud-config
+[providers]: https://github.com/coreos/ignition/blob/master/doc/supported-platforms.md

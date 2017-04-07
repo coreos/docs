@@ -8,7 +8,7 @@ This guide we will assume you have the DNS record `registry.example.com` configu
 
 Each Container Linux machine needs to be configured with the username and password for a robot account in order to deploy your containers. Docker looks for configured credentials in a `.dockercfg` file located within the user's home directory. You can download this file directly from the Quay Enterprise interface. Let's assume you've created a robot account called `myapp+deployment`.
 
-Writing the `.dockercfg` can be specified in [cloud-config](https://coreos.com/os/docs/latest/cloud-config.html) with the write_files parameter, or created manually on each machine.
+Writing the `.dockercfg` can be specified in [a Container Linux Config](https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md) with the files parameter, or created manually on each machine.
 
 ### Kubernetes pull secret
 
@@ -69,26 +69,27 @@ spec:
 
 To use a specific pull secret as the default in a specific namespace, you can create a [Service Account](http://kubernetes.io/docs/user-guide/service-accounts/) that will be available to each pod. This is new in Kubernetes v1.1.
 
-### Cloud-Config
+### Container Linux Config
 
-A snippet to configure the credentials via write_files looks like:
+A snippet to configure the credentials via `files` in a Container Linux Config looks like:
 
-```cloud-config
-#cloud-config
-
-write_files:
-  - path: /root/.dockercfg
-    permissions: 0644
-    content: |
-      {
-       "https://registry.example.com/v1/": {
-        "auth": "cm9ic3p1bXNrajYzUFFXSU9HSkhMUEdNMEISt0ZXN0OkdOWEVHWDRaSFhNUVVSMkI1WE9MM1k1S1R1VET0I1RUZWSVg3TFRJV1I3TFhPMUI=",
-        "email": ""
-       }
-      }
+```container-linux-config
+storage:
+  files:
+    - path: /root/.dockercfg
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          {
+           "https://registry.example.com/v1/": {
+            "auth": "cm9ic3p1bXNrajYzUFFXSU9HSkhMUEdNMEISt0ZXN0OkdOWEVHWDRaSFhNUVVSMkI1WE9MM1k1S1R1VET0I1RUZWSVg3TFRJV1I3TFhPMUI=",
+            "email": ""
+           }
+          }
 ```
 
-Each machine booted with this cloud-config should automatically be authenticated with Quay Enterprise.
+Each machine booted with this Container Linux Config should automatically be authenticated with Quay Enterprise.
 
 
 ### Manual login

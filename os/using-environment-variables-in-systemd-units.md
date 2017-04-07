@@ -79,39 +79,24 @@ This unit file will run nginx Docker container and bind it to specific IP addres
 
 ### System wide environment variables
 
-You can define system wide environment variables using [cloud-config] as explained below:
+You can define system wide environment variables using a [Container Linux Config][cl-configs] as explained below:
 
-```cloud-config
-#cloud-config
-
-write_files:
-  - path: "/etc/systemd/system.conf.d/10-default-env.conf"
-    content: |
-      [Manager]
-      DefaultEnvironment=HTTP_PROXY=http://192.168.0.1:3128
-  - path: "/etc/profile.env"
-    content: |
-      export HTTP_PROXY=http://192.168.0.1:3128
-```
-
-or using [Ignition][ignition]:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "files": [
-    {
-      "filesystem": "root",
-      "path": "/etc/systemd/system.conf.d/10-default-env.conf",
-      "contents": { "source": "data:,[Manager]\nDefaultEnvironment=HTTP_PROXY=http://192.168.0.1:3128" }
-    },
-    {
-      "filesystem": "root",
-      "path": "/etc/profile.env",
-      "contents": { "source": "data:,export%20HTTP_PROXY=http://192.168.0.1:3128" }
-    }
-  ]
-}
+```container-linux-config
+storage:
+  files:
+    - path: /etc/systemd/system.conf.d/10-default-env.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          [Manager]
+          DefaultEnvironment=HTTP_PROXY=http://192.168.0.1:3128
+    - path: /etc/profile.env
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          export HTTP_PROXY=http://192.168.0.1:3128
 ```
 
 Where:
@@ -136,11 +121,10 @@ For more systemd examples, check out these documents:
 [customizing-sshd]: customizing-sshd.md#changing-the-sshd-port
 [customizing-etcd]: customize-etcd-unit.md
 [customizing-docker]: customizing-docker.md#using-a-dockercfg-file-for-authentication
-[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
 [etcd-discovery]: cluster-discovery.md
 [systemd-udev]: using-systemd-and-udev-rules.md
 [etcd-cluster-reconfiguration]: ../etcd/etcd-live-cluster-reconfiguration.md
-[ignition]: https://github.com/coreos/ignition/blob/master/doc/getting-started.md
 
 ## More Information
 

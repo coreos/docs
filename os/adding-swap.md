@@ -77,19 +77,35 @@ Filesystem     Type      Size  Used Avail Use% Mounted on
 
 The block device mounted at `/var/`, `/dev/sdXN`, is the correct filesystem type and has enough space for a 1GiB swapfile.
 
-## Adding swap with Ignition
+## Adding swap with a Container Linux Config
 
-The following Ignition config sets up a 1GiB swapfile located at `/var/vm/swapfile1`.
+The following config sets up a 1GiB swapfile located at `/var/vm/swapfile1`.
 
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "systemd": {
-    "units": [{
-      "name": "swap.service",
-      "enable": true,
-      "contents": "[Unit]\n Description=Turn on swap\n \n [Service]\n Type=oneshot\n Environment=\"SWAP_PATH=/var/vm\" \"SWAP_FILE=swapfile1\"\n ExecStartPre=-/usr/bin/rm -rf ${SWAP_PATH}\n ExecStartPre=/usr/bin/mkdir -p ${SWAP_PATH}\n ExecStartPre=/usr/bin/touch ${SWAP_PATH}/${SWAP_FILE}\n ExecStartPre=/bin/bash -c \"fallocate -l 1024m ${SWAP_PATH}/${SWAP_FILE}\"\n ExecStartPre=/usr/bin/chmod 600 ${SWAP_PATH}/${SWAP_FILE}\n ExecStartPre=/usr/sbin/mkswap ${SWAP_PATH}/${SWAP_FILE}\n ExecStartPre=/usr/sbin/sysctl vm.swappiness=10\n ExecStart=/sbin/swapon ${SWAP_PATH}/${SWAP_FILE}\n ExecStop=/sbin/swapoff ${SWAP_PATH}/${SWAP_FILE}\n ExecStopPost=-/usr/bin/rm -rf ${SWAP_PATH}\n RemainAfterExit=true\n \n [Install]\n WantedBy=multi-user.target\n"
-    }]
-  }
-}
+```container-linux-config
+systemd:
+  units:
+    - name: swap.service
+      enable: true
+      contents: |
+        [Unit]
+        Description=Turn on swap
+        
+        [Service]
+        Type=oneshot
+        Environment="SWAP_PATH=/var/vm"
+        Environment="SWAP_FILE=swapfile1"
+        ExecStartPre=-/usr/bin/rm -rf ${SWAP_PATH}
+        ExecStartPre=/usr/bin/mkdir -p ${SWAP_PATH}
+        ExecStartPre=/usr/bin/touch ${SWAP_PATH}/${SWAP_FILE}
+        ExecStartPre=/bin/bash -c "fallocate -l 1024m ${SWAP_PATH}/${SWAP_FILE}"
+        ExecStartPre=/usr/bin/chmod 600 ${SWAP_PATH}/${SWAP_FILE}
+        ExecStartPre=/usr/sbin/mkswap ${SWAP_PATH}/${SWAP_FILE}
+        ExecStartPre=/usr/sbin/sysctl vm.swappiness=10
+        ExecStart=/sbin/swapon ${SWAP_PATH}/${SWAP_FILE}
+        ExecStop=/sbin/swapoff ${SWAP_PATH}/${SWAP_FILE}
+        ExecStopPost=-/usr/bin/rm -rf ${SWAP_PATH}
+        RemainAfterExit=true
+        
+        [Install]
+        WantedBy=multi-user.target
 ```

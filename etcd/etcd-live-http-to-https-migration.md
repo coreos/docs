@@ -10,10 +10,10 @@ By default, etcd communicates with clients over two ports: 2379, the current and
 
 If you've configured flannel, fleet, or other components to use custom ports, or 2379 only, they will be reconfigured to use port 4001.
 
-If etcd isn't listening on port 4001, it must also be reconfigured. If you used cloud-config to spin up your machines, you can retrieve the `ETCD_LISTEN_CLIENT_URLS` value from `/run/systemd/system/etcd2.service.d/20-cloudinit.conf` to verify the etcd ports:
+If etcd isn't listening on port 4001, it must also be reconfigured. If you used a Container Linux Config to spin up your machines, you can retrieve the `ETCD_LISTEN_CLIENT_URLS` value from `/etc/systemd/system/etcd-member.service.d/20-clct-etcd-member.conf` to verify the etcd ports:
 
 ```sh
-$ grep ETCD_LISTEN_CLIENT_URLS /run/systemd/system/etcd2.service.d/20-cloudinit.conf
+$ grep ETCD_LISTEN_CLIENT_URLS /run/systemd/system/etcd-member.service.d/20-clct-etcd-member.conf
 Environment="ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379"
 ```
 

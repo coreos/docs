@@ -103,46 +103,23 @@ systemctl restart systemd-journald
 dmesg | grep systemd-journald
 ```
 
-## Enable debugging via cloud-config
+## Enable debugging via a Container Linux Config
 
-Define a [Drop-In][drop-ins] in a [Cloud-Config][cloud-config]:
+Define a [Drop-In][drop-ins] in a [Container Linux Config][ct-configs]:
 
-```cloud-config
-#cloud-config
-coreos:
+```container-linux-config
+systemd:
   units:
     - name: systemd-journald.service
-      drop-ins:
+      dropins:
         - name: 10-debug.conf
-          content: |
+          contents: |
             [Service]
             Environment=SYSTEMD_LOG_LEVEL=debug
-      command: restart
-```
-
-And run `coreos-cloudinit` or reboot your Container Linux host to apply the changes.
-
-## Enable debugging via Ignition
-
-Define a [Drop-In][drop-ins] in an Ignition config:
-
-```json
-{
-  "ignition": { "version": "2.0.0" },
-  "systemd": {
-    "units": [{
-      "name": "systemd-journald.service",
-      "dropins": [{
-        "name": "10-debug.conf",
-        "contents": "[Service]\nEnvironment=SYSTEMD_LOG_LEVEL=debug"
-      }]
-    }]
-  }
-}
 ```
 
 [drop-ins]: using-systemd-drop-in-units.md
-[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
+[ct-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
 
 ## More information
 
