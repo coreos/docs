@@ -156,7 +156,7 @@ This is the password you will use to log into the console of images built and la
 
 #### Selecting the architecture to build
 
-##### 64 bit AMD: The `amd64-usr` target
+##### 64 bit AMD: The amd64-usr target
 
 The `--board` option can be set to one of a few known target architectures, or system "boards", to build for a given CPU.
 
@@ -166,7 +166,7 @@ To create a root filesystem for the `amd64-usr` target beneath the directory `/b
 ./setup_board --default --board=amd64-usr
 ```
 
-##### 64 bit ARM: The `arm64-usr` target
+##### 64 bit ARM: The arm64-usr target
 
 Similarly, use `arm64-usr` for the cross-compiled ARM target. If switching between different targets in a single SDK, you can add the `--board=` option to the subsequent `build_packages`, `build_image`, and other similar commands to select the given target architecture and path.
 
