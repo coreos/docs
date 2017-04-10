@@ -147,7 +147,7 @@ storage:
 ```
 
 
-## Switching from `timesyncd` to `ntpd`
+## Switching from timesyncd to ntpd
 
 On Container Linux 681.0.0 or later, you can switch from `systemd-timesyncd` back to `ntpd` with the following commands:
 
@@ -171,7 +171,7 @@ systemd:
 
 Because `timesyncd` and `ntpd` are mutually exclusive, it's important to `mask` the `systemd-tinesyncd` service. `Systemctl disable` or `stop` alone will not prevent a default service from starting again.
 
-### Configuring `ntpd`
+### Configuring ntpd
 
 The `ntpd` service reads all configuration from the file `/etc/ntp.conf`. It does not use DHCP or other configuration sources. To use a different set of NTP servers, replace the `/etc/ntp.conf` symlink with something like the following:
 

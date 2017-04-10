@@ -42,7 +42,7 @@ some-k8s-node.internal.hostname.ext        Ready                      8m        
 ...
 ```
 
-### `nodeSelector`
+### nodeSelector
 
 `nodeSelector` is the most basic way to set node affinity in Kubernetes. Given a set of `key: value` pair of requirements, a pod can be scheduled to run (or not run) on certain nodes.
 
@@ -65,7 +65,7 @@ spec:
     key2: value2
 ```
 
-#### `nodeSelector` Example
+#### nodeSelector example
 
 Let's say we're running a Kubernetes cluster on AWS and we want to run an Nginx pod on `m3.medium` instance. We also want a different `httpd` pod to only run in the `us-west-2` region and only on nodes with the `example.com/load-balancer` key set to `true`. Here's how that `mypods.yaml` would look:
 
@@ -178,7 +178,7 @@ Affinity selector                                      | Requirements met | Requ
 
 In addition to affinity/anti-affinity for specific nodes `nodeAffinity`
 
-#### `nodeAffinity` example
+#### nodeAffinity example
 
 Lets take the above example of deploying a `nginx` and a `httpd` pod, except we have a more complicated set of requirements:
 

@@ -27,7 +27,7 @@ $ tree quay/config/
 │   ├── storage.crt
 ```
 
-### Restart QE container and check cert with `docker exec`:
+### Restart QE container and check cert with docker-exec:
 
 Obtain the quay container's `CONTAINER ID` with `docker ps`:
 
