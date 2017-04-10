@@ -196,6 +196,7 @@ Now that you have a machine booted it is time to play around. Check out the [Con
 [append-initrd]: http://www.syslinux.org/wiki/index.php?title=SYSLINUX#INITRD_initrd_file
 [coreos-user]: https://groups.google.com/forum/#!forum/coreos-user
 [docs]: https://coreos.com/docs
+[ignition]: https://coreos.com/ignition/docs/latest
 [install-to-disk]: installing-to-disk.md
 [cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
 [irc]: irc://irc.freenode.org:6667/#coreos

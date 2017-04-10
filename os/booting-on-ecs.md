@@ -59,6 +59,7 @@ The example above pulls the latest official Amazon ECS agent container from the 
 If you want to configure SSH keys in order to log in, mount disks or configure other options, see the [Container Linux Configs documentation][cl-configs].
 
 [cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[ignition-docs]: https://coreos.com/ignition/docs/latest
 
 ## Connect ECS to an existing cluster
 
