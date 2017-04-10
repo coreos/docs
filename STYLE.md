@@ -230,6 +230,12 @@ Some file types are commonly identified with more than one file name extension. 
 * YAML: `file.yaml` is preferred to `file.yml`
 * HTML: `file.html`, not `file.htm`
 
+## Placeholder conventions
+
+Things you can use when you don't want to expose working URLs, IP Addresses, or other info.
+
+URL: example.com
+IP Address: Any in the range 203.0.113.0/24
 
 [command-line-grammar]: #command-line-grammar
 [configuring-dns]: os/configuring-dns.md
