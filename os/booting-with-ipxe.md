@@ -21,7 +21,7 @@ When configuring the Container Linux iPXE boot script there are a few kernel opt
 - **sshkey**: Add the given SSH public key to the `core` user's authorized_keys file. Replace the example key below with your own (it is usually in `~/.ssh/id_rsa.pub`)
 - **console**: Enable kernel output and a login prompt on a given tty. The default, `tty0`, generally maps to VGA. Can be used multiple times, e.g. `console=tty0 console=ttyS0`
 - **coreos.autologin**: Drop directly to a shell on a given console without prompting for a password. Useful for troubleshooting but use with caution. For any console that doesn't normally get a login prompt by default be sure to combine with the `console` option, e.g. `console=tty0 console=ttyS0 coreos.autologin=tty1 coreos.autologin=ttyS0`. Without any argument it enables access on all consoles. Note that for the VGA console the login prompts are on virtual terminals (`tty1`, `tty2`, etc), not the VGA console itself (`tty0`).
-- **coreos.config.url**: Container Linux will attempt to download an Ignition config and use it to provision your booted system. See the [Ignition documentation][ignition] for more information.
+- **coreos.config.url**: Container Linux will attempt to download an Ignition config and use it to provision your booted system. Ignition configs are generated from Container Linux Configs. See the [config transpiler documentation][cl-configs] for more information.
 
 ### Choose a Channel
 
@@ -116,4 +116,5 @@ Similar to the [OEM partition][oem] in Container Linux disk images, iPXE images 
 
 Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
 
+[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
 [ignition]: https://coreos.com/ignition/docs/latest
