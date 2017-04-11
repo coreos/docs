@@ -192,6 +192,8 @@ Build an image based on the binary packages built above, including development t
 
 After `build_image` completes, it prints commands for converting the raw bin into a bootable virtual machine. Run the `image_to_vm.sh` command.
 
+If instead you want to convert the image to an AMI, see [building an AMI][awsamibuild].
+
 ### Booting
 
 Once you build an image you can launch it with KVM (instructions will print out after `image_to_vm.sh` runs).
@@ -239,6 +241,7 @@ We've compiled a [list of tips and tricks][sdktips] that can make working with t
 [android-repo-git]: https://source.android.com/source/developing.html
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
 [devimages]: sdk-building-development-images.md
+[awsamibuild]: sdk-building-aws-images.md
 [github-coreos]: https://github.com/coreos/
 [irc]: irc://irc.freenode.org:6667/#coreos
 [mantle]: sdk-testing-with-mantle.md
