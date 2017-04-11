@@ -23,7 +23,8 @@ When configuring the Container Linux pxelinux.cfg there are a few kernel options
 - **sshkey**: Add the given SSH public key to the `core` user's authorized_keys file. Replace the example key below with your own (it is usually in `~/.ssh/id_rsa.pub`)
 - **console**: Enable kernel output and a login prompt on a given tty. The default, `tty0`, generally maps to VGA. Can be used multiple times, e.g. `console=tty0 console=ttyS0`
 - **coreos.autologin**: Drop directly to a shell on a given console without prompting for a password. Useful for troubleshooting but use with caution. For any console that doesn't normally get a login prompt by default be sure to combine with the `console` option, e.g. `console=tty0 console=ttyS0 coreos.autologin=tty1 coreos.autologin=ttyS0`. Without any argument it enables access on all consoles. Note that for the VGA console the login prompts are on virtual terminals (`tty1`, `tty2`, etc), not the VGA console itself (`tty0`).
-- **coreos.config.url**: Container Linux will attempt to download an Ignition config and use it to provision your booted system. Ignition configs are generated from Container Linux Configs. See the [config transpiler documentation][cl-configs] for more information.
+- **coreos.first_boot=1**: Download an Ignition config and use it to provision your booted system. Ignition configs are generated from Container Linux Configs. See the [config transpiler documentation][cl-configs] for more information. If a local filesystem is used for the root partition, pass this parameter only on the first boot.
+- **coreos.config.url**: Download the Ignition config from the specified URL.
 
 This is an example pxelinux.cfg file that assumes Container Linux is the only option. You should be able to copy this verbatim into `/var/lib/tftpboot/pxelinux.cfg/default` after providing an Ignition config URL:
 
@@ -38,7 +39,7 @@ label coreos
   menu default
   kernel coreos_production_pxe.vmlinuz
   initrd coreos_production_pxe_image.cpio.gz
-  append coreos.config.url=https://example.com/pxe-config.ign
+  append coreos.first_boot=1 coreos.config.url=https://example.com/pxe-config.ign
 ```
 
 Here's a common config example which should be located at the URL from above:
@@ -184,7 +185,7 @@ Add the `oem.cpio.gz` file to your PXE boot directory, then [append it][append-i
 ```
 ...
 initrd coreos_production_pxe_image.cpio.gz,oem.cpio.gz
-kernel coreos_production_pxe.vmlinuz coreos.config.url=oem:///example.ign
+kernel coreos_production_pxe.vmlinuz coreos.first_boot=1 coreos.config.url=oem:///example.ign
 ...
 ```
 
