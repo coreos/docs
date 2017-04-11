@@ -58,4 +58,4 @@ systemctl daemon-reload
 ```
 
 [sshd-guide]: customizing-sshd.md
-[etcd-sec-guide]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/security.md
+[etcd-sec-guide]: https://github.com/coreos/etcd/blob/v3.1.5/Documentation/op-guide/security.md
