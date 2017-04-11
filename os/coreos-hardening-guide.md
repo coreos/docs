@@ -12,7 +12,7 @@ To disable sshd from listening you can stop the socket:
 systemctl mask sshd.socket --now
 ```
 
-If you wish to make further customizations see our [customize sshd guide](customizing-sshd.md).
+If you wish to make further customizations see our [customize sshd guide][sshd-guide].
 
 ## Remote non-listening services
 
@@ -20,7 +20,7 @@ If you wish to make further customizations see our [customize sshd guide](custom
 
 etcd and Locksmith should be secured and authenticated using TLS if you are using these services. Please see the relevant guides for details.
 
-* [etcd security guide](https://github.com/coreos/etcd/blob/v3.1.0/Documentation/op-guide/security.md)
+* [etcd security guide][etcd-sec-guide]
 
 ## Local services
 
@@ -56,3 +56,6 @@ SocketGroup=root
 EOM
 systemctl daemon-reload
 ```
+
+[sshd-guide]: customizing-sshd.md
+[etcd-sec-guide]: https://github.com/coreos/etcd/blob/v3.1.5/Documentation/op-guide/security.md
