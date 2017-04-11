@@ -19,11 +19,12 @@ When configuring the Container Linux pxelinux.cfg there are a few kernel options
 
 - **rootfstype=tmpfs**: Use tmpfs for the writable root filesystem. This is the default behavior.
 - **rootfstype=btrfs**: Use btrfs in RAM for the writable root filesystem. The filesystem will consume more RAM as it grows, up to a max of 50%. The limit isn't currently configurable.
-- **root**: Use a local filesystem for root instead of one of two in-ram options above. The filesystem must be formatted in advance but may be completely blank, it will be initialized on boot. The filesystem may be specified by any of the usual ways including device, label, or UUID; e.g: `root=/dev/sda1`, `root=LABEL=ROOT` or `root=UUID=2c618316-d17a-4688-b43b-aa19d97ea821`.
+- **root**: Use a local filesystem for root instead of one of two in-ram options above. The filesystem must be formatted (perhaps using Ignition) but may be completely blank; it will be initialized on boot. The filesystem may be specified by any of the usual ways including device, label, or UUID; e.g: `root=/dev/sda1`, `root=LABEL=ROOT` or `root=UUID=2c618316-d17a-4688-b43b-aa19d97ea821`.
 - **sshkey**: Add the given SSH public key to the `core` user's authorized_keys file. Replace the example key below with your own (it is usually in `~/.ssh/id_rsa.pub`)
 - **console**: Enable kernel output and a login prompt on a given tty. The default, `tty0`, generally maps to VGA. Can be used multiple times, e.g. `console=tty0 console=ttyS0`
 - **coreos.autologin**: Drop directly to a shell on a given console without prompting for a password. Useful for troubleshooting but use with caution. For any console that doesn't normally get a login prompt by default be sure to combine with the `console` option, e.g. `console=tty0 console=ttyS0 coreos.autologin=tty1 coreos.autologin=ttyS0`. Without any argument it enables access on all consoles. Note that for the VGA console the login prompts are on virtual terminals (`tty1`, `tty2`, etc), not the VGA console itself (`tty0`).
-- **coreos.config.url**: Container Linux will attempt to download an Ignition config and use it to provision your booted system. Ignition configs are generated from Container Linux Configs. See the [config transpiler documentation][cl-configs] for more information.
+- **coreos.first_boot=1**: Download an Ignition config and use it to provision your booted system. Ignition configs are generated from Container Linux Configs. See the [config transpiler documentation][cl-configs] for more information. If a local filesystem is used for the root partition, pass this parameter only on the first boot.
+- **coreos.config.url**: Download the Ignition config from the specified URL.
 
 This is an example pxelinux.cfg file that assumes Container Linux is the only option. You should be able to copy this verbatim into `/var/lib/tftpboot/pxelinux.cfg/default` after providing an Ignition config URL:
 
@@ -38,7 +39,7 @@ label coreos
   menu default
   kernel coreos_production_pxe.vmlinuz
   initrd coreos_production_pxe_image.cpio.gz
-  append coreos.config.url=https://example.com/pxe-config.ign
+  append coreos.first_boot=1 coreos.config.url=https://example.com/pxe-config.ign
 ```
 
 Here's a common config example which should be located at the URL from above:
@@ -141,20 +142,42 @@ Once booted it is possible to [install Container Linux on a local disk][install-
 
 If you plan on using Docker we recommend using a local ext4 filesystem with overlayfs, however, btrfs is also available to use if needed.
 
-For example, to setup an ext4 root filesystem on '/dev/sda':
+For example, to setup an ext4 root filesystem on `/dev/sda`:
 
-```sh
-cfdisk -z /dev/sda
-mkfs.ext4 -L ROOT /dev/sda1
+```container-linux-config
+storage:
+  disks:
+  - device: /dev/sda
+    wipe_table: true
+    partitions:
+    - label: ROOT
+  filesystems:
+  - mount:
+      device: /dev/disk/by-partlabel/ROOT
+      format: ext4
+      create:
+        force: true
+        options: [-L, ROOT]
 ```
 
 And add `root=/dev/sda1` or `root=LABEL=ROOT` to the kernel options as documented above.
 
 Similarly, to setup a btrfs root filesystem on `/dev/sda`:
 
-```sh
-cfdisk -z /dev/sda
-mkfs.btrfs -L ROOT /dev/sda1
+```container-linux-config
+storage:
+  disks:
+  - device: /dev/sda
+    wipe_table: true
+    partitions:
+    - label: ROOT
+  filesystems:
+  - mount:
+      device: /dev/disk/by-partlabel/ROOT
+      format: btrfs
+      create:
+        force: true
+        options: [-L, ROOT]
 ```
 
 ## Adding a Custom OEM
@@ -164,7 +187,7 @@ Similar to the [OEM partition][oem] in Container Linux disk images, PXE images c
 ```sh
 mkdir -p usr/share/oem
 cp example.ign ./usr/share/oem
-find usr | cpio -o -A -H newc -O oem.cpio
+find usr | cpio -o -H newc -O oem.cpio
 gzip oem.cpio
 ```
 
@@ -184,7 +207,7 @@ Add the `oem.cpio.gz` file to your PXE boot directory, then [append it][append-i
 ```
 ...
 initrd coreos_production_pxe_image.cpio.gz,oem.cpio.gz
-kernel coreos_production_pxe.vmlinuz coreos.config.url=oem:///example.ign
+kernel coreos_production_pxe.vmlinuz coreos.first_boot=1 coreos.config.url=oem:///example.ign
 ...
 ```
 
