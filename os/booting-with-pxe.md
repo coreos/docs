@@ -164,7 +164,7 @@ Similar to the [OEM partition][oem] in Container Linux disk images, PXE images c
 ```sh
 mkdir -p usr/share/oem
 cp example.ign ./usr/share/oem
-find usr | cpio -o -A -H newc -O oem.cpio
+find usr | cpio -o -H newc -O oem.cpio
 gzip oem.cpio
 ```
 
