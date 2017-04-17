@@ -8,11 +8,18 @@ These steps will download the Container Linux image, uncompress it, convert it f
 
 ### Choosing a channel
 
-Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
+Container Linux is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
 
-The channel is selected based on the URL below. Simply replace `alpha` with `beta`. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes in each channel.
-
-```sh
+<div id="eucalyptus-create">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#stable-create" data-toggle="tab">Stable Channel</a></li>
+    <li><a href="#beta-create" data-toggle="tab">Beta Channel</a></li>
+    <li><a href="#alpha-create" data-toggle="tab">Alpha Channel</a></li>
+  </ul>
+  <div class="tab-content coreos-docs-image-table">
+    <div class="tab-pane" id="alpha-create">
+      <p>The Alpha channel closely tracks master and is released frequently. The newest versions of system libraries and utilities will be available for testing. The current version is Container Linux {{site.alpha-channel}}.</p>
+      <pre>
 $ wget -q https://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
 $ bunzip2 coreos_production_openstack_image.img.bz2
 $ qemu-img convert -O raw coreos_production_openstack_image.img coreos_production_openstack_image.raw
@@ -23,7 +30,40 @@ $ euca-upload-bundle -m /var/tmp/coreos_production_openstack_image.raw.manifest.
 Uploaded coreos-production/coreos_production_openstack_image.raw.manifest.xml
 $ euca-register coreos-production/coreos_production_openstack_image.raw.manifest.xml --virtualization-type hvm --name "Container Linux-Production"
 emi-E4A33D45
-```
+      </pre>
+    </div>
+    <div class="tab-pane" id="beta-create">
+      <p>The Beta channel consists of promoted Alpha releases. The current version is Container Linux {{site.beta-channel}}.</p>
+      <pre>
+$ wget -q https://beta.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
+$ bunzip2 coreos_production_openstack_image.img.bz2
+$ qemu-img convert -O raw coreos_production_openstack_image.img coreos_production_openstack_image.raw
+$ euca-bundle-image -i coreos_production_openstack_image.raw -r x86_64 -d /var/tmp
+00% |====================================================================================================|   5.33 GB  59.60 MB/s Time: 0:01:35
+Wrote manifest bundle/coreos_production_openstack_image.raw.manifest.xml
+$ euca-upload-bundle -m /var/tmp/coreos_production_openstack_image.raw.manifest.xml -b coreos-production
+Uploaded coreos-production/coreos_production_openstack_image.raw.manifest.xml
+$ euca-register coreos-production/coreos_production_openstack_image.raw.manifest.xml --virtualization-type hvm --name "Container Linux-Production"
+emi-E4A33D45
+      </pre>
+    </div>
+    <div class="tab-pane active" id="stable-create">
+      <p>The Stable channel should be used by production clusters. Versions of Container Linux are battle-tested within the Beta and Alpha channels before being promoted. The current version is Container Linux {{site.stable-channel}}.</p>
+      <pre>
+$ wget -q https://stable.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2
+$ bunzip2 coreos_production_openstack_image.img.bz2
+$ qemu-img convert -O raw coreos_production_openstack_image.img coreos_production_openstack_image.raw
+$ euca-bundle-image -i coreos_production_openstack_image.raw -r x86_64 -d /var/tmp
+00% |====================================================================================================|   5.33 GB  59.60 MB/s Time: 0:01:35
+Wrote manifest bundle/coreos_production_openstack_image.raw.manifest.xml
+$ euca-upload-bundle -m /var/tmp/coreos_production_openstack_image.raw.manifest.xml -b coreos-production
+Uploaded coreos-production/coreos_production_openstack_image.raw.manifest.xml
+$ euca-register coreos-production/coreos_production_openstack_image.raw.manifest.xml --virtualization-type hvm --name "Container Linux-Production"
+emi-E4A33D45
+      </pre>
+    </div>
+  </div>
+</div>
 
 ## Boot it up
 

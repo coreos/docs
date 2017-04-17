@@ -16,9 +16,7 @@ to substitute that path if you use another one.
 
 ### Choosing a channel
 
-Container Linux is released into alpha, beta, and stable channels. Releases to each channel serve as a release candidate for the next channel. For example, a bug-free alpha release is promoted bit-for-bit to the beta channel.
-
-Read the [release notes](https://coreos.com/releases) for specific features and bug fixes in each channel.
+Container Linux is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
 
 <div id="libvirt-create">
   <ul class="nav nav-tabs">
@@ -28,6 +26,7 @@ Read the [release notes](https://coreos.com/releases) for specific features and 
   </ul>
   <div class="tab-content coreos-docs-image-table">
     <div class="tab-pane" id="alpha-create">
+      <p>The Alpha channel closely tracks master and is released frequently. The newest versions of system libraries and utilities will be available for testing. The current version is Container Linux {{site.alpha-channel}}.</p>
       <p>We start by downloading the most recent disk image:</p>
       <pre>
 mkdir -p /var/lib/libvirt/images/coreos
@@ -35,6 +34,7 @@ cd /var/lib/libvirt/images/coreos
 wget https://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img</pre>
     </div>
     <div class="tab-pane" id="beta-create">
+      <p>The Beta channel consists of promoted Alpha releases. The current version is Container Linux {{site.beta-channel}}.</p>
       <p>We start by downloading the most recent disk image:</p>
       <pre>
 mkdir -p /var/lib/libvirt/images/coreos
@@ -42,6 +42,7 @@ cd /var/lib/libvirt/images/coreos
 wget https://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2 -O - | bzcat > coreos_production_qemu_image.img</pre>
     </div>
     <div class="tab-pane active" id="stable-create">
+      <p>The Stable channel should be used by production clusters. Versions of Container Linux are battle-tested within the Beta and Alpha channels before being promoted. The current version is Container Linux {{site.stable-channel}}.</p>
       <p>We start by downloading the most recent disk image:</p>
       <pre>
 mkdir -p /var/lib/libvirt/images/coreos
