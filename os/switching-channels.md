@@ -1,6 +1,6 @@
 # Switching release channels
 
-Container Linux is released into alpha, beta, and stable channels. New features and bug fixes are tested in the alpha channel and are promoted bit-for-bit to the beta channel if no additional bugs are found.
+Container Linux is designed to be [updated automatically](https://coreos.com/why/#updates) with different schedules per channel. You can [disable this feature](update-strategies.md), although we don't recommend it. Read the [release notes](https://coreos.com/releases) for specific features and bug fixes.
 
 By design, the Container Linux update engine does not execute downgrades. If you're switching from a channel with a higher Container Linux version than the new channel, your machine won't be updated again until the new channel contains a higher version number.
 
@@ -35,7 +35,3 @@ For reference, you can find the current version:
 ```sh
 cat /etc/os-release
 ```
-
-## Release information
-
-You can read more about the current releases and channels on the [releases page](https://coreos.com/releases).
