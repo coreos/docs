@@ -38,7 +38,7 @@ As part of the installation process, this YAML file is converted into an Ignitio
 
 # Can etcd be configured with cloud-config?
 
-The preferred way to configure a Container Linux machine is with Container Linux Configs and Ignition.
+The preferred way to configure a Container Linux machine is with Container Linux configs and Ignition. The Container Linux Config Transpiler docs include [an etcd configuration example][clct-etcd-example].
 
 Cloud-Config is still a supported configuration method, however it does not have any etcd v3 specific support.
 
@@ -46,3 +46,4 @@ Cloud-Config is still a supported configuration method, however it does not have
 [etcd-member-service]: https://github.com/coreos/coreos-overlay/blob/master/app-admin/etcd-wrapper/files/etcd-member.service
 [getting-started]: https://coreos.com/etcd/docs/latest/getting-started-with-etcd.html
 [clconfig]: https://coreos.com/os/docs/latest/configuration.html
+[clct-etcd-example]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/examples.md#etcd

@@ -4,6 +4,8 @@ etcd is an open-source distributed key value store that provides shared configur
 
 Application containers running on your cluster can read and write data into etcd. Common examples are storing database connection details, cache settings, feature flags, and more. This guide will walk you through a basic example of reading and writing to etcd then proceed to other features like TTLs, directories and watching a prefix. This guide is way more fun when you've got at least one Container Linux machine up and running &mdash; try it on [Amazon EC2](../os/booting-on-ec2.md) or locally with [Vagrant](../os/booting-on-vagrant.md).
 
+*Are you installing/running etcd on Container Linux? Check out the [etcd on Container Linux FAQ][os-faq] to clarify some common misconceptions.*
+
 <a class="btn btn-default" href="learning/api.html">Complete etcd API Docs</a>
 
 ## Setting up etcd
@@ -226,3 +228,4 @@ $ curl http://127.0.0.1:2379/v2/keys/foo
 
 [etcd-v3-upgrade]: https://github.com/coreos/etcd/blob/master/Documentation/upgrades/upgrade_3_0.md
 [cl-configs]: ../os/provisioning.md
+[os-faq]: os-faq.md
