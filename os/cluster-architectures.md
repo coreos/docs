@@ -4,7 +4,7 @@
 
 Depending on the size and expected use of your Container Linux cluster, you will have different architectural requirements. A few of the common cluster architectures, as well as their strengths and weaknesses, are described below.
 
-Most of these scenarios dedicate a few machines, physical hardware of virtual machines, to running central cluster services. These may include etcd and the distributed controllers for applications like Kubernetes, Mesos, and OpenStack. Excluding these services onto a few known machines helps to ensure they are distributed across cabinets/availability zones. It also helps in setting up static networking to allow for easy bootstrapping. If you're concerned about relying on a discovery service, this architecture helps resolve a lot of those problems.
+Most of these scenarios dedicate a few machines, hardware of virtual, to running central cluster services. These may include etcd and the distributed controllers for applications like Kubernetes, Mesos, and OpenStack. Excluding these services onto a few known machines helps to ensure they are distributed across cabinets/availability zones. It also helps in setting up static networking to allow for easy bootstrapping. This architecture helps to resolve concerns about relying on a discovery service.
 
 ## Docker dev environment on laptop
 
@@ -15,13 +15,13 @@ Most of these scenarios dedicate a few machines, physical hardware of virtual ma
 |------|--------------------|-------------|------------|
 | Low  | Laptop development | Minutes     | No         |
 
-If you're developing locally but plan to run containers in production, it's best practice to mirror that environment locally. This can easily be done by running Docker commands on your laptop that control a Container Linux VM in VMware Fusion or VirtualBox.
+If you're developing locally but plan to run containers in production, it's best practice to mirror that environment locally. Run Docker commands on your laptop that control a Container Linux VM in VMware Fusion or Virtual box to mirror your container production environment locally.
 
 ### Configuring your laptop
 
 Start a single Container Linux VM with the Docker remote socket enabled in the Container Linux config. Here's what the cloud-config looks like:
 
-```yaml
+```container-linux-config
 systemd:
   units:
     - name: docker-tcp.socket
@@ -49,25 +49,24 @@ systemd:
         ExecStart=/usr/bin/systemctl enable docker-tcp.socket
 ```
 
-This file is used to provision your local CoreOS machine on it's first boot. It enables the docker sets up and enables the docker socket in systemd.
+This file is used to provision your local CoreOS machine on its first boot. This sets up and enables the docker API, which is how you can use docker on your laptop. The Docker CLI manages containers running within the VM, *not* on your personal operating system.
 
-Using the Container Linux Config Transpiler, or `ct`, ([download][ct-getting-started]) convert the above yaml into an [ignition][ignition-getting-started]. Once you have the ignition configuration file, pass it to your provider ([complete list of supported ignition platforms][ignition-supported]).
+Using the Container Linux Config Transpiler, or `ct`, ([download][ct-getting-started]) convert the above yaml into an [Ignition][ignition-getting-started]. Alternatively, copy the content of the Igntion tab in the above example. Once you have the Ignition configuration file, pass it to your provider ([complete list of supported Ignition platforms][ignition-supported]).
 
-Once the local VM is running, tell your Docker binary to use the remote port by exporting an environment variable and start running Docker commands:
+Once the local VM is running, tell your Docker binary on your personal operating system to use the remote port by exporting an environment variable and start running Docker commands. Run these commands in a terminal *on your local operating system (MacOS or Linux), not in the Container Linux virtual machine*:
 
-```
+```sh
 $ export DOCKER_HOST=tcp://localhost:2375
 $ docker ps
 ```
 
-This avoids potentially breaking differences between your local development environment and where the container will *actually* run in production.
+This avoids discrepencies between your development and production environemnts.
 
 ### Related local installation tools
 
-There are a myriad of alternative solutions for testing CoreOS locally:
+There are several different options for testing Container Linux locally:
 
-- [coreos-vagrant][coreos-vagrant] is not an officially fully supported platform, however may be a good resource to check out if you are already comfortable with Vagrant and are unable to use one of ignition's officially supported platforms.
-- [coreos-kubernetes][coreos-kubernetes] provides resources to run a local Kubernetes cluster with one or more nodes provisioned by Vagrant.
+- [coreos-vagrant][coreos-vagrant] is not an officially fully supported platform, however may be a good resource to check out if you are already comfortable with Vagrant and are unable to use one of Ignition's officially supported platforms.
 - [Minikube][minikube] is used for local Kubernetes development. This does not use CoreOS but is very fast to setup and is the easiest way to test-drive use Kubernetes.
 
 ## Small cluster
@@ -85,7 +84,9 @@ Getting started is easy &mdash; a single Container Linux config can be used to p
 
 ### Configuring the machines
 
-Following the guide for each of the [supported platforms](https://coreos.com/docs#running-coreos) will be the easiest way to get started with this architecture. Boot the desired number of machines with the same Container Linux config and discovery token. The Container Linux config specifies that etcd and other services will be started on each machine.
+For more information on getting started with this architecture, see the CoreOS documentation on [supported platforms][coreos-supported]. These include [Amazon EC2][coreos-ec2], [Openstack][coreos-openstack], [Azure][coreos-azure], [Google Compute Platform][coreos-gce], [bare metal iPXE][coreos-bm], [Digital Ocean][coreos-do], and many more community supported platforms.
+
+Boot the desired number of machines with the same Container Linux config and discovery token. The Container Linux config specifies which services will be started on each machine.
 
 ## Easy development/testing cluster
 
@@ -96,21 +97,21 @@ Following the guide for each of the [supported platforms](https://coreos.com/doc
 |------|-----------|-------------|------------|
 | Low | Development/Testing | Minutes | No |
 
-When getting started with Container Linux, you may find yourself booting/rebooting/destroying many machines. Instead of slowing down and distracting yourself, generating new discovery URLs and bootstrapping etcd. Instead, start a single etcd node and build your cluster around that.
+When getting started with Container Linux, it's common to frequently boot, reboot, and destroy machines while tweaking your configuration. To avoid the need to generate new discovery URLs and bootstrap etcd, start a single etcd node, and build your cluster around it.
 
 You can now boot as many machines as you'd like as test workers that read from the etcd node. All the features of Locksmith and etcdctl will continue to work properly but will connect to the etcd node instead of using a local etcd instance. Since etcd isn't running on all of the machines you'll gain a little bit of extra CPU and RAM to play with.
 
-Once this environment is set up, it'll be ready to take a beating. Pull the plug on a machine and watch Kubernetes reschedule the units, max out the CPU, etc.
+Once this environment is set up, it's ready to be tested. Destroy a machine, and watch Kubernetes reschedule the units, max out the CPU, and rebuild your setup automatically.
 
 ### Configuration for etcd role
 
 Since we're only using a single etcd node, there is no need to include a discovery token. There isn't any high availability for etcd in this configuration, but that's assumed to be OK for development and testing. Boot this machine first so you can configure the rest with its IP address, which is specified with the network unit.
 
-The network unit is typically used for bare metal installations that require static networking. Check the documentation for your specific provider for examples.
+The network unit is typically used for bare metal installations that require static networking. See your provider's documentation for specific examples.
 
 Here's the Container Linux config for the etcd machine:
 
-```yaml
+```container-linux-config
 etcd:
   version: 3.1.5
   name: "etcdserver"
@@ -144,15 +145,25 @@ networkd:
 
 ### Configuration for worker role
 
-This architecture allows you to boot any number of workers, as few as 1 or up to a large cluster for load testing. The notable configuration difference for this role is specifying that applications like Kubernetes should use our etcd proxy instead of starting etcd server locally.
+This architecture allows you to boot any number of workers, from a single unit to a large cluster designed for load testing. The notable configuration difference for this role is specifying that applications like Kubernetes should use our etcd proxy instead of starting etcd server locally.
 
 The Container Linux config:
 
-```
-<<< ADD CONTAINER LINUX CONFIG >>>
+```container-linux-config
+etcd:
+  version: 3.1.5
+  listen_client-urls: "http://localhost:2379"
+  initial_cluster: "etcdserver=http://10.0.0.101:2380"
+  proxy: on
+systemd:
+  units:
+    - name: etcd-member.service
+      enable: true
 ```
 
 ## Production cluster with central services
+
+*[Tectonic from CoreOS][tectonic]* simplifies install and ongoing management of your Kubernetes cluster. Run up to 10 Container Linux nodes for free. [Check it out][tectonic].
 
 <img class="img-center" src="img/prod.png" alt="Container Linux cluster optimized for production environments"/>
 <div class="caption">Container Linux cluster separated into central services and workers.</div>
@@ -167,17 +178,17 @@ For large clusters, it's recommended to set aside 3-5 machines to run central se
 
 Our central services machines will run services like etcd and Kubernetes controllers that support the rest of the cluster. etcd is configured with static networking and a peers list.
 
-[Managed Linux][managed-linux] customers can also specify a [CoreUpdate][core-update] group ID which allows you to subscribe these machines to a different update channel, controlling updates separately from the worker machines.
+[Managed Linux][coreos-managed] customers can also specify a [CoreUpdate][core-update] group ID which allows you to subscribe these machines to a different update channel, controlling updates separately from the worker machines.
 
 Here's an example cloud-config for one of the central service machines. Be sure to generate a new discovery token with the initial size of your cluster:
 
-```yaml
+```container-linux-config
 etcd:
   version: 3.0.15
   # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
   # specify the initial size of your cluster with ?size=X
   discovery: https://discovery.etcd.io/<token>
-  # multi-region and multi-cloud deployments need to use $public_ipv4
+  # multi-region and multi-cloud deployments must use $public_ipv4
   advertise_client_urls: http://10.0.0.101:2379
   initial_advertise_peer_urls: http://10.0.0.101:2380
   listen_client_urls: http://0.0.0.0:2379
@@ -211,11 +222,11 @@ The worker roles will use DHCP and should be easy to add capacity or autoscaling
 
 Similar to the central services machines, fleet will be configured with metadata specifying the role and any additional metadata you wish to set. etcd will automatically fallback to a local proxy via discovery service.If not all machines have SSDs or you have a subset of machines with a ton of RAM, it's useful to set metadata for those attributes.
 
-[Managed Linux](https://coreos.com/products/managed-linux) customers can also specify a [CoreUpdate](https://coreos.com/products/coreupdate) group ID to use a different channel and control updates separately from the central machines.
+[Managed Linux][coreos-managed] customers can also specify a [CoreUpdate][core-update] group ID to use a different channel and control updates separately from the central machines.
 
 Here's an example cloud-config for a worker:
 
-```yaml
+```container-linux-config
 etcd:
   version: 3.0.15
   # use the same discovery token for the central service machines
@@ -245,7 +256,15 @@ systemd:
 [ignition-getting-started]: https://coreos.com/ignition/docs/latest/getting-started.html
 [ignition-supported]: https://coreos.com/ignition/docs/latest/supported-platforms.html
 [coreos-vagrant]: https://github.com/coreos/coreos-vagrant/
-[coreos-kubernetes]: https://github.com/coreos/coreos-kubernetes/
 [minikube]: https://github.com/kubernetes/minikube
 [managed-linux]: https://coreos.com/products/managed-linux
 [core-update]: https://coreos.com/products/coreupdate
+[coreos-supported]: https://coreos.com/os/docs/latest#running-coreos
+[coreos-managed]: https://coreos.com/products/managed-linux
+[coreos-ec2]: https://coreos.com/os/docs/latest/booting-on-ec2.html
+[coreos-openstack]: https://coreos.com/os/docs/latest/booting-on-openstack.html
+[coreos-azure]: https://coreos.com/os/docs/latest/booting-on-azure.html
+[coreos-gce]: https://coreos.com/os/docs/latest/booting-on-google-compute-engine.html
+[coreos-bm]: https://coreos.com/matchbox/
+[coreos-do]: https://coreos.com/os/docs/latest/booting-on-digitalocean.html
+[tectonic]: https://coreos.com/tectonic
