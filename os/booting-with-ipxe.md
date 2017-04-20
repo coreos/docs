@@ -120,5 +120,5 @@ Similar to the [OEM partition][oem] in Container Linux disk images, iPXE images 
 
 Now that you have a machine booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
 
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: provisioning.md
 [ignition]: https://coreos.com/ignition/docs/latest

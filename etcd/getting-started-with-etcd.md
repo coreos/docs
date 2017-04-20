@@ -225,4 +225,4 @@ $ curl http://127.0.0.1:2379/v2/keys/foo
 
 
 [etcd-v3-upgrade]: https://github.com/coreos/etcd/blob/master/Documentation/upgrades/upgrade_3_0.md
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: ../os/provisioning.md

@@ -11,7 +11,7 @@ $ curl -w "\n" 'https://discovery.etcd.io/new?size=3'
 https://discovery.etcd.io/6a28e078895c5ec737174db2419bb2f3
 ```
 
-The discovery URL can be provided to each Container Linux machine via [Container Linux Configs](https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md). The rest of this guide will explain what's happening behind the scenes, but if you're trying to get clustered as quickly as possible, all you need to do is provide a _fresh, unique_ discovery token in your config.
+The discovery URL can be provided to each Container Linux machine via [Container Linux Configs](provisioning.md). The rest of this guide will explain what's happening behind the scenes, but if you're trying to get clustered as quickly as possible, all you need to do is provide a _fresh, unique_ discovery token in your config.
 
 Boot each one of the machines with identical Container Linux Config and they should be automatically clustered:
 

@@ -119,7 +119,7 @@ systemd:
 ```
 
 [drop-ins]: using-systemd-drop-in-units.md
-[ct-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[ct-configs]: provisioning.md
 
 ## More information
 

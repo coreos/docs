@@ -192,4 +192,4 @@ Fleet has many more features that you can explore in the guides below.
 [iso-docs]: booting-with-iso.md
 [install-docs]: installing-to-disk.md
 [ignition]: https://coreos.com/blog/introducing-ignition.html
-[cl-configs]:https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: provisioning.md

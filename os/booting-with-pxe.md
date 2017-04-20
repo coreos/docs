@@ -224,7 +224,7 @@ Now that you have a machine booted it is time to play around. Check out the [Con
 [docs]: https://coreos.com/docs
 [ignition]: https://coreos.com/ignition/docs/latest
 [install-to-disk]: installing-to-disk.md
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: provisioning.md
 [irc]: irc://irc.freenode.org:6667/#coreos
 [oem]: notes-for-distributors.md#image-customization
 [qs]: quickstart.md

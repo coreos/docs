@@ -232,5 +232,5 @@ For details, check out the [Container Linux Config examples][ct-examples].
 [quay-site]: https://quay.io/
 [rfc-2397]: https://tools.ietf.org/html/rfc2397
 [rkt-config]: https://coreos.com/rkt/docs/latest/configuration.html#configuration-kinds
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: provisioning.md
 [ct-examples]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/examples.md

@@ -12,7 +12,7 @@ In addition to the default groups, you may choose to create your own group that 
 
 To place a Container Linux machine in one of these groups, you must configure the update settings via a Container Linux Config or a file on disk.
 
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: ../os/provisioning.md
 
 ### Join preconfigured group
 

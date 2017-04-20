@@ -121,7 +121,7 @@ For more systemd examples, check out these documents:
 [customizing-sshd]: customizing-sshd.md#changing-the-sshd-port
 [customizing-etcd]: customize-etcd-unit.md
 [customizing-docker]: customizing-docker.md#using-a-dockercfg-file-for-authentication
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: provisioning.md
 [etcd-discovery]: cluster-discovery.md
 [systemd-udev]: using-systemd-and-udev-rules.md
 [etcd-cluster-reconfiguration]: ../etcd/etcd-live-cluster-reconfiguration.md

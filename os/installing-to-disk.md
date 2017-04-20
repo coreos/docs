@@ -133,5 +133,5 @@ Now that you have a machine booted it is time to play around. Check out the [Con
 [coreos-iso]: booting-with-iso.md
 [clc-section]: #container-linux-configs
 [coreos-install]: https://raw.github.com/coreos/init/master/bin/coreos-install
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: provisioning.md
 [ct-docs]: https://github.com/coreos/container-linux-config-transpiler/tree/master/doc
