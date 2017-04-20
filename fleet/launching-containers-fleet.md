@@ -241,7 +241,7 @@ Global units can deployed to a subset of matching machines with the `MachineMeta
 
 Applications with complex and specific requirements can target a subset of the cluster for scheduling via machine metadata. Powerful deployment topologies can be achieved &mdash; schedule units based on the machine's region, rack location, disk speed or anything else you can think of.
 
-Metadata can be provided via [a Container Linux Config](https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md) or a [config file](https://github.com/coreos/fleet/blob/master/Documentation/deployment-and-configuration.md). Here's an example config file:
+Metadata can be provided via [a Container Linux Config](../os/provisioning.md) or a [config file](https://github.com/coreos/fleet/blob/master/Documentation/deployment-and-configuration.md). Here's an example config file:
 
 ```ini
 # Comma-delimited key/value pairs that are published to the fleet registry.

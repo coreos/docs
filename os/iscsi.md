@@ -126,4 +126,4 @@ See the [mounting storage docs][mounting-storage] for an example.
 
 [iscsi-wiki]: https://en.wikipedia.org/wiki/ISCSI
 [mounting-storage]: mounting-storage.md
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: provisioning.md

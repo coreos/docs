@@ -110,4 +110,4 @@ Now that you have a machine booted it is time to play around. Check out the [Con
 [ssh]: http://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-use-ssh-key/
 [update-docs]: https://coreos.com/why/#updates
 [xplat-cli]: http://azure.microsoft.com/en-us/documentation/articles/xplat-cli/
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: provisioning.md

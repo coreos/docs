@@ -344,4 +344,4 @@ A json file `.dockercfg` can be created in your home directory that holds authen
 [self-signed-certs]: generate-self-signed-certificates.md
 [systemd-socket]: https://www.freedesktop.org/software/systemd/man/systemd.socket.html
 [systemd-env-vars]: https://coreos.com/os/docs/latest/using-environment-variables-in-systemd-units.html#system-wide-environment-variables
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: provisioning.md

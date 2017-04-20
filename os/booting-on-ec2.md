@@ -140,7 +140,7 @@ etcd:
 ```
 
 [ec2-user-data]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: provisioning.md
 
 ### Instance storage
 
@@ -257,7 +257,7 @@ First we need to create a security group to allow Container Linux instances to c
           Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
         <li>
-          Use <a href="https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md">ct</a> to convert the following configuration into an Ignition config, and back in the EC2 dashboard, paste it into the "User Data" field.
+          Use <a href="provisioning.md">ct</a> to convert the following configuration into an Ignition config, and back in the EC2 dashboard, paste it into the "User Data" field.
           ```container-linux-config:ec2
           etcd:
             # All options get passed as command line flags to etcd.
@@ -331,7 +331,7 @@ First we need to create a security group to allow Container Linux instances to c
           Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
         <li>
-          Use <a href="https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md">ct</a> to convert the following configuration into an Ignition config, and back in the EC2 dashboard, paste it into the "User Data" field.
+          Use <a href="provisioning.md">ct</a> to convert the following configuration into an Ignition config, and back in the EC2 dashboard, paste it into the "User Data" field.
           ```container-linux-config:ec2
           etcd:
             # All options get passed as command line flags to etcd.
@@ -405,7 +405,7 @@ First we need to create a security group to allow Container Linux instances to c
           Next, we need to specify a discovery URL, which contains a unique token that allows us to find other hosts in our cluster. If you're launching your first machine, generate one at <a href="https://discovery.etcd.io/new?size=3">https://discovery.etcd.io/new?size=3</a>, configure the `?size=` to your initial cluster size and add it to the metadata. You should re-use this key for each machine in the cluster.
         </li>
         <li>
-          Use <a href="https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md">ct</a> to convert the following configuration into an Ignition config, and back in the EC2 dashboard, paste it into the "User Data" field.
+          Use <a href="provisioning.md">ct</a> to convert the following configuration into an Ignition config, and back in the EC2 dashboard, paste it into the "User Data" field.
           ```container-linux-config:ec2
           etcd:
             # All options get passed as command line flags to etcd.

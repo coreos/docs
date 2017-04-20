@@ -56,7 +56,7 @@ etcd:
   discovery:                   "https://discovery.etcd.io/<token>"
 ```
 
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: provisioning.md
 
 ## Using CoreOS Container Linux
 

@@ -183,4 +183,4 @@ If you would like to create multiple clusters you'll need to generate and use a 
 
 Now that you have instances booted it is time to play around. Check out the [Container Linux Quickstart](quickstart.md) guide or dig into [more specific topics](https://coreos.com/docs).
 
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: provisioning.md

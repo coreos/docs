@@ -186,7 +186,7 @@ systemd:
             Environment=SYSTEMD_LOG_LEVEL=debug
 ```
 
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: provisioning.md
 
 ## Further reading
 

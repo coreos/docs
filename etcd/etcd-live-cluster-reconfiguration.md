@@ -224,7 +224,7 @@ The next steps are those described in the [Change etcd cluster size][change-clus
 
 
 [change-cluster-size]: #change-etcd-cluster-size
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: ../os/provisioning.md
 [data-dir]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/configuration.md#-data-dir
 [disaster-recovery]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/recovery.md#disaster-recovery
 [drop-in]: ../os/using-systemd-drop-in-units.md

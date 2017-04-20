@@ -172,7 +172,7 @@ Container Linux allows you to configure machine parameters, configure networking
 
 This will pass the contents of `config.ign` through to Ignition, which runs in the virtual machine.
 
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: provisioning.md
 
 ## Using CoreOS Container Linux
 

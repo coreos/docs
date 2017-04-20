@@ -43,4 +43,4 @@ Only nss-aware applications can take advantage of the `systemd-resolved` cache. 
 [systemd-networkd]: http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html
 [resolved.conf]: http://www.freedesktop.org/software/systemd/man/resolved.conf.html
 [nsswitch.conf]: http://man7.org/linux/man-pages/man5/nsswitch.conf.5.html
-[cl-configs]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[cl-configs]: provisioning.md
