@@ -113,16 +113,27 @@ ExecStart=/usr/lib/coreos/etcd-wrapper $ETCD_OPTS \
 
 The details of these changes are covered in depth in Ignition's [metadata documentation][metadata], but the gist is that `coreos-metadata` is used to fetch the IP addresses from the Amazon APIs and then `systemd` is leveraged to substitute the IP addresses into the invocation of etcd. The result is that even though Ignition only runs once, `coreos-metadata` fetches the IP addresses whenever etcd is run, allowing etcd to use IP addresses that have the potential to change.
 
+## Migrating from cloud configs
+
+Previously, the recommended way to provision a Container Linux machine was with a cloud-config. These configs would be given to a Container Linux machine and a utility called [coreos-cloudinit][cloudinit] would read this file and apply the configuration on every boot.
+
+For a [number of reasons][vs], coreos-cloudinit has been deprecated in favor of Container Linux Configs and Ignition. For help migrating from these legacy cloud-configs to Container Linux Configs, refer to the [migration guide][migrating].
+
+
 ## Using Container Linux Configs
 
-Now that the basics of Container Linux Configs have been covered, a good next step is to read through the [examples][examples] and start experimenting.
+Now that the basics of Container Linux Configs have been covered, a good next step is to read through the [examples][examples] and start experimenting. The [troubleshooting guide][troubleshooting] is a good reference for debugging issues.
 
 [clc]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/configuration.md
+[cloudinit]: https://github.com/coreos/coreos-cloudinit
 [ct]: https://github.com/coreos/container-linux-config-transpiler/releases
 [etcd]: https://github.com/coreos/etcd
 [examples]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/examples.md
-[matchbox]: https://github.com/coreos/matchbox
-[metadata]: ../ignition/metadata.md
-[rkt]: https://github.com/rkt/rkt
 [flannel]: https://github.com/coreos/flannel
 [locksmith]: https://github.com/coreos/locksmith
+[matchbox]: https://github.com/coreos/matchbox
+[metadata]: ../ignition/metadata.md
+[migrating]: migrating-to-clcs.md
+[rkt]: https://github.com/rkt/rkt
+[troubleshooting]: https://github.com/coreos/ignition/blob/master/doc/getting-started.md#troubleshooting
+[vs]: ../ignition/what-is-ignition.md#ignition-vs-coreos-cloudinit
