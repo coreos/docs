@@ -126,7 +126,7 @@ Now that the basics of Container Linux Configs have been covered, a good next st
 
 [clc]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/configuration.md
 [cloudinit]: https://github.com/coreos/coreos-cloudinit
-[ct]: https://github.com/coreos/container-linux-config-transpiler/releases
+[ct]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/overview.md
 [etcd]: https://github.com/coreos/etcd
 [examples]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/examples.md
 [flannel]: https://github.com/coreos/flannel
