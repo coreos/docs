@@ -4,7 +4,7 @@ Historically, the recommended way to provision a Container Linux machine was wit
 
 Going forward, a new method of provisioning with Container Linux Configs is now recommended.
 
-This document details how to convert an existing cloud-config into a Container Linux Config. Once a Container Linux Config has been written, it is given to the Config Transpiler to be converted into an Ignition Config. This Ignition Config can then be provided to a booting machine. For more information on this process, take a look at the [Config Transpiler getting started doc][ct-getting-started].
+This document details how to convert an existing cloud-config into a Container Linux Config. Once a Container Linux Config has been written, it is given to the Config Transpiler to be converted into an Ignition Config. This Ignition Config can then be provided to a booting machine. For more information on this process, take a look at the [provisioning guide][provisioning].
 
 The etcd and flannel examples shown in this document will use dynamic data in the Container Linux Config (anything looking like this: `{PRIVATE_IPV4}`). Not all types of dynamic data are supported on all cloud providers, and if the machine is not on a cloud provider this feature cannot be used. Please see [here][dynamic-data] for more information.
 
@@ -338,7 +338,7 @@ storage:
           127.0.0.1 example.com
 ```
 
-[ct-getting-started]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[provisioning]: provisioning.md
 [dynamic-data]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/dynamic-data.md
 [fleet-deprecation]: https://coreos.com/blog/migrating-from-fleet-to-kubernetes.html
 [ct-config]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/configuration.md
