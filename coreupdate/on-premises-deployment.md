@@ -98,9 +98,9 @@ DBMAXACTIVE: 100
 #ENABLE_PACKAGE_UPLOADS: true
 
 # (Optional) Enable if syncing with upstream CoreUpdate instances.
-# Zero value is disabled.
+# Value is minutes. Zero value is disabled.
 # This should be disabled if you plan to synchronize packages manually.
-UPSTREAM_SYNC_INTERVAL: 1
+UPSTREAM_SYNC_INTERVAL: 10
 
 # (Optional) enables TLS
 #TLS_CERT_FILE:
