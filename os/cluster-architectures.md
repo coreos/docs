@@ -4,7 +4,7 @@
 
 Depending on the size and expected use of your Container Linux cluster, you will have different architectural requirements. A few of the common cluster architectures, as well as their strengths and weaknesses, are described below.
 
-Most of these scenarios dedicate a few machines, hardware of virtual, to running central cluster services. These may include etcd and the distributed controllers for applications like Kubernetes, Mesos, and OpenStack. Excluding these services onto a few known machines helps to ensure they are distributed across cabinets/availability zones. It also helps in setting up static networking to allow for easy bootstrapping. This architecture helps to resolve concerns about relying on a discovery service.
+Most of these scenarios dedicate a few machines, hardware of virtual, to running central cluster services. These may include etcd and the distributed controllers for applications like Kubernetes, Mesos, and OpenStack. Isolating these services onto a few known machines helps to ensure they are distributed across cabinets or availability zones. It also helps in setting up static networking to allow for easy bootstrapping. This architecture helps to resolve concerns about relying on a discovery service.
 
 ## Docker dev environment on laptop
 
@@ -19,7 +19,7 @@ If you're developing locally but plan to run containers in production, it's best
 
 ### Configuring your laptop
 
-Start a single Container Linux VM with the Docker remote socket enabled in the Container Linux config. Here's what the cloud-config looks like:
+Start a single Container Linux VM with the Docker remote socket enabled in the Container Linux Config (CL Config). Here's what the CL Config looks like:
 
 ```container-linux-config
 systemd:
@@ -49,9 +49,9 @@ systemd:
         ExecStart=/usr/bin/systemctl enable docker-tcp.socket
 ```
 
-This file is used to provision your local CoreOS machine on its first boot. This sets up and enables the docker API, which is how you can use docker on your laptop. The Docker CLI manages containers running within the VM, *not* on your personal operating system.
+This file is used to provision your local CoreOS machine on its first boot. This sets up and enables the Docker API, which is how you can use Docker on your laptop. The Docker CLI manages containers running within the VM, *not* on your personal operating system.
 
-Using the Container Linux Config Transpiler, or `ct`, ([download][ct-getting-started]) convert the above yaml into an [Ignition][ignition-getting-started]. Alternatively, copy the content of the Igntion tab in the above example. Once you have the Ignition configuration file, pass it to your provider ([complete list of supported Ignition platforms][ignition-supported]).
+Using the CL Config Transpiler, or `ct`, ([download][ct-getting-started]) convert the above yaml into an [Ignition][ignition-getting-started]. Alternatively, copy the content of the Igntion tab in the above example. Once you have the Ignition configuration file, pass it to your provider ([complete list of supported Ignition platforms][ignition-supported]).
 
 Once the local VM is running, tell your Docker binary on your personal operating system to use the remote port by exporting an environment variable and start running Docker commands. Run these commands in a terminal *on your local operating system (MacOS or Linux), not in the Container Linux virtual machine*:
 
@@ -80,13 +80,13 @@ There are several different options for testing Container Linux locally:
 
 For small clusters, between 3-9 machines, running etcd on all of the machines allows for high availability without paying for extra machines that just run etcd.
 
-Getting started is easy &mdash; a single Container Linux config can be used to provision all machines on your cloud-provider.
+Getting started is easy &mdash; a single CL Config can be used to provision all machines on your cloud provider.
 
 ### Configuring the machines
 
 For more information on getting started with this architecture, see the CoreOS documentation on [supported platforms][coreos-supported]. These include [Amazon EC2][coreos-ec2], [Openstack][coreos-openstack], [Azure][coreos-azure], [Google Compute Platform][coreos-gce], [bare metal iPXE][coreos-bm], [Digital Ocean][coreos-do], and many more community supported platforms.
 
-Boot the desired number of machines with the same Container Linux config and discovery token. The Container Linux config specifies which services will be started on each machine.
+Boot the desired number of machines with the same CL Config and discovery token. The CL Config specifies which services will be started on each machine.
 
 ## Easy development/testing cluster
 
@@ -105,11 +105,11 @@ Once this environment is set up, it's ready to be tested. Destroy a machine, and
 
 ### Configuration for etcd role
 
-Since we're only using a single etcd node, there is no need to include a discovery token. There isn't any high availability for etcd in this configuration, but that's assumed to be OK for development and testing. Boot this machine first so you can configure the rest with its IP address, which is specified with the network unit.
+Since we're only using a single etcd node, there is no need to include a discovery token. There isn't any high availability for etcd in this configuration, but that's assumed to be OK for development and testing. Boot this machine first so you can configure the rest with its IP address, which is specified with the networkd unit.
 
-The network unit is typically used for bare metal installations that require static networking. See your provider's documentation for specific examples.
+The networkd unit is typically used for bare metal installations that require static networking. See your provider's documentation for specific examples.
 
-Here's the Container Linux config for the etcd machine:
+Here's the CL Config for the etcd machine:
 
 ```container-linux-config
 etcd:
@@ -147,7 +147,7 @@ networkd:
 
 This architecture allows you to boot any number of workers, from a single unit to a large cluster designed for load testing. The notable configuration difference for this role is specifying that applications like Kubernetes should use our etcd proxy instead of starting etcd server locally.
 
-The Container Linux config:
+The CL Config:
 
 ```container-linux-config
 etcd:
@@ -178,9 +178,9 @@ For large clusters, it's recommended to set aside 3-5 machines to run central se
 
 Our central services machines will run services like etcd and Kubernetes controllers that support the rest of the cluster. etcd is configured with static networking and a peers list.
 
-[Managed Linux][coreos-managed] customers can also specify a [CoreUpdate][core-update] group ID which allows you to subscribe these machines to a different update channel, controlling updates separately from the worker machines.
+[Container Linux Support][coreos-managed] customers can also specify a [CoreUpdate][core-update] group ID which allows you to subscribe these machines to a different update channel, controlling updates separately from the worker machines.
 
-Here's an example cloud-config for one of the central service machines. Be sure to generate a new discovery token with the initial size of your cluster:
+Here's an example CL Config for one of the central service machines. Be sure to generate a new discovery token with the initial size of your cluster:
 
 ```container-linux-config
 etcd:
@@ -224,7 +224,7 @@ Similar to the central services machines, fleet will be configured with metadata
 
 [Managed Linux][coreos-managed] customers can also specify a [CoreUpdate][core-update] group ID to use a different channel and control updates separately from the central machines.
 
-Here's an example cloud-config for a worker:
+Here's an example CL Config for a worker:
 
 ```container-linux-config
 etcd:
