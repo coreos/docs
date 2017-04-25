@@ -4,7 +4,7 @@ Container Linux automates machine provisioning with a specialized system for app
 
 ## Container Linux Config
 
-Container Linux admins define these configurations in a format called the [Container Linux Config][clc]. Container Linux Configs are structured as YAML and intended to be human-readable. The Container Linux Config is specific to Container Linux, as the name implies. It has features devoted to configuring Container Linux services such as [etcd][etcd], [rkt][rkt], Docker, [flannel][flannel], and [locksmith][locksmith]. The defining feature of the Container Linux Config is that is cannot be sent directly to a Container Linux provisioning target. Instead, it is first validated and transformed into a machine-readable and wire-efficient form. Before examining why and how that process is conducted, a few example Container Linux Configs will give a flavor of the format:
+Container Linux admins define these configurations in a format called the [Container Linux Config][clc]. Container Linux Configs are structured as YAML and intended to be human-readable. The Container Linux Config is specific to Container Linux, as the name implies. It has features devoted to configuring Container Linux services such as [etcd][etcd], [rkt][rkt], Docker, [flannel][flannel], and [locksmith][locksmith]. The defining feature of the Container Linux Config is that it cannot be sent directly to a Container Linux provisioning target. Instead, it is first validated and transformed into a machine-readable and wire-efficient form. Before examining why and how that process is conducted, a few example Container Linux Configs will give a flavor of the format:
 
 This extremely simple Container Linux Config will fetch and run the current release of etcd:
 
