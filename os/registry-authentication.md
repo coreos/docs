@@ -4,7 +4,7 @@ Many container image registries require authentication. This document explains h
 
 ## Using a Quay robot for registry auth
 
-The recommended way to authenticate container manager software with [quay.io][quay-site] is via a [Quay Robot][quay-robot]. The robot account acts as an authentication token wth some nice features, including:
+The recommended way to authenticate container manager software with [quay.io][quay-site] is via a [Quay Robot][quay-robot]. The robot account acts as an authentication token with some nice features, including:
 
 * Readymade repository authentication configuration files
 * Credentials are limited to specific repositories
