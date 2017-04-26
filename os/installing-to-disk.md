@@ -22,7 +22,7 @@ Then install as you would with the PXE booted system, but be sure to include use
 
 
 ```sh
-coreos-install -d /dev/sda -c ignition.json
+coreos-install -d /dev/sda -i ignition.json
 ```
 
 ## Choose a channel
@@ -72,7 +72,7 @@ For reference here are the rest of the `coreos-install` options:
 
 By default there isn't a password or any other way to log into a fresh Container Linux system. The easiest way to configure accounts, add systemd units, and more is via Container Linux Configs. Jump over to the [docs to learn about the supported features][cl-configs].
 
-After using the [Container Linux Config Transpiler][ct-docs] to produce an Ignition config, the installation script will process your `ignition.json` file specified with the `-c` flag and use it when the installation is booted.
+After using the [Container Linux Config Transpiler][ct-docs] to produce an Ignition config, the installation script will process your `ignition.json` file specified with the `-i` flag and use it when the installation is booted.
 
 A Container Linux Config that specifies an SSH key for the `core` user but doesn't use any other parameters looks like:
 
