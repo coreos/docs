@@ -106,7 +106,7 @@ ExecStart=
 ExecStart=/usr/lib/coreos/etcd-wrapper $ETCD_OPTS \
   --listen-peer-urls="http://${COREOS_EC2_IPV4_LOCAL}:2380" \
   --listen-client-urls="http://0.0.0.0:2379" \
-  --initial-advertise-peer-urls="http://$${COREOS_EC2_IPV4_LOCAL}:2380" \
+  --initial-advertise-peer-urls="http://${COREOS_EC2_IPV4_LOCAL}:2380" \
   --advertise-client-urls="http://${COREOS_EC2_IPV4_PUBLIC}:2379" \
   --discovery="https://discovery.etcd.io/<token>"
 ```
