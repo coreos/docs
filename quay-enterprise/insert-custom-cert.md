@@ -58,7 +58,7 @@ When deployed on Kubernetes, QE mounts in a secret as a volume to store config a
 
 To get around this error, a base64 encoded certificate can be added to the secret *after* Quay Enterprise has been deployed. 
 
-Begin by base64 encoing the contents of the certificate:
+Begin by base64 encoding the contents of the certificate:
 
 ```
 $ cat ca.crt 
@@ -87,7 +87,4 @@ Add an entry for the cert and paste the full base64 encoded string under the ent
 c1psWGpqeGlPQmNEWkJPMjJ5d0pDemVnR2QNCnRsbW9JdEF4YnFSdVd3PT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
 ```
 
-Finally, recycle all QE pods for the certificate to be added to the QE container. 
-
-
-
+Finally, recycle all QE pods. Use `kubectl delete` to remove all QE pods. The QE Deployment will automatically schedule replacement pods with the new certificate data.
