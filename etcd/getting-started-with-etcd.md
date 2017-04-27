@@ -4,15 +4,19 @@ etcd is an open-source distributed key value store that provides shared configur
 
 Application containers running on your cluster can read and write data into etcd. Common examples are storing database connection details, cache settings, feature flags, and more. This guide will walk you through a basic example of reading and writing to etcd then proceed to other features like TTLs, directories and watching a prefix. This guide is way more fun when you've got at least one Container Linux machine up and running &mdash; try it on [Amazon EC2](../os/booting-on-ec2.md) or locally with [Vagrant](../os/booting-on-vagrant.md).
 
-*Are you installing/running etcd on Container Linux? Check out the [etcd on Container Linux FAQ][os-faq] to clarify some common misconceptions.*
-
 <a class="btn btn-default" href="learning/api.html">Complete etcd API Docs</a>
+
+The [version 3 series is the current edition of etcd][etcd3-blog]. Version 3 etcd binaries are *not* included in the Container Linux filesystem. Instead, etcd is distributed in a container fetched by an included system service. Read on below in [setting up etcd][setup-internal-anchor] and see the [etcd on Container Linux FAQ][os-faq] for more details on etcd v3 in a container on Container Linux.
 
 ## Setting up etcd
 
 Container Linux's `etcd-member.service` systemd unit knows how to fetch and run the current etcd v3.x container image, providing etcd v3 without requiring the binary to be present in every default OS installation.
 
-etcd v3 startup can be configured at a new node's first boot with a [Container Linux Config][cl-configs]. To upgrade an existing etcd v2 cluster rather than deploy a new one, start with the [etcd v2 to v3 upgrade doc][etcd-v3-upgrade]. A Container Linux Config can be used to set any etcd option, like in this example:
+etcd v3 startup can be configured at a new node's first boot with a [Container Linux Config][cl-configs].
+
+To upgrade an existing etcd v2 cluster rather than deploy a new one, start with the [etcd v2 to v3 upgrade doc][etcd-v3-upgrade].
+
+A Container Linux Config can be used to set any etcd option, like in this example:
 
 ```container-linux-config
 etcd:
@@ -226,6 +230,8 @@ $ curl http://127.0.0.1:2379/v2/keys/foo
 <a class="btn btn-default" href="https://github.com/coreos/etcd/blob/master/Documentation/libraries-and-tools.md">Projects using etcd</a>
 
 
-[etcd-v3-upgrade]: https://github.com/coreos/etcd/blob/master/Documentation/upgrades/upgrade_3_0.md
 [cl-configs]: ../os/provisioning.md
+[etcd3-blog]: https://coreos.com/blog/toward-etcd-v3-in-container-linux.html
+[etcd-v3-upgrade]: https://github.com/coreos/etcd/blob/master/Documentation/upgrades/upgrade_3_0.md
 [os-faq]: os-faq.md
+[setup-internal-anchor]: #setting-up-etcd
