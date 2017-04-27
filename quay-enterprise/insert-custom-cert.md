@@ -50,3 +50,41 @@ $ docker exec -it 5a3e82c4a75f cat /etc/ssl/certs/storage.pem
 -----BEGIN CERTIFICATE-----
 MIIDTTCCAjWgAwIBAgIJAMVr9ngjJhzbMA0GCSqGSIb3DQEBCwUAMD0xCzAJBgNV
 ```
+
+
+## Add certs when deployed on Kubernetes
+
+When deployed on Kubernetes, QE mounts in a secret as a volume to store config assets. Unfortunately, this currently breaks the upload certificate function of the superuser panel. 
+
+To get around this error, a base64 encoded certificate can be added to the secret *after* Quay Enterprise has been deployed. 
+
+Begin by base64 encoding the contents of the certificate:
+
+```
+$ cat ca.crt 
+-----BEGIN CERTIFICATE-----
+MIIDljCCAn6gAwIBAgIBATANBgkqhkiG9w0BAQsFADA5MRcwFQYDVQQKDA5MQUIu
+TElCQ09SRS5TTzEeMBwGA1UEAwwVQ2VydGlmaWNhdGUgQXV0aG9yaXR5MB4XDTE2
+MDExMjA2NTkxMFoXDTM2MDExMjA2NTkxMFowOTEXMBUGA1UECgwOTEFCLkxJQkNP
+UkUuU08xHjAcBgNVBAMMFUNlcnRpZmljYXRlIEF1dGhvcml0eTCCASIwDQYJKoZI
+[...]
+-----END CERTIFICATE-----
+
+$ cat ca.crt | base64 -w 0
+[...]
+c1psWGpqeGlPQmNEWkJPMjJ5d0pDemVnR2QNCnRsbW9JdEF4YnFSdVd3PT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+```
+
+Use the `kubectl` tool to edit the quay-enterprise-config-secret.
+```
+$ kubectl --namespace quay-enterprise edit secret/quay-enterprise-config-secret
+```
+
+Add an entry for the cert and paste the full base64 encoded string under the entry: 
+
+```
+  custom-cert.crt: 
+c1psWGpqeGlPQmNEWkJPMjJ5d0pDemVnR2QNCnRsbW9JdEF4YnFSdVd3PT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+```
+
+Finally, recycle all QE pods. Use `kubectl delete` to remove all QE pods. The QE Deployment will automatically schedule replacement pods with the new certificate data.
