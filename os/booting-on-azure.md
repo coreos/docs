@@ -16,19 +16,19 @@ The following command will create a single instance. For more details, check out
     <div class="tab-pane" id="alpha">
       <div class="channel-info">
         <p>The Alpha channel closely tracks master and is released frequently. The newest versions of system libraries and utilities will be available for testing. The current version is Container Linux {{site.alpha-channel}}.</p>
-        <pre>az vm create --name node-1 --resource-group group-1 --admin-username core --custom-data config.ign --image CoreOS:CoreOS:Alpha:{{site.alpha-channel}}</pre>
+        <pre>az vm create --name node-1 --resource-group group-1 --admin-username core --custom-data "$(cat config.ign)" --image CoreOS:CoreOS:Alpha:{{site.alpha-channel}}</pre>
       </div>
     </div>
     <div class="tab-pane" id="beta">
       <div class="channel-info">
         <p>The Beta channel consists of promoted Alpha releases. The current version is Container Linux {{site.beta-channel}}.</p>
-        <pre>az vm create --name node-1 --resource-group group-1 --admin-username core --custom-data config.ign --image CoreOS:CoreOS:Beta:{{site.beta-channel}}</pre>
+        <pre>az vm create --name node-1 --resource-group group-1 --admin-username core --custom-data "$(cat config.ign)" --image CoreOS:CoreOS:Beta:{{site.beta-channel}}</pre>
       </div>
     </div>
     <div class="tab-pane active" id="stable">
       <div class="channel-info">
         <p>The Stable channel should be used by production clusters. Versions of Container Linux are battle-tested within the Beta and Alpha channels before being promoted. The current version is Container Linux {{site.stable-channel}}.</p>
-        <pre>az vm create --name node-1 --resource-group group-1 --admin-username core --custom-data config.ign --image CoreOS:CoreOS:Stable:{{site.stable-channel}}</pre>
+        <pre>az vm create --name node-1 --resource-group group-1 --admin-username core --custom-data "$(cat config.ign)" --image CoreOS:CoreOS:Stable:{{site.stable-channel}}</pre>
       </div>
     </div>
   </div>
@@ -74,7 +74,7 @@ az group create --name group-1 --location <location>
 Now that you have a resource group, create an instance of Container Linux Alpha {{site.alpha-channel}} inside it:
 
 ```sh
-az vm create --name node-1 --resource-group group-1 --admin-username core --custom-data config.ign --image CoreOS:CoreOS:Alpha:{{site.alpha-channel}}
+az vm create --name node-1 --resource-group group-1 --admin-username core --custom-data "$(cat config.ign)" --image CoreOS:CoreOS:Alpha:{{site.alpha-channel}}
 ```
 
 ## Using CoreOS Container Linux
