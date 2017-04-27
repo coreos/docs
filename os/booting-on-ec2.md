@@ -29,7 +29,7 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
         </thead>
         <tbody>
         {% for region in site.data.alpha-channel.amis %}
-        {% capture region_domain %}{% if region.name == 'us-gov-west-1' %}amazonaws-us-gov.com{% elif region.name == 'cn-north-1' %}amazonaws.cn{% else %}aws.amazon.com{% endif %}{% endcapture %}
+        {% capture region_domain %}{% if region.name == 'us-gov-west-1' %}amazonaws-us-gov.com{% elsif region.name == 'cn-north-1' %}amazonaws.cn{% else %}aws.amazon.com{% endif %}{% endcapture %}
         <tr>
           <td rowspan="2">{{ region.name }}</td>
           <td class="dashed"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
@@ -61,7 +61,7 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
         </thead>
         <tbody>
         {% for region in site.data.beta-channel.amis %}
-        {% capture region_domain %}{% if region.name == 'us-gov-west-1' %}amazonaws-us-gov.com{% elif region.name == 'cn-north-1' %}amazonaws.cn{% else %}aws.amazon.com{% endif %}{% endcapture %}
+        {% capture region_domain %}{% if region.name == 'us-gov-west-1' %}amazonaws-us-gov.com{% elsif region.name == 'cn-north-1' %}amazonaws.cn{% else %}aws.amazon.com{% endif %}{% endcapture %}
         <tr>
           <td rowspan="2">{{ region.name }}</td>
           <td class="dashed"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
@@ -93,7 +93,7 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
         </thead>
         <tbody>
         {% for region in site.data.stable-channel.amis %}
-        {% capture region_domain %}{% if region.name == 'us-gov-west-1' %}amazonaws-us-gov.com{% elif region.name == 'cn-north-1' %}amazonaws.cn{% else %}aws.amazon.com{% endif %}{% endcapture %}
+        {% capture region_domain %}{% if region.name == 'us-gov-west-1' %}amazonaws-us-gov.com{% elsif region.name == 'cn-north-1' %}amazonaws.cn{% else %}aws.amazon.com{% endif %}{% endcapture %}
         <tr>
           <td rowspan="2">{{ region.name }}</td>
           <td class="dashed"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
