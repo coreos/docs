@@ -4,7 +4,7 @@
 
 Depending on the size and expected use of your Container Linux cluster, you will have different architectural requirements. A few of the common cluster architectures, as well as their strengths and weaknesses, are described below.
 
-Most of these scenarios dedicate a few machines, hardware of virtual, to running central cluster services. These may include etcd and the distributed controllers for applications like Kubernetes, Mesos, and OpenStack. Isolating these services onto a few known machines helps to ensure they are distributed across cabinets or availability zones. It also helps in setting up static networking to allow for easy bootstrapping. This architecture helps to resolve concerns about relying on a discovery service.
+Most of these scenarios dedicate a few machines, bare metal or virtual, to running central cluster services. These may include etcd and the distributed controllers for applications like Kubernetes, Mesos, and OpenStack. Isolating these services onto a few known machines helps to ensure they are distributed across cabinets or availability zones. It also helps in setting up static networking to allow for easy bootstrapping. This architecture helps to resolve concerns about relying on a discovery service.
 
 ## Docker dev environment on laptop
 
@@ -21,7 +21,7 @@ If you're developing locally but plan to run containers in production, it's best
 
 Start a single Container Linux VM with the Docker remote socket enabled in the Container Linux Config (CL Config). Here's what the CL Config looks like:
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: docker-tcp.socket
@@ -51,7 +51,7 @@ systemd:
 
 This file is used to provision your local CoreOS machine on its first boot. This sets up and enables the Docker API, which is how you can use Docker on your laptop. The Docker CLI manages containers running within the VM, *not* on your personal operating system.
 
-Using the CL Config Transpiler, or `ct`, ([download][ct-getting-started]) convert the above yaml into an [Ignition][ignition-getting-started]. Alternatively, copy the content of the Igntion tab in the above example. Once you have the Ignition configuration file, pass it to your provider ([complete list of supported Ignition platforms][ignition-supported]).
+Using the CL Config Transpiler, or `ct`, ([download][ct-getting-started]) convert the above yaml into an [Ignition][ignition-getting-started]. Alternatively, copy the contents of the Igntion tab in the above example. Once you have the Ignition configuration file, pass it to your provider ([complete list of supported Ignition platforms][ignition-supported]).
 
 Once the local VM is running, tell your Docker binary on your personal operating system to use the remote port by exporting an environment variable and start running Docker commands. Run these commands in a terminal *on your local operating system (MacOS or Linux), not in the Container Linux virtual machine*:
 
@@ -60,14 +60,14 @@ $ export DOCKER_HOST=tcp://localhost:2375
 $ docker ps
 ```
 
-This avoids discrepencies between your development and production environemnts.
+This avoids discrepancies between your development and production environments.
 
 ### Related local installation tools
 
 There are several different options for testing Container Linux locally:
 
-- [coreos-vagrant][coreos-vagrant] is not an officially fully supported platform, however may be a good resource to check out if you are already comfortable with Vagrant and are unable to use one of Ignition's officially supported platforms.
-- [Minikube][minikube] is used for local Kubernetes development. This does not use CoreOS but is very fast to setup and is the easiest way to test-drive use Kubernetes.
+- [Container Linux on QEMU][coreos-qemu] is a feature rich way of running Container Linux locally, provisioned by Ignition configs like the one shown above.
+- [Minikube][minikube] is used for local Kubernetes development. This does not use Container Linux but is very fast to setup and is the easiest way to test-drive use Kubernetes.
 
 ## Small cluster
 
@@ -80,7 +80,9 @@ There are several different options for testing Container Linux locally:
 
 For small clusters, between 3-9 machines, running etcd on all of the machines allows for high availability without paying for extra machines that just run etcd.
 
-Getting started is easy &mdash; a single CL Config can be used to provision all machines on your cloud provider.
+Getting started is easy &mdash; a single CL Config can be used to provision all machines in your environment.
+
+Once you have a small cluster up and running, you can install a Kubernetes on the cluster. You can do this easily using the open source [Tectonic installer][tectonic-installer].
 
 ### Configuring the machines
 
@@ -101,6 +103,8 @@ When getting started with Container Linux, it's common to frequently boot, reboo
 
 You can now boot as many machines as you'd like as test workers that read from the etcd node. All the features of Locksmith and etcdctl will continue to work properly but will connect to the etcd node instead of using a local etcd instance. Since etcd isn't running on all of the machines you'll gain a little bit of extra CPU and RAM to play with.
 
+You can easily provision the remaining (non-etcd) nodes with Kubernetes using the open source [Tectonic installer][tectonic-installer] to start running containerized app with your cluster.
+
 Once this environment is set up, it's ready to be tested. Destroy a machine, and watch Kubernetes reschedule the units, max out the CPU, and rebuild your setup automatically.
 
 ### Configuration for etcd role
@@ -111,7 +115,7 @@ The networkd unit is typically used for bare metal installations that require st
 
 Here's the CL Config for the etcd machine:
 
-```container-linux-config
+```yaml container-linux-config
 etcd:
   version: 3.1.5
   name: "etcdserver"
@@ -147,19 +151,7 @@ networkd:
 
 This architecture allows you to boot any number of workers, from a single unit to a large cluster designed for load testing. The notable configuration difference for this role is specifying that applications like Kubernetes should use our etcd proxy instead of starting etcd server locally.
 
-The CL Config:
-
-```container-linux-config
-etcd:
-  version: 3.1.5
-  listen_client-urls: "http://localhost:2379"
-  initial_cluster: "etcdserver=http://10.0.0.101:2380"
-  proxy: on
-systemd:
-  units:
-    - name: etcd-member.service
-      enable: true
-```
+You can easily provision the remaining (non-etcd) nodes with Kubernetes using the open source [Tectonic installer][tectonic-installer] to start running containerized app with your cluster.
 
 ## Production cluster with central services
 
@@ -182,7 +174,7 @@ Our central services machines will run services like etcd and Kubernetes control
 
 Here's an example CL Config for one of the central service machines. Be sure to generate a new discovery token with the initial size of your cluster:
 
-```container-linux-config
+```yaml container-linux-config
 etcd:
   version: 3.0.15
   # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
@@ -218,44 +210,27 @@ networkd:
 
 ### Configuration for worker role
 
-The worker roles will use DHCP and should be easy to add capacity or autoscaling.
+You can easily provision the remaining (non-etcd) nodes with Kubernetes using the open source [Tectonic installer][tectonic-installer] to start running containerized app with your cluster.
 
-Similar to the central services machines, fleet will be configured with metadata specifying the role and any additional metadata you wish to set. etcd will automatically fallback to a local proxy via discovery service.If not all machines have SSDs or you have a subset of machines with a ton of RAM, it's useful to set metadata for those attributes.
+The worker roles will use DHCP and should be easy to add capacity or autoscaling.
 
 [Managed Linux][coreos-managed] customers can also specify a [CoreUpdate][core-update] group ID to use a different channel and control updates separately from the central machines.
 
-Here's an example CL Config for a worker:
+Here's an example CL Config for a worker which specifies an update channel:
 
-```container-linux-config
-etcd:
-  version: 3.0.15
-  # use the same discovery token for the central service machines
-  # make sure you have used the discovery token to bootstrap the
-  # central service successfully
-  # this etcd will fallback to proxy automatically
-  discovery: https://discovery.etcd.io/<token>
-  # listen on both the official ports and the legacy ports
-  # legacy ports can be omitted if your application doesn't depend on them
-  listen_client-urls: http://0.0.0.0:2379
-locksmith:
-  reboot: etcd-lock
-  etcd_endpoints: "http://localhost:2379"
+```yaml container-linux-config
 update:
   # CoreUpdate group ID for "Production Central Services"
   # Use "stable", "beta", or "alpha" for non-subscribers.
   group: 9e98ecae-4623-48c1-9679-423549c44da6
   # Non-subscribers should use server: "https://public.update.core-os.net/v1/update/"
   server: https://customer.update.core-os.net/v1/update/
-systemd:
-  units:
-    - name: etcd-member.service
-      enable: true
 ```
 
 [ct-getting-started]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
 [ignition-getting-started]: https://coreos.com/ignition/docs/latest/getting-started.html
 [ignition-supported]: https://coreos.com/ignition/docs/latest/supported-platforms.html
-[coreos-vagrant]: https://github.com/coreos/coreos-vagrant/
+[coreos-qemu]: https://coreos.com/os/docs/latest/booting-with-qemu.html
 [minikube]: https://github.com/kubernetes/minikube
 [managed-linux]: https://coreos.com/products/managed-linux
 [core-update]: https://coreos.com/products/coreupdate
@@ -268,3 +243,4 @@ systemd:
 [coreos-bm]: https://coreos.com/matchbox/
 [coreos-do]: https://coreos.com/os/docs/latest/booting-on-digitalocean.html
 [tectonic]: https://coreos.com/tectonic
+[tectonic-installer]: https://github.com/coreos/tectonic-installer#tectonic-installer 
