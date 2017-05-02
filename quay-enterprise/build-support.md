@@ -28,7 +28,7 @@ One or more build workers will communicate with Quay Enterprise to build new con
 Pull down the latest copy of the image. **Make sure to pull the version tagged matching your Quay Enterprise version**.
 
 ```sh
-docker pull quay.io/coreos/quay-builder:v2.3.2
+docker pull quay.io/coreos/quay-builder:v2.3.3
 ```
 
 ### Run the build worker image
@@ -45,7 +45,7 @@ Use the environment variable `SERVER` to tell the worker the hostname at which Q
 Here's what the full command looks like:
 
 ```sh
-docker run --restart on-failure -e SERVER=wss://myquayenterprise -v /var/run/docker.sock:/var/run/docker.sock quay.io/coreos/quay-builder:v2.3.2
+docker run --restart on-failure -e SERVER=wss://myquayenterprise -v /var/run/docker.sock:/var/run/docker.sock quay.io/coreos/quay-builder:v2.3.3
 ```
 
 When the container starts, each build worker will auto-register and start building containers once a job is triggered and it is assigned to a worker.
@@ -53,7 +53,7 @@ When the container starts, each build worker will auto-register and start buildi
 If Quay is setup to use a SSL certificate that is not globally trusted, for example a self-signed certificate, Quay's public SSL certificates must be mounted onto the `quay-builder` container's SSL trust store. An example command to mount a certificate directory found at the host's `/path/to/ssl` looks like:
 
 ```sh
-docker run --restart on-failure -e SERVER=wss://myquayenterprise -v /path/to/ssl:/usr/local/share/ca-certificates -v /var/run/docker.sock:/var/run/docker.sock quay.io/coreos/quay-builder:v2.3.2 /bin/sh -c "/usr/sbin/update-ca-certificates ; /quay-builder"
+docker run --restart on-failure -e SERVER=wss://myquayenterprise -v /path/to/ssl:/usr/local/share/ca-certificates -v /var/run/docker.sock:/var/run/docker.sock quay.io/coreos/quay-builder:v2.3.3 /bin/sh -c "/usr/sbin/update-ca-certificates ; /quay-builder"
 ```
 
 ### Setup GitHub build (optional)
