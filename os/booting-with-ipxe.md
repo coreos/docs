@@ -43,7 +43,7 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
       <pre>
 #!ipxe
 
-set base-url http://alpha.release.core-os.net/amd64-usr/current
+set base-url https://alpha.release.core-os.net/amd64-usr/current
 kernel ${base-url}/coreos_production_pxe.vmlinuz coreos.config.url=https://example.com/pxe-config.ign
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
@@ -54,7 +54,7 @@ boot</pre>
       <pre>
 #!ipxe
 
-set base-url http://beta.release.core-os.net/amd64-usr/current
+set base-url https://beta.release.core-os.net/amd64-usr/current
 kernel ${base-url}/coreos_production_pxe.vmlinuz coreos.config.url=https://example.com/pxe-config.ign
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
@@ -65,7 +65,7 @@ boot</pre>
       <pre>
 #!ipxe
 
-set base-url http://stable.release.core-os.net/amd64-usr/current
+set base-url https://stable.release.core-os.net/amd64-usr/current
 kernel ${base-url}/coreos_production_pxe.vmlinuz coreos.config.url=https://example.com/pxe-config.ign
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
@@ -97,7 +97,7 @@ Immediately iPXE should download your boot script URL and start grabbing the ima
 
 ```sh
 ${YOUR_BOOT_URL}... ok
-http://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz... 98%
+https://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz... 98%
 ```
 
 After a few moments of downloading Container Linux should boot normally.

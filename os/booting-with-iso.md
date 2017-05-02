@@ -16,7 +16,7 @@ The latest Container Linux ISOs can be downloaded from the image storage site:
       <a href="https://alpha.release.core-os.net/amd64-usr/current/coreos_production_iso_image.iso" class="btn btn-primary">Download Alpha ISO</a>
       <a href="https://alpha.release.core-os.net/amd64-usr/current/" class="btn btn-default">Browse Storage Site</a>
       <br/><br/>
-      <p>All of the files necessary to verify the image can be found on the storage site.</p>
+      <p>Before you go further, <a href="https://coreos.com/os/docs/latest/verify-images.html">verify your download</a>.</p>
     </div>
     <div class="tab-pane" id="beta">
       <div class="channel-info">
@@ -25,7 +25,7 @@ The latest Container Linux ISOs can be downloaded from the image storage site:
       <a href="https://beta.release.core-os.net/amd64-usr/current/coreos_production_iso_image.iso" class="btn btn-primary">Download Beta ISO</a>
       <a href="https://beta.release.core-os.net/amd64-usr/current/" class="btn btn-default">Browse Storage Site</a>
       <br/><br/>
-      <p>All of the files necessary to verify the image can be found on the storage site.</p>
+      <p>Before you go further, <a href="https://coreos.com/os/docs/latest/verify-images.html">verify your download</a>.</p>
     </div>
     <div class="tab-pane active" id="stable">
       <div class="channel-info">
@@ -34,7 +34,7 @@ The latest Container Linux ISOs can be downloaded from the image storage site:
       <a href="https://stable.release.core-os.net/amd64-usr/current/coreos_production_iso_image.iso" class="btn btn-primary">Download Stable ISO</a>
       <a href="https://stable.release.core-os.net/amd64-usr/current/" class="btn btn-default">Browse Storage Site</a>
       <br/><br/>
-      <p>All of the files necessary to verify the image can be found on the storage site.</p>
+      <p>Before you go further, <a href="https://coreos.com/os/docs/latest/verify-images.html">verify your download</a>.</p>
     </div>
   </div>
 </div>
