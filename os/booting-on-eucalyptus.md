@@ -31,6 +31,13 @@ Uploaded coreos-production/coreos_production_openstack_image.raw.manifest.xml
 $ euca-register coreos-production/coreos_production_openstack_image.raw.manifest.xml --virtualization-type hvm --name "Container Linux-Production"
 emi-E4A33D45
       </pre>
+      <p>Before you go further, <a href="https://coreos.com/os/docs/latest/verify-images.html">verify your download</a>.</p>
+      <pre>
+$ curl -O https://coreos.com/security/image-signing-key/CoreOS_Image_Signing_Key.asc
+$ gpg --import --keyid-format LONG CoreOS_Image_Signing_Key.asc
+$ wget -q https://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2.sig
+$ gpg --verify coreos_production_openstack_image.img.bz2.sig
+      </pre>
     </div>
     <div class="tab-pane" id="beta-create">
       <p>The Beta channel consists of promoted Alpha releases. The current version is Container Linux {{site.beta-channel}}.</p>
@@ -46,6 +53,13 @@ Uploaded coreos-production/coreos_production_openstack_image.raw.manifest.xml
 $ euca-register coreos-production/coreos_production_openstack_image.raw.manifest.xml --virtualization-type hvm --name "Container Linux-Production"
 emi-E4A33D45
       </pre>
+      <p>Before you go further, <a href="https://coreos.com/os/docs/latest/verify-images.html">verify your download</a>.</p>
+      <pre>
+$ curl -O https://coreos.com/security/image-signing-key/CoreOS_Image_Signing_Key.asc
+$ gpg --import --keyid-format LONG CoreOS_Image_Signing_Key.asc
+$ wget -q https://beta.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2.sig
+$ gpg --verify coreos_production_openstack_image.img.bz2.sig
+      </pre>
     </div>
     <div class="tab-pane active" id="stable-create">
       <p>The Stable channel should be used by production clusters. Versions of Container Linux are battle-tested within the Beta and Alpha channels before being promoted. The current version is Container Linux {{site.stable-channel}}.</p>
@@ -60,6 +74,13 @@ $ euca-upload-bundle -m /var/tmp/coreos_production_openstack_image.raw.manifest.
 Uploaded coreos-production/coreos_production_openstack_image.raw.manifest.xml
 $ euca-register coreos-production/coreos_production_openstack_image.raw.manifest.xml --virtualization-type hvm --name "Container Linux-Production"
 emi-E4A33D45
+      </pre>
+      <p>Before you go further, <a href="https://coreos.com/os/docs/latest/verify-images.html">verify your download</a>.</p>
+      <pre>
+$ curl -O https://coreos.com/security/image-signing-key/CoreOS_Image_Signing_Key.asc
+$ gpg --import --keyid-format LONG CoreOS_Image_Signing_Key.asc
+$ wget -q https://stable.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2.sig
+$ gpg --verify coreos_production_openstack_image.img.bz2.sig
       </pre>
     </div>
   </div>
