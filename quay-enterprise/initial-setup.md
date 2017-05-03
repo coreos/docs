@@ -46,7 +46,7 @@ The `config.json` file will look like this:
 }
 ```
 
-`config.json` contains your credentials for the `quay.io/coreos/quay` repository. Save this file to your Container Linux machine in `/home/core/.docker/config.json` and `/root/.docker/config.json`. You should now be able to execute `docker pull quay.io/coreos/quay:v2.3.3` to download the container.
+`config.json` contains your credentials for the `quay.io/coreos/quay` repository. Save this file to your Container Linux machine in `/home/core/.docker/config.json` and `/root/.docker/config.json`. You should now be able to execute `docker pull quay.io/coreos/quay:v2.3.4` to download the container.
 
 ## Setting up the directories
 
@@ -62,7 +62,7 @@ mkdir config
 Run the following command, replacing `/local/path/to/the/config/directory` and `/local/path/to/the/storage/directory` with the absolute paths to the directories created above:
 
 ```
-sudo docker run --restart=always -p 443:443 -p 80:80 --privileged=true -v /local/path/to/the/config/directory:/conf/stack -v /local/path/to/the/storage/directory:/datastorage -d quay.io/coreos/quay:v2.3.3
+sudo docker run --restart=always -p 443:443 -p 80:80 --privileged=true -v /local/path/to/the/config/directory:/conf/stack -v /local/path/to/the/storage/directory:/datastorage -d quay.io/coreos/quay:v2.3.4
 ```
 
 <img src="img/db-setup-full.png" class="img-center" alt="Quay Enterprise Setup Screen"/>
