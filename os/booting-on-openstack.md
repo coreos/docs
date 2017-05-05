@@ -95,6 +95,11 @@ etcd:
   # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
   # specify the initial size of your cluster with ?size=X
   discovery:                   "https://discovery.etcd.io/<token>"
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        - ssh-rsa ABCD...
 ```
 
 The `{PRIVATE_IPV4}` and `{PUBLIC_IPV4}` substitution variables are fully supported in Container Linux Configs on OpenStack deployments using the metadata service. Unfortunately systems relying on config drive are currently unsupported.
