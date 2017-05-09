@@ -64,19 +64,6 @@ NTP synchronized: yes
                   Sun 2015-11-01 01:00:00 EST
 ```
 
-Time zone may instead be set in a [Container Linux Config][cl-configs], with something like the following excerpt:
-
-```container-linux-config
-storage:
-  files:
-    - path: /etc/timezone
-      filesystem: root
-      mode: 0644
-      contents:
-        inline: America/New_York
-```
-
-
 ## Time synchronization
 
 Container Linux clusters use NTP to synchronize the clocks of member nodes, and all machines start an NTP client at boot. Container Linux versions later than [681.0.0][681.0.0] use [`systemd-timesyncd(8)`][systemd-timesyncd] as the default NTP client. Earlier versions used [`ntpd(8)`][ntp.org]. Use `systemctl` to check which service is running:
