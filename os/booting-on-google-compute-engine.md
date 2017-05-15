@@ -1,6 +1,6 @@
 # Running CoreOS Container Linux on Google Compute Engine
 
-Before proceeding, you will need a GCE account ([get $300 of credit here][free-trial]) and [install gcloud][gcloud-documentation] on your machine. In each command below, be sure to insert your project name in place of `<project-id>`.
+Before proceeding, you will need a GCE account ([GCE free trial ][free-trial]) and [install gcloud][gcloud-documentation] on your machine. In each command below, be sure to insert your project name in place of `<project-id>`.
 
 [gce-advanced-os]: http://developers.google.com/compute/docs/transition-v1#customkernelbinaries
 [gcloud-documentation]: https://cloud.google.com/sdk/
