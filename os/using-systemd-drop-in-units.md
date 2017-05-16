@@ -92,7 +92,7 @@ RestartSec=60s
 
 Container Linux Config example:
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: fleet.service

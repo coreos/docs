@@ -42,7 +42,7 @@ You can provide a raw Ignition config (produced from a Container Linux Config) t
 
 As an example, this config will configure and start etcd:
 
-```container-linux-config:azure
+```yaml container-linux-config:azure
 etcd:
   # All options get passed as command line flags to etcd.
   # Any information inside curly braces comes from the machine at boot time.

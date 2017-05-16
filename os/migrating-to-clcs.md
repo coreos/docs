@@ -30,7 +30,7 @@ etcd can be configured in a more general way with a Container Linux Config. This
 
 This is done under the etcd section:
 
-```container-linux-config
+```yaml container-linux-config
 etcd:
     version: 3.1.6
 ```
@@ -39,7 +39,7 @@ Omitting the version specification declares that the unit file should use the ve
 
 Configuration options in this section can be provided the same way as they were in a cloud-config, with the exception of dashes (`-`) being replaced with underscores (`_`) in key names.
 
-```container-linux-config:gce
+```yaml container-linux-config:gce
 etcd:
   name:                        "{HOSTNAME}"
   advertise_client_urls:       "{PRIVATE_IPV4}:2379"
@@ -63,7 +63,7 @@ coreos:
 
 The flannel section in a Container Linux Config is used the same way, and a version can optionally be specified for flannel as well.
 
-```container-linux-config
+```yaml container-linux-config
 flannel:
   version:     0.7.0
   etcd_prefix: "/coreos.com/network2"
@@ -83,7 +83,7 @@ coreos:
 
 Locksmith can be configured in the same way under the locksmith section of a Container Linux Config, but some of the accepted options are slightly different. Also the reboot strategy is set in the locksmith section, instead of the update section. Check out the [Container Linux Config schema][ct-config] to see what options are available.
 
-```container-linux-config
+```yaml container-linux-config
 locksmith:
   reboot_strategy: "reboot"
   etcd_endpoints:  "http://example.com:2379"
@@ -104,7 +104,7 @@ coreos:
 
 In the update section in a Container Linux Config the group and server can be configured, but the reboot-strategy option has been moved under the locksmith section.
 
-```container-linux-config
+```yaml container-linux-config
 update:
   group:  "stable"
   server: "https://public.update.core-os.net/v1/update/"
@@ -163,7 +163,7 @@ One big difference in Container Linux Config compared to cloud-configs is that t
 
 _Note: in this example an `[Install]` section has been added so that the unit can be enabled._
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: "docker-redis.service"
@@ -185,7 +185,7 @@ systemd:
 
 Drop-in files can be provided for units in a Container Linux Config just like in a cloud-config.
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: "docker.service"
@@ -198,7 +198,7 @@ systemd:
 
 Existing units can also be enabled without configuration.
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: "etcd-member.service"
@@ -218,7 +218,7 @@ ssh_authorized_keys:
 
 In a Container Linux Config there is no analogous section to `ssh_authorized_keys`, but ssh keys for the core user can be set just as easily using the `passwd.users.*` section:
 
-```container-linux-config
+```yaml container-linux-config
 passwd:
   users:
     - name: core
@@ -238,7 +238,7 @@ hostname: "coreos1"
 
 The Container Linux Config is intentionally more generalized than a cloud-config, and there is no equivalent hostname section understood in a CL Config. Instead, set the hostname by writing it to `/etc/hostname` in a CL Config `storage.files.*` section.
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - filesystem: "root"
@@ -267,7 +267,7 @@ users:
 
 This same information can be added to the Container Linux Config in the `passwd.users.*` section.
 
-```container-linux-config
+```yaml container-linux-config
 passwd:
   users:
     - name:          "elroy"
@@ -298,7 +298,7 @@ write_files:
 
 This can be done in a Container Linux Config with the `storage.files.*` section.
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - filesystem: "root"
@@ -325,7 +325,7 @@ manage_etc_hosts: "localhost"
 
 There is no analogous section in a Container Linux Config, however the `/etc/hosts` file can be written in the `storage.files.*` section.
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - filesystem: "root"

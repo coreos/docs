@@ -10,20 +10,20 @@ The following examples demonstrate the simplicity of the Container Linux Config 
 
 This extremely simple Container Linux Config will fetch and run the current release of etcd:
 
-```container-linux-config:norender
+```yaml container-linux-config:norender
 etcd:
 ```
 
 Extend the definition to specify the version of etcd to run. The following example will provision a new Container Linux machine to fetch and run the etcd service, version 3.1.6:
 
-```container-linux-config:norender
+```yaml container-linux-config:norender
 etcd:
   version: 3.1.6
 ```
 
 Use variable replacement to configure the etcd service with the provisioning target's public and private IPv4 addresses, making it repeatable across a group of machines.
 
-```container-linux-config:norender
+```yaml container-linux-config:norender
 etcd:
   advertise_client_urls:       http://{PUBLIC_IPV4}:2379
   initial_advertise_peer_urls: http://{PRIVATE_IPV4}:2380
@@ -54,7 +54,7 @@ The Container Linux Config Transpiler abstracts the details of configuring Conta
 
 The following config will configure an etcd cluster using the machine's public and private IP addresses:
 
-```container-linux-config:norender
+```yaml container-linux-config:norender
 etcd:
   advertise_client_urls:       http://{PUBLIC_IPV4}:2379
   initial_advertise_peer_urls: http://{PRIVATE_IPV4}:2380

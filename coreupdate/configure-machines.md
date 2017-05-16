@@ -24,7 +24,7 @@ For example, here is what the Alpha group looks like in CoreUpdate:
 
 Here's the Container Linux Config to use:
 
-```container-linux-config
+```yaml container-linux-config
 update:
   group:  alpha
   server: https://customer.update.core-os.net/v1/update/
@@ -40,7 +40,7 @@ For example, here is what "NYC Production" looks like in CoreUpdate:
 
 Here's the Container Linux Config to use:
 
-```container-linux-config
+```yaml container-linux-config
 update:
   group:  0a809ab1-c01c-4a6b-8ac8-6b17cb9bae09
   server: https://customer.update.core-os.net/v1/update/

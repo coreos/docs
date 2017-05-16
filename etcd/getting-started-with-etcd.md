@@ -18,7 +18,7 @@ To upgrade an existing etcd v2 cluster rather than deploy a new one, start with 
 
 A Container Linux Config can be used to set any etcd option, like in this example:
 
-```container-linux-config
+```yaml container-linux-config
 etcd:
   name:                        my-etcd-1
   listen_client_urls:          https://10.240.0.1:2379

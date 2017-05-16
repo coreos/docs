@@ -76,7 +76,7 @@ You can provide a raw Ignition config to Container Linux via VMware's [Guestinfo
 
 As an example, this config will start etcd:
 
-```container-linux-config
+```yaml container-linux-config
 etcd:
   # All options get passed as command line flags to etcd.
   # Any information inside curly braces comes from the machine at boot time.

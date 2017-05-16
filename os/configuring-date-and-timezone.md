@@ -121,7 +121,7 @@ $ sudo systemctl restart systemd-networkd
 
 NTP time sources can be set in `timesyncd.conf` with a [Container Linux Config][cl-configs] snippet like:
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - path: /etc/systemd/timesyncd.conf
@@ -147,7 +147,7 @@ $ sudo systemctl start ntpd
 
 or with this Container Linux Config snippet:
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: systemd-timesyncd.service
@@ -179,7 +179,7 @@ $ sudo systemctl reload ntpd
 
 Or, in a [Container Linux Config][cl-configs]:
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - path: /etc/ntp.conf

@@ -81,7 +81,7 @@ The block device mounted at `/var/`, `/dev/sdXN`, is the correct filesystem type
 
 The following config sets up a 1GiB swapfile located at `/var/vm/swapfile1`.
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: swap.service

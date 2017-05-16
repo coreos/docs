@@ -100,7 +100,7 @@ discovery.sendtargets.auth.password = my_secret_password
 
 ### The Container Linux Config
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: iscsid.service

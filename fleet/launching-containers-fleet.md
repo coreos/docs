@@ -297,7 +297,7 @@ MachineMetadata=region=east
 
 On Container Linux, only fleet 0.11.x is available under /usr/bin. That one might be obsolete for users who want to try out more recent versions. In that case, users should define their own custom Container Linux Config to be able to run any version of fleet as they want. For example:
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - path: /opt/bin/fleet-wrapper

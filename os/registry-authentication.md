@@ -180,7 +180,7 @@ More thorough information about configuring Mesos registry authentication can be
 
 Here is an example of using a Container Linux Config to write the .docker/config.json registry auth configuration file mentioned above to the appropriate path on the Container Linux node:
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - path: /home/core/.docker/config.json
@@ -200,7 +200,7 @@ storage:
 
 Container Linux Configs can also download a file from a remote location and verify its integrity with a SHA512 hash:
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - path: /home/core/.docker/config.json

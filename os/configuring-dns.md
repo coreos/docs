@@ -8,7 +8,7 @@ By default, DNS resolution on Container Linux is handled through `/etc/resolv.co
 
 Here is an example [Container Linux Config][cl-configs] snippet to do that:
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - path: /etc/nsswitch.conf

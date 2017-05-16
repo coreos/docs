@@ -10,7 +10,7 @@ When booting your [Container Linux Machines on EC2](booting-on-ec2.md), configur
 
 Be sure to change `ECS_CLUSTER` to the cluster name you've configured via the ECS CLI or leave it empty for the default. Here's a full config example:
 
-```container-linux-config:ec2
+```yaml container-linux-config:ec2
 systemd:
  units:
    - name: amazon-ecs-agent.service

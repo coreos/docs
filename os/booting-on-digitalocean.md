@@ -78,7 +78,7 @@ You can provide a raw Ignition config to Container Linux via the DigitalOcean we
 
 As an example, this config will configure and start etcd:
 
-```container-linux-config:digitalocean
+```yaml container-linux-config:digitalocean
 etcd:
   # All options get passed as command line flags to etcd.
   # Any information inside curly braces comes from the machine at boot time.

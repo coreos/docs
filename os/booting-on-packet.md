@@ -39,7 +39,7 @@ You can provide a raw Ignition config to Container Linux via Packet's userdata f
 
 As an example, this config will configure and start etcd:
 
-```container-linux-config:packet
+```yaml container-linux-config:packet
 etcd:
   # All options get passed as command line flags to etcd.
   # Any information inside curly braces comes from the machine at boot time.
