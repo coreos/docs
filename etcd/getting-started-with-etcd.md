@@ -30,7 +30,7 @@ etcd:
   initial_cluster_state:       new
 ```
 
-If you are unable to provision your machine using Container Linux configs, check out the [Setting up etcd v3 on Container Linux "by hand"][by-hand]
+If you are unable to provision your machine using Container Linux configs, refer to [Setting up etcd v3 on Container Linux "by hand"][by-hand].
 
 ## Reading and writing to etcd
 
