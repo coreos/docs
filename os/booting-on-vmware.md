@@ -68,6 +68,10 @@ Run VMware Workstation GUI:
 
 *NB: These instructions were tested with a Fusion 8.1 host.*
 
+### Installing via PXE or ISO image
+
+Container Linux can also be installed by booting the virtual machine via [PXE][PXE] or the [ISO image][ISO] and then [installing Container Linux to disk][install].
+
 ## Container Linux Configs
 
 Container Linux allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Container Linux Configs. These configs are then transpiled into Ignition configs and given to booting machines. Head over to the [docs to learn about the supported features][cl-configs].
@@ -173,6 +177,9 @@ Now that you have a machine booted, it's time to explore. Check out the [Contain
 [cloud-config guide]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 [coreos-cloudinit]: https://github.com/coreos/coreos-cloudinit
 [VMware guestinfo]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/vmware-guestinfo.md
+[PXE]: booting-with-pxe.md
+[ISO]: booting-with-iso.md
+[install]: installing-to-disk.md
 [vcloud director]: http://blogs.vmware.com/vsphere/2012/06/leveraging-vapp-vm-custom-properties-in-vcloud-director.html
 [ovf-selfconfig]: http://blogs.vmware.com/vapp/2009/07/selfconfiguration-and-the-ovf-environment.html
 [vmware-use-guestinfo]: http://blog-lrivallain.rhcloud.com/2014/08/15/vmware-use-guestinfo-variables-to-customize-guest-os/
