@@ -33,7 +33,12 @@ Quay Enterprise has native Kubernetes integrations. These integrations require S
 
 Kubernetes API has minor changes between versions 1.4 and 1.5, Download appropiate versions of Role Based Access Control (RBAC) Policies.
 
-### Tectonic v1.5.x RBAC Policies
+### Tectonic v1.6.x RBAC Policies 
+
+- [quay-servicetoken-role.yaml](files/quay-servicetoken-role-k8s1-6.yaml)
+- [quay-servicetoken-role-binding.yaml](files/quay-servicetoken-role-binding-k8s1-6.yaml)
+
+### Tectonic v1.5.x RBAC Policies 
 
 - [quay-servicetoken-role.yaml](files/quay-servicetoken-role.yaml)
 - [quay-servicetoken-role-binding.yaml](files/quay-servicetoken-role-binding.yaml)
