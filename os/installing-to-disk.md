@@ -59,13 +59,15 @@ For reference here are the rest of the `coreos-install` options:
 ```
 -d DEVICE   Install Container Linux to the given device.
 -V VERSION  Version to install (e.g. current)
+-B BOARD    Container Linux board to use
 -C CHANNEL  Release channel to use (e.g. beta)
--o OEM      OEM type to install (e.g. openstack)
+-o OEM      OEM type to install (e.g. ami)
 -c CLOUD    Insert a cloud-init config to be executed on boot.
 -i IGNITION Insert an Ignition config to be executed on boot.
 -t TMPDIR   Temporary location with enough space to download images.
 -v          Super verbose, for debugging.
--b BASEURL  URL to the image mirror
+-b BASEURL  URL to the image mirror (overrides BOARD)
+-n          Copy generated network units to the root partition.
 ```
 
 ## Container Linux Configs
