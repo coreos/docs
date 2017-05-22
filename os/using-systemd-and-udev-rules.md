@@ -52,7 +52,7 @@ storage:
           ACTION=="add", SUBSYSTEM=="block", TAG+="systemd", ENV{SYSTEMD_WANTS}="device-attach.service"
 systemd:
   units:
-    - name: detach-attach.service
+    - name: device-attach.service
       contents: |
         [Unit]
         Description=Notify about attached device
