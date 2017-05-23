@@ -27,7 +27,7 @@ The configuration string for this test database is `postgresql://postgres@{DOCKE
 Pull the security-enabled Clair image:
 
 ```
-docker pull quay.io/coreos/clair-jwt:v1.2.6
+docker pull quay.io/coreos/clair-jwt:v2.0.0
 ```
 
 ### Make a configuration directory for Clair
@@ -221,7 +221,7 @@ Similar to the process for setting up Docker to [trust your self-signed certific
 2. Make sure the `ca.crt` file is mounted inside the Clair container under `/usr/local/share/ca-certificates/` as in the example below:
 
 ```
-docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config -v /path/to/quay/cert/directory:/usr/local/share/ca-certificates  quay.io/coreos/clair-jwt:v1.2.6
+docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config -v /path/to/quay/cert/directory:/usr/local/share/ca-certificates  quay.io/coreos/clair-jwt:v2.0.0
 ```
 
 Now Clair will be able to trust the source of your TLS certificates and use them to secure communication between Clair and Quay.
@@ -231,7 +231,7 @@ Now Clair will be able to trust the source of your TLS certificates and use them
 Execute the following command to run Clair:
 
 ```
-docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config quay.io/coreos/clair-jwt:v1.2.6
+docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config quay.io/coreos/clair-jwt:v2.0.0
 ```
 
 Output similar to the following will be seen on success:
