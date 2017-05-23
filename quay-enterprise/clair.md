@@ -27,7 +27,7 @@ The configuration string for this test database is `postgresql://postgres@{DOCKE
 Pull the security-enabled Clair image:
 
 ```
-docker pull quay.io/coreos/clair-jwt:v1.2.6
+docker pull quay.io/coreos/clair-jwt:v2.0.0
 ```
 
 ### Make a configuration directory for Clair
@@ -48,10 +48,12 @@ Create a `config.yaml` file in the config directory with the following contents,
 ```yaml
 clair:
   database:
-    # A PostgreSQL Connection string pointing to the Clair Postgres database.
-    # Documentation on the format can be found at: http://www.postgresql.org/docs/9.4/static/libpq-connect.html
-    source: { POSTGRES_CONNECTION_STRING }
-    cachesize: 16384
+    type: pgsql
+    options:
+      # A PostgreSQL Connection string pointing to the Clair Postgres database.
+      # Documentation on the format can be found at: http://www.postgresql.org/docs/9.4/static/libpq-connect.html
+      source: { POSTGRES_CONNECTION_STRING }
+      cachesize: 16384
   api:
     # The port at which Clair will report its health status. For example, if Clair is running at
     # https://clair.mycompany.com, the health will be reported at
@@ -126,10 +128,12 @@ jwtproxy:
 ```yaml
 clair:
   database:
-    # A PostgreSQL Connection string pointing to the Clair Postgres database.
-    # Documentation on the format can be found at: http://www.postgresql.org/docs/9.4/static/libpq-connect.html
-    source: { POSTGRES_CONNECTION_STRING }
-    cachesize: 16384
+    type: pgsql
+    options:
+      # A PostgreSQL Connection string pointing to the Clair Postgres database.
+      # Documentation on the format can be found at: http://www.postgresql.org/docs/9.4/static/libpq-connect.html
+      source: { POSTGRES_CONNECTION_STRING }
+      cachesize: 16384
   api:
     # The port at which Clair will report its health status. For example, if Clair is running at
     # https://clair.mycompany.com, the health will be reported at
@@ -140,7 +144,7 @@ clair:
     timeout: 900s
 
     # paginationkey can be any random set of characters. *Must be the same across all Clair instances*.
-    paginationkey: "XxoPtCUzrUv4JV5dS+yQ+MdW7yLEJnRMwigVY/bpgtQ="
+    paginationkey:
 
   updater:
     # interval defines how often Clair will check for updates from its upstream vulnerability databases.
@@ -221,7 +225,7 @@ Similar to the process for setting up Docker to [trust your self-signed certific
 2. Make sure the `ca.crt` file is mounted inside the Clair container under `/usr/local/share/ca-certificates/` as in the example below:
 
 ```
-docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config -v /path/to/quay/cert/directory:/usr/local/share/ca-certificates  quay.io/coreos/clair-jwt:v1.2.6
+docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config -v /path/to/quay/cert/directory:/usr/local/share/ca-certificates  quay.io/coreos/clair-jwt:v2.0.0
 ```
 
 Now Clair will be able to trust the source of your TLS certificates and use them to secure communication between Clair and Quay.
@@ -231,7 +235,7 @@ Now Clair will be able to trust the source of your TLS certificates and use them
 Execute the following command to run Clair:
 
 ```
-docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config quay.io/coreos/clair-jwt:v1.2.6
+docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config quay.io/coreos/clair-jwt:v2.0.0
 ```
 
 Output similar to the following will be seen on success:
