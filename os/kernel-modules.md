@@ -44,7 +44,7 @@ Read system configuration files to determine the URL of the development containe
 . /usr/share/coreos/release
 . /usr/share/coreos/update.conf
 . /etc/coreos/update.conf  # This might not exist.
-url="http://${GROUP:-stable}.release.core-os.net/$COREOS_RELEASE_BOARD/$COREOS_RELEASE_VERSION/coreos_developer_container.bin.bz2"
+url="https://${GROUP:-stable}.release.core-os.net/$COREOS_RELEASE_BOARD/$COREOS_RELEASE_VERSION/coreos_developer_container.bin.bz2"
 ```
 
 Download, decompress, and verify the development container image.
