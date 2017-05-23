@@ -41,7 +41,7 @@ The latest Container Linux ISOs can be downloaded from the image storage site:
 
 ## Known limitations
 
-1. The best strategy for providing [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md) is via [config-drive](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/config-drive.md).
+1. There is no straightforward way to provide an [Ignition config][cl-configs].
 2. A mininum of 1024M of RAM is required to boot Container Linux via ISO.
 
 ## Install to disk
@@ -51,3 +51,5 @@ The most common use-case for this ISO is to install Container Linux to disk. You
 ## No authentication on console
 
 The ISO is configured to start a shell on the console without prompting for a password. This is convenient for installation and troubleshooting, but use caution.
+
+[cl-configs]: provisioning.md

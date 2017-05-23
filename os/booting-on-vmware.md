@@ -62,17 +62,20 @@ Run VMware Workstation GUI:
 3. Name your VM, then click `Import`
 4. (Press `Retry` *if* VMware Workstation raises an "OVF specification" warning)
 5. Edit VM settings if necessary
-6. Create a cloud-config image (see below) containing at least one valid SSH key using a [config drive](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/config-drive.md).
-    * On Fusion, simply connect and mount this image as the CD, ignoring the instruction below regarding the filesystem label which are not applicable.
+6. [Modify the `.vmx` file][guestinfo] to pass an Ignition config containing at least one valid SSH key
 7. Start your Container Linux VM
 
 *NB: These instructions were tested with a Fusion 8.1 host.*
+
+### Installing via PXE or ISO image
+
+Container Linux can also be installed by booting the virtual machine via [PXE][PXE] or the [ISO image][ISO] and then [installing Container Linux to disk][install].
 
 ## Container Linux Configs
 
 Container Linux allows you to configure machine parameters, configure networking, launch systemd units on startup, and more via Container Linux Configs. These configs are then transpiled into Ignition configs and given to booting machines. Head over to the [docs to learn about the supported features][cl-configs].
 
-You can provide a raw Ignition config to Container Linux via VMware's [Guestinfo interface](#vmware-guestinfo-interface).
+You can provide a raw Ignition config to Container Linux via VMware's [Guestinfo interface][guestinfo].
 
 As an example, this config will start etcd:
 
@@ -99,7 +102,7 @@ etcd:
 
 ### Setting Guestinfo options
 
-The VMware guestinfo interface is an alternative to using a config-drive for VM configuration. Guestinfo properties are stored in the VMX file, or in the VMX representation in host memory. These properties are available to the VM at boot time. Within the VMX, the names of these properties are prefixed with `guestinfo.`. Guestinfo settings can be injected into VMs in one of four ways:
+The VMware guestinfo interface is a mechanism for VM configuration. Guestinfo properties are stored in the VMX file, or in the VMX representation in host memory. These properties are available to the VM at boot time. Within the VMX, the names of these properties are prefixed with `guestinfo.`. Guestinfo settings can be injected into VMs in one of four ways:
 
 * Configure guestinfo in the OVF for deployment. Software like [vcloud director][vcloud director] manipulates OVF descriptors for guest configuration. For details, check out this VMware blog post about [Self-Configuration and the OVF Environment][ovf-selfconfig].
 
@@ -169,12 +172,11 @@ Now that you have a machine booted, it's time to explore. Check out the [Contain
 
 [quickstart]: quickstart.md
 [docs]: https://github.com/coreos/docs
-[config-drive]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/config-drive.md
-[cloud-config guide]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
-[coreos-cloudinit]: https://github.com/coreos/coreos-cloudinit
-[VMware guestinfo]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/vmware-guestinfo.md
+[PXE]: booting-with-pxe.md
+[ISO]: booting-with-iso.md
+[install]: installing-to-disk.md
 [vcloud director]: http://blogs.vmware.com/vsphere/2012/06/leveraging-vapp-vm-custom-properties-in-vcloud-director.html
 [ovf-selfconfig]: http://blogs.vmware.com/vapp/2009/07/selfconfiguration-and-the-ovf-environment.html
 [vmware-use-guestinfo]: http://blog-lrivallain.rhcloud.com/2014/08/15/vmware-use-guestinfo-variables-to-customize-guest-os/
 [labrie-guestinfo]: https://robertlabrie.wordpress.com/2015/09/27/coreos-on-vmware-using-vmware-guestinfo-api/
-[guestinfo]: #guestinfo-example
+[guestinfo]: #vmware-guestinfo-interface

@@ -9,20 +9,15 @@ The script is self-contained and located [on GitHub here][coreos-install] and ca
 If you boot Container Linux via PXE, the install script is already installed. By default the install script will attempt to install the same version and channel that was PXE-booted:
 
 ```sh
-coreos-install -d /dev/sda
-```
-
-If you are using the ISO with VMware, first sudo to root:
-
-```sh
-sudo su - root
-```
-
-Then install as you would with the PXE booted system, but be sure to include user information, especially an SSH key, in a [Container Linux Config][clc-section], or else you will not be able to log into your Container Linux instance.
-
-
-```sh
 coreos-install -d /dev/sda -i ignition.json
+```
+
+`ignition.json` should include user information (especially an SSH key) generated from a [Container Linux Config][clc-section], or you will not be able to log into your Container Linux instance.
+
+If you are installing on VMware, pass `-o vmware_raw` to install the VMware-specific image:
+
+```sh
+coreos-install -d /dev/sda -i ignition.json -o vmware_raw
 ```
 
 ## Choose a channel
@@ -59,13 +54,15 @@ For reference here are the rest of the `coreos-install` options:
 ```
 -d DEVICE   Install Container Linux to the given device.
 -V VERSION  Version to install (e.g. current)
+-B BOARD    Container Linux board to use
 -C CHANNEL  Release channel to use (e.g. beta)
--o OEM      OEM type to install (e.g. openstack)
+-o OEM      OEM type to install (e.g. ami)
 -c CLOUD    Insert a cloud-init config to be executed on boot.
 -i IGNITION Insert an Ignition config to be executed on boot.
 -t TMPDIR   Temporary location with enough space to download images.
 -v          Super verbose, for debugging.
--b BASEURL  URL to the image mirror
+-b BASEURL  URL to the image mirror (overrides BOARD)
+-n          Copy generated network units to the root partition.
 ```
 
 ## Container Linux Configs
