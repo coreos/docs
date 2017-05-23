@@ -50,7 +50,7 @@ url="http://${GROUP:-stable}.release.core-os.net/$COREOS_RELEASE_BOARD/$COREOS_R
 Download, decompress, and verify the development container image.
 
 ```sh
-gpg2 --recv-keys 48F9B96A2E16137F  # Fetch the buildbot key if neccesary.
+gpg2 --recv-keys 04127D0BFABEC8871FFB2CCE50E0885593D2DCB4  # Fetch the buildbot key if neccesary.
 curl -L "$url" |
     tee >(bzip2 -d > coreos_developer_container.bin) |
     gpg2 --verify <(curl -Ls "$url.sig") -
