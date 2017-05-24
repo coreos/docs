@@ -1,6 +1,7 @@
 # Quay Security Scanner
 
-Quay Enterprise supports scanning container images for known vulnerabilities with a scanning engine such as [Clair](clair.md). This document explains how to configure Clair with Quay Enterprise.
+Quay Enterprise supports scanning container images for known vulnerabilities with a scanning engine such as [Clair](clair.md).
+This document explains how to configure Clair with Quay Enterprise.
 
 ## Visit the management panel
 
