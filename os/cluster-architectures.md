@@ -121,7 +121,7 @@ etcd:
   name: "etcdserver"
   initial_cluster: "etcdserver=http://10.0.0.101:2380"
   initial_advertise_peer_urls: "http://10.0.0.101:2380"
-  advertise_client_urls: "http://10.0.0.101:2379'
+  advertise_client_urls: "http://10.0.0.101:2379"
   listen_client_urls: "http://0.0.0.0:2379,http://0.0.0.0:4001"
   listen_peer_urls: "http://0.0.0.0:2380"
 systemd:
@@ -136,8 +136,7 @@ systemd:
 networkd:
   units:
     - name: 00-eth0.network
-      enable: true
-      content: |
+      contents: |
         [Match]
         Name=eth0
 
@@ -197,8 +196,7 @@ systemd:
 networkd:
   units:
     - name: 00-eth0.network
-      enable: true
-      content: |
+      contents: |
         [Match]
         Name=eth0
 
