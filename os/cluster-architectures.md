@@ -51,7 +51,7 @@ systemd:
 
 This file is used to provision your local CoreOS machine on its first boot. This sets up and enables the Docker API, which is how you can use Docker on your laptop. The Docker CLI manages containers running within the VM, *not* on your personal operating system.
 
-Using the CL Config Transpiler, or `ct`, ([download][ct-getting-started]) convert the above yaml into an [Ignition][ignition-getting-started]. Alternatively, copy the contents of the Igntion tab in the above example. Once you have the Ignition configuration file, pass it to your provider ([complete list of supported Ignition platforms][ignition-supported]).
+Using the CL Config Transpiler, or `ct`, ([download][ct-download]) convert the above yaml into an [Ignition][ignition-getting-started]. Alternatively, copy the contents of the Igntion tab in the above example. Once you have the Ignition configuration file, pass it to your provider ([complete list of supported Ignition platforms][ignition-supported]).
 
 Once the local VM is running, tell your Docker binary on your personal operating system to use the remote port by exporting an environment variable and start running Docker commands. Run these commands in a terminal *on your local operating system (MacOS or Linux), not in the Container Linux virtual machine*:
 
@@ -225,7 +225,7 @@ update:
   server: https://customer.update.core-os.net/v1/update/
 ```
 
-[ct-getting-started]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/getting-started.md
+[ct-download]: https://github.com/coreos/container-linux-config-transpiler/releases
 [ignition-getting-started]: https://coreos.com/ignition/docs/latest/getting-started.html
 [ignition-supported]: https://coreos.com/ignition/docs/latest/supported-platforms.html
 [coreos-qemu]: https://coreos.com/os/docs/latest/booting-with-qemu.html
