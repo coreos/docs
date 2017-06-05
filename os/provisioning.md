@@ -52,6 +52,8 @@ As shown in this diagram, `ct` is manually invoked only when users are manually 
 
 The Container Linux Config Transpiler abstracts the details of configuring Container Linux. It's responsible for transforming a Container Linux Config written by a user into an Ignition Config to be consumed by instances of Container Linux.
 
+The Container Linux Config Transpiler command line interface, `ct` for short, can be downloaded from its [Github Releases page][download-ct].
+
 The following config will configure an etcd cluster using the machine's public and private IP addresses:
 
 ```container-linux-config:norender
@@ -66,7 +68,7 @@ etcd:
 As suggested earlier, `ct` requires information about the target environment before it can transform configs which use templating. If this config is passed to `ct` without any other arguments, `ct` fails with the following error message:
 
 ```
-$ bin/ct < example.yml
+$ ct < example.yml
 error: platform must be specified to use templating
 ```
 
@@ -75,7 +77,7 @@ This message states that because the config takes advantage of templating (in th
 CT can be invoked again and given Amazon EC2 as an example:
 
 ```
-$ bin/ct --platform=ec2 < example.yml
+$ ct --platform=ec2 < example.yml
 {"ignition":{"version":"2.0.0","config"...
 ```
 
@@ -130,6 +132,7 @@ Now that the basics of Container Linux Configs have been covered, a good next st
 [clc]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/configuration.md
 [cloudinit]: https://github.com/coreos/coreos-cloudinit
 [ct]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/overview.md
+[download-ct]: https://github.com/coreos/container-linux-config-transpiler/releases
 [etcd]: https://github.com/coreos/etcd
 [examples]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/examples.md
 [flannel]: https://github.com/coreos/flannel
