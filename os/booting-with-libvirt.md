@@ -123,7 +123,7 @@ coreos:
 Now start new libvirt instance with 1024Mb of RAM and 1 CPU:
 
 ```sh
-virt-install --connect qemu:///system --import --name coreos1 --ram 1024 --vcpus 1 --os-type=linux --os-variant=virtio26 --disk path=/var/lib/libvirt/images/coreos/coreos1.qcow2,format=qcow2,bus=virtio --filesystem /var/lib/libvirt/images/coreos/coreos1/,config-2,type=mount,mode=squash --network bridge=virbr0,mac=52:54:00:fe:b3:c0,type=bridge --vnc --noautoconsole
+virt-install --connect qemu:///system --import --name coreos1 --ram 1024 --vcpus 1 --os-type=linux --os-variant=virtio26 --disk path=/var/lib/libvirt/images/coreos/coreos1.qcow2,format=qcow2,bus=virtio --filesystem /var/lib/libvirt/images/coreos/coreos1/,config-2,type=mount,mode=squash --network bridge=virbr0,mac=52:54:00:fe:b3:c0 --vnc --noautoconsole
 ```
 
 Once the virtual machine has started you can log in via SSH:
