@@ -22,7 +22,7 @@ All containers share the same network namespace &amp; port space. Communication 
 
 Volumes attached to the pod may be mounted inside of one or more containers. In the logging example above, a volume named `logs` is attached to the pod. The app server would log output to `logs` mounted at `/volumes/logs` and the logging adapter would have a read-only mount to the same volume. If either of these containers needed to restarted, the log data is preserved instead of being lost.
 
-There are many types of volumes supported by Kubernetes, including native support for mounting Github repos, network disks (EBS, NFS, etc), local machine disks, and a few special volume types, like secrets.
+There are many types of volumes supported by Kubernetes, including native support for mounting GitHub repos, network disks (EBS, NFS, etc), local machine disks, and a few special volume types, like secrets.
 
 Here's an example pod:
 
