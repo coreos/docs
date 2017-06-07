@@ -1,4 +1,4 @@
-# Verify CoreOS images with GPG
+# Verify CoreOS Container Linux images with GPG
 
 Container Linux publishes new images for each release across a variety of platforms and hosting providers. Each channel has it's own set of images ([stable], [beta], [alpha]) that are posted to our storage site. Along with each image, a signature is generated from the [CoreOS Image Signing Key][signing-key] and posted.
 
