@@ -73,7 +73,7 @@ After using the [Container Linux Config Transpiler][ct-docs] to produce an Ignit
 
 A Container Linux Config that specifies an SSH key for the `core` user but doesn't use any other parameters looks like:
 
-```container-linux-config
+```yaml container-linux-config
 passwd:
   users:
     - name: core
@@ -94,7 +94,7 @@ coreos-install -d /dev/sda -C stable -i ~/ignition.json
 
 This example will configure Container Linux components: etcd and flannel. You have to substitute `<PEER_ADDRESS>` to your host's IP or DNS address.
 
-```container-linux-config
+```yaml container-linux-config
 passwd:
   users:
     - name: core

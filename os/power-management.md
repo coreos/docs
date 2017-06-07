@@ -23,7 +23,7 @@ echo "conservative" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor 
 
 This can be configured with a [Container Linux Config][cl-configs] as well:
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: cpu-governor.service

@@ -38,7 +38,7 @@ docker -H tcp://127.0.0.1:2375 ps
 
 To enable the remote API on every Container Linux machine in a cluster, use a [Container Linux Config][cl-configs]. We need to provide the new socket file and Docker's socket activation support will automatically start using the socket:
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: docker-tcp.socket
@@ -162,7 +162,7 @@ docker images
 
 A Container Linux Config for Docker TLS authentication will look like:
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - path: /etc/docker/ca.pem
@@ -249,7 +249,7 @@ journalctl -u docker
 
 If you need to modify a flag across many machines, you can add the flag with a Container Linux Config:
 
-```container-linux-config
+```yaml container-linux-config
 docker:
   flags:
     - --debug
@@ -283,7 +283,7 @@ Proxy environment variables can also be set [system-wide][systemd-env-vars].
 
 The easiest way to use this proxy on all of your machines is via a Container Linux Config:
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: docker.service
@@ -321,7 +321,7 @@ systemctl restart docker
 
 The easiest way to use these new ulimits on all of your machines is via a Container Linux Config:
 
-```container-linux-configs
+```yaml container-linux-configs
 systemd:
   units:
     - name: docker.service

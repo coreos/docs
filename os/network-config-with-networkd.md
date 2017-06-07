@@ -29,7 +29,7 @@ sudo systemctl restart systemd-networkd
 
 Setting up static networking in your Container Linux Config can be done by writing out the network unit. Be sure to modify the `[Match]` section with the name of your desired interface, and replace the IPs:
 
-```container-linux-config
+```yaml container-linux-config
 networkd:
   units:
     - name: 00-eth0.network
@@ -100,7 +100,7 @@ Destination=172.16.0.0/24
 
 To specify the same route in a Container Linux Config, create the systemd network unit there instead:
 
-```container-linux-config
+```yaml container-linux-config
 networkd:
   units:
     - name: 10-static.network
@@ -130,7 +130,7 @@ Gateway=10.0.1.1
 
 To do the same thing through a Container Linux Config:
 
-```container-linux-config
+```yaml container-linux-config
 networkd:
   units:
     - name: 20-multi_ip.network
@@ -175,7 +175,7 @@ journalctl -b -u systemd-networkd
 
 Define a [Drop-In][drop-ins] in a [Container Linux Config][cl-configs]:
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: systemd-networkd.service

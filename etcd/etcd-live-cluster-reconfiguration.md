@@ -6,7 +6,7 @@ This document describes the reconfiguration or recovery of an etcd cluster runni
 
 When [a Container Linux Config][cl-configs] is used to configure an etcd member on a Container Linux node, it compiles a special `/etc/systemd/system/etcd-member.service.d/20-clct-etcd-member.conf` [drop-in unit file][drop-in]. That is, the Container Linux Config below:
 
-```container-linux-config
+```yaml container-linux-config
 etcd:
   advertise_client_urls: http://<PEER_ADDRESS>:2379
   initial_advertise_peer_urls: http://<PEER_ADDRESS>:2380
@@ -76,7 +76,7 @@ This section provides instructions on how to recover a failed etcd member. It is
 
 In this example, we use a 3-member etcd cluster with one failed node, that is still running and has maintained [quorum][majority]. An etcd member node might fail for several reasons: out of disk space, an incorrect reboot, or issues on the underlying system. Note that this example assumes you used [a Container Linux Config][cl-configs] with an etcd [discovery URL][etcd-discovery] to bootstrap your cluster, with the following default options:
 
-```container-linux-config
+```yaml container-linux-config
 etcd:
   advertise_client_urls: http://<PEER_ADDRESS>:2379
   initial_advertise_peer_urls: http://<PEER_ADDRESS>:2380

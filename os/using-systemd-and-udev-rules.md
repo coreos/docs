@@ -41,7 +41,7 @@ That rule means that udev will trigger `device-attach.service` systemd unit on a
 
 To use the unit and udev rule with a Container Linux Config, modify this example as needed:
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - path: /etc/udev/rules.d/01-block.rules 

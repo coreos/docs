@@ -80,7 +80,7 @@ Container Linux allows you to configure machine parameters, launch systemd units
 
 A common Container Linux Config for OpenStack looks like:
 
-```container-linux-config:openstack-metadata
+```yaml container-linux-config:openstack-metadata
 etcd:
   # All options get passed as command line flags to etcd.
   # Any information inside curly braces comes from the machine at boot time.

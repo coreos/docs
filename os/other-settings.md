@@ -10,7 +10,7 @@ echo nf_conntrack > /etc/modules-load.d/nf.conf
 
 Or, using a Container Linux Config:
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - path: /etc/modules-load.d/nf.conf
@@ -31,7 +31,7 @@ Further details can be found in the systemd man pages:
 
 This example Container Linux Config loads the `dummy` network interface module with an option specifying the number of interfaces the module should create when loaded (`numdummies=5`):
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - path: /etc/modprobe.d/dummy.conf
@@ -57,7 +57,7 @@ sysctl --system
 
 Some parameters, such as the conntrack one above, are only available after the module they control has been loaded. To ensure any modules are loaded in advance use `modules-load.d` as described above. A complete Container Linux Config using both would look like:
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - path: /etc/modules-load.d/nf.conf
@@ -117,7 +117,7 @@ echo "This machine is dedicated to computing Pi" > /etc/motd.d/pi.conf
 
 Or via a Container Linux Config:
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - path: /etc/motd.d/pi.conf
@@ -138,7 +138,7 @@ echo -e '[Service]\nTTYVTDisallocate=no' > '/etc/systemd/system/getty@.service.d
 
 Or via a Container Linux Config:
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: getty@.service

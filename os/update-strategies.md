@@ -16,7 +16,7 @@ It's important to note that updates are always downloaded to the passive partiti
 
 The reboot strategy can be set with a Container Linux Config:
 
-```container-linux-config
+```yaml container-linux-config
 locksmith:
   reboot_strategy: "etcd-lock"
 ```
@@ -72,7 +72,7 @@ In case when you don't want to install updates onto the passive partition and av
 
 If you wish to disable automatic updates permanently, use can configure this with a Container Linux Config. This example will stop `update-engine`, which executes the updates, and `locksmithd`, which coordinates reboots across the cluster:
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: update-engine.service
@@ -86,7 +86,7 @@ systemd:
 Public Internet access is required to contact CoreUpdate and download new versions of Container Linux. If direct access is not available the `update-engine` service may be configured to use a HTTP or SOCKS proxy using curl-compatible environment variables, such as `HTTPS_PROXY` or `ALL_PROXY`.
 See [curl's documentation](http://curl.haxx.se/docs/manpage.html#ALLPROXY) for details.
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: update-engine.service

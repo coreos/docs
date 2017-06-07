@@ -12,7 +12,7 @@ In this example we will disable logins for the `root` user, only allow login for
 
 [openssh-manual]: http://www.openssh.com/cgi-bin/man.cgi?query=sshd_config
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - path: /etc/ssh/sshd_config
@@ -34,7 +34,7 @@ storage:
 
 Container Linux ships with socket-activated SSH by default. The configuration for this can be found at `/usr/lib/systemd/system/sshd.socket`. We're going to override some of the default settings for this in the Container Linux Config provided at boot:
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: sshd.socket
@@ -185,7 +185,7 @@ Finally, execute a daemon-reload, stop the sshd.socket service, and start the ss
 
 The same configuration can be achieved and an actively listening sshd started with a Container Linux Config like:
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: sshd.socket

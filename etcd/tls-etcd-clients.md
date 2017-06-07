@@ -14,7 +14,7 @@ This document assumes three Container Linux nodes will be booted and will be run
 
 Flannel options can be specified in a Container Linux Config. For an example, this is a config that sets the etcd endpoints flannel will use and specifies tls resources to encrypt the connection:
 
-```container-linux-config
+```yaml container-linux-config
 flannel:
   etcd_endpoints: "https://172.16.0.101:2379,https://172.16.0.102:2379,https://172.16.0.103:2379"
   etcd_cafile:    /etc/ssl/etcd/ca.pem
@@ -28,7 +28,7 @@ Suppose you're using `/etc/etcd/ssl` instead, you will need to adjust the flanne
  
 A complete example would look like:
 
-```container-linux-config
+```yaml container-linux-config
 flannel:
   etcd_endpoints: "https://172.16.0.101:2379,https://172.16.0.102:2379,https://172.16.0.103:2379"
   etcd_cafile:    /etc/ssl/etcd/ca.pem
@@ -47,7 +47,7 @@ systemd:
 
 Due to the [deprecation of fleet][fleet-deprecation], Container Linux Configs don't have a convenient syntax for configuring fleet like for flannel. Fleet can still be easily configured however with the use of a systemd drop-in.
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: fleet.service
@@ -67,7 +67,7 @@ systemd:
 
 Example Container Linux Config excerpt for Locksmith configuration:
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: locksmithd.service

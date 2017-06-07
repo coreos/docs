@@ -73,7 +73,7 @@ To use a specific pull secret as the default in a specific namespace, you can cr
 
 A snippet to configure the credentials via `files` in a Container Linux Config looks like:
 
-```container-linux-config
+```yaml container-linux-config
 storage:
   files:
     - path: /root/.dockercfg

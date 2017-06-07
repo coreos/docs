@@ -6,7 +6,7 @@ You can create user accounts on a CoreOS Container Linux machine manually with `
 
 In your Container Linux Config, you can specify many [different parameters](https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/configuration.md) for each user. Here's an example:
 
-```container-linux-config
+```yaml container-linux-config
 passwd:
   users:
     - name: core

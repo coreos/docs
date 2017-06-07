@@ -26,7 +26,7 @@ $ etcdctl set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
 
 You can put this into a drop-in for flanneld.service via a Container Linux Config:
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: flanneld.service
@@ -47,7 +47,7 @@ flannel uses UDP port 8285 for sending encapsulated IP packets. Make sure to ena
 
 The last step is to enable `flanneld.service` by creating the `flannel` section in our Container Linux Config. Options for flannel can be specified in this section.
 
-```container-linux-config
+```yaml container-linux-config
 flannel:
 ```
 
@@ -57,7 +57,7 @@ flannel:
 
 Flannel requires SSL certificates to communicate with a secure etcd cluster. By default, flannel looks for these certificates in `/etc/ssl/etcd`. To use different certificates, add `Environment=ETCD_SSL_DIR` to a drop-in file for `flanneld.service`. Use the following configuration snippet to achieve this:
 
-```container-linux-config
+```yaml container-linux-config
 systemd:
   units:
     - name: flanneld.service
