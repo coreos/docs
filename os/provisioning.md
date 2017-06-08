@@ -52,7 +52,7 @@ As shown in this diagram, `ct` is manually invoked only when users are manually 
 
 The Container Linux Config Transpiler abstracts the details of configuring Container Linux. It's responsible for transforming a Container Linux Config written by a user into an Ignition Config to be consumed by instances of Container Linux.
 
-The Container Linux Config Transpiler command line interface, `ct` for short, can be downloaded from its [Github Releases page][download-ct].
+The Container Linux Config Transpiler command line interface, `ct` for short, can be downloaded from its [GitHub Releases page][download-ct].
 
 The following config will configure an etcd cluster using the machine's public and private IP addresses:
 
