@@ -91,7 +91,7 @@ A DNS query for this service will return a list of A records that can be used by
 
 ## Zero Downtime Deployments
 
-During a deployment, new pods will be launched, running the updated version of your software. While this deployment is in progress, inbound traffic is being routed to the pods maching the service's pod label query.
+During a deployment, new pods will be launched, running the updated version of your software. While this deployment is in progress, inbound traffic is being routed to the pods matching the service's pod label query.
 
 Modifying this label query to be broad or specific is a flexible mechanism to point traffic towards a specific version of your application, either old or new, or send traffic to both at the same time.
 
