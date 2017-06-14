@@ -17,3 +17,7 @@ Verizon Labs [uses Container Linux](https://www.youtube.com/watch?v=uwssG6eHYBQ&
 ## [CA Technology](https://www.ca.com/us.html)
 
 CA Technology [uses Container Linux](https://www.youtube.com/watch?v=1-SbSa_rwOg&feature=youtu.be&list=PLlh6TqkU8kg_Eydfk1Nyt6iK7wM8v9bRA) to run some of the Kubernetes solutions they provide to customers.
+
+## [@FuriKuri](https://furikuri.net)
+
+@FuriKuri [uses Container Linux](https://www.youtube.com/watch?v=1-SbSa_rwOg&feature=youtu.be&list=PLlh6TqkU8kg_Eydfk1Nyt6iK7wM8v9bRA) to host  his private projects (e.g. the page https://furikuri.net itself) in a minimal and lightweight way.
