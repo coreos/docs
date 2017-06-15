@@ -188,20 +188,20 @@ The same configuration can be achieved and an actively listening sshd started wi
 ```yaml container-linux-config
 systemd:
   units:
-    - name: sshd.socket
-      mask: true
-    - name: sshd.service
-      enable: true
-      contents: |-
-          [Unit]
-          Description=OpenSSH server
-          After=network.target
+  - name: sshd.socket
+    mask: true
+  - name: sshd.service
+    enable: true
+    contents: |-
+      [Unit]
+      Description=OpenSSH server
+      After=network.target
 
-          [Service]
-          ExecStart=/usr/sbin/sshd -D -e
-          ExecReload=/bin/kill -HUP $MAINPID
-          Restart=on-failure
-          RestartSec=30s
-          [Install]
-          WantedBy=multi-user.target
+      [Service]
+      ExecStart=/usr/sbin/sshd -D -e
+      ExecReload=/bin/kill -HUP $MAINPID
+      Restart=on-failure
+      RestartSec=30s
+      [Install]
+      WantedBy=multi-user.target
 ```
