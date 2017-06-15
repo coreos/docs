@@ -192,24 +192,16 @@ systemd:
       mask: true
     - name: sshd.service
       enable: true
-      contents: |
+      contents: |-
           [Unit]
-          Description=OpenSSH server daemon
+          Description=OpenSSH server
+          After=network.target
 
           [Service]
-          Type=forking
-          PIDFile=/var/run/sshd.pid
-          ExecStart=/usr/sbin/sshd
+          ExecStart=/usr/sbin/sshd -D -e
           ExecReload=/bin/kill -HUP $MAINPID
-          KillMode=process
           Restart=on-failure
           RestartSec=30s
-
           [Install]
           WantedBy=multi-user.target
-storage:
-  files:
-    - path: /var/run/sshd.pid
-      filesystem: root
-      mode: 0644
 ```
