@@ -14,7 +14,7 @@ There are a few other common ways to write or not write things:
 
 * Expand acronyms on their introduction in a document, with the short form following in parentheses: Trusted Platform Module (TPM).
 * Terms of art that are not commands or other literal text should often be italicized on their first appearance in a document: *Kubernetes* is a good example.
-* The hyphen is overused and most English compounds do not require it.
+* The [hyphen is overused and most English compounds do not require it][economist-hyphens].
 * There is one space (` `) after a period (aka *full stop*, `.`), comma (`,`), semicolon (`;`) and other marks of punctuation.
 
 ### Specifics
@@ -240,6 +240,7 @@ Things you can use when you don't want to expose working URLs, IP Addresses, or 
 [command-line-grammar]: #command-line-grammar
 [configuring-dns]: os/configuring-dns.md
 [coreos-docs]: https://coreos.com/docs/
+[economist-hyphens]: http://www.economist.com/news/books-and-arts/21723088-hyphens-can-be-tricky-they-need-not-drive-you-crazy-hysteria-over-hyphens
 [eos]: https://faculty.washington.edu/heagerty/Courses/b572/public/StrunkWhite.pdf "The Elements of Style"
 [githubmd]: https://help.github.com/articles/github-flavored-markdown/
 [headings]: #headings
