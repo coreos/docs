@@ -44,7 +44,7 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
 #!ipxe
 
 set base-url http://alpha.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz initrd=coreos_production_pxe_image.cpio.gz coreos.config.url=https://example.com/pxe-config.ign
+kernel ${base-url}/coreos_production_pxe.vmlinuz initrd=coreos_production_pxe_image.cpio.gz coreos.first_boot=1 coreos.config.url=https://example.com/pxe-config.ign
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
@@ -55,7 +55,7 @@ boot</pre>
 #!ipxe
 
 set base-url http://beta.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz initrd=coreos_production_pxe_image.cpio.gz coreos.config.url=https://example.com/pxe-config.ign
+kernel ${base-url}/coreos_production_pxe.vmlinuz initrd=coreos_production_pxe_image.cpio.gz coreos.first_boot=1 coreos.config.url=https://example.com/pxe-config.ign
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
@@ -66,7 +66,7 @@ boot</pre>
 #!ipxe
 
 set base-url http://stable.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz initrd=coreos_production_pxe_image.cpio.gz coreos.config.url=https://example.com/pxe-config.ign
+kernel ${base-url}/coreos_production_pxe.vmlinuz initrd=coreos_production_pxe_image.cpio.gz coreos.first_boot=1 coreos.config.url=https://example.com/pxe-config.ign
 initrd ${base-url}/coreos_production_pxe_image.cpio.gz
 boot</pre>
     </div>
