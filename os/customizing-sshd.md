@@ -151,7 +151,32 @@ For more information about configuring Container Linux hosts with `systemd`, see
 
 Occasionally when systemd gets into a broken state, socket activation doesn't work, which can make a system inaccessible if ssh is the only option. This can be avoided configuring a permanently active SSH daemon that forks for each incoming connection.
 
-To do this directly on the Container Linux machine, begin by replacing the default sshd unit file at `/etc/systemd/system/sshd.service` with the following:
+To configure sshd on Container Linux without socket activation, a Container Linux Config file similar to the following may be used:
+
+```yaml container-linux-config
+systemd:
+  units:
+  - name: sshd.socket
+    mask: true
+  - name: sshd.service
+    enable: true
+    contents: |-
+      [Unit]
+      Description=OpenSSH server
+      After=network.target
+
+      [Service]
+      ExecStart=/usr/sbin/sshd -D -e
+      ExecReload=/bin/kill -HUP $MAINPID
+      Restart=on-failure
+      RestartSec=30s
+      [Install]
+      WantedBy=multi-user.target
+```
+
+Alternately, this configuration can be applied by hand with the following steps.
+
+First, override the default sshd unit file by editing `/etc/systemd/system/sshd.service` to contain the following:
 
 ```
 # /etc/systemd/system/sshd.service
@@ -176,32 +201,9 @@ Next mask the systemd.socket unit:
 ```
 # systemctl mask --now sshd.socket
 ```
-Finally, execute a daemon-reload, stop the sshd.socket service, and start the sshd.service unit:
+Finally, execute a daemon-reload and start the sshd.service unit:
 
 ```
 # systemctl daemon-reload
 # systemctl restart sshd.service
-```
-
-The same configuration can be achieved and an actively listening sshd started with a Container Linux Config like:
-
-```yaml container-linux-config
-systemd:
-  units:
-  - name: sshd.socket
-    mask: true
-  - name: sshd.service
-    enable: true
-    contents: |-
-      [Unit]
-      Description=OpenSSH server
-      After=network.target
-
-      [Service]
-      ExecStart=/usr/sbin/sshd -D -e
-      ExecReload=/bin/kill -HUP $MAINPID
-      Restart=on-failure
-      RestartSec=30s
-      [Install]
-      WantedBy=multi-user.target
 ```
