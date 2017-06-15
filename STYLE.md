@@ -42,6 +42,52 @@ CoreOS is written in CamelCase. The Linux distribution is called CoreOS Containe
 
 These capitalization rules are traditional and arcane. They should eventually give way to all project and product names being capitalized as proper nouns, except when given literally, e.g., `rkt run docker://nginx` or `/var/lib/rkt`.
 
+## Unix style: Command line grammar
+
+*Commands* *invoke* or *execute* programs. Commands *take* *arguments* and *accept* *options*, which themselves may be *set* to *values*.
+
+### Example: Documenting `echo(1)`
+
+In this simple command line:
+
+```sh
+$ echo -n Example
+Example
+```
+
+`echo` is the command, and `Example` is the argument. The option `-n` suppresses the terminating newline usually emitted by `echo`. A binary option represented by a single letter, like `-n`, is sometimes called a *flag*. The `echo(1)` command prints its argument on the standard output, and a good shell excerpt often includes the expected output of commands, as shown here. The shell prompt character `$` distinguishes input from output.
+
+### Example: Documenting subcommands
+
+Some command lines are more complex. Many commands operate through a set of *subcommands*. `rkt` and several other relevant programs follow this pattern.
+
+```sh
+$ rkt run --debug example.aci
+[...]
+```
+
+In this case the argument to `rkt`, `run`, is a subcommand. `run` in turn accepts the `--debug` option to modify how it executes the ACI image specified by its own argument, `example.aci`
+
+### Example: Documenting long command lines
+
+Some commands pack many subcommands, arguments, and options on a single line. It is good practice to break such long command lines with newlines, escaped with backslash (`\`), because lines inside code blocks are not soft-wrapped in most presentations. For very long command lines, choose points that break the parameters into logical groups. Lines so wrapped are not indented for vertical alignment.
+
+```sh
+$ docker run --name docsbuilder \
+-i -t \
+-p 80:9001 -p 443:9443 \
+-v /home/core/site:/app:rw \
+-v /etc/ssl/certs:/etc/ssl/certs:ro \
+quay.io/coreosinc/coreos-pages-builder scripts/deploy stage
+```
+
+### Placeholder conventions
+
+Use these standard example entities to avoid exposing real URLs, IP Addresses, or other data.
+
+* URL: [example.com][rfc2606s3]
+* IP Address: [Any in the range 203.0.113.0/24][rfc5737]
+
 ## Source formatting
 
 CoreOS documentation is written in [Markdown][mdhome], a simple way to annotate text to indicate presentation typesetting. Markdown source is intended to be a plain text human-readable version of the document, even before conversion to HTML for the browser or other display.
@@ -102,6 +148,12 @@ The abridged skeletal markdown source for this document's headings:
 
 [...]
 
+## Unix style: Command line grammar
+
+### Example: Documenting `echo(1)`
+
+[...]
+
 ## Hyperlink considerations
 
 ### Naming
@@ -109,12 +161,6 @@ The abridged skeletal markdown source for this document's headings:
 ### Marking down the link
 
 #### Example: Reference-style hyperlinking
-
-[...]
-
-## Command line grammar
-
-### Example: Documenting `echo(1)`
 
 [...]
 
@@ -163,45 +209,6 @@ For example, there are two ways to refer to the [CoreOS quick start guide][quick
 
 CoreOS documents have two major publication targets: the [coreos.com documentation library][coreos-docs], and [GitHub's Markdown presentation][githubmd]. The deployment scripts used to build the CoreOS site handle some of the wrinkles arising between the two targets. These scripts expect links to other CoreOS project documentation to refer to the Markdown source; that is, to end with the `.md` file extension. The deployment scripts rewrite hyperlinks to replace that extension with `.html` for presentation. This allows the links to be valid in either context. External links are not rewritten.
 
-## Command line grammar
-
-*Commands* *invoke* or *execute* programs. Commands *take* *arguments* and *accept* *options*, which themselves may be *set* to *values*.
-
-### Example: Documenting `echo(1)`
-
-In this simple command line:
-
-```sh
-$ echo -n Example
-Example
-```
-
-`echo` is the command, and `Example` is the argument. The option `-n` suppresses the terminating newline usually emitted by `echo`. A binary option represented by a single letter, like `-n`, is sometimes called a *flag*. The `echo(1)` command prints its argument on the standard output, and a good shell excerpt often includes the expected output of commands, as shown here. The shell prompt character `$` distinguishes input from output.
-
-### Example: Documenting subcommands
-
-Some command lines are more complex. Many commands operate through a set of *subcommands*. `rkt` and several other relevant programs follow this pattern.
-
-```sh
-$ rkt run --debug example.aci
-[...]
-```
-
-In this case the argument to `rkt`, `run`, is a subcommand. `run` in turn accepts the `--debug` option to modify how it executes the ACI image specified by its own argument, `example.aci`
-
-### Example: Documenting long command lines
-
-Some commands pack many subcommands, arguments, and options on a single line. It is good practice to break such long command lines with newlines, escaped with backslash (`\`), because lines inside code blocks are not soft-wrapped in most presentations. For very long command lines, choose points that break the parameters into logical groups. Lines so wrapped are not indented for vertical alignment.
-
-```sh
-$ docker run --name docsbuilder \
--i -t \
--p 80:9001 -p 443:9443 \
--v /home/core/site:/app:rw \
--v /etc/ssl/certs:/etc/ssl/certs:ro \
-quay.io/coreosinc/coreos-pages-builder scripts/deploy stage
-```
-
 ## Example: Documenting code blocks
 
 Insert triple backtick (grave accent) characters on a new line before and after a block of code. A tag, such as `yaml`, `sh`, `json`, or `ini`, can be placed after the opening backticks to declare the language in the block. Markdown syntax is not interpreted within the gated code block, but special characters are replaced with HTML entities.
@@ -230,12 +237,6 @@ Some file types are commonly identified with more than one file name extension. 
 * YAML: `file.yaml` is preferred to `file.yml`
 * HTML: `file.html`, not `file.htm`
 
-## Placeholder conventions
-
-Things you can use when you don't want to expose working URLs, IP Addresses, or other info.
-
-* URL: example.com
-* IP Address: Any in the range 203.0.113.0/24
 
 [command-line-grammar]: #command-line-grammar
 [configuring-dns]: os/configuring-dns.md
@@ -247,4 +248,6 @@ Things you can use when you don't want to expose working URLs, IP Addresses, or 
 [hyperlink-considerations]: #hyperlink-considerations
 [mdhome]: https://daringfireball.net/projects/markdown/syntax
 [quickstart]: os/quickstart.md "Relative link from here to CoreOS Quick Start"
+[rfc2606s3]: https://tools.ietf.org/html/rfc2606#section-3
+[rfc5737]: https://tools.ietf.org/html/rfc5737
 [style]: STYLE.md "CoreOS Documentation Style"
