@@ -60,6 +60,5 @@ for SEQ in $(seq 1 $1); do
                      --os-variant=virtio26 \
                      --disk path=$LIBVIRT_PATH/$COREOS_HOSTNAME.qcow2,format=qcow2,bus=virtio \
                      --filesystem $LIBVIRT_PATH/$COREOS_HOSTNAME/,config-2,type=mount,mode=squash \
-                     --vnc \
-                     --noautoconsole
+                     --vnc
 done
