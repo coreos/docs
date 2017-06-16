@@ -23,11 +23,11 @@ storage:
           # Use most defaults for sshd configuration.
           UsePrivilegeSeparation sandbox
           Subsystem sftp internal-sftp
+          UseDNS no
 
           PermitRootLogin no
           AllowUsers core
-          PasswordAuthentication no
-          ChallengeResponseAuthentication no
+          AuthenticationMethods publickey
 ```
 
 ### Changing the sshd port
