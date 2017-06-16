@@ -61,20 +61,6 @@ systemd:
   units:
   - name: sshd.socket
     mask: true
-  - name: sshd.service
-    enable: true
-    contents: |-
-      [Unit]
-      Description=OpenSSH server
-      After=network.target
-
-      [Service]
-      ExecStart=/usr/sbin/sshd -D -e
-      ExecReload=/bin/kill -HUP $MAINPID
-      Restart=on-failure
-      RestartSec=30s
-      [Install]
-      WantedBy=multi-user.target
 ```
 
 Note that in this configuration the port will be configured by updating the `/etc/ssh/sshd_config` file with the `Port` directive rather than via editing `sshd.socket`.
@@ -181,32 +167,13 @@ core@machine $
 
 ### Disabling socket-activation for sshd
 
-First, override the default sshd unit file by editing `/etc/systemd/system/sshd.service` to contain the following:
-
-```
-# /etc/systemd/system/sshd.service
-[Unit]
-Description=OpenSSH server daemon
-
-[Service]
-Type=forking
-PIDFile=/var/run/sshd.pid
-ExecStart=/usr/sbin/sshd
-ExecReload=/bin/kill -HUP $MAINPID
-KillMode=process
-Restart=on-failure
-RestartSec=30s
-
-[Install]
-WantedBy=multi-user.target
-```
-
-Next mask the systemd.socket unit:
+Simply mask the systemd.socket unit:
 
 ```
 # systemctl mask --now sshd.socket
 ```
-Finally, execute a daemon-reload and start the sshd.service unit:
+
+Finally, execute a daemon-reload and restart the sshd.service unit:
 
 ```
 # systemctl daemon-reload
