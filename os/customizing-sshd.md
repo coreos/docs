@@ -9,8 +9,10 @@ As a practical example, when a client fails to connect by not completing the TCP
 ## Customizing sshd with a Container Linux Config
 
 In this example we will disable logins for the `root` user, only allow login for the `core` user and disable password based authentication. For more details on what sections can be added to `/etc/ssh/sshd_config` see the [OpenSSH manual][openssh-manual].
+If you're interested in additional security options, Mozilla provides a well-commented example of a [hardened configuration][mozilla-ssh-rec].
 
 [openssh-manual]: http://www.openssh.com/cgi-bin/man.cgi?query=sshd_config
+[mozilla-ssh-rec]: https://wiki.mozilla.org/Security/Guidelines/OpenSSH#Modern_.28OpenSSH_6.7.2B.29
 
 ```yaml container-linux-config
 storage:
