@@ -50,7 +50,7 @@ systemd:
 
 `sshd` will now listen only on port 222 on all interfaces when the system is built.
 
-### Disabling socket-activation for sshd
+### Disabling socket activation for sshd
 
 It may be desirable to disable socket-activation for sshd to ensure it will reliably accept connections even when systemd or dbus aren't operating correctly.
 
@@ -84,8 +84,7 @@ First, create an editable copy of the `sshd.socket`.
 $ sudo cp /usr/lib/systemd/system/sshd.socket /etc/systemd/system/sshd.socket
 ```
 
-This gives you a `sshd.socket` unit that will override the one supplied by Container Linux -- when you make changes to it and `systemd` re-reads its configuration, those changes will be applied.
-
+This gives you a `sshd.socket` unit that will override the one supplied by Container Linux. When changes are made to it, and `systemd` re-reads its configuration, those changes will be applied.
 
 To change how sshd listens, change or add the relevant lines in the `[Socket]` section of `/etc/systemd/system/sshd.socket` (leaving options not specified here intact).
 
@@ -104,7 +103,9 @@ ListenStream=10.20.30.40:22
 FreeBind=true
 ```
 
-You can specify both an IP and an alternate port in a single ListenStream line; additionally, IPv6 address bindings would be specified as, for example, `[2001:db8::7]:22`  Note two things: first, while a specific IP address is optional, you must always specify the port, even if it is the default SSH port. Second, the `FreeBind` option is used allow the socket to be bound on addresses that are not actually configured on an interface yet, to avoid issues caused by delays in IP configuration at boot. (This is not needed if you are not specifying an address.)
+You can specify both an IP and an alternate port in a single `ListenStream` line. IPv6 address bindings would be specified using the format `[2001:db8::7]:22`.
+
+*Note*: While a specific IP address is optional, you must always specify the port, even if it is the default SSH port. The FreeBind option is used to allow the socket to be bound on addresses that are not yet configured on an interface, to avoid issues caused by delays in IP configuration at boot. (This option is required only if you are specifying an address.)
 
 Multiple ListenStream lines can be specified, in which case `sshd` will listen on all the specified sockets:
 
