@@ -27,9 +27,9 @@ git config --global user.name "Your Name"
 
 **NOTE**: Do the git configuration as a normal user and not with sudo.
 
-### Option 1: Using Cork
+### Using Cork
 
-The `cork` utility, included in the CoreOS [mantle](https://github.com/coreos/mantle) project, can be used to create and work with an SDK chroot.
+The `cork` utility, included in the CoreOS [mantle](https://github.com/coreos/mantle) project, is used to create and work with an SDK chroot.
 
 In order to use this utility, you must additionally have the [golang](https://golang.org/) toolchain installed and configured correctly.
 
@@ -47,7 +47,7 @@ export PATH=$PATH:$HOME/bin
 You may want to add the `PATH` export to your shell profile (e.g. `.bashrc`).
 
 
-Next, the cork utility can be used to create an SDK chroot:
+Next, use the cork utility to create a project directory. This will hold all of your git repos and the SDK chroot. A few gigabytes of space will be necessary.
 
 ```sh
 mkdir coreos-sdk
@@ -61,56 +61,7 @@ cork enter
 
 To use the SDK chroot in the future, run `cork enter` from the above directory.
 
-### Option 2: using repo and cros\_sdk
-
-#### Install Repo
-
-The `repo` utility helps to manage the collection of git repositories that makes up Container Linux. 
-
-For newer Debian, Ubuntu, and other Debian based systems, install the repo package from your distro:
-
-    sudo apt-get install repo
-
-For systems without a packaged repo download it and add it to `$PATH`:
-
-```sh
-mkdir ~/bin
-export PATH="$PATH:$HOME/bin"
-curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
-chmod a+x ~/bin/repo
-```
-
-You may want to add the `PATH` export to `.bashrc` or `/etc/profile.d/` so that you don’t need to set `$PATH` in every new shell.
-
-#### Bootstrap the SDK chroot
-
-Create a project directory. This will hold all of your git repos and the SDK chroot. A few gigabytes of space will be necessary.
-
-```sh
-mkdir coreos; cd coreos
-```
-
-Initialize the .repo directory with the manifest that describes all of the git repos required to get started.
-
-```sh
-repo init -u https://github.com/coreos/manifest.git
-```
-
-Synchronize all of the required git repos from the manifest.
-
-```sh
-repo sync
-```
-
-#### Use cros\_sdk to setup the chroot
-
-Download and enter the SDK chroot which contains all of the compilers and tooling.
-
-```sh
-./chromite/bin/cros_sdk
-```
-
-**WARNING:** To delete the SDK chroot, use `./chromite/bin/cros_sdk --delete`. Otherwise, you will delete `/dev` entries that are `bind`-mounted into the chroot.
+**WARNING:** To delete the SDK chroot, use `cork delete`. Otherwise, you will delete `/dev` entries that are `bind`-mounted into the chroot.
 
 ### Using QEMU for cross-compiling
 
@@ -141,7 +92,7 @@ This will install the configuration file `/etc/binfmt.d/qemu-aarch64.conf`, whic
 
 ### Building an image
 
-After entering the chroot via `cork` or `cros_sdk` for the first time, you should set user `core`'s password:
+After entering the chroot via `cork` for the first time, you should set user `core`'s password:
 
 ```sh
 ./set_shared_user_password.sh
