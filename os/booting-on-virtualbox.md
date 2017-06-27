@@ -106,7 +106,7 @@ Click on 'OK' button and the virtual machine will be ready to be started.
 
 ## Logging in
 
-Networking can take a bit of time to come up under VirtualBox and you will need to know the IP in order to connect to it. Press enter a few times at the login prompt and you see an IP address pop up.
+Networking can take a bit of time to come up under VirtualBox and you will need to know the IP in order to connect to it. Press enter a few times at the login prompt and you see an IP address pop up. If you see VirtualBox NAT ip 10.0.2.15 you have go to virtual machine settings again then click on Network tab and then on Port Forwarding. In dialog add rule as follows Host Port: 2222; Guest Port 22 then you will be able to connect using command `ssh core@localhost -p2222`
 
 Now you can login using your private SSH key.
 
