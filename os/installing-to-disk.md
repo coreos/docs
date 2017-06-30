@@ -59,10 +59,11 @@ For reference here are the rest of the `coreos-install` options:
 -o OEM      OEM type to install (e.g. ami)
 -c CLOUD    Insert a cloud-init config to be executed on boot.
 -i IGNITION Insert an Ignition config to be executed on boot.
--t TMPDIR   Temporary location with enough space to download images.
--v          Super verbose, for debugging.
 -b BASEURL  URL to the image mirror (overrides BOARD)
+-k KEYFILE  Override default GPG key for verifying image signature
+-f IMAGE    Install unverified local image file to disk instead of fetching
 -n          Copy generated network units to the root partition.
+-v          Super verbose, for debugging.
 ```
 
 ## Container Linux Configs
