@@ -99,13 +99,11 @@ Note the declaration of `ConditionPathExists=!/var/lib/docker.btrfs`. Without th
 
 ## Mounting NFS exports
 
-This Container Linux Config excerpt enables the NFS host monitor [`rpc.statd(8)`](http://linux.die.net/man/8/rpc.statd), then mounts an NFS export onto the Container Linux node's `/var/www`.
+This Container Linux Config excerpt mounts an NFS export onto the Container Linux node's `/var/www`.
 
 ```yaml container-linux-config
 systemd:
   units:
-    - name: rpc-statd.service
-      enable: true
     - name: var-www.mount
       enable: true
       contents: |
