@@ -8,10 +8,17 @@ There is a script that simplify the VDI building. It downloads a bare-metal imag
 
 The script is located on [GitHub](https://github.com/coreos/scripts/blob/master/contrib/create-coreos-vdi). The running host must support VirtualBox tools.
 
-As first step, you must download and make it executable.
+As first step, download the script using either `wget` or `curl`.
 
 ```sh
 wget https://raw.githubusercontent.com/coreos/scripts/master/contrib/create-coreos-vdi
+# OR
+curl https://raw.githubusercontent.com/coreos/scripts/master/contrib/create-coreos-vdi > create-coreos-vdi
+```
+
+Then make it executable.
+
+```sh
 chmod +x create-coreos-vdi
 ```
 
