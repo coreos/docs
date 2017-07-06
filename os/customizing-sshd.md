@@ -34,7 +34,7 @@ storage:
 
 ### Changing the sshd port
 
-Container Linux ships with socket-activated SSH by default. The configuration for this can be found at `/usr/lib/systemd/system/sshd.socket`. We're going to override some of the default settings for this in the Container Linux Config provided at boot:
+Container Linux ships with socket-activated SSH daemon by default. The configuration for this can be found at `/usr/lib/systemd/system/sshd.socket`. We're going to override some of the default settings for this in the Container Linux Config provided at boot:
 
 ```yaml container-linux-config
 systemd:
@@ -65,11 +65,11 @@ systemd:
     mask: true
 ```
 
-Note that in this configuration the port will be configured by updating the `/etc/ssh/sshd_config` file with the `Port` directive rather than via editing `sshd.socket`.
+Note that in this configuration the port will be configured by updating the `/etc/ssh/sshd_config` file with the `Port` directive rather than via `sshd.socket`.
 
 ### Further reading
 
-Read the [full Container Linux Config][cl-configs] guide for more details on working with Container Linux Configs, including setting uesr's ssh keys.
+Read the [full Container Linux Config][cl-configs] guide for more details on working with Container Linux Configs, including setting user's ssh keys.
 
 ## Customizing sshd after first boot
 
@@ -108,7 +108,7 @@ FreeBind=true
 
 You can specify both an IP and an alternate port in a single `ListenStream` line. IPv6 address bindings would be specified using the format `[2001:db8::7]:22`.
 
-*Note*: While a specific IP address is optional, you must always specify the port, even if it is the default SSH port. The FreeBind option is used to allow the socket to be bound on addresses that are not yet configured on an interface, to avoid issues caused by delays in IP configuration at boot. (This option is required only if you are specifying an address.)
+*Note*: While specifying an IP address is optional, you must always specify the port, even if it is the default SSH port. The `FreeBind` option is used to allow the socket to be bound on addresses that are not yet configured on an interface, to avoid issues caused by delays in IP configuration at boot. (This option is required only if you are specifying an address.)
 
 Multiple ListenStream lines can be specified, in which case `sshd` will listen on all the specified sockets:
 
@@ -123,7 +123,7 @@ FreeBind=true
 
 ### Activating changes
 
-After creating the the dropin file, the changes can be activated by doing a daemon-reload and restarting `sshd.socket`
+After creating the dropin file, the changes can be activated by doing a daemon-reload and restarting `sshd.socket`
 
 ```
 $ sudo systemctl daemon-reload
