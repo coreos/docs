@@ -40,14 +40,12 @@ Container Linux ships with socket-activated SSH by default. The configuration fo
 systemd:
   units:
     - name: sshd.socket
-      enable: true
-      contents: |
-        [Socket]
-        ListenStream=222
-        FreeBind=true
-        Accept=yes
-        [Install]
-        WantedBy=multi-user.target
+      dropins:
+      - name: 10-sshd-port.conf
+        contents: |
+          [Socket]
+          ListenStream=
+          ListenStream=222
 ```
 
 `sshd` will now listen only on port 222 on all interfaces when the system is built.
@@ -61,6 +59,8 @@ To configure sshd on Container Linux without socket activation, a Container Linu
 ```yaml container-linux-config
 systemd:
   units:
+  - name: sshd.service
+    enable: true
   - name: sshd.socket
     mask: true
 ```
@@ -80,10 +80,10 @@ The following sections walk through applying the same changes documented above o
 
 ### Changing the sshd port
 
-First, create an editable copy of the `sshd.socket`.
+First, create a dropin for the `sshd.socket` unit.
 
 ```
-$ sudo cp /usr/lib/systemd/system/sshd.socket /etc/systemd/system/sshd.socket
+$ sudo systemctl edit sshd.socket
 ```
 
 This gives you a `sshd.socket` unit that will override the one supplied by Container Linux. When changes are made to it, and `systemd` re-reads its configuration, those changes will be applied.
