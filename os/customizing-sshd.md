@@ -81,27 +81,27 @@ The following sections walk through applying the same changes documented above o
 
 ### Changing the sshd port
 
-First, create a dropin for the `sshd.socket` unit.
+The sshd.socket unit may be configured via systemd [dropins](using-systemd-drop-in-units.md).
+
+To change how sshd listens, update the list of `ListenStream`s in the `[Socket]` section of the dropin.
+
+*Note*: `ListenStream` is a list of values with each line adding to the list. An empty value clears the list, which is why `ListenStream=` is necessary to prevent it from *also* listening on the default port `22`.
+
+To change just the listened-to port (in this example, port 222), create a dropin at `/etc/systemd/system/sshd.socket.d/10-sshd-listen-ports.conf`
 
 ```
-$ sudo systemctl edit sshd.socket
-```
-
-This gives you a `sshd.socket` unit that will override the one supplied by Container Linux. When changes are made to it, and `systemd` re-reads its configuration, those changes will be applied.
-
-To change how sshd listens, change or add the relevant lines in the `[Socket]` section of `/etc/systemd/system/sshd.socket` (leaving options not specified here intact).
-
-To change just the listened-to port (in this example, port 222):
-
-```
+# /etc/systemd/system/sshd.socket.d/10-sshd-listen-ports.conf
 [Socket]
+ListenStream=
 ListenStream=222
 ```
 
 To change the listened-to IP address (in this example, 10.20.30.40):
 
 ```
+# /etc/systemd/system/sshd.socket.d/10-sshd-listen-ports.conf
 [Socket]
+ListenStream=
 ListenStream=10.20.30.40:22
 FreeBind=true
 ```
@@ -113,37 +113,21 @@ You can specify both an IP and an alternate port in a single `ListenStream` line
 Multiple ListenStream lines can be specified, in which case `sshd` will listen on all the specified sockets:
 
 ```
+# /etc/systemd/system/sshd.socket.d/10-sshd-listen-ports.conf
 [Socket]
+ListenStream=
 ListenStream=222
 ListenStream=10.20.30.40:223
 FreeBind=true
-```
-
-`sshd` will now listen to port 222 on all configured addresses, and port 223 on 10.20.30.40.
-
-Taking the last example, the complete contents of `/etc/systemd/system/sshd.socket` would now be:
-
-```
-[Unit]
-Description=OpenSSH Server Socket
-Conflicts=sshd.service
-
-[Socket]
-ListenStream=222
-ListenStream=10.20.30.40:223
-FreeBind=true
-Accept=yes
-
-[Install]
-WantedBy=sockets.target
 ```
 
 ### Activating changes
 
-After the edited file is written to disk, you can activate it without rebooting with:
+After creating the the dropin file, the changes can be activated by doing a daemon-reload and restarting `sshd.socket`
 
 ```
 $ sudo systemctl daemon-reload
+$ sudo systemctl restart sshd.socket
 ```
 
 We now see that systemd is listening on the new sockets:
@@ -177,10 +161,9 @@ Simply mask the systemd.socket unit:
 # systemctl mask --now sshd.socket
 ```
 
-Finally, execute a daemon-reload and restart the sshd.service unit:
+Finally, restart the sshd.service unit:
 
 ```
-# systemctl daemon-reload
 # systemctl restart sshd.service
 ```
 
