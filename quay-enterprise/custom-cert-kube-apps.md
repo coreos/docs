@@ -2,7 +2,7 @@
 
 This document assumes you have deployed [Quay Enterprise with a self-signed certificate.][self-signed]
 
-[Appr](https://github.com/app-registry/appr) uses a [Python Requests library][python-requests], which trusts only a standard set of certificates by default. This prevents Helm from interacting with a Quay Enterprise instance that is using a self-signed certificate.
+[Appr][appr] uses the [Python Requests library][python-requests], which trusts only a standard set of certificates by default. This prevents Helm from interacting with a Quay Enterprise instance that is using a self-signed certificate.
 
 The error is reported as a connection error when attempting to interact with the registry:
 
@@ -17,7 +17,6 @@ To work around this restriction, add the CA for the self-signed certificate to t
 - [Container Linux][container-linux]
 - [Red Hat][red-hat]
 - [Ubuntu/Debian][ubuntu]
-
 
 ### Add an environment variable that points Python Requests to the correct certificate chain:
 
@@ -34,6 +33,7 @@ Client-version: 0.3.7
 ````
 
 
+[appr]: https://github.com/app-registry/appr
 [self-signed]: quay-ssl.md
 [python-requests]: http://docs.python-requests.org/en/master/
 [container-linux]: https://coreos.com/os/docs/latest/adding-certificate-authorities.html
