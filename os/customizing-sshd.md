@@ -77,6 +77,7 @@ Since [Container Linux Configs][cl-configs] are only applied on first boot, exis
 
 The following sections walk through applying the same changes documented above on a running machine.
 
+*Note*: To avoid incidentally locking yourself out of the machine, it's a good idea to double-check you're able to directly login to the machine's console, if applicable.
 
 ### Changing the sshd port
 
