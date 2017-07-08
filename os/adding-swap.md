@@ -2,63 +2,62 @@
 
 Swap is the process of moving pages of memory to a designated part of the hard disk, freeing up space when needed. Swap can be used to alleviate problems with low-memory environments.
 
-By default Container Linux does not include a partition for swap, however one can configure their system to have swap.
+By default Container Linux does not include a partition for swap, however one can configure their system to have swap, either by including a dedicated partition for it or creating a swapfile.
 
 ## Managing swap with systemd
 
-A systemd-managed service can be used to create, enable, and disable a swapfile service on your system. Write, enable, and start the systemd unit file found in the next section to add swap to a Container Linux node.
+systemd provides a specialized `.swap` unit file type which may be used to activate swap. The below example shows how to add a swapfile and activate it using systemd.
+
+### Creating a swapfile
+
+The following commands, run as root, will make a 1GiB file suitable for use as swap.
+
+```sh
+mkdir -p /var/vm
+fallocate -l 1024m /var/vm/swapfile1
+chmod 600 /var/vm/swapfile1
+mkswap /var/vm/swapfile1
+```
 
 ### Creating the systemd unit file
 
-The following systemd unit creates and enables a service to manage a 1GiB swapfile. It should be written to `/etc/systemd/system/swap.service`.
+The following systemd unit activates the swapfile we created. It should be written to `/etc/systemd/system/var-vm-swapfile1.swap`.
 
-```
+```ini
 [Unit]
 Description=Turn on swap
 
-[Service]
-Type=oneshot
-Environment="SWAP_PATH=/var/vm" "SWAP_FILE=swapfile1"
-ExecStartPre=-/usr/bin/rm -rf ${SWAP_PATH}
-ExecStartPre=/usr/bin/mkdir -p ${SWAP_PATH}
-ExecStartPre=/usr/bin/touch ${SWAP_PATH}/${SWAP_FILE}
-ExecStartPre=/bin/bash -c "fallocate -l 1024m ${SWAP_PATH}/${SWAP_FILE}"
-ExecStartPre=/usr/bin/chmod 600 ${SWAP_PATH}/${SWAP_FILE}
-ExecStartPre=/usr/sbin/mkswap ${SWAP_PATH}/${SWAP_FILE}
-ExecStartPre=/usr/sbin/sysctl vm.swappiness=10
-ExecStart=/sbin/swapon ${SWAP_PATH}/${SWAP_FILE}
-ExecStop=/sbin/swapoff ${SWAP_PATH}/${SWAP_FILE}
-ExecStopPost=-/usr/bin/rm -rf ${SWAP_PATH}
-RemainAfterExit=true
+[Swap]
+What=/var/vm/swapfile1
 
 [Install]
 WantedBy=multi-user.target
 ```
 
-**Note** Ensure the block device containing your swapfile is configured to auto-mount on boot.
-
 ### Enable the unit and start using swap
 
-The following command enables and starts the new `swap` service.
+Use `systemctl` to enable the unit once created. The `swappiness` value may be modified if desired.
+
+```sh
+$ systemctl enable --now var-vm-swapfile1.swap
+# Optionally
+$ echo 'vm.swappiness=10' | sudo tee /etc/sysctl.d/80-swappiness.conf
+$ systemctl restart systemd-sysctl
+```
+
+Swap has been enabled and will be started automatically on subsequent reboots. We can verify that the swap is activated by running `swapon`:
 
 ```
-$ systemctl enable --now /etc/systemd/system/swap.service
-```
-
-Swap has been enabled and will be started automatically on subsequent reboots. We can verify that the swap is being used by running `free -hm`:
-
-```
-$ free -hm
-             total       used       free     shared    buffers     cached
-[...]
-Swap:         1.0G         0B       1.0G
+$ swapon
+NAME              TYPE       SIZE USED PRIO
+/var/vm/swapfile1 file      1024M   0B   -1
 ```
 
 ## Problems and Considerations
 
 ### Btrfs and xfs
 
-Swapfiles should not be created on btrfs or xfs volumes. For systems using btrfs or xfs, it is recommended to create a dedicated ext4 partition to store swapfiles.
+Swapfiles should not be created on btrfs or xfs volumes. For systems using btrfs or xfs, it is recommended to create a dedicated swap partition.
 
 ### Partition size
 
@@ -82,30 +81,38 @@ The block device mounted at `/var/`, `/dev/sdXN`, is the correct filesystem type
 The following config sets up a 1GiB swapfile located at `/var/vm/swapfile1`.
 
 ```yaml container-linux-config
+storage:
+  files:
+  - path: /etc/sysctl.d/80-swappiness.conf
+    filesystem: root
+    contents:
+      inline: "vm.swappiness=10"
+
 systemd:
   units:
-    - name: swap.service
-      enable: true
+    - name: var-vm-swapfile1.swap
       contents: |
         [Unit]
         Description=Turn on swap
+        Requires=create-swapfile.service
+        After=create-swapfile.service
+
+        [Swap]
+        What=/var/vm/swapfile1
+
+        [Install]
+        WantedBy=multi-user.target
+    - name: create-swapfile.service
+      contents: |
+        [Unit]
+        Description=Create a swapfile
+        RequiresMountsFor=/var
+        ConditionPathExists=!/var/vm/swapfile1
         
         [Service]
         Type=oneshot
-        Environment="SWAP_PATH=/var/vm"
-        Environment="SWAP_FILE=swapfile1"
-        ExecStartPre=-/usr/bin/rm -rf ${SWAP_PATH}
-        ExecStartPre=/usr/bin/mkdir -p ${SWAP_PATH}
-        ExecStartPre=/usr/bin/touch ${SWAP_PATH}/${SWAP_FILE}
-        ExecStartPre=/bin/bash -c "fallocate -l 1024m ${SWAP_PATH}/${SWAP_FILE}"
-        ExecStartPre=/usr/bin/chmod 600 ${SWAP_PATH}/${SWAP_FILE}
-        ExecStartPre=/usr/sbin/mkswap ${SWAP_PATH}/${SWAP_FILE}
-        ExecStartPre=/usr/sbin/sysctl vm.swappiness=10
-        ExecStart=/sbin/swapon ${SWAP_PATH}/${SWAP_FILE}
-        ExecStop=/sbin/swapoff ${SWAP_PATH}/${SWAP_FILE}
-        ExecStopPost=-/usr/bin/rm -rf ${SWAP_PATH}
+        ExecStart=/usr/bin/mkdir -p /var/vm
+        ExecStart=/usr/bin/fallocate -l 1024m /var/vm/swapfile1
+        ExecStart=/usr/bin/chmod 600 /var/vm/swapfile1
         RemainAfterExit=true
-        
-        [Install]
-        WantedBy=multi-user.target
 ```
