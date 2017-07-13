@@ -48,7 +48,7 @@ flannel uses UDP port 8285 for sending encapsulated IP packets. Make sure to ena
 The last step is to enable `flanneld.service` by creating the `flannel` section in our Container Linux Config. Options for flannel can be specified in this section.
 
 ```yaml container-linux-config
-flannel:
+flannel: ~
 ```
 
 *Important*: Other units that will run in containers, including those scheduled via fleet, should include `Requires=flanneld.service`, `After=flanneld.service`, and `Restart=always|on-failure` directives. These directive are necessary because flanneld.service may fail due to etcd not being available yet. It will keep restarting and it is important for Docker based services to also keep trying until flannel is up.
