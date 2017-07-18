@@ -4,15 +4,10 @@ Container Linux defaults to running an OpenSSH daemon using `systemd` socket act
 
 As a practical example, when a client fails to connect by not completing the TCP connection (e.g. because the "client" is actually a TCP port scanner), the MOTD may report failures of `systemd` units (which will be named by the source IP that failed to connect) next time you log in to the Container Linux host. These failures are not themselves harmful, but it is a good general practice to change how SSH listens, either by changing the IP address `sshd` listens to from the default setting (which listens on all configured interfaces), changing the default port, or both.
 
-[cl-configs]: provisioning.md
-
 ## Customizing sshd with a Container Linux Config
 
 In this example we will disable logins for the `root` user, only allow login for the `core` user and disable password based authentication. For more details on what sections can be added to `/etc/ssh/sshd_config` see the [OpenSSH manual][openssh-manual].
 If you're interested in additional security options, Mozilla provides a well-commented example of a [hardened configuration][mozilla-ssh-rec].
-
-[openssh-manual]: http://www.openssh.com/cgi-bin/man.cgi?query=sshd_config
-[mozilla-ssh-rec]: https://wiki.mozilla.org/Security/Guidelines/OpenSSH#Modern_.28OpenSSH_6.7.2B.29
 
 ```yaml container-linux-config
 storage:
@@ -170,3 +165,8 @@ Finally, restart the sshd.service unit:
 ### Further reading on systemd units
 
 For more information about configuring Container Linux hosts with `systemd`, see [Getting Started with systemd](getting-started-with-systemd.md).
+
+
+[openssh-manual]: http://www.openssh.com/cgi-bin/man.cgi?query=sshd_config
+[mozilla-ssh-rec]: https://wiki.mozilla.org/Security/Guidelines/OpenSSH#Modern_.28OpenSSH_6.7.2B.29
+[cl-configs]: provisioning.md
