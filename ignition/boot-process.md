@@ -14,7 +14,7 @@ Finally, GRUB [searches for the initial disk GUID][search-guid] (00000000-0000-0
 
 ## Early user space
 
-After GRUB, the Container Linux startup process moves into the initial RAM file system. The initramfs mount the root filesystem, randomize the disk GUID, and run Ignition.
+After GRUB, the Container Linux startup process moves into the initial RAM file system. The initramfs mounts the root filesystem, randomizes the disk GUID, and runs Ignition.
 
 If the `coreos.randomize_guid` kernel parameter is provided, the disk with the specified GUID is given a new, random GUID.
 
