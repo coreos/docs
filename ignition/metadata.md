@@ -1,6 +1,6 @@
 # Metadata
 
-In many cases, it is desirable to inject dynamic data into services writen by Ignition. Because Ignition itself is static and cannot inject dynamic data into configs, this has to be done as the system starts. Container Linux ships with a small utility, `coreos-metadata`, which fetches information specific to the environment in which Container Linux is running. While this utility only works on officially supported platforms, it is possible to use the same paradigm to write a custom utility.
+In many cases, it is desirable to inject dynamic data into services written by Ignition. Because Ignition itself is static and cannot inject dynamic data into configs, this must be done as the system starts. Container Linux ships with a small utility, `coreos-metadata`, which fetches information specific to the environment in which Container Linux is running. While this utility works only on officially supported platforms, it is possible to use the same paradigm to write a custom utility.
 
 Each of these examples is written in version 2.0.0 of the config. Ensure that any configuration matches the version that Ignition expects.
 
@@ -45,7 +45,7 @@ ExecStart=/usr/bin/etcd2 \
 
 ## Custom metadata agent
 
-In the event that Container Linux is being used outside of a supported cloud environment (e.g., a PXE booted, bare-metal installation), coreos-metadata won't work. However, it is possible to write a custom metadata service.
+In the event that Container Linux is being used outside of a supported cloud environment (for example, a PXE booted, bare-metal installation), coreos-metadata won't work. However, it is possible to write a custom metadata service.
 
 This config will write a single service unit with the contents of a metadata agent service (shown below). This unit will not start on its own, because it is not enabled and is not a dependency of any other units. This metadata agent will fetch instance metadata from EC2 and save it to an ephemeral file.
 
