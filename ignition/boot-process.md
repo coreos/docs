@@ -1,10 +1,10 @@
 # CoreOS Container Linux startup process
 
-The Container Linux startup process is built on the standard [Linux startup process][linux startup]. Since this process is already well documented and generally well understood, this document will focus on aspects specific to booting Container Linux.
+The Container Linux startup process is built on the standard [Linux startup process][linux-startup]. Since this process is already well documented and generally well understood, this document will focus on aspects specific to booting Container Linux.
 
 ## Bootloader
 
-[GRUB][grub] is the first program executed when a Container Linux system boots. The Container Linux [GRUB config][grub config] has several roles.
+[GRUB][grub] is the first program executed when a Container Linux system boots. The Container Linux [GRUB config][grub-config] has several roles.
 
 First, the GRUB config [specifies which `usr` partition to use][gptprio.next] from the two `usr` partitions Container Linux uses to provide atomic upgrades and rollbacks.
 
@@ -37,6 +37,6 @@ After all of the tasks in the initramfs complete, the machine pivots into user s
 [check-file]: https://github.com/coreos/scripts/blob/9e1c23f3f44d2751076e770f43f7a6db05d49652/build_library/grub.cfg#L68-L71
 [gptprio.next]: https://github.com/coreos/scripts/blob/9e1c23f3f44d2751076e770f43f7a6db05d49652/build_library/grub.cfg#L132
 [grub]: https://www.gnu.org/software/grub/
-[grub config]: https://github.com/coreos/scripts/blob/9e1c23f3f44d2751076e770f43f7a6db05d49652/build_library/grub.cfg
-[linux startup]: https://en.wikipedia.org/wiki/Linux_startup_process
+[grub-config]: https://github.com/coreos/scripts/blob/9e1c23f3f44d2751076e770f43f7a6db05d49652/build_library/grub.cfg
+[linux-startup]: https://en.wikipedia.org/wiki/Linux_startup_process
 [search-guid]: https://github.com/coreos/scripts/blob/9e1c23f3f44d2751076e770f43f7a6db05d49652/build_library/grub.cfg#L73-L78
