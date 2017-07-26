@@ -1,6 +1,6 @@
 ## Redirecting syslog to /dev/stdout
 
-By default, Quay Enterprise logs most relevant for debugging to `/var/log/syslog` within the container. [syslog-ng](https://en.wikipedia.org/wiki/Syslog-ng) can be configured to redirect these logs to `/dev/stdout` which will allow for collection by most logging solutions:
+By default, Quay Enterprise saves logs most relevant for debugging to `/var/log/syslog` within the container. [syslog-ng][syslog-ng] can be configured to redirect these logs to `/dev/stdout` which will allow for collection by most logging solutions:
 
 Create `syslog-ng-extra.conf` with the following content:
 
@@ -71,3 +71,6 @@ quay-enterprise-redis-3163299701-mdw95   1/1       Running   0          3h
 $ kubectl -n quay-enterprise delete pod/quay-enterprise-app-1576414776-vv4vv
 $ kubectl -n quay-enterprise delete pod/quay-enterprise-app-1623234786-twrc2
 ```
+
+[syslog-ng]: https://en.wikipedia.org/wiki/Syslog-ng
+
