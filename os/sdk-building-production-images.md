@@ -33,7 +33,7 @@ That was far too easy, if you need to do it the hard way try this:
  4. Update `version.txt` with the desired version number.
     * COREOS_BUILD is the major version number, and should be the number of days since July 1st, 2013. COREOS_BRANCH should start at 0 and is incremented for every normal release based on a particular COREOS_BUILD version. COREOS_PATCH is reserved for exceptional situations such as emergency manual releases and should normally be 0.
     * The complete version string is COREOS_BUILD.COREOS_BRANCH.COREOS_PATCH
-    * COREOS_SDK_VERSION should be the complete version string of an existing build. The `cros_sdk` uses this to pick what SDK tarball to use when creating a fresh chroot and provides a fallback set of binary packages to use when the current release's packages are unavailable. Usually it will be one release behind COREOS_BUILD.
+    * COREOS_SDK_VERSION should be the complete version string of an existing build. `cork` uses this to pick what SDK tarball to use when creating a fresh chroot and provides a fallback set of binary packages to use when the current release's packages are unavailable. Usually it will be one release behind COREOS_BUILD.
  5. Generate a release manifest: `repo manifest -r -o build-$BUILD.xml` where `$BUILD` is the current value of COREOS_BUILD in `version.txt`.
  6. Update `release.xml`: `ln -sf build-$BUILD.xml release.xml`
  7. Commit! `git add build-$BUILD.xml; git commit -a`
