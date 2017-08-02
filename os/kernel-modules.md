@@ -63,17 +63,10 @@ sudo systemd-nspawn \
     --image=coreos_developer_container.bin
 ```
 
-Now, inside the container, fetch the Container Linux package definitions and check out the current version's branch.
+Now, inside the container, fetch the Container Linux package definitions, then download and prepare the Linux kernel source for building external modules.
 
 ```sh
 emerge-gitclone
-. /usr/share/coreos/release
-git -C /var/lib/portage/coreos-overlay checkout build-${COREOS_RELEASE_VERSION%%.*}
-```
-
-Still inside the container, download and prepare the Linux kernel source for building external modules.
-
-```sh
 emerge -gKv coreos-sources
 gzip -cd /proc/config.gz > /usr/src/linux/.config
 make -C /usr/src/linux modules_prepare
