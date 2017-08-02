@@ -43,7 +43,6 @@ Read system configuration files to determine the URL of the development containe
 ```sh
 . /usr/share/coreos/release
 . /usr/share/coreos/update.conf
-. /etc/coreos/update.conf  # This might not exist.
 url="http://${GROUP:-stable}.release.core-os.net/$COREOS_RELEASE_BOARD/$COREOS_RELEASE_VERSION/coreos_developer_container.bin.bz2"
 ```
 
@@ -64,7 +63,7 @@ sudo systemd-nspawn \
     --image=coreos_developer_container.bin
 ```
 
-Now, inside the container, fetch the Container Linux packages and check out the current version. The `git checkout` command might fail on the latest alpha, before its version is branched from `master`, so staying on the `master` branch is correct in that case.
+Now, inside the container, fetch the Container Linux package definitions and check out the current version's branch.
 
 ```sh
 emerge-gitclone
