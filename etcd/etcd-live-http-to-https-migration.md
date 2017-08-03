@@ -17,14 +17,14 @@ $ grep ETCD_LISTEN_CLIENT_URLS /run/systemd/system/etcd-member.service.d/20-clct
 Environment="ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379"
 ```
 
-In this case etcd is listening only on port 2379. We'll add port 4001 with a systemd [drop-in][drop-ins] unit file. Create the file `/etc/systemd/system/etcd2.service.d/25-insecure_localhost.conf`. In this file, write an excerpt that appends the new URL on port 4001 to the existing value we retrieved in the step above:
+In this case etcd is listening only on port 2379. We'll add port 4001 with a systemd [drop-in][drop-ins] unit file. Create the file `/etc/systemd/system/etcd-member.service.d/25-insecure_localhost.conf`. In this file, write an excerpt that appends the new URL on port 4001 to the existing value we retrieved in the step above:
 
 ```
 [Service]
 Environment="ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379,http://127.0.0.1:4001"
 ```
 
-Run `systemctl daemon-reload` followed by `systemctl restart etcd2` to restart etcd. Check cluster status using the [`etcdctl`][etcdctl] commands:
+Run `systemctl daemon-reload` followed by `systemctl restart etcd-member.service` to restart etcd. Check cluster status using the [`etcdctl`][etcdctl] commands:
 
 ```sh
 $ etcdctl member list
@@ -67,7 +67,7 @@ It is also necessary to modify your systemd [unit files][systemd-unit-file] or [
 
 ## Configure etcd key pair
 
-Now we will configure etcd to use the new certificates. Create a `/etc/systemd/system/etcd2.service.d/30-certs.conf` [drop-in][drop-ins] file with the following contents:
+Now we will configure etcd to use the new certificates. Create a `/etc/systemd/system/etcd-member.service.d/30-certs.conf` [drop-in][drop-ins] file with the following contents:
 
 ```
 [Service]
@@ -81,7 +81,7 @@ Environment="ETCD_PEER_TRUSTED_CA_FILE=/etc/ssl/etcd/ca.pem"
 Environment="ETCD_PEER_CLIENT_CERT_AUTH=true"
 ```
 
-Reload systemd configs with `systemctl daemon-reload` then restart etcd by invoking `systemctl restart etcd2`. Check cluster health:
+Reload systemd configs with `systemctl daemon-reload` then restart etcd by invoking `systemctl restart etcd-member service`. Check cluster health:
 
 ```sh
 $ etcdctl member list
@@ -92,7 +92,7 @@ Repeat this step on the rest of the cluster members.
 
 ### Configure etcd proxy key pair
 
-If proxying etcd connections as discussed above, create a systemd [drop-in][drop-ins] unit file named `/etc/systemd/system/etcd2.service.d/30-certs.conf` with the following contents:
+If proxying etcd connections as discussed above, create a systemd [drop-in][drop-ins] unit file named `/etc/systemd/system/etcd-member.service.d/30-certs.conf` with the following contents:
 
 ```
 [Service]
@@ -106,7 +106,7 @@ Environment="ETCD_PEER_TRUSTED_CA_FILE=/etc/ssl/etcd/ca.pem"
 Environment="ETCD_LISTEN_CLIENT_URLS=http://127.0.0.1:2379,http://127.0.0.1:4001"
 ```
 
-Reload systemd configs with `systemctl daemon-reload`, then restart etcd with `systemctl restart etcd2`. Check proxy status with, e.g.:
+Reload systemd configs with `systemctl daemon-reload`, then restart etcd with `systemctl restart etcd-member.service`. Check proxy status with, e.g.:
 
 ```sh
 $ curl http://127.0.0.1:4001/v2/stats/self
@@ -167,7 +167,7 @@ Apply the changes in the same manner described above, by running each of the pri
 
 ## Change etcd client URLs
 
-Create a [drop-in][drop-ins] file named `/etc/systemd/system/etcd2.service.d/40-tls.conf` and write the following there:
+Create a [drop-in][drop-ins] file named `/etc/systemd/system/etcd-member.service.d/40-tls.conf` and write the following there:
 
 ```
 [Service]
@@ -176,7 +176,7 @@ Environment="ETCD_LISTEN_CLIENT_URLS=https://0.0.0.0:2379,http://127.0.0.1:4001"
 Environment="ETCD_LISTEN_PEER_URLS=https://0.0.0.0:2380"
 ```
 
-Reload systemd configs with `systemctl daemon-reload` and restart etcd by issuing `systemctl restart etcd2`. Check that HTTPS connections are working properly with, e.g.:
+Reload systemd configs with `systemctl daemon-reload` and restart etcd by issuing `systemctl restart etcd-member.service`. Check that HTTPS connections are working properly with, e.g.:
 
 ```sh
 $ curl --cacert /etc/ssl/etcd/ca.pem --cert /etc/ssl/etcd/server1.pem --key /etc/ssl/etcd/server1-key.pem https://172.16.0.101:2379/v2/stats/self
@@ -202,7 +202,7 @@ $ etcdctl cluster-health
 Check etcd status and availability of the insecure port on the loopback interface:
 
 ```sh
-$ systemctl status etcd2
+$ systemctl status etcd-member.service
 $ curl http://127.0.0.1:4001/v2/stats/self
 ```
 

@@ -45,7 +45,7 @@ ETCD_INITIAL_CLUSTER_STATE=existing
 
 The `ETCD_DISCOVERY` environment variable defined in `20-cloudinit.conf` conflicts with the `ETCD_INITIAL_CLUSTER` setting needed for these steps, so the first step is clearing it by overriding `20-cloudinit.conf` with a new drop-in, `99-restore.conf`. `99-restore.conf` contains an empty `Environment="ETCD_DISCOVERY="` string.
 
-The complete example looks like this. On the `node4` Container Linux host, create a  temporary systemd drop-in, `/run/systemd/system/etcd2.service.d/99-restore.conf` with the contents below, filling in the information from the output of the `etcd member add` command we ran previously:
+The complete example looks like this. On the `node4` Container Linux host, create a  temporary systemd drop-in, `/run/systemd/system/etcd-member.service.d/99-restore.conf` with the contents below, filling in the information from the output of the `etcd member add` command we ran previously:
 
 ```ini
 [Service]
@@ -62,13 +62,13 @@ Environment="ETCD_INITIAL_CLUSTER=node1=http://10.0.1.1:2380,node2=http://10.0.1
 Environment="ETCD_INITIAL_CLUSTER_STATE=existing"
 ```
 
-Run `sudo systemctl daemon-reload` to parse the new and edited units. Check whether the new [drop-in][drop-in] is valid by checking the service's journal: `sudo journalctl _PID=1 -e -u etcd2`. If everything is ok, run `sudo systemctl restart etcd2` to activate your changes. You will see that the former proxy node has become a cluster member:
+Run `sudo systemctl daemon-reload` to parse the new and edited units. Check whether the new [drop-in][drop-in] is valid by checking the service's journal: `sudo journalctl _PID=1 -e -u etcd2`. If everything is ok, run `sudo systemctl restart etcd-member.service` to activate your changes. You will see that the former proxy node has become a cluster member:
 
 ```
 etcdserver: start member 9bf1b35fc7761a23 in cluster 36cce781cb4f1292
 ```
 
-Once your new member node is up and running, and `etcdctl cluster-health` shows a healthy cluster, remove the temporary drop-in file and reparse the services: `sudo rm /run/systemd/system/etcd2.service.d/99-restore.conf && sudo systemctl daemon-reload`.
+Once your new member node is up and running, and `etcdctl cluster-health` shows a healthy cluster, remove the temporary drop-in file and reparse the services: `sudo rm /run/systemd/system/etcd-member.service.d/99-restore.conf && sudo systemctl daemon-reload`.
 
 ## Replace a failed etcd member on CoreOS Container Linux
 
@@ -107,19 +107,19 @@ $ etcdctl member remove 1609b5a3a078c227
 Removed member 1609b5a3a078c227 from cluster
 ```
 
-Then, on the failed node (`10.0.1.2`), stop the etcd2 service:
+Then, on the failed node (`10.0.1.2`), stop the etcd-member service:
 
 ```sh
-$ sudo systemctl stop etcd2
+$ sudo systemctl stop etcd-member.service
 ```
 
-Clean up the `/var/lib/etcd2` directory:
+Clean up the `/var/lib/etcd` directory:
 
 ```sh
-$ sudo rm -rf /var/lib/etcd2/*
+$ sudo rm -rf /var/lib/etcd/*
 ```
 
-Check that the `/var/lib/etcd2/` directory exists and is empty. If you removed this directory accidentally, you can recreate it with the proper modes by using:
+Check that the `/var/lib/etcd/` directory exists and is empty. If you removed this directory accidentally, you can recreate it with the proper modes by using:
 
 ```sh
 $ sudo systemd-tmpfiles --create /usr/lib64/tmpfiles.d/etcd2.conf
@@ -136,7 +136,7 @@ ETCD_INITIAL_CLUSTER="52d2c433e31d54526cf3aa660304e8f1=http://10.0.1.1:2380,node
 ETCD_INITIAL_CLUSTER_STATE="existing"
 ```
 
-With the new node added, create a systemd [drop-in][drop-in] `/run/systemd/system/etcd2.service.d/99-restore.conf`, replacing the node data with the appropriate information from the output of the `etcdctl member add` command executed in the last step.
+With the new node added, create a systemd [drop-in][drop-in] `/run/systemd/system/etcd-member.service.d/99-restore.conf`, replacing the node data with the appropriate information from the output of the `etcdctl member add` command executed in the last step.
 
 ```ini
 [Service]
@@ -159,13 +159,13 @@ $ sudo systemctl daemon-reload
 Check whether the new [drop-in][drop-in] is valid:
 
 ```sh
-sudo journalctl _PID=1 -e -u etcd2
+sudo journalctl _PID=1 -e -u etcd-member.service
 ```
 
-And finally, if everything is ok start the `etcd2` service:
+And finally, if everything is ok start the `etcd-member` service:
 
 ```sh
-$ sudo systemctl start etcd2
+$ sudo systemctl start etcd-member.service
 ```
 
 Check cluster health:
@@ -174,7 +174,7 @@ Check cluster health:
 $ etcdctl cluster-health
 ```
 
-If your cluster has healthy state, etcd successfully wrote cluster configuration into the `/var/lib/etcd2` directory. Now it is safe to remove the temporary `/run/systemd/system/etcd2.service.d/99-restore.conf` drop-in file.
+If your cluster has healthy state, etcd successfully wrote cluster configuration into the `/var/lib/etcd2` directory. Now it is safe to remove the temporary `/run/systemd/system/etcd-member.service.d/99-restore.conf` drop-in file.
 
 ## etcd disaster recovery on CoreOS Container Linux
 
@@ -185,10 +185,10 @@ If a cluster is totally broken and [quorum][majority] cannot be restored, all et
 
 This document is an adaptation for Container Linux of the official [etcd disaster recovery guide][disaster-recovery], and uses systemd [drop-ins][drop-in] for convenience.
 
-Let's assume a 3-node cluster with no living members. First, stop the `etcd2` service on all the members:
+Let's assume a 3-node cluster with no living members. First, stop the `etcd-member` service on all the members:
 
 ```sh
-$ sudo systemctl stop etcd2
+$ sudo systemctl stop etcd-member.service
 ```
 
 If you have etcd proxy nodes, they should update members list automatically according to the [`--proxy-refresh-interval`][proxy-refresh] configuration option.
@@ -196,17 +196,17 @@ If you have etcd proxy nodes, they should update members list automatically acco
 Then, on one of the *member* nodes, run the following command to backup the current [data directory][data-dir]:
 
 ```sh
-$ sudo etcdctl backup --data-dir /var/lib/etcd2 --backup-dir /var/lib/etcd2_backup
+$ sudo etcdctl backup --data-dir /var/lib/etcd --backup-dir /var/lib/etcd_backup
 ```
 
-Now that we've made a backup, we tell etcd to start a one-member cluster. Create the `/run/systemd/system/etcd2.service.d/98-force-new-cluster.conf` [drop-in][drop-in] file with the following contents:
+Now that we've made a backup, we tell etcd to start a one-member cluster. Create the `/run/systemd/system/etcd-member.service.d/98-force-new-cluster.conf` [drop-in][drop-in] file with the following contents:
 
 ```ini
 [Service]
 Environment="ETCD_FORCE_NEW_CLUSTER=true"
 ```
 
-Then run `sudo systemctl daemon-reload`. Check whether the new [drop-in][drop-in] is valid by looking in its journal for errors: `sudo journalctl _PID=1 -e -u etcd2`. If everything is ok, start the `etcd2` daemon: `sudo systemctl start etcd2`.
+Then run `sudo systemctl daemon-reload`. Check whether the new [drop-in][drop-in] is valid by looking in its journal for errors: `sudo journalctl _PID=1 -e -u etcd2`. If everything is ok, start the `etcd2` daemon: `sudo systemctl start etcd-member.service`.
 
 Check the cluster state:
 
@@ -218,9 +218,9 @@ member e6c2bda2aa1f2dcf is healthy: got healthy result from http://10.0.1.2:2379
 cluster is healthy
 ```
 
-If the output contains no errors, remove the `/run/systemd/system/etcd2.service.d/98-force-new-cluster.conf` drop-in file, and reload systemd services: `sudo systemctl daemon-reload`. It is not necessary to restart the `etcd2` service after this step.
+If the output contains no errors, remove the `/run/systemd/system/etcd-member.service.d/98-force-new-cluster.conf` drop-in file, and reload systemd services: `sudo systemctl daemon-reload`. It is not necessary to restart the `etcd-member` service after this step.
 
-The next steps are those described in the [Change etcd cluster size][change-cluster-size] section, with one difference: Remove the `/var/lib/etcd2/member` directory as well as `/var/lib/etcd2/proxy`.
+The next steps are those described in the [Change etcd cluster size][change-cluster-size] section, with one difference: Remove the `/var/lib/etcd/member` directory as well as `/var/lib/etcd/proxy`.
 
 
 [change-cluster-size]: #change-etcd-cluster-size
