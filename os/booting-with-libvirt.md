@@ -207,10 +207,10 @@ storage:
     contents: 
       inline: container-linux1
 
-systemd:
+networkd:
   units:
   - name: 10-ens3.network
-    content: |
+    contents: |
       [Match]
       MACAddress=52:54:00:fe:b3:c0
 
