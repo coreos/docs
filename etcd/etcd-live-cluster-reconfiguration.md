@@ -1,236 +1,318 @@
 # etcd cluster runtime reconfiguration on CoreOS Container Linux
 
-This document describes the reconfiguration or recovery of an etcd cluster running on Container Linux, using a combination of `systemd` features and `etcdctl` commands.
+This document describes the reconfiguration and recovery of an etcd cluster running on Container Linux, using a combination of `systemd` features and `etcdctl` commands. The examples given in this document show the configuration for a three-node Container Linux cluster. Replace the IP addresses used in the examples with the corresponding real IPs.
 
-## Change etcd cluster size
+## Configuring etcd using Container Linux Config
 
-When [a Container Linux Config][cl-configs] is used to configure an etcd member on a Container Linux node, it compiles a special `/etc/systemd/system/etcd-member.service.d/20-clct-etcd-member.conf` [drop-in unit file][drop-in]. That is, the Container Linux Config below:
+When a [Container Linux Config][cl-configs] is used for configuring an etcd member on a Container Linux node, it compiles a special `/etc/systemd/system/etcd-member.service.d/20-clct-etcd-member.conf` [drop-in unit file][drop-in]. For example:
 
 ```yaml container-linux-config
 etcd:
-  advertise_client_urls: http://<PEER_ADDRESS>:2379
-  initial_advertise_peer_urls: http://<PEER_ADDRESS>:2380
-  listen_client_urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-  listen_peer_urls: http://0.0.0.0:2380
-  discovery: https://discovery.etcd.io/<token>
+  name: demo-etcd-1
+  listen_client_urls: https://10.240.0.1:2379,http://0.0.0.0:4001
+  advertise_client_urls: http://10.240.0.1:2379
+  listen_peer_urls:            http://0.0.0.0:2380
+  initial_advertise_peer_urls: http://10.240.0.1:2380
+  initial_cluster:             demo-etcd-1=http://10.240.0.1:2380,demo-etcd-2=http://10.240.0.2:2380,demo-etcd-3=http://10.240.0.3:2380
+  initial_cluster_token:       demo-etcd-token
+  initial_cluster_state:       new
 ```
 
-will generate the following [drop-in][drop-in]:
+The config file is first validated and transformed into a machine-readable form, which is then sent directly to a Container Linux provisioning target. The [drop-in][drop-in] generated from the example config file is given below:
 
 ```ini
 [Service]
-Environment="ETCD_IMAGE_TAG=v3.1.4"
 ExecStart=
 ExecStart=/usr/lib/coreos/etcd-wrapper $ETCD_OPTS \
-  --advertise-client-urls: http://<PEER_ADDRESS>:2379 \
-  --initial-advertise-peer-urls: http://<PEER_ADDRESS>:2380 \
-  --listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001 \
-  --listen-peer-urls: http://0.0.0.0:2380 \
-  --discovery: https://discovery.etcd.io/<token>
+  --name="demo-etcd-1" \
+  --listen-peer-urls="http://0.0.0.0:2380" \
+  --listen-client-urls="http://10.240.0.1:2379,http://0.0.0.0:4001" \
+  --initial-advertise-peer-urls="http://http://10.240.0.1:2380" \
+  --initial-cluster="demo-etcd-1=http://10.240.0.1:2380,demo-etcd-2=http://10.240.0.2:2380,demo-etcd-3=http://10.240.0.3:2380" \
+  --initial-cluster-state="new" \
+  --initial-cluster-token="demo-etcd-token" \
+  --advertise-client-urls="http://10.240.0.1:2379"
 ```
 
-If the etcd cluster is secured with TLS, use `https://` instead of `http://` in the command examples below.
+If the etcd cluster is secured with TLS, use `https://` instead of `http://` in the config files. If the peer addresses for the initial cluster are unknown when provisioning the cluster, use the etcd discovery service with the `--discovery="https://discovery.etcd.io/<token>` argument.
 
-Assume that you have created a five-node Container Linux cluster, but did not specify cluster size in the [discovery][etcd-discovery] URL. Since the default discovery cluster size is 3, the remaining two nodes were configured as proxies. You would like to promote these proxies to full etcd cluster members, without bootstrapping a new etcd cluster.
+### Change etcd cluster size
 
-The existing cluster can be reconfigured. Run `etcdctl member add node4 http://10.0.1.4:2380`. Later steps will use information from the output of this command, so it's a good idea to copy and paste it somewhere convenient. The output of a successful member addition will look like this:
+Changing the size of an etcd cluster is as simple as adding a new member, and using the output of the member addition, such as name of the new etcd member, member IDs, state and URLs of the cluster, to the config file for provisioning on the Container Linux node.
 
-```
-added member 9bf1b35fc7761a23 to cluster
+1. Run the `etcdctl member add` command.
 
-ETCD_NAME="node4"
-ETCD_INITIAL_CLUSTER="1dc800dbf6a732d8839bc71d0538bb99=http://10.0.1.1:2380,f961e5cb1b0cb8810ea6a6b7a7c8b5cf=http://10.0.1.2:2380,8982fae69ad09c623601b68c83818921=http://10.0.1.3:2380,node4=http://10.0.1.4:2380"
-ETCD_INITIAL_CLUSTER_STATE=existing
-```
+   For example:
 
-The `ETCD_DISCOVERY` environment variable defined in `20-cloudinit.conf` conflicts with the `ETCD_INITIAL_CLUSTER` setting needed for these steps, so the first step is clearing it by overriding `20-cloudinit.conf` with a new drop-in, `99-restore.conf`. `99-restore.conf` contains an empty `Environment="ETCD_DISCOVERY="` string.
+    ```sh
+    $ etcdctl member add node4 http://10.240.0.4:2380
+    ```
 
-The complete example looks like this. On the `node4` Container Linux host, create a  temporary systemd drop-in, `/run/systemd/system/etcd2.service.d/99-restore.conf` with the contents below, filling in the information from the output of the `etcd member add` command we ran previously:
+    The output of a successful member addition is given below:
 
-```ini
-[Service]
-# remove previously created proxy directory
-ExecStartPre=/usr/bin/rm -rf /var/lib/etcd2/proxy
-# NOTE: use this option if you would like to re-add broken etcd member into cluster
-# Don't forget to make a backup before
-#ExecStartPre=/usr/bin/rm -rf /var/lib/etcd2/member /var/lib/etcd2/proxy
-# here we clean previously defined ETCD_DISCOVERY environment variable, we don't need it as we've already bootstrapped etcd cluster and ETCD_DISCOVERY conflicts with ETCD_INITIAL_CLUSTER environment variable
-Environment="ETCD_DISCOVERY="
-Environment="ETCD_NAME=node4"
-# We use ETCD_INITIAL_CLUSTER variable value from previous step ("etcdctl member add" output)
-Environment="ETCD_INITIAL_CLUSTER=node1=http://10.0.1.1:2380,node2=http://10.0.1.2:2380,node3=http://10.0.1.3:2380,node4=http://10.0.1.4:2380"
-Environment="ETCD_INITIAL_CLUSTER_STATE=existing"
-```
+    ```sh
+    added member 9bf1b35fc7761a23 to cluster
 
-Run `sudo systemctl daemon-reload` to parse the new and edited units. Check whether the new [drop-in][drop-in] is valid by checking the service's journal: `sudo journalctl _PID=1 -e -u etcd2`. If everything is ok, run `sudo systemctl restart etcd2` to activate your changes. You will see that the former proxy node has become a cluster member:
+    ETCD_NAME="node4"
+    ETCD_INITIAL_CLUSTER="demo-etcd-1=http://10.240.0.1:2380,demo-etcd-2=http://10.240.0.2:2380,demo-etcd-3=http://10.240.0.3:2380,node4=http://10.240.1.4:2380"
+    ETCD_INITIAL_CLUSTER_STATE="existing"
+    ```
+2. Store the output of this command for later use.
 
-```
-etcdserver: start member 9bf1b35fc7761a23 in cluster 36cce781cb4f1292
-```
+3. Use the information from the output of the `etcdctl member add` command and provision a new Container Linux host with the following Container Linux Config:
 
-Once your new member node is up and running, and `etcdctl cluster-health` shows a healthy cluster, remove the temporary drop-in file and reparse the services: `sudo rm /run/systemd/system/etcd2.service.d/99-restore.conf && sudo systemctl daemon-reload`.
+    ```yaml container-linux-config
+    etcd:
+      name: node4
+      listen_client_urls: http://10.240.0.4:2379,http://0.0.0.0:4001
+      advertise_client_urls: http://0.240.0.4:2379
+      listen_peer_urls: http://0.0.0.0:2380
+      initial_advertise_peer_urls: http://0.240.0.4:2380
+      initial_cluster: demo-etcd-1=http://10.240.0.1:2380,demo-etcd-2=http://10.240.0.2:2380,demo-etcd-3=http://10.240.0.3:2380,node4=http://10.240.0.4:2380
+      initial_cluster_state: existing
+    ```
 
-## Replace a failed etcd member on CoreOS Container Linux
+4. Check whether the new member node is up and running:
 
-This section provides instructions on how to recover a failed etcd member. It is important to know that an etcd cluster cannot be restored using only a discovery URL; the discovery URL is used only once during cluster bootstrap.
+    ```sh
+    $ etcdctl cluster-health
 
-In this example, we use a 3-member etcd cluster with one failed node, that is still running and has maintained [quorum][majority]. An etcd member node might fail for several reasons: out of disk space, an incorrect reboot, or issues on the underlying system. Note that this example assumes you used [a Container Linux Config][cl-configs] with an etcd [discovery URL][etcd-discovery] to bootstrap your cluster, with the following default options:
+    member 9bf1b35fc7761a23 is healthy: got healthy result from http://10.240.0.4:2379
+    cluster is healthy
+    ```
+
+If your cluster has healthy state, etcd successfully writes cluster configuration into the `/var/lib/etcd` directory.
+
+### Replace a failed etcd member on CoreOS Container Linux
+
+An etcd member node might fail for several reasons: out of disk space, an incorrect reboot, or issues on the underlying system. This section provides instructions on how to recover a failed etcd member.
+
+Consider a scenario where a member is failed in a three-member cluster. The cluster is still running and has maintained [quorum][majority].  The example assumes [a Container Linux Config][cl-configs] is used with the following default options:
 
 ```yaml container-linux-config
 etcd:
-  advertise_client_urls: http://<PEER_ADDRESS>:2379
-  initial_advertise_peer_urls: http://<PEER_ADDRESS>:2380
-  listen_client_urls: http://0.0.0.0:2379,http://0.0.0.0:4001
+  name: demo-etcd-1
+  listen_client_urls: http://10.240.0.1:2379,http://0.0.0.0:4001
+  advertise_client_urls: http://10.240.0.1:2379
   listen_peer_urls: http://0.0.0.0:2380
-  discovery: https://discovery.etcd.io/<token>
+  initial_advertise_peer_urls: http://10.240.0.1:2380
+  initial_cluster: ddemo-etcd-1=http://10.240.0.1:2380,demo-etcd-2=http://10.240.0.2:2380,demo-etcd-3=http://10.240.0.3:2380,node4=http://10.240.0.4:2380
+  initial_cluster_token: demo-etcd-token
+  initial_cluster_state: new
 ```
 
 If the etcd cluster is protected with TLS, use `https://` instead of `http://` in the examples below.
 
-Let's assume that your etcd cluster has a faulty member `10.0.1.2`:
+Assume that the given etcd cluster has a faulty member `10.240.0.2`:
 
 ```sh
 $ etcdctl cluster-health
-member fe2f75dd51fa5ff is healthy: got healthy result from http://10.0.1.1:2379
-failed to check the health of member 1609b5a3a078c227 on http://10.0.1.2:2379: Get http://10.0.1.2:2379/health: dial tcp 10.0.1.2:2379: connection refused
-member 1609b5a3a078c227 is unreachable: [http://10.0.1.2:2379] are all unreachable
-member 60e8a32b09dc91f1 is healthy: got healthy result from http://10.0.1.3:2379
+member fe2f75dd51fa5ff is healthy: got healthy result from http://10.240.0.1:2379
+failed to check the health of member 1609b5a3a078c227 on http://10.240.0.2:2379: Get http://10.240.0.2:2379/health: dial tcp 10.240.0.2:2379: connection refused
+member 1609b5a3a078c227 is unreachable: [http://10.240.0.2:2379] are all unreachable
+member 60e8a32b09dc91f1 is healthy: got healthy result from http://10.240.0.3:2379
 cluster is healthy
 ```
 
-Run `etcdctl` from a working node, or use the [`ETCDCTL_ENDPOINT`][etcdctl-endpoint] environment variable or command line option to point `etcdctl` at any healthy member node.
 
-[Remove the failed member][etcdctl-member-remove] `10.0.1.2` from the etcd cluster. The remove subcommand informs all other cluster nodes that a human has determined this node is dead and not available for connections:
+1. [Remove the failed member][etcdctl-member-remove] `1609b5a3a078c227` from the etcd cluster.
 
-```sh
-$ etcdctl member remove 1609b5a3a078c227
-Removed member 1609b5a3a078c227 from cluster
-```
+    ```sh
+    $ etcdctl member remove 1609b5a3a078c227
+    Removed member 1609b5a3a078c227 from cluster
+    ```
+    The remove subcommand informs all other cluster nodes that a human has determined this node is dead and not available for connections.
 
-Then, on the failed node (`10.0.1.2`), stop the etcd2 service:
+2. Stop the etcd-member service on the failed node (`0.0.0.2`):
 
-```sh
-$ sudo systemctl stop etcd2
-```
+    ```sh
+    $ sudo systemctl stop etcd-member.service
+    ```
 
-Clean up the `/var/lib/etcd2` directory:
+3. Reinitialize the failed member.
 
-```sh
-$ sudo rm -rf /var/lib/etcd2/*
-```
+      ```sh
+        $ etcdctl member add demo-etcd-2 http://10.240.0.2:2380
+        Added member named demo-etcd-2 with ID 4fb77509779cac99 to cluster
 
-Check that the `/var/lib/etcd2/` directory exists and is empty. If you removed this directory accidentally, you can recreate it with the proper modes by using:
+        ETCD_NAME="demo-etcd-2"
+        ETCD_INITIAL_CLUSTER="demo-etcd-1=http://10.240.0.1:2380,demo-etcd-2=http://10.240.0.2:2380,demo-etcd-3=http://10.240.0.3:2380"
+        ETCD_INITIAL_CLUSTER_STATE="existing"
+        ```
 
-```sh
-$ sudo systemd-tmpfiles --create /usr/lib64/tmpfiles.d/etcd2.conf
-```
+4. Modify the existing systemd drop-in, `/etc/systemd/system/etcd-member.service.d/20-clct-etcd-member.conf` by replacing the node data with the appropriate information from the output of the `etcdctl member add` command executed in the last step.
 
-Next, reinitialize the failed member. Note that `10.0.1.2` is an example IP address. Use the IP address corresponding to your failed node:
+    ```yaml container-linux-config
+    etcd:
+      name: demo-etcd-2
+      listen_client_urls: http://10.240.0.2:2379,http://0.0.0.0:4001
+      advertise_client_urls: http://10.240.0.2:2379
+      listen_peer_urls: http://0.0.0.0:2380
+      initial_advertise_peer_urls: http://10.240.0.2:2380
+      initial_cluster: demo-etcd-1=http://10.240.0.1:2380,demo-etcd-2=http://10.240.0.2:2380,demo-etcd-3=http://10.240.0.3:2380
+      initial_cluster_token: demo-etcd-token
+      initial_cluster_state: existing
+    ```
 
-```sh
-$ etcdctl member add node2 http://10.0.1.2:2380
-Added member named node2 with ID 4fb77509779cac99 to cluster
+5. Check the cluster health:
 
-ETCD_NAME="node2"
-ETCD_INITIAL_CLUSTER="52d2c433e31d54526cf3aa660304e8f1=http://10.0.1.1:2380,node2=http://10.0.1.2:2380,2cb7bb694606e5face87ee7a97041758=http://10.0.1.3:2380"
-ETCD_INITIAL_CLUSTER_STATE="existing"
-```
+    ```sh
+    $ etcdctl cluster-health
 
-With the new node added, create a systemd [drop-in][drop-in] `/run/systemd/system/etcd2.service.d/99-restore.conf`, replacing the node data with the appropriate information from the output of the `etcdctl member add` command executed in the last step.
+      member e6c2bda2aa1f2dcf is healthy: got healthy result from http://10.240.0.2:2379
+      cluster is healthy
+    ```
 
-```ini
-[Service]
-# here we clean previously defined ETCD_DISCOVERY environment variable, we don't need it as we've already bootstrapped etcd cluster and ETCD_DISCOVERY conflicts with ETCD_INITIAL_CLUSTER environment variable
-Environment="ETCD_DISCOVERY="
-Environment="ETCD_NAME=node2"
-# We use ETCD_INITIAL_CLUSTER variable value from previous step ("etcdctl member add" output)
-Environment="ETCD_INITIAL_CLUSTER=52d2c433e31d54526cf3aa660304e8f1=http://10.0.1.1:2380,node2=http://10.0.1.2:2380,2cb7bb694606e5face87ee7a97041758=http://10.0.1.3:2380"
-Environment="ETCD_INITIAL_CLUSTER_STATE=existing"
-```
+If your cluster has healthy state, etcd successfully writes cluster configuration into the `/var/lib/etcd` directory.
 
-**Note:** Make sure to remove the excess double quotes just after `ETCD_INITIAL_CLUSTER=` entry.
+### Recovering etcd on CoreOS Container Linux
 
-Parse the new drop-in:
+#### etcd v3
 
-```sh
-$ sudo systemctl daemon-reload
-```
+1. Download `etcdctl` from the [etcd Release page][etcd-release] and install, for example, into `/opt/bin`.
 
-Check whether the new [drop-in][drop-in] is valid:
+2. Create a backup directory:
 
-```sh
-sudo journalctl _PID=1 -e -u etcd2
-```
+    ```sh
+     $ sudo mkdir /var/lib/etcd_backup
+     ```
 
-And finally, if everything is ok start the `etcd2` service:
+3. Save a snapshot of the database to `/var/lib/etcd_backup/backup.db`:
 
-```sh
-$ sudo systemctl start etcd2
-```
+    ```sh
+     $ sudo ETCDCTL_API=3 /opt/bin/etcdctl snapshot save /var/lib/etcd_backup/backup.db
+     ```
 
-Check cluster health:
+4. Restore the snapshot file into a new member directory `/var/lib/etcd_backup/etcd`:
 
-```sh
-$ etcdctl cluster-health
-```
+    ```sh
+     $ sudo ETCDCTL_API=3 /opt/bin/etcdctl snapshot --data-dir /var/lib/etcd_backup/etcd restore backup.db \
+      --name new-demo-etcd-1 \
+      --initial-cluster new-demo-etcd-1=http://10.240.0.1:2380
+      --initial-cluster-token new-etcd-cluster-1 \
+      --initial-advertise-peer-urls http://10.240.0.1:2380
+      ```
 
-If your cluster has healthy state, etcd successfully wrote cluster configuration into the `/var/lib/etcd2` directory. Now it is safe to remove the temporary `/run/systemd/system/etcd2.service.d/99-restore.conf` drop-in file.
+5. Remove the obsolete directory:
 
-## etcd disaster recovery on CoreOS Container Linux
+    ```sh
+     $ sudo rm -rf /var/lib/etcd
+     ```
+
+6. Move the restored member directory to `/var/lib/etcd`:
+
+    ```sh
+    $ sudo mv /var/lib/etcd_backup/etcd /var/lib/
+    ```
+
+7. Set the etcd user permissions:
+
+    ```sh
+     $ sudo chown etcd -R /var/lib/etcd
+     ```
+
+8. Start the etcd member service:
+
+    ```sh
+     $ sudo systemctl start etcd-member.service
+     ```
+
+9. Check the node health:
+
+    ```sh
+     $ etcdctl cluster-health
+     ```
+
+10. The restored cluster is now running with a single node. For information on adding more nodes, see [Change etcd cluster size][change-cluster-size].
+
+
+#### etcd v2
 
 If a cluster is totally broken and [quorum][majority] cannot be restored, all etcd members must be reconfigured from scratch. This procedure consists of two steps:
 
 * Initialize a one-member etcd cluster using the initial [data directory][data-dir]
-* Resize this etcd cluster by adding new etcd members by following the steps in the [change the etcd cluster size][change-cluster-size] section, above.
+* Resize this etcd cluster by adding new etcd members by following the steps in the [change the etcd cluster size][change-cluster-size] section.
 
 This document is an adaptation for Container Linux of the official [etcd disaster recovery guide][disaster-recovery], and uses systemd [drop-ins][drop-in] for convenience.
 
-Let's assume a 3-node cluster with no living members. First, stop the `etcd2` service on all the members:
+Consider a three-node cluster with two permanently lost members.
 
-```sh
-$ sudo systemctl stop etcd2
-```
+1. Stop the `etcd-member` service on all the members:
 
-If you have etcd proxy nodes, they should update members list automatically according to the [`--proxy-refresh-interval`][proxy-refresh] configuration option.
+    ```sh
+    $ sudo systemctl stop etcd-member.service
+    ```
 
-Then, on one of the *member* nodes, run the following command to backup the current [data directory][data-dir]:
+    If you have etcd proxy nodes, they should update members list automatically according to the [`--proxy-refresh-interval`][proxy-refresh] configuration option.
 
-```sh
-$ sudo etcdctl backup --data-dir /var/lib/etcd2 --backup-dir /var/lib/etcd2_backup
-```
+2. On one of the *member* nodes, run the following command to backup the current [data directory][data-dir]:
 
-Now that we've made a backup, we tell etcd to start a one-member cluster. Create the `/run/systemd/system/etcd2.service.d/98-force-new-cluster.conf` [drop-in][drop-in] file with the following contents:
+    ```sh
+    $ sudo etcdctl backup --data-dir /var/lib/etcd --backup-dir /var/lib/etcd_backup
+    ```
 
-```ini
-[Service]
-Environment="ETCD_FORCE_NEW_CLUSTER=true"
-```
+    Now that a backup has been created, start a single-member cluster.
 
-Then run `sudo systemctl daemon-reload`. Check whether the new [drop-in][drop-in] is valid by looking in its journal for errors: `sudo journalctl _PID=1 -e -u etcd2`. If everything is ok, start the `etcd2` daemon: `sudo systemctl start etcd2`.
+3. Create the `/run/systemd/system/etcd-member.service.d/98-force-new-cluster.conf` [drop-in][drop-in] file with the following contents:
 
-Check the cluster state:
+    ```ini
+    [Service]
+    Environment="ETCD_FORCE_NEW_CLUSTER=true"
+    ```
 
-```sh
-$ etcdctl member list
-e6c2bda2aa1f2dcf: name=1be6686cc2c842db035fdc21f56d1ad0 peerURLs=http://10.0.1.2:2380 clientURLs=http://10.0.1.2:2379
-$ etcdctl cluster-health
-member e6c2bda2aa1f2dcf is healthy: got healthy result from http://10.0.1.2:2379
-cluster is healthy
-```
+4. Run `sudo systemctl daemon-reload`.
 
-If the output contains no errors, remove the `/run/systemd/system/etcd2.service.d/98-force-new-cluster.conf` drop-in file, and reload systemd services: `sudo systemctl daemon-reload`. It is not necessary to restart the `etcd2` service after this step.
+5. Check whether the new [drop-in][drop-in] is valid by looking in its journal for errors:
 
-The next steps are those described in the [Change etcd cluster size][change-cluster-size] section, with one difference: Remove the `/var/lib/etcd2/member` directory as well as `/var/lib/etcd2/proxy`.
+    ```sh
+    $ sudo journalctl _PID=1 -e -u etcd-member.service
+    ```
+
+6. If everything is ok, start the `etcd-member` daemon:
+
+    ```sh
+    $ sudo systemctl start etcd-member.service
+    ```
+
+7. Check the cluster state:
+
+    ```sh
+    $ etcdctl member list
+    e6c2bda2aa1f2dcf: name=1be6686cc2c842db035fdc21f56d1ad0 peerURLs=http://10.240.1.2:2380 clientURLs=http://10.240.1.2:2379
+    $ etcdctl cluster-health
+    member e6c2bda2aa1f2dcf is healthy: got healthy result from http://10.240.1.2:2379
+    cluster is healthy
+    ```
+
+8. If the output contains no errors, remove the `98-force-new-cluster.conf` drop-in file.
+
+    ```sh
+    $ rm -rf /run/systemd/system/etcd-member.service.d/98-force-new-cluster.conf
+    ```
+
+9. Reload systemd services:
+
+   ```
+    $ sudo systemctl daemon-reload
+    ```
+
+    It is not necessary to restart the `etcd-member` service after reloading the systemd services.
+
+10. Spin up new nodes. Ensure that the version is given in the config file.
+    For information on adding more nodes, see [Change etcd cluster size][change-cluster-size].
+
 
 
 [change-cluster-size]: #change-etcd-cluster-size
 [cl-configs]: ../os/provisioning.md
 [data-dir]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/configuration.md#-data-dir
 [disaster-recovery]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/recovery.md#disaster-recovery
+[disaster-recovery-doc]: https://coreos.com/etcd/docs/latest/op-guide/recovery.html
 [drop-in]: ../os/using-systemd-drop-in-units.md
 [etcd-discovery]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/clustering.md#lifetime-of-a-discovery-url
 [etcdctl-endpoint]: https://github.com/coreos/etcd/tree/master/etcdctl#--endpoint
 [etcdctl-member-remove]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/runtime-configuration.md#remove-a-member
+[etcd-release]: https://github.com/coreos/etcd/releases/
 [machine-id]: http://www.freedesktop.org/software/systemd/man/machine-id.html
 [majority]: https://github.com/coreos/etcd/blob/master/Documentation/v2/admin_guide.md#fault-tolerance-table
 [proxy-refresh]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/configuration.md#--proxy-refresh-interval
