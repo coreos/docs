@@ -9,7 +9,7 @@ When a [Container Linux Config][cl-configs] is used for configuring an etcd memb
 ```yaml container-linux-config
 etcd:
   name: demo-etcd-1
-  listen_client_urls: https://10.240.0.1:2379,http://0.0.0.0:4001
+  listen_client_urls: http://10.240.0.1:2379,http://0.0.0.0:4001
   advertise_client_urls: http://10.240.0.1:2379
   listen_peer_urls:            http://0.0.0.0:2380
   initial_advertise_peer_urls: http://10.240.0.1:2380
@@ -18,7 +18,7 @@ etcd:
   initial_cluster_state:       new
 ```
 
-The config file is first validated and transformed into a machine-readable form, which is then sent directly to a Container Linux provisioning target. The [drop-in][drop-in] generated from the example config file is given below:
+The above Container Linux config file can be used to provision a machine. Provisioning with a config file creates the following [drop-in][drop-in]:
 
 ```ini
 [Service]
