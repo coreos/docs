@@ -40,7 +40,7 @@ passwd: password changed.
 To assign an SSH key, run:
 
 ```sh
-update-ssh-keys -u user1 user1.pem
+update-ssh-keys -u user1 -a user1 user1.pem
 ```
 
 ## Grant sudo Access
