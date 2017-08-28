@@ -241,7 +241,7 @@ We've compiled a [list of tips and tricks][sdktips] that can make working with t
 [devimages]: sdk-building-development-images.md
 [github-coreos]: https://github.com/coreos/
 [irc]: irc://irc.freenode.org:6667/#coreos
-[mantle]: sdk-testing-with-mantle.md
+[mantle]: https://github.com/coreos/mantle
 [prodimages]: sdk-building-production-images.md
 [repo-blog]: http://google-opensource.blogspot.com/2008/11/gerrit-and-repo-android-source.html
 [sdktips]: sdk-tips-and-tricks.md

@@ -56,12 +56,6 @@ Note: Add `COREOS_OFFICIAL=1` here if you are making a real release. That will c
 
 The generated production image is bootable as-is by qemu but for a larger ROOT partition or VMware images use `image_to_vm.sh` as described in the final output of `build_image`.
 
-## Automated builds
-
-Automated release builds are triggered by pushes to the `dev-channel` branch in the manifest repository.
-
-Note: In the future builds will be triggered by pushing new tags instead of using the `dev-channel` branch; the branch only exists due to a limitation of the current buildbot deployment.
-
 ## Pushing updates into CoreUpdate
 
 The automated build host does not have access to production signing keys so the final signing and push to roller must be done elsewhere. The `coreos_production_update.zip` archive provides the tools required to do this so a full SDK setup is not required. This does require gsutil to be installed and configured. An update payload signed by the insecure development keys is generated automatically as `coreos_production_update.gz` and `coreos_production_update.meta`. If needed the raw filesystem image used to generate the payload is `coreos_production_update.bin.bz2`. As an example, to publish the insecurely signed payload:
