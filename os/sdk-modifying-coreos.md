@@ -114,7 +114,7 @@ Download and enter the SDK chroot which contains all of the compilers and toolin
 
 ### Using QEMU for cross-compiling
 
-The Container Linux initramfs is generated with the `dracut` tool. `Dracut` assumes it is running on the target system, and produces output only for that CPU architecture. In order to create initramfs files for other architectures, `dracut` is executed under QEMU's user mode emulation of the target CPU.
+The Container Linux initramfs is generated with the `dracut` tool. `Dracut` assumes it is running on the target system, and produces output only for that CPU architecture. In order to create initramfs files for other architectures, `dracut` is executed under QEMU's user mode emulation of the target CPU via the host system's binfmt support.
 
 #### Configuring QEMU for 64 bit ARM binaries
 
@@ -130,19 +130,14 @@ For Debian, Ubuntu, and other Debian based systems installing the following pack
 
 ##### Configuring other systemd based systems
 
-On systemd systems, a configuration file controls how binaries for a given architecture are handled.
-
-To register QEMU as the runtime for 64 bit ARM binaries, write the following to `/etc/binfmt.d/qemu-aarch64.conf`:
-
-```
-:qemu-aarch64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff:/usr/bin/qemu-aarch64-static:
-```
-
-Then run:
+The cork utility can setup QEMU binfmt support on systemd based systems:
 
 ```sh
+cork setup
 systemctl restart systemd-binfmt.service
 ```
+
+This will install the configuration file `/etc/binfmt.d/qemu-aarch64.conf`, which controls how binaries for a given architecture are handled.
 
 ### Building an image
 
