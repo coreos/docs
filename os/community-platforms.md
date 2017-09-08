@@ -35,7 +35,7 @@ CoreOS Container Linux supports a growing community of open source contributors.
 [nifty]: booting-on-niftycloud.md
 [packet]: booting-on-packet.md
 [rackspace]: booting-on-rackspace.md
-[rimuhosting]: booting-on-launchtimevps.html
+[rimuhosting]: booting-on-launchtimevps.md
 [vexxhost]: booting-on-vexxhost.md
 [vultr]: booting-on-vultr.md
 [cloudstack]: booting-on-cloudstack.md
