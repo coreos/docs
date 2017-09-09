@@ -173,6 +173,22 @@ coreos-base/coreos-0.0.1-r187
 
 It may be necessary to comment out kernel source checks from the ebuild if the build fails, as Container Linux does not yet provide visibility of the configured kernel source at build time.  Usually this is not a problem, but may lead to warning messages.
 
+### `coreos-kernel` fails to link after previously aborting a build
+
+Emerging `coreos-kernel` (either manually or through `build_packages`) may fail with the error:
+
+```/usr/lib/gcc/x86_64-pc-linux-gnu/4.9.4/../../../../x86_64-pc-linux-gnu/bin/ld: scripts/kconfig/conf.o: relocation R_X86_64_32 against `.rodata.str1.8' can not be used when making a shared object; recompile with -fPIC scripts/kconfig/conf.o: error adding symbols: Bad value```
+
+This indicates the ccache is corrupt. To clear the ccache, run:
+
+```CCACHE_DIR=/var/tmp/ccache ccache -C```
+
+To avoid corrupting the ccache, do not abort builds.
+
+### `build_image` hangs while emerging packages after previously aborting a build
+
+Delete all `*.portage_lockfile`s in `/build/<arch>/`. To avoid stale lockfiles, do not abort builds.
+
 ## Constants and IDs
 
 ### CoreOS Container Linux app ID
