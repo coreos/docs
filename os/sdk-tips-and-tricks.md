@@ -177,11 +177,15 @@ It may be necessary to comment out kernel source checks from the ebuild if the b
 
 Emerging `coreos-kernel` (either manually or through `build_packages`) may fail with the error:
 
-```/usr/lib/gcc/x86_64-pc-linux-gnu/4.9.4/../../../../x86_64-pc-linux-gnu/bin/ld: scripts/kconfig/conf.o: relocation R_X86_64_32 against `.rodata.str1.8' can not be used when making a shared object; recompile with -fPIC scripts/kconfig/conf.o: error adding symbols: Bad value```
+```
+/usr/lib/gcc/x86_64-pc-linux-gnu/4.9.4/../../../../x86_64-pc-linux-gnu/bin/ld: scripts/kconfig/conf.o: relocation R_X86_64_32 against `.rodata.str1.8' can not be used when making a shared object; recompile with -fPIC scripts/kconfig/conf.o: error adding symbols: Bad value
+```
 
 This indicates the ccache is corrupt. To clear the ccache, run:
 
-```CCACHE_DIR=/var/tmp/ccache ccache -C```
+```
+CCACHE_DIR=/var/tmp/ccache ccache -C
+```
 
 To avoid corrupting the ccache, do not abort builds.
 
