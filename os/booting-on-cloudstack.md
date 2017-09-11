@@ -17,7 +17,7 @@ After logging in to CloudStack UI, to upload a template:
   * **Hypervisor**: The supported hypervisors are listed. Select the desired one.
   * **Format**: The format of the template upload file, such as VHD or OVA.
   * **Extractable**: Choose Yes if the template is available for extraction. If this option is selected, end users can download a full image of a template.
-  * **Public**: Choose Yes to make this template accessible to all users of this CloudStack installation. The template will appear in the Community Templates list. See [Container Linux Templates](#coreos-templates).
+  * **Public**: Choose Yes to make this template accessible to all users of this CloudStack installation. The template will appear in the Community Templates list. See [Container Linux Templates](#coreos-container-linux-templates).
   * **Featured**: Choose Yes if you would like this template to be more prominent for users to select. The template will appear in the Featured Templates list. Only an administrator can make a template Featured.
 
 Alternatively, the [registerTemplate API][register-template-api] can also be used.
