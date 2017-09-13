@@ -41,8 +41,9 @@ The latest Container Linux ISOs can be downloaded from the image storage site:
 
 ## Known limitations
 
-1. There is no straightforward way to provide an [Ignition config][cl-configs].
-2. A mininum of 1024M of RAM is required to boot Container Linux via ISO.
+1. UEFI boot is not currently supported. Boot the system in BIOS compatibility mode.
+2. There is no straightforward way to provide an [Ignition config][cl-configs].
+3. A mininum of 1024M of RAM is required to boot Container Linux via ISO.
 
 ## Install to disk
 
