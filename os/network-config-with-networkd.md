@@ -17,6 +17,7 @@ Name=enp2s0
 [Network]
 Address=192.168.0.15/24
 Gateway=192.168.0.1
+DNS=192.168.10
 ```
 
 Place the file in `/etc/systemd/network/`. To apply the configuration, run:
