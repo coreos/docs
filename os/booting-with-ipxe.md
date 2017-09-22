@@ -2,7 +2,7 @@
 
 These instructions will walk you through booting Container Linux via iPXE on real or virtual hardware. By default, this will run Container Linux completely out of RAM. Container Linux can also be [installed to disk](installing-to-disk.md).
 
-A mininum of 1024M of RAM is required to boot Container Linux via PXE.
+A mininum of 2 GB of RAM is required to boot Container Linux via PXE.
 
 ## Configuring iPXE
 
