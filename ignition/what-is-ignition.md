@@ -1,6 +1,6 @@
 # What is Ignition?
 
-Ignition is a new provisioning utility designed specifically for Container Linux, which allows you to manipulate disks during early boot. This includes partitioning disks, formatting partitions, writing files (regular files, systemd units, networkd units, and more), and configuring users. On first boot, Ignition reads its configuration from a source-of-truth (remote URL, network metadata service, or hypervisor bridge, for example) and applies the configuration.
+Ignition is a new provisioning utility designed specifically for Container Linux, which allows you to manipulate disks during early boot. This includes partitioning disks, formatting partitions, writing files (regular files, systemd units, networkd units, and more), and configuring users. On the first boot, Ignition reads its configuration from a source-of-truth (remote URL, network metadata service, or hypervisor bridge, for example) and applies the configuration.
 
 A [series of example configs][examples] are provided for reference.
 
@@ -12,7 +12,7 @@ Instead of YAML, Ignition uses JSON for its configuration format. JSON's typing 
 
 ### Ignition only runs once
 
-Even though Ignition only runs once, it packs a powerful punch. Because Ignition runs so early in the boot process (in the initramfs, to be exact), it is able to repartition disks, format filesystems, create users, and write files, all before the userspace begins to boot.
+Even though Ignition only runs once, during the first boot of the system, it packs a powerful punch. Because Ignition runs so early in the boot process (in the initramfs, to be exact), it is able to repartition disks, format filesystems, create users, and write files, all before the userspace begins to boot.
 
 Because Ignition runs so early in the boot process, the network config is available for networkd to read when it first starts, and systemd services are already written to disk when systemd starts. [Configuring the network][network-config] is no longer an issue. This results in a simple startup, a faster startup, and the ability to accurately inspect the unit dependency graphs.
 
