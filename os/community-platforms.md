@@ -1,6 +1,8 @@
 # Community supported platforms
 
-CoreOS Container Linux supports a growing community of open source contributors. This page lists the most fully developed integrations for Container Linux on cloud and other platforms.
+The CoreOS Container Linux community has provided support for Container Linux on a number of platforms beyond those [officially supported][official-support] by CoreOS.
+
+The platforms and providers listed below each provide support and documentation for running Container Linux:
 
 ## Cloud providers
 
@@ -21,7 +23,6 @@ CoreOS Container Linux supports a growing community of open source contributors.
 * [CloudStack][cloudstack]
 * [Eucalyptus][eucalyptus]
 * [libvirt][libvirt]
-* [QEMU][qemu]
 * [Vagrant][vagrant]
 * [VirtualBox][virtualbox]
 * [VMware vSphere Integrated Containers][vmware-containers]
@@ -41,7 +42,7 @@ CoreOS Container Linux supports a growing community of open source contributors.
 [cloudstack]: booting-on-cloudstack.md
 [eucalyptus]: booting-on-eucalyptus.md
 [libvirt]: booting-with-libvirt.md
-[qemu]: booting-with-qemu.md
 [vagrant]: booting-on-vagrant.md
 [virtualbox]: booting-on-virtualbox.md
 [vmware-containers]: booting-on-vmware.md
+[official-support]: https://coreos.com/os/docs/latest/
