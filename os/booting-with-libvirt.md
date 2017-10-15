@@ -32,7 +32,7 @@ mkdir -p /var/lib/libvirt/images/container-linux
 cd /var/lib/libvirt/images/container-linux
 wget https://alpha.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2{,.sig}
 gpg --verify coreos_production_qemu_image.img.bz2.sig
-bunzip2 coreos_production_qemu_image.bz2</pre>
+bunzip2 coreos_production_qemu_image.img.bz2</pre>
     </div>
     <div class="tab-pane" id="beta-create">
       <p>The Beta channel consists of promoted Alpha releases. The current version is Container Linux {{site.beta-channel}}.</p>
@@ -42,7 +42,7 @@ mkdir -p /var/lib/libvirt/images/container-linux
 cd /var/lib/libvirt/images/container-linux
 wget https://beta.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2{,.sig}
 gpg --verify coreos_production_qemu_image.img.bz2.sig
-bunzip2 coreos_production_qemu_image.bz2</pre>
+bunzip2 coreos_production_qemu_image.img.bz2</pre>
     </div>
     <div class="tab-pane active" id="stable-create">
       <p>The Stable channel should be used by production clusters. Versions of Container Linux are battle-tested within the Beta and Alpha channels before being promoted. The current version is Container Linux {{site.stable-channel}}.</p>
@@ -52,7 +52,7 @@ mkdir -p /var/lib/libvirt/images/container-linux
 cd /var/lib/libvirt/images/container-linux
 wget https://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2{,.sig}
 gpg --verify coreos_production_qemu_image.img.bz2.sig
-bunzip2 coreos_production_qemu_image.bz2</pre>
+bunzip2 coreos_production_qemu_image.img.bz2</pre>
     </div>
   </div>
 </div>
