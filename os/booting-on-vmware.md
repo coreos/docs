@@ -142,7 +142,7 @@ guestinfo.coreos.config.data.encoding = "base64"
 
 This example will be decoded into:
 
-```json
+```json ignition-config
 {
   "ignition": { "version": "2.0.0" }
 }
