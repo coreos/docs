@@ -122,8 +122,6 @@ vmware-cmd /vmfs/volumes/[...]/<VMNAME>/<VMNAME>.vmx setguestinfo guestinfo.<pro
 
 Guestinfo configuration set via the VMware API or with `vmtoolsd` from within the Container Linux guest itself are stored in VM process memory and are lost on VM shutdown or reboot.
 
-[This blog post][vmware-use-guestinfo] has some useful details about the guestinfo interface, while Robert Labrie's blog provides a practicum specific to [using VMware guestinfo to configure Container Linux VMs][labrie-guestinfo].
-
 ### Defining the Ignition config in Guestinfo
 
 If the `guestinfo.coreos.config.data` property is set, Ignition will apply the referenced config on first boot.
@@ -177,6 +175,4 @@ Now that you have a machine booted, it's time to explore. Check out the [Contain
 [install]: installing-to-disk.md
 [vcloud director]: http://blogs.vmware.com/vsphere/2012/06/leveraging-vapp-vm-custom-properties-in-vcloud-director.html
 [ovf-selfconfig]: http://blogs.vmware.com/vapp/2009/07/selfconfiguration-and-the-ovf-environment.html
-[vmware-use-guestinfo]: http://blog-lrivallain.rhcloud.com/2014/08/15/vmware-use-guestinfo-variables-to-customize-guest-os/
-[labrie-guestinfo]: https://robertlabrie.wordpress.com/2015/09/27/coreos-on-vmware-using-vmware-guestinfo-api/
 [guestinfo]: #vmware-guestinfo-interface
