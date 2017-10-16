@@ -8,7 +8,7 @@ Each of these examples is written in version 2.0.0 of the config. Ensure that an
 
 In this example, the network interface with the name "eth0" will be given the IP address 10.0.1.7. A typical interface will need more configuration and may use all of the options of a [network unit][network].
 
-```json
+```json ignition-config
 {
   "ignition": { "version": "2.0.0" },
   "networkd": {
@@ -22,7 +22,7 @@ In this example, the network interface with the name "eth0" will be given the IP
 
 This configuration will instruct Ignition to create a single network unit named "00-eth0.network" with the contents:
 
-```
+```ini
 [Match]
 Name=eth0
 
@@ -51,7 +51,7 @@ This format can be specified multiple times to apply unique static configuration
 
 In this example, all of the network interfaces whose names begin with "eth" will be bonded together to form "bond0". This new interface will then be configured to use DHCP.
 
-```json
+```json ignition-config
 {
   "ignition": { "version": "2.0.0" },
   "networkd": {

@@ -83,7 +83,7 @@ $ ct --platform=ec2 < example.yml
 
 This time, `ct` successfully runs and produces the following Ignition Config:
 
-```ignition-config
+```json ignition-config
 {
   "ignition": { "version": "2.0.0" },
   "systemd": {
