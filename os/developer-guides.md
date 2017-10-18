@@ -8,7 +8,7 @@ Most users will never have to build Container Linux from source or modify it in 
 * [Building custom kernel modules][kernel-modules]
 * [SDK tips and tricks][sdk-tips]
 * [Disk layout][disk-layout]
-* [Mantle utilities][mantle-utils]
+* [Kola integration testing framework][mantle-utils]
 
 
 [sdk-tips]: sdk-tips-and-tricks.md
@@ -17,4 +17,4 @@ Most users will never have to build Container Linux from source or modify it in 
 [mod-cl]: sdk-modifying-coreos.md
 [dev-images]: sdk-building-development-images.md
 [kernel-modules]: kernel-modules.md
-[mantle-utils]: https://github.com/coreos/mantle/
+[mantle-utils]: https://github.com/coreos/mantle/#kola/
