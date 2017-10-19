@@ -17,4 +17,4 @@ Most users will never have to build Container Linux from source or modify it in 
 [mod-cl]: sdk-modifying-coreos.md
 [dev-images]: sdk-building-development-images.md
 [kernel-modules]: kernel-modules.md
-[mantle-utils]: https://github.com/coreos/mantle/#kola/
+[mantle-utils]: https://github.com/coreos/mantle/blob/master/README.md#kola
