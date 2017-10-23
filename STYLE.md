@@ -81,6 +81,19 @@ $ docker run --name docsbuilder \
 quay.io/coreosinc/coreos-pages-builder scripts/deploy stage
 ```
 
+### Comment conventions
+
+Add comments inline if possible, and before the referenced line of code if not.
+
+```yaml
+staticPasswords:
+- email: "admin@example.com"
+  # bcrypt hash of the string "password".
+  hash: "$2a$10$2b2cU8CPhOTaGrs1HRQuAueS7JTT5ZHsHSzYiFPm1leZck7Mc8T4W"
+  username: "admin" # username to display. NOT used during login.
+  userID: "08a8684b-db88-4b73-90a9-3cd1661f5466"
+```
+
 ### Placeholder conventions
 
 Use these standard example entities to avoid exposing real URLs, IP Addresses, or other data.
