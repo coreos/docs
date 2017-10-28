@@ -70,7 +70,7 @@ coreos:
 
 The `$private_ipv4` and `$public_ipv4` substitution variables are fully supported in cloud-config on Vagrant. They will map to the first statically defined private and public networks defined in the Vagrantfile.
 
-There is no need to add an SSH key since Vagrant will automatically generate and use it's own SSH key. Any keys added will be overwritten.
+There is no need to add an SSH key since Vagrant will automatically generate and use its own SSH key. Any keys added will be overwritten.
 
 Your Vagrantfile should copy your cloud-config file to `/var/lib/coreos-vagrant/vagrantfile-user-data`. The provided Vagrantfile is already configured to do this. `cloudinit` reads `vagrantfile-user-data` on every boot and uses it to create the machine's user-data file.
 
