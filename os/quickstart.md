@@ -1,6 +1,6 @@
 # Container Linux quick start
 
-If you don't have a Container Linux machine running, check out the guides on [running Container Linux][running-coreos] on most cloud providers ([EC2][ec2-docs], [Rackspace][rackspace-docs], [GCE][gce-docs]), virtualization platforms ([Vagrant][vagrant-docs], [VMware][vmware-docs], [OpenStack][openstack-docs], [QEMU/KVM][qemu-docs]) and bare metal servers ([PXE][pxe-docs], [iPXE][ipxe-docs], [ISO][iso-docs], [Installer][install-docs]). With any of these guides you will have machines up and running in a few minutes.
+If you don't have a Container Linux machine running, check out the guides on [running Container Linux][running-container-linux] on most cloud providers ([EC2][ec2-docs], [Rackspace][rackspace-docs], [GCE][gce-docs]), virtualization platforms ([Vagrant][vagrant-docs], [VMware][vmware-docs], [OpenStack][openstack-docs], [QEMU/KVM][qemu-docs]) and bare metal servers ([PXE][pxe-docs], [iPXE][ipxe-docs], [ISO][iso-docs], [Installer][install-docs]). With any of these guides you will have machines up and running in a few minutes.
 
 It's highly recommended that you set up a cluster of at least 3 machines &mdash; it's not as much fun on a single machine. If you don't want to break the bank, [Vagrant][vagrant-docs] allows you to run an entire cluster on your laptop. For a cluster to be properly bootstrapped, you have to provide ideally an [Ignition config][ignition] (generated from a [Container Linux Config][cl-configs]), or possibly a cloud-config, via user-data, which is covered in each platform's guide.
 
@@ -177,9 +177,9 @@ Fleet has many more features that you can explore in the guides below.
 <a class="btn btn-default" href="https://coreos.com/os/docs/latest/getting-started-with-systemd.html" data-category="More Information" data-event="Docs: Getting Started with systemd">View Getting Started with systemd Guide</a>
 
 [getting-started-systemd]: getting-started-with-systemd.md
-[docker-docs]: https://docs.docker.io
+[docker-docs]: https://docs.docker.com/
 [etcd-docs]: https://coreos.com/etcd/docs/latest/
-[running-coreos]: https://coreos.com/docs/#running-coreos
+[running-container-linux]: https://coreos.com/os/docs/latest/#running-coreos
 [ec2-docs]: booting-on-ec2.md
 [rackspace-docs]: booting-on-rackspace.md
 [gce-docs]: booting-on-google-compute-engine.md
