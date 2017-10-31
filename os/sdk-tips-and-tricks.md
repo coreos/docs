@@ -10,10 +10,10 @@
 
 ## Searching all repo code
 
-Using `repo forall` you can search across all of the Git repos at once:
+Using `repo grep` you can search across all of the Git repos at once:
 
 ```sh
-repo forall -c  git grep 'CONFIG_EXTRA_FIRMWARE_DIR'
+repo grep CONFIG_EXTRA_FIRMWARE
 ```
 
 Note: this could take some time.
@@ -82,7 +82,7 @@ To quickly test your new package(s), use the following commands:
 To recreate the chroot prior to a clean rebuild, exit the chroot and run:
 
 ```sh
-~/coreos $ ./chromite/bin/cros_sdk -r
+~/coreos-sdk $ cork create --replace
 ```
 
 To include the new package as a dependency of Container Linux, add the package to the end of the `RDEPEND` environment variable in `coreos-base/coreos/coreos-0.0.1.ebuild` then increment the revision of Container Linux by renaming the softlink (e.g.):
