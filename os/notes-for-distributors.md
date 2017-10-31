@@ -2,7 +2,7 @@
 
 ## Importing images
 
-Images of Container Linux alpha releases are hosted at `https://alpha.release.core-os.net/amd64-usr/`. There are directories for releases by version as well as `current` with a copy of the latest version. Similarly, beta releases can be found at `https://beta.release.core-os.net/amd64-usr/` and stable releases at `https://stable.release.core-os.net/amd64-usr/`.
+Images of Container Linux alpha releases are hosted at [`https://alpha.release.core-os.net/amd64-usr/`][alpha-bucket]. There are directories for releases by version as well as `current` with a copy of the latest version. Similarly, beta releases can be found at [`https://beta.release.core-os.net/amd64-usr/`][beta-bucket] and stable releases at [`https://stable.release.core-os.net/amd64-usr/`][stable-bucket].
 
 If you are importing images for use inside of your environment it is recommended that you import from the `current` directory. For example to grab the alpha OpenStack version of Container Linux you can import `https://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2`. There is a `version.txt` file in this directory which you can use to label the image with a version number.
 
@@ -14,6 +14,9 @@ wget https://alpha.release.core-os.net/amd64-usr/current/coreos_production_opens
 gpg --verify coreos_production_openstack_image.img.bz2.sig
 ```
 
+[alpha-bucket]: https://alpha.release.core-os.net/amd64-usr/
+[beta-bucket]: https://beta.release.core-os.net/amd64-usr/
+[stable-bucket]: https://stable.release.core-os.net/amd64-usr/
 [signing-key]: https://coreos.com/security/image-signing-key
 
 ## Image customization
