@@ -32,7 +32,7 @@ There are two predominant ways that a Container Linux image can be easily custom
 
 Use Ignition to handle platform specific configuration such as custom networking, running an agent on the machine, or injecting files onto disk.
 
-Additionally, it is recommended that providers ensure that [coreos-metadata][coreos-metadata] and [ct][ct] have support for their platform. This will allow a nicer user experience, as coreos-metadata will be able to install users ssh keys and users will be able to reference dynamic data in their Container Linux Configs.
+Additionally, it is recommended that providers ensure that [coreos-metadata][coreos-metadata] and [ct][ct] have support for their platform. This will allow a nicer user experience, as coreos-metadata will be able to install users' ssh keys and users will be able to reference dynamic data in their Container Linux Configs.
 
 [ignition]: https://coreos.com/blog/introducing-ignition.html
 [ign-platforms]: https://github.com/coreos/ignition/blob/master/doc/supported-platforms.md
