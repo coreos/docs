@@ -14,10 +14,13 @@ wget https://alpha.release.core-os.net/amd64-usr/current/coreos_production_opens
 gpg --verify coreos_production_openstack_image.img.bz2.sig
 ```
 
+The signing key is rotated annually. We will announce upcoming rotations of the signing key on the [user mailing list][coreos-user].
+
 [alpha-bucket]: https://alpha.release.core-os.net/amd64-usr/
 [beta-bucket]: https://beta.release.core-os.net/amd64-usr/
 [stable-bucket]: https://stable.release.core-os.net/amd64-usr/
 [signing-key]: https://coreos.com/security/image-signing-key
+[coreos-user]: https://groups.google.com/forum/#!forum/coreos-user
 
 ## Image customization
 
@@ -40,7 +43,7 @@ Additionally, it is recommended that providers ensure that [coreos-metadata][cor
 
 A Container Linux image can also be customized using [cloud-config](https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md). Users are recommended to instead use Container Linux Configs (that are converted into Ignition configs with [ct][ct]), for reasons [outlined in the blog post that introduced Ignition][ignition].
 
-Providers should still ensure that their platform is supported in cloud-config however, as not all users have switched over to Container Linux Configs.
+Providers that previously supported cloud-config should continue to do so, as not all users have switched over to Container Linux Configs. New platforms do not need to support cloud-config.
 
 Container Linux will automatically parse and execute `/usr/share/oem/cloud-config.yml` if it exists.
 
