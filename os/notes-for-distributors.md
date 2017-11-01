@@ -4,7 +4,11 @@
 
 Images of Container Linux alpha releases are hosted at [`https://alpha.release.core-os.net/amd64-usr/`][alpha-bucket]. There are directories for releases by version as well as `current` with a copy of the latest version. Similarly, beta releases can be found at [`https://beta.release.core-os.net/amd64-usr/`][beta-bucket] and stable releases at [`https://stable.release.core-os.net/amd64-usr/`][stable-bucket].
 
-If you are importing images for use inside of your environment it is recommended that you import from the `current` directory. For example to grab the alpha OpenStack version of Container Linux you can import `https://alpha.release.core-os.net/amd64-usr/current/coreos_production_openstack_image.img.bz2`. There is a `version.txt` file in this directory which you can use to label the image with a version number.
+Each directory has a `version.txt` file containing version information for the files in that directory. If you are importing images for use inside your environment it is recommended that you fetch `version.txt` from the `current` directory and use its contents to compute the path to the other artifacts. For example, to download the alpha OpenStack version of Container Linux:
+
+1. Download `https://alpha.release.core-os.net/amd64-usr/current/version.txt`.
+2. Parse `version.txt` to obtain the value of `COREOS_VERSION_ID`, for example `1576.1.0`.
+3. Download `https://alpha.release.core-os.net/amd64-usr/1576.1.0/coreos_production_openstack_image.img.bz2`.
 
 It is recommended that you also verify files using the [CoreOS Image Signing Key][signing-key]. The GPG signature for each image is a detached `.sig` file that must be passed to `gpg --verify`. For example:
 
