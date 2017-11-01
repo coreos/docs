@@ -31,17 +31,32 @@ git config --global user.name "Your Name"
 
 The `cork` utility, included in the CoreOS [mantle](https://github.com/coreos/mantle) project, is used to create and work with an SDK chroot.
 
-In order to use this utility, you must additionally have the [golang](https://golang.org/) toolchain installed and configured correctly.
-
-First, install the cork utility:
+First, download the cork utility and verify it with the signature:
 
 ```sh
-git clone https://github.com/coreos/mantle
-cd mantle
-./build cork
-mkdir ~/bin
-mv ./bin/cork ~/bin
-export PATH=$PATH:$HOME/bin
+curl -L -o cork https://github.com/coreos/mantle/releases/download/v0.7.0/cork-0.7.0-amd64
+curl -L -o cork.sig https://github.com/coreos/mantle/releases/download/v0.7.0/cork-0.7.0-amd64.sig
+gpg --receive-keys 9CEB8FE6B4F1E9E752F61C82CDDE268EBB729EC7
+gpg --verify cork.sig cork
+```
+
+The `gpg --verify` command should output something like this:
+
+```
+gpg: Signature made Thu 31 Aug 2017 02:47:22 PM PDT
+gpg:                using RSA key 9CEB8FE6B4F1E9E752F61C82CDDE268EBB729EC7
+gpg: Good signature from "CoreOS Application Signing Key <security@coreos.com>" [unknown]
+Primary key fingerprint: 18AD 5014 C99E F7E3 BA5F  6CE9 50BD D3E0 FC8A 365E
+     Subkey fingerprint: 9CEB 8FE6 B4F1 E9E7 52F6  1C82 CDDE 268E BB72 9EC7
+```
+
+Then proceed with the installation of the cork binary to a location on your path:
+
+```sh
+chmod +x cork
+mkdir -p ~/.local/bin
+mv cork ~/.local/bin
+export PATH=$PATH:$HOME/.local/bin
 ```
 
 You may want to add the `PATH` export to your shell profile (e.g. `.bashrc`).
@@ -60,8 +75,6 @@ cork enter
 
 
 To use the SDK chroot in the future, run `cork enter` from the above directory.
-
-**WARNING:** To delete the SDK chroot, use `cork delete`. Otherwise, you will delete `/dev` entries that are `bind`-mounted into the chroot.
 
 ### Using QEMU for cross-compiling
 
