@@ -1,5 +1,11 @@
 # Building production images
 
+## This document is not maintained
+
+This document still contains useful pointers, but the details are not necessarily up to date.
+
+## Introduction
+
 In general the automated process should always be used but in a pinch putting together a release manually may be necessary. All release information is tracked in the [manifest][coreos-manifest] git repository which is usually organized like so:
 
  * build-109.xml (previous release manifest)
