@@ -22,7 +22,7 @@ The following command will create a single droplet. For more details, check out 
      --header "Content-Type: application/json" \
      --header "Authorization: Bearer $TOKEN" \
      --data '{"region":"'"${REGION}"'",
-        "image":"{{site.data.alpha-channel.do-image-path}}",
+        "image":"coreos-alpha",
         "size":"'"$SIZE"'",
         "user_data": "'"$(cat ~/config.ign)"'",
         "ssh_keys":["'"$SSH_KEY_ID"'"],
@@ -38,7 +38,7 @@ The following command will create a single droplet. For more details, check out 
      --header "Content-Type: application/json" \
      --header "Authorization: Bearer $TOKEN" \
      --data '{"region":"'"${REGION}"'",
-        "image":"{{site.data.beta-channel.do-image-path}}",
+        "image":"coreos-beta",
         "size":"'"$SIZE"'",
         "user_data": "'"$(cat ~/config.ign)"'",
         "ssh_keys":["'"$SSH_KEY_ID"'"],
@@ -55,7 +55,7 @@ The following command will create a single droplet. For more details, check out 
      --header "Content-Type: application/json" \
      --header "Authorization: Bearer $TOKEN" \
      --data '{"region":"'"${REGION}"'",
-        "image":"{{site.data.stable-channel.do-image-path}}",
+        "image":"coreos-stable",
         "size":"'"$SIZE"'",
         "user_data": "'"$(cat ~/config.ign)"'",
         "ssh_keys":["'"$SSH_KEY_ID"'"],
@@ -146,7 +146,7 @@ curl --request POST "https://api.digitalocean.com/v2/droplets" \
      --header "Authorization: Bearer $TOKEN" \
      --data '{
       "region":"nyc3",
-      "image":"{{site.data.stable-channel.do-image-path}}",
+      "image":"coreos-stable",
       "size":"512mb",
       "name":"core-1",
       "private_networking":true,
