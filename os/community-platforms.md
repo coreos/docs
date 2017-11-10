@@ -25,7 +25,7 @@ The platforms and providers listed below each provide support and documentation 
 * [libvirt][libvirt]
 * [Vagrant][vagrant]
 * [VirtualBox][virtualbox]
-* [VMware vSphere Integrated Containers][vmware-containers]
+* [VMware][vmware]
 
 
 [auro]: booting-on-auro.md
@@ -44,5 +44,5 @@ The platforms and providers listed below each provide support and documentation 
 [libvirt]: booting-with-libvirt.md
 [vagrant]: booting-on-vagrant.md
 [virtualbox]: booting-on-virtualbox.md
-[vmware-containers]: booting-on-vmware.md
+[vmware]: booting-on-vmware.md
 [official-support]: https://coreos.com/os/docs/latest/
