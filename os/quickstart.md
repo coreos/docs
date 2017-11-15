@@ -1,16 +1,86 @@
-# Container Linux quick start
-
-If you don't have a Container Linux machine running, check out the guides on [running Container Linux][running-coreos] on most cloud providers ([EC2][ec2-docs], [Rackspace][rackspace-docs], [GCE][gce-docs]), virtualization platforms ([Vagrant][vagrant-docs], [VMware][vmware-docs], [OpenStack][openstack-docs], [QEMU/KVM][qemu-docs]) and bare metal servers ([PXE][pxe-docs], [iPXE][ipxe-docs], [ISO][iso-docs], [Installer][install-docs]). With any of these guides you will have machines up and running in a few minutes.
-
-It's highly recommended that you set up a cluster of at least 3 machines &mdash; it's not as much fun on a single machine. If you don't want to break the bank, [Vagrant][vagrant-docs] allows you to run an entire cluster on your laptop. For a cluster to be properly bootstrapped, you have to provide ideally an [Ignition config][ignition] (generated from a [Container Linux Config][cl-configs]), or possibly a cloud-config, via user-data, which is covered in each platform's guide.
+# Up and Running with Container Linux
 
 Container Linux gives you three essential tools: declarative provisioning, container management, and process management. Let's try each of them out.
-Together, these tools make it easy to provision a cluster of machines and use an container orchestration system, such as Kubernetes, on top of them.
+
+Together, these tools make it easy to provision a cluster of machines and use a container orchestration system, such as Kubernetes, on top of them.
 
 ## Provisioning a Container Linux machine
 
-* Walkthrough for using CT to set a ssh key
-* Mention that some platforms, like ec2 or vagrant, will set an ssh key for you
+For this example, let's provision a single Container Linux machine:
+
+The first step of provisioning a Container Linux machine is to write a [Container Linux Config][cl-configs].
+
+At a bare minimum, a Container Linux Config will typically include an ssh public key to access the machine later, as shown below:
+
+```yaml container-linux-config
+passwd:
+  users:
+  - name: core
+    ssh_authorized_keys:
+    - ssh-rsa AAAA...
+```
+
+On some platforms, such as Amazon EC2 and Google Compute Engine, the provider will offer an alternative mechanism to supply an ssh key. In those cases, both the ssh keys configured by the provider and those specified in the Container Linux Config will be configured.
+
+### Converting the Container Linux Config
+
+Before being used to launch a machine, a Container Linux Config should be converted with the [Container Linux Config Transpiler][config-transpiler].
+This process can be done with the Config Transpiler tool, `ct`, from its [Release Page][download-ct].
+
+After writing the above Container Linux Config to a `quickstart-config.yaml`, run `ct < quickstart-config.yaml > quickstart-config.ign` to create an Ignition file to be used as user-data to launch a Container Linux machine.
+
+### Launching the Container Linux machine
+
+The exact process to launch a Container Linux machine varies by platform. There is documentation available for [running Container Linux][running-coreos] on most cloud providers ([EC2][ec2-docs], [Rackspace][rackspace-docs], [GCE][gce-docs]), virtualization platforms ([Vagrant][vagrant-docs], [VMware][vmware-docs], [OpenStack][openstack-docs], [QEMU/KVM][qemu-docs]) and bare metal servers ([PXE][pxe-docs], [iPXE][ipxe-docs], [ISO][iso-docs], [Installer][install-docs]). Each of those guides explains the process for provisioning a machine and providing user-data.
+Going forwards, this guide will provide instructions for the Vagrant and EC2 platforms, but other platforms should work similarly.
+
+<div id="launch-machine">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#vagrant-launch" data-toggle="tab">Vagrant></li>
+    <li class="active"><a href="#ec2-launch" data-toggle="tab">EC2></li>
+  </ul>
+  <div class="tab-content coreos-docs-image-table">
+    <div class="tab-pane active" id="vagrant-launch">
+      <pre>
+      $ git clone https://github.com/coreos/coreos-vagrant.git
+      $ cd coreos-vagrant
+      $ ct -platform vagrant-virtualbox < /path/to/container-linux-config.yaml > config.ign
+      $ vagrant --provider virtualbox up
+      Bringing machine 'core-01' up with 'virtualbox' provider...
+      ...
+          core-01: SSH address: 127.0.0.1:2222
+
+      $ ssh -p 2222 core@127.0.0.1
+      </pre>
+    </div>
+    <!-- TODO ec2 -->
+  </div>
+</div>
+
+### Running Software
+
+Container Linux is lightweight &emdash; the system only includes a minimum set of components to configure and update the machine, and to run containers or container orchestration software.
+
+Container Linux doesn't include a package manager, so any software not included in the base image must be run in a container.
+For example, to run the colorful "htop" utility to see what processes are running on the machine, you could use a docker image you've built or trust:
+
+```shell
+$ docker run -it --pid=host jess/htop
+# press 'q' to quit
+```
+
+<!-- Toolbox mention? I'd personally prefer people use purpose-built containers vs the toolbox though - euank -->
+
+### Updates
+
+
+
+
+Container Linux, at its core, is a lightweight operating system
+Container Linux by default is a minimal Linux distribution
+
+
+
 * Walkthrough ssh-ing in and looking at systemctl status to see the basic running services
 * Briefly mention automatic updates
 
@@ -84,5 +154,7 @@ across your Container Linux cluster.
 [install-docs]: installing-to-disk.md
 [ignition]: https://coreos.com/blog/introducing-ignition.html
 [cl-configs]: provisioning.md
+[config-transpiler]: provisioning.md#config-transpiler
 [tectonic]: https://coreos.com/tectonic/
 [coreos-kubernetes]: https://coreos.com/kubernetes/docs/latest/
+[download-ct]: https://github.com/coreos/container-linux-config-transpiler/releases
