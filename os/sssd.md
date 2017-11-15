@@ -7,6 +7,7 @@ Container Linux ships with the System Security Services Daemon, allowing integra
 Edit /etc/sssd/sssd.conf. This configuration file is fully documented [here](https://jhrozek.fedorapeople.org/sssd/1.13.1/man/sssd.conf.5.html). For example, to configure SSSD to use an IPA server called ipa.example.com, sssd.conf should read:
 
 ```
+[sssd]
 config_file_version = 2
 services = nss, pam
 domains = LDAP
