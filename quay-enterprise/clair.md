@@ -132,9 +132,9 @@ clair:
     options:
       # A PostgreSQL Connection string pointing to the Clair Postgres database.
       # Documentation on the format can be found at: http://www.postgresql.org/docs/9.4/static/libpq-connect.html
-      source: { POSTGRES_CONNECTION_STRING }
+      source: host={ DOCKER_HOST } port=5432 dbname={ DB_NAME } user={ CLAIR_USER } password={ PASSWORD } sslmode=disable statement_timeout=60000
       cachesize: 16384
-  api:
+    api:
     # The port at which Clair will report its health status. For example, if Clair is running at
     # https://clair.mycompany.com, the health will be reported at
     # http://clair.mycompany.com:6061/health.
@@ -225,7 +225,7 @@ Similar to the process for setting up Docker to [trust your self-signed certific
 2. Make sure the `ca.crt` file is mounted inside the Clair container under `/usr/local/share/ca-certificates/` as in the example below:
 
 ```
-docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config -v /path/to/quay/cert/ca.crt:/usr/local/share/ca-certificates/ca.crt  quay.io/coreos/clair-jwt:v2.0.0
+docker run --restart=always -p 6060:6060 -p 6061:6061 -v /path/to/clair/config/directory:/config -v /path/to/quay/cert/ca.crt:/usr/local/share/ca-certificates/ca.crt -d quay.io/coreos/clair-jwt:v2.0.0
 ```
 
 Now Clair will be able to trust the source of your TLS certificates and use them to secure communication between Clair and Quay.
