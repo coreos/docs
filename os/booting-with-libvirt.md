@@ -75,7 +75,7 @@ Unfortunately, libvirt does not have direct support for Ignition yet, so configu
 
 This configuration can be done in the following steps:
 
-#### Create the Igntion config
+#### Create the Ignition config
 
 Typically you won't write Ignition files yourself, rather you will typically use a tool like the [config transpiler](https://coreos.com/os/docs/latest/overview-of-ct.html) to generate them.
 
