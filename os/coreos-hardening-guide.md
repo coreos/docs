@@ -26,11 +26,11 @@ etcd and Locksmith should be secured and authenticated using TLS if you are usin
 
 ### Local users
 
-Container Linux has a single default user account called "core". Generally this user is the one that gets ssh keys added to it via a Container Linux Config for administrators to login. The core users, by default, has access to the wheel group which grants sudo access. You can change this by removing the core user from wheel by running this command: `gpasswd -d core wheel`.
+Container Linux has a single default user account called "core". Generally this user is the one that gets ssh keys added to it via a Container Linux Config for administrators to login. The core user, by default, has access to the wheel group which grants sudo access. You can change this by removing the core user from wheel by running this command: `gpasswd -d core wheel`.
 
 ### Docker daemon
 
-The docker daemon is accessible via a unix domain socket at /run/docker.sock. Users in the "docker" group have access to this service and access to the docker socket grants similar capabilities to sudo. The core user, by default, has access to the docker group. You can change this by removing the core user from docker by running this command: `gpasswd -d core docker`.
+The docker daemon is accessible via a unix domain socket at `/run/docker.sock`. Users in the "docker" group have access to this service and access to the docker socket grants similar capabilities to sudo. The core user, by default, has access to the docker group. You can change this by removing the core user from docker by running this command: `gpasswd -d core docker`.
 
 ### rkt fetch
 
@@ -38,7 +38,7 @@ Users in the "rkt" group have access to the rkt container image store. A user ma
 
 ### fleet API socket
 
-The fleet API allows management of the state of the cluster using JSON over HTTP. By default, Container Linux ships a socket unit for fleet (fleet.socket) which binds to a Unix domain socket, /var/run/fleet.sock. This socket is currently globally writable but will be restricted in a future release. Users with access to this socket and fleet configured have sudo equivalent access via systemd. To disable fleet completely run:
+The fleet API allows management of the state of the cluster using JSON over HTTP. By default, Container Linux ships a socket unit for fleet (fleet.socket) which binds to a Unix domain socket, `/var/run/fleet.sock`. Users with access to this socket have root access via systemd. To disable fleet completely run:
 
 ```
 systemctl mask fleet.socket --now
