@@ -87,4 +87,25 @@ Add an entry for the cert and paste the full base64 encoded string under the ent
 c1psWGpqeGlPQmNEWkJPMjJ5d0pDemVnR2QNCnRsbW9JdEF4YnFSdVd3PT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
 ```
 
+Add the env variable `REQUESTS_CA_BUNDLE` to the quay deployment: 
+
+```
+kubectl --namespace quay-enterprise edit deploy/quay-enterprise-app 
+
+```
+
+The `REQUESTS_CA_BUNDLE` env should be defined under the `containers:` section: 
+
+```
+      containers:
+      - name: quay-enterprise-app
+        image: quay.io/coreos/quay:v2.6.1
+        ports:
+        - containerPort: 80
+       env: 
+       - name: REQUESTS_CA_BUNDLE 
+	 value: /conf/stack/custom-cert.crt
+```
+
+
 Finally, recycle all QE pods. Use `kubectl delete` to remove all QE pods. The QE Deployment will automatically schedule replacement pods with the new certificate data.
