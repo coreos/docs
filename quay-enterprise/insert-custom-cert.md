@@ -102,9 +102,9 @@ The `REQUESTS_CA_BUNDLE` env should be defined under the `containers:` section:
         image: quay.io/coreos/quay:v2.6.1
         ports:
         - containerPort: 80
-       env: 
-       - name: REQUESTS_CA_BUNDLE 
-	 value: /conf/stack/custom-cert.crt
+      env: 
+      - name: REQUESTS_CA_BUNDLE 
+	value: /conf/stack/custom-cert.crt
 ```
 
 
