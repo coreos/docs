@@ -23,6 +23,7 @@ The platforms and providers listed below each provide support and documentation 
 * [CloudStack][cloudstack]
 * [Eucalyptus][eucalyptus]
 * [libvirt][libvirt]
+* [OpenStack][openstack]
 * [Vagrant][vagrant]
 * [VirtualBox][virtualbox]
 * [VMware][vmware]
@@ -34,6 +35,7 @@ The platforms and providers listed below each provide support and documentation 
 [exoscale]: booting-on-exoscale.md
 [ikoula]: booting-on-ikoula.md
 [nifty]: booting-on-niftycloud.md
+[openstack]: booting-on-openstack.md
 [packet]: booting-on-packet.md
 [rackspace]: booting-on-rackspace.md
 [rimuhosting]: booting-on-launchtimevps.md
