@@ -70,7 +70,7 @@ For reference here are the rest of the `coreos-install` options:
 
 By default there isn't a password or any other way to log into a fresh Container Linux system. The easiest way to configure accounts, add systemd units, and more is via Container Linux Configs. Jump over to the [docs to learn about the supported features][cl-configs].
 
-After using the [Container Linux Config Transpiler][ct-docs] to produce an Ignition config, the installation script will process your `ignition.json` file specified with the `-i` flag and use it when the installation is booted.
+After using the [Container Linux Config Transpiler][ct] to produce an Ignition config, the installation script will process your `ignition.json` file specified with the `-i` flag and use it when the installation is booted.
 
 A Container Linux Config that specifies an SSH key for the `core` user but doesn't use any other parameters looks like:
 
@@ -132,4 +132,4 @@ Now that you have a machine booted it is time to play around. Check out the [Con
 [clc-section]: #container-linux-configs
 [coreos-install]: https://raw.github.com/coreos/init/master/bin/coreos-install
 [cl-configs]: provisioning.md
-[ct-docs]: https://github.com/coreos/container-linux-config-transpiler/tree/master/doc
+[ct]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/overview.md
