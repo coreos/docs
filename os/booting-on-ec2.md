@@ -152,8 +152,7 @@ storage:
     - mount:
         device: /dev/xvdb
         format: ext4
-        create:
-          force: false
+        wipe_filesystem: true
 
 systemd:
   units:
