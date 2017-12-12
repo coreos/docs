@@ -3,9 +3,16 @@
 Container Linux Configs can be used to format and attach additional filesystems to Container Linux nodes, whether such storage is provided by an underlying cloud platform, physical disk, SAN, or NAS system. This is done by specifying how partitions should be mounted in the config, and then using a _systemd mount unit_ to mount the partition. By [systemd convention](http://www.freedesktop.org/software/systemd/man/systemd.mount.html), mount unit names derive from the target mount point, with interior slashes replaced by dashes, and the `.mount` extension appended. A unit mounting onto `/var/www` is thus named `var-www.mount`.
 
 
-Mount units name the source filesystem and target mount point, and optionally the filesystem type. *Systemd* mounts filesystems defined in such units at boot time. The following example mounts an [EC2 ephemeral disk](booting-on-ec2.md#instance-storage) at the node's `/media/ephemeral` directory, and is therefore named `media-ephemeral.mount`:
+Mount units name the source filesystem and target mount point, and optionally the filesystem type. *Systemd* mounts filesystems defined in such units at boot time. The following example formats an [EC2 ephemeral disk](booting-on-ec2.md#instance-storage) and then mounts it at the node's `/media/ephemeral` directory. The mount unit is therefore named `media-ephemeral.mount`.
 
 ```yaml container-linux-config
+storage:
+  filesystems:
+    - name: ephemeral1
+      mount:
+        device: /dev/xvdb
+        format: ext4
+        wipe_filesystem: true
 systemd:
   units:
     - name: media-ephemeral.mount
@@ -16,7 +23,7 @@ systemd:
         [Mount]
         What=/dev/xvdb
         Where=/media/ephemeral
-        Type=ext3
+        Type=ext4
         [Install]
         WantedBy=local-fs.target
 ```
