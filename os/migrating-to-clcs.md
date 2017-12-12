@@ -274,13 +274,10 @@ passwd:
       password_hash: "$6$5s2u6/jR$un0AvWnqilcgaNB3Mkxd5yYv6mTlWfOoCYHZmfi3LDKVltj.E8XNKEcwWm..."
       ssh_authorized_keys:
         - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0g+ZTxC7weoIJLUafOgrm+h..."
-      create:
-        groups:
-          - "sudo"
-          - "docker"
+      groups:
+        - "sudo"
+        - "docker"
 ```
-
-_Note: the `create:` section must exist or the user will not be created._
 
 ### write_files
 

@@ -32,8 +32,7 @@ storage:
       mount:
         device: /dev/xvdb
         format: ext4
-        create:
-          force: true
+        wipe_filesystem: true
 systemd:
   units:
     - name: var-lib-docker.mount

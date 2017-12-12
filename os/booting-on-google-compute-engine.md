@@ -73,7 +73,6 @@ storage:
     - mount:
         device: /dev/disk/by-id/scsi-0Google_PersistentDisk_database-backup
         format: ext4
-        create:
 
 systemd:
   units:

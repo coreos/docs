@@ -158,9 +158,8 @@ storage:
   - mount:
       device: /dev/disk/by-partlabel/ROOT
       format: ext4
-      create:
-        force: true
-        options: [-L, ROOT]
+      wipe_filesystem: true
+      label: ROOT
 ```
 
 And add `root=/dev/sda1` or `root=LABEL=ROOT` to the kernel options as documented above.
@@ -178,9 +177,8 @@ storage:
   - mount:
       device: /dev/disk/by-partlabel/ROOT
       format: btrfs
-      create:
-        force: true
-        options: [-L, ROOT]
+      wipe_filesystem: true
+      label: ROOT
 ```
 
 ## Adding a Custom OEM

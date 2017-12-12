@@ -40,19 +40,13 @@ storage:
       mount:
         device: "/dev/md/root_array"
         format: "ext4"
-        create:
-          options:
-            - "-L"
-            - "ROOT"
+        label: "ROOT"
     - name: "unused"
       mount:
         device: "/dev/vda9"
         format: "ext4"
-        create:
-          options:
-            - "-L"
-            - "unused"
-          force: true
+        wipe_filesystem: true
+        label: "unused"
 ```
 
 ### Limitations
