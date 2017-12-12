@@ -11,12 +11,14 @@ systemd:
     - name: media-ephemeral.mount
       enable: true
       contents: |
+        [Unit]
+        Before=local-fs.target
         [Mount]
         What=/dev/xvdb
         Where=/media/ephemeral
         Type=ext3
         [Install]
-        WantedBy=multi-user.target
+        WantedBy=local-fs.target
 ```
 
 ## Use attached storage for Docker
@@ -40,12 +42,13 @@ systemd:
       contents: |
         [Unit]
         Description=Mount ephemeral to /var/lib/docker
+        Before=local-fs.target
         [Mount]
         What=/dev/xvdb
         Where=/var/lib/docker
         Type=ext4
         [Install]
-        WantedBy=multi-user.target
+        WantedBy=local-fs.target
     - name: docker.service
       dropins:
         - name: 10-wait-docker.conf
@@ -65,17 +68,15 @@ In this example, we are going to mount a new 25GB btrfs volume file to `/var/lib
 systemd:
   units:
     - name: format-var-lib-docker.service
-      enable: true
       contents: |
         [Unit]
         Before=docker.service var-lib-docker.mount
+        RequiresMountsFor=/var/lib
         ConditionPathExists=!/var/lib/docker.btrfs
         [Service]
         Type=oneshot
         ExecStart=/usr/bin/truncate --size=25G /var/lib/docker.btrfs
         ExecStart=/usr/sbin/mkfs.btrfs /var/lib/docker.btrfs
-        [Install]
-        WantedBy=multi-user.target
     - name: var-lib-docker.mount
       enable: true
       contents: |
@@ -83,13 +84,13 @@ systemd:
         Before=docker.service
         After=format-var-lib-docker.service
         Requires=format-var-lib-docker.service
-        [Install]
-        RequiredBy=docker.service
         [Mount]
         What=/var/lib/docker.btrfs
         Where=/var/lib/docker
         Type=btrfs
         Options=loop,discard
+        [Install]
+        RequiredBy=docker.service
 ```
 
 Note the declaration of `ConditionPathExists=!/var/lib/docker.btrfs`. Without this line, systemd would reformat the btrfs filesystem every time the machine starts.
@@ -104,12 +105,14 @@ systemd:
     - name: var-www.mount
       enable: true
       contents: |
+        [Unit]
+        Before=remote-fs.target
         [Mount]
         What=nfs.example.com:/var/www
         Where=/var/www
         Type=nfs
         [Install]
-        WantedBy=multi-user.target
+        WantedBy=remote-fs.target
 ```
 
 To declare that another service depends on this mount, name the mount unit in the dependent unit's `After` and `Requires` properties:
