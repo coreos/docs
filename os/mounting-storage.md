@@ -40,8 +40,6 @@ systemd:
       contents: |
         [Unit]
         Description=Mount ephemeral to /var/lib/docker
-        Requires=format-ephemeral.service
-        After=format-ephemeral.service
         [Mount]
         What=/dev/xvdb
         Where=/var/lib/docker
