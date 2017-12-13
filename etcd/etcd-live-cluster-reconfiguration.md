@@ -131,14 +131,14 @@ cluster is healthy
 
 3. Reinitialize the failed member.
 
-      ```sh
-        $ etcdctl member add demo-etcd-2 http://10.240.0.2:2380
-        Added member named demo-etcd-2 with ID 4fb77509779cac99 to cluster
+    ```sh
+    $ etcdctl member add demo-etcd-2 http://10.240.0.2:2380
+    Added member named demo-etcd-2 with ID 4fb77509779cac99 to cluster
 
-        ETCD_NAME="demo-etcd-2"
-        ETCD_INITIAL_CLUSTER="demo-etcd-1=http://10.240.0.1:2380,demo-etcd-2=http://10.240.0.2:2380,demo-etcd-3=http://10.240.0.3:2380"
-        ETCD_INITIAL_CLUSTER_STATE="existing"
-        ```
+    ETCD_NAME="demo-etcd-2"
+    ETCD_INITIAL_CLUSTER="demo-etcd-1=http://10.240.0.1:2380,demo-etcd-2=http://10.240.0.2:2380,demo-etcd-3=http://10.240.0.3:2380"
+    ETCD_INITIAL_CLUSTER_STATE="existing"
+    ```
 
 4. Modify the existing systemd drop-in, `/etc/systemd/system/etcd-member.service.d/20-clct-etcd-member.conf` by replacing the node data with the appropriate information from the output of the `etcdctl member add` command executed in the last step.
 
@@ -159,8 +159,8 @@ cluster is healthy
     ```sh
     $ etcdctl cluster-health
 
-      member e6c2bda2aa1f2dcf is healthy: got healthy result from http://10.240.0.2:2379
-      cluster is healthy
+    member e6c2bda2aa1f2dcf is healthy: got healthy result from http://10.240.0.2:2379
+    cluster is healthy
     ```
 
 If your cluster has healthy state, etcd successfully writes cluster configuration into the `/var/lib/etcd` directory.
@@ -174,30 +174,30 @@ If your cluster has healthy state, etcd successfully writes cluster configuratio
 2. Create a backup directory:
 
     ```sh
-     $ sudo mkdir /var/lib/etcd_backup
-     ```
+    $ sudo mkdir /var/lib/etcd_backup
+    ```
 
 3. Save a snapshot of the database to `/var/lib/etcd_backup/backup.db`:
 
     ```sh
-     $ sudo ETCDCTL_API=3 /opt/bin/etcdctl snapshot save /var/lib/etcd_backup/backup.db
-     ```
+    $ sudo ETCDCTL_API=3 /opt/bin/etcdctl snapshot save /var/lib/etcd_backup/backup.db
+    ```
 
 4. Restore the snapshot file into a new member directory `/var/lib/etcd_backup/etcd`:
 
     ```sh
-     $ sudo ETCDCTL_API=3 /opt/bin/etcdctl snapshot --data-dir /var/lib/etcd_backup/etcd restore backup.db \
-      --name new-demo-etcd-1 \
-      --initial-cluster new-demo-etcd-1=http://10.240.0.1:2380
-      --initial-cluster-token new-etcd-cluster-1 \
-      --initial-advertise-peer-urls http://10.240.0.1:2380
-      ```
+    $ sudo ETCDCTL_API=3 /opt/bin/etcdctl snapshot --data-dir /var/lib/etcd_backup/etcd restore backup.db \
+    --name new-demo-etcd-1 \
+    --initial-cluster new-demo-etcd-1=http://10.240.0.1:2380
+    --initial-cluster-token new-etcd-cluster-1 \
+    --initial-advertise-peer-urls http://10.240.0.1:2380
+    ```
 
 5. Remove the obsolete directory:
 
     ```sh
-     $ sudo rm -rf /var/lib/etcd
-     ```
+    $ sudo rm -rf /var/lib/etcd
+    ```
 
 6. Move the restored member directory to `/var/lib/etcd`:
 
@@ -208,20 +208,20 @@ If your cluster has healthy state, etcd successfully writes cluster configuratio
 7. Set the etcd user permissions:
 
     ```sh
-     $ sudo chown etcd -R /var/lib/etcd
-     ```
+    $ sudo chown etcd -R /var/lib/etcd
+    ```
 
 8. Start the etcd member service:
 
     ```sh
-     $ sudo systemctl start etcd-member.service
-     ```
+    $ sudo systemctl start etcd-member.service
+    ```
 
 9. Check the node health:
 
     ```sh
-     $ etcdctl cluster-health
-     ```
+    $ etcdctl cluster-health
+    ```
 
 10. The restored cluster is now running with a single node. For information on adding more nodes, see [Change etcd cluster size][change-cluster-size].
 
@@ -293,8 +293,8 @@ Consider a three-node cluster with two permanently lost members.
 9. Reload systemd services:
 
    ```
-    $ sudo systemctl daemon-reload
-    ```
+   $ sudo systemctl daemon-reload
+   ```
 
     It is not necessary to restart the `etcd-member` service after reloading the systemd services.
 
