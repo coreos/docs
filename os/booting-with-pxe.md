@@ -183,11 +183,11 @@ storage:
 
 ## Adding a Custom OEM
 
-Similar to the [OEM partition][oem] in Container Linux disk images, PXE images can be customized with an [Ignition config][ignition] bundled in the initramfs. Simply create a `./usr/share/oem/` directory containing the Ignition config (e.g. `example.ign`), add it as an additional initramfs, and boot it specifying the path to the config using `coreos.config.url`:
+Similar to the [OEM partition][oem] in Container Linux disk images, PXE images can be customized with an [Ignition config][ignition] bundled in the initramfs. Simply create a `./usr/share/oem/` directory, add a `config.ign` file containing the Ignition config, and add the directory tree as an additional initramfs:
 
 ```sh
 mkdir -p usr/share/oem
-cp example.ign ./usr/share/oem
+cp example.ign ./usr/share/oem/config.ign
 find usr | cpio -o -H newc -O oem.cpio
 gzip oem.cpio
 ```
@@ -200,15 +200,15 @@ gzip --stdout --decompress oem.cpio.gz | cpio -it
 usr
 usr/share
 usr/share/oem
-usr/share/oem/example.ign
+usr/share/oem/config.ign
 ```
 
-Add the `oem.cpio.gz` file to your PXE boot directory, then [append it][append-initrd] to the `initrd` line in your `pxelinux.cfg`. Finally, specify the URL of the config in the `kernel` line:
+Add the `oem.cpio.gz` file to your PXE boot directory, then [append it][append-initrd] to the `initrd` line in your `pxelinux.cfg`:
 
 ```
 ...
 initrd coreos_production_pxe_image.cpio.gz,oem.cpio.gz
-kernel coreos_production_pxe.vmlinuz coreos.first_boot=1 coreos.config.url=oem:///example.ign
+kernel coreos_production_pxe.vmlinuz coreos.first_boot=1
 ...
 ```
 
