@@ -27,7 +27,7 @@ ExecStart=/usr/lib/coreos/etcd-wrapper $ETCD_OPTS \
   --name="demo-etcd-1" \
   --listen-peer-urls="http://0.0.0.0:2380" \
   --listen-client-urls="http://10.240.0.1:2379,http://0.0.0.0:4001" \
-  --initial-advertise-peer-urls="http://http://10.240.0.1:2380" \
+  --initial-advertise-peer-urls="http://10.240.0.1:2380" \
   --initial-cluster="demo-etcd-1=http://10.240.0.1:2380,demo-etcd-2=http://10.240.0.2:2380,demo-etcd-3=http://10.240.0.3:2380" \
   --initial-cluster-state="new" \
   --initial-cluster-token="demo-etcd-token" \
