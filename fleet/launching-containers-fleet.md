@@ -295,7 +295,7 @@ MachineMetadata=region=east
 
 ## Running fleet via a Container Linux Config
 
-On Container Linux, only fleet 0.11.x is available under /usr/bin. That one might be obsolete for users who want to try out more recent versions. In that case, users should define their own custom Container Linux Config to be able to run any version of fleet as they want. For example:
+A fleet binary is no longer installed since Container Linux 1675.0.0. To continue running fleet, users should define their own container-based service and PolicyKit rule. For example:
 
 ```yaml container-linux-config
 storage:
@@ -306,6 +306,18 @@ storage:
       contents:
         remote:
           url: https://raw.githubusercontent.com/coreos/fleet/master/scripts/fleet-wrapper
+    - path: /etc/polkit-1/rules.d/98-fleet-org.freedesktop.systemd1.rules
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          polkit.addRule(function(action, subject) {
+            if (action.id.indexOf("org.freedesktop.systemd1.") == 0 &&
+                subject.user == "fleet") {
+                  return polkit.Result.YES;
+            }
+          });
+
 systemd:
   units:
     - name: fleet.service
