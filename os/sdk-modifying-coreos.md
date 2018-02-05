@@ -16,8 +16,9 @@ System requirements to get started:
 
 * curl
 * git
-* python2
 * bzip2
+* gpg
+* sudo
 
 You also need a proper git setup:
 
