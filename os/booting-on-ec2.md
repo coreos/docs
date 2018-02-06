@@ -30,14 +30,21 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
         <tbody>
         {% for region in site.data.alpha-channel.amis %}
         {% capture region_domain %}{% if region.name == 'us-gov-west-1' %}amazonaws-us-gov.com{% elsif region.name == 'cn-north-1' or region.name == 'cn-northwest-1' %}amazonaws.cn{% else %}aws.amazon.com{% endif %}{% endcapture %}
+        {% if region.pv %}
         <tr>
           <td rowspan="2">{{ region.name }}</td>
           <td class="dashed"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
           <td class="dashed"><a href="https://console.{{ region_domain }}/ec2/home?region={{ region.name }}#launchAmi={{ region.pv }}">{{ region.pv }}</a></td>
           <td class="dashed"><a href="https://console.{{ region_domain }}/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7Ehttps%3A%2F%2Fs3.amazonaws.com%2Fcoreos.com%2Fdist%2Faws%2Fcoreos-alpha-pv.template" target="_blank"><img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png" alt="Launch Stack"/></a></td>
         </tr>
+        {% endif %}
         <tr>
+          {% unless region.pv %}
+          <td>{{ region.name }}</td>
+          <td><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">HVM</a></td>
+          {% else %}
           <td class="rowspan-padding"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">HVM</a></td>
+          {% endunless %}
           <td><a href="https://console.{{ region_domain }}/ec2/home?region={{ region.name }}#launchAmi={{ region.hvm }}">{{ region.hvm }}</a></td>
           <td><a href="https://console.{{ region_domain }}/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7Ehttps%3A%2F%2Fs3.amazonaws.com%2Fcoreos.com%2Fdist%2Faws%2Fcoreos-alpha-hvm.template" target="_blank"><img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png" alt="Launch Stack"/></a></td>
         </tr>
@@ -62,14 +69,21 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
         <tbody>
         {% for region in site.data.beta-channel.amis %}
         {% capture region_domain %}{% if region.name == 'us-gov-west-1' %}amazonaws-us-gov.com{% elsif region.name == 'cn-north-1' or region.name == 'cn-northwest-1' %}amazonaws.cn{% else %}aws.amazon.com{% endif %}{% endcapture %}
+        {% if region.pv %}
         <tr>
           <td rowspan="2">{{ region.name }}</td>
           <td class="dashed"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
           <td class="dashed"><a href="https://console.{{ region_domain }}/ec2/home?region={{ region.name }}#launchAmi={{ region.pv }}">{{ region.pv }}</a></td>
           <td class="dashed"><a href="https://console.{{ region_domain }}/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-beta%7Cturl%7Ehttps%3A%2F%2Fs3.amazonaws.com%2Fcoreos.com%2Fdist%2Faws%2Fcoreos-beta-pv.template" target="_blank"><img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png" alt="Launch Stack"/></a></td>
         </tr>
+        {% endif %}
         <tr>
+          {% unless region.pv %}
+          <td>{{ region.name }}</td>
+          <td><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">HVM</a></td>
+          {% else %}
           <td class="rowspan-padding"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">HVM</a></td>
+          {% endunless %}
           <td><a href="https://console.{{ region_domain }}/ec2/home?region={{ region.name }}#launchAmi={{ region.hvm }}">{{ region.hvm }}</a></td>
           <td><a href="https://console.{{ region_domain }}/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-beta%7Cturl%7Ehttps%3A%2F%2Fs3.amazonaws.com%2Fcoreos.com%2Fdist%2Faws%2Fcoreos-beta-hvm.template" target="_blank"><img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png" alt="Launch Stack"/></a></td>
         </tr>
@@ -94,14 +108,21 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
         <tbody>
         {% for region in site.data.stable-channel.amis %}
         {% capture region_domain %}{% if region.name == 'us-gov-west-1' %}amazonaws-us-gov.com{% elsif region.name == 'cn-north-1' or region.name == 'cn-northwest-1' %}amazonaws.cn{% else %}aws.amazon.com{% endif %}{% endcapture %}
+        {% if region.pv %}
         <tr>
           <td rowspan="2">{{ region.name }}</td>
           <td class="dashed"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
           <td class="dashed"><a href="https://console.{{ region_domain }}/ec2/home?region={{ region.name }}#launchAmi={{ region.pv }}">{{ region.pv }}</a></td>
           <td class="dashed"><a href="https://console.{{ region_domain }}/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-stable%7Cturl%7Ehttps%3A%2F%2Fs3.amazonaws.com%2Fcoreos.com%2Fdist%2Faws%2Fcoreos-stable-pv.template" target="_blank"><img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png" alt="Launch Stack"/></a></td>
         </tr>
+        {% endif %}
         <tr>
+          {% unless region.pv %}
+          <td>{{ region.name }}</td>
+          <td><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">HVM</a></td>
+          {% else %}
           <td class="rowspan-padding"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">HVM</a></td>
+          {% endunless %}
           <td><a href="https://console.{{ region_domain }}/ec2/home?region={{ region.name }}#launchAmi={{ region.hvm }}">{{ region.hvm }}</a></td>
           <td><a href="https://console.{{ region_domain }}/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-stable%7Cturl%7Ehttps%3A%2F%2Fs3.amazonaws.com%2Fcoreos.com%2Fdist%2Faws%2Fcoreos-stable-hvm.template" target="_blank"><img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png" alt="Launch Stack"/></a></td>
         </tr>
