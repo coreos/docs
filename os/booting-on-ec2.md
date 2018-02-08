@@ -193,7 +193,7 @@ If you would like to create multiple clusters you will need to change the "Stack
 
 {% for region in site.data.alpha-channel.amis %}
   {% if region.name == 'us-east-1' %}
-**TL;DR:** launch three instances of [{{region.pv}}](https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.pv}}) in **{{region.name}}** with a security group that has open port 22, 2379, 2380, 4001, and 7001 and the same "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [Docker][docker-docs] to play with.
+**TL;DR:** launch three instances of [{{region.hvm}}](https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.hvm}}) in **{{region.name}}** with a security group that has open port 22, 2379, 2380, 4001, and 7001 and the same "User Data" of each host. SSH uses the `core` user and you have [etcd][etcd-docs] and [Docker][docker-docs] to play with.
   {% endif %}
 {% endfor %}
 
@@ -241,7 +241,7 @@ First we need to create a security group to allow Container Linux instances to c
         <li>
         {% for region in site.data.alpha-channel.amis %}
           {% if region.name == 'us-east-1' %}
-            Open the <a href="https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.pv}}" target="_blank">quick launch wizard</a> to boot {{region.pv}}.
+            Open the <a href="https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.hvm}}" target="_blank">quick launch wizard</a> to boot {{region.hvm}}.
           {% endif %}
         {% endfor %}
         </li>
@@ -315,7 +315,7 @@ First we need to create a security group to allow Container Linux instances to c
         <li>
         {% for region in site.data.beta-channel.amis %}
           {% if region.name == 'us-east-1' %}
-            Open the <a href="https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.pv}}" target="_blank">quick launch wizard</a> to boot {{region.pv}}.
+            Open the <a href="https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.hvm}}" target="_blank">quick launch wizard</a> to boot {{region.hvm}}.
           {% endif %}
         {% endfor %}
         </li>
@@ -389,7 +389,7 @@ First we need to create a security group to allow Container Linux instances to c
         <li>
         {% for region in site.data.stable-channel.amis %}
           {% if region.name == 'us-east-1' %}
-            Open the <a href="https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.pv}}" target="_blank">quick launch wizard</a> to boot {{region.pv}}.
+            Open the <a href="https://console.aws.amazon.com/ec2/home?region={{region.name}}#launchAmi={{region.hvm}}" target="_blank">quick launch wizard</a> to boot {{region.hvm}}.
           {% endif %}
         {% endfor %}
         </li>
