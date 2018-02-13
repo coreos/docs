@@ -192,19 +192,3 @@ To avoid corrupting the ccache, do not abort builds.
 ### `build_image` hangs while emerging packages after previously aborting a build
 
 Delete all `*.portage_lockfile`s in `/build/<arch>/`. To avoid stale lockfiles, do not abort builds.
-
-## Constants and IDs
-
-### CoreOS Container Linux app ID
-
-This UUID is used to identify Container Linux to the update service and elsewhere.
-
-```
-e96281a6-d1af-4bde-9a0a-97b76e56dc57
-```
-
-### GPT UUID types
-
-- CoreOS Root: 5dfbf5f4-2848-4bac-aa5e-0d9a20b745a6
-- CoreOS Reserved: c95dc21a-df0e-4340-8d7b-26cbfa9a03e0
-- CoreOS Raid Containing Root: be9067b9-ea49-4f15-b4f6-f36f8c9e1818
