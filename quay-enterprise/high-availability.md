@@ -15,7 +15,7 @@ The following services are required in order to run Quay Enterprise as HA:
 
 ## Basic setup
 
-Perform the basic [Quay Enterprise Setup](https://tectonic.com/quay-enterprise/docs/latest/initial-setup.html) process, using the above database, storage, redis and using the *load balancer hostname* as the server hostname. Once complete, save the contents of the `conf/stack` directory.
+Perform the basic [Quay Enterprise Setup](initial-setup.md) process, using the above database, storage, redis and using the *load balancer hostname* as the server hostname. Once complete, save the contents of the `conf/stack` directory.
 
 ## High Availability Setup
 
