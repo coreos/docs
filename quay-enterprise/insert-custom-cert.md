@@ -34,7 +34,7 @@ Obtain the quay container's `CONTAINER ID` with `docker ps`:
 ```
 $ docker ps
 CONTAINER ID        IMAGE                                COMMAND                  CREATED             STATUS              PORTS
-5a3e82c4a75f        quay.io/coreos/quay:v2.6.1           "/sbin/my_init"          24 hours ago        Up 18 hours         0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp, 8443/tcp   grave_keller
+5a3e82c4a75f        quay.io/coreos/quay:v2.8.0           "/sbin/my_init"          24 hours ago        Up 18 hours         0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp, 8443/tcp   grave_keller
 ```
 
 Restart the container with that ID:
