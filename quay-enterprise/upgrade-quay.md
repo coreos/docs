@@ -1,6 +1,6 @@
 # Upgrading Quay Enterprise
 
-The full list of Quay Enterprise versions can be found on the [Quay Enterprise Releases](https://tectonic.com/quay-enterprise/releases/) page.
+The full list of Quay Enterprise versions can be found on the [Quay Enterprise Releases][releases] page.
 
 ### Special Note: Upgrading from Quay Enterprise < 2.0.0 to >= 2.0.0
 
@@ -12,7 +12,7 @@ We **highly** recommend performing upgrades during a scheduled maintainence wind
 
 ## The upgrade process
 
-1. Visit the [Quay Enterprise Releases](https://tectonic.com/quay-enterprise/releases/) page and note the latest version of Quay Enterprise.
+1. Visit the [Quay Enterprise Releases][releases] page and note the latest version of Quay Enterprise.
 2. Shutdown the Quay Enterprise cluster: Remove **all** containers from service.
 3. On a **single** node, run the newer version of Quay Enterprise.
 4. Quay Enterprise will perform any necessary database migrations before bringing itself back into service.
@@ -24,3 +24,5 @@ docker logs -f {containerId}
 ```
 
 5. Update all other nodes to refer to the new tag and bring them back into service.
+
+[releases]: https://coreos.com/quay-enterprise/releases/

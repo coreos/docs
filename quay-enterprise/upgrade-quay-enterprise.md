@@ -60,4 +60,4 @@ Visit the /health/endtoend endpoint on the registry hostname and verify that the
 If the upgraded container is healthy, repeat this process for all remaining Quay Enterprise containers.
 
 
-[qe-releases]: https://tectonic.com/quay-enterprise/releases/
+[qe-releases]: https://coreos.com/quay-enterprise/releases/

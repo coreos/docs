@@ -36,6 +36,6 @@ Client-version: 0.3.7
 [appr]: https://github.com/app-registry/appr
 [self-signed]: quay-ssl.md
 [python-requests]: http://docs.python-requests.org/en/master/
-[container-linux]: https://coreos.com/os/docs/latest/adding-certificate-authorities.html
+[container-linux]: https://github.com/coreos/docs/blob/master/os/adding-certificate-authorities.md
 [red-hat]: https://access.redhat.com/solutions/1519813
 [ubuntu]: https://askubuntu.com/questions/73287/how-do-i-install-a-root-certificate

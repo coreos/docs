@@ -134,5 +134,5 @@ latest: digest: sha256:c24be6d92b0a4e2bb8a8cc7c9bd044278d6abdf31534729b1660a485b
 ```
 
 
-[qe-single]: https://tectonic.com/quay-enterprise/docs/latest/initial-setup.html
+[qe-single]: initial-setup.md
 [self-signed-cert]: https://en.wikipedia.org/wiki/Self-signed_certificate
