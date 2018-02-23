@@ -75,8 +75,16 @@ cork enter
 
 **Note**: The `create` and `enter` commands will request root permissions via sudo.
 
+To leave the SDK chroot, simply run `exit`.
 
 To use the SDK chroot in the future, run `cork enter` from the above directory.
+
+Verify you are in the SDK chroot:
+
+```
+$ grep NAME /etc/os-release
+NAME="Container Linux by CoreOS"
+```
 
 ### Using QEMU for cross-compiling
 
@@ -156,6 +164,8 @@ After `build_image` completes, it prints commands for converting the raw bin int
 ### Booting
 
 Once you build an image you can launch it with KVM (instructions will print out after `image_to_vm.sh` runs).
+
+If you encounter errors with KVM, verify that it is supported by your CPU and enabled in the BIOS.
 
 ## Making changes
 
