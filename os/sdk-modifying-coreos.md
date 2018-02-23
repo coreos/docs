@@ -69,15 +69,9 @@ Next, use the cork utility to create a project directory. This will hold all of 
 ```sh
 mkdir coreos-sdk
 cd coreos-sdk
-cork create
-cork enter
+cork create # This will request root permisions via sudo
+cork enter  # This will request root permisions via sudo
 ```
-
-**Note**: The `create` and `enter` commands will request root permissions via sudo.
-
-To leave the SDK chroot, simply run `exit`.
-
-To use the SDK chroot in the future, run `cork enter` from the above directory.
 
 Verify you are in the SDK chroot:
 
@@ -85,6 +79,10 @@ Verify you are in the SDK chroot:
 $ grep NAME /etc/os-release
 NAME="Container Linux by CoreOS"
 ```
+To leave the SDK chroot, simply run `exit`.
+
+To use the SDK chroot in the future, run `cork enter` from the above directory.
+
 
 ### Using QEMU for cross-compiling
 
