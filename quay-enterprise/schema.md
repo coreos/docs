@@ -1,4 +1,4 @@
- # Schema for Quay Enterprise #
+Schema for Quay Enterprise
 
  _Note: all fields are optional unless otherwise marked_
 
