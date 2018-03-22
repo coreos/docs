@@ -33,7 +33,7 @@ Quay Enterprise has native Kubernetes integrations. These integrations require S
 
 Kubernetes API has minor changes between versions 1.4 and 1.5, Download appropiate versions of Role Based Access Control (RBAC) Policies.
 
-### Tectonic v1.6.x RBAC Policies 
+### Tectonic v1.6.x and later RBAC Policies 
 
 - [quay-servicetoken-role.yaml](files/quay-servicetoken-role-k8s1-6.yaml)
 - [quay-servicetoken-role-binding.yaml](files/quay-servicetoken-role-binding-k8s1-6.yaml)
@@ -61,6 +61,13 @@ Next, add your pull secret to Kubernetes (make sure you specify the correct path
 
 ```sh
 kubectl create secret generic coreos-pull-secret --from-file=".dockerconfigjson=config.json" --type='kubernetes.io/dockerconfigjson' --namespace=quay-enterprise
+```
+
+### Tectonic v1.6.x and later : Deploy RBAC Policies
+
+```sh
+kubectl create -f quay-servicetoken-role-k8s1-6.yaml
+kubectl create -f quay-servicetoken-role-binding-k8s1-6.yaml
 ```
 
 ### Tectonic v1.5.x : Deploy RBAC Policies
