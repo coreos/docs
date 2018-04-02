@@ -17,6 +17,7 @@ Name=enp2s0
 [Network]
 Address=192.168.0.15/24
 Gateway=192.168.0.1
+DNS=1.2.3.4
 ```
 
 Place the file in `/etc/systemd/network/`. To apply the configuration, run:
@@ -56,6 +57,7 @@ Name=enp2s0
 [Network]
 Address=192.168.0.15/24
 Gateway=192.168.0.1
+DNS=1.2.3.4
 ```
 
 Put your settings-of-last-resort in `20-dhcp.network`. For example, any interfaces matching `en*` that weren't matched in `10-static.network` will be configured with DHCP:
