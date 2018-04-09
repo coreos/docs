@@ -26,7 +26,7 @@ Restart the Quay Enterprise container:
 
 ```
 $ docker ps
-0f6c27088c32        quay.io/coreos/quay:v2.9.0 "/sbin/my_init"          27 hours ago        Up 3 hours          0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp, 8443/tcp   epic_banach
+0f6c27088c32        quay.io/coreos/quay:v2.9.1 "/sbin/my_init"          27 hours ago        Up 3 hours          0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp, 8443/tcp   epic_banach
 
 docker restart 0f6c27088c32
 ```
