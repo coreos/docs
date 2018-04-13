@@ -6,7 +6,7 @@ Container Linux is designed to be reliably updated via a [continuous stream of u
 
 | Number | Label      | Description                                                       | Partition Type        |
 |:------:|------------|-------------------------------------------------------------------|-----------------------|
-| 1      | EFI-SYSTEM | Contains the bootloader                                           | VFAT                  |
+| 1      | EFI-SYSTEM | Contains the bootloader                                           | FAT32                 |
 | 2      | BIOS-BOOT  | Contains the second stages of GRUB for use when booting from BIOS | grub core.img         |
 | 3      | USR-A      | One of two active/passive partitions holding Container Linux      | EXT4                  |
 | 4      | USR-B      | One of two active/passive partitions holding Container Linux      | (empty on first boot) |
