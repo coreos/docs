@@ -12,28 +12,10 @@ sudo mount \
     -t overlay overlay /lib/modules
 ```
 
-The following systemd unit can be written to `/etc/systemd/system/lib-modules.mount`.
+To mount the overlay automatically when the system boots, add the following line to `/etc/fstab` (creating it if necessary).
 
-```ini
-[Unit]
-Description=Custom Kernel Modules
-Before=local-fs.target
-ConditionPathExists=/opt/modules
-
-[Mount]
-Type=overlay
-What=overlay
-Where=/lib/modules
-Options=lowerdir=/lib/modules,upperdir=/opt/modules,workdir=/opt/modules.wd
-
-[Install]
-WantedBy=local-fs.target
 ```
-
-Enable the unit so this overlay is mounted automatically on boot.
-
-```sh
-sudo systemctl enable lib-modules.mount
+overlay /lib/modules overlay lowerdir=/lib/modules,upperdir=/opt/modules,workdir=/opt/modules.wd,nofail 0 0
 ```
 
 ## Prepare a CoreOS Container Linux development container
