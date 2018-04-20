@@ -19,7 +19,7 @@ docker login quay.io
 Check the [list of Quay Enterprise releases][qe-releases] for the latest version.
 
 ```
-docker pull quay.io/coreos/registry:RELEASE_VERSION
+docker pull quay.io/coreos/quay:vRELEASE_VERSION
 ```
 
 Replace `RELEASE VERSION` with the desired version of Quay Enterprise.
@@ -44,7 +44,7 @@ docker stop QE_CONTAINER_ID
 docker run --restart=always -p 443:443 -p 80:80 --privileged=true \
 -v /local/path/to/config/directory:/conf/stack \
 -v /local/path/to/storage/directory:/datastorage \
--d quay.io/coreos/registry:RELEASE_VERSION
+-d quay.io/coreos/quay:vRELEASE_VERSION
 ```
 
 Replace `/local/path/to/config/directory` and `/local/path/to/storage/directory` with the absolute paths to those directories on the host. Replace `RELEASE_VERSION` with the desired Quay Enterprise version.
