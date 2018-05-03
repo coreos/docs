@@ -157,6 +157,16 @@ If you want to permanently leave you can run the following:
 crossystem disable_dev_request=1; reboot
 ```
 
+## Use binary packages from nightly builds
+
+Some packages like `coreos-modules` take a long time to build, but are also built as part of the nightly build. Use 
+
+```
+./build_packages --getbinpkgver=$(gsutil cat gs://builds.developer.core-os.net/boards/amd64-usr/current-master/version.txt |& sed -n 's/^COREOS_VERSION=//p')
+```
+
+To use packages from the nightly build.
+
 ## Known issues
 
 ### build\_packages fails on coreos-base
