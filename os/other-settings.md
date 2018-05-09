@@ -87,7 +87,7 @@ The Container Linux bootloader parses the configuration file `/usr/share/oem/gru
 To login without a password on every boot, edit `/usr/share/oem/grub.cfg` to add the line:
 
 ```
-set linux_append="coreos.autologin=tty1"
+set linux_append="$linux_append coreos.autologin=tty1"
 ```
 
 ### Enable systemd debug logging
@@ -95,7 +95,7 @@ set linux_append="coreos.autologin=tty1"
 Edit `/usr/share/oem/grub.cfg` to add the following line, enabling systemd's most verbose `debug`-level logging:
 
 ```
-set linux_append="systemd.log_level=debug"
+set linux_append="$linux_append systemd.log_level=debug"
 ```
 
 ### Mask a systemd unit
@@ -103,7 +103,7 @@ set linux_append="systemd.log_level=debug"
 Completely disable the `systemd-networkd.service` unit by adding this line to `/usr/share/oem/grub.cfg`:
 
 ```
-set linux_append="systemd.mask=systemd-networkd.service"
+set linux_append="$linux_append systemd.mask=systemd-networkd.service"
 ```
 
 ## Adding custom messages to MOTD
