@@ -151,7 +151,7 @@ Build all of the target binary packages:
 
 #### Render the CoreOS Container Linux image
 
-Build an image based on the binary packages built above, including development tools:
+Build the production image based on the binary packages built above:
 
 ```sh
 ./build_image
