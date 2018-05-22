@@ -33,19 +33,31 @@ git config --global user.name "Your Name"
 
 The `cork` utility, included in the CoreOS [mantle](https://github.com/coreos/mantle) project, is used to create and work with an SDK chroot.
 
-First, download the cork utility and verify it with the signature:
+First, download the cork utility:
 
 ```sh
 curl -L -o cork https://github.com/coreos/mantle/releases/download/v0.9.1/cork-0.9.1-amd64
 curl -L -o cork.sig https://github.com/coreos/mantle/releases/download/v0.9.1/cork-0.9.1-amd64.sig
-gpg --receive-keys 9CEB8FE6B4F1E9E752F61C82CDDE268EBB729EC7
+```
+
+Now, verify the downloads with the signature:  
+
+```sh
+gpg --keyserver keys.gnupg.net --recv-keys 9CEB8FE6B4F1E9E752F61C82CDDE268EBB729EC7
 gpg --verify cork.sig cork
 ```
 
-The `gpg --verify` command should output something like this:
+Alternatively, you could use `gpg2` instead of `gpg`:   
+
+```sh
+gpg2 --receive-keys 9CEB8FE6B4F1E9E752F61C82CDDE268EBB729EC7
+gpg2 --verify cork.sig cork
+```
+
+`gpg --verify` and `gpg2 --verify` commands should output something like this:
 
 ```
-gpg: Signature made Thu 31 Aug 2017 02:47:22 PM PDT
+gpg: Signature made Thu 19 Apr 2018 03:33:40 PM PDT
 gpg:                using RSA key 9CEB8FE6B4F1E9E752F61C82CDDE268EBB729EC7
 gpg: Good signature from "CoreOS Application Signing Key <security@coreos.com>" [unknown]
 Primary key fingerprint: 18AD 5014 C99E F7E3 BA5F  6CE9 50BD D3E0 FC8A 365E
