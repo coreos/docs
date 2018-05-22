@@ -154,7 +154,7 @@ Build all of the target binary packages:
 Build an image based on the binary packages built above, including development tools:
 
 ```sh
-./build_image dev
+./build_image
 ```
 
 After `build_image` completes, it prints commands for converting the raw bin into a bootable virtual machine. Run the `image_to_vm.sh` command.
