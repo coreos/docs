@@ -40,7 +40,7 @@ curl -L -o cork https://github.com/coreos/mantle/releases/download/v0.9.1/cork-0
 curl -L -o cork.sig https://github.com/coreos/mantle/releases/download/v0.9.1/cork-0.9.1-amd64.sig
 ```
 
-Now, verify the downloads with the signature:  
+Now, verify the download with the signature:  
 
 ```sh
 gpg --keyserver keys.gnupg.net --recv-keys 9CEB8FE6B4F1E9E752F61C82CDDE268EBB729EC7
