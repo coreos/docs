@@ -47,14 +47,7 @@ gpg --keyserver keys.gnupg.net --recv-keys 9CEB8FE6B4F1E9E752F61C82CDDE268EBB729
 gpg --verify cork.sig cork
 ```
 
-Alternatively, you could use `gpg2` instead of `gpg`:   
-
-```sh
-gpg2 --receive-keys 9CEB8FE6B4F1E9E752F61C82CDDE268EBB729EC7
-gpg2 --verify cork.sig cork
-```
-
-`gpg --verify` and `gpg2 --verify` commands should output something like this:
+The `gpg --verify` command should output something like this:
 
 ```
 gpg: Signature made Thu 19 Apr 2018 03:33:40 PM PDT
