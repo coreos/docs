@@ -56,6 +56,8 @@ If Quay is setup to use a SSL certificate that is not globally trusted, for exam
 docker run --restart on-failure -e SERVER=wss://myquayenterprise -v /path/to/ssl/rootCA.pem:/usr/local/share/ca-certificates/rootCA.pem -v /var/run/docker.sock:/var/run/docker.sock --entrypoint /bin/sh quay.io/coreos/quay-builder:v2.9.2 -c '/usr/sbin/update-ca-certificates && quay-builder'
 ```
 
+The logs of the quay-builder container can provide insight into the build related issues. It can be useful configure a log driver to aggregate and archive these logs. This can be done by passing a `--log-driver` flag in the `docker run` comand or configuring a logging driver via the Docker daemon. 
+
 ### Setup GitHub build (optional)
 
 If your organization plans to have builds be conducted via pushes to GitHub (or GitHub Enterprise), please continue
