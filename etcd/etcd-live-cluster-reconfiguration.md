@@ -54,7 +54,7 @@ Changing the size of an etcd cluster is as simple as adding a new member, and us
     added member 9bf1b35fc7761a23 to cluster
 
     ETCD_NAME="node4"
-    ETCD_INITIAL_CLUSTER="demo-etcd-1=http://10.240.0.1:2380,demo-etcd-2=http://10.240.0.2:2380,demo-etcd-3=http://10.240.0.3:2380,node4=http://10.240.1.4:2380"
+    ETCD_INITIAL_CLUSTER="demo-etcd-1=http://10.240.0.1:2380,demo-etcd-2=http://10.240.0.2:2380,demo-etcd-3=http://10.240.0.3:2380,node4=http://10.240.0.4:2380"
     ETCD_INITIAL_CLUSTER_STATE="existing"
     ```
 2. Store the output of this command for later use.
@@ -65,9 +65,9 @@ Changing the size of an etcd cluster is as simple as adding a new member, and us
     etcd:
       name: node4
       listen_client_urls: http://10.240.0.4:2379,http://0.0.0.0:4001
-      advertise_client_urls: http://0.240.0.4:2379
+      advertise_client_urls: http://10.240.0.4:2379
       listen_peer_urls: http://0.0.0.0:2380
-      initial_advertise_peer_urls: http://0.240.0.4:2380
+      initial_advertise_peer_urls: http://10.240.0.4:2380
       initial_cluster: demo-etcd-1=http://10.240.0.1:2380,demo-etcd-2=http://10.240.0.2:2380,demo-etcd-3=http://10.240.0.3:2380,node4=http://10.240.0.4:2380
       initial_cluster_state: existing
     ```
@@ -96,7 +96,7 @@ etcd:
   advertise_client_urls: http://10.240.0.1:2379
   listen_peer_urls: http://0.0.0.0:2380
   initial_advertise_peer_urls: http://10.240.0.1:2380
-  initial_cluster: ddemo-etcd-1=http://10.240.0.1:2380,demo-etcd-2=http://10.240.0.2:2380,demo-etcd-3=http://10.240.0.3:2380,node4=http://10.240.0.4:2380
+  initial_cluster: ddemo-etcd-1=http://10.240.0.1:2380,demo-etcd-2=http://10.240.0.2:2380,demo-etcd-3=http://10.240.0.3:2380
   initial_cluster_token: demo-etcd-token
   initial_cluster_state: new
 ```
@@ -123,7 +123,7 @@ cluster is healthy
     ```
     The remove subcommand informs all other cluster nodes that a human has determined this node is dead and not available for connections.
 
-2. Stop the etcd-member service on the failed node (`0.0.0.2`):
+2. Stop the etcd-member service on the failed node (`10.240.0.2`):
 
     ```sh
     $ sudo systemctl stop etcd-member.service
