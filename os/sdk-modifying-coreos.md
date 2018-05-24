@@ -168,7 +168,19 @@ After `build_image` completes, it prints commands for converting the raw bin int
 
 Once you build an image you can launch it with KVM (instructions will print out after `image_to_vm.sh` runs).
 
-If you encounter errors with KVM, verify that it is supported by your CPU and enabled in the BIOS.
+If you encounter errors with KVM, verify that virtualization is supported by your CPU by running `egrep '(vmx|svm)' /proc/cpuinfo`. The `/dev/kvm` directory will be in your host OS when virtualization is enabled in the BIOS.
+
+The `./coreos_production_qemu.sh` file can be found in the `~/trunk/src/build/images/amd64-usr/latest` directory inside the SDK chroot.
+
+#### Boot Options
+
+After `image_to_vm.sh` completes, run `./coreos_production_qemu.sh -curses` to launch a graphical interface to log in to the Container Linux VM.
+
+You could instead use the `-nographic` option, `./coreos_production_qemu.sh -nographic`, which gives you the ability to switch from the VM to the QEMU monitor console by pressing <kbd>CTRL</kbd>+<kbd>a</kbd> and then <kbd>c</kbd>. To close the Container Linux Guest OS VM, run `sudo systemctl poweroff` inside the VM. 
+
+You could also log in via SSH by running `./coreos_production_qemu.sh` and then running `ssh core@127.0.0.1 -p 2222` to enter the guest OS. Running without the `-p 2222` option will arise a *ssh: connect to host 127.0.0.1 port 22: Connection refused* or *Permission denied (publickey,gssapi-keyex,gssapi-with-mic)* warning. Additionally, you can log in via SSH keys or with a different ssh port by running this example `./coreos_production_qemu.sh -a ~/.ssh/authorized_keys -p 2223 -- -curses`. Refer to the [Booting with QEMU](booting-with-qemu.md#SSH-keys) guide for more information on this usage.
+
+The default login username is `core` and the [password is the one set in the `./set_shared_user_password`](sdk-modifying-coreos.md#Building-an-image) step of this guide. If you forget your password, you will need to rerun `./set_shared_user_password` and then `./build_image` again.
 
 ## Making changes
 
