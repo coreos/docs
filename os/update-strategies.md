@@ -114,18 +114,11 @@ Locksmith supports maintenance windows in addition to the reboot strategies ment
 
 Windows are defined by a start time and a length. In this example, the window is defined to be every Thursday between 04:00 and 05:00:
 
-Container Linux Configs don't yet support maintenance windows, but will very soon.
-
-As an example, consider the following cloud config:
-
-```cloud-config
-#cloud-config
-coreos:
-  update:
-    reboot-strategy: "reboot"
-  locksmith:
-    window-start: Thu 04:00
-    window-length: 1h
+```yaml container-linux-config
+locksmith:
+  reboot_strategy: reboot
+  window_start: Thu 04:00
+  window_length: 1h
 ```
 
 This will configure a Container Linux machine to follow the `reboot` strategy, and thus when an update is ready it will simply reboot instead of attempting to grab a lock in etcd. This machine however has also been configured to only reboot between 04:00 and 05:00 on Thursdays, so if an update occurs outside of this window the machine will then wait until it is inside of this window to reboot.
