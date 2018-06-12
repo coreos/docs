@@ -36,8 +36,8 @@ The `cork` utility, included in the CoreOS [mantle](https://github.com/coreos/ma
 First, download the cork utility:
 
 ```sh
-curl -L -o cork https://github.com/coreos/mantle/releases/download/v0.9.1/cork-0.9.1-amd64
-curl -L -o cork.sig https://github.com/coreos/mantle/releases/download/v0.9.1/cork-0.9.1-amd64.sig
+curl -L -o cork https://github.com/coreos/mantle/releases/download/v0.10.0/cork-0.10.0-amd64
+curl -L -o cork.sig https://github.com/coreos/mantle/releases/download/v0.10.0/cork-0.10.0-amd64.sig
 ```
 
 Now, verify the download with the signature:  
