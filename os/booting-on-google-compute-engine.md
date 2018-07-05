@@ -94,7 +94,11 @@ For more information about mounting storage, Google's [own documentation](https:
 
 To add more instances to the cluster, just launch more with the same Ignition config inside of the project.
 
-## SSH
+## SSH and users
+
+Users are added to Container Linux on GCE by the user provided configuration (i.e. Ignition, cloudinit) and by either the GCE account manager or [GCE OS Login](https://cloud.google.com/compute/docs/instances/managing-instance-access). OS Login is used if it is enabled for the instance, otherwise the GCE account manager is used.
+
+### Using the GCE account manager
 
 You can log in your Container Linux instances using:
 
@@ -103,6 +107,30 @@ gcloud compute ssh --zone us-central1-a core@<instance-name>
 ```
 
 Users other than `core`, which are set up by the GCE account manager, may not be a member of required groups. If you have issues, try running commands such as `journalctl` with sudo.
+
+### Using OS Login
+
+You can log in using your Google account on instances with OS Login enabled. OS Login needs to be [enabled in the GCE console](https://cloud.google.com/compute/docs/instances/managing-instance-access#enable_oslogin) and on the instance. It is enabled by default on instances provisioned with Container Linux 1898.0.0 or later. Once enabled, you can log into your Container Linux instances using:
+
+```sh
+gcloud compute ssh --zone us-central1-a <instance-name>
+```
+
+This will use your GCE user to log in.
+
+
+#### Disabling OS Login on newly provisioned nodes
+
+You can disable the OS Login functionality by masking the `oem-gce-enable-oslogin.service` unit:
+
+```yaml container-linux-config:gce
+systemd:
+  units:
+    - name: oem-gce-enable-oslogin.service
+      mask: true
+```
+
+When disabling OS Login functionality on the instance, it is also recommended to disable it in the GCE console.
 
 ## Using CoreOS Container Linux
 
