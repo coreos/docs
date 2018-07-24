@@ -22,7 +22,7 @@ spec:
             secretName: quay-enterprise-config-secret
       containers:
       - name: quay-enterprise-app
-        image: quay.io/coreos/quay:v2.9.2
+        image: quay.io/coreos/quay:v2.9.3
         ports:
         - containerPort: 80
         volumeMounts:
