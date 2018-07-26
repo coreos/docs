@@ -209,9 +209,9 @@ specify in `repo init`, this defaults to 'origin/master'. Keep this in
 mind when making changes, the origin git repository should not have a
 'default' branch.
 
-## Building images
+## Building release images
 
-There are separate workflows for building [production images][prodimages] and [development images][devimages].
+The [production images][prodimages] document is unmaintained and out of date, but contains useful pointers as to how official release images are built.
 
 ## Tips and tricks
 
@@ -224,7 +224,6 @@ We've compiled a [list of tips and tricks][sdktips] that can make working with t
 
 [android-repo-git]: https://source.android.com/source/developing.html
 [coreos-dev]: https://groups.google.com/forum/#!forum/coreos-dev
-[devimages]: sdk-building-development-images.md
 [github-coreos]: https://github.com/coreos/
 [irc]: irc://irc.freenode.org:6667/#coreos
 [mantle]: https://github.com/coreos/mantle
