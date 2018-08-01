@@ -1,6 +1,6 @@
 # Running CoreOS Container Linux on EC2
 
-The current AMIs for all Container Linux channels and EC2 regions are listed below and updated frequently. Using CloudFormation is the easiest way to launch a cluster, but it is also possible to follow the manual steps at the end of the article. Questions can be directed to the CoreOS [IRC channel][irc] or [user mailing list][coreos-user].
+The current AMIs for all Container Linux channels and EC2 regions are listed below and updated frequently. Questions can be directed to the CoreOS [IRC channel][irc] or [user mailing list][coreos-user].
 
 ## Choosing a channel
 
@@ -24,7 +24,6 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
             <th>EC2 Region</th>
             <th>AMI Type</th>
             <th>AMI ID</th>
-            <th>CloudFormation</th>
           </tr>
         </thead>
         <tbody>
@@ -35,7 +34,6 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
           <td rowspan="2">{{ region.name }}</td>
           <td class="dashed"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
           <td class="dashed"><a href="https://console.{{ region_domain }}/ec2/home?region={{ region.name }}#launchAmi={{ region.pv }}">{{ region.pv }}</a></td>
-          <td class="dashed"><a href="https://console.{{ region_domain }}/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7Ehttps%3A%2F%2Fs3.amazonaws.com%2Fcoreos.com%2Fdist%2Faws%2Fcoreos-alpha-pv.template" target="_blank"><img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png" alt="Launch Stack"/></a></td>
         </tr>
         {% endif %}
         <tr>
@@ -46,7 +44,6 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
           <td class="rowspan-padding"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">HVM</a></td>
           {% endunless %}
           <td><a href="https://console.{{ region_domain }}/ec2/home?region={{ region.name }}#launchAmi={{ region.hvm }}">{{ region.hvm }}</a></td>
-          <td><a href="https://console.{{ region_domain }}/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-alpha%7Cturl%7Ehttps%3A%2F%2Fs3.amazonaws.com%2Fcoreos.com%2Fdist%2Faws%2Fcoreos-alpha-hvm.template" target="_blank"><img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png" alt="Launch Stack"/></a></td>
         </tr>
         {% endfor %}
         </tbody>
@@ -63,7 +60,6 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
             <th>EC2 Region</th>
             <th>AMI Type</th>
             <th>AMI ID</th>
-            <th>CloudFormation</th>
           </tr>
         </thead>
         <tbody>
@@ -74,7 +70,6 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
           <td rowspan="2">{{ region.name }}</td>
           <td class="dashed"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
           <td class="dashed"><a href="https://console.{{ region_domain }}/ec2/home?region={{ region.name }}#launchAmi={{ region.pv }}">{{ region.pv }}</a></td>
-          <td class="dashed"><a href="https://console.{{ region_domain }}/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-beta%7Cturl%7Ehttps%3A%2F%2Fs3.amazonaws.com%2Fcoreos.com%2Fdist%2Faws%2Fcoreos-beta-pv.template" target="_blank"><img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png" alt="Launch Stack"/></a></td>
         </tr>
         {% endif %}
         <tr>
@@ -85,7 +80,6 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
           <td class="rowspan-padding"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">HVM</a></td>
           {% endunless %}
           <td><a href="https://console.{{ region_domain }}/ec2/home?region={{ region.name }}#launchAmi={{ region.hvm }}">{{ region.hvm }}</a></td>
-          <td><a href="https://console.{{ region_domain }}/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-beta%7Cturl%7Ehttps%3A%2F%2Fs3.amazonaws.com%2Fcoreos.com%2Fdist%2Faws%2Fcoreos-beta-hvm.template" target="_blank"><img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png" alt="Launch Stack"/></a></td>
         </tr>
         {% endfor %}
         </tbody>
@@ -102,7 +96,6 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
             <th>EC2 Region</th>
             <th>AMI Type</th>
             <th>AMI ID</th>
-            <th>CloudFormation</th>
           </tr>
         </thead>
         <tbody>
@@ -113,7 +106,6 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
           <td rowspan="2">{{ region.name }}</td>
           <td class="dashed"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">PV</a></td>
           <td class="dashed"><a href="https://console.{{ region_domain }}/ec2/home?region={{ region.name }}#launchAmi={{ region.pv }}">{{ region.pv }}</a></td>
-          <td class="dashed"><a href="https://console.{{ region_domain }}/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-stable%7Cturl%7Ehttps%3A%2F%2Fs3.amazonaws.com%2Fcoreos.com%2Fdist%2Faws%2Fcoreos-stable-pv.template" target="_blank"><img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png" alt="Launch Stack"/></a></td>
         </tr>
         {% endif %}
         <tr>
@@ -124,7 +116,6 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
           <td class="rowspan-padding"><a href="http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/">HVM</a></td>
           {% endunless %}
           <td><a href="https://console.{{ region_domain }}/ec2/home?region={{ region.name }}#launchAmi={{ region.hvm }}">{{ region.hvm }}</a></td>
-          <td><a href="https://console.{{ region_domain }}/cloudformation/home?region={{ region.name }}#cstack=sn%7ECoreOS-stable%7Cturl%7Ehttps%3A%2F%2Fs3.amazonaws.com%2Fcoreos.com%2Fdist%2Faws%2Fcoreos-stable-hvm.template" target="_blank"><img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png" alt="Launch Stack"/></a></td>
         </tr>
         {% endfor %}
         </tbody>
@@ -132,8 +123,6 @@ Container Linux is designed to be [updated automatically](https://coreos.com/why
     </div>
   </div>
 </div>
-
-CloudFormation will launch a cluster of Container Linux machines with a security and autoscaling group.
 
 ## Container Linux Configs
 
