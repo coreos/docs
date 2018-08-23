@@ -66,6 +66,7 @@ systemd:
            --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro \
            --volume=/run/docker/execdriver/native:/var/lib/docker/execdriver/native:ro \
            --publish=127.0.0.1:51678:51678 \
+           --publish=127.0.0.1:51679:51679 \
            --env=ECS_AVAILABLE_LOGGING_DRIVERS='["awslogs","json-file","journald","logentries","splunk","syslog"]'
            --env=ECS_ENABLE_TASK_IAM_ROLE=true \
            --env=ECS_ENABLE_TASK_IAM_ROLE_NETWORK_HOST=true \
