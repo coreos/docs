@@ -11,8 +11,30 @@ When booting your [Container Linux Machines on EC2](booting-on-ec2.md), configur
 Be sure to change `ECS_CLUSTER` to the cluster name you've configured via the ECS CLI or leave it empty for the default. Here's a full config example:
 
 ```yaml container-linux-config:ec2
+storage:
+  files:
+    - path: /var/lib/iptables/rules-save
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          *nat
+          -A PREROUTING -d 169.254.170.2/32 -p tcp -m tcp --dport 80 -j DNAT --to-destination 127.0.0.1:51679
+          -A OUTPUT -d 169.254.170.2/32 -p tcp -m tcp --dport 80 -j REDIRECT --to-ports 51679
+          COMMIT
+    - path: /etc/sysctl.d/localnet.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          net.ipv4.conf.all.route_localnet=1
+
 systemd:
  units:
+   - name: iptables-restore.service
+     enable: true
+   - name: systemd-sysctl.service
+     enable: true
    - name: amazon-ecs-agent.service
      enable: true
      contents: |
@@ -44,6 +66,10 @@ systemd:
            --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro \
            --volume=/run/docker/execdriver/native:/var/lib/docker/execdriver/native:ro \
            --publish=127.0.0.1:51678:51678 \
+           --publish=127.0.0.1:51679:51679 \
+           --env=ECS_AVAILABLE_LOGGING_DRIVERS='["awslogs","json-file","journald","logentries","splunk","syslog"]'
+           --env=ECS_ENABLE_TASK_IAM_ROLE=true \
+           --env=ECS_ENABLE_TASK_IAM_ROLE_NETWORK_HOST=true \
            --env=ECS_LOGFILE=/log/ecs-agent.log \
            --env=ECS_LOGLEVEL=${ECS_LOGLEVEL} \
            --env=ECS_DATADIR=/data \
