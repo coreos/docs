@@ -82,6 +82,27 @@ Further details can be found in the systemd man pages:
 
 The Container Linux bootloader parses the configuration file `/usr/share/oem/grub.cfg`, where custom kernel boot options may be set.
 
+The `/usr/share/oem/grub.cfg` file can be configured with Ignition. Note that Ignition runs after GRUB. Therefore, the GRUB configuration won't take effect until the next reboot of the node. 
+
+Here's an example configuration:
+
+```yaml container-linux-config
+storage:
+  filesystems:
+    - name: "OEM"
+      mount:
+        device: "/dev/disk/by-label/OEM"
+        format: "ext4"
+  files:
+    - filesystem: "OEM"
+      path: "/grub.cfg"
+      mode: 0644
+      append: true
+      contents:
+        inline: |
+          set linux_append="$linux_append coreos.autologin=tty1"
+```
+
 ### Enable CoreOS Container Linux autologin
 
 To login without a password on every boot, edit `/usr/share/oem/grub.cfg` to add the line:
