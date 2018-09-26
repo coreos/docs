@@ -74,6 +74,15 @@ The following sections walk through applying the same changes documented above o
 
 *Note*: To avoid incidentally locking yourself out of the machine, it's a good idea to double-check you're able to directly login to the machine's console, if applicable.
 
+### Customizing sshd\_config
+
+Since `/etc/ssh/sshd_config` is a symlink to a read only file in `/usr`, it
+needs to be replaced with a regular file before it may be edited.
+
+This, for example, can be done by running `sudo sed -i '' /etc/ssh/sshd_config`.
+
+At this point, any configuration changes can easily be applied by editing the file `/etc/ssh/sshd_config`.
+
 ### Changing the sshd port
 
 The sshd.socket unit may be configured via systemd [dropins](using-systemd-drop-in-units.md).
