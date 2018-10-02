@@ -25,6 +25,7 @@ When configuring the Container Linux pxelinux.cfg there are a few kernel options
 - **coreos.autologin**: Drop directly to a shell on a given console without prompting for a password. Useful for troubleshooting but use with caution. For any console that doesn't normally get a login prompt by default be sure to combine with the `console` option, e.g. `console=tty0 console=ttyS0 coreos.autologin=tty1 coreos.autologin=ttyS0`. Without any argument it enables access on all consoles. Note that for the VGA console the login prompts are on virtual terminals (`tty1`, `tty2`, etc), not the VGA console itself (`tty0`).
 - **coreos.first_boot=1**: Download an Ignition config and use it to provision your booted system. Ignition configs are generated from Container Linux Configs. See the [config transpiler documentation][cl-configs] for more information. If a local filesystem is used for the root partition, pass this parameter only on the first boot.
 - **coreos.config.url**: Download the Ignition config from the specified URL. `http`, `https`, `s3`, and `tftp` schemes are supported.
+- **ip**: Configure temporary static networking for initramfs. This parameter does not influence the final network configuration of the node and is mostly useful for first-boot provisioning of systems in DHCP-less environments. See [Ignition documentation][ignition-kargs-ip] for the complete syntax.
 
 This is an example pxelinux.cfg file that assumes Container Linux is the only option. You should be able to copy this verbatim into `/var/lib/tftpboot/pxelinux.cfg/default` after providing an Ignition config URL:
 
@@ -221,6 +222,7 @@ Now that you have a machine booted it is time to play around. Check out the [Con
 [coreos-user]: https://groups.google.com/forum/#!forum/coreos-user
 [docs]: https://coreos.com/docs
 [ignition]: https://coreos.com/ignition/docs/latest
+[ignition-kargs-ip]: https://coreos.com/ignition/docs/latest/network-configuration.html#using-static-ip-addresses-with-ignition
 [install-to-disk]: installing-to-disk.md
 [cl-configs]: provisioning.md
 [irc]: irc://irc.freenode.org:6667/#coreos
