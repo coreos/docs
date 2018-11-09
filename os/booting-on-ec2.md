@@ -194,8 +194,6 @@ To connect to an instance after it's created, run:
 ssh core@<ip address>
 ```
 
-Optionally, you may want to [configure your ssh-agent](https://github.com/coreos/fleet/blob/master/Documentation/using-the-client.md#remote-fleet-access) to more easily run [fleet commands](../fleet/launching-containers-fleet.md).
-
 ## Multiple clusters
 If you would like to create multiple clusters you will need to change the "Stack Name". You can find the direct [template file on S3](https://s3.amazonaws.com/coreos.com/dist/aws/coreos-stable-hvm.template).
 

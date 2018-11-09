@@ -31,7 +31,7 @@ cfssl print-defaults csr > ca-csr.json
 
 ### Certificate types which are used inside Container Linux
 
-* **client certificate** is used to authenticate client by server. For example `etcdctl`, `etcd proxy`, `fleetctl` or `docker` clients.
+* **client certificate** is used to authenticate client by server. For example `etcdctl`, `etcd proxy`, or `docker` clients.
 * **server certificate** is used by server and verified by client for server identity. For example `docker` server or `kube-apiserver`.
 * **peer certificate** is used by etcd cluster members as they communicate with each other in both ways.
 

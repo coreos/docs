@@ -111,8 +111,6 @@ To connect to a droplet after it's created, run:
 ssh core@<ip address>
 ```
 
-Optionally, you may want to [configure your ssh-agent](https://github.com/coreos/fleet/blob/master/Documentation/using-the-client.md#remote-fleet-access) to more easily run [fleet commands](../fleet/launching-containers-fleet.md).
-
 ## Launching droplets
 
 ### Via the API

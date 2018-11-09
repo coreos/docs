@@ -21,18 +21,16 @@ ssh-add
 Connect to a Container Linux machine via SSH as the user `core`. For example, on Amazon, use:
 
 ```sh
-$ ssh -A core@an.ip.compute-1.amazonaws.com
+$ ssh core@an.ip.compute-1.amazonaws.com
 CoreOS (beta)
 ```
-
-The `-A` forwards your ssh-agent to the machine, which is needed for the fleet section of this guide.
 
 If you're using Vagrant, you'll need to connect a bit differently:
 
 ```sh
 $ ssh-add ~/.vagrant.d/insecure_private_key
 Identity added: /Users/core/.vagrant.d/insecure_private_key (/Users/core/.vagrant.d/insecure_private_key)
-$ vagrant ssh core-01 -- -A
+$ vagrant ssh core-01
 CoreOS (beta)
 ```
 
@@ -112,71 +110,6 @@ docker run -i -t busybox /bin/sh
 <a class="btn btn-primary" href="https://coreos.com/os/docs/latest/getting-started-with-docker.html" data-category="More Information" data-event="Docs: Getting Started docker">View Complete Guide</a>
 <a class="btn btn-default" href="http://docs.docker.io/">Read Docker Docs</a>
 
-## Process management with fleet
-
-The third building block of Container Linux is **fleet**, a distributed init system for your cluster. You should use fleet to manage the life cycle of your Docker containers.
-
-Fleet works by receiving [systemd unit files][getting-started-systemd] and scheduling them onto machines in the cluster based on declared conflicts and other preferences encoded in the unit file. Using the `fleetctl` tool, you can query the status of a unit, remotely access its logs and more.
-
-First, let's construct a simple systemd unit that runs a Docker container. Save this as `hello.service` in the home directory:
-
-### hello.service
-
-```ini
-[Unit]
-Description=My Service
-After=docker.service
-
-[Service]
-TimeoutStartSec=0
-ExecStartPre=-/usr/bin/docker kill hello
-ExecStartPre=-/usr/bin/docker rm hello
-ExecStartPre=/usr/bin/docker pull busybox
-ExecStart=/usr/bin/docker run --name hello busybox /bin/sh -c "trap 'exit 0' INT TERM; while true; do echo Hello World; sleep 1; done"
-ExecStop=/usr/bin/docker stop hello
-```
-
-The [Getting Started with systemd][getting-started-systemd] guide explains the format of this file in more detail.
-
-Then load and start the unit:
-
-```sh
-$ fleetctl load hello.service
-Unit hello.service loaded on 8145ebb7.../172.17.8.105
-$ fleetctl start hello.service
-Unit hello.service launched on 8145ebb7.../172.17.8.105
-```
-
-Your container has been started somewhere on the cluster. To verify the status, run:
-
-```sh
-$ fleetctl status hello.service
-● hello.service - My Service
-   Loaded: loaded (/run/fleet/units/hello.service; linked-runtime)
-   Active: active (running) since Wed 2014-06-04 19:04:13 UTC; 44s ago
- Main PID: 27503 (bash)
-   CGroup: /system.slice/hello.service
-           └─27503 /usr/bin/docker run --name hello busybox /bin/sh -c trap 'exit 0' INT TERM; while true; do echo Hello World; sleep 1; done
-
-Jun 04 19:04:57 core-01 bash[27503]: Hello World
-..snip...
-Jun 04 19:05:06 core-01 bash[27503]: Hello World
-```
-
-To stop the container, run:
-
-```sh
-fleetctl destroy hello.service
-```
-
-Fleet has many more features that you can explore in the guides below.
-
-### More detailed information
-
-<a class="btn btn-primary" href="https://coreos.com/fleet/docs/latest/launching-containers-fleet.html" data-category="More Information" data-event="Docs: Launching Containers Fleet">View Complete Guide</a>
-<a class="btn btn-default" href="https://coreos.com/os/docs/latest/getting-started-with-systemd.html" data-category="More Information" data-event="Docs: Getting Started with systemd">View Getting Started with systemd Guide</a>
-
-[getting-started-systemd]: getting-started-with-systemd.md
 [docker-docs]: https://docs.docker.com/
 [etcd-docs]: https://coreos.com/etcd/docs/latest/
 [running-container-linux]: https://coreos.com/os/docs/latest/#running-coreos
