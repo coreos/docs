@@ -36,27 +36,6 @@ The docker daemon is accessible via a unix domain socket at `/run/docker.sock`. 
 
 Users in the "rkt" group have access to the rkt container image store. A user may download new images and place them in the store if they belong to this group. This could be used as an attack vector to insert images that are later executed as root by the rkt container runtime. The core user, by default, has access to the rkt group. You can change this by removing the core user from rkt by running this command: `gpasswd -d core rkt`.
 
-### fleet API socket
-
-The fleet API allows management of the state of the cluster using JSON over HTTP. By default, Container Linux ships a socket unit for fleet (fleet.socket) which binds to a Unix domain socket, `/var/run/fleet.sock`. Users with access to this socket have root access via systemd. To disable fleet completely run:
-
-```
-systemctl mask fleet.socket --now
-```
-
-To restrict access to fleet.socket to root only run:
-
-```
-mkdir -p /etc/systemd/system/fleet.socket.d
-cat  << EOM > /etc/systemd/system/fleet.socket.d/10-root-only.conf
-[Socket]
-SocketMode=0600
-SocketUser=root
-SocketGroup=root
-EOM
-systemctl daemon-reload
-```
-
 ## Additional hardening
 
 ### SELinux

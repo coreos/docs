@@ -337,6 +337,5 @@ storage:
 
 [provisioning]: provisioning.md
 [dynamic-data]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/dynamic-data.md
-[fleet-deprecation]: https://coreos.com/blog/migrating-from-fleet-to-kubernetes.html
 [ct-config]: https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/configuration.md
 [ignition]: https://coreos.com/ignition
