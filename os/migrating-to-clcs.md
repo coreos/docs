@@ -243,7 +243,7 @@ storage:
   files:
     - filesystem: "root"
       path:       "/etc/hostname"
-      mode:       0644
+      mode:       644
       contents:
         inline: coreos1
 ```
@@ -300,7 +300,7 @@ storage:
   files:
     - filesystem: "root"
       path:       "/etc/resolv.conf"
-      mode:       0644
+      mode:       644
       contents:
         inline: |
           nameserver 8.8.8.8
@@ -327,7 +327,7 @@ storage:
   files:
     - filesystem: "root"
       path:       "/etc/hosts"
-      mode:       0644
+      mode:       644
       contents:
         inline: |
           127.0.0.1	localhost
