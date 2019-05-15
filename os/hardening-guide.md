@@ -38,6 +38,12 @@ Users in the "rkt" group have access to the rkt container image store. A user ma
 
 ## Additional hardening
 
+### Disabling Simultaneous Multi-Threading
+
+Recent Intel CPU vulnerabilities cannot be fully mitigated in software without disabling Simultaneous Multi-Threading. This can have a substantial performance impact and is only necessary for certain workloads, so for compatibility reasons, SMT is enabled by default.
+
+The [SMT on Container Linux guide][smt-guide] provides guidance and instructions for disabling SMT.
+
 ### SELinux
 
 SELinux is a fine-grained access control mechanism integrated into Container Linux. Each container runs in its own independent SELinux context, increasing isolation between containers and providing another layer of protection should a container be compromised.
@@ -45,6 +51,7 @@ SELinux is a fine-grained access control mechanism integrated into Container Lin
 Container Linux implements SELinux, but currently does not enforce SELinux protections by default. The [SELinux on Container Linux guide][selinux-guide] covers the process of checking containers for SELinux policy compatibility and switching SELinux into enforcing mode.
 
 
+[smt-guide]: disabling-smt.md
 [sshd-guide]: customizing-sshd.md
 [etcd-sec-guide]: https://github.com/coreos/etcd/blob/v3.2.11/Documentation/op-guide/security.md
 [selinux-guide]: selinux.md
