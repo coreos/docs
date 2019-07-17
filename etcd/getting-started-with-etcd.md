@@ -30,6 +30,8 @@ etcd:
   initial_cluster_state:       new
 ```
 
+If you are unable to provision your machine using Container Linux configs, refer to [Setting up etcd v3 on Container Linux "by hand"][by-hand].
+
 ## Reading and writing to etcd
 
 The HTTP-based API is easy to use. This guide will show both `etcdctl` and `curl` examples.
@@ -235,3 +237,4 @@ $ curl http://127.0.0.1:2379/v2/keys/foo
 [etcd-v3-upgrade]: https://github.com/coreos/etcd/blob/master/Documentation/upgrades/upgrade_3_0.md
 [os-faq]: os-faq.md
 [setup-internal-anchor]: #setting-up-etcd
+[by-hand]: getting-started-with-etcd-manually.md
