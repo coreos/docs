@@ -91,6 +91,7 @@ storage:
 systemd:
   units:
     - name: var-vm-swapfile1.swap
+      enabled: true
       contents: |
         [Unit]
         Description=Turn on swap

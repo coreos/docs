@@ -194,8 +194,6 @@ To connect to an instance after it's created, run:
 ssh core@<ip address>
 ```
 
-Optionally, you may want to [configure your ssh-agent](https://github.com/coreos/fleet/blob/master/Documentation/using-the-client.md#remote-fleet-access) to more easily run [fleet commands](../fleet/launching-containers-fleet.md).
-
 ## Multiple clusters
 If you would like to create multiple clusters you will need to change the "Stack Name". You can find the direct [template file on S3](https://s3.amazonaws.com/coreos.com/dist/aws/coreos-stable-hvm.template).
 
@@ -267,22 +265,22 @@ First we need to create a security group to allow Container Linux instances to c
         </li>
         <li>
           Use <a href="provisioning.md">ct</a> to convert the following configuration into an Ignition config, and back in the EC2 dashboard, paste it into the "User Data" field.
-          ```yaml container-linux-config:ec2
-          etcd:
-            # All options get passed as command line flags to etcd.
-            # Any information inside curly braces comes from the machine at boot time.
-          
-            # multi_region and multi_cloud deployments need to use {PUBLIC_IPV4}
-            advertise_client_urls:       "http://{PRIVATE_IPV4}:2379"
-            initial_advertise_peer_urls: "http://{PRIVATE_IPV4}:2380"
-            # listen on both the official ports and the legacy ports
-            # legacy ports can be omitted if your application doesn't depend on them
-            listen_client_urls:          "http://0.0.0.0:2379"
-            listen_peer_urls:            "http://{PRIVATE_IPV4}:2380"
-            # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-            # specify the initial size of your cluster with ?size=X
-            discovery:                   "https://discovery.etcd.io/<token>"
-          ```
+```yaml container-linux-config:ec2
+etcd:
+  # All options get passed as command line flags to etcd.
+  # Any information inside curly braces comes from the machine at boot time.
+
+  # multi_region and multi_cloud deployments need to use {PUBLIC_IPV4}
+  advertise_client_urls:       "http://{PRIVATE_IPV4}:2379"
+  initial_advertise_peer_urls: "http://{PRIVATE_IPV4}:2380"
+  # listen on both the official ports and the legacy ports
+  # legacy ports can be omitted if your application doesn't depend on them
+  listen_client_urls:          "http://0.0.0.0:2379"
+  listen_peer_urls:            "http://{PRIVATE_IPV4}:2380"
+  # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+  # specify the initial size of your cluster with ?size=X
+  discovery:                   "https://discovery.etcd.io/<token>"
+```
           <ul>
             <li>Paste configuration into "User Data"</li>
             <li>"Continue"</li>
@@ -341,22 +339,22 @@ First we need to create a security group to allow Container Linux instances to c
         </li>
         <li>
           Use <a href="provisioning.md">ct</a> to convert the following configuration into an Ignition config, and back in the EC2 dashboard, paste it into the "User Data" field.
-          ```yaml container-linux-config:ec2
-          etcd:
-            # All options get passed as command line flags to etcd.
-            # Any information inside curly braces comes from the machine at boot time.
-          
-            # multi_region and multi_cloud deployments need to use {PUBLIC_IPV4}
-            advertise_client_urls:       "http://{PRIVATE_IPV4}:2379"
-            initial_advertise_peer_urls: "http://{PRIVATE_IPV4}:2380"
-            # listen on both the official ports and the legacy ports
-            # legacy ports can be omitted if your application doesn't depend on them
-            listen_client_urls:          "http://0.0.0.0:2379"
-            listen_peer_urls:            "http://{PRIVATE_IPV4}:2380"
-            # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-            # specify the initial size of your cluster with ?size=X
-            discovery:                   "https://discovery.etcd.io/<token>"
-          ```
+```yaml container-linux-config:ec2
+etcd:
+  # All options get passed as command line flags to etcd.
+  # Any information inside curly braces comes from the machine at boot time.
+
+  # multi_region and multi_cloud deployments need to use {PUBLIC_IPV4}
+  advertise_client_urls:       "http://{PRIVATE_IPV4}:2379"
+  initial_advertise_peer_urls: "http://{PRIVATE_IPV4}:2380"
+  # listen on both the official ports and the legacy ports
+  # legacy ports can be omitted if your application doesn't depend on them
+  listen_client_urls:          "http://0.0.0.0:2379"
+  listen_peer_urls:            "http://{PRIVATE_IPV4}:2380"
+  # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+  # specify the initial size of your cluster with ?size=X
+  discovery:                   "https://discovery.etcd.io/<token>"
+```
           <ul>
             <li>Paste configuration into "User Data"</li>
             <li>"Continue"</li>
@@ -415,22 +413,22 @@ First we need to create a security group to allow Container Linux instances to c
         </li>
         <li>
           Use <a href="provisioning.md">ct</a> to convert the following configuration into an Ignition config, and back in the EC2 dashboard, paste it into the "User Data" field.
-          ```yaml container-linux-config:ec2
-          etcd:
-            # All options get passed as command line flags to etcd.
-            # Any information inside curly braces comes from the machine at boot time.
-          
-            # multi_region and multi_cloud deployments need to use {PUBLIC_IPV4}
-            advertise_client_urls:       "http://{PRIVATE_IPV4}:2379"
-            initial_advertise_peer_urls: "http://{PRIVATE_IPV4}:2380"
-            # listen on both the official ports and the legacy ports
-            # legacy ports can be omitted if your application doesn't depend on them
-            listen_client_urls:          "http://0.0.0.0:2379"
-            listen_peer_urls:            "http://{PRIVATE_IPV4}:2380"
-            # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-            # specify the initial size of your cluster with ?size=X
-            discovery:                   "https://discovery.etcd.io/<token>"
-          ```
+```yaml container-linux-config:ec2
+etcd:
+  # All options get passed as command line flags to etcd.
+  # Any information inside curly braces comes from the machine at boot time.
+
+  # multi_region and multi_cloud deployments need to use {PUBLIC_IPV4}
+  advertise_client_urls:       "http://{PRIVATE_IPV4}:2379"
+  initial_advertise_peer_urls: "http://{PRIVATE_IPV4}:2380"
+  # listen on both the official ports and the legacy ports
+  # legacy ports can be omitted if your application doesn't depend on them
+  listen_client_urls:          "http://0.0.0.0:2379"
+  listen_peer_urls:            "http://{PRIVATE_IPV4}:2380"
+  # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+  # specify the initial size of your cluster with ?size=X
+  discovery:                   "https://discovery.etcd.io/<token>"
+```
           <ul>
             <li>Paste configuration into "User Data"</li>
             <li>"Continue"</li>

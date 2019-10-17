@@ -65,7 +65,7 @@ systemd:
            --volume=/var/ecs-data:/data \
            --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro \
            --volume=/run/docker/execdriver/native:/var/lib/docker/execdriver/native:ro \
-           --publish=127.0.0.1:51678:51678 \
+           --publish=127.0.0.1:51679:51679 \
            --env=ECS_AVAILABLE_LOGGING_DRIVERS='["awslogs","json-file","journald","logentries","splunk","syslog"]'
            --env=ECS_ENABLE_TASK_IAM_ROLE=true \
            --env=ECS_ENABLE_TASK_IAM_ROLE_NETWORK_HOST=true \
@@ -83,45 +83,7 @@ The example above pulls the latest official Amazon ECS agent container from the 
 
 If you want to configure SSH keys in order to log in, mount disks or configure other options, see the [Container Linux Configs documentation][cl-configs].
 
+For more information on using ECS, check out the [official Amazon documentation](http://aws.amazon.com/documentation/ecs/).
+
 [cl-configs]: provisioning.md
 [ignition-docs]: https://coreos.com/ignition/docs/latest
-
-## Connect ECS to an existing cluster
-
-Connecting an existing cluster to ECS is simple with [fleet](../fleet/launching-containers-fleet.md) &mdash; the agent can be run as a global unit. The unit looks similar to the example above:
-
-#### amazon-ecs-agent.service
-
-```ini
-[Unit]
-Description=Amazon ECS Agent
-After=docker.service
-Requires=docker.service
-Requires=network-online.target
-After=network-online.target
-
-[Service]
-Environment=ECS_CLUSTER=your_cluster_name
-Environment=ECS_LOGLEVEL=warn
-ExecStartPre=-/usr/bin/docker kill ecs-agent
-ExecStartPre=-/usr/bin/docker rm ecs-agent
-ExecStartPre=/usr/bin/docker pull amazon/amazon-ecs-agent
-ExecStart=/usr/bin/docker run --name ecs-agent --env=ECS_CLUSTER=${ECS_CLUSTER} --env=ECS_LOGLEVEL=${ECS_LOGLEVEL} --publish=127.0.0.1:51678:51678 --volume=/var/run/docker.sock:/var/run/docker.sock amazon/amazon-ecs-agent
-ExecStop=/usr/bin/docker stop ecs-agent
-
-[X-Fleet]
-Global=true
-```
-
-Be sure to change `ECS_CLUSTER` to the cluster name you've configured in the AWS console or leave it empty for the default.
-
-To run this unit on each machine, all you have to do is submit it to the cluster:
-
-```sh
-$ fleetctl start amazon-ecs-agent.service
-Triggered global unit amazon-ecs-agent.service start
-```
-
-You should see all of your machines show up in the ECS CLI output.
-
-For more information on using ECS, check out the [official Amazon documentation](http://aws.amazon.com/documentation/ecs/).

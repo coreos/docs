@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: redis-master
-        image: quay.io/quay/redis
+        image: redis:4
         ports:
         - containerPort: 6379
 ---

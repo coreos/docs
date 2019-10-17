@@ -6,7 +6,7 @@ Each of these examples is written in version 2.0.0 of the config. Ensure that an
 
 ## etcd2 with coreos-metadata
 
-This config will write a systemd drop-in (shown below) for the etcd2.service. The drop-in modifies the ExecStart option, adding a few flags to etcd2's invocation. These flags use variables defined by coreos-metadata.service to change the interfaces on which etcd2 listens. coreos-metadata is provided by Container Linux and will read the appropriate metadata for the cloud environment (AWS in this example) and write the results to `/run/metadata/coreos`. For more information on the supported platforms and environment variables, refer to the [coreos-metadata README][metadata-readme].
+This config will write a systemd drop-in (shown below) for the etcd2.service. The drop-in modifies the ExecStart option, adding a few flags to etcd2's invocation. These flags use variables defined by coreos-metadata.service to change the interfaces on which etcd2 listens. coreos-metadata is provided by Container Linux and will read the appropriate metadata for the cloud environment (AWS in this example) and write the results to `/run/metadata/coreos`. For more information on the supported platforms and environment variables, refer to the [coreos-metadata documentation][metadata-docs].
 
 ```json ignition-config
 {
@@ -78,4 +78,4 @@ ExecStart=/usr/bin/bash -c 'echo "CUSTOM_EC2_IPV4_PUBLIC=$(curl\
 ```
 
 
-[metadata-readme]: https://github.com/coreos/coreos-metadata/blob/master/README.md
+[metadata-docs]: https://github.com/coreos/coreos-metadata/blob/master/docs/container-linux-legacy.md

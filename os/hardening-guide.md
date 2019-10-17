@@ -36,28 +36,13 @@ The docker daemon is accessible via a unix domain socket at `/run/docker.sock`. 
 
 Users in the "rkt" group have access to the rkt container image store. A user may download new images and place them in the store if they belong to this group. This could be used as an attack vector to insert images that are later executed as root by the rkt container runtime. The core user, by default, has access to the rkt group. You can change this by removing the core user from rkt by running this command: `gpasswd -d core rkt`.
 
-### fleet API socket
-
-The fleet API allows management of the state of the cluster using JSON over HTTP. By default, Container Linux ships a socket unit for fleet (fleet.socket) which binds to a Unix domain socket, `/var/run/fleet.sock`. Users with access to this socket have root access via systemd. To disable fleet completely run:
-
-```
-systemctl mask fleet.socket --now
-```
-
-To restrict access to fleet.socket to root only run:
-
-```
-mkdir -p /etc/systemd/system/fleet.socket.d
-cat  << EOM > /etc/systemd/system/fleet.socket.d/10-root-only.conf
-[Socket]
-SocketMode=0600
-SocketUser=root
-SocketGroup=root
-EOM
-systemctl daemon-reload
-```
-
 ## Additional hardening
+
+### Disabling Simultaneous Multi-Threading
+
+Recent Intel CPU vulnerabilities cannot be fully mitigated in software without disabling Simultaneous Multi-Threading. This can have a substantial performance impact and is only necessary for certain workloads, so for compatibility reasons, SMT is enabled by default.
+
+The [SMT on Container Linux guide][smt-guide] provides guidance and instructions for disabling SMT.
 
 ### SELinux
 
@@ -66,6 +51,7 @@ SELinux is a fine-grained access control mechanism integrated into Container Lin
 Container Linux implements SELinux, but currently does not enforce SELinux protections by default. The [SELinux on Container Linux guide][selinux-guide] covers the process of checking containers for SELinux policy compatibility and switching SELinux into enforcing mode.
 
 
+[smt-guide]: disabling-smt.md
 [sshd-guide]: customizing-sshd.md
 [etcd-sec-guide]: https://github.com/coreos/etcd/blob/v3.2.11/Documentation/op-guide/security.md
 [selinux-guide]: selinux.md

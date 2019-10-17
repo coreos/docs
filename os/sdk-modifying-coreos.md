@@ -36,8 +36,8 @@ The `cork` utility, included in the CoreOS [mantle](https://github.com/coreos/ma
 First, download the cork utility:
 
 ```sh
-curl -L -o cork https://github.com/coreos/mantle/releases/download/v0.11.1/cork-0.11.1-amd64
-curl -L -o cork.sig https://github.com/coreos/mantle/releases/download/v0.11.1/cork-0.11.1-amd64.sig
+curl -L -o cork https://github.com/coreos/mantle/releases/download/v0.12.0/cork-0.12.0-amd64
+curl -L -o cork.sig https://github.com/coreos/mantle/releases/download/v0.12.0/cork-0.12.0-amd64.sig
 ```
 
 Now, verify the download with the signature:  
@@ -91,6 +91,8 @@ To use the SDK chroot in the future, run `cork enter` from the above directory.
 
 ### Building an image
 
+#### Set up the chroot
+
 After entering the chroot via `cork` for the first time, you should set user `core`'s password:
 
 ```sh
@@ -99,16 +101,10 @@ After entering the chroot via `cork` for the first time, you should set user `co
 
 This is the password you will use to log into the console of images built and launched with the SDK.
 
-#### Selecting the architecture to build
-
-##### 64 bit AMD: The amd64-usr target
-
-The `--board` option can be set to the target architecture, or system "board", to build for a given CPU.
-
-To create a root filesystem for the `amd64-usr` target beneath the directory `/build/amd64-usr/`:
+Then, to create a root filesystem for the `amd64-usr` build target beneath the directory `/build/amd64-usr/`:
 
 ```sh
-./setup_board --default --board=amd64-usr
+./setup_board
 ```
 
 #### Compile and link system binaries

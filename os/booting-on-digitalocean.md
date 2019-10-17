@@ -111,8 +111,6 @@ To connect to a droplet after it's created, run:
 ssh core@<ip address>
 ```
 
-Optionally, you may want to [configure your ssh-agent](https://github.com/coreos/fleet/blob/master/Documentation/using-the-client.md#remote-fleet-access) to more easily run [fleet commands](../fleet/launching-containers-fleet.md).
-
 ## Launching droplets
 
 ### Via the API
@@ -158,10 +156,10 @@ curl --request POST "https://api.digitalocean.com/v2/droplets" \
 
 For more details, check out [DigitalOcean's API documentation][do-api-docs].
 
-[do-api-docs]: https://developers.digitalocean.com/#droplets
-[do-keys-docs]: https://developers.digitalocean.com/#keys
-[do-list-keys-docs]: https://developers.digitalocean.com/#list-all-keys
-[do-token-settings]: https://cloud.digitalocean.com/settings/applications
+[do-api-docs]: https://developers.digitalocean.com/documentation/v2/
+[do-keys-docs]: https://developers.digitalocean.com/documentation/v2/#ssh-keys
+[do-list-keys-docs]: https://developers.digitalocean.com/documentation/v2/#list-all-keys
+[do-token-settings]: https://cloud.digitalocean.com/account/api/tokens
 
 ### Via the web console
 

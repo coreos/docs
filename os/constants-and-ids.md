@@ -20,5 +20,6 @@ These GUIDs are dedicated [GPT partition types](https://en.wikipedia.org/wiki/GU
 | `coreos-resize`    | `3884dd41-8582-4404-b9a8-e9b84f2df50e` | Support for auto-resizing via `extend-filesystems`, current default type for `/` |
 | `coreos-reserved`  | `c95dc21a-df0e-4340-8d7b-26cbfa9a03e0` | Reserved for OEM usage, support for customizations via `OEM-CONFIG` partition |
 | `coreos-root-raid` | `be9067b9-ea49-4f15-b4f6-f36f8c9e1818` | RAID partition containing a rootfs, see [notes](../os/root-filesystem-placement.md) for details and limitations |
+| `coreos-early-cryptsetup` | `ab997286-8ab3-400a-ad19-bae58743b7af` | Support for unlocking cryptsetup volumes in initramfs via `coreos-cryptagent`|
 
 For more information on the partitioning scheme used by Container Linux, read the [disk layout](../os/sdk-disk-partitions.md) documentation.

@@ -64,7 +64,7 @@ When running Docker containers manually, the most important option is to run the
 docker run -d coreos/apache [process]
 ```
 
-After you are comfortable with the mechanics of running containers by hand, it's recommended to use [systemd units](getting-started-with-systemd.md) and/or [fleet](../fleet/launching-containers-fleet.md) to run your containers on a cluster of Container Linux machines.
+After you are comfortable with the mechanics of running containers by hand, it's recommended to use [systemd units](getting-started-with-systemd.md) to run a container on a Container Linux machine.
 
 Do not run containers with detached mode inside of systemd unit files. Detached mode prevents your init system, in our case systemd, from monitoring the process that owns the container because detached mode forks it into the background. To prevent this issue, just omit the `-d` flag if you aren't running something manually.
 

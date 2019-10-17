@@ -10,31 +10,37 @@ Note that for drop-in files, if one wants to remove entries from a setting that 
 
 This also applies for user instances of systemd, but with different locations for the unit files. See the section on unit load paths in [official systemd doc](http://www.freedesktop.org/software/systemd/man/systemd.unit.html) for further details.
 
-## Example: customizing fleet.service
+## Example: customizing locksmithd.service
 
-Let's review `/usr/lib64/systemd/system/fleet.service` unit (you can find it using this command: `systemctl list-units | grep fleet`) with the following contents:
+Let's review `/usr/lib64/systemd/system/locksmithd.service` unit (you can find it using this command: `systemctl list-units | grep locksmithd`) with the following contents:
 
 ```
 [Unit]
-Description=fleet daemon
-
-After=etcd.service
-After=etcd2.service
-
-Wants=fleet.socket
-After=fleet.socket
+Description=Cluster reboot manager
+After=update-engine.service
+ConditionVirtualization=!container
+ConditionPathExists=!/usr/.noupdate
 
 [Service]
-ExecStart=/usr/bin/fleetd
-Restart=always
+CPUShares=16
+MemoryLimit=32M
+PrivateDevices=true
+Environment=GOMAXPROCS=1
+EnvironmentFile=-/usr/share/coreos/update.conf
+EnvironmentFile=-/etc/coreos/update.conf
+ExecStart=/usr/lib/locksmith/locksmithd
+Restart=on-failure
 RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
 ```
 
 Let's walk through increasing the `RestartSec` parameter via both methods:
 
 ### Override only specific option
 
-You can create a drop-in file `/etc/systemd/system/fleet.service.d/10-restart_60s.conf` with the following contents:
+You can create a drop-in file `/etc/systemd/system/locksmithd.service.d/10-restart_60s.conf` with the following contents:
 
 ```
 [Service]
@@ -51,7 +57,7 @@ systemctl daemon-reload
 And restart modified service if necessary (in our example we have changed only `RestartSec` option, but if you want to change environment variables, `ExecStart` or other run options you have to restart service):
 
 ```sh
-systemctl restart fleet.service
+systemctl restart locksmithd.service
 ```
 
 Here is how that could be implemented within a Container Linux Config:
@@ -59,7 +65,7 @@ Here is how that could be implemented within a Container Linux Config:
 ```containter-linux-config
 systemd:
   units:
-    - name: fleet.service
+    - name: locksmithd.service
       enable: true
       dropins:
         - name: 10-restart_60s.conf
@@ -72,22 +78,28 @@ This change is small and targeted. It is the easiest way to tweak unit's paramet
 
 ### Override the whole unit file
 
-Another way is to override whole systemd unit. Copy default unit file `/usr/lib64/systemd/system/fleet.service` to `/etc/systemd/system/fleet.service` and change the chosen settings:
+Another way is to override whole systemd unit. Copy default unit file `/usr/lib64/systemd/system/locksmithd.service` to `/etc/systemd/system/locksmithd.service` and change the chosen settings:
 
 ```
 [Unit]
-Description=fleet daemon
-
-After=etcd.service
-After=etcd2.service
-
-Wants=fleet.socket
-After=fleet.socket
+Description=Cluster reboot manager
+After=update-engine.service
+ConditionVirtualization=!container
+ConditionPathExists=!/usr/.noupdate
 
 [Service]
-ExecStart=/usr/bin/fleetd
-Restart=always
+CPUShares=16
+MemoryLimit=32M
+PrivateDevices=true
+Environment=GOMAXPROCS=1
+EnvironmentFile=-/usr/share/coreos/update.conf
+EnvironmentFile=-/etc/coreos/update.conf
+ExecStart=/usr/lib/locksmith/locksmithd
+Restart=on-failure
 RestartSec=60s
+
+[Install]
+WantedBy=multi-user.target
 ```
 
 Container Linux Config example:
@@ -95,22 +107,28 @@ Container Linux Config example:
 ```yaml container-linux-config
 systemd:
   units:
-    - name: fleet.service
+    - name: locksmithd.service
       enable: true
       contents: |
         [Unit]
-        Description=fleet daemon
-
-        After=etcd.service
-        After=etcd2.service
-
-        Wants=fleet.socket
-        After=fleet.socket
+        Description=Cluster reboot manager
+        After=update-engine.service
+        ConditionVirtualization=!container
+        ConditionPathExists=!/usr/.noupdate
 
         [Service]
-        ExecStart=/usr/bin/fleetd
-        Restart=always
+        CPUShares=16
+        MemoryLimit=32M
+        PrivateDevices=true
+        Environment=GOMAXPROCS=1
+        EnvironmentFile=-/usr/share/coreos/update.conf
+        EnvironmentFile=-/etc/coreos/update.conf
+        ExecStart=/usr/lib/locksmith/locksmithd
+        Restart=on-failure
         RestartSec=60s
+
+        [Install]
+        WantedBy=multi-user.target
 ```
 
 ### List drop-ins
