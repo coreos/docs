@@ -338,9 +338,13 @@ systemd:
 
 A json file `.dockercfg` can be created in your home directory that holds authentication information for a public or private Docker registry.
 
+Read more about [registry authentication][registry-authentication].
+
+[cloud-config]: https://github.com/coreos/coreos-cloudinit/blob/master/Documentation/cloud-config.md
 [docker-socket-systemd]: https://github.com/docker/docker/pull/17211
 [drop-in]: using-systemd-drop-in-units.md
 [mounting-storage]: mounting-storage.md
+[registry-authentication]: registry-authentication.md
 [self-signed-certs]: generate-self-signed-certificates.md
 [systemd-socket]: https://www.freedesktop.org/software/systemd/man/systemd.socket.html
 [systemd-env-vars]: https://coreos.com/os/docs/latest/using-environment-variables-in-systemd-units.html#system-wide-environment-variables
