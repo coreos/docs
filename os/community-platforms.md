@@ -11,6 +11,7 @@ The platforms and providers listed below each provide support and documentation 
 * [cloud.ca][cloud-ca]
 * [Exoscale][exoscale]
 * [Ikoula][ikoula]
+* [Linode][Linode]
 * [NIFTY Cloud][nifty]
 * [Packet][packet]
 * [Rackspace Cloud][rackspace]
@@ -48,3 +49,4 @@ The platforms and providers listed below each provide support and documentation 
 [virtualbox]: booting-on-virtualbox.md
 [vmware]: booting-on-vmware.md
 [official-support]: https://coreos.com/os/docs/latest/
+[Linode]: https://www.linode.com/
