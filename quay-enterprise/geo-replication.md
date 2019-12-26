@@ -2,7 +2,7 @@
 
 Georeplication allows for a single globally-distributed Quay Enterprise to serve container images from localized storage.
 
-When georeplication is configured, container image pushes will be written to the preferred storage engine for that QE instance. After the initial push, image data will be replicated in the background to other storage engines. The list of replication locations is configurable. An image pull will always use the closest available storage engine, to maximize pull performance.
+When georeplication is configured, container image pushes will be written to the preferred storage engine for that QE instance. After the initial push, image data will be replicated in the background to other storage engines. Georeplication provides eventually consistentency of the image store. The list of replication locations is configurable. An image pull will always use the closest available storage engine, to maximize pull performance. Images pushed when georeplication is enabled will usually be available at other storage site after just a few minutes although this is dependent on the network route between the QE instance and the various storage engines.
 
 ## Prerequisites
 
