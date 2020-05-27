@@ -19,7 +19,7 @@ Now that you have Vagrant installed you can bring up a Container Linux instance.
 The following commands will clone a repository that contains the Container Linux Vagrantfile. This file tells Vagrant where it can find the latest disk image of Container Linux. Vagrant will download the image the first time you attempt to start the VM.
 
 ```sh
-git clone https://github.com/coreos/coreos-vagrant.git
+git clone --depth 1 https://github.com/coreos/coreos-vagrant.git
 cd coreos-vagrant
 ```
 

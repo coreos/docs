@@ -51,10 +51,10 @@ A VM can be reinstalled (with a fresh/clean Container Linux image and different 
 
 Set your public [SSH keys][rh-ssh-keys-page].
 
-Git clone the [Python driver for the RimuHosting API][rh-python-driver-api]:
+git clone --depth 1 the [Python driver for the RimuHosting API][rh-python-driver-api]:
 
 ```sh
-git clone git@github.com:pbkwee/RimuHostingAPI.git
+git clone --depth 1 git@github.com:pbkwee/RimuHostingAPI.git
 ```
 
 Install the library:
